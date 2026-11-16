@@ -1,0 +1,1194 @@
+{
+ "started": "2026-11-16T23:31:20+09:00",
+ "commit": "fcf3da57339739f4cf1770b8897fb9bc56db2a5c",
+ "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+ "platform": "Windows-11-10.0.26300-SP0",
+ "env": {
+  "tk": "8.6.15",
+  "scaling": 1.334646962233169,
+  "screen": [
+   1536,
+   864
+  ],
+  "work_area": [
+   0,
+   0,
+   1536,
+   816
+  ],
+  "dpi_awareness": 0,
+  "capture_scale": 1.25
+ },
+ "error": null,
+ "clicks": 15,
+ "repo_db_unchanged": true,
+ "repo_db_count": 12,
+ "temp_files_removed": [
+  "aidc_story_slot_001.db",
+  "aidc_story_slot_001.db.lock"
+ ],
+ "checks": [
+  {
+   "step": "1 시작 화면",
+   "item": "모드 카드 3장의 [시작 / 이어하기] 버튼 표시",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "1 시작 화면",
+   "item": "모드 선택 화면 위젯 중 창 밖·가려짐·글자 잘림 없음",
+   "result": "PASS",
+   "detail": "[]",
+   "kind": "auto"
+  },
+  {
+   "step": "1 시작 화면",
+   "item": "모드 선택 창 전체가 작업 영역(작업 표시줄 제외) 안",
+   "result": "PASS",
+   "detail": "창 아래 785 / 작업 영역 아래 816",
+   "kind": "auto"
+  },
+  {
+   "step": "2 튜토리얼 시작",
+   "item": "튜토리얼 모드·별도 임시 슬롯으로 시작",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "3 교육 안내",
+   "item": "교육창이 관제실 중앙(±4px)",
+   "result": "PASS",
+   "detail": "중심 차이 (0, 0)",
+   "kind": "auto"
+  },
+  {
+   "step": "3 교육 안내",
+   "item": "교육창 안 버튼·글자 잘림/가려짐 없음",
+   "result": "PASS",
+   "detail": "[]",
+   "kind": "auto"
+  },
+  {
+   "step": "3 교육 안내",
+   "item": "관제실 기본 창의 버튼이 작업 영역 안(작업 표시줄에 가리지 않음)",
+   "result": "PASS",
+   "detail": "[]",
+   "kind": "auto"
+  },
+  {
+   "step": "3 교육 안내",
+   "item": "4쪽 본문이 데이터의 줄바꿈(\\n) 그대로 표시",
+   "result": "PASS",
+   "detail": "[True, True, True, True]",
+   "kind": "auto"
+  },
+  {
+   "step": "3 교육 안내",
+   "item": "긴 줄 없음(교육창 본문 한 줄 최대 40자 이하)",
+   "result": "PASS",
+   "detail": "최대 33자",
+   "kind": "auto"
+  },
+  {
+   "step": "3 교육 안내",
+   "item": "교육창 종료 후 STEP 2/5(요청 확인)",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인(기본 창)",
+   "item": "금색 강조 대상 하나(테두리 8개 = 버튼 1개)",
+   "result": "PASS",
+   "detail": "key=request edges=8",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인(기본 창)",
+   "item": "강조된 [요청 확인] 버튼이 실제로 보이고 클릭 가능",
+   "result": "FAIL",
+   "detail": "중심점 위젯: .!frame4.!label2",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인(기본 창)",
+   "item": "가려진 버튼 위치 실제 클릭 시 요청이 열리지 않음(재현)",
+   "result": "PASS",
+   "detail": "단계 그대로 request, 요청창 없음",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인(기본 창)→최대화",
+   "item": "최대화 후 [요청 확인] 버튼이 보이고 클릭 가능",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "최대화 관제실의 버튼·글자 가려짐/잘림/작업 영역 밖",
+   "result": "FAIL",
+   "detail": "2건 [{'window': '서버실 생존기 v0.9-4b | 울산 AI 데이터센터 관제실', 'text': '튜토리얼 — 관제실 첫걸음 · 미션에 따라 요청 접수', 'class': 'Label', 'flags': ['covered'], 'covered_by': '.!frame4.!label'}, {'window': '서버실 생존기 v0.9-4b | 울산 AI 데이터센터 관제실', 'text': '운영 작업 · 진행률', 'class': 'Label', 'flags': ['covered'], 'covered_by': '.!frame4.!label2'}]",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "고객 요청서가 관제실 중앙(±8px)",
+   "result": "FAIL",
+   "detail": "중심 차이 (0, 110) · 게임 기록 offset (0, 110) target (328, 199) actual (328, 199)",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "요청서 GPU/전력 요구량이 실제 요청(고성능 모드)과 일치",
+   "result": "PASS",
+   "detail": "GPU 7 / 전력 7",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "요청서의 현재 가용량이 실제 서버 가용량과 일치",
+   "result": "PASS",
+   "detail": "가용 (10, 10)",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "고객 요청서 창 안 버튼·글자 잘림/작업 영역 밖 없음",
+   "result": "FAIL",
+   "detail": "[{'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '◀ 이전', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}, {'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '확인 · 운영실로', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}, {'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '전체 보기', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}, {'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '건너뛰기', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}]",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "[X]로 닫아도 요청 열람 기록 유지",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "4 요청 확인",
+   "item": "요청 열람 후 STEP 3/5(배정 검토)",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "목표 카드 안내 버튼과 금색 강조 대상이 같은 위젯",
+   "result": "FAIL",
+   "detail": "목표 카드: [배정 설정·선택]에서 운영 모드와 배정안을 고르세요 / 강조: key=preview (.!frame3.!serverpanel)",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "배정 설정창이 관제실 중앙(±8px)",
+   "result": "PASS",
+   "detail": "중심 차이 (0, -6)",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "배정안 선택 전 [작업 시작] 비활성",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "배정안 카드 3개 표시",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "[작업 시작]·[닫기] 하단 버튼이 창 안·작업 영역 안",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "배정창 금색 강조 대상 하나(배정안 1)",
+   "result": "PASS",
+   "detail": "edges=8",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "배정안 선택만으로는 자원 미점유",
+   "result": "PASS",
+   "detail": "(10, 10) → (10, 10)",
+   "kind": "auto"
+  },
+  {
+   "step": "5 배정 검토",
+   "item": "배정안 선택 후 STEP 4/5·[작업 시작] 활성·강조 이동",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "6 작업 시작",
+   "item": "작업 실행 중(running)·진행률 0%",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "6 작업 시작",
+   "item": "GPU 7·전력 7 점유 반영(가용 3/3, 서버 원장·전체 HUD 일치)",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "6 작업 시작",
+   "item": "서버 원장이 선택한 배정안 1(A 4/4, B 2/2, C 1/1)과 일치",
+   "result": "PASS",
+   "detail": "[('A', 4, 4), ('B', 2, 2), ('C', 1, 1)]",
+   "kind": "auto"
+  },
+  {
+   "step": "6 작업 시작",
+   "item": "상단 HUD에 GPU 7/10 · 전력 7/10 표시",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "6 작업 시작",
+   "item": "시간 버튼 3개(+10/+30/+60분)가 각각 테두리 강조",
+   "result": "PASS",
+   "detail": "{'key': 'time', 'parts': ['+10분', '+30분', '+60분'], 'edges': 24}",
+   "kind": "auto"
+  },
+  {
+   "step": "6 작업 시작",
+   "item": "[시간 빨리감기] 라벨에는 테두리 없음",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "7 시간 빨리감기",
+   "item": "시간 진행 직후 흰 창 순간 표시 없음(창 등장 순간 캡처·연속 캡처)",
+   "result": "PASS",
+   "detail": "창 등장 1건, 흰 창 후보 0건, 등장 후 이동 0건, 연속 캡처 최대 흰 비율 0.028 (기준 0.017)",
+   "kind": "auto"
+  },
+  {
+   "step": "7 시간 빨리감기",
+   "item": "+10분 진행으로 진행률 0% → 100% 증가",
+   "result": "PASS",
+   "detail": "100%",
+   "kind": "auto"
+  },
+  {
+   "step": "7 시간 빨리감기",
+   "item": "고객 업무 정상 완료(completed·성공)",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "7 시간 빨리감기",
+   "item": "완료 후 자원 반환(가용 10/10, 원장에서 제거)",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "7 시간 빨리감기",
+   "item": "튜토리얼 단계 complete",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "8 결과창",
+   "item": "결과창이 관제실 중앙(±8px)",
+   "result": "PASS",
+   "detail": "중심 차이 (0, 1)",
+   "kind": "auto"
+  },
+  {
+   "step": "8 결과창",
+   "item": "결과창 MISSION SUCCESS 표시",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "8 결과창",
+   "item": "결과창 점수·기한·반환 자원 = 100.0점 / 기한 내 완료 / GPU 7 · 전력 7",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "8 결과창",
+   "item": "결과창 버튼 2개([다시 학습]·[메인 메뉴])",
+   "result": "PASS",
+   "detail": "['다시 학습', '메인 메뉴']",
+   "kind": "auto"
+  },
+  {
+   "step": "8 결과창",
+   "item": "결과창 버튼·글자 잘림/가려짐 없음",
+   "result": "PASS",
+   "detail": "[]",
+   "kind": "auto"
+  },
+  {
+   "step": "9 메인 메뉴",
+   "item": "[메인 메뉴]로 같은 창에서 모드 선택 복귀",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  }
+ ],
+ "shots": [
+  {
+   "file": "01_title.png",
+   "step": "1 시작 화면",
+   "note": "시작 화면(모드 카드 3장)",
+   "rect": [
+    104,
+    104,
+    1120,
+    793
+   ],
+   "keep": true
+  },
+  {
+   "file": "02_guide_p1.png",
+   "step": "3 교육 안내",
+   "note": "교육창 1/4 페이지",
+   "rect": [
+    104,
+    104,
+    1400,
+    823
+   ],
+   "keep": true
+  },
+  {
+   "file": "03_guide_p2.png",
+   "step": "3 교육 안내",
+   "note": "교육창 2/4 페이지",
+   "rect": [
+    104,
+    104,
+    1400,
+    823
+   ],
+   "keep": true
+  },
+  {
+   "file": "04_guide_p3.png",
+   "step": "3 교육 안내",
+   "note": "교육창 3/4 페이지",
+   "rect": [
+    104,
+    104,
+    1400,
+    823
+   ],
+   "keep": true
+  },
+  {
+   "file": "05_guide_p4.png",
+   "step": "3 교육 안내",
+   "note": "교육창 4/4 페이지",
+   "rect": [
+    104,
+    104,
+    1400,
+    823
+   ],
+   "keep": true
+  },
+  {
+   "file": "06_step2_default_window.png",
+   "step": "4 요청 확인(기본 창)",
+   "note": "기본 1280x680 창: 강조 테두리 안의 [요청 확인]이 요청 상세 패널에 가려짐",
+   "rect": [
+    104,
+    104,
+    1400,
+    823
+   ],
+   "keep": true
+  },
+  {
+   "file": "07_request.png",
+   "step": "4 요청 확인",
+   "note": "고객 요청서(AIDC LINK) — 하단 버튼이 작업 표시줄 아래로 밀림",
+   "rect": [
+    0,
+    0,
+    1536,
+    864
+   ],
+   "keep": true
+  },
+  {
+   "file": "08_step3_goal_vs_highlight.png",
+   "step": "5 배정 검토",
+   "note": "STEP 3: 목표 카드는 [배정 설정·선택], 금색 강조는 Inspector [배정 미리보기] 탭",
+   "rect": [
+    0,
+    0,
+    1536,
+    824
+   ],
+   "keep": true
+  },
+  {
+   "file": "09_allocation.png",
+   "step": "5 배정 검토",
+   "note": "배정 설정창(운영 모드 카드·배정안 3개)",
+   "rect": [
+    0,
+    0,
+    1536,
+    824
+   ],
+   "keep": true
+  },
+  {
+   "file": "10_plan_selected.png",
+   "step": "5 배정 검토",
+   "note": "배정안 1 선택 · 시작 요약 · [작업 시작] 강조",
+   "rect": [
+    0,
+    0,
+    1536,
+    824
+   ],
+   "keep": false
+  },
+  {
+   "file": "11_running_time_highlight.png",
+   "step": "6 작업 시작",
+   "note": "작업 진행 중 관제실 · 시간 버튼 3개 금색 테두리",
+   "rect": [
+    0,
+    0,
+    1536,
+    824
+   ],
+   "keep": true
+  },
+  {
+   "file": "12_result.png",
+   "step": "8 결과창",
+   "note": "튜토리얼 성공 결과창",
+   "rect": [
+    0,
+    0,
+    1536,
+    824
+   ],
+   "keep": true
+  },
+  {
+   "file": "13_back_to_menu.png",
+   "step": "9 메인 메뉴",
+   "note": "메인 메뉴 복귀",
+   "rect": [
+    0,
+    0,
+    1536,
+    824
+   ],
+   "keep": false
+  }
+ ],
+ "window_events": [
+  {
+   "t": 1.717,
+   "step": "1 시작 화면",
+   "event": "appear",
+   "title": "서버실 생존기 v0.9-4b | 모드 선택",
+   "rect": [
+    104,
+    104,
+    1120,
+    793
+   ],
+   "white_ratio": 0.013
+  },
+  {
+   "t": 3.889,
+   "step": "2 튜토리얼 시작",
+   "event": "move",
+   "title": "서버실 생존기 v0.9-4b | 울산 AI 데이터센터 관제실",
+   "from": [
+    104,
+    104,
+    1120,
+    793
+   ],
+   "rect": [
+    104,
+    104,
+    1400,
+    823
+   ]
+  },
+  {
+   "t": 3.913,
+   "step": "2 튜토리얼 시작",
+   "event": "appear",
+   "title": "현장 교육 | 교육 담당자 · 튜토리얼 — 관제실 첫걸음",
+   "rect": [
+    334,
+    209,
+    1170,
+    718
+   ],
+   "white_ratio": 0.0
+  },
+  {
+   "t": 9.483,
+   "step": "3 교육 안내",
+   "event": "move",
+   "title": "",
+   "from": [
+    334,
+    209,
+    1170,
+    718
+   ],
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "t": 9.551,
+   "step": "3 교육 안내",
+   "event": "hide",
+   "title": ""
+  },
+  {
+   "t": 12.543,
+   "step": "4 요청 확인(기본 창)",
+   "event": "move",
+   "title": "서버실 생존기 v0.9-4b | 울산 AI 데이터센터 관제실",
+   "from": [
+    104,
+    104,
+    1400,
+    823
+   ],
+   "rect": [
+    -8,
+    -8,
+    1544,
+    824
+   ]
+  },
+  {
+   "t": 14.389,
+   "step": "4 요청 확인",
+   "event": "appear",
+   "title": "AIDC LINK | Merlion AI · 싱가포르",
+   "rect": [
+    320,
+    168,
+    1216,
+    867
+   ],
+   "white_ratio": 0.0
+  },
+  {
+   "t": 16.584,
+   "step": "4 요청 확인",
+   "event": "move",
+   "title": "",
+   "from": [
+    320,
+    168,
+    1216,
+    867
+   ],
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "t": 16.6,
+   "step": "4 요청 확인",
+   "event": "hide",
+   "title": ""
+  },
+  {
+   "t": 18.772,
+   "step": "5 배정 검토",
+   "event": "appear",
+   "title": "배정 설정 · 운영 모드와 서버 배정안 · v0.9-4b",
+   "rect": [
+    260,
+    12,
+    1276,
+    791
+   ],
+   "white_ratio": 0.0
+  },
+  {
+   "t": 22.786,
+   "step": "6 작업 시작",
+   "event": "move",
+   "title": "",
+   "from": [
+    260,
+    12,
+    1276,
+    791
+   ],
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "t": 22.843,
+   "step": "6 작업 시작",
+   "event": "hide",
+   "title": ""
+  },
+  {
+   "t": 25.088,
+   "step": "7 시간 빨리감기",
+   "event": "appear",
+   "title": "튜토리얼 — 관제실 첫걸음 · 결과",
+   "rect": [
+    350,
+    69,
+    1186,
+    748
+   ],
+   "white_ratio": 0.0
+  },
+  {
+   "t": 27.993,
+   "step": "9 메인 메뉴",
+   "event": "move",
+   "title": "",
+   "from": [
+    350,
+    69,
+    1186,
+    748
+   ],
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "t": 28.01,
+   "step": "9 메인 메뉴",
+   "event": "hide",
+   "title": ""
+  },
+  {
+   "t": 29.796,
+   "step": "9 메인 메뉴",
+   "event": "move",
+   "title": "",
+   "from": [
+    -8,
+    -8,
+    1544,
+    824
+   ],
+   "rect": [
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "burst": [
+  {
+   "t": 24.649,
+   "white_ratio": 0.017,
+   "windows": 1
+  },
+  {
+   "t": 24.719,
+   "white_ratio": 0.017,
+   "windows": 1
+  },
+  {
+   "t": 24.803,
+   "white_ratio": 0.017,
+   "windows": 1
+  },
+  {
+   "t": 25.041,
+   "white_ratio": 0.018,
+   "windows": 1
+  },
+  {
+   "t": 25.18,
+   "white_ratio": 0.027,
+   "windows": 2
+  },
+  {
+   "t": 25.281,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.356,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.441,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.526,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.621,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.708,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.792,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.872,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 25.965,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.04,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.132,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.207,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.292,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.384,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.458,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.549,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.623,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.74,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.83,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.909,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 26.999,
+   "white_ratio": 0.028,
+   "windows": 2
+  },
+  {
+   "t": 27.072,
+   "white_ratio": 0.028,
+   "windows": 2
+  }
+ ],
+ "result_buttons": {
+  "left": 304,
+  "right": 304,
+  "heights": [
+   38,
+   51
+  ]
+ },
+ "placements": [
+  {
+   "step": "3 교육 안내",
+   "window": "현장 교육",
+   "record": {
+    "parent_center": [
+     752.0,
+     475.0
+    ],
+    "target_client": [
+     342,
+     240
+    ],
+    "actual_client": [
+     342,
+     240
+    ],
+    "actual_center": [
+     752.0,
+     475.0
+    ],
+    "offset": [
+     0,
+     0
+    ]
+   },
+   "measured_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "step": "4 요청 확인",
+   "window": "AIDC LINK |",
+   "record": {
+    "parent_center": [
+     768.0,
+     419.5
+    ],
+    "target_client": [
+     328,
+     199
+    ],
+    "actual_client": [
+     328,
+     199
+    ],
+    "actual_center": [
+     768.0,
+     529.0
+    ],
+    "offset": [
+     0,
+     110
+    ]
+   },
+   "measured_offset": [
+    0,
+    110
+   ]
+  },
+  {
+   "step": "5 배정 검토",
+   "window": "배정 설정",
+   "record": {
+    "parent_center": [
+     768.0,
+     419.5
+    ],
+    "target_client": [
+     268,
+     43
+    ],
+    "actual_client": [
+     268,
+     43
+    ],
+    "actual_center": [
+     768.0,
+     413.0
+    ],
+    "offset": [
+     0,
+     -6
+    ]
+   },
+   "measured_offset": [
+    0,
+    -6
+   ]
+  },
+  {
+   "step": "8 결과창",
+   "window": "결과",
+   "record": {
+    "parent_center": [
+     768.0,
+     419.5
+    ],
+    "target_client": [
+     358,
+     100
+    ],
+    "actual_client": [
+     358,
+     100
+    ],
+    "actual_center": [
+     768.0,
+     420.0
+    ],
+    "offset": [
+     0,
+     0
+    ]
+   },
+   "measured_offset": [
+    0,
+    1
+   ]
+  }
+ ],
+ "frame_offset_trace": [
+  {
+   "t": 3.826,
+   "step": "2 튜토리얼 시작",
+   "dialog": "현장 교육 | 교육 담당자 · 튜토리얼 — 관제실 첫걸음",
+   "dialog_viewable": false,
+   "dialog_root": [
+    138,
+    161
+   ],
+   "dialog_xy": [
+    0,
+    0
+   ],
+   "parent_root": [
+    112,
+    135
+   ],
+   "parent_xy": [
+    104,
+    104
+   ],
+   "result": [
+    138,
+    161
+   ]
+  },
+  {
+   "t": 14.336,
+   "step": "4 요청 확인",
+   "dialog": "AIDC LINK | Merlion AI · 싱가포르",
+   "dialog_viewable": false,
+   "dialog_root": [
+    164,
+    187
+   ],
+   "dialog_xy": [
+    0,
+    0
+   ],
+   "parent_root": [
+    0,
+    23
+   ],
+   "parent_xy": [
+    -8,
+    -8
+   ],
+   "result": [
+    164,
+    187
+   ]
+  },
+  {
+   "t": 18.709,
+   "step": "5 배정 검토",
+   "dialog": "배정 설정 · 운영 모드와 서버 배정안 · v0.9-4b",
+   "dialog_viewable": false,
+   "dialog_root": [
+    8,
+    31
+   ],
+   "dialog_xy": [
+    0,
+    0
+   ],
+   "parent_root": [
+    0,
+    23
+   ],
+   "parent_xy": [
+    -8,
+    -8
+   ],
+   "result": [
+    8,
+    31
+   ]
+  },
+  {
+   "t": 25.032,
+   "step": "7 시간 빨리감기",
+   "dialog": "튜토리얼 — 관제실 첫걸음 · 클리어",
+   "dialog_viewable": false,
+   "dialog_root": [
+    8,
+    31
+   ],
+   "dialog_xy": [
+    0,
+    0
+   ],
+   "parent_root": [
+    0,
+    23
+   ],
+   "parent_xy": [
+    -8,
+    -8
+   ],
+   "result": [
+    8,
+    31
+   ]
+  }
+ ],
+ "log": [
+  "[   1.72s] [boot] 캡처 해상도 (1920, 1080), 논리 해상도 (1536, 864), 배율 1.250",
+  "[   1.76s] [0 환경] 환경 {'tk': '8.6.15', 'scaling': 1.334646962233169, 'screen': (1536, 864), 'work_area': (0, 0, 1536, 816), 'dpi_awareness': 0, 'capture_scale': 1.25}",
+  "[   1.82s] [1 시작 화면] CHECK PASS: 모드 카드 3장의 [시작 / 이어하기] 버튼 표시 ",
+  "[   1.88s] [1 시작 화면] CHECK PASS: 모드 선택 화면 위젯 중 창 밖·가려짐·글자 잘림 없음 []",
+  "[   1.88s] [1 시작 화면] CHECK PASS: 모드 선택 창 전체가 작업 영역(작업 표시줄 제외) 안 창 아래 785 / 작업 영역 아래 816",
+  "[   1.99s] [1 시작 화면] 캡처 01_title.png 시작 화면(모드 카드 3장)",
+  "[   2.16s] [2 튜토리얼 시작] 실제 클릭 (305,655) '시작 / 이어하기  ▶' [Button]",
+  "[   3.13s] [2 튜토리얼 시작] 실제 클릭 (612,497) '튜토리얼 처음부터 · 별도 슬롯' [Button]",
+  "[   5.44s] [2 튜토리얼 시작] CHECK PASS: 튜토리얼 모드·별도 임시 슬롯으로 시작 ",
+  "[   5.57s] [3 교육 안내] CHECK PASS: 교육창이 관제실 중앙(±4px) 중심 차이 (0, 0)",
+  "[   5.67s] [3 교육 안내] CHECK PASS: 교육창 안 버튼·글자 잘림/가려짐 없음 []",
+  "[   5.71s] [3 교육 안내] CHECK PASS: 관제실 기본 창의 버튼이 작업 영역 안(작업 표시줄에 가리지 않음) []",
+  "[   5.79s] [3 교육 안내] 교육창 1/4 본문: '첫 출근을 환영해요!\\n오늘은 고객 요청 하나를 처음부터 끝까지 처리해 볼 거예요.'",
+  "[   5.92s] [3 교육 안내] 캡처 02_guide_p1.png 교육창 1/4 페이지",
+  "[   6.11s] [3 교육 안내] 실제 클릭 (479,673) '다음 ▶' [Button]",
+  "[   6.91s] [3 교육 안내] 교육창 2/4 본문: '네, 잘 부탁드립니다!\\n처음이라 조금 긴장되네요.'",
+  "[   7.04s] [3 교육 안내] 캡처 03_guide_p2.png 교육창 2/4 페이지",
+  "[   7.20s] [3 교육 안내] 실제 클릭 (479,673) '다음 ▶' [Button]",
+  "[   7.99s] [3 교육 안내] 교육창 3/4 본문: '순서는 네 단계예요.\\n\\n① 요청 확인\\n② 배정 검토\\n③ 작업 시작\\n④ 시간 빨리감기'",
+  "[   8.12s] [3 교육 안내] 캡처 04_guide_p3.png 교육창 3/4 페이지",
+  "[   8.27s] [3 교육 안내] 실제 클릭 (479,673) '다음 ▶' [Button]",
+  "[   9.08s] [3 교육 안내] 교육창 4/4 본문: '화면 위쪽 목표 카드가 지금 할 일 하나만 알려 줘요.\\n\\n천천히 따라오세요.'",
+  "[   9.21s] [3 교육 안내] 캡처 05_guide_p4.png 교육창 4/4 페이지",
+  "[   9.21s] [3 교육 안내] CHECK PASS: 4쪽 본문이 데이터의 줄바꿈(\\n) 그대로 표시 [True, True, True, True]",
+  "[   9.21s] [3 교육 안내] CHECK PASS: 긴 줄 없음(교육창 본문 한 줄 최대 40자 이하) 최대 33자",
+  "[   9.38s] [3 교육 안내] 실제 클릭 (494,673) '첫 업무 시작' [Button]",
+  "[  10.77s] [3 교육 안내] CHECK PASS: 교육창 종료 후 STEP 2/5(요청 확인) ",
+  "[  10.81s] [4 요청 확인(기본 창)] 강조 대상 {'path': '.!frame3.!frame.!frame.!actionbutton', 'class': 'Button', 'text': '요청 확인', 'x': 138, 'y': 583, 'w': 198, 'h': 38, 'state': 'normal', 'inside_top': True, 'clipped_text': False, 'covered': True, 'covered_by': '.!frame4.!label2', 'offscreen': False, 'top': '.', 'key': 'request', 'edges': 8}",
+  "[  10.81s] [4 요청 확인(기본 창)] CHECK PASS: 금색 강조 대상 하나(테두리 8개 = 버튼 1개) key=request edges=8",
+  "[  10.81s] [4 요청 확인(기본 창)] CHECK FAIL: 강조된 [요청 확인] 버튼이 실제로 보이고 클릭 가능 중심점 위젯: .!frame4.!label2",
+  "[  10.93s] [4 요청 확인(기본 창)] 캡처 06_step2_default_window.png 기본 1280x680 창: 강조 테두리 안의 [요청 확인]이 요청 상세 패널에 가려짐",
+  "[  11.08s] [4 요청 확인(기본 창)] 실제 클릭 (237,602) '요청 확인' [Button]",
+  "[  12.29s] [4 요청 확인(기본 창)] CHECK PASS: 가려진 버튼 위치 실제 클릭 시 요청이 열리지 않음(재현) 단계 그대로 request, 요청창 없음",
+  "[  12.29s] [4 요청 확인(기본 창)] 사용자 행동처럼 관제실 창을 최대화합니다.",
+  "[  12.48s] [4 요청 확인(기본 창)] 실제 클릭 (1324,119) '창 최대화(제목 표시줄)' [caption]",
+  "[  13.88s] [4 요청 확인(기본 창)] CHECK PASS: 최대화 후 [요청 확인] 버튼이 보이고 클릭 가능 ",
+  "[  13.94s] [4 요청 확인] CHECK FAIL: 최대화 관제실의 버튼·글자 가려짐/잘림/작업 영역 밖 2건 [{'window': '서버실 생존기 v0.9-4b | 울산 AI 데이터센터 관제실', 'text': '튜토리얼 — 관제실 첫걸음 · 미션에 따라 요청 접수', 'class': 'Label', 'flags': ['covered'], 'covered_by': '.!frame4.!label'}, {'window': '서버실 생존기 v0.9-4b | 울산 AI 데이터센터 관제실', 'text': '운영 작업 · 진행률', 'class': 'Label', 'flags': ['covered'], 'covered_by': '.!frame4.!label2'}]",
+  "[  14.10s] [4 요청 확인] 실제 클릭 (125,490) '요청 확인' [Button]",
+  "[  16.03s] [4 요청 확인] CHECK FAIL: 고객 요청서가 관제실 중앙(±8px) 중심 차이 (0, 110) · 게임 기록 offset (0, 110) target (328, 199) actual (328, 199)",
+  "[  16.10s] [4 요청 확인] 요청 사실 {'gpu': 7, 'power': 7, 'due': '입문 · 짧은 모델 학습 · 접수 D1 09:00 · 대기 0분\\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 180분', 'avail': (10, 10)}",
+  "[  16.10s] [4 요청 확인] CHECK PASS: 요청서 GPU/전력 요구량이 실제 요청(고성능 모드)과 일치 GPU 7 / 전력 7",
+  "[  16.10s] [4 요청 확인] CHECK PASS: 요청서의 현재 가용량이 실제 서버 가용량과 일치 가용 (10, 10)",
+  "[  16.14s] [4 요청 확인] CHECK FAIL: 고객 요청서 창 안 버튼·글자 잘림/작업 영역 밖 없음 [{'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '◀ 이전', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}, {'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '확인 · 운영실로', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}, {'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '전체 보기', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}, {'window': 'AIDC LINK | Merlion AI · 싱가포르', 'text': '건너뛰기', 'class': 'Button', 'flags': ['offscreen'], 'covered_by': ''}]",
+  "[  16.30s] [4 요청 확인] 캡처 07_request.png 고객 요청서(AIDC LINK) — 하단 버튼이 작업 표시줄 아래로 밀림",
+  "[  16.33s] [4 요청 확인] [확인 · 운영실로]가 작업 영역 밖이므로 제목 표시줄 [X]로 닫습니다(사용자 대체 행동).",
+  "[  16.52s] [4 요청 확인] 실제 클릭 (1186,183) '[X] AIDC LINK |' [caption]",
+  "[  17.96s] [4 요청 확인] CHECK PASS: [X]로 닫아도 요청 열람 기록 유지 ",
+  "[  17.99s] [4 요청 확인] CHECK PASS: 요청 열람 후 STEP 3/5(배정 검토) ",
+  "[  18.06s] [5 배정 검토] 목표 카드 \"[배정 설정·선택]에서 운영 모드와 배정안을 고르세요\" / 금색 강조 ('preview', '.!frame3.!serverpanel')",
+  "[  18.06s] [5 배정 검토] CHECK FAIL: 목표 카드 안내 버튼과 금색 강조 대상이 같은 위젯 목표 카드: [배정 설정·선택]에서 운영 모드와 배정안을 고르세요 / 강조: key=preview (.!frame3.!serverpanel)",
+  "[  18.20s] [5 배정 검토] 캡처 08_step3_goal_vs_highlight.png STEP 3: 목표 카드는 [배정 설정·선택], 금색 강조는 Inspector [배정 미리보기] 탭",
+  "[  18.42s] [5 배정 검토] 실제 클릭 (160,675) '배정 설정·선택' [Button]",
+  "[  20.39s] [5 배정 검토] CHECK PASS: 배정 설정창이 관제실 중앙(±8px) 중심 차이 (0, -6)",
+  "[  20.43s] [5 배정 검토] CHECK PASS: 배정안 선택 전 [작업 시작] 비활성 ",
+  "[  20.43s] [5 배정 검토] CHECK PASS: 배정안 카드 3개 표시 ",
+  "[  20.43s] [5 배정 검토] CHECK PASS: [작업 시작]·[닫기] 하단 버튼이 창 안·작업 영역 안 ",
+  "[  20.46s] [5 배정 검토] CHECK PASS: 배정창 금색 강조 대상 하나(배정안 1) edges=8",
+  "[  20.61s] [5 배정 검토] 캡처 09_allocation.png 배정 설정창(운영 모드 카드·배정안 3개)",
+  "[  20.78s] [5 배정 검토] 실제 클릭 (413,358) '배정안 1 (추천) · 클릭하여 선택' [Radiobutton]",
+  "[  22.23s] [5 배정 검토] CHECK PASS: 배정안 선택만으로는 자원 미점유 (10, 10) → (10, 10)",
+  "[  22.31s] [5 배정 검토] CHECK PASS: 배정안 선택 후 STEP 4/5·[작업 시작] 활성·강조 이동 ",
+  "[  22.46s] [5 배정 검토] 캡처 10_plan_selected.png 배정안 1 선택 · 시작 요약 · [작업 시작] 강조",
+  "[  22.65s] [6 작업 시작] 실제 클릭 (1068,748) '선택한 계획으로 작업 시작' [Button]",
+  "[  24.35s] [6 작업 시작] 시작 후 상태 {'phase': 'running', 'progress': 0.0, 'avail': (3, 3), 'center': (3, 3), 'ledger': [('A', 4, 4), ('B', 2, 2), ('C', 1, 1)], 'step': 'time'}",
+  "[  24.35s] [6 작업 시작] CHECK PASS: 작업 실행 중(running)·진행률 0% ",
+  "[  24.35s] [6 작업 시작] CHECK PASS: GPU 7·전력 7 점유 반영(가용 3/3, 서버 원장·전체 HUD 일치) ",
+  "[  24.35s] [6 작업 시작] CHECK PASS: 서버 원장이 선택한 배정안 1(A 4/4, B 2/2, C 1/1)과 일치 [('A', 4, 4), ('B', 2, 2), ('C', 1, 1)]",
+  "[  24.40s] [6 작업 시작] CHECK PASS: 상단 HUD에 GPU 7/10 · 전력 7/10 표시 ",
+  "[  24.43s] [6 작업 시작] CHECK PASS: 시간 버튼 3개(+10/+30/+60분)가 각각 테두리 강조 {'key': 'time', 'parts': ['+10분', '+30분', '+60분'], 'edges': 24}",
+  "[  24.50s] [6 작업 시작] CHECK PASS: [시간 빨리감기] 라벨에는 테두리 없음 ",
+  "[  24.65s] [6 작업 시작] 캡처 11_running_time_highlight.png 작업 진행 중 관제실 · 시간 버튼 3개 금색 테두리",
+  "[  24.84s] [7 시간 빨리감기] 실제 클릭 (193,734) '+10분' [Button]",
+  "[  27.18s] [7 시간 빨리감기] 연속 캡처 27장, 흰 비율 시작 0.017 / 최대 0.028 (t=25.281)",
+  "[  27.28s] [7 시간 빨리감기] CHECK PASS: 시간 진행 직후 흰 창 순간 표시 없음(창 등장 순간 캡처·연속 캡처) 창 등장 1건, 흰 창 후보 0건, 등장 후 이동 0건, 연속 캡처 최대 흰 비율 0.028 (기준 0.017)",
+  "[  27.31s] [7 시간 빨리감기] 완료 후 상태 {'phase': 'finished', 'succeeded': True, 'progress': 100, 'status': 'completed', 'avail': (10, 10), 'center': (10, 10), 'ledger': False, 'step': 'complete', 'clock': None, 'tutorial_completed': False}",
+  "[  27.31s] [7 시간 빨리감기] CHECK PASS: +10분 진행으로 진행률 0% → 100% 증가 100%",
+  "[  27.31s] [7 시간 빨리감기] CHECK PASS: 고객 업무 정상 완료(completed·성공) ",
+  "[  27.31s] [7 시간 빨리감기] CHECK PASS: 완료 후 자원 반환(가용 10/10, 원장에서 제거) ",
+  "[  27.31s] [7 시간 빨리감기] CHECK PASS: 튜토리얼 단계 complete ",
+  "[  27.42s] [8 결과창] CHECK PASS: 결과창이 관제실 중앙(±8px) 중심 차이 (0, 1)",
+  "[  27.48s] [8 결과창] CHECK PASS: 결과창 MISSION SUCCESS 표시 ",
+  "[  27.48s] [8 결과창] CHECK PASS: 결과창 점수·기한·반환 자원 = 100.0점 / 기한 내 완료 / GPU 7 · 전력 7 ",
+  "[  27.48s] [8 결과창] CHECK PASS: 결과창 버튼 2개([다시 학습]·[메인 메뉴]) ['다시 학습', '메인 메뉴']",
+  "[  27.55s] [8 결과창] CHECK PASS: 결과창 버튼·글자 잘림/가려짐 없음 []",
+  "[  27.55s] [8 결과창] 결과창 버튼 좌우 여백 304 / 304, 버튼 높이 [38, 51]",
+  "[  27.68s] [8 결과창] 캡처 12_result.png 튜토리얼 성공 결과창",
+  "[  27.86s] [9 메인 메뉴] 실제 클릭 (815,698) '메인 메뉴' [Button]",
+  "[  29.59s] [9 메인 메뉴] CHECK PASS: [메인 메뉴]로 같은 창에서 모드 선택 복귀 ",
+  "[  29.73s] [9 메인 메뉴] 캡처 13_back_to_menu.png 메인 메뉴 복귀"
+ ],
+ "preexisting_windows": 0
+}
