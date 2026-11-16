@@ -1717,7 +1717,9 @@ class ModeSelection:
             buttons = self.menu_buttons[category] = {}
             if category == 'story':
                 text = CHAPTERS[1].heading+'\n'+CHAPTERS[1].intro
-                label(panel, text, 11, TEXT, wraplength=730, justify='left').pack(anchor='w', pady=(0, 10))
+                intro = label(panel, text, 11, TEXT, justify='left')
+                intro.pack(fill='x', pady=(0, 10))
+                intro.bind('<Configure>', lambda event: event.widget.configure(wraplength=max(1, event.width-4)))
                 buttons['new'] = ActionButton(panel, '새 도전 시작 · '+CHAPTERS[1].heading, self.new_story)
                 buttons['new'].pack(fill='x')
                 buttons['chapters'] = ActionButton(panel, '장 선택 · 저장된 시작 지점', self.show_chapter_menu)
