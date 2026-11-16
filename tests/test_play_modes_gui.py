@@ -45,6 +45,11 @@ class PlayModesGuiTests(unittest.TestCase):
         self.assertEqual(self.errors, [])
 
     def test_all_menu_buttons_fit_three_resolutions(self):
+        from session import GameSession
+        for mode, chapter in (('story', 1), ('tutorial', 1), ('story', 'lab')):
+            db = self.factory(self.slots.reserve_new())
+            GameSession(db, mode=mode, start_chapter=chapter)
+            db.close()
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
             for category in ('tutorial', 'story', 'practice'):
                 self.root.geometry(f'{width}x{height}')

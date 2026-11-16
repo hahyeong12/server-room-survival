@@ -1523,7 +1523,7 @@ class ModeSelection:
         reset_hardware(icon)
         gpu_module(icon, 6, 6, 64, 27, 'available')
         label(title, 'AIDC Simulator', 30, CYAN, True).pack(side='left')
-        label(self.content, '울산 AI 데이터센터 운영 시뮬레이션', 14, MUTED).pack(anchor='w', pady=(8, 28))
+        label(self.content, '울산 AI 데이터센터 운영 시뮬레이션', 14, MUTED).pack(anchor='w', pady=(8, 12))
         self.menu_body = tk.Frame(self.content, bg=BG)
         self.menu_body.pack(fill='x')
         self.mode_panel = tk.Frame(self.menu_body, bg=BG)

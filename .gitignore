@@ -20,6 +20,7 @@ artifacts/*.log
 artifacts/*.py
 artifacts/*.zip
 artifacts/baseline-source/
+artifacts/v0.9-4b/
 
 # 재생성 가능한 UX 검증 캡처. README에서 사용하는 대표 이미지 네 개만 보관합니다.
 artifacts/v0.9-1d/*.png
