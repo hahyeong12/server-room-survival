@@ -22,7 +22,7 @@ from result_summary import free_result_lines
 from aidc.ui.result_presentation import failure_explanation
 from aidc.ui.ui_kit import PrimaryButton, StatusChip
 from aidc.ui.goal_card import GoalCard
-from aidc.ui.window_placement import center_dialog
+from aidc.ui.window_placement import center_dialog, fit_main_window
 from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
 from request_summary import request_summary
@@ -31,6 +31,7 @@ from ui import (BG, PANEL, BORDER, TEXT, MUTED, CYAN, GREEN, RED, AMBER, FONT,
                 TextDialog, label, request_status_of, status_of)
 
 
+MAIN_WINDOW_SIZE = (1280, 860)  # 원하는 관제실 크기. 작업 영역이 작으면 그 안으로 줄입니다(125% 노트북: 약 1504x768).
 TIME_BUTTON_GAP = 12  # 교육 강조 테두리(바깥 3px x 2)보다 넓어야 버튼 사이가 비어 보입니다.
 
 
@@ -55,7 +56,8 @@ class SimulatorApp:
         self.root = root
         self.db_factory, self.closed, self.transitioning = db_factory, False, False
         root.title(f'{APP_NAME} {VERSION} | 울산 AI 데이터센터 관제실')
-        root.geometry(f'{min(1280, root.winfo_screenwidth()-40)}x{min(680, root.winfo_screenheight()-100)}')
+        # 작업 영역(작업 표시줄 제외) 안에서 가능한 큰 창으로 배치합니다. 사용자가 최대화한 창은 그대로 둡니다(Q-01·Q-07).
+        fit_main_window(root, MAIN_WINDOW_SIZE)
         root.minsize(1000, 650)
         root.configure(bg=BG)
         self.db = db if db is not None else Database(
@@ -1617,7 +1619,7 @@ class ModeSelection:
         root.protocol('WM_DELETE_WINDOW', root.destroy)
         root.title(f'{APP_NAME} {VERSION} | 모드 선택')
         if root.winfo_width() <= 1:
-            root.geometry('1000x650')
+            fit_main_window(root, (1000, 650))  # 첫 실행 창도 작업 표시줄 아래로 내려가지 않게 합니다(Q-07).
         root.minsize(1000, 650)
         root.configure(bg=BG)
         self.frame = tk.Frame(root, bg=BG)

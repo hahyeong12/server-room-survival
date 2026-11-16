@@ -42,12 +42,49 @@ def centered_bounds(parent_bounds, area, size, margin=12, decoration=(16, 40)):
 
 
 def frame_offset(dialog, parent):
-    """창틀(제목줄·테두리) 바깥 좌표와 클라이언트 좌표의 차이. 숨긴(withdraw) 창은 아직 틀 정보가 없어 0으로 나오므로,
-    같은 방식으로 꾸며진 부모 창의 차이를 대신 씁니다(대화창이 제목줄 높이만큼 아래로 치우치는 것을 막음)."""
-    dx, dy = dialog.winfo_rootx()-dialog.winfo_x(), dialog.winfo_rooty()-dialog.winfo_y()
-    if (dx, dy) == (0, 0) and not dialog.winfo_viewable():
+    """창틀(제목줄·테두리) 바깥 좌표와 클라이언트 좌표의 차이.
+
+    숨긴(withdraw) 창은 창틀 정보가 없습니다. 이때 winfo_x/y는 (0, 0)이지만 winfo_rootx/rooty에는 Windows가 정한
+    기본(계단식) 위치가 들어 있어, 둘의 차이를 창틀로 쓰면 (164, 187) 같은 엉뚱한 값이 됩니다(QA tutorial-001 Q-02).
+    그래서 숨긴 창은 항상 같은 방식으로 꾸며진 부모 창의 차이를 씁니다."""
+    if dialog.winfo_viewable():
+        dx, dy = dialog.winfo_rootx()-dialog.winfo_x(), dialog.winfo_rooty()-dialog.winfo_y()
+    else:
         dx, dy = parent.winfo_rootx()-parent.winfo_x(), parent.winfo_rooty()-parent.winfo_y()
     return max(0, dx), max(0, dy)
+
+
+def overflow_shift(client, size, area, frame_bottom=8, margin=4):
+    """표시된 창이 작업 영역 아래/위로 넘친 만큼 옮길 세로 거리(순수 함수, 0이면 안쪽).
+    client=(x, y) 클라이언트 왼쪽 위, size=(w, h) 클라이언트 크기, area=(left, top, right, bottom)."""
+    bottom = client[1]+size[1]+frame_bottom
+    if bottom > area[3]-margin:
+        return max(area[1]+margin-client[1], area[3]-margin-bottom)
+    return 0
+
+
+def main_window_bounds(area, size, frame=(16, 39), margin=8):
+    """메인 창(관제실·모드 선택)의 클라이언트 크기와 창틀 위치를 작업 영역 안에서 계산합니다(순수 함수).
+    frame=(좌우 창틀 합, 제목줄+아래 창틀). 반환 (width, height, x, y)이며 x, y는 Tk geometry의 창틀 좌표입니다.
+    작업 표시줄 아래로 창이 내려가지 않게 하고(Q-07), 화면이 크면 원하는 크기를 유지합니다."""
+    left, top, right, bottom = area
+    width = max(1, min(size[0], right-left-frame[0]-2*margin))
+    height = max(1, min(size[1], bottom-top-frame[1]-2*margin))
+    x = left+max(0, (right-left-width-frame[0])//2)
+    y = top+max(0, (bottom-top-height-frame[1])//2)
+    return width, height, x, y
+
+
+def fit_main_window(root, size):
+    """메인 창을 작업 영역 안에 놓습니다. 사용자가 최대화한 창은 그대로 둡니다."""
+    try:
+        if root.state() == 'zoomed':
+            return None
+    except Exception:
+        pass
+    width, height, x, y = main_window_bounds(work_area(root), size)
+    root.geometry(f'{width}x{height}{x:+d}{y:+d}')
+    return width, height, x, y
 
 
 def corrected_outer(outer, target_client, actual_client, tolerance=1):
@@ -119,7 +156,15 @@ def center_dialog(dialog, parent, size=(820, 470), minimum=(740, 430)):
             _move_outer(dialog, *fixed)
             dialog.update_idletasks()
             actual = (dialog.winfo_rootx(), dialog.winfo_rooty())
+        # 마지막 안전장치: 실제 위치가 작업 영역(작업 표시줄 제외)을 벗어나면 안쪽으로 옮깁니다(하단 버튼 보호).
+        shift = overflow_shift(actual, (width, height), area)
+        if shift:
+            outer = (dialog.winfo_x(), dialog.winfo_y())
+            _move_outer(dialog, outer[0], outer[1]+shift)
+            dialog.update_idletasks()
+            actual = (dialog.winfo_rootx(), dialog.winfo_rooty())
         dialog.placement = placement_record(bounds, (width, height), target, actual)
+        dialog.placement['inside_work_area'] = overflow_shift(actual, (width, height), area) == 0
         if os.environ.get('SRS_PLACEMENT_LOG') == '1':
             print('[placement]', dialog.title(), dialog.placement, flush=True)
     except Exception:  # 측정 실패는 배치 자체를 막지 않습니다.
