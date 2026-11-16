@@ -203,11 +203,11 @@ class SimulatorApp:
         self.action_frame.grid(row=3, sticky='ew')
         tools = tk.Frame(self.root, bg=BG, padx=12)
         tools.grid(row=4, sticky='ew', pady=(0, 5))
-        label(tools, '가상 시간 진행', 10, CYAN, True).pack(side='left', padx=(0, 10))
         self.time_buttons = {}
-        # 교육에서는 세 시간 버튼을 하나의 대상으로 묶어 강조합니다.
-        self.time_group = tk.Frame(tools, bg=BG, highlightthickness=0)
+        # 라벨과 +10/+30/+60분을 하나의 [시간 빨리감기] 기능으로 묶어 교육에서도 그룹 단위로 강조합니다.
+        self.time_group = tk.Frame(tools, bg=BG, highlightthickness=0, padx=6, pady=3)
         self.time_group.pack(side='left')
+        label(self.time_group, '⏩ 시간 빨리감기', 10, CYAN, True).pack(side='left', padx=(0, 10))
         for minutes in (10, 30, 60):
             b = ActionButton(self.time_group, f'+{minutes}분', lambda m=minutes: self.advance_time(m))
             b.pack(side='left', padx=(0, 6))
@@ -580,7 +580,7 @@ class SimulatorApp:
                           'rejected':'고객 거절 · 기존 고성능 조건 유지'}[proposal['status']]
                 self.action_hint.configure(text=f'절약형 대안: {status}. 자원은 작업 시작 시 다시 확인합니다.')
         elif s.phase == 'running' and s.progress == 0:
-            self.action_hint.configure(text='자원 배정 완료 · 진행 0% · +10/+30/+60분을 누르면 모든 정상 작업이 함께 진행됩니다.')
+            self.action_hint.configure(text='자원 배정 완료 · 진행 0% · [시간 빨리감기]로 시간을 진행하면 모든 정상 작업이 함께 진행됩니다.')
         elif s.phase in ('incident','paused'):
             self.action_hint.configure(text=f'필요 네트워크 {s.network_needed} / 가용 {s.network_available} · 중단 {s.downtime}/60분 · 대응 {s.response_attempts}/3회 · 자원 점유 유지')
             locked = self.session.training_response_locked(self.session.current)
@@ -1070,7 +1070,7 @@ class SimulatorApp:
         return self.diagnosis_window
 
     def repair_faulted_server(self):
-        """장애가 난 서버의 장비 복구를 시작합니다(시간은 흐르지 않고, 시간 버튼으로 20분이 진행됩니다)."""
+        """장애가 난 서버의 장비 복구를 시작합니다(시간은 흐르지 않고, 시간 빨리감기로 20분이 진행됩니다)."""
         servers = self.session.hardware_servers(self.session.current)
         faulted = [key for key in servers if self.session.servers.hardware[key].state == 'FAULT']
         if not faulted:

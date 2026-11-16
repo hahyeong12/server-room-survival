@@ -88,6 +88,7 @@ class MessageDialog(tk.Toplevel):
     def __init__(self, parent, company, country, steps, animate=True, message_kind='업무 메시지', confirm=None,
                  history_hint='과거 내용은 운영실 [대화 기록]', summary=None, availability=None):
         super().__init__(parent, bg=BG)
+        self.withdraw()  # 내용을 모두 만든 뒤 center_dialog가 보여 줍니다(기본 위치의 빈 흰 창 점멸 방지).
         self.title(f'AIDC LINK | {company} · {country}')
         self.geometry('760x470')
         self.minsize(610, 390)

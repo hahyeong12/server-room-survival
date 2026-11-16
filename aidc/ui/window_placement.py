@@ -92,3 +92,4 @@ def place_near(dialog, parent, anchor, size=(390, 210), avoid=()):
         user.SetWindowPos.argtypes = [wintypes.HWND, wintypes.HWND, ctypes.c_int,
                                      ctypes.c_int, ctypes.c_int, ctypes.c_int, wintypes.UINT]
         user.SetWindowPos(user.GetParent(dialog.winfo_id()), None, x, y, 0, 0, 0x15)
+    dialog.deiconify()  # 위치를 정한 뒤에 한 번만 보여 줍니다.

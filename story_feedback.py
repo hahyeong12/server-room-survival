@@ -13,7 +13,7 @@ FEEDBACK = {
     'preview': ('배정 계획 확인 완료', '계획을 검토했네요. 아직 자원은 점유하지 않았습니다. 조건에 맞는 계획으로 실제 작업을 시작하세요.'),
     'allocation': ('작업 시작 완료', 'GPU가 실제로 배정됐네요. SG 표시와 전력 사용량을 확인해 보세요.'),
     'time': ('작업량 증가 확인', '작업 진행률이 증가했습니다. 예상 완료 시각과 고객 기한을 비교해 보세요.'),
-    'operations': ('운영 상태 확인 완료', '운영 정보를 확인했네요. 시간 버튼으로 첫 고객 업무를 정상 완료해 봅시다.'),
+    'operations': ('운영 상태 확인 완료', '운영 정보를 확인했네요. 시간 빨리감기로 첫 고객 업무를 정상 완료해 봅시다.'),
     'c2_briefing': ('브리핑 확인 완료', '좋아요. 이제 AIDC LINK에서 일본·미국 두 요청서를 하나씩 열어 GPU·전력·완료 기한을 비교해 보세요.'),
     'c2_requests': ('두 요청 확인 완료', '두 고객의 조건을 모두 읽었네요. 이제 서버별 가용량과 배정안을 비교해 보세요. 한 요청의 배정이 다른 요청에 주는 영향은 비교창에서 확인할 수 있어요.'),
     'c2_review': ('배정안 비교 완료', '두 요청의 배정안을 비교해 봤네요. 선택만으로는 자원을 점유하지 않습니다. 이제 직접 판단해 실제로 배정해 보세요.'),
@@ -25,6 +25,7 @@ FEEDBACK = {
 class StoryFeedbackDialog(tk.Toplevel):
     def __init__(self, parent, event, objective, anchor, avoid=()):
         super().__init__(parent, bg=BG)
+        self.withdraw()  # place_near가 위치를 정한 뒤 보여 줍니다(기본 위치의 빈 흰 창 점멸 방지).
         self.event = event
         title, text = FEEDBACK[event]
         self.title('FEEDBACK · '+title)

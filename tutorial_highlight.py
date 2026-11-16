@@ -3,7 +3,7 @@ import tkinter as tk
 
 GOLD, GOLD_DIM = '#ffe08a', '#d9ae54'
 TAB_KEYS = {'inspector': 0, 'preview': 1}
-POINTER_TEXT = {'time': '시간 버튼 중 하나를 클릭', 'work_complete': '시간 버튼 중 하나를 클릭'}
+POINTER_TEXT = {'time': '시간 빨리감기로 작업을 진행하세요', 'work_complete': '시간 빨리감기로 작업을 진행하세요'}
 
 
 def pointer_geometry(rect, container, size, gap=3):
@@ -108,7 +108,8 @@ class TutorialHighlight:
         elif self.key == 'inspector':
             self.target.book.select(self.target.inspector_frame)
         elif self.key in ('time', 'work_complete'):
-            self.target.winfo_children()[0].invoke()  # 묶음의 첫 버튼(+10분)과 같은 실제 동작
+            # 묶음 전체가 하나의 빨리감기 기능입니다. 안내를 눌렀을 때는 가장 짧은 +10분과 같은 실제 동작을 합니다.
+            next(w for w in self.target.winfo_children() if hasattr(w, 'invoke')).invoke()
         elif self.key == 'server':
             self.target.select('A')
         elif hasattr(self.target, 'invoke'):

@@ -264,7 +264,7 @@ class TutorialGuiTests(unittest.TestCase):
 
     def test_time_group_pointer_text_and_pointer_click_uses_real_button(self):
         self.running()
-        self.assertIn('시간 버튼', self.h.pointer.cget('text'))
+        self.assertIn('시간 빨리감기', self.h.pointer.cget('text'))
         self.h.activate(); self.root.update()
         self.assertGreater(self.app.state.work_done, 0)
 

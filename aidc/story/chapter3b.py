@@ -127,10 +127,10 @@ def card(kind, record, closed=False):
         if record.get('migrate_finish') is None:
             rows.insert(2, ('작업 이전', '불가능 · 정상 서버 자원 부족'))
             mentor = (f'{record["need_gpu"]}개 GPU가 필요하지만 정상 서버에는 {record["normal_gpu"]}개만 남아 있어 작업을 옮길 수 없습니다. '
-                      '시간 버튼을 눌러 복구를 진행하세요.')
+                      '시간 빨리감기를 눌러 복구를 진행하세요.')
         else:
             rows.append(('예상 완료', f'{game_time(record["repair_finish"])} · 기한 {game_time(record["due"])}'))
-            mentor = '장비 복구를 시작했습니다. 시간 버튼으로 20분이 지나면 기존 배정 그대로 작업이 재개됩니다.'
+            mentor = '장비 복구를 시작했습니다. 시간 빨리감기로 20분이 지나면 기존 배정 그대로 작업이 재개됩니다.'
         return {'kind': kind, 'title': '장비 복구 시작', 'tone': 'success', 'rows': rows, 'mentor': mentor}
     if kind == 'migrate':
         rows = [('장애 서버', server), ('선택 대응', '작업 이전'),

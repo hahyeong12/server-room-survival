@@ -1047,18 +1047,18 @@ class GameSession:
             run = self.runs[chapter3b.request_ids[1 if chapter3b.step == 'b_finish' else 0]]
             servers = self.hardware_servers(run)
             if servers and self.servers.hardware[servers[0]].state == 'REPAIRING':
-                return f'장비 복구 중({self.servers.hardware[servers[0]].repair_left}분 남음)입니다. 시간 버튼으로 진행하세요.'
+                return f'장비 복구 중({self.servers.hardware[servers[0]].repair_left}분 남음)입니다. 시간 빨리감기로 진행하세요.'
             if run.state.allocated and run.migration_left:
-                return f'작업 이전 준비 중({run.migration_left}분 남음)입니다. 시간 버튼으로 진행하세요.'
+                return f'작업 이전 준비 중({run.migration_left}분 남음)입니다. 시간 빨리감기로 진행하세요.'
             if run.state.allocated and not servers and chapter3b.records.get(str(run.request['id']), {}).get('choices'):
-                return '정상 실행 중입니다. 시간 버튼으로 남은 고객 작업을 끝까지 진행하세요.'
+                return '정상 실행 중입니다. 시간 빨리감기로 남은 고객 작업을 끝까지 진행하세요.'
         if chapter3 is not None and chapter3.step in ('a_finish', 'b_finish') and len(chapter3.request_ids) > (chapter3.step == 'b_finish'):
             run = self.runs[chapter3.request_ids[1 if chapter3.step == 'b_finish' else 0]]
             s = run.state
             if s.incident_kind and s.recovered_by and s.allocated:
                 if s.phase == 'recovering':
-                    return f'복구 준비({s.recovery_left}분 남음)를 확인하세요. 시간 버튼으로 진행하거나 다른 업무를 처리해도 됩니다.'
-                return '정상 실행 중입니다. 시간 버튼으로 남은 고객 작업을 끝까지 진행하세요.'
+                    return f'복구 준비({s.recovery_left}분 남음)를 확인하세요. 시간 빨리감기로 진행하거나 다른 업무를 처리해도 됩니다.'
+                return '정상 실행 중입니다. 시간 빨리감기로 남은 고객 작업을 끝까지 진행하세요.'
         return story.objective if story else ''
 
     def mark_chapter3_feedback_seen(self, key):
@@ -1510,7 +1510,7 @@ class GameSession:
                           f'관제실 AIDC LINK에서 연수 요청 #{t.rid}를 확인하고 배정하세요. '
                           'Lab에서 보는 것만으로는 배정·시간 진행이 일어나지 않습니다.', 'control')
         return result('waiting', False, '작업 진행 중', '작업 진행 중 · 장애 발생 후 진단을 시작합니다.',
-                      f'관제실의 시간 버튼으로 작업을 진행하세요(현재 {s.progress:.0f}%). 장애가 발생하면 {head} 과제가 열립니다.',
+                      f'관제실의 시간 빨리감기로 작업을 진행하세요(현재 {s.progress:.0f}%). 장애가 발생하면 {head} 과제가 열립니다.',
                       'control')
 
     def _training_incident_reason(self):
