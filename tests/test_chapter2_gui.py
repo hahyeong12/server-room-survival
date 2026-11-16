@@ -30,7 +30,7 @@ class Chapter2GuiTests(unittest.TestCase):
         self.assertTrue(story.chapter_completed)
         self.assertIsNone(self.app.chapter_window)
         self.assertTrue(self.app.story_window.winfo_exists())
-        self.assertIn('Chapter 2', self.app.story_objective.cget('text'))
+        self.assertIn('제2장', self.app.story_objective.cget('text'))
         self.assertEqual(self.app.session.center.gpu_used, 0)
         self.assertEqual(self.errors, [])
 
@@ -79,7 +79,9 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
 
     def test_story_menu_offers_chapter_one_chapter_two_and_continue(self):
         self.selector.show_story_menu(); self.root.update()
-        self.assertEqual({'new', 'chapter2', 'chapter3', 'continue', 'continue3', 'back'}, set(self.selector.story_buttons))
+        self.assertEqual({'new', 'continue', 'back'}, set(self.selector.story_buttons))
+        self.selector.show_practice_menu(); self.root.update()
+        self.assertTrue({'chapter2', 'chapter3', 'chapter3b', 'lab'} <= set(self.selector.practice_buttons))
 
     def test_new_chapter_two_practice_starts_clean_in_a_new_slot(self):
         app = self.selector.new_story(2); self.root.update()
@@ -89,7 +91,7 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
         self.assertFalse(story.chapter_completed)
         self.assertEqual(len(app.session.runs), 2)
         self.assertEqual(app.session.minute, 540)
-        self.assertIn('Chapter 2', app.story_objective.cget('text'))
+        self.assertIn('제2장', app.story_objective.cget('text'))
         self.assertTrue(app.story_window.winfo_exists())      # 브리핑
         self.assertFalse(app.story_skip_button.winfo_ismapped())
         # v0.9-2a-4: 브리핑 마지막 장에 두 고객 비교표(실제 엔진 값)가 붙습니다. 작성만 했으며 아직 실행하지 않았습니다.

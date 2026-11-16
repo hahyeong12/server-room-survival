@@ -13,6 +13,13 @@ aidc_story.db.lock
 aidc_story_slot_*.db
 aidc_story_slot_*.db-*
 aidc_story_slot_*.db.lock
+aidc_checkpoint_*.db*
+
+# 로컬 회귀 검증 로그·일회성 스크립트·최초 커밋 복사본
+artifacts/*.log
+artifacts/*.py
+artifacts/*.zip
+artifacts/baseline-source/
 
 # 재생성 가능한 UX 검증 캡처. README에서 사용하는 대표 이미지 네 개만 보관합니다.
 artifacts/v0.9-1d/*.png

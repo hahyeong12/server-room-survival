@@ -667,7 +667,7 @@ class UnlockAndRetryTests(unittest.TestCase):
         s.view_network_diagnosis(a); s.respond('compress')
         s.close()
         digest = hashlib.sha256(first.read_bytes()).hexdigest()
-        self.assertIn('Chapter 3 연습 진행 중', slots.describe(first))
+        self.assertIn('제3장 — 끊어진 연결 · 연습 · 진행 중', slots.describe(first))
         self.assertEqual(slots.chapter3_in_progress(), [first])
         second = slots.reserve_new()
         self.assertNotEqual(first, second)

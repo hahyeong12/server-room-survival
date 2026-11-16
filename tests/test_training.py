@@ -556,7 +556,8 @@ class StorylineAndWiringTests(unittest.TestCase):
         main = (root / 'main.py').read_text(encoding='utf-8')
         self.assertIn("start_next=self.begin_training if not self.session.training_unlock_reason() else None", main)
         self.assertIn("self.session.training_response_locked(self.session.current)", main)
-        self.assertIn("lambda:self.new_story('lab')", main)
+        self.assertIn("('lab', 'lab')", main)
+        self.assertIn("self.practice_buttons = self.menu_buttons['practice']", main)
         self.assertIn("chapter in (2, 3, '3b', 'lab')", main)
         self.assertIn("and r['id'] in self.session.story.chapter3.request_ids", main)   # 연수 사건에는 3a 진단창을 쓰지 않음
         lab = (root / 'engineering_lab.py').read_text(encoding='utf-8')

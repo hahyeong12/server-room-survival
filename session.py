@@ -53,19 +53,19 @@ class GameSession:
         self.servers = ServerPool()
         self.missions = {m['id']:m for m in db.get_missions()}
         saved = db.get_simulation()
-        if mode not in ('free', 'story'):
+        if mode not in ('free', 'story', 'tutorial'):
             raise ValueError('존재하지 않는 게임 모드입니다.')
         if start_chapter not in (1, 2, 3, '3b', 'lab') or (start_chapter in (2, 3, '3b', 'lab') and (mode != 'story' or saved)):
             raise ValueError('Chapter 2/3 연습은 비어 있는 새 스토리 슬롯에서만 시작할 수 있습니다.')
         if saved and saved.get('mode', 'free') != mode:
             raise ValueError('선택한 모드와 저장 파일이 다릅니다. 모드별 저장 파일을 사용해 주세요.')
-        if mode == 'story' and not saved and db.get_requests():
+        if mode in ('story', 'tutorial') and not saved and db.get_requests():
             raise ValueError('기존 자유 운영 요청을 스토리로 변경할 수 없습니다.')
         self.mode = mode
-        if saved and mode == 'story' and not isinstance(saved.get('story'), dict):
+        if saved and mode in ('story', 'tutorial') and not isinstance(saved.get('story'), dict):
             raise ValueError('저장된 스토리 진행 기록을 찾을 수 없습니다.')
         self.story = None
-        if mode == 'story' and not saved:
+        if mode in ('story', 'tutorial') and not saved:
             self.story = StoryProgress(practice=start_chapter in (2, 3, '3b', 'lab'),
                                        practice_chapter=start_chapter if start_chapter in (3, '3b', 'lab') else 2)
         self.minute = saved['minute'] if saved else 540
@@ -78,9 +78,12 @@ class GameSession:
         self.selected_id = None
         for request in db.get_requests():
             self.runs[request['id']] = self._load_run(request)
+        if mode == 'tutorial' and saved and (saved['story'].get('practice') or any(
+                key in saved['story'] for key in ('chapter2', 'chapter3', 'chapter3b', 'training'))):
+            raise ValueError('튜토리얼에는 제1장 기본 교육만 저장할 수 있습니다.')
         if mode == 'story' and saved and saved['story'].get('practice') is True:
             self.story = StoryProgress.from_payload(saved['story'], None, False)
-        elif mode == 'story' and saved:
+        elif mode in ('story', 'tutorial') and saved:
             rid = saved['story'].get('request_id')
             if type(rid) is not int or rid not in self.runs:
                 raise ValueError('스토리의 첫 고객 요청을 찾을 수 없습니다.')
@@ -360,6 +363,8 @@ class GameSession:
 
     def start_chapter2(self):
         """Chapter 1을 정상 완료한 스토리에서만 일본·미국 요청을 접수합니다. 기존 기록은 변경하지 않습니다."""
+        if self.mode == 'tutorial':
+            raise ValueError('튜토리얼 결과는 본편 진행에 사용하지 않습니다. 스토리 도전에서 새로 시작해 주세요.')
         if not self.story or not self.story.chapter_completed:
             raise ValueError('Chapter 1을 정상 완료한 뒤 Chapter 2를 시작할 수 있습니다.')
         if self.story.chapter2 is not None:

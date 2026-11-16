@@ -433,7 +433,7 @@ class PersistenceAndCompatibilityTests(unittest.TestCase):
         s = practice3b(open_db(self, first))
         a = start_job(s); to_fault(s, a)
         s.close()
-        self.assertIn('Chapter 3b 연습 진행 중', slots.describe(first))
+        self.assertIn('제4장 — 서버실의 경보 · 연습 · 진행 중', slots.describe(first))
         self.assertEqual(slots.chapter3b_in_progress(), [first])
         second = slots.reserve_new()
         self.assertNotEqual(first, second)

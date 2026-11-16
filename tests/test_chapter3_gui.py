@@ -31,8 +31,10 @@ class Chapter3MenuGuiTests(unittest.TestCase):
 
     def test_story_menu_offers_chapter_three_start_and_resume(self):
         self.selector.show_story_menu(); self.root.update()
-        self.assertEqual({'new', 'chapter2', 'chapter3', 'continue', 'continue3', 'back'}, set(self.selector.story_buttons))
-        self.assertEqual(str(self.selector.story_buttons['continue3'].cget('state')), 'disabled')   # 진행 중인 Chapter 3이 없음
+        self.assertEqual({'new', 'continue', 'back'}, set(self.selector.story_buttons))
+        self.selector.show_practice_menu(); self.root.update()
+        self.assertIn('chapter3', self.selector.practice_buttons)
+        self.assertEqual(str(self.selector.practice_buttons['continue'].cget('state')), 'disabled')
 
     def test_new_chapter_three_practice_starts_in_a_new_clean_slot(self):
         app = self.selector.new_story(3); self.root.update()
@@ -43,7 +45,7 @@ class Chapter3MenuGuiTests(unittest.TestCase):
         self.assertFalse(story.chapter_completed)
         self.assertEqual(len(app.session.runs), 1)
         self.assertEqual(app.session.center.gpu_used, 0)
-        self.assertIn('Chapter 3', app.story_objective.cget('text'))
+        self.assertIn('제3장', app.story_objective.cget('text'))
         self.assertTrue(app.story_window.winfo_exists())                    # 선배 브리핑
 
 
@@ -192,7 +194,7 @@ class Chapter3bGuiTests(unittest.TestCase):
         dismiss_story_popups(self.app, self.root)
 
     def test_title_names_chapter_3b_and_fault_button_is_disabled(self):
-        self.assertIn('Chapter 3b', self.app.story_window.title())
+        self.assertIn('제4장', self.app.story_window.title())
         self.assertEqual(str(self.app.resources.fault_button.cget('state')), 'disabled')
 
     def test_repair_and_migrate_are_locked_until_the_hardware_diagnosis_is_opened(self):
@@ -217,8 +219,8 @@ class Chapter3bGuiTests(unittest.TestCase):
         root = tk.Tk(); self.addCleanup(root.destroy)
         folder = tempfile.TemporaryDirectory(); self.addCleanup(folder.cleanup)
         menu = ModeSelection(root, db_factory=lambda path: Database(':memory:'), story_slots=StorySlots(folder.name))
-        menu.show_story_menu(); root.update()
-        self.assertTrue({'chapter3b', 'continue3b'} <= set(menu.story_buttons))
+        menu.show_practice_menu(); root.update()
+        self.assertIn('chapter3b', menu.practice_buttons)
 
 
 class Chapter3FailureCardGuiTests(unittest.TestCase):

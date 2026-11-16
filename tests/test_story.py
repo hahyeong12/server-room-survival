@@ -551,7 +551,8 @@ class ModeSelectionTests(unittest.TestCase):
         s = GameSession(db, incident_chance=0, seed=9)
         s.choose_plan('performance'); s.advance_time(10); s.save()
         self.selector.db_factory = lambda path:self.paths.append(path) or db
-        self.selector.buttons['free'].invoke(); self.root.update()
+        self.selector.buttons['practice'].invoke(); self.root.update()
+        self.selector.practice_buttons['free'].invoke(); self.root.update()
         self.addCleanup(self.selector.app.network.stop)
         self.assertEqual(self.paths, [DB_PATH])
         self.assertEqual(self.selector.app.session.minute, 550)

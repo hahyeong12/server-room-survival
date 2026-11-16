@@ -113,7 +113,9 @@ class EngineeringLabDialog(tk.Toplevel):
         info.columnconfigure(0, weight=1)
         text = ('관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.'
                 if self.training_mode else
-                '관찰 미리보기입니다. 명령어 학습과 가상 터미널은 심화 연수에서 열리며, 자유 체험은 스토리 메뉴의 [Engineering Lab 연습]을 이용하세요.')
+                '관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.')
+        if self.training_mode:
+            text = 'Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n'+text
         self.readonly_label = label(info, text, 9, MUTED, anchor='w', justify='left', wraplength=760)
         self.readonly_label.grid(row=0, column=0, sticky='w')
         ActionButton(info, '새로고침', self.refresh).grid(row=0, column=1, padx=(8, 6))

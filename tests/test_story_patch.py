@@ -367,8 +367,8 @@ class PatchGuiTests(unittest.TestCase):
         self.complete()
         status = self.app.show_story_status()
         text = status.text.get('1.0', 'end')
-        self.assertIn('Chapter 1 · 완료', text)
-        self.assertIn('Chapter 2 · 시작 가능', text)
+        self.assertIn('제1장 — 첫 출근 · 클리어', text)
+        self.assertIn('제2장 — 한정된 자원 · 시작 가능', text)
         self.assertEqual(set(self.app.chapter_window.buttons), {'modes', 'free', 'status', 'review', 'chapter2'})
 
     def test_completion_return_to_selection_closes_database_and_timer(self):

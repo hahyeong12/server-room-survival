@@ -15,6 +15,8 @@ from engineering_lab import EngineeringLabDialog, TrainingResultDialog
 from aidc.learning.lab_model import diagnosis_lab_target, lab_support
 from story_dialog import StoryDialogueDialog, StoryReviewDialog
 from aidc.storage.story_slots import StorySlots
+from aidc.storage.checkpoints import capture, restore, checkpoint_path
+from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload, heading, chapter_state, STATE_LABELS
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
 from version import VERSION
@@ -26,14 +28,16 @@ from ui import (BG, PANEL, BORDER, TEXT, MUTED, CYAN, GREEN, RED, AMBER, FONT,
 
 
 class SimulatorApp:
-    def __init__(self, root, db=None, db_factory=Database, story_slots=None, **session_options):
+    def __init__(self, root, db=None, db_factory=Database, story_slots=None, checkpoint_start=False, **session_options):
         self.root = root
         self.db_factory, self.closed, self.transitioning = db_factory, False, False
         root.title(f'AIDC Simulator {VERSION} | 울산 AI 데이터센터 관제실')
         root.geometry(f'{min(1280, root.winfo_screenwidth()-40)}x{min(680, root.winfo_screenheight()-100)}')
         root.minsize(1000, 650)
         root.configure(bg=BG)
-        self.db = db if db is not None else Database(STORY_DB_PATH if session_options.get('mode') == 'story' else DB_PATH)
+        self.db = db if db is not None else Database(
+            (story_slots or StorySlots()).reserve_new() if session_options.get('mode') == 'tutorial' else
+            STORY_DB_PATH if session_options.get('mode') == 'story' else DB_PATH)
         self.story_slots = story_slots or StorySlots(self.db.path.parent if self.db.path else None)
         before = set(root.winfo_children())
         claimed = False
@@ -41,6 +45,8 @@ class SimulatorApp:
             self.db.claim_game()
             claimed = True
             self.session = GameSession(self.db, **session_options)
+            if checkpoint_start:
+                capture(self.session)
             self.center = self.session.center
             self.message_window = None
             self.allocation_window = None
@@ -250,7 +256,7 @@ class SimulatorApp:
         self.preview_plan()
         if self.session.story:
             story = self.session.story
-            self.story_objective.configure(text=f'{story.chapter_label} · ACTION · 현재 목표: {self.session.story_objective()}')
+            self.story_objective.configure(text=f'{heading(self.session)} · 현재 목표: {self.session.story_objective()}')
             self.story_skip_button.configure(state='disabled' if story.tutorial_completed else 'normal')
             self.resource_confirm_button.configure(state='normal' if story.step == 'resources' else 'disabled')
             training = story.training
@@ -308,6 +314,9 @@ class SimulatorApp:
                 self.story_skip_button.grid_remove()
                 self.story_complete_button.configure(text=f'{story.chapter_label} 완료')
                 self.story_complete_button.grid(row=0, column=2)
+            elif story.mission_status == 'closed':
+                self.story_complete_button.configure(text='실패 결과·재도전', command=self.show_chapter_failure)
+                self.story_complete_button.grid(row=0, column=2)
             else:
                 self.story_complete_button.grid_remove()
         self.update_tutorial_highlight()
@@ -321,7 +330,7 @@ class SimulatorApp:
         story = self.session.story
         if (story and not self.closed and not self.transitioning
                 and self.story_objective.winfo_exists()):
-            self.story_objective.configure(text=f'{story.chapter_label} · {self.story_phase} · 현재 목표: {self.session.story_objective()}')
+            self.story_objective.configure(text=f'{heading(self.session)} · {self.story_phase} · 현재 목표: {self.session.story_objective()}')
         if getattr(self, 'highlight_deferred', False):
             # 단계가 바뀐 직후에는 피드백/교육창이 먼저 열리므로, 다음 대상 강조를 그 뒤로 미룹니다(순간 점멸 방지).
             highlight.clear()
@@ -491,7 +500,7 @@ class SimulatorApp:
         self.arrival_schedule.configure(text=f'다음 {self.session.next_arrival_label} · '
                                        f'{pending}/{MAX_PENDING_REQUESTS}'+(' 보류' if limit_note else ''))
         if self.session.story:
-            self.arrival_schedule.configure(text=f'{self.session.story.chapter_label} · 미션에 따라 요청 접수')
+            self.arrival_schedule.configure(text=f'{heading(self.session)} · 미션에 따라 요청 접수')
             story = self.session.story
             if story.step == 'request' and not story.request_read and not story.tutorial_completed:
                 target = self.session.runs[story.request_id]
@@ -500,7 +509,7 @@ class SimulatorApp:
                 self.arrival_open_button.configure(state='normal')
             if not incoming:
                 if self.arrival_request_id is None:
-                    self.arrival_notice.configure(text=f'{story.chapter_label} · 고객 업무', fg=MUTED)
+                    self.arrival_notice.configure(text=f'{heading(self.session)} · 고객 업무', fg=MUTED)
         faults = [r for r in active if r.state.phase in ('incident','paused')]
         self.alert.configure(text='! ' + ' · '.join(r.mission['country'] for r in faults)+' 장애 / 중단 · 대응을 선택하세요' if faults else '정상 작업은 시간 진행 버튼으로 함께 처리됩니다.')
         hardware = [key for key,value in self.session.servers.hardware.items() if value.state != 'HEALTHY']
@@ -709,6 +718,8 @@ class SimulatorApp:
                 return None
         if self.story_window is not None and self.story_window.winfo_exists():
             return self.story_window
+        if current_chapter(story).key == 1 and story.mission_status == 'closed':
+            return self.show_chapter_failure()
         if self.session.chapter2_failure_pending:
             return self.show_chapter2_failure()
         if story.chapter3b is not None and self.session.chapter3b_pending_feedback() is not None:
@@ -860,6 +871,8 @@ class SimulatorApp:
         story = self.session.story
         if not story:
             return None
+        if current_chapter(story).key == 1 and story.mission_status == 'closed':
+            return self.show_chapter_failure()
         if self.feedback_window is not None and self.feedback_window.winfo_exists():
             self.feedback_window.destroy()
         if self.story_window is not None and self.story_window.winfo_exists():
@@ -873,6 +886,9 @@ class SimulatorApp:
                     'c3b_briefing':('브리핑 확인', lambda:self.confirm_story_step(self.session.confirm_chapter3b_briefing))}
         confirm = confirms.get(story.ui_step) if not story.ui_done and not story.skipped else None
         pages = [line.page() for line in story.dialogue]
+        if story.ui_step in ('arrival', 'c2_briefing', 'c3_briefing', 'c3b_briefing', 't_structure') and pages:
+            speaker, text = pages[0]
+            pages[0] = speaker, current_chapter(story).intro+'\n\n'+text
         if story.step == 'operations' and not story.chapter_completed:
             run = self.session.runs[story.request_id]
             remaining = '\n'.join(f'Server {v["spec"].key}: GPU {v["gpu_available"]} · 전력 {v["power_available"]}'
@@ -886,7 +902,7 @@ class SimulatorApp:
             if comparison:
                 pages.append(Dialogue('system', '\n'.join(comparison)).page())
         self.story_window = self.build_popup(StoryDialogueDialog, self.root, pages, confirm=confirm,
-                                             chapter_label=story.chapter_label)
+                                             chapter_label=heading(self.session))
         self.story_window.bind('<Destroy>', self.tutorial_window_closed, add='+')
         try:
             self.session.mark_story_dialogue(story.dialogue_event)
@@ -918,40 +934,48 @@ class SimulatorApp:
 
     def show_story_status(self):
         story = self.session.story
+        state, reason = chapter_state(self.session)
+        lines = [heading(self.session), STATE_LABELS[state]+' · '+reason,
+                 current_chapter(story).intro,
+                 '튜토리얼·연습은 본편 진급 기록과 별개입니다.' if self.session.mode == 'tutorial' or story.practice
+                 else '각 장 시작 체크포인트는 재도전 시 새 슬롯으로 복원합니다.']
+        for key, field in ((1, 'chapter_completed'), (2, 'chapter2'), (3, 'chapter3'), ('3b', 'chapter3b'), ('lab', 'training')):
+            progress = getattr(story, field)
+            if key == 1:
+                note = '클리어' if progress else '미완료'
+            elif progress is None:
+                available = (self.session.mode == 'story' and (
+                    (key == 2 and story.chapter_completed) or
+                    (key == 3 and not self.session.chapter3_unlock_reason()) or
+                    (key == '3b' and not self.session.chapter3b_unlock_reason()) or
+                    (key == 'lab' and not self.session.training_unlock_reason())))
+                note = '시작 가능' if available else '아직 시작하지 않음'
+            else:
+                done = progress.done if key == 'lab' else progress.completed
+                note = '종료 · 결과 확인' if done else '진행 중'
+            lines.append(CHAPTERS[key].heading+' · '+note)
         if story.training is not None:
-            t = story.training
-            lines = [f'{"Engineering Lab 연습 (정규 기록 아님)" if t.practice else "심화 연수"} · 진행률 {t.completed_count} / 5']
-            status = self.session.training_status()
-            for item in status['stages']:
-                lines.append(f'Stage {item["no"]} {item["short"]} — {item["badge_text"]}')
-            lines.append(f'\n현재 목표: {status["headline"]["title"]}')
-            if not t.practice:
-                lines.append('\nChapter 1~3b 기초 운영 교육 기록은 그대로 보존됩니다.')
-            return TextDialog(self.root, '스토리 진행 현황', '\n'.join(lines))
-        if story.chapter3b is not None:
-            state = '진행 중' if story.chapter3b_active else '완료'
-            origin = ('Chapter 3a(네트워크 장애) 기록은 그대로 보존됩니다.' if story.chapter3 is not None
-                      else '독립 연습 슬롯입니다. 이전 Chapter를 완료한 기록은 없습니다.')
-            return TextDialog(self.root, '스토리 진행 현황',
-                              f'Chapter 3b · 서버 장비 장애 · {state}\n장비 복구와 작업 이전을 자원·시간으로 비교해 선택합니다.\n{origin}')
-        if story.chapter3 is not None:
-            state = '진행 중' if story.chapter3_active else '완료'
-            origin = ('Chapter 2 기록은 그대로 보존됩니다.' if story.chapter2 is not None
-                      else '독립 연습 슬롯입니다. Chapter 1·2를 완료한 기록은 없습니다.')
-            return TextDialog(self.root, '스토리 진행 현황',
-                              f'Chapter 3 · 네트워크 장애 진단과 대응 · {state}\n두 번의 장애를 진단하고 원인에 맞는 대응을 선택합니다.\n{origin}')
-        if story.chapter2 is not None:
-            chapter2 = '진행 중' if story.chapter2_active else '완료'
-            tail = f'\n\nChapter 2 · 여러 고객 요청과 서버 배정 · {chapter2}\n두 요청의 확인·비교·배정·진행·종료 단계로 진행합니다.'
-        elif story.chapter_completed:
-            tail = '\n\nChapter 2 · 시작 가능\nChapter 1 완료 화면의 [Chapter 2 시작]으로 시작할 수 있습니다. Chapter 3은 Chapter 2 성공 후 이어서 시작하거나 모드 선택에서 독립 연습으로 시작할 수 있습니다.'
-        else:
-            tail = '\n\nChapter 2 · Chapter 1 완료 후 시작 가능\nChapter 3은 Chapter 2 성공 후 또는 독립 연습으로 시작할 수 있습니다.'
-        text = ('Chapter 1 · '+('완료' if story.chapter_completed else '진행 중')
-                + '\n튜토리얼 안내: '+('완료' if story.tutorial_completed else '진행 중')
-                + '\n첫 고객 업무: '+('정상 완료' if story.first_work_completed else '미완료')
-                + tail)
-        return TextDialog(self.root, '스토리 진행 현황', text)
+            lines.append('\nLab 학습 과제 1~5 (Stage)는 본편의 장 번호와 별개입니다.')
+            lines.extend(f'학습 과제 {item["no"]} · {item["short"]} — {item["badge_text"]}'
+                         for item in self.session.training_status()['stages'])
+        return TextDialog(self.root, '진행 현황', '\n\n'.join(lines))
+
+    def show_chapter_failure(self):
+        from aidc.ui.chapter_failure import ChapterFailureDialog
+        if self.chapter_window is not None and self.chapter_window.winfo_exists():
+            self.chapter_window.lift()
+            return self.chapter_window
+        self.chapter_window = ChapterFailureDialog(
+            self.root, heading(self.session), chapter_state(self.session)[1],
+            self.retry_current_chapter, self.return_to_modes, self.show_story_review)
+        return self.chapter_window
+
+    def record_chapter_start(self):
+        try:
+            capture(self.session)
+        except Exception as exc:
+            messagebox.showerror('체크포인트 저장 오류',
+                                 '장은 시작되었지만 재도전용 복사본을 만들지 못했습니다. 현재 저장은 유지됩니다.\n'+str(exc), parent=self.root)
 
     def show_chapter_complete(self):
         self.pending_feedback = None
@@ -971,14 +995,14 @@ class SimulatorApp:
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
                 retry=self.retry_chapter3b,
                 start_next=self.begin_training if not self.session.training_unlock_reason() else None,
-                next_label='심화 연수 시작 · Engineering Lab')
+                next_label=CHAPTERS['lab'].heading+' · 시작')
         elif self.session.story.chapter3 is not None:
             self.chapter_window = Chapter3CompleteDialog(
                 self.root, self.session.chapter3_result(), self.return_to_modes,
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
                 retry=self.retry_chapter3,
                 start_next=self.begin_chapter3b if not self.session.chapter3b_unlock_reason() else None,
-                next_label='Chapter 3b 시작 · 서버 장비 장애')
+                next_label=CHAPTERS['3b'].heading+' · 시작')
         elif self.session.story.chapter2 is not None:
             self.chapter_window = Chapter2CompleteDialog(
                 self.root, self.session.chapter2_result(), self.return_to_modes,
@@ -989,7 +1013,9 @@ class SimulatorApp:
             self.chapter_window = ChapterCompleteDialog(
                 self.root, self.session.chapter_result(), self.return_to_modes,
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
-                start_chapter2=self.begin_chapter2)
+                start_chapter2=self.begin_chapter2 if self.session.mode != 'tutorial' else None,
+                tutorial=self.session.mode == 'tutorial', retry=self.retry_current_chapter)
+        self.chapter_window.title(heading(self.session)+' · 결과')
         return self.chapter_window
 
     def confirm_retry_chapter2(self):
@@ -1002,7 +1028,7 @@ class SimulatorApp:
 
     def retry_chapter2(self):
         """현재 슬롯과 기록은 그대로 저장하고, 새 독립 슬롯에서 Chapter 2를 처음부터 시작합니다."""
-        return self.return_to_modes('chapter2')
+        return self.retry_current_chapter('chapter2')
 
     # ---- Chapter 3b: 서버 장비 장애 ----
     def open_hardware_diagnosis(self):
@@ -1066,7 +1092,7 @@ class SimulatorApp:
         return False
 
     def retry_chapter3b(self):
-        return self.return_to_modes('chapter3b')
+        return self.retry_current_chapter('chapter3b')
 
     def begin_training(self):
         """Chapter 3b 성공 결과에서 호출합니다. 기존 Chapter 기록은 그대로 두고 연수용 사건 요청만 접수합니다."""
@@ -1075,6 +1101,7 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_training):
             return False
+        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1105,6 +1132,7 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_chapter3b):
             return False
+        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1120,7 +1148,29 @@ class SimulatorApp:
         return False
 
     def retry_chapter3(self):
-        return self.return_to_modes('chapter3')
+        return self.retry_current_chapter('chapter3')
+
+    def retry_current_chapter(self, fallback=None):
+        story = self.session.story
+        chapter = current_chapter(story)
+        if self.session.mode == 'tutorial':
+            return self.return_to_modes('tutorial')
+        if story.practice:
+            return self.return_to_modes(fallback or 'lab')
+        if self.db.path is None or not checkpoint_path(self.db.path, chapter.key).is_file():
+            messagebox.showinfo('장 시작 기록 없음',
+                                '이전 버전 슬롯에는 장 시작 체크포인트가 없습니다. 현재 기록은 보존됩니다.\n'
+                                '자유·연습에서 이 장을 독립 연습하거나 스토리 도전을 새로 시작할 수 있습니다.', parent=self.root)
+            return False
+        try:
+            self.session.save()
+            path = restore(self.story_slots, self.db.path, chapter.key)
+        except Exception as exc:
+            messagebox.showerror('재도전 준비 오류', str(exc), parent=self.root)
+            return False
+        if not self.return_to_modes():
+            return False
+        return self.mode_selector.start('story', path=path, resume=True, checkpoint_start=True)
 
     def begin_chapter3(self):
         """Chapter 2 성공 결과 화면에서 호출합니다. Chapter 2 기록은 그대로 두고 첫 장애 미션 요청만 접수합니다."""
@@ -1129,6 +1179,7 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_chapter3):
             return False
+        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1142,6 +1193,7 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_chapter2):
             return False
+        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1174,6 +1226,10 @@ class SimulatorApp:
             self.mode_selector.new_story(3)
         elif mode == 'chapter3b':
             self.mode_selector.new_story('3b')
+        elif mode == 'tutorial':
+            self.mode_selector.new_tutorial()
+        elif mode == 'lab':
+            self.mode_selector.new_story('lab')
         elif mode is not None:
             self.mode_selector.start(mode)
         return True
@@ -1474,82 +1530,127 @@ class ModeSelection:
         self.mode_panel = tk.Frame(self.menu_body, bg=BG)
         self.mode_panel.pack(fill='x')
         self.buttons = {}
-        for mode, title, text in (
-            ('story', '스토리 모드', '신입 엔지니어로 첫 출근하여 데이터센터 운영을 배우고 단계별 미션에 도전합니다.'),
-            ('free', '자유 운영 모드', '기존 데이터센터 운영 기록을 이어가거나 고객 요청을 자유롭게 처리합니다.')):
-            card = tk.Frame(self.mode_panel, bg=PANEL, padx=22, pady=18)
-            card.pack(fill='x', pady=(0, 18))
-            command = self.show_story_menu if mode == 'story' else lambda:self.start('free')
+        for mode, title, text, command in (
+            ('tutorial', '튜토리얼', '관제실·GPU·전력·고객 요청의 기본 조작을 배웁니다. 본편 기록과 별도로 반복할 수 있습니다.', self.show_tutorial_menu),
+            ('story', '스토리 도전', '제1장~제5장을 순서대로 진행합니다. 실제 업무와 학습 행동으로 다음 장을 엽니다.', self.show_story_menu),
+            ('practice', '자유·연습', '자유 운영과 장별 연습, Engineering Lab을 이용합니다. 본편 진급과 별도입니다.', self.show_practice_menu)):
+            card = tk.Frame(self.mode_panel, bg=PANEL, padx=22, pady=12)
+            card.pack(fill='x', pady=(0, 12))
             self.buttons[mode] = ActionButton(card, title, command)
             self.buttons[mode].pack(anchor='w')
             description = label(card, text, 11, MUTED, wraplength=760, justify='left')
-            description.pack(anchor='w', pady=(10, 0))
+            description.pack(anchor='w', pady=(7, 0))
             card.bind('<Configure>', lambda e, text=description:text.configure(wraplength=max(300, e.width-44)))
-        self.story_panel = tk.Frame(self.menu_body, bg=PANEL, padx=22, pady=18)
-        label(self.story_panel, '스토리 모드 · Chapter 1–3', 15, CYAN, True).pack(anchor='w', pady=(0, 10))
-        self.story_buttons = {}
-        self.story_buttons['new'] = ActionButton(self.story_panel, 'Chapter 1 새로 시작 · 첫 출근부터', self.new_story)
-        self.story_buttons['new'].pack(fill='x')
-        label(self.story_panel, '첫 출근부터 정식으로 시작합니다. 이전 기록은 별도 슬롯에 보존됩니다.',
-              10, MUTED).pack(anchor='w', pady=(7, 12))
-        self.story_buttons['chapter2'] = ActionButton(self.story_panel, 'Chapter 2 새로 시작 · 연습', lambda:self.new_story(2))
-        self.story_buttons['chapter2'].pack(fill='x')
-        label(self.story_panel, 'Chapter 1 없이 여러 고객의 요청 미션만 새 슬롯에서 시작합니다. Chapter 1 진행이나 점수로 기록되지 않습니다.',
-              10, MUTED, wraplength=700, justify='left').pack(anchor='w', pady=(7, 12))
-        self.story_buttons['chapter3'] = ActionButton(self.story_panel, 'Chapter 3 새로 시작 · 연습', lambda:self.new_story(3))
-        self.story_buttons['chapter3'].pack(fill='x')
-        label(self.story_panel, 'Chapter 1·2 없이 네트워크 장애 진단 미션만 새 슬롯에서 시작합니다. Chapter 1·2를 완료한 것으로 기록되지 않습니다.',
-              10, MUTED, wraplength=700, justify='left').pack(anchor='w', pady=(7, 12))
-        self.story_buttons['continue3'] = ActionButton(self.story_panel, 'Chapter 3 이어하기 · 진행 중인 최근 기록', self.continue_chapter3)
-        self.story_buttons['continue3'].pack(fill='x', pady=(0, 14))
-        self.story_buttons['chapter3b'] = ActionButton(self.story_panel, 'Chapter 3b 새로 시작 · 연습 (서버 장비 장애)', lambda:self.new_story('3b'))
-        self.story_buttons['chapter3b'].pack(fill='x')
-        label(self.story_panel, 'Chapter 3a를 마친 슬롯은 결과 화면의 [Chapter 3b 시작]으로 이어서 시작합니다. 연습은 이전 Chapter를 완료한 것으로 기록하지 않습니다.',
-              10, MUTED, wraplength=700, justify='left').pack(anchor='w', pady=(7, 12))
-        row = tk.Frame(self.story_panel, bg=PANEL)
-        row.pack(fill='x', pady=(0, 14))
-        self.story_buttons['continue3b'] = ActionButton(row, 'Chapter 3b 이어하기 · 진행 중인 최근 기록', self.continue_chapter3b)
-        self.story_buttons['continue3b'].pack(side='left', fill='x', expand=True)
-        # v0.9-4a-1: 정규 심화 연수와 구분되는 독립 연습 슬롯(모든 Stage 자유 선택, 정규 통과로 기록하지 않음)
-        self.story_buttons['lab'] = ActionButton(row, 'Engineering Lab 연습 · 새 슬롯 (정규 기록 아님)', lambda:self.new_story('lab'),
-                                                 accent=AMBER)
-        self.story_buttons['lab'].pack(side='left', fill='x', expand=True, padx=(8, 0))
-        label(self.story_panel, '이어갈 저장 기록', 10, MUTED).pack(anchor='w')
-        self.slot_choice = ttk.Combobox(self.story_panel, state='readonly', font=(FONT, 10))
-        self.slot_choice.pack(fill='x', pady=7)
-        self.story_buttons['continue'] = ActionButton(self.story_panel, '이어하기', self.continue_story)
-        self.story_buttons['continue'].pack(fill='x')
-        self.story_buttons['back'] = ActionButton(self.story_panel, '돌아가기', self.show_modes)
-        self.story_buttons['back'].pack(anchor='w', pady=(16, 0))
-        self.version_label = label(self.content, f'{VERSION} · 스토리 Chapter 1~3b + 심화 연수 Stage 1~5(프로토타입)', 10, MUTED)
-        self.version_label.pack(anchor='w', pady=(14, 0))
+        self.panels, self.choices, self.menu_buttons, self.previews = {}, {}, {}, {}
+        for category, title in (('story', '스토리 도전'), ('tutorial', '튜토리얼'), ('practice', '자유·연습')):
+            panel = tk.Frame(self.menu_body, bg=PANEL, padx=22, pady=14)
+            self.panels[category] = panel
+            label(panel, title, 16, CYAN, True).pack(anchor='w', pady=(0, 8))
+            buttons = self.menu_buttons[category] = {}
+            if category == 'story':
+                text = CHAPTERS[1].heading+'\n'+CHAPTERS[1].intro
+                label(panel, text, 11, TEXT, wraplength=730, justify='left').pack(anchor='w', pady=(0, 10))
+                buttons['new'] = ActionButton(panel, '새 도전 시작 · '+CHAPTERS[1].heading, self.new_story)
+                buttons['new'].pack(fill='x')
+            elif category == 'tutorial':
+                label(panel, '선배와 기본 조작을 익힙니다. 실패해도 새 튜토리얼에서 반복할 수 있습니다.',
+                      11, MUTED, wraplength=720, justify='left').pack(anchor='w', pady=(0, 10))
+                buttons['new'] = ActionButton(panel, '튜토리얼 처음부터 · 별도 슬롯', self.new_tutorial)
+                buttons['new'].pack(fill='x')
+            else:
+                buttons['free'] = ActionButton(panel, '자유 운영 · 기존 기록 이어하기', lambda:self.start('free'))
+                buttons['free'].pack(fill='x', pady=(0, 8))
+                for key, chapter in (('chapter2', 2), ('chapter3', 3), ('chapter3b', '3b'), ('lab', 'lab')):
+                    text = 'Engineering Lab · 학습 과제 1~5 연습' if chapter == 'lab' else CHAPTERS[chapter].heading+' · 연습'
+                    buttons[key] = ActionButton(panel, text, lambda c=chapter:self.new_story(c))
+                    buttons[key].pack(fill='x', pady=2)
+                label(panel, '기존 연습 공개 정책을 유지합니다. 본편의 클리어·진급으로 기록되지 않습니다.',
+                      10, MUTED).pack(anchor='w', pady=5)
+            choice = self.choices[category] = ttk.Combobox(panel, state='readonly', font=(FONT, 10))
+            choice.pack(fill='x', pady=(12, 6))
+            preview = self.previews[category] = label(panel, '', 10, MUTED, wraplength=730, justify='left')
+            preview.pack(anchor='w', pady=(0, 6))
+            choice.bind('<<ComboboxSelected>>', lambda e, c=category:self.preview_slot(c))
+            buttons['continue'] = ActionButton(panel, '선택한 기록 이어하기', lambda c=category:self.continue_selected(c))
+            buttons['continue'].pack(fill='x')
+            buttons['back'] = ActionButton(panel, '돌아가기', self.show_modes)
+            buttons['back'].pack(anchor='w', pady=(10, 0))
+        self.story_panel = self.panels['story']
+        self.story_buttons = self.menu_buttons['story']
+        self.practice_buttons = self.menu_buttons['practice']
+        self.tutorial_buttons = self.menu_buttons['tutorial']
+        self.slot_choice = self.choices['story']
+        self.paths_by_mode = {}
+        self.version_label = label(self.content, f'{VERSION} · 제1장~제5장 / Lab 학습 과제 1~5 (프로토타입)', 10, MUTED)
+        self.version_label.pack(anchor='w', pady=(12, 0))
 
     def layout_content(self, event):
         self.content.place_configure(width=min(860, max(600, event.width-80)))
 
-    def show_story_menu(self):
+    def show_menu(self, category):
         if self.starting or self.app is not None:
             return
-        self.slot_paths = self.story_slots.available()
-        self.slot_choice.configure(values=[self.story_slots.title(p)+self.story_slots.describe(p) for p in self.slot_paths])
-        if self.slot_paths:
-            preferred = self.preferred_story
-            index = self.slot_paths.index(preferred) if preferred in self.slot_paths else len(self.slot_paths)-1
-            self.slot_choice.current(index)
+        paths = self.paths_by_mode[category] = self.story_slots.for_mode(category)
+        choice = self.choices[category]
+        choice.configure(values=[self.story_slots.title(p)+self.story_slots.describe(p) for p in paths])
+        if paths:
+            index = paths.index(self.preferred_story) if self.preferred_story in paths else len(paths)-1
+            choice.current(index)
         else:
-            self.slot_choice.set('저장된 스토리가 없습니다.')
-        self.story_buttons['continue'].configure(state='normal' if self.slot_paths else 'disabled')
-        self.chapter3_paths = self.story_slots.chapter3_in_progress()
-        self.story_buttons['continue3'].configure(state='normal' if self.chapter3_paths else 'disabled')
-        self.chapter3b_paths = self.story_slots.chapter3b_in_progress()
-        self.story_buttons['continue3b'].configure(state='normal' if self.chapter3b_paths else 'disabled')
+            choice.set('저장된 기록이 없습니다.')
+        self.menu_buttons[category]['continue'].configure(state='normal' if paths else 'disabled')
         self.mode_panel.pack_forget()
-        self.story_panel.pack(fill='x')
+        for panel in self.panels.values():
+            panel.pack_forget()
+        self.panels[category].pack(fill='x')
+        self.preview_slot(category)
+        if category == 'story':
+            self.slot_paths = paths
+
+    def preview_slot(self, category):
+        paths = self.paths_by_mode.get(category, [])
+        index = self.choices[category].current()
+        text = ''
+        if 0 <= index < len(paths):
+            payload = self.story_slots.payload(paths[index])
+            data = payload.get('story', {})
+            if isinstance(data, dict) and data:
+                chapter = chapter_from_payload(data)
+                text = ('튜토리얼' if category == 'tutorial' else chapter.heading)+' · 저장 지점에서 이어하기'
+                text += '\n'+chapter.intro
+        self.previews[category].configure(text=text)
+
+    def show_story_menu(self):
+        self.show_menu('story')
+
+    def show_practice_menu(self):
+        self.show_menu('practice')
+
+    def show_tutorial_menu(self):
+        self.show_menu('tutorial')
 
     def show_modes(self):
         if not self.starting:
-            self.story_panel.pack_forget()
+            for panel in self.panels.values():
+                panel.pack_forget()
             self.mode_panel.pack(fill='x')
+
+    def new_tutorial(self):
+        if self.app is not None or self.starting:
+            return self.app
+        try:
+            path = self.story_slots.reserve_new()
+        except Exception as exc:
+            messagebox.showerror('튜토리얼 시작 오류', str(exc), parent=self.root)
+            return None
+        return self.start('tutorial', path=path, fresh=True)
+
+    def continue_selected(self, category):
+        paths = self.paths_by_mode.get(category, [])
+        index = self.choices[category].current()
+        if index < 0 or index >= len(paths):
+            return None
+        return self.start('tutorial' if category == 'tutorial' else 'story', path=paths[index], resume=True)
 
     def new_story(self, chapter=1):
         if self.app is not None or self.starting:
@@ -1561,36 +1662,18 @@ class ModeSelection:
             return None
         return self.start('story', path=path, fresh=True, chapter=chapter)
 
-    def continue_chapter3b(self):
-        paths = getattr(self, 'chapter3b_paths', None) or self.story_slots.chapter3b_in_progress()
-        if not paths:
-            return None
-        return self.start('story', path=paths[-1], resume=True)
-
-    def continue_chapter3(self):
-        """진행 중인 Chapter 3 슬롯 중 가장 최근 번호를 이어갑니다. 다른 슬롯은 건드리지 않습니다."""
-        paths = getattr(self, 'chapter3_paths', None) or self.story_slots.chapter3_in_progress()
-        if not paths:
-            return None
-        return self.start('story', path=paths[-1], resume=True)
-
-    def continue_story(self):
-        index = self.slot_choice.current()
-        if index < 0 or index >= len(self.slot_paths):
-            return None
-        return self.start('story', path=self.slot_paths[index], resume=True)
-
-    def start(self, mode, path=None, fresh=False, resume=False, chapter=1):
+    def start(self, mode, path=None, fresh=False, resume=False, chapter=1, checkpoint_start=False):
         # 직접 start('story')를 쓰는 기존 호출은 기존 스토리 파일을 이어갑니다.
         if self.app is not None or self.starting:
             return self.app
-        if mode not in ('free', 'story'):
+        if mode not in ('free', 'story', 'tutorial'):
             raise ValueError('존재하지 않는 게임 모드입니다.')
         db = None
         self.starting = True
         before = set(self.root.winfo_children())
         try:
-            target = path if path is not None else self.story_slots.legacy_path if mode == 'story' else DB_PATH
+            target = path if path is not None else (self.story_slots.reserve_new() if mode == 'tutorial' else
+                     self.story_slots.legacy_path if mode == 'story' else DB_PATH)
             if resume and not target.is_file():
                 raise ValueError('선택한 저장 파일을 찾을 수 없습니다. 새 스토리 시작을 이용해 주세요.')
             db = self.db_factory(target)
@@ -1601,7 +1684,7 @@ class ModeSelection:
             self.frame.pack_forget()
             options = {'start_chapter': chapter} if chapter in (2, 3, '3b', 'lab') else {}
             self.app = SimulatorApp(self.root, db=db, db_factory=self.db_factory,
-                                    story_slots=self.story_slots, mode=mode, **options)
+                                    story_slots=self.story_slots, checkpoint_start=fresh or checkpoint_start, mode=mode, **options)
         except Exception as exc:
             if db is not None and not db._game_claimed:
                 db.close()

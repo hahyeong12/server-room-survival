@@ -12,6 +12,7 @@ from ui import BG, PANEL, CYAN, MUTED, TEXT, FONT, RED, GREEN, ActionButton, lab
 from story_portraits import draw_portrait
 from aidc.ui.scroll_area import ScrollArea
 from aidc.ui.window_placement import center_dialog
+from aidc.story.chapters import CHAPTERS
 
 
 def _mentor_box(parent, title, lines):
@@ -29,9 +30,10 @@ def _mentor_box(parent, title, lines):
 
 
 class ChapterCompleteDialog(tk.Toplevel):
-    def __init__(self, parent, result, select_mode, start_free, status, review, start_chapter2=None):
+    def __init__(self, parent, result, select_mode, start_free, status, review, start_chapter2=None, tutorial=False, retry=None):
         super().__init__(parent, bg=BG)
-        self.title('Chapter 1 완료 · 첫 출근 · MISSION SUCCESS')
+        name = '튜토리얼 — 관제실 첫걸음' if tutorial else CHAPTERS[1].heading
+        self.title(name+' · 클리어')
         self.withdraw()
         self.transient(parent)
         self.columnconfigure(0, weight=1)
@@ -39,7 +41,7 @@ class ChapterCompleteDialog(tk.Toplevel):
         top = tk.Frame(self, bg=BG)
         top.grid(row=0, sticky='ew', padx=22, pady=(14, 6))
         top.columnconfigure(0, weight=1)
-        label(top, 'CHAPTER 1 · 첫 출근', 9, MUTED).grid(row=0, sticky='w')
+        label(top, name, 9, MUTED).grid(row=0, sticky='w')
         self.verdict = label(top, 'MISSION SUCCESS', 22, GREEN, True)
         self.verdict.grid(row=1, sticky='w')
         self.congratulations = label(top, '첫 업무를 성공적으로 마쳤네요. 처음에는 복잡해 보여도 조금씩 익숙해질 겁니다.',
@@ -73,7 +75,8 @@ class ChapterCompleteDialog(tk.Toplevel):
         box.grid(row=1, sticky='ew', padx=22, pady=(10, 0))
         self.customer_reply = label(body, '고객 안내 · '+str(result['feedback']), 9, MUTED, justify='left', wraplength=700)
         self.customer_reply.grid(row=2, sticky='w', padx=22, pady=(6, 0))
-        notice = ('다음에는 여러 고객의 요청이 동시에 들어옵니다. [Chapter 2 시작]으로 일본·미국 고객의 요청을 비교하고 서버를 배정해 보세요.\n'
+        notice = ('튜토리얼을 마쳤습니다. 스토리 도전은 별도 슬롯에서 제1장부터 시작합니다.' if tutorial else
+                  '다음에는 여러 고객의 요청이 동시에 들어옵니다. [제2장 시작]으로 일본·미국 고객의 요청을 비교하고 서버를 배정해 보세요.\n'
                   '기존 Chapter 1 기록은 그대로 보존됩니다.' if start_chapter2 is not None else
                   '다음에는 여러 고객 요청과 네트워크 장애도 경험하게 됩니다.\nChapter 2는 이후 개발 예정입니다. 지금은 자유 운영을 이어가실 수 있습니다.')
         self.next_notice = label(body, notice, 10, MUTED, justify='left', wraplength=700)
@@ -89,9 +92,12 @@ class ChapterCompleteDialog(tk.Toplevel):
             button.grid(row=index//2, column=index%2, sticky='ew', padx=4, pady=2)
             self.buttons[key] = button
         if start_chapter2 is not None:
-            button = ActionButton(buttons, 'Chapter 2 시작 · 여러 고객 요청', start_chapter2)
+            button = ActionButton(buttons, CHAPTERS[2].heading+' · 시작', start_chapter2)
             button.grid(row=2, column=0, columnspan=2, sticky='ew', padx=4, pady=2)
             self.buttons['chapter2'] = button
+        if retry is not None:
+            self.buttons['retry'] = ActionButton(buttons, '튜토리얼 다시 학습' if tutorial else '이 장 다시 도전 · 새 슬롯', retry)
+            self.buttons['retry'].grid(row=3, column=0, columnspan=2, sticky='ew', padx=4, pady=2)
         center_dialog(self, parent, size=(760, 580), minimum=(640, 400))
 
 
@@ -101,7 +107,7 @@ class Chapter2CompleteDialog(tk.Toplevel):
         super().__init__(parent, bg=BG)
         self.withdraw()
         success = result.get('mission') == 'success'
-        self.title('Chapter 2 '+('성공' if success else '실패')+' · 여러 고객의 요청과 서버 배정')
+        self.title(CHAPTERS[2].heading+' · '+('클리어' if success else '실패'))
         self.transient(parent)
         self.columnconfigure(0, weight=1)
         self.result = result
@@ -136,7 +142,7 @@ class Chapter2CompleteDialog(tk.Toplevel):
         top = tk.Frame(self, bg=BG)
         top.grid(row=0, sticky='ew', padx=22, pady=(12, 4))
         top.columnconfigure(0, weight=1)
-        label(top, 'CHAPTER 2 · 여러 고객의 요청과 서버 배정', 9, MUTED).grid(row=0, column=0, sticky='w')
+        label(top, CHAPTERS[2].heading, 9, MUTED).grid(row=0, column=0, sticky='w')
         self.verdict = label(top, 'MISSION SUCCESS' if success else 'MISSION FAILED', 22, GREEN if success else RED, True)
         self.verdict.grid(row=1, column=0, sticky='w')
         overall = result.get('overall')
@@ -216,11 +222,11 @@ class Chapter2CompleteDialog(tk.Toplevel):
             button.grid(row=0, column=index, sticky='ew', padx=3, pady=2)
             self.buttons[key] = button
         if retry is not None:
-            button = ActionButton(buttons, 'Chapter 2 다시 도전 · 새 슬롯에서 처음부터 (현재 기록은 보존)', retry)
+            button = ActionButton(buttons, '제2장 다시 도전 · 새 슬롯 (현재 기록 보존)', retry)
             button.grid(row=1, column=0, columnspan=4, sticky='ew', padx=3, pady=2)
             self.buttons['retry'] = button
         if start_chapter3 is not None and success:
-            button = ActionButton(buttons, 'Chapter 3 시작 · 네트워크 장애 진단 (Chapter 2 기록은 보존)', start_chapter3)
+            button = ActionButton(buttons, CHAPTERS[3].heading+' · 시작', start_chapter3)
             button.grid(row=2, column=0, columnspan=4, sticky='ew', padx=3, pady=2)
             self.buttons['chapter3'] = button
         center_dialog(self, parent, size=(820, 640), minimum=(640, 400))
@@ -246,6 +252,8 @@ class Chapter3CompleteDialog(tk.Toplevel):
         summary = result.get('summary') or {}
         name = summary.get('name', 'Chapter 3')
         subtitle = summary.get('subtitle', '네트워크 장애 진단과 대응')
+        chapter = CHAPTERS['3b' if name == 'Chapter 3b' else 3]
+        name, subtitle = f'제{chapter.number}장', chapter.title
         self.title(f'{name} '+('성공' if success else '실패')+f' · {subtitle}')
         self.transient(parent)
         self.columnconfigure(0, weight=1)

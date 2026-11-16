@@ -34,7 +34,7 @@ class DiagnoseGuideTests(unittest.TestCase):
         self.assertIn("chapter_label='Chapter 1'", source)
         self.assertNotIn("교육 담당자 · Chapter 1')", source)
         main = (ROOT / 'main.py').read_text(encoding='utf-8')
-        self.assertIn('chapter_label=story.chapter_label', main)
+        self.assertIn('chapter_label=heading(self.session)', main)
         self.assertIn("chapter_label='Chapter 2'", main)
         from story import StoryProgress
         s = practice3()

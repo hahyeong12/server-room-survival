@@ -240,10 +240,10 @@ class PracticeSlotTests(unittest.TestCase):
             jp, us = q.story.chapter2.request_ids
             start(q, jp, 'performance'); start(q, us, 'economy'); finish_all(q); q.close()
             snapshot = {p: Path(p).read_bytes() for p in (p1, p2, p3, p4)}
-            self.assertEqual(slots.describe(p1), ' · Chapter 1 완료')
-            self.assertEqual(slots.describe(p2), ' · Chapter 2 진행 중')
-            self.assertEqual(slots.describe(p3), ' · Chapter 2 연습 진행 중')
-            self.assertEqual(slots.describe(p4), ' · Chapter 2 연습 완료')
+            self.assertEqual(slots.describe(p1), ' · 제1장 — 첫 출근 · 종료 · 결과 확인')
+            self.assertEqual(slots.describe(p2), ' · 제2장 — 한정된 자원 · 진행 중')
+            self.assertEqual(slots.describe(p3), ' · 제2장 — 한정된 자원 · 연습 · 진행 중')
+            self.assertEqual(slots.describe(p4), ' · 제2장 — 한정된 자원 · 연습 · 종료 · 결과 확인')
             self.assertEqual(slots.describe(Path(directory)/'missing.db'), '')
             self.assertEqual({p: Path(p).read_bytes() for p in snapshot}, snapshot)
 
