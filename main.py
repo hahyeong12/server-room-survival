@@ -141,7 +141,7 @@ class SimulatorApp:
         self.root.rowconfigure(2, weight=1)
         top = tk.Frame(self.root, bg=BG)
         top.grid(row=0, sticky='ew')
-        header = tk.Frame(top, bg=BG, padx=16, pady=8)
+        header = tk.Frame(top, bg=BG, padx=16, pady=5)
         header.pack(fill='x')
         if self.session.story:
             # 현재 목표는 하단 긴 문장이 아니라 위쪽의 별도 카드(단계 배지·행동 하나·단계 표시)로 보여 줍니다.
@@ -170,15 +170,17 @@ class SimulatorApp:
         left = tk.Frame(body, bg=PANEL, padx=6, pady=5)
         left.grid(row=0, column=0, sticky='nsew', padx=(0, 10))
         left.columnconfigure(0, weight=1)
-        left.rowconfigure(1, weight=2, minsize=58 if self.session.story else 55)
+        # 필수 행동([요청 확인])이 있는 새 요청 박스를 제목 바로 아래에 둡니다. 창 높이가 부족하면 grid가 아래쪽 목록부터
+        # 잘라내므로 버튼은 항상 보입니다(QA tutorial-001 Q-01: 이전 순서에서는 버튼이 본문 밖으로 밀려 가려졌습니다).
+        left.rowconfigure(2, weight=2, minsize=58 if self.session.story else 55)
         left.rowconfigure(4, weight=1, minsize=60)
         label(left, 'AIDC LINK · 고객 요청함', 12, bold=True).grid(row=0, sticky='w', pady=(0, 5))
         self.inbox = self.make_list(left, ('client', 'status'), ('고객 / 국가', '상태 / 기한'), (110, 100), 4)
-        self.inbox.grid(row=1, sticky='nsew')
+        self.inbox.grid(row=2, sticky='nsew')
         self.inbox.bind('<ButtonRelease-1>', self.on_inbox_click)
         self.inbox.bind('<Return>', lambda _: self.open_selected_message())
         arrival = tk.Frame(left, bg=BORDER, padx=8, pady=6)
-        arrival.grid(row=2, sticky='ew', pady=6)
+        arrival.grid(row=1, sticky='ew', pady=(0, 6))
         arrival.columnconfigure(0, weight=1)
         self.arrival_notice = label(arrival, size=10, justify='left', anchor='w', wraplength=190)
         self.arrival_notice.grid(row=0, sticky='ew')
@@ -186,7 +188,9 @@ class SimulatorApp:
         self.arrival_open_button = ActionButton(arrival, '요청 확인', self.open_arrival_message)
         self.arrival_open_button.grid(row=1, sticky='ew', pady=(4, 0))
         self.arrival_schedule = label(arrival, size=10, color=MUTED, anchor='w', wraplength=190)
-        self.arrival_schedule.grid(row=2, sticky='ew', pady=(4,0))
+        if not self.session.story:
+            # 스토리에서는 '미션에 따라 요청 접수'뿐인 보조 문구라 숨기고(높이 절약), 자유 운영의 다음 접수 시각은 유지합니다.
+            self.arrival_schedule.grid(row=2, sticky='ew', pady=(4,0))
         label(left, '운영 작업 · 진행률', 12, bold=True).grid(row=3, sticky='w', pady=(3, 5))
         self.active_list = self.make_list(left, ('client', 'progress'), ('고객', '상태 / 진행'), (70, 140), 3)
         self.active_list.grid(row=4, sticky='nsew')
@@ -200,9 +204,10 @@ class SimulatorApp:
         self.resources.repair_button.configure(command=lambda:self._perform(
             lambda:self.session.begin_server_repair(self.resources.selected)))
         self.network = self.server_room = LiveServerRoom(middle, self.session, self.select_server)
-        self.network.pack(fill='both', expand=True)
         self.alert = label(middle, size=10, color=AMBER, justify='left', wraplength=400)
-        self.alert.pack(fill='x', pady=(3, 0))
+        # 안내 문구를 먼저 아래쪽에 배치해 높이가 부족할 때 문구 대신 서버실 그림이 줄어들게 합니다(문구 잘림 방지).
+        self.alert.pack(side='bottom', fill='x', pady=(3, 0))
+        self.network.pack(fill='both', expand=True)
         self.resources.grid(row=0, column=2, sticky='nsew')
         self.network.extra_canvases = [self.overview, self.resources.inspector]
         controls = self.controls = tk.Frame(self.root, bg=PANEL, padx=12, pady=4)
@@ -256,8 +261,9 @@ class SimulatorApp:
         ActionButton(tools, '수행 기록', self.show_history).pack(side='right', padx=6)
         ActionButton(tools, '이벤트 / 로그', self.show_events).pack(side='right', padx=6)
         if self.session.story:
-            self.story_bar = tk.Frame(self.root, bg=PANEL, padx=12, pady=5)
-            self.story_bar.grid(row=5, sticky='ew', padx=12, pady=(0, 5))
+            # 교육 보조 버튼은 별도 줄(48px) 대신 목표 카드 오른쪽에 둡니다(Q-01 높이 절약). 기능·버튼은 그대로입니다.
+            self.story_bar = tk.Frame(self.goal_card.side, bg=PANEL)
+            self.story_bar.pack(anchor='e')
             self.story_bar.columnconfigure(0, weight=1)
             self.story_help_button = ActionButton(self.story_bar, '교육 도움말', self.show_story_help)
             self.story_help_button.grid(row=0, column=1, padx=6)

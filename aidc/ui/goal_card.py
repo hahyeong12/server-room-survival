@@ -25,28 +25,39 @@ def card_colors(phase):
 
 
 class GoalCard(tk.Frame):
+    """3줄 카드: ① 제목 + 장 이름 ② 지금 할 행동 ③ 단계 표시 + 선배 한마디. 오른쪽 `side`에는 교육 보조 버튼을 둡니다.
+
+    QA tutorial-001 Q-01: 5줄 카드(145px)와 별도 교육 버튼 줄(48px) 때문에 관제실 본문이 82px로 눌려
+    [요청 확인] 버튼이 보이지 않았습니다. 같은 정보를 3줄로 모으고 버튼 줄을 카드 오른쪽으로 옮겼습니다."""
     def __init__(self, parent):
-        super().__init__(parent, bg=PANEL, highlightthickness=1, highlightbackground=BORDER, padx=12, pady=7)
+        super().__init__(parent, bg=PANEL, highlightthickness=1, highlightbackground=BORDER, padx=12, pady=5)
         self.columnconfigure(1, weight=1)
         self.badge = tk.Label(self, text='ACTION', bg=RAISED, fg=CYAN, font=(FONT, 9, 'bold'), padx=8, pady=3)
         self.badge.grid(row=0, column=0, rowspan=2, sticky='n', padx=(0, 12), pady=2)
-        self.kicker = label(self, '', 9, MUTED, anchor='w')
-        self.kicker.grid(row=0, column=1, sticky='ew')
-        self.title = label(self, '', 13, TEXT, True, anchor='w', justify='left')
-        self.title.grid(row=1, column=1, sticky='ew')
+        head = tk.Frame(self, bg=PANEL)
+        head.grid(row=0, column=1, sticky='ew')
+        self.title = label(head, '', 13, TEXT, True, anchor='w', justify='left')
+        self.title.pack(side='left')
+        self.kicker = label(head, '', 9, MUTED, anchor='w')
+        self.kicker.pack(side='left', padx=(12, 0))
         self.action = label(self, '', 11, TEXT, anchor='w', justify='left')
-        self.action.grid(row=2, column=1, sticky='ew', pady=(1, 0))
-        self.pip_row = tk.Frame(self, bg=PANEL)
-        self.pip_row.grid(row=3, column=1, sticky='w', pady=(5, 0))
-        self.mentor = label(self, '', 10, MUTED, anchor='w', justify='left')
-        self.mentor.grid(row=4, column=1, sticky='ew', pady=(3, 0))
+        self.action.grid(row=1, column=1, sticky='ew')
+        foot = tk.Frame(self, bg=PANEL)
+        foot.grid(row=2, column=1, sticky='ew', pady=(3, 0))
+        self.pip_row = tk.Frame(foot, bg=PANEL)
+        self.pip_row.pack(side='left')
+        self.mentor = label(foot, '', 10, MUTED, anchor='w', justify='left')
+        self.mentor.pack(side='left', fill='x', expand=True, padx=(8, 0))
+        self.side = tk.Frame(self, bg=PANEL)  # 교육 도움말·건너뛰기·재도전 등(관제실이 채움)
+        self.side.grid(row=0, column=2, rowspan=3, sticky='e', padx=(12, 0))
         self._pips = None
         self.bind('<Configure>', self._wrap)
 
     def _wrap(self, event):
-        width = max(260, event.width-110)
-        for widget in (self.title, self.action, self.mentor):
-            widget.configure(wraplength=width)
+        width = max(260, event.width-110-self.side.winfo_reqwidth())
+        self.title.configure(wraplength=max(200, width-self.kicker.winfo_reqwidth()-12))
+        self.action.configure(wraplength=width)
+        self.mentor.configure(wraplength=max(200, width-self.pip_row.winfo_reqwidth()-8))
 
     def set(self, badge, title, action='', kicker='', pips=None, mentor='', phase='ACTION'):
         colors = card_colors(phase)

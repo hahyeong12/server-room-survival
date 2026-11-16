@@ -94,6 +94,17 @@ class LiveOverview(tk.Canvas):
         ink(self, p_end+8, 62, f'장비 사용 불가 {self.values["hardware"]}대', 8, RED if self.values['hardware'] else MUTED)
 
 
+def rack_layout(columns, rack_height):
+    """랙 카드 높이에 맞는 배치(순수 함수). 그림과 글자가 겹치지 않는 가장 큰 배치를 고릅니다.
+    tall: 2x2 모듈 + 큰 GPU 숫자(모듈 아래 끝 y+107, 글자 블록 104px → 215px 이상)
+    tall_mid: 2x2 모듈 + 한 줄 요약(145px 이상) / wide: 모듈 한 줄 + 요약 / compact: 낮은 카드"""
+    if columns == 4 and rack_height >= 215:
+        return 'tall'
+    if columns == 4 and rack_height >= 145:
+        return 'tall_mid'
+    return 'compact' if rack_height < 110 else 'wide'
+
+
 class LiveServerRoom(tk.Canvas):
     def __init__(self, parent, session, on_select):
         super().__init__(parent, bg='#0a1421', highlightthickness=1, highlightbackground=EDGE, takefocus=True)
@@ -137,15 +148,17 @@ class LiveServerRoom(tk.Canvas):
             ink(self,x+12,y+7,spec.name,10,TEXT,True,tags=tags)
             status = v['status'] if v['health'] != 'HEALTHY' else 'NET' if v['network'] else v['status']
             ink(self,x+rw-12,y+10,status,8,RED if v['health'] != 'HEALTHY' else '#ffbf69' if v['network'] else MUTED,anchor='ne',tags=tags)
-            tall = self.columns == 4
-            compact = not tall and rh < 110
+            layout = rack_layout(self.columns, rh)
+            tall = layout in ('tall', 'tall_mid')
+            compact = layout == 'compact'
             mw = min(60,(rw-36)/2) if tall else (rw-30)/4-3
+            module_h, row_gap = (27, 32) if layout == 'tall' or (layout == 'tall_mid' and rh >= 175) else (20, 24) if tall else (20 if compact else 27, 0)
             for j in range(4):
                 mx = x+(rw-2*mw-8)/2+(j%2)*(mw+8) if tall else x+12+j*(mw+3)
-                my = y+48+(j//2)*32 if tall else y+(25 if compact else 30)
+                my = y+(48 if layout == 'tall' else 46)+(j//2)*row_gap if tall else y+(25 if compact else 30)
                 owner = v['slots'][j] if j < spec.gpu else None
                 state = 'empty' if j >= spec.gpu else 'fault' if v['health'] != 'HEALTHY' else 'busy' if owner else 'available'
-                gpu_module(self,mx,my,mw,20 if compact else 27,state,owner['code'] if owner else None,j,tags=tags,
+                gpu_module(self,mx,my,mw,module_h,state,owner['code'] if owner else None,j,tags=tags,
                            body_tags=('gpu-slot',) if j < spec.gpu else ('spare-bay',))
             names = '/'.join(dict.fromkeys(o['code'].upper() for o in v['owners'])) or '미점유'
             if v['repair_left']:
@@ -156,7 +169,13 @@ class LiveServerRoom(tk.Canvas):
                 names += ' · 호환'
             elif any(o['reconstructed'] for o in v['owners']):
                 names += ' · 복원'
-            if tall:
+            if layout == 'tall_mid':
+                # 중간 높이: 큰 숫자 대신 한 줄 요약(GPU 가용·전력)과 얇은 전력 막대만 모듈 아래에 둡니다(Q-06 겹침 방지).
+                ink(self,x+12,y+29,names,8,CYAN if v['owners'] else MUTED,tags=tags+('owner-label',))
+                ink(self,x+12,y+rh-49,f'GPU {v["gpu_available"]}/{spec.gpu}',11,CYAN,True,tags=tags)
+                ink(self,x+rw-13,y+rh-47,f'전력 가용 {v["power_available"]}/{spec.power}',8,TEXT,anchor='ne',tags=tags)
+                battery(self,x+12,y+rh-27,rw-24,18,v['power_available'],spec.power,tags)  # 막대 안 '가용 n%' 글자가 들어가는 높이
+            elif tall:
                 ink(self,x+12,y+29,names,8,CYAN if v['owners'] else MUTED,tags=tags+('owner-label',))
                 ink(self,x+12,y+rh-104,'GPU AVAILABLE',8,MUTED,tags=tags)
                 ink(self,x+12,y+rh-86,f'{v["gpu_available"]}/{spec.gpu}',20,CYAN,True,tags=tags)

@@ -37,6 +37,46 @@ def edge_rect(rect, inset, thickness, side):
     return (ex if side == 'left' else ex+ew-thickness), ey, thickness, eh
 
 
+def clip_rect(rect, clips):
+    """rect=(x, y, w, h)를 상위 영역들(clips)과 교차한 사각형(순수 함수). 겹치는 부분이 없으면 None."""
+    x0, y0, x1, y1 = rect[0], rect[1], rect[0]+rect[2], rect[1]+rect[3]
+    for cx, cy, cw, ch in clips:
+        x0, y0, x1, y1 = max(x0, cx), max(y0, cy), min(x1, cx+cw), min(y1, cy+ch)
+        if x1 <= x0 or y1 <= y0:
+            return None
+    return x0, y0, x1-x0, y1-y0
+
+
+def mostly_visible(rect, clips, ratio=0.9):
+    """상위 영역에 잘리지 않고 대부분(기본 90%)이 보이는지(순수 함수)."""
+    inside = clip_rect(rect, clips)
+    return inside is not None and rect[2] > 0 and rect[3] > 0 and inside[2]*inside[3] >= ratio*rect[2]*rect[3]
+
+
+def widget_visible(widget):
+    """대상이 실제 화면에서 보이고 눌리는지 확인합니다. 상위 프레임에 잘렸거나(창 높이 부족), 중심점이 다른 위젯에
+    덮였으면 False입니다. QA tutorial-001 Q-01: 가려진 버튼의 좌표에 금색 테두리가 그려져 엉뚱한 글자를 감쌌습니다."""
+    try:
+        if not widget.winfo_ismapped() or not widget.winfo_viewable():
+            return False
+        top = widget.winfo_toplevel()
+        rect = (widget.winfo_rootx(), widget.winfo_rooty(), widget.winfo_width(), widget.winfo_height())
+        clips, parent = [], widget.master
+        while parent is not None and parent is not top:
+            clips.append((parent.winfo_rootx(), parent.winfo_rooty(), parent.winfo_width(), parent.winfo_height()))
+            parent = parent.master
+        clips.append((top.winfo_rootx(), top.winfo_rooty(), top.winfo_width(), top.winfo_height()))
+        if not mostly_visible(rect, clips):
+            return False
+        hit = widget.winfo_containing(rect[0]+rect[2]//2, rect[1]+rect[3]//2)
+        if hit is None:
+            return False
+        # 강조 테두리·안내 자체는 대상 위에 겹쳐 있어도 됩니다.
+        return str(hit).startswith(str(widget)) or getattr(hit, 'tutorial_side', None) is not None
+    except tk.TclError:
+        return False
+
+
 def highlight_parts(widget):
     """강조할 실제 조작 버튼 목록. 묶음(tutorial_parts)이면 각 버튼, 묶음이 아니면 빈 목록입니다."""
     parts = getattr(widget, 'tutorial_parts', None)
@@ -56,6 +96,7 @@ class TutorialHighlight:
         self.parts, self.part_originals = [], []
         self.pointer = None
         self.bright = True
+        self.hidden = False  # 대상이 가려져 테두리를 숨긴 상태(화면 전용)
         self.binding = root.bind('<Destroy>', self._destroyed, add='+')
         self.layout_binding = root.bind('<Configure>', lambda _: self.position_pointer(), add='+')
 
@@ -187,14 +228,26 @@ class TutorialHighlight:
             rect = (rect[0]-top.winfo_rootx(), rect[1]-top.winfo_rooty(), rect[2], rect[3])
         else:
             rect = self._rect(self.target, top)
+        visible = {}
         for edge in self.edges:
             part = edge.tutorial_part
             if part is not None and not part.winfo_exists():
                 continue
+            widget = part if part is not None else self.target
+            if widget not in visible:
+                visible[widget] = widget_visible(widget)
+            if not visible[widget]:
+                # 가려지거나 잘린 대상에는 테두리를 그리지 않습니다(다른 위젯 위의 엉뚱한 테두리 방지).
+                edge.place_forget()
+                continue
             ex, ey, ew, eh = edge_rect(self._rect(part, top) if part is not None else rect, *edge.tutorial_side)
             edge.place(x=ex, y=ey, width=ew, height=eh)
             edge.lift()
+        self.hidden = bool(visible) and not any(visible.values())
         if self.pointer is None or not self.pointer.winfo_exists():
+            return
+        if self.hidden:
+            self.pointer.place_forget()
             return
         base = POINTER_TEXT.get(self.key, '여기를 클릭')
         self.pointer.update_idletasks()
