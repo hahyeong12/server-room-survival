@@ -111,12 +111,15 @@ class WindowMonitor(threading.Thread):
             t = round(time.perf_counter() - self.h.t0, 3)
             for hwnd, (title, rect) in now.items():
                 if hwnd not in self.known:
-                    white = self.h.white_ratio(rect)
+                    white, frame = self.h.white_ratio(rect, keep=True)
                     self.events.append({'t': t, 'step': self.h.step, 'event': 'appear', 'title': title,
                                         'rect': rect, 'white_ratio': white})
-                    if white is not None and white > .35:
-                        self.h.shot(f'flash_{len(self.events):03d}', rect=rect, note='새 창이 처음 보인 순간 흰 픽셀 비율 높음',
-                                    keep=False)
+                    if white is not None and white > .35 and frame is not None:
+                        # 흰 비율을 잰 바로 그 프레임을 저장합니다(다시 찍으면 이미 그려진 뒤일 수 있음).
+                        name = f'flash_{len(self.events):03d}_{t:.3f}s.png'
+                        frame.save(self.h.out / 'shots' / name)
+                        self.h.shots.append({'file': name, 'step': self.h.step, 'note': f'새 창 등장 순간 프레임(흰 비율 {white})',
+                                             'rect': rect, 'keep': False})
                 elif self.known[hwnd][1] != rect:
                     self.events.append({'t': t, 'step': self.h.step, 'event': 'move', 'title': title,
                                         'from': self.known[hwnd][1], 'rect': rect})
@@ -383,16 +386,18 @@ class Harness:
         s = self.scale or 1
         return tuple(int(round(v * s)) for v in rect)
 
-    def white_ratio(self, rect):
+    def white_ratio(self, rect, keep=False):
+        """rect 영역의 흰 픽셀 비율. keep=True면 (비율, 캡처한 원본 프레임)을 돌려줍니다."""
         try:
             l, t, r, b = self.phys(rect)
             if r - l < 10 or b - t < 10:
-                return None
-            img = self._grab((l, t, r, b)).convert('L').resize((80, 60))
-            data = img.getdata()
-            return round(sum(1 for v in data if v > 235) / len(data), 3)
+                return (None, None) if keep else None
+            frame = self._grab((l, t, r, b))
+            data = frame.convert('L').resize((80, 60)).getdata()
+            ratio = round(sum(1 for v in data if v > 235) / len(data), 3)
+            return (ratio, frame) if keep else ratio
         except Exception:
-            return None
+            return (None, None) if keep else None
 
     def shot(self, name, rect=None, note='', keep=True):
         """이 프로세스의 보이는 창 전체를 감싸는 영역(또는 rect)을 실제 화면에서 캡처합니다."""

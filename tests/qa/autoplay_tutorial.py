@@ -128,6 +128,9 @@ def scenario(h):
         if index < 3:
             S.click_text('다음 ▶', top='현장 교육 | 교육 담당자 · 튜토리얼 — 관제실 첫걸음')
     S.check(S.step, '4쪽 본문이 데이터의 줄바꿈(\\n) 그대로 표시', all(pages_ok), str(pages_ok))
+    last_buttons = [b['text'] for b in top_by_title(S.snapshot(), '현장 교육')['buttons']]
+    S.check(S.step, '교육창 마지막 페이지에 중복 행동 버튼([마지막 안내]·[업무로 돌아가기]) 없음',
+            '마지막 안내' not in last_buttons and '업무로 돌아가기' not in last_buttons, str(last_buttons))
     S.check(S.step, '긴 줄 없음(교육창 본문 한 줄 최대 40자 이하)', max(len(line) for p in expected for line in p.split('\n')) <= 40,
             f"최대 {max(len(line) for p in expected for line in p.split(chr(10)))}자")
     S.click_text('첫 업무 시작', settle=1.2)
@@ -141,7 +144,13 @@ def scenario(h):
     S.check(S.step, '금색 강조 대상 하나(테두리 8개 = 버튼 1개)', target['edges'] == 8, f"key={target['key']} edges={target['edges']}")
     S.check(S.step, '강조된 [요청 확인] 버튼이 실제로 보이고 클릭 가능', not target['covered'],
             f"중심점 위젯: {target['covered_by'] or '자기 자신'}")
-    S.shot('step2_default_window', note='기본 1280x680 창: 강조 테두리 안의 [요청 확인]이 요청 상세 패널에 가려짐')
+    shown_edges = S.call(lambda: (app().tutorial_highlight.hidden, sum(1 for e in app().tutorial_highlight.edges if e.winfo_ismapped())))
+    S.check(S.step, '금색 테두리가 실제로 그려짐(가려진 대상 위의 테두리 아님)', shown_edges == (False, 8), f'(숨김, 표시된 테두리) = {shown_edges}')
+    geo = S.call(lambda: (S.root.state(), S.root.winfo_width(), S.root.winfo_height()))
+    S.default_geometry = geo
+    S.check(S.step, '최대화하지 않은 기본 창으로 진행', geo[0] == 'normal', f'상태 {geo[0]} · 내용 {geo[1]}x{geo[2]}')
+    S.shot('step2_default_window', note=f'기본 창 {geo[1]}x{geo[2]}: STEP 2 [요청 확인] 강조'
+           + (' — 가려짐' if target['covered'] else ''))
     if target['covered']:
         S.click(target, settle=1.0)  # 보이는 강조 테두리 안을 사용자가 누른 상황 재현
         S.check(S.step, '가려진 버튼 위치 실제 클릭 시 요청이 열리지 않음(재현)', S.call(lambda: session().story.onboarding.step) == 'request'
@@ -152,7 +161,11 @@ def scenario(h):
         S.check(S.step + '→최대화', '최대화 후 [요청 확인] 버튼이 보이고 클릭 가능', not target['covered'], target['covered_by'])
     S.step = '4 요청 확인'
     maxi = layout_issues(S)
-    S.check(S.step, '최대화 관제실의 버튼·글자 가려짐/잘림/작업 영역 밖', not maxi, f'{len(maxi)}건 ' + str(maxi[:8]))
+    S.check(S.step, '현재 관제실 창의 버튼·글자 가려짐/잘림/작업 영역 밖 없음', not maxi, f'{len(maxi)}건 ' + str(maxi[:8]))
+    rack = S.call(lambda: (app().network.winfo_height(), app().network.columns))
+    from server_console import rack_layout
+    S.rack = {'canvas_height': rack[0], 'columns': rack[1], 'rack_height': rack[0]-40, 'layout': rack_layout(rack[1], rack[0]-40)}
+    S.note(f'서버 랙 배치 {S.rack}')
     S.click(target, settle=1.5)
     S.wait_for(lambda: top_by_title(S.snapshot(), 'AIDC LINK |'), what='고객 요청서')
     off = centered(S, 'AIDC LINK |')
@@ -188,6 +201,18 @@ def scenario(h):
             S.click_text('확인 · 운영실로', settle=1.2)  # 사용자가 다시 누르는 행동
             S.check(S.step, '두 번째 클릭으로 요청서 닫힘', not top_by_title(S.snapshot(), 'AIDC LINK |'))
     S.check(S.step, '요청 열람 후 STEP 3/5(배정 검토)', S.call(lambda: session().story.onboarding.step) == 'preview')
+    first_pos = record and record.get('actual_client')
+    positions = [tuple(first_pos) if first_pos else None]
+    for again in range(2):  # Q-02: 여러 번 열고 닫아도 같은 위치, 확인 버튼 한 번으로 닫힘
+        S.click_text('AIDC LINK ·', settle=1.2)
+        S.wait_for(lambda: top_by_title(S.snapshot(), 'AIDC LINK |'), what='요청서 다시 열기')
+        rec = placement(S, 'AIDC LINK |')
+        positions.append(tuple(rec['actual_client']) if rec else None)
+        inside = not [i for i in layout_issues(S, 'AIDC LINK |') if 'offscreen' in i['flags']]
+        S.click_text('확인 · 운영실로', settle=1.0)
+        S.check(S.step, f'요청서 다시 열기 {again + 2}회차: 같은 위치·버튼 화면 안·확인 한 번에 닫힘',
+                positions[-1] == positions[0] and inside and not top_by_title(S.snapshot(), 'AIDC LINK |'),
+                f'위치 {positions}')
 
     # ---------------------------------------------------------------- 5. 배정 검토
     S.step = '5 배정 검토'
@@ -204,7 +229,7 @@ def scenario(h):
     S.note(f'목표 카드 "{card}" / 금색 강조 {hl}')
     S.check(S.step, '목표 카드 안내 버튼과 금색 강조 대상이 같은 위젯', '배정 설정' in card and '배정 설정' in str(hl[1]),
             f'목표 카드: {card} / 강조: key={hl[0]} ({hl[1]})')
-    S.shot('step3_goal_vs_highlight', note='STEP 3: 목표 카드는 [배정 설정·선택], 금색 강조는 Inspector [배정 미리보기] 탭')
+    S.shot('step3_goal_vs_highlight', note=f'STEP 3: 목표 카드 "{card}" / 금색 강조 {hl[1]}')
     before = S.call(lambda: session().servers.available())
     S.click_text('배정 설정·선택', settle=1.5)
     S.wait_for(lambda: top_by_title(S.snapshot(), '배정 설정'), what='배정 설정창')
@@ -293,6 +318,7 @@ def scenario(h):
     res = top_by_title(S.snapshot(), '결과')
     texts = [l['text'] for l in res['labels']]
     S.check(S.step, '결과창 MISSION SUCCESS 표시', 'MISSION SUCCESS' in texts)
+    S.check(S.step, '처음부터 끝까지 관제실을 최대화하지 않음', S.call(lambda: S.root.state()) == 'normal')
     S.check(S.step, '결과창 점수·기한·반환 자원 = 100.0점 / 기한 내 완료 / GPU 7 · 전력 7',
             {'100.0점', '기한 내 완료', 'GPU 7 · 전력 7'} <= set(texts))
     S.check(S.step, '결과창 버튼 2개([다시 학습]·[메인 메뉴])', sorted(b['text'] for b in res['buttons']) == ['다시 학습', '메인 메뉴'],
@@ -333,7 +359,7 @@ def main():
         'repo_db_unchanged': hashes_before == hashes_after, 'repo_db_count': len(hashes_before),
         'temp_files_removed': leftovers, 'checks': h.checks,
         'shots': h.shots, 'window_events': h.monitor.events, 'burst': getattr(h, 'burst_summary', []),
-        'result_buttons': getattr(h, 'res_buttons', None), 'placements': h.placements, 'frame_offset_trace': h.frame_trace, 'log': h.log, 'preexisting_windows': len(others)}
+        'result_buttons': getattr(h, 'res_buttons', None), 'rack': getattr(h, 'rack', None), 'default_geometry': getattr(h, 'default_geometry', None), 'placements': h.placements, 'frame_offset_trace': h.frame_trace, 'log': h.log, 'preexisting_windows': len(others)}
     (out / 'result.json').write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding='utf-8')
     passed = sum(c['result'] == 'PASS' for c in h.checks)
     print(f"\n완료: 오류={result['error']} 검사 {passed}/{len(h.checks)} PASS · 실제 클릭 {h.clicks}회 · "
