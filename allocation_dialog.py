@@ -7,6 +7,7 @@ from server_console import server_views
 from aidc.ui.scroll_area import ScrollArea
 from version import VERSION
 from aidc.ui.window_placement import center_dialog
+from aidc.ui.ui_kit import PrimaryButton
 from server_widgets import (BG, PANEL, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             gpu_module, reset_hardware, ink)
 
@@ -36,6 +37,7 @@ class AllocationDialog(tk.Toplevel):
         self.confirmed = migration
         self.title(('작업 이전 계획' if migration else '배정 설정 · 운영 모드와 서버 배정안')+' · '+VERSION)
         self.configure(bg=BG)
+        self.withdraw()  # center_dialog가 위치를 정한 뒤 보여 줍니다(기본 위치의 빈 흰 창 점멸 방지).
         self.transient(parent)
         self.geometry('940x690')
         self.columnconfigure(0, weight=1)
@@ -47,42 +49,53 @@ class AllocationDialog(tk.Toplevel):
         body.columnconfigure(0, weight=1)
         self.selection = tk.IntVar(value=-1)
         self.mode_var = tk.StringVar(value=mode)
-        self.heading = tk.Label(body, bg=BG, fg=TEXT, font=(FONT, 11, 'bold'), anchor='w', justify='left')
+        self.heading = tk.Label(body, bg=BG, fg=TEXT, font=(FONT, 13, 'bold'), anchor='w', justify='left')
         self.heading.grid(row=0, sticky='ew', padx=14, pady=(12, 4))
+        # 두 단계로 나누어 읽습니다: ① 운영 모드(고성능/절약형 비교) → ② 서버 배정안.
+        self.mode_title = tk.Label(body, bg=BG, fg=CYAN, font=(FONT, 11, 'bold'), anchor='w',
+                                   text='① 운영 모드 선택 · 모드마다 필요한 자원과 처리 시간이 다릅니다')
+        self.mode_title.grid(row=1, sticky='ew', padx=14, pady=(6, 2))
         self.mode_frame = tk.Frame(body, bg=BG)
-        self.mode_frame.grid(row=1, sticky='ew', padx=12, pady=(0, 4))
+        self.mode_frame.grid(row=2, sticky='ew', padx=12, pady=(0, 4))
         self.mode_buttons = {}
         self.mode_rows = []
-        self.mode_reason = tk.Label(body, bg=BG, fg='#ffe08a', font=(FONT, 9), anchor='w', justify='left', wraplength=880)
-        self.mode_reason.grid(row=2, sticky='ew', padx=14)
+        self.mode_reason = tk.Label(body, bg=BG, fg='#ffe08a', font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.mode_reason.grid(row=3, sticky='ew', padx=14)
         if migration:
+            self.mode_title.grid_remove()
             self.mode_frame.grid_remove()
+        self.plan_title_label = tk.Label(body, bg=BG, fg=CYAN, font=(FONT, 11, 'bold'), anchor='w',
+                                         text=('이전 위치 선택 · 현재 수행의 새 서버 위치' if migration else
+                                               '② 서버 배정안 선택 · 서버별 GPU / 전력 배분 (표의 수치는 GPU / 전력 순서)'))
+        self.plan_title_label.grid(row=4, sticky='ew', padx=14, pady=(8, 2))
         self.auto_button = tk.Radiobutton(body, text='자동 추천 · 시작 시 현재 자원으로 다시 계산',
                                          variable=self.selection, value=-1, command=self.user_select,
                                          bg=BG, fg=CYAN, selectcolor=PANEL, activebackground=BG,
                                          activeforeground=CYAN, font=(FONT, 10), anchor='w')
-        self.auto_button.grid(row=3, sticky='ew', padx=12)
+        self.auto_button.grid(row=5, sticky='ew', padx=12)
         if migration:
             self.auto_button.grid_remove()
         self.cards = tk.Frame(body, bg=BG)
-        self.cards.grid(row=4, sticky='ew', padx=12, pady=6)
+        self.cards.grid(row=6, sticky='ew', padx=12, pady=6)
         self.canvas = tk.Canvas(body, bg=PANEL, height=200, highlightthickness=1, highlightbackground=EDGE)
-        self.canvas.grid(row=5, sticky='ew', padx=12)
+        self.canvas.grid(row=7, sticky='ew', padx=12)
         self.canvas.bind('<Configure>', lambda _: self.draw_preview())
-        self.notice = tk.Label(body, bg=BG, fg=MUTED, font=(FONT, 9), anchor='w', justify='left', wraplength=880)
-        self.notice.grid(row=6, sticky='ew', padx=12, pady=(6, 0))
-        self.change_label = tk.Label(body, bg=BG, fg='#ffe08a', font=(FONT, 9), anchor='w', justify='left', wraplength=880)
-        self.change_label.grid(row=7, sticky='ew', padx=12, pady=(4, 0))
-        self.impact_label = tk.Label(body, bg=BG, fg=CYAN, font=(FONT, 9), anchor='w', justify='left', wraplength=880)
-        self.impact_label.grid(row=8, sticky='ew', padx=12, pady=(2, 0))
-        self.summary_label = tk.Label(body, bg=BG, fg=TEXT, font=(FONT, 10, 'bold'), anchor='w', justify='left', wraplength=880)
-        self.summary_label.grid(row=9, sticky='ew', padx=12, pady=(6, 10))
+        self.notice = tk.Label(body, bg=BG, fg=MUTED, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.notice.grid(row=8, sticky='ew', padx=12, pady=(6, 0))
+        self.change_label = tk.Label(body, bg=BG, fg='#ffe08a', font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.change_label.grid(row=9, sticky='ew', padx=12, pady=(4, 0))
+        self.impact_label = tk.Label(body, bg=BG, fg=CYAN, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.impact_label.grid(row=10, sticky='ew', padx=12, pady=(2, 0))
+        self.summary_label = tk.Label(body, bg=BG, fg=TEXT, font=(FONT, 11, 'bold'), anchor='w', justify='left', wraplength=880)
+        self.summary_label.grid(row=11, sticky='ew', padx=12, pady=(6, 10))
         footer = tk.Frame(self, bg=BG)
         footer.grid(row=1, sticky='ew', padx=12, pady=(6, 10))
         footer.columnconfigure(0, weight=1)
         self.reload_button = self.button(footer, '현재 자원으로 다시 확인', self.reload)
         self.reload_button.grid(row=0, column=0, sticky='w')
-        self.start_button = self.button(footer, '선택한 계획으로 작업 시작', self.start)
+        # 이 창의 주요 행동: 선택한 계획으로 시작(대비가 강한 기본 버튼). 닫기·재조회는 보조 버튼입니다.
+        self.start_button = PrimaryButton(footer, '선택한 계획으로 작업 시작', self.start)
+        self.start_button.configure(font=(FONT, 12, 'bold'), padx=18, pady=8)
         if migration:
             self.start_button.configure(text='선택한 계획으로 이전 · 준비 10분')
         self.start_button.grid(row=0, column=1, padx=8)
@@ -101,7 +114,7 @@ class AllocationDialog(tk.Toplevel):
 
     @staticmethod
     def button(parent, text, command):
-        return tk.Button(parent, text=text, command=command, bg=PANEL, fg=CYAN,
+        return tk.Button(parent, text=text, command=command, bg=PANEL, fg=MUTED,
                          activebackground=EDGE, activeforeground=TEXT, font=(FONT, 10),
                          relief='flat', padx=12, pady=7)
 
@@ -120,7 +133,8 @@ class AllocationDialog(tk.Toplevel):
             self.build_mode_rows(run)
         self.heading.configure(text=f'요청 #{self.request_id} · {run.mission["company_name"]} · {p["label"]}'
                                f'  |  GPU {p["gpu"]} / 전력 {p["power"]}\n'
-                               '서버별 배정과 잔여량 비교 · 수치는 GPU / 전력 순서입니다.', wraplength=900)
+                               + ('이전할 새 서버 위치를 고르세요.' if self.migration else '운영 모드와 서버 배정안을 고른 뒤 작업을 시작하세요.'),
+                               wraplength=900)
         if not self.migration:
             # Chapter 2: 모드별 처리 시간·기한, 두 요청의 동시 실행 가능 여부를 판단 자료로 보여 줍니다.
             # 모드별 시간·기한은 위의 운영 모드 선택에 있으므로 두 고객 동시 실행 가능 여부만 덧붙입니다.
@@ -148,11 +162,11 @@ class AllocationDialog(tk.Toplevel):
             card.grid(row=0, column=i, sticky='nsew', padx=3)
             radio = tk.Radiobutton(card, text=self.plan_title(i), variable=self.selection, value=i,
                                    command=self.user_select, bg=PANEL, fg=CYAN, selectcolor=BG,
-                                   activebackground=PANEL, activeforeground=CYAN, font=(FONT, 10, 'bold'))
+                                   activebackground=PANEL, activeforeground=CYAN, font=(FONT, 11, 'bold'))
             radio.grid(row=0, columnspan=3, sticky='w')
             self.plan_buttons.append(radio)
             for column, text in enumerate(('서버', '배정 GPU/전력', '잔여 GPU/전력')):
-                tk.Label(card, text=text, bg=PANEL, fg=MUTED, font=(FONT, 9)).grid(row=1, column=column, padx=4)
+                tk.Label(card, text=text, bg=PANEL, fg=MUTED, font=(FONT, 10)).grid(row=1, column=column, padx=4)
             rows = []
             for row, view in enumerate(self.views, 2):
                 spec = view['spec']
@@ -162,9 +176,9 @@ class AllocationDialog(tk.Toplevel):
                 rows.append((spec.key, g, power, view['gpu_available']-g, view['power_available']-power))
                 for column, value in enumerate(values):
                     tk.Label(card, text=value, bg=PANEL, fg=TEXT if part else MUTED,
-                             font=(FONT, 9)).grid(row=row, column=column, padx=4, pady=2)
+                             font=(FONT, 10)).grid(row=row, column=column, padx=4, pady=2)
             self.comparison_rows.append(rows)
-            caption = tk.Label(card, text=self.caption(i, parts), bg=PANEL, fg=CYAN, font=(FONT, 9),
+            caption = tk.Label(card, text=self.caption(i, parts), bg=PANEL, fg=CYAN, font=(FONT, 10),
                                justify='left', anchor='w', wraplength=270)
             caption.grid(row=6, columnspan=3, pady=(5, 0), sticky='w')
             self.card_captions.append(caption)
@@ -184,8 +198,8 @@ class AllocationDialog(tk.Toplevel):
             self.heading.configure(text=self.heading.cget('text')+'\n이 조건에서 의미 있게 구별되는 배정안은 하나뿐입니다.')
         self.start_button.configure(state='normal' if self.options and self.confirmed else 'disabled')
         blocked = '' if self.migration else next((r['reason'] for r in self.mode_rows if r['key'] == self.mode and r['reason']), '')
-        self.notice.configure(text=('모드·배정안 선택은 자원을 점유하지 않습니다. 자동 추천을 포함해 계획을 직접 선택한 뒤 [선택한 계획으로 작업 시작]을 눌러야 시작하며, '
-                                    '직접 선택한 안은 슬롯까지 그대로 적용하고 시작 직전에 다시 검사합니다.'
+        self.notice.configure(text=('고르기만 해서는 자원을 점유하지 않습니다. 자동 추천을 포함해 계획을 직접 선택한 뒤 [선택한 계획으로 작업 시작]을 눌러야 시작하며, '
+                                    '시작 직전에 한 번 더 검사합니다.'
                                     if self.options else '배정 불가 · '+(blocked or result['reason'])+' · 조건을 확인한 후 다시 조회해 주세요.'),
                               fg=MUTED if self.options else RED)
         self.draw_preview()
@@ -206,13 +220,14 @@ class AllocationDialog(tk.Toplevel):
         for column, row in enumerate(self.mode_rows):
             self.mode_frame.columnconfigure(column, weight=1, uniform='modes')
             due = ('' if row['on_time'] is None else
-                   f' · 기한 {row["due_label"]} 준수 가능' if row['on_time'] else f' · 기한 {row["due_label"]}보다 {row["late_minutes"]}분 늦음')
-            text = (f'{row["label"]}\nGPU {row["gpu"]} / 전력 {row["power"]}\n처리 {row["minutes"]}분 → 지금 시작하면 {row["finish_label"]} 완료{due}\n'
-                    f'{row["status"]}')
+                   f'\n✔ 기한 {row["due_label"]} 준수 가능' if row['on_time'] else f'\n✖ 기한 {row["due_label"]}보다 {row["late_minutes"]}분 늦음')
+            consent = ('✔ ' if row['agreed'] else '⚠ ')+row['status']
+            text = (f'{row["label"]}\nGPU {row["gpu"]} / 전력 {row["power"]}\n처리 {row["minutes"]}분 → {row["finish_label"]} 완료{due}\n'
+                    f'{consent}')
             button = tk.Radiobutton(self.mode_frame, text=text, variable=self.mode_var, value=row['key'], command=self.change_mode,
                                     indicatoron=False, bg=PANEL, fg=TEXT if row['agreed'] else MUTED, selectcolor='#253746',
-                                    activebackground=EDGE, activeforeground=TEXT, font=(FONT, 9), justify='left', anchor='w',
-                                    padx=10, pady=6, relief='flat', highlightthickness=2, highlightbackground=EDGE)
+                                    activebackground=EDGE, activeforeground=TEXT, font=(FONT, 11), justify='left', anchor='w',
+                                    padx=12, pady=8, relief='flat', highlightthickness=2, highlightbackground=EDGE)
             button.grid(row=0, column=column, sticky='nsew', padx=3)
             self.mode_buttons[row['key']] = button
         current = next((r for r in self.mode_rows if r['key'] == self.mode), None)

@@ -20,6 +20,7 @@ from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload,
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
 from aidc.ui.result_presentation import failure_explanation
+from aidc.ui.ui_kit import PrimaryButton
 from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
 from request_summary import request_summary
@@ -573,7 +574,10 @@ class SimulatorApp:
         eta = getattr(s, 'remaining_minutes', 0)
         self.action_hint.configure(text=f'{self.mission["title"]}  |  진행 {getattr(s,"progress",0):.0f}% · 예상 잔여 {eta}분 (장애·복구 지연 제외)')
         if s.phase in ('ready','accepted'):
-            self.action_hint.configure(text='아직 자원이 배정되지 않았습니다. [배정 설정·선택]에서 운영 모드와 서버 배정안을 확인한 뒤 작업을 시작하세요.')
+            if s.phase == 'accepted':
+                self.action_hint.configure(text='요청을 수락했습니다 · 배정 대기 중입니다. 아직 서버와 자원은 점유하지 않았습니다. [배정 설정·선택]에서 운영 모드와 서버 배정안을 정해 작업을 시작하세요.')
+            else:
+                self.action_hint.configure(text='새 요청입니다. 조건과 기한을 확인한 뒤 [배정 설정·선택]으로 바로 배정하거나, 먼저 수락만 하고 나중에 배정할 수 있습니다.')
             if self.session.current.proposals:
                 proposal = self.session.current.proposals[-1]
                 status = {'pending':'고객 답변 대기 · 시작 전 답변 확인', 'accepted':'고객 동의 · 절약형으로 시작 가능',
@@ -625,7 +629,7 @@ class SimulatorApp:
                     or 'economy' in self.session.current.conditions['allowed_modes']):
                 options = [option for option in options if option[0] != 'propose']
             if s.phase != 'accepted':
-                options.insert(0, ('accept','수락만 · 배정 대기',lambda: self._perform(self.session.accept_request)))
+                options.insert(1, ('accept','요청 수락 · 배정은 나중에',lambda: self._perform(self.session.accept_request)))
         elif s.phase in ('incident','paused'):
             options = [(key, value['label'], lambda k=key: self.respond(k)) for key,value in RESPONSES.items()]
             options += [('delay','고객 지연 안내',lambda: self._perform(self.session.notify_delay)),
@@ -671,7 +675,10 @@ class SimulatorApp:
             self.action_frame.grid_remove()
         self.action_buttons = {}
         for index,(key,text,command) in enumerate(options):
-            b = ActionButton(self.action_frame, text, command, accent=AMBER if key in ('fail','report','reject') else CYAN)
+            if key == 'start':
+                b = PrimaryButton(self.action_frame, text, command, strong=True)  # 이 화면의 주요 행동
+            else:
+                b = ActionButton(self.action_frame, text, command, accent=AMBER if key in ('fail','report','reject') else CYAN)
             b.grid(row=0, column=index, sticky='ew', padx=(0, 6))
             self.action_frame.columnconfigure(index, weight=1, uniform='actions')
             self.action_buttons[key] = b
