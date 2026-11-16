@@ -13,6 +13,8 @@ from story_portraits import draw_portrait
 from aidc.ui.scroll_area import ScrollArea
 from aidc.ui.window_placement import center_dialog
 from aidc.story.chapters import CHAPTERS
+from aidc.ui.result_presentation import failure_explanation, result_actions
+from aidc.ui.result_widgets import failure_card, failure_heading
 
 
 def _mentor_box(parent, title, lines):
@@ -30,7 +32,7 @@ def _mentor_box(parent, title, lines):
 
 
 class ChapterCompleteDialog(tk.Toplevel):
-    def __init__(self, parent, result, select_mode, start_free, status, review, start_chapter2=None, tutorial=False, retry=None):
+    def __init__(self, parent, result, select_mode, start_free, status, review, start_chapter2=None, tutorial=False, retry=None, select_chapter=None):
         super().__init__(parent, bg=BG)
         name = '튜토리얼 — 관제실 첫걸음' if tutorial else CHAPTERS[1].heading
         self.title(name+' · 클리어')
@@ -44,11 +46,12 @@ class ChapterCompleteDialog(tk.Toplevel):
         label(top, name, 9, MUTED).grid(row=0, sticky='w')
         self.verdict = label(top, 'MISSION SUCCESS', 22, GREEN, True)
         self.verdict.grid(row=1, sticky='w')
-        self.congratulations = label(top, '첫 업무를 성공적으로 마쳤네요. 처음에는 복잡해 보여도 조금씩 익숙해질 겁니다.',
-                                     10, TEXT, justify='left', wraplength=560)
+        self.congratulations = label(top, '입문 완료 · 이제 첫 근무를 시작할 준비가 됐습니다.' if tutorial else
+                                     f'업무 {len(result.get("jobs", [1]))}건 완료 · 고객의 작업을 마치고 자원을 반환했습니다.',
+                                     12, TEXT, justify='left', wraplength=640)
         self.congratulations.grid(row=2, sticky='w')
         deadline = '기한 내 완료' if result['on_time'] is True else '기한 초과' if result['on_time'] is False else '기한 평가 제외'
-        self.full_text = (f'첫 번째 고객 업무를 완료했습니다.\n'
+        self.full_text = (f'이번 근무의 고객 업무를 완료했습니다.\n'
                           f'고객: {result["company"]}\n작업: {result["task"]}\n'
                           f'운영 점수: {result["score"]}점 · 완료 기한: {deadline}\n'
                           f'반환 GPU: {result["gpu"]}개 · 반환 전력: {result["power"]}단위\n'
@@ -78,16 +81,14 @@ class ChapterCompleteDialog(tk.Toplevel):
         notice = ('튜토리얼을 마쳤습니다. 스토리 도전은 별도 슬롯에서 제1장부터 시작합니다.' if tutorial else
                   '다음에는 여러 고객의 요청이 동시에 들어옵니다. [제2장 시작]으로 일본·미국 고객의 요청을 비교하고 서버를 배정해 보세요.\n'
                   '기존 Chapter 1 기록은 그대로 보존됩니다.' if start_chapter2 is not None else
-                  '다음에는 여러 고객 요청과 네트워크 장애도 경험하게 됩니다.\nChapter 2는 이후 개발 예정입니다. 지금은 자유 운영을 이어가실 수 있습니다.')
+                  '메인 메뉴에서 다른 기록을 선택하거나 다음 근무를 준비할 수 있습니다.')
         self.next_notice = label(body, notice, 10, MUTED, justify='left', wraplength=700)
         self.next_notice.grid(row=3, sticky='w', padx=22, pady=8)
         buttons = tk.Frame(self, bg=BG)
         buttons.grid(row=2, sticky='ew', padx=22, pady=(6, 10))
         buttons.columnconfigure((0, 1), weight=1)
         self.buttons = {}
-        for index, (key, text, command) in enumerate((
-            ('modes', '모드 선택 화면으로', select_mode), ('free', '자유 운영 모드 시작', start_free),
-            ('status', '스토리 진행 현황', status), ('review', '교육 내용 다시 보기', review))):
+        for index, (key, text, command) in enumerate(result_actions(None, select_chapter, select_mode)):
             button = ActionButton(buttons, text, command)
             button.grid(row=index//2, column=index%2, sticky='ew', padx=4, pady=2)
             self.buttons[key] = button
@@ -103,7 +104,7 @@ class ChapterCompleteDialog(tk.Toplevel):
 
 class Chapter2CompleteDialog(tk.Toplevel):
     """Chapter 2 실제 결과. 미션 성공/실패와 종합 점수, 고객별 표, 선배 분석을 먼저 보여 주고 긴 기록은 접어 둡니다."""
-    def __init__(self, parent, result, select_mode, start_free, status, review, retry=None, start_chapter3=None):
+    def __init__(self, parent, result, select_mode, start_free, status, review, retry=None, start_chapter3=None, select_chapter=None):
         super().__init__(parent, bg=BG)
         self.withdraw()
         success = result.get('mission') == 'success'
@@ -154,11 +155,16 @@ class Chapter2CompleteDialog(tk.Toplevel):
             note += ' · 종합 점수와 별개로 한 고객이라도 기한 내 정상 완료하지 못하면 미션은 실패입니다.'
         self.verdict_note = label(top, note, 10, TEXT, anchor='w', justify='left', wraplength=560)
         self.verdict_note.grid(row=2, column=0, sticky='w')
+        if not success:
+            self.failure = failure_explanation(result)
+            self.failure_title = failure_heading(top, self.failure)
 
         self.scroll = ScrollArea(self)
         self.scroll.grid(row=1, sticky='nsew')
         self.rowconfigure(1, weight=1)
         body = self.scroll.body
+        if not success:
+            failure_card(body, self.failure).grid(row=0, sticky='ew', padx=22, pady=(4, 12))
         stats = tk.Frame(body, bg=PANEL)
         stats.grid(row=1, sticky='ew', padx=22, pady=(4, 6))
         stats.columnconfigure(1, weight=1)
@@ -196,13 +202,15 @@ class Chapter2CompleteDialog(tk.Toplevel):
                                    + '\n· 자원: '+summary.get('resources', '')+'\n· 결과: '+summary.get('verdict', '')
                                    + '\n· 평가: '+('미션 성공' if success else '미션 실패'),
                                    10, TEXT, justify='left', anchor='w')
-        self.key_decisions.grid(row=3, sticky='w', padx=22, pady=(8, 2))
+        if success:
+            self.key_decisions.grid(row=3, sticky='w', padx=22, pady=(8, 2))
 
         analysis = ([page.text for page in chapter2_failure_pages(result['failure'])[:-2]][:4] if (not success and result.get('failure'))
                     else list(result.get('highlights') or [])[:4])
         self.mentor_lines = analysis or ['분석할 실패·성공 기록이 없습니다.']
         box, self.mentor_portrait, self.mentor_label = _mentor_box(body, '[선배 엔지니어의 분석]', self.mentor_lines)
-        box.grid(row=4, sticky='ew', padx=22, pady=(6, 2))
+        if success:
+            box.grid(row=4, sticky='ew', padx=22, pady=(6, 2))
 
         self.detail_shown = False
         self.detail_button = ActionButton(body, '상세 기록 보기 ▼', self.toggle_detail)
@@ -215,14 +223,12 @@ class Chapter2CompleteDialog(tk.Toplevel):
         buttons.grid(row=2, sticky='ew', padx=22, pady=(6, 10))
         buttons.columnconfigure((0, 1, 2, 3), weight=1)
         self.buttons = {}
-        for index, (key, text, command) in enumerate((
-            ('modes', '모드 선택 화면으로', select_mode), ('free', '자유 운영 모드 시작', start_free),
-            ('status', '스토리 진행 현황', status), ('review', '교육 내용 다시 보기', review))):
+        for index, (key, text, command) in enumerate(result_actions(None, select_chapter, select_mode)):
             button = ActionButton(buttons, text, command)
             button.grid(row=0, column=index, sticky='ew', padx=3, pady=2)
             self.buttons[key] = button
         if retry is not None:
-            button = ActionButton(buttons, '제2장 다시 도전 · 새 슬롯 (현재 기록 보존)', retry)
+            button = ActionButton(buttons, '다시 도전 · 새 슬롯' if result.get('practice') else '체크포인트부터 다시 도전 · 새 슬롯', retry)
             button.grid(row=1, column=0, columnspan=4, sticky='ew', padx=3, pady=2)
             self.buttons['retry'] = button
         if start_chapter3 is not None and success:
@@ -245,7 +251,7 @@ class Chapter2CompleteDialog(tk.Toplevel):
 class Chapter3CompleteDialog(tk.Toplevel):
     """Chapter 3 결과(v0.9-3a-1 압축판). 판정·성공 수 → 결과표 → 선배 평가 2~3문장 → 접힌 상세 기록.
     버튼은 스크롤 영역 밖 아래에 고정되어 창이 작아도 항상 보입니다."""
-    def __init__(self, parent, result, select_mode, start_free, status, review, retry=None, start_next=None, next_label=''):
+    def __init__(self, parent, result, select_mode, start_free, status, review, retry=None, start_next=None, next_label='', select_chapter=None):
         super().__init__(parent, bg=BG)
         self.withdraw()
         success = result.get('mission') == 'success'
@@ -269,13 +275,18 @@ class Chapter3CompleteDialog(tk.Toplevel):
         label(top, '성공한 미션', 9, MUTED).grid(row=2, column=1, sticky='e', padx=6)
         self.verdict_note = label(top, summary.get('verdict', ''), 10, TEXT, anchor='w', justify='left', wraplength=560)
         self.verdict_note.grid(row=2, column=0, sticky='w')
+        if not success:
+            self.failure = failure_explanation(result)
+            self.failure_title = failure_heading(top, self.failure)
 
         self.scroll = ScrollArea(self)
         self.scroll.grid(row=1, sticky='nsew')
         self.rowconfigure(1, weight=1)
         body = self.scroll.body
+        if not success:
+            failure_card(body, self.failure).grid(row=0, sticky='ew', padx=22, pady=(4, 12))
         table = tk.Frame(body, bg=PANEL)
-        table.grid(row=0, sticky='ew', padx=22, pady=(4, 4))
+        table.grid(row=1, sticky='ew', padx=22, pady=(4, 4))
         columns = summary.get('columns', ('미션', '장애 원인', '선택 대응', '복구 결과', '점수'))
         for column in range(len(columns)):
             table.columnconfigure(column, weight=(1, 2, 5, 2, 2, 2)[column] if len(columns) == 6 and column == 5 else (1, 2, 5, 2, 2)[column])
@@ -293,7 +304,8 @@ class Chapter3CompleteDialog(tk.Toplevel):
             self.table_cells.append(row_cells)
         self.mentor_lines = result.get('mentor') or ['분석할 장애 기록이 없습니다.']
         box, self.mentor_portrait, self.mentor_label = _mentor_box(body, '[선배 평가]', self.mentor_lines)
-        box.grid(row=1, sticky='ew', padx=22, pady=(6, 2))
+        if success:
+            box.grid(row=2, sticky='ew', padx=22, pady=(6, 2))
 
         lines = []
         for index, job in enumerate(result['jobs'] if not summary.get('detail_text') else ()):
@@ -313,7 +325,7 @@ class Chapter3CompleteDialog(tk.Toplevel):
         self.full_text = summary.get('detail_text') or '\n'.join(lines)
         self.detail_shown = False
         self.detail_button = ActionButton(body, '상세 기록 보기 ▼', self.toggle_detail)
-        self.detail_button.grid(row=2, sticky='w', padx=22, pady=(4, 2))
+        self.detail_button.grid(row=3, sticky='w', padx=22, pady=(4, 2))
         self.summary = ScrolledText(body, wrap='word', height=9, font=(FONT, 10), bg=PANEL, fg=TEXT, bd=0, padx=12, pady=10)
         self.summary.insert('1.0', self.full_text)
         self.summary.configure(state='disabled')
@@ -322,11 +334,10 @@ class Chapter3CompleteDialog(tk.Toplevel):
         buttons.grid(row=2, sticky='ew', padx=22, pady=(6, 10))
         buttons.columnconfigure((0, 1, 2), weight=1)
         self.buttons = {}
-        entries = [('retry', f'{name} 다시 도전', retry)] if retry is not None else []
+        entries = result_actions(retry, select_chapter, select_mode,
+                                 '다시 도전 · 새 슬롯' if result.get('practice') else '체크포인트부터 다시 도전')
         if start_next is not None and success:
             entries.insert(0, ('next', next_label, start_next))
-        entries += [('modes', '모드 선택', select_mode), ('status', '진행 현황', status),
-                    ('free', '자유 운영 모드 시작', start_free), ('review', '교육 내용 다시 보기', review)]
         for index, (key, text, command) in enumerate(entries):
             button = ActionButton(buttons, text, command)
             button.grid(row=index//3, column=index % 3, sticky='ew', padx=3, pady=2)
@@ -337,7 +348,7 @@ class Chapter3CompleteDialog(tk.Toplevel):
         """조회 전용. 상세 기록(수치·반환 자원·서버 상태)은 접어 두었다가 필요할 때만 펼칩니다."""
         self.detail_shown = not self.detail_shown
         if self.detail_shown:
-            self.summary.grid(row=3, sticky='nsew', padx=22)
+            self.summary.grid(row=4, sticky='nsew', padx=22)
             self.detail_button.configure(text='상세 기록 접기 ▲')
         else:
             self.summary.grid_remove()

@@ -19,6 +19,7 @@ from aidc.storage.checkpoints import capture, restore, checkpoint_path
 from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload, heading, chapter_state, STATE_LABELS
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
+from aidc.ui.result_presentation import failure_explanation
 from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
 from request_summary import request_summary
@@ -797,12 +798,12 @@ class SimulatorApp:
             if window is not None and window.winfo_exists():
                 window.destroy()
         self.tutorial_highlight.clear()
-        pages = [line.page() for line in chapter2_failure_pages(story.chapter2.failure)]
-        pages.insert(len(pages)-1, Dialogue('system', '현재 미션 평가\n'+'\n'.join(self.session.chapter2_evaluation_lines())).page())
-        # 다른 고객의 작업이 진행 중이어도 바로 새 슬롯에서 다시 도전할 수 있습니다.
-        self.story_window = self.build_popup(StoryDialogueDialog, self.root, pages,
-                                             confirm=(CHAPTERS[2].label+' 다시 도전', self.retry_chapter2), chapter_label=CHAPTERS[2].heading)
-        self.story_window.close_button.configure(text='기존 진행 계속 보기')
+        from aidc.ui.chapter_failure import ChapterFailureDialog
+        # 확정 실패만 안내합니다. 닫으면 다른 고객의 기존 작업을 계속 확인할 수 있습니다.
+        self.story_window = self.build_popup(ChapterFailureDialog, self.root, CHAPTERS[2].heading,
+                                             failure_explanation({'failure': story.chapter2.failure}),
+                                             self.retry_chapter2, self.return_to_modes,
+                                             select_chapter=self.return_to_chapters)
         self.story_window.bind('<Destroy>', self.tutorial_window_closed, add='+')
         try:
             self.session.mark_chapter2_failure_seen()
@@ -989,8 +990,10 @@ class SimulatorApp:
             self.chapter_window.lift()
             return self.chapter_window
         self.chapter_window = ChapterFailureDialog(
-            self.root, heading(self.session), chapter_state(self.session)[1],
-            self.retry_current_chapter, self.return_to_modes, self.show_story_review)
+            self.root, heading(self.session), failure_explanation(run=self.session.runs[
+                self.session.story.onboarding.rid if self.session.story.intro_active else self.session.story.request_id]),
+            self.retry_current_chapter, self.return_to_modes, select_chapter=self.return_to_chapters,
+            retry_label='튜토리얼 다시 도전' if self.session.mode == 'tutorial' else '체크포인트부터 다시 도전')
         return self.chapter_window
 
     def record_chapter_start(self):
@@ -1018,26 +1021,28 @@ class SimulatorApp:
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
                 retry=self.retry_chapter3b,
                 start_next=self.begin_training if not self.session.training_unlock_reason() else None,
-                next_label=CHAPTERS['lab'].heading+' · 시작')
+                next_label=CHAPTERS['lab'].heading+' · 시작', select_chapter=self.return_to_chapters)
         elif self.session.story.chapter3 is not None:
             self.chapter_window = Chapter3CompleteDialog(
                 self.root, self.session.chapter3_result(), self.return_to_modes,
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
                 retry=self.retry_chapter3,
                 start_next=self.begin_chapter3b if not self.session.chapter3b_unlock_reason() else None,
-                next_label=CHAPTERS['3b'].heading+' · 시작')
+                next_label=CHAPTERS['3b'].heading+' · 시작', select_chapter=self.return_to_chapters)
         elif self.session.story.chapter2 is not None:
             self.chapter_window = Chapter2CompleteDialog(
                 self.root, self.session.chapter2_result(), self.return_to_modes,
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
                 retry=self.retry_chapter2,
-                start_chapter3=self.begin_chapter3 if not self.session.chapter3_unlock_reason() else None)
+                start_chapter3=self.begin_chapter3 if not self.session.chapter3_unlock_reason() else None,
+                select_chapter=self.return_to_chapters)
         else:
             self.chapter_window = ChapterCompleteDialog(
                 self.root, self.session.chapter_result(), self.return_to_modes,
                 lambda:self.return_to_modes('free'), self.show_story_status, self.show_story_review,
                 start_chapter2=self.begin_chapter2 if self.session.mode != 'tutorial' else None,
-                tutorial=self.session.mode == 'tutorial', retry=self.retry_current_chapter)
+                tutorial=self.session.mode == 'tutorial', retry=self.retry_current_chapter,
+                select_chapter=self.return_to_chapters if self.session.mode == 'story' else None)
         self.chapter_window.title(heading(self.session)+' · 결과')
         return self.chapter_window
 
@@ -1239,7 +1244,9 @@ class SimulatorApp:
         self.root.rowconfigure(2, weight=0)
         self.mode_selector = ModeSelection(self.root, db_factory=self.db_factory, story_slots=self.story_slots,
                                            preferred_story=self.db.path if self.session.story else None)
-        if mode == 'chapter2':
+        if mode == 'chapters':
+            self.mode_selector.show_chapter_menu()
+        elif mode == 'chapter2':
             self.mode_selector.new_story(2)
         elif mode == 'chapter3':
             self.mode_selector.new_story(3)
@@ -1252,6 +1259,9 @@ class SimulatorApp:
         elif mode is not None:
             self.mode_selector.start(mode)
         return True
+
+    def return_to_chapters(self):
+        return self.return_to_modes('chapters')
 
     def confirm_story_resources(self):
         if (self.resources.selected != 'A'
@@ -1571,6 +1581,8 @@ class ModeSelection:
                 label(panel, text, 11, TEXT, wraplength=730, justify='left').pack(anchor='w', pady=(0, 10))
                 buttons['new'] = ActionButton(panel, '새 도전 시작 · '+CHAPTERS[1].heading, self.new_story)
                 buttons['new'].pack(fill='x')
+                buttons['chapters'] = ActionButton(panel, '장 선택 · 저장된 시작 지점', self.show_chapter_menu)
+                buttons['chapters'].pack(fill='x', pady=(6, 0))
             elif category == 'tutorial':
                 label(panel, '선배와 기본 조작을 익힙니다. 실패해도 새 튜토리얼에서 반복할 수 있습니다.',
                       11, MUTED, wraplength=720, justify='left').pack(anchor='w', pady=(0, 10))
@@ -1609,6 +1621,8 @@ class ModeSelection:
     def show_menu(self, category):
         if self.starting or self.app is not None:
             return
+        if getattr(self, 'chapter_panel', None) is not None:
+            self.chapter_panel.pack_forget()
         paths = self.paths_by_mode[category] = self.story_slots.for_mode(category)
         choice = self.choices[category]
         choice.configure(values=[self.story_slots.title(p)+self.story_slots.describe(p) for p in paths])
@@ -1642,6 +1656,58 @@ class ModeSelection:
     def show_story_menu(self):
         self.show_menu('story')
 
+    def show_chapter_menu(self):
+        if self.starting or self.app is not None:
+            return
+        self.mode_panel.pack_forget()
+        for panel in self.panels.values():
+            panel.pack_forget()
+        if getattr(self, 'chapter_panel', None) is not None:
+            self.chapter_panel.destroy()
+        panel = self.chapter_panel = tk.Frame(self.menu_body, bg=PANEL, padx=22, pady=14)
+        panel.pack(fill='x')
+        label(panel, '장 선택', 18, CYAN, True).pack(anchor='w')
+        label(panel, '보존된 장 시작 지점에서 새 슬롯으로 도전합니다.', 11, MUTED).pack(anchor='w', pady=(4, 10))
+        paths = self.story_slots.for_mode('story')
+        choice = ttk.Combobox(panel, state='readonly', font=(FONT, 11),
+                              values=[self.story_slots.title(p) for p in paths])
+        choice.pack(fill='x')
+        if paths:
+            choice.current(paths.index(self.preferred_story) if self.preferred_story in paths else len(paths)-1)
+        else:
+            choice.set('저장된 정규 도전이 없습니다.')
+        rows = tk.Frame(panel, bg=PANEL)
+        rows.pack(fill='x', pady=10)
+        def render(_=None):
+            for widget in rows.winfo_children():
+                widget.destroy()
+            if not paths:
+                label(rows, '스토리 도전에서 제1장을 새로 시작해 주세요.', 11, MUTED).pack(anchor='w')
+                return
+            source = paths[choice.current()]
+            found = False
+            for chapter in CHAPTERS.values():
+                if checkpoint_path(source, chapter.key).is_file():
+                    found = True
+                    ActionButton(rows, chapter.heading+' · 시작 지점부터',
+                                 lambda c=chapter.key, p=source: self.start_checkpoint(p, c)).pack(fill='x', pady=3)
+            if not found:
+                label(rows, '이 기록에는 보존된 장 시작 지점이 없습니다.\n기존 진행은 스토리 도전의 이어하기에서 확인할 수 있습니다.',
+                      11, MUTED, justify='left', wraplength=680).pack(anchor='w')
+        choice.bind('<<ComboboxSelected>>', render)
+        render()
+        ActionButton(panel, '메인 메뉴', self.show_modes).pack(anchor='w', pady=(4, 0))
+
+    def start_checkpoint(self, source, chapter):
+        if self.starting or self.app is not None:
+            return
+        try:
+            target = restore(self.story_slots, source, chapter)
+        except Exception as exc:
+            messagebox.showerror('재도전 준비 오류', str(exc), parent=self.root)
+            return
+        return self.start('story', path=target, resume=True, checkpoint_start=True)
+
     def show_practice_menu(self):
         self.show_menu('practice')
 
@@ -1649,6 +1715,8 @@ class ModeSelection:
         self.show_menu('tutorial')
 
     def show_modes(self):
+        if getattr(self, 'chapter_panel', None) is not None:
+            self.chapter_panel.pack_forget()
         if not self.starting:
             for panel in self.panels.values():
                 panel.pack_forget()

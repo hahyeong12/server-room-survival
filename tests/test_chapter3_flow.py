@@ -35,7 +35,7 @@ class DiagnoseGuideTests(unittest.TestCase):
         self.assertNotIn("교육 담당자 · Chapter 1')", source)
         main = (ROOT / 'main.py').read_text(encoding='utf-8')
         self.assertIn('chapter_label=heading(self.session)', main)
-        self.assertIn("chapter_label=CHAPTERS[2].heading", main)
+        self.assertIn('ChapterFailureDialog, self.root, CHAPTERS[2].heading', main)
         from story import StoryProgress
         s = practice3()
         self.assertEqual(s.story.chapter_label, 'Chapter 3')
@@ -226,9 +226,9 @@ class ResultTableTests(unittest.TestCase):
         src = (ROOT / 'chapter_dialog.py').read_text(encoding='utf-8')
         tail = src[src.index('class Chapter3CompleteDialog'):]
         self.assertIn("buttons.grid(row=2", tail)
-        self.assertIn("{name} 다시 도전", tail)
-        self.assertIn("('modes', '모드 선택'", tail)
-        self.assertIn("('status', '진행 현황'", tail)
+        self.assertIn('result_actions(retry, select_chapter, select_mode', tail)
+        self.assertNotIn('자유 운영 모드 시작', tail)
+        self.assertIn('failure_heading(top, self.failure)', tail)
         self.assertIn('상세 기록 보기', tail)
 
 
