@@ -1,4 +1,4 @@
-"""story-002: 기존 하네스로 제1장을 실제 마우스 입력으로 한 번 플레이합니다.
+"""story-003: 전경 Preflight를 통과한 뒤 제1장을 실제 마우스로 한 번 플레이합니다.
 
 Windows 저장소 루트: python tests/qa/autoplay_story_ch1.py <새 출력 디렉터리>
 실행 중 마우스/키보드를 사용하지 마세요. 게임 코드와 사용자 저장은 변경하지 않습니다.
@@ -57,6 +57,32 @@ def intersection(a, b):
     return box if box[0] < box[2] and box[1] < box[3] else None
 
 
+def subtract(rect, cover):
+    inside = intersection(rect, cover)
+    if inside is None:
+        return [rect]
+    l, t, r, b = rect
+    x, y, z, w = inside
+    return [p for p in ((l, t, r, y), (l, w, r, b), (l, y, x, w), (z, y, r, w))
+            if p[0] < p[2] and p[1] < p[3]]
+
+
+class PreflightGate:
+    """30초 안에 전경·가림·클릭 위치가 연속 4초 안정적이어야 시작합니다(1초 확인+3초 예고)."""
+    def __init__(self, started):
+        self.started, self.ready_since = started, None
+
+    def observe(self, now, ready):
+        if now-self.started >= 30:
+            return 'timeout'
+        if not ready:
+            self.ready_since = None
+            return 'waiting'
+        if self.ready_since is None:
+            self.ready_since = now
+        return 'passed' if now-self.ready_since >= 4 else 'countdown' if now-self.ready_since >= 1 else 'stable'
+
+
 class OcclusionWatch:
     """창 제목·PID·핸들을 보존하지 않는 가림 구간 기록. 시계는 호출자가 제공합니다."""
     def __init__(self):
@@ -81,39 +107,109 @@ class StoryHarness(Harness):
     """공용/튜토리얼 코드는 보존하고 이번 실행에만 더 엄격한 입력·캡처 보호를 적용."""
     def __init__(self, out_dir):
         super().__init__(out_dir)
+        # ctypes 기본 int 반환에 HWND가 잘리지 않도록 포인터 폭을 명시합니다.
+        import ctypes.wintypes as wt
+        for name, args, result in (
+            ('GetAncestor', [wt.HWND, wt.UINT], wt.HWND),
+            ('GetForegroundWindow', [], wt.HWND), ('WindowFromPoint', [POINT], wt.HWND),
+            ('IsWindow', [wt.HWND], wt.BOOL), ('IsWindowVisible', [wt.HWND], wt.BOOL),
+            ('GetWindowRect', [wt.HWND, ctypes.POINTER(wt.RECT)], wt.BOOL),
+            ('GetClientRect', [wt.HWND, ctypes.POINTER(wt.RECT)], wt.BOOL),
+            ('ClientToScreen', [wt.HWND, ctypes.POINTER(POINT)], wt.BOOL),
+            ('GetWindowThreadProcessId', [wt.HWND, ctypes.POINTER(wt.DWORD)], wt.DWORD),
+        ):
+            fn = getattr(user32, name)
+            fn.argtypes, fn.restype = args, result
         self.watch, self.guard_lock = OcclusionWatch(), threading.Lock()
         self.occlusions = self.watch.events
+        self.preflight_data = {'status': 'not_started', 'samples': []}
+        self.play_attempted = False
+        self.guard_events = []
 
     def calibrate(self):
-        # 백그라운드 실행 셸에서 띄운 Tk가 다른 앱 뒤에 남지 않게 자체 창만 최초 한 번 활성화합니다.
-        hwnd = self.call(lambda: user32.GetAncestor(self.root.winfo_id(), 2))
-        before = user32.GetForegroundWindow() == hwnd
-        self.call(lambda: (self.root.lift(), self.root.focus_force()))
-        time.sleep(.4)
-        self.activation = {'foreground_before': before, 'foreground_after': user32.GetForegroundWindow() == hwnd,
-                           'own_window_activated_once': True}
-        return super().calibrate()
+        result = super().calibrate()
+        self.preflight()
+        return result
+
+    def preflight(self):
+        self.step = 'Preflight'
+        ids = self.call(lambda: {'client': self.root.winfo_id(), 'frame': int(self.root.wm_frame(), 0),
+                                'ancestor': user32.GetAncestor(self.root.winfo_id(), 2)})
+        self.preflight_data['game_hwnds'] = {key: hex(value) for key, value in ids.items()}
+        self.preflight_data['frame_matches_ancestor'] = ids['frame'] == ids['ancestor']
+        self.preflight_data['handles_owned_and_valid'] = all(user32.IsWindow(v) and window_pid(v) == os.getpid() for v in ids.values())
+        if not self.preflight_data['handles_owned_and_valid'] or ids['frame'] != ids['ancestor']:
+            self.preflight_data['status'] = 'invalid_game_hwnd'
+            raise AbortQA('Preflight: 게임 HWND 검증 실패 — 플레이 시작 안 함')
+        self.game_hwnd = ids['frame']
+        original_title = self.call(lambda: self.root.title())
+        self.call(lambda: self.root.title('서버실 생존기 | QA 준비 — 게임 창을 활성화하세요 (최대 30초)'))
+        started = time.monotonic()
+        gate, notified, last_count = PreflightGate(started), False, None
+        self.preflight_data['status'] = 'waiting'
+        while True:
+            button = self.call(lambda: self.widget_info(self.selector.buttons['story']))
+            point = (button['x']+button['w']//2, button['y']+button['h']//2)
+            regions, _ = self.foreign_regions(click_point=point)
+            hit, pid = owner_at(*point)
+            foreground = user32.GetForegroundWindow() == self.game_hwnd
+            clickable = pid == os.getpid() and user32.GetAncestor(hit, 2) == self.game_hwnd
+            ready = foreground and clickable and not regions and not button['offscreen'] and not button['covered']
+            now = time.monotonic()
+            status = gate.observe(now, ready)
+            sample = {'foreground_matches_game': foreground, 'button_point_owned_and_correct_top': clickable,
+                      'root_in_z_order': self.last_z['root_found'], 'own_dialogs_above_root': self.last_z['own_dialogs'],
+                      'occlusions': regions, 'state': status}
+            old = self.preflight_data['samples']
+            if not old or {k:v for k,v in old[-1].items() if k != 'elapsed'} != sample:
+                old.append(dict(sample, elapsed=round(now-started, 3)))
+            self.preflight_data['elapsed'] = round(now-started, 3)
+            if status == 'passed':
+                self.preflight_data['status'] = 'passed'
+                self.call(lambda: self.root.title(original_title))
+                self.note('Preflight 통과: 실제 HWND·전경·Z 순서·클릭 위치 확인. 자동 플레이 시작')
+                self.play_attempted = True
+                return
+            if status == 'timeout':
+                self.preflight_data['status'] = 'timeout'
+                raise AbortQA('Preflight 30초 실패 — 실제 플레이 시도 0회')
+            if not ready and not notified:
+                self.note('게임 창이 다른 창 뒤에 있습니다. 게임 창을 한 번 직접 활성화해 주세요. '
+                          '이후 자동 플레이가 시작되면 마우스와 키보드를 사용하지 마세요.')
+                notified = True
+                self.preflight_data['manual_activation_requested'] = True
+            if status == 'countdown':
+                count = max(1, 4-int(now-gate.ready_since))
+                if count != last_count:
+                    self.note(f'전경 안정 확인: {count}초 후 자동 플레이 시작 — 입력을 멈춰 주세요')
+                    last_count = count
+            elif not ready:
+                last_count = None
+            time.sleep(.1)
 
     def root_bounds(self):
         import ctypes.wintypes as wt
-        hwnd = user32.GetAncestor(self.root.winfo_id(), 2)
+        hwnd = getattr(self, 'game_hwnd', None) or user32.GetAncestor(self.root.winfo_id(), 2)
         rect, point = wt.RECT(), POINT(0, 0)
         user32.GetClientRect(hwnd, ctypes.byref(rect))
         user32.ClientToScreen(hwnd, ctypes.byref(point))
         bounds = self.phys((point.x, point.y, point.x+rect.right, point.y+rect.bottom))
         return hwnd, bounds
 
-    def foreign_regions(self):
+    def foreign_regions(self, click_point=None):
         """루트 위 외부 창의 교차 영역만 조회. 감시·클릭에서 같은 전체 루트 영역을 검사합니다."""
         import ctypes.wintypes as wt
         hwnd, bounds = self.root_bounds()
-        foreign, found_root = [], []
+        foreign, found_root, own_above = [], [], []
         callback_type = ctypes.WINFUNCTYPE(wt.BOOL, wt.HWND, wt.LPARAM)
 
         def visit(other, _):
             if other == hwnd:
                 found_root.append(True)
                 return False
+            if user32.IsWindowVisible(other) and window_pid(other) == os.getpid():
+                own_above.append(self.phys(window_rect(other)))
+                return True
             if user32.IsWindowVisible(other) and window_pid(other) != os.getpid():
                 cloaked = wt.DWORD()
                 ctypes.windll.dwmapi.DwmGetWindowAttribute(other, 14, ctypes.byref(cloaked), ctypes.sizeof(cloaked))
@@ -121,30 +217,49 @@ class StoryHarness(Harness):
                     r = self.phys(window_rect(other))
                     overlap = intersection(r, bounds)
                     if overlap:
-                        foreign.append({'window_rect': r, 'overlap': overlap,
-                                        'overlap_pixels': (overlap[2]-overlap[0])*(overlap[3]-overlap[1])})
+                        pieces = [overlap]
+                        for cover in own_above:
+                            pieces = [p for piece in pieces for p in subtract(piece, cover)]
+                        for piece in pieces:
+                            physical_point = self.phys((*click_point, *click_point))[:2] if click_point else None
+                            foreign.append({'window_rect': r, 'overlap': piece,
+                                            'overlap_pixels': (piece[2]-piece[0])*(piece[3]-piece[1]),
+                                            'covers_whole_game': piece == bounds,
+                                            'covers_click_point': bool(physical_point and piece[0] <= physical_point[0] < piece[2]
+                                                                       and piece[1] <= physical_point[1] < piece[3])})
             return True
         user32.EnumWindows(callback_type(visit), 0)
         if not found_root:
             raise AbortQA('게임 루트 창의 Z 순서 확인 불가')
+        self.last_z = {'root_found': True, 'own_dialogs': len(own_above)}
         now = round(time.perf_counter()-self.t0, 3)
         with self.guard_lock:
-            expired = self.watch.observe(foreign, now, self.step)
+            # 포인트별 필드는 변하므로 지속 시간 기록은 공통 기하 정보만 사용합니다.
+            expired = self.watch.observe([{k:v for k,v in r.items() if k != 'covers_click_point'} for r in foreign], now, self.step)
         return foreign, expired
 
-    def wait_clear(self):
+    def wait_clear(self, point=None, capture_box=None):
         """최대 5초만 기다리며 외부 앱의 창·포커스를 변경하지 않습니다."""
         deadline, clear_since, waited = time.monotonic()+5, None, False
         while True:
-            regions, expired = self.foreign_regions()
+            regions, _ = self.foreign_regions(click_point=point)
+            foreground_ours = window_pid(user32.GetForegroundWindow()) == os.getpid()
+            blocked = ([r for r in regions if r['covers_click_point']] if point else
+                       [r for r in regions if capture_box is None or intersection(r['overlap'], capture_box)])
+            self.last_guard = {'step': self.step, 'operation': 'click' if point else 'capture',
+                               'click_point_blocked': bool(blocked) if point else None,
+                               'screenshot_only_overlap': bool(regions) and not bool(blocked) if point else None,
+                               'foreground_owned': foreground_ours, 'own_dialogs': self.last_z['own_dialogs']}
+            if not self.guard_events or {k:v for k,v in self.guard_events[-1].items() if k != 't'} != self.last_guard:
+                self.guard_events.append(dict(self.last_guard, t=round(time.perf_counter()-self.t0, 3)))
             now = time.monotonic()
-            if not regions:
+            if not blocked and foreground_ours:
                 clear_since = now if clear_since is None else clear_since
                 if not waited or now-clear_since >= .3:
                     return
             else:
                 clear_since, waited = None, True
-            if expired or now >= deadline:
+            if now >= deadline:
                 raise AbortQA('외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)')
             time.sleep(.1)
 
@@ -156,19 +271,22 @@ class StoryHarness(Harness):
         box = intersection(box, self.phys(self.work_area())) if box else None
         if box is None:
             raise AbortQA('게임 클라이언트 바깥 캡처 중단')
-        if self.foreign_regions()[0]:
+        if any(intersection(r['overlap'], box) for r in self.foreign_regions()[0]):
             raise AbortQA('외부 창 가림 중 캡처 금지')
         frame = super()._grab(box)
-        if self.foreign_regions()[0]:
+        if any(intersection(r['overlap'], box) for r in self.foreign_regions()[0]):
             raise AbortQA('캡처 도중 외부 창 등장: 프레임 폐기')
         return frame
 
     def shot(self, *args, **kwargs):
+        if self.preflight_data['status'] != 'passed':
+            raise AbortQA('Preflight 실패/대기 중: 화면 저장 안 함')
         self.wait_clear()
         return super().shot(*args, **kwargs)
 
     def click(self, item, dx=None, dy=None, settle=.6):
-        self.wait_clear()
+        if self.preflight_data['status'] != 'passed':
+            raise AbortQA('Preflight 이전 클릭 금지')
         # 현재 좌표를 다시 조회합니다. 가려진 위젯이나 화면 밖은 대체 좌표를 추측하지 않습니다.
         if item.get('path'):
             item = self.call(lambda: self.widget_info(self.root.nametowidget(item['path'])))
@@ -176,13 +294,13 @@ class StoryHarness(Harness):
             raise AbortQA('보이지 않는 버튼 클릭 중단: '+item['text'])
         x = item['x']+(item['w']//2 if dx is None else dx)
         y = item['y']+(item['h']//2 if dy is None else dy)
+        self.wait_clear(point=(x, y))
         expected = self.call(lambda: user32.GetAncestor(self.root.nametowidget(item['top']).winfo_id(), 2))
         if owner_at(x, y)[1] != os.getpid() or user32.GetAncestor(owner_at(x, y)[0], 2) != expected:
             raise AbortQA('다른 창이 클릭 좌표를 차지함: 입력 없이 중단')
         user32.SetCursorPos(x, y)
         time.sleep(.08)
-        if self.foreign_regions()[0]:
-            self.wait_clear()
+        self.wait_clear(point=(x, y))
         if owner_at(x, y)[1] != os.getpid() or user32.GetAncestor(owner_at(x, y)[0], 2) != expected:
             raise AbortQA('입력 직전 창 변경: 클릭 중단')
         _mouse(MOUSEEVENTF_LEFTDOWN)
@@ -462,6 +580,18 @@ def self_check():
     assert request_numbers('GPU 요구량\n3\n 개\n전력 요구량\n4\n 단위') == (3, 4)
     assert intersection((0, 0, 10, 10), (5, 5, 20, 20)) == (5, 5, 10, 10)
     assert intersection((0, 0, 10, 10), (10, 0, 20, 10)) is None
+    assert subtract((0, 0, 10, 10), (0, 0, 10, 10)) == []
+    pieces = subtract((0, 0, 10, 10), (2, 2, 8, 8))
+    assert sum((p[2]-p[0])*(p[3]-p[1]) for p in pieces) == 64
+    assert all(intersection(p, (2, 2, 8, 8)) is None for p in pieces)
+    gate = PreflightGate(0)
+    assert gate.observe(0, False) == 'waiting'
+    assert gate.observe(1, True) == 'stable'
+    assert gate.observe(2, True) == 'countdown'
+    assert gate.observe(3, False) == 'waiting'  # 전경을 잃으면 카운트다운도 취소
+    assert gate.observe(4, True) == 'stable'
+    assert gate.observe(8, True) == 'passed'
+    assert PreflightGate(0).observe(30, True) == 'timeout'
     watch = OcclusionWatch()
     regions = [{'overlap': (1, 1, 2, 2)}]
     assert not watch.observe(regions, 1, 'click') and watch.current is not None
@@ -488,13 +618,13 @@ def main():
     if '--self-check' in sys.argv:
         self_check()
         return
-    out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.gettempdir())/'srs_qa_story_002'
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.gettempdir())/'srs_qa_story_003'
     out.mkdir(parents=True, exist_ok=True)
     # 덮어쓰기/암묵적 반복 실행 금지. 재실행은 새로운 출력 디렉터리를 명시해야 합니다.
     marker = out/'attempt.json'
     with marker.open('x', encoding='utf-8') as f:
         json.dump({'started': datetime.now(ZoneInfo('Asia/Seoul')).isoformat(timespec='seconds')}, f)
-    print('실제 GUI 자동 플레이 1회: 마우스/키보드를 사용하지 마세요.', flush=True)
+    print('Preflight 준비: 게임 창을 직접 활성화해 주세요. 확인·카운트다운 뒤에는 입력하지 마세요.', flush=True)
     before = db_hashes()
     h = StoryHarness(out)
     h.env, h.placements, h.layouts, h.goals, h.jobs = {}, [], [], [], []
@@ -516,6 +646,7 @@ def main():
                   'commit': subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip(),
                   'python': platform.python_version(), 'os': platform.system()+' '+platform.release(), 'env': h.env,
                   'completed': getattr(h, 'completed', False), 'error': error, 'clicks': h.clicks,
+                  'preflight': h.preflight_data, 'play_attempts': int(h.play_attempted),
                   'passed': sum(c['result'] == 'PASS' for c in h.checks), 'failed': sum(c['result'] == 'FAIL' for c in h.checks),
                   'repo_db_unchanged': before == after, 'repo_db_count': len(before), 'temp_files_removed': removed,
                   'checks': h.checks, 'jobs': h.jobs, 'goals': h.goals, 'layouts': h.layouts, 'placements': h.placements,
@@ -524,7 +655,7 @@ def main():
                   'qa_source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   'shots': h.shots, 'window_events': getattr(getattr(h, 'monitor', None), 'events', []),
                   'capture_occlusions': h.occlusions,
-                  'startup_activation': getattr(h, 'activation', None),
+                  'native_guard_events': h.guard_events,
                   'frame_offset_trace': h.frame_trace,
                   'log': [line.replace(str(ROOT), '<repo>').replace(str(h.tmp), '<qa-temp>') for line in h.log]}
         (out/'result.json').write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding='utf-8')
