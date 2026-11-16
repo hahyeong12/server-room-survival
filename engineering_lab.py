@@ -22,6 +22,7 @@ from aidc.learning.training import QUESTIONS, STAGE_INFO, STAGES
 from ui import BG, PANEL, RAISED, BORDER, TEXT, MUTED, CYAN, BLUE, GREEN, RED, AMBER, FONT, ActionButton, label
 from aidc.ui.ui_kit import MONO, HEALTH_TONES, Gauge, PrimaryButton, StatusChip, ToggleButton, tone_color
 from aidc.ui.window_placement import center_dialog
+from aidc.ui.terminal_clipboard import bind_entry_paste, bind_output_copy
 
 TABS = ('운영 상태', '네트워크 구조', '서버 내부', '명령어 학습', '가상 터미널')
 TRAINING_TAB = '연수 진행'
@@ -163,12 +164,15 @@ class EngineeringLabDialog(tk.Toplevel):
                 self.on_result()
 
     def _destroyed(self, event):
-        if event.widget is self and self.anim_timer is not None:
-            try:
-                self.after_cancel(self.anim_timer)
-            except tk.TclError:
-                pass
-            self.anim_timer = None
+        if event.widget is self:
+            for name in ('anim_timer', '_term_notice_timer'):
+                timer = getattr(self, name, None)
+                if timer is not None:
+                    try:
+                        self.after_cancel(timer)
+                    except tk.TclError:
+                        pass
+                    setattr(self, name, None)
 
     def _schedule(self):
         self.anim_timer = self.after(ANIMATION_MS, self._tick)
@@ -1001,6 +1005,7 @@ class EngineeringLabDialog(tk.Toplevel):
         box.tag_configure('prompt', foreground=CYAN)
         box.tag_configure('error', foreground=RED)
         box.configure(state='disabled')
+        bind_output_copy(box, lambda n: self.notify(f'✓ 출력 {n}자를 클립보드에 복사했습니다', GREEN))
         return box
 
     def _set_box(self, box, result):
@@ -1193,11 +1198,18 @@ class EngineeringLabDialog(tk.Toplevel):
     def _build_terminal(self, frame):
         frame.columnconfigure(0, weight=1)
         frame.rowconfigure(1, weight=1)
-        label(frame, '교육용 가상 터미널 · 실제 Windows/Linux 명령을 실행하지 않습니다 · 출력은 현재 게임 상태로 계산한 시뮬레이션입니다',
-              9, AMBER, True, anchor='w').grid(row=0, sticky='w', padx=10, pady=(8, 4))
+        head = tk.Frame(frame, bg=BG)
+        head.grid(row=0, sticky='ew', padx=10, pady=(8, 4))
+        head.columnconfigure(0, weight=1)
+        label(head, '교육용 가상 터미널 · 실제 Windows/Linux 명령을 실행하지 않습니다 · 출력은 현재 게임 상태로 계산한 시뮬레이션입니다',
+              9, AMBER, True, anchor='w').grid(row=0, column=0, sticky='w')
+        self.term_status = label(head, '', 9, GREEN, anchor='e')
+        self.term_status.grid(row=0, column=1, sticky='e', padx=(8, 0))
         self.term = tk.Text(frame, bg=TERM_BG, fg=TERM_FG, insertbackground=TERM_FG, font=(MONO, 10), bd=0, padx=10, pady=8,
                             wrap='char', highlightthickness=1, highlightbackground=BORDER)
         self.term.grid(row=1, sticky='nsew', padx=8)
+        # 출력은 읽기 전용입니다. 드래그해 선택하면 복사되고, 아래 입력창(밝은 테두리)에서만 명령을 입력합니다.
+        bind_output_copy(self.term, lambda n: self._term_notice(f'✓ 출력 {n}자를 클립보드에 복사했습니다'))
         for tag, color in (('meta', MUTED), ('prompt', CYAN), ('error', RED), ('hint', AMBER)):
             self.term.tag_configure(tag, foreground=color)
         self._term_write('AIDC Engineering Lab 가상 터미널 (교육용 시뮬레이션)\n', 'meta')
@@ -1212,12 +1224,20 @@ class EngineeringLabDialog(tk.Toplevel):
                                    disabledbackground=PANEL, disabledforeground=MUTED)
         self.term_entry.grid(row=0, column=1, sticky='ew', ipady=4)
         self.term_entry.bind('<Return>', lambda _: self.submit_terminal())
+        bind_entry_paste(self.term_entry, lambda n: self._term_notice(f'✓ 클립보드 {n}자를 입력창에 붙여넣었습니다 · Enter로 실행'))
         self.term_entry.bind('<Up>', lambda _: self._history(-1))
         self.term_entry.bind('<Down>', lambda _: self._history(1))
         self.term_run = PrimaryButton(bottom, '실행', self.submit_terminal)
         self.term_run.grid(row=0, column=2, padx=(8, 0))
         self.term_hint = label(frame, '', 9, MUTED, anchor='w', justify='left')
         self.term_hint.grid(row=3, sticky='w', padx=10, pady=(2, 8))
+
+    def _term_notice(self, text):
+        """복사/붙여넣기 결과를 잠깐 보여 줍니다(화면 표시만, 게임 상태와 무관)."""
+        self.term_status.configure(text=text)
+        if getattr(self, '_term_notice_timer', None) is not None:
+            self.after_cancel(self._term_notice_timer)
+        self._term_notice_timer = self.after(2500, lambda: self.term_status.winfo_exists() and self.term_status.configure(text=''))
 
     def terminal_locked(self):
         return not self.training_mode or self.stage_locked('terminal')
@@ -1233,7 +1253,7 @@ class EngineeringLabDialog(tk.Toplevel):
         elif self._terminal_stage() == 'independent':
             text = 'Stage 5 · 힌트 없음. 입력 오류 안내만 표시합니다.'
         else:
-            text = '무엇을 확인할지 스스로 정해 입력하세요. help로 지원 명령을 볼 수 있습니다.  (↑/↓: 이전 명령)'
+            text = '무엇을 확인할지 스스로 정해 입력하세요. help로 지원 명령을 볼 수 있습니다.  (↑/↓: 이전 명령 · 출력 드래그: 복사 · 입력창 우클릭: 붙여넣기)'
         self.term_hint.configure(text=text, fg=AMBER if locked else MUTED)
 
     def _term_write(self, text, tag=()):
