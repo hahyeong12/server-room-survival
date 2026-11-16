@@ -3,6 +3,19 @@ from dataclasses import dataclass, field
 
 COUNTRIES = ('싱가포르', '일본', '미국')
 STEPS = ('arrival', 'request', 'preview', 'allocation', 'time', 'complete')
+# 화면 위쪽 목표 카드의 5단계(짧은 튜토리얼도 단계감 있게). 각 단계는 '지금 할 행동 하나'를 가리킵니다.
+CARD_STEPS = (('arrival', '안내 확인'), ('request', '요청 확인'), ('preview', '배정 검토'),
+              ('allocation', '작업 시작'), ('time', '시간 빨리감기'))
+STEP_ACTIONS = {'arrival': '안내 창에서 [다음]을 눌러 시작하세요',
+                'request': '[요청 확인]을 눌러 고객 조건과 기한을 읽으세요',
+                'preview': '[배정 설정·선택]에서 운영 모드와 배정안을 고르세요',
+                'allocation': '[선택한 계획으로 작업 시작]을 누르세요',
+                'time': '[⏩ 시간 빨리감기]로 작업을 끝까지 진행하세요'}
+STEP_MENTOR = {'arrival': '천천히 해도 괜찮아요. 한 번에 한 단계씩만 해요.',
+               'request': '고객이 원하는 자원과 기한부터 확인해요.',
+               'preview': '고르기만 해서는 자원을 쓰지 않아요. 편하게 비교해 봐요.',
+               'allocation': '좋아요. 이제 선택한 안으로 시작해요.',
+               'time': '시간을 흘려보내면 진행률이 올라가요. 완료되면 자원이 돌아와요.'}
 EVENTS = tuple(f'intro_{kind}_{n}_{step}' for kind in ('tutorial', 'shift')
                for n in range(1, 4) for step in (*STEPS, 'closed'))
 
@@ -54,6 +67,35 @@ class OnboardingProgress:
                 'time': '시간을 빠르게 진행해 다음 상황을 확인해 보세요.',
                 'complete': '업무 완료 · 결과를 확인하세요.', 'closed': '요청 종료 · 실패 원인과 재도전 방법을 확인하세요.'}[self.step]
         return prefix + ' — ' + text
+
+    @property
+    def pages(self):
+        """시작 대화(역할, 짧은 문장) 목록. 한 페이지에 한 가지 말만 합니다."""
+        if self.done:
+            return [('mentor', self.dialogue)]
+        if self.step != 'arrival':
+            return [('mentor', self.objective)]
+        if self.kind == 'tutorial':
+            return [('mentor', '첫 출근을 환영해요! 오늘은 고객 요청 하나를 끝까지 처리해 볼 거예요.'),
+                    ('mentor', '순서는 네 단계예요. ① 요청 확인 ② 배정 검토 ③ 작업 시작 ④ 시간 빨리감기.'),
+                    ('mentor', '화면 위쪽 목표 카드가 지금 할 일 하나만 알려 줘요. 천천히 따라오세요.')]
+        return [('mentor', '기본 조작은 익혔죠? 오늘은 고객 세 곳의 업무를 한 건씩 맡아요.'),
+                ('mentor', '싱가포르 → 일본 → 미국 순서예요. 앞 업무가 끝나고 자원이 돌아와야 다음 요청이 와요.'),
+                ('mentor', '세 건을 정상 완료하면 다음 장으로 가요. 위쪽 목표 카드를 따라가 보세요.')]
+
+    @property
+    def card(self):
+        """목표 카드용 조회 전용 값: 단계 번호, 지금 할 행동 하나, 단계 표시. 게임 상태를 바꾸지 않습니다."""
+        keys = [key for key, _ in CARD_STEPS]
+        current = len(keys) if self.done else keys.index(self.step) if self.step in keys else len(keys)-1
+        pips = [(name, 'done' if index < current else 'current' if index == current and not self.step == 'closed' else 'todo')
+                for index, (_, name) in enumerate(CARD_STEPS)]
+        key = keys[min(current, len(keys)-1)]
+        return {'kind': self.kind, 'step_no': min(current+1, len(keys)), 'total': len(keys), 'done': self.done,
+                'closed': self.step == 'closed', 'title': CARD_STEPS[min(current, len(keys)-1)][1],
+                'action': '' if self.done else '요청이 종료되었습니다. 실패 결과를 확인하세요' if self.step == 'closed' else STEP_ACTIONS[key],
+                'mentor': '' if self.done or self.step == 'closed' else STEP_MENTOR[key], 'pips': pips,
+                'job': (len(self.request_ids), self.total) if self.kind == 'shift' else None}
 
     @property
     def dialogue(self):

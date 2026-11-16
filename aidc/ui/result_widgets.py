@@ -28,10 +28,10 @@ def tone_card(parent, title, body, tone='cyan', icon='', body_size=12):
 def stat_tile(parent, name, value, tone='cyan'):
     """큰 숫자/상태 하나를 보여 주는 타일(점수·기한·반환 자원 등)."""
     tile = tk.Frame(parent, bg=PANEL, highlightthickness=1, highlightbackground=BORDER, padx=14, pady=8)
-    tile.name = label(tile, name, 10, MUTED, anchor='w')
-    tile.name.pack(anchor='w')
-    tile.value = label(tile, value, 18, TONES.get(tone, CYAN), True, anchor='w')
-    tile.value.pack(anchor='w')
+    tile.name_label = label(tile, name, 10, MUTED, anchor='w')
+    tile.name_label.pack(anchor='w')
+    tile.value_label = label(tile, value, 18, TONES.get(tone, CYAN), True, anchor='w')
+    tile.value_label.pack(anchor='w')
     return tile
 
 

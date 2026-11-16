@@ -35,6 +35,15 @@ def centered_bounds(parent_bounds, area, size, margin=12, decoration=(16, 40)):
     return width, height, x, y
 
 
+def frame_offset(dialog, parent):
+    """창틀(제목줄·테두리) 바깥 좌표와 클라이언트 좌표의 차이. 숨긴(withdraw) 창은 아직 틀 정보가 없어 0으로 나오므로,
+    같은 방식으로 꾸며진 부모 창의 차이를 대신 씁니다(대화창이 제목줄 높이만큼 아래로 치우치는 것을 막음)."""
+    dx, dy = dialog.winfo_rootx()-dialog.winfo_x(), dialog.winfo_rooty()-dialog.winfo_y()
+    if (dx, dy) == (0, 0) and not dialog.winfo_viewable():
+        dx, dy = parent.winfo_rootx()-parent.winfo_x(), parent.winfo_rooty()-parent.winfo_y()
+    return max(0, dx), max(0, dy)
+
+
 def center_dialog(dialog, parent, size=(820, 470), minimum=(740, 430)):
     parent.update_idletasks()
     bounds = (parent.winfo_rootx(), parent.winfo_rooty(), parent.winfo_width(), parent.winfo_height())
@@ -42,7 +51,7 @@ def center_dialog(dialog, parent, size=(820, 470), minimum=(740, 430)):
     width, height, x, y = centered_bounds(bounds, area, size)
     dialog.minsize(min(minimum[0], width), min(minimum[1], height))
     # geometry의 좌표는 창틀 기준이고 Tk 위젯 좌표는 클라이언트 기준입니다.
-    dx, dy = dialog.winfo_rootx()-dialog.winfo_x(), dialog.winfo_rooty()-dialog.winfo_y()
+    dx, dy = frame_offset(dialog, parent)
     x, y = max(area[0]+12, x-dx), max(area[1]+12, y-dy)
     dialog.geometry(f'{width}x{height}{x:+d}{y:+d}')
     if sys.platform == 'win32' and (x < 0 or y < 0):

@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinter.scrolledtext import ScrolledText
 from game import game_time, GameState
+from aidc.ui.window_placement import center_dialog
 
 BG, PANEL, RAISED, BORDER = '#080f1d', '#101c2e', '#17273d', '#263b54'
 TEXT, MUTED, CYAN, BLUE = '#e3edf8', '#91a7c1', '#38d9d0', '#6d9fff'
@@ -73,14 +74,15 @@ class Tooltip:
 class TextDialog(tk.Toplevel):
     def __init__(self, parent, title, text):
         super().__init__(parent, bg=BG)
+        self.withdraw()  # 내용을 만든 뒤 부모 중앙에 한 번만 보여 줍니다.
         self.title(title)
-        self.geometry('800x510')
         self.minsize(520, 330)
         box = ScrolledText(self, wrap='word', bg=PANEL, fg=TEXT, font=(FONT, 11), padx=18, pady=15)
         box.pack(fill='both', expand=True, padx=10, pady=10)
         box.insert('1.0', text)
         box.configure(state='disabled')
         self.text = box
+        center_dialog(self, parent, size=(800, 510), minimum=(520, 330))
 
 
 class MessageDialog(tk.Toplevel):
@@ -522,8 +524,8 @@ class ResourcePanel(tk.Frame):
 class RejectionDialog(tk.Toplevel):
     def __init__(self, parent, submit):
         super().__init__(parent, bg=PANEL)
+        self.withdraw()
         self.title('고객 요청 거절')
-        self.geometry('520x310')
         self.minsize(450, 280)
         self.transient(parent)
         self.submit = submit
@@ -536,6 +538,7 @@ class RejectionDialog(tk.Toplevel):
         self.note.pack(fill='both', expand=True, padx=18, pady=8)
         self.confirm_button = ActionButton(self, '거절 기록 저장', self.confirm, accent=AMBER)
         self.confirm_button.pack(fill='x', padx=18, pady=12)
+        center_dialog(self, parent, size=(520, 310), minimum=(450, 280))
         self.grab_set()
     def confirm(self):
         reason, note = self.reason.get(), self.note.get('1.0', 'end').strip()

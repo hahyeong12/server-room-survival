@@ -576,7 +576,7 @@ class StoryProgress:
     @property
     def dialogue(self):
         if self.onboarding and self.chapter2 is None:
-            return [Dialogue('mentor', self.onboarding.dialogue)]
+            return [Dialogue(role, text) for role, text in self.onboarding.pages]
         if self.training is not None:
             if self.training.done:
                 return [Dialogue('mentor', RESULT_OUTRO)]

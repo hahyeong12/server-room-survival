@@ -13,7 +13,7 @@ from story_portraits import draw_portrait
 from aidc.ui.scroll_area import ScrollArea
 from aidc.ui.window_placement import center_dialog
 from aidc.story.chapters import CHAPTERS
-from aidc.ui.result_presentation import (complete_actions, failure_explanation, result_actions, success_headline,
+from aidc.ui.result_presentation import (complete_actions, failure_explanation, success_headline,
                                          success_mentor_lines, success_tiles)
 from aidc.ui.result_widgets import button_bar, failure_card, failure_heading, tile_row, tone_card
 

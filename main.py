@@ -20,13 +20,31 @@ from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload,
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
 from aidc.ui.result_presentation import failure_explanation
-from aidc.ui.ui_kit import PrimaryButton
+from aidc.ui.ui_kit import PrimaryButton, StatusChip
+from aidc.ui.goal_card import GoalCard
+from aidc.ui.window_placement import center_dialog
 from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
 from request_summary import request_summary
 from ui import (BG, PANEL, BORDER, TEXT, MUTED, CYAN, GREEN, RED, AMBER, FONT,
                 ActionButton, RejectionDialog, MessageDialog,
                 TextDialog, label, request_status_of, status_of)
+
+
+def status_tone(run, color):
+    """요청 상태를 배지 색 역할로 바꿉니다(순수 함수, 표시 전용). 빨강=위험/실패, 청록=정상 진행, 회색=대기."""
+    state = run.state
+    if run.terms.get('expired') or (state.phase == 'finished' and not state.succeeded):
+        return 'failed'
+    if state.phase in ('incident', 'paused'):
+        return 'fault'
+    if state.phase == 'recovering':
+        return 'recover'
+    if state.phase == 'running':
+        return 'ok'
+    if state.phase == 'finished':
+        return 'done'
+    return 'warn' if run.request['status'] == 'waiting' else 'idle'
 
 
 class SimulatorApp:
@@ -116,8 +134,15 @@ class SimulatorApp:
         style.configure('Treeview',bordercolor=BORDER,lightcolor=BORDER,darkcolor=BORDER)
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(2, weight=1)
-        header = tk.Frame(self.root, bg=BG, padx=16, pady=8)
-        header.grid(row=0, sticky='ew')
+        top = tk.Frame(self.root, bg=BG)
+        top.grid(row=0, sticky='ew')
+        header = tk.Frame(top, bg=BG, padx=16, pady=8)
+        header.pack(fill='x')
+        if self.session.story:
+            # 현재 목표는 하단 긴 문장이 아니라 위쪽의 별도 카드(단계 배지·행동 하나·단계 표시)로 보여 줍니다.
+            self.goal_card = GoalCard(top)
+            self.goal_card.pack(fill='x', padx=12, pady=(0, 6))
+            self.story_objective = self.goal_card.title
         label(header, 'AIDC', 22, CYAN, True).pack(side='left')
         mode_label = '스토리 모드' if self.session.story else '자유 운영 모드'
         label(header, f'ULSAN / {VERSION} · {mode_label}', 11, bold=True).pack(side='left', padx=12)
@@ -179,7 +204,10 @@ class SimulatorApp:
         controls.grid(row=3, sticky='ew', padx=12, pady=(0, 5))
         controls.columnconfigure(0, weight=1)
         self.detail_title = label(controls, size=13, bold=True, anchor='w')
-        self.detail_title.grid(row=0, sticky='ew')
+        self.detail_title.grid(row=0, column=0, sticky='ew')
+        # 상태는 글줄 대신 색·기호가 있는 배지로 먼저 보여 줍니다.
+        self.status_chip = StatusChip(controls, 'idle', '대기', size=11)
+        self.status_chip.grid(row=0, column=1, sticky='e', padx=(10, 0))
         self.action_hint = label(controls, size=10, color=MUTED, anchor='w', justify='left')
         self.action_hint.grid(row=1, sticky='ew', pady=(3, 5))
         self.action_hint.bind('<Configure>', lambda e: self.action_hint.configure(wraplength=max(300, e.width-5)))
@@ -206,9 +234,9 @@ class SimulatorApp:
         tools.grid(row=4, sticky='ew', pady=(0, 5))
         self.time_buttons = {}
         # 라벨과 +10/+30/+60분을 하나의 [시간 빨리감기] 기능으로 묶어 교육에서도 그룹 단위로 강조합니다.
-        self.time_group = tk.Frame(tools, bg=BG, highlightthickness=0, padx=6, pady=3)
+        self.time_group = tk.Frame(tools, bg=PANEL, highlightthickness=1, highlightbackground=CYAN, padx=10, pady=4)
         self.time_group.pack(side='left')
-        label(self.time_group, '⏩ 시간 빨리감기', 10, CYAN, True).pack(side='left', padx=(0, 10))
+        label(self.time_group, '⏩ 시간 빨리감기', 11, CYAN, True).pack(side='left', padx=(0, 10))
         for minutes in (10, 30, 60):
             b = ActionButton(self.time_group, f'+{minutes}분', lambda m=minutes: self.advance_time(m))
             b.pack(side='left', padx=(0, 6))
@@ -223,9 +251,6 @@ class SimulatorApp:
             self.story_bar = tk.Frame(self.root, bg=PANEL, padx=12, pady=5)
             self.story_bar.grid(row=5, sticky='ew', padx=12, pady=(0, 5))
             self.story_bar.columnconfigure(0, weight=1)
-            self.story_objective = label(self.story_bar, size=11, color=CYAN, bold=True, anchor='w', justify='left')
-            self.story_objective.grid(row=0, column=0, sticky='ew')
-            self.story_objective.bind('<Configure>', lambda e:self.story_objective.configure(wraplength=max(300, e.width-4)))
             self.story_help_button = ActionButton(self.story_bar, '교육 도움말', self.show_story_help)
             self.story_help_button.grid(row=0, column=1, padx=6)
             self.story_skip_button = ActionButton(self.story_bar, '튜토리얼 건너뛰기', self.skip_tutorial, accent=AMBER)
@@ -258,7 +283,7 @@ class SimulatorApp:
         self.preview_plan()
         if self.session.story:
             story = self.session.story
-            self.story_objective.configure(text=f'{heading(self.session)} · 현재 목표: {self.session.story_objective()}')
+            self.update_goal_card()
             self.story_skip_button.configure(state='disabled' if story.tutorial_completed else 'normal')
             self.resource_confirm_button.configure(state='normal' if story.step == 'resources' else 'disabled')
             training = story.training
@@ -336,13 +361,31 @@ class SimulatorApp:
         if lab is not None and lab.winfo_exists():
             lab.refresh()  # 같은 세션 상태를 다시 읽기만 합니다.
 
+    def update_goal_card(self):
+        """세션의 현재 목표를 위쪽 목표 카드에 반영합니다(표시 전용, 게임 상태를 바꾸지 않음)."""
+        story = self.session.story
+        if not story or not hasattr(self, 'goal_card') or not self.goal_card.winfo_exists():
+            return
+        phase = self.story_phase or 'ACTION'
+        head = heading(self.session)
+        if story.intro_active and story.chapter2 is None:
+            card = story.onboarding.card
+            if card['done'] or card['closed']:
+                self.goal_card.set('RESULT', self.session.story_objective(), kicker=head, phase='FEEDBACK' if card['done'] else 'ACTION')
+                return
+            kicker = head+(f' · 업무 {card["job"][0]}/{card["job"][1]}' if card['job'] else '')
+            self.goal_card.set(f'STEP {card["step_no"]}/{card["total"]}', card['title'], card['action'], kicker,
+                               card['pips'], card['mentor'], phase)
+            return
+        self.goal_card.set(phase, f'{head} · {self.session.story_objective()}', phase=phase)
+
     def update_tutorial_highlight(self):
         """현재 사실에서 대상을 재계산합니다. 대화/복습을 읽는 동안 관제실은 점멸하지 않습니다."""
         highlight = self.tutorial_highlight
         story = self.session.story
         if (story and not self.closed and not self.transitioning
                 and self.story_objective.winfo_exists()):
-            self.story_objective.configure(text=f'{heading(self.session)} · {self.story_phase} · 현재 목표: {self.session.story_objective()}')
+            self.update_goal_card()
         if getattr(self, 'highlight_deferred', False):
             # 단계가 바뀐 직후에는 피드백/교육창이 먼저 열리므로, 다음 대상 강조를 그 뒤로 미룹니다(순간 점멸 방지).
             highlight.clear()
@@ -570,7 +613,8 @@ class SimulatorApp:
         if self.session.hardware_status(self.session.current):
             name += ' · '+self.session.hardware_status(self.session.current)
             color = RED if self.session.hardware_servers(self.session.current) else AMBER
-        self.detail_title.configure(text=f'요청 #{r["id"]} · {self.mission["company_name"]} / {self.mission["country"]} · {name}', fg=color)
+        self.detail_title.configure(text=f'요청 #{r["id"]} · {self.mission["company_name"]} / {self.mission["country"]}', fg=TEXT)
+        self.status_chip.set(status_tone(self.session.current, color), name)
         eta = getattr(s, 'remaining_minutes', 0)
         self.action_hint.configure(text=f'{self.mission["title"]}  |  진행 {getattr(s,"progress",0):.0f}% · 예상 잔여 {eta}분 (장애·복구 지연 제외)')
         if s.phase in ('ready','accepted'):
@@ -1499,8 +1543,8 @@ class SimulatorApp:
         return TextDialog(self.root, '작업 이벤트 / 고객 피드백', text)
     def show_history(self):
         win = tk.Toplevel(self.root, bg=BG)
+        win.withdraw()
         win.title('전체 수행 기록 · 더블클릭으로 상세 로그')
-        win.geometry('950x420')
         self.history = self.make_list(win, ('id','client','plan','status','score'),
                                       ('수행 ID','고객','모드','결과','점수'), (70,220,140,140,80), 10)
         self.history.pack(fill='both', expand=True, padx=10, pady=10)
@@ -1513,6 +1557,7 @@ class SimulatorApp:
                 self.history.insert('', 'end', iid=f'request-{rid}',
                                     values=(f'요청 {rid}', run.mission['company_name'], '미배정', '미처리 · 기한 만료', 0))
         self.history.bind('<Double-1>', self.show_record)
+        center_dialog(win, self.root, size=(950, 420), minimum=(700, 320))
         return win
     def show_record(self, _=None):
         selected = self.history.selection()
@@ -1535,6 +1580,26 @@ class SimulatorApp:
         self.root.destroy()
 
 
+def draw_mode_icon(canvas, kind):
+    """모드 카드의 단순한 아이콘(외부 이미지 없이 Canvas 도형으로 그립니다)."""
+    if kind == 'play':
+        canvas.create_oval(6, 4, 56, 54, outline=CYAN, width=3)
+        canvas.create_polygon(25, 17, 25, 41, 44, 29, fill=CYAN, outline=CYAN)
+    elif kind == 'book':
+        gold = '#ffe08a'
+        canvas.create_polygon(6, 12, 30, 18, 30, 52, 6, 46, outline=gold, fill='', width=3)
+        canvas.create_polygon(34, 18, 58, 12, 58, 46, 34, 52, outline=gold, fill='', width=3)
+        for y in (26, 34, 42):
+            canvas.create_line(11, y-4, 25, y, fill=gold, width=2)
+            canvas.create_line(39, y, 53, y-4, fill=gold, width=2)
+    else:
+        for index, led in enumerate((GREEN, CYAN, AMBER)):
+            top = 4+index*18
+            canvas.create_rectangle(6, top, 58, top+14, outline='#6d9fff', width=2)
+            canvas.create_oval(12, top+4, 18, top+10, fill=led, outline='')
+            canvas.create_line(26, top+7, 50, top+7, fill='#6d9fff', width=2)
+
+
 class ModeSelection:
     """중앙 모드 메뉴와 독립 스토리 슬롯 선택. 메뉴에서는 DB를 열지 않습니다."""
     def __init__(self, root, db_factory=Database, story_slots=None, preferred_story=None):
@@ -1551,32 +1616,52 @@ class ModeSelection:
         self.frame = tk.Frame(root, bg=BG)
         self.frame.pack(fill='both', expand=True)
         self.content = tk.Frame(self.frame, bg=BG)
-        self.content.place(relx=.5, rely=.5, anchor='center', width=860)
+        self.content.place(relx=.5, rely=.5, anchor='center', width=1060)
         self.frame.bind('<Configure>', self.layout_content)
-        title = tk.Frame(self.content, bg=BG)
-        title.pack(anchor='w')
-        icon = tk.Canvas(title, width=76, height=40, bg=BG, highlightthickness=0)
-        icon.pack(side='left', padx=(0, 12))
+        # 게임 타이틀 화면: 큰 로고와 한 줄 소개 → 독립 모드 카드 3장(아이콘·소개·목적·시작 버튼).
+        banner = tk.Frame(self.content, bg=BG)
+        banner.pack(fill='x', pady=(0, 20))
+        icon = tk.Canvas(banner, width=76, height=40, bg=BG, highlightthickness=0)
+        icon.pack()
         reset_hardware(icon)
         gpu_module(icon, 6, 6, 64, 27, 'available')
-        label(title, APP_NAME, 30, CYAN, True).pack(side='left')
-        label(self.content, f'{APP_NAME_EN} · 울산 AI 데이터센터 운영 시뮬레이션', 14, MUTED).pack(anchor='w', pady=(8, 12))
+        self.title_label = label(banner, APP_NAME, 38, CYAN, True)
+        self.title_label.pack(pady=(6, 0))
+        label(banner, f'{APP_NAME_EN} · 울산 AI 데이터센터 운영 시뮬레이션', 13, MUTED).pack(pady=(2, 0))
+        tk.Frame(banner, bg=CYAN, height=2, width=140).pack(pady=(12, 0))
         self.menu_body = tk.Frame(self.content, bg=BG)
         self.menu_body.pack(fill='x')
         self.mode_panel = tk.Frame(self.menu_body, bg=BG)
         self.mode_panel.pack(fill='x')
-        self.buttons = {}
-        for mode, title, text, command in (
-            ('tutorial', '튜토리얼', '관제실·GPU·전력·고객 요청의 기본 조작을 배웁니다. 본편 기록과 별도로 반복할 수 있습니다.', self.show_tutorial_menu),
-            ('story', '스토리 도전', '제1장~제5장을 순서대로 진행합니다. 실제 업무와 학습 행동으로 다음 장을 엽니다.', self.show_story_menu),
-            ('practice', '자유·연습', '자유 운영과 장별 연습, Engineering Lab을 이용합니다. 본편 진급과 별도입니다.', self.show_practice_menu)):
-            card = tk.Frame(self.mode_panel, bg=PANEL, padx=22, pady=12)
-            card.pack(fill='x', pady=(0, 12))
-            self.buttons[mode] = ActionButton(card, title, command)
-            self.buttons[mode].pack(anchor='w')
-            description = label(card, text, 11, MUTED, wraplength=760, justify='left')
-            description.pack(anchor='w', pady=(7, 0))
-            card.bind('<Configure>', lambda e, text=description:text.configure(wraplength=max(300, e.width-44)))
+        self.buttons, self.mode_cards = {}, {}
+        for column, (mode, kind, title, intro, purpose, command) in enumerate((
+            ('tutorial', 'play', '튜토리얼', '관제실 기본 조작을 따라 해 보세요.',
+             '요청 확인부터 작업 완료까지, 고객 요청 한 건을 처음부터 끝까지 익힙니다.', self.show_tutorial_menu),
+            ('story', 'book', '스토리 도전', '신입 엔지니어가 되어 서버실에서 살아남으세요.',
+             '제1장~제5장을 순서대로 진행합니다. 실제 업무와 학습으로 다음 장이 열립니다.', self.show_story_menu),
+            ('practice', 'rack', '자유·연습', '내 방식대로 운영하거나 장별로 연습하세요.',
+             '자유 운영, 장별 연습, Engineering Lab. 본편 진급 기록과는 별도입니다.', self.show_practice_menu))):
+            self.mode_panel.columnconfigure(column, weight=1, uniform='modecards')
+            card = self.mode_cards[mode] = tk.Frame(self.mode_panel, bg=PANEL, highlightthickness=2,
+                                                    highlightbackground=BORDER, padx=20, pady=18, cursor='hand2')
+            card.grid(row=0, column=column, sticky='nsew', padx=(0 if column == 0 else 8, 0))
+            art = tk.Canvas(card, width=72, height=60, bg=PANEL, highlightthickness=0)
+            art.pack(anchor='w')
+            draw_mode_icon(art, kind)
+            heading_label = label(card, title, 20, TEXT, True)
+            heading_label.pack(anchor='w', pady=(8, 2))
+            intro_label = label(card, intro, 12, CYAN, wraplength=260, justify='left')
+            intro_label.pack(anchor='w', fill='x')
+            purpose_label = label(card, '목적 · '+purpose, 10, MUTED, wraplength=260, justify='left')
+            purpose_label.pack(anchor='w', fill='x', pady=(8, 14))
+            self.buttons[mode] = PrimaryButton(card, '시작 / 이어하기  ▶', command, strong=True)
+            self.buttons[mode].pack(side='bottom', fill='x')
+            card.bind('<Configure>', lambda e, a=intro_label, b=purpose_label: [w.configure(wraplength=max(180, e.width-48)) for w in (a, b)])
+            for widget in (card, art, heading_label, intro_label, purpose_label):
+                widget.bind('<Button-1>', lambda _, c=command: c())
+            for widget in (card, art, heading_label, intro_label, purpose_label, self.buttons[mode]):
+                widget.bind('<Enter>', lambda _, c=card: c.configure(highlightbackground=CYAN), add='+')
+                widget.bind('<Leave>', lambda _, c=card: c.configure(highlightbackground=BORDER), add='+')
         self.panels, self.choices, self.menu_buttons, self.previews = {}, {}, {}, {}
         for category, title in (('story', '스토리 도전'), ('tutorial', '튜토리얼'), ('practice', '자유·연습')):
             panel = tk.Frame(self.menu_body, bg=PANEL, padx=22, pady=14)
@@ -1623,7 +1708,7 @@ class ModeSelection:
         self.version_label.pack(anchor='w', pady=(12, 0))
 
     def layout_content(self, event):
-        self.content.place_configure(width=min(860, max(600, event.width-80)))
+        self.content.place_configure(width=min(1060, max(600, event.width-80)))
 
     def show_menu(self, category):
         if self.starting or self.app is not None:
@@ -1642,7 +1727,7 @@ class ModeSelection:
         self.mode_panel.pack_forget()
         for panel in self.panels.values():
             panel.pack_forget()
-        self.panels[category].pack(fill='x')
+        self.panels[category].pack(fill='x', padx=130)  # 카드 화면보다 좁게 가운데 모아 보여 줍니다.
         self.preview_slot(category)
         if category == 'story':
             self.slot_paths = paths
@@ -1672,7 +1757,7 @@ class ModeSelection:
         if getattr(self, 'chapter_panel', None) is not None:
             self.chapter_panel.destroy()
         panel = self.chapter_panel = tk.Frame(self.menu_body, bg=PANEL, padx=22, pady=14)
-        panel.pack(fill='x')
+        panel.pack(fill='x', padx=130)
         label(panel, '장 선택', 18, CYAN, True).pack(anchor='w')
         label(panel, '보존된 장 시작 지점에서 새 슬롯으로 도전합니다.', 11, MUTED).pack(anchor='w', pady=(4, 10))
         paths = self.story_slots.for_mode('story')
