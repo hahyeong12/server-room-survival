@@ -84,6 +84,16 @@ class StoryHarness(Harness):
         self.watch, self.guard_lock = OcclusionWatch(), threading.Lock()
         self.occlusions = self.watch.events
 
+    def calibrate(self):
+        # 백그라운드 실행 셸에서 띄운 Tk가 다른 앱 뒤에 남지 않게 자체 창만 최초 한 번 활성화합니다.
+        hwnd = self.call(lambda: user32.GetAncestor(self.root.winfo_id(), 2))
+        before = user32.GetForegroundWindow() == hwnd
+        self.call(lambda: (self.root.lift(), self.root.focus_force()))
+        time.sleep(.4)
+        self.activation = {'foreground_before': before, 'foreground_after': user32.GetForegroundWindow() == hwnd,
+                           'own_window_activated_once': True}
+        return super().calibrate()
+
     def root_bounds(self):
         import ctypes.wintypes as wt
         hwnd = user32.GetAncestor(self.root.winfo_id(), 2)
@@ -514,6 +524,7 @@ def main():
                   'qa_source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   'shots': h.shots, 'window_events': getattr(getattr(h, 'monitor', None), 'events', []),
                   'capture_occlusions': h.occlusions,
+                  'startup_activation': getattr(h, 'activation', None),
                   'frame_offset_trace': h.frame_trace,
                   'log': [line.replace(str(ROOT), '<repo>').replace(str(h.tmp), '<qa-temp>') for line in h.log]}
         (out/'result.json').write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding='utf-8')
