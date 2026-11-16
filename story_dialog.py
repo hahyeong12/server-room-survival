@@ -35,6 +35,9 @@ class StoryDialogueDialog(MessageDialog):
             label(frame, '신입 엔지니어' if role == 'player' else '선배 엔지니어',
                   9, MUTED).pack(pady=5)
             self.portraits[role] = canvas
+        # 말풍선 기본 폭(80글자)은 초상화와 합치면 창(820px)보다 넓어 내용이 오른쪽에서 잘리고 왼쪽에 몰려 보였습니다.
+        # 요구 폭을 창 안으로 줄이고, 실제 폭은 grid가 남는 공간만큼 늘립니다.
+        self.bubble.configure(width=40)
         self.bubble.grid_configure(column=1, padx=(12, 20))
         self.skip_button.configure(text='마지막 안내')
         self.close_button = ActionButton(self.next_button.master, '업무로 돌아가기', self.destroy)

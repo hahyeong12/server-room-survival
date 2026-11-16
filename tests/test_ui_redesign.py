@@ -125,11 +125,23 @@ class TutorialStepTests(unittest.TestCase):
         self.assertEqual(card['action'], '')
         self.assertTrue(all(state == 'done' for _, state in card['pips']))
 
-    def test_arrival_dialogue_is_three_short_pages(self):
+    def test_arrival_dialogue_is_a_short_conversation(self):
         for kind in ('tutorial', 'shift'):
             pages = OnboardingProgress(kind=kind).pages
-            self.assertEqual(len(pages), 3)
-            self.assertTrue(all(role == 'mentor' and len(text) <= 70 for role, text in pages), pages)
+            self.assertEqual([role for role, _ in pages], ['mentor', 'player', 'mentor', 'mentor'])
+            for _, text in pages:
+                # 문장마다 줄을 나누므로 한 줄은 짧고, 페이지 전체도 몇 줄을 넘지 않습니다.
+                self.assertTrue(all(len(line) <= 40 for line in text.split('\n')), text)
+                self.assertLessEqual(text.count('\n'), 8)
+
+    def test_numbered_steps_are_each_on_their_own_line(self):
+        for kind, items in (('tutorial', ('① 요청 확인', '② 배정 검토', '③ 작업 시작', '④ 시간 빨리감기')),
+                            ('shift', ('① 싱가포르', '② 일본', '③ 미국'))):
+            text = OnboardingProgress(kind=kind).pages[2][1]
+            lines = text.split('\n')
+            for item in items:
+                self.assertIn(item, lines)
+            self.assertIn('', lines)  # 안내 문장과 목록 사이의 빈 줄(문단 구분)
 
     def test_later_steps_show_a_single_goal_page(self):
         self.assertEqual(len(self.progress('request').pages), 1)
@@ -140,6 +152,39 @@ class TutorialStepTests(unittest.TestCase):
             card = self.progress(key, read=[1] if key != 'request' else [],
                                  reviewed=[1] if key in ('allocation', 'time') else []).card
             self.assertTrue(card['action'].startswith('[') or '[' in card['action'])
+
+
+class Chapter1DialogueLayoutTests(unittest.TestCase):
+    """제1장 교육 대화: 의미 단위 줄바꿈과 원래 안내(버튼 이름·수치·순서) 보존."""
+    def pages(self):
+        from story import GUIDES
+        return [(key, line.text) for key, (_, lines) in GUIDES.items() for line in lines]
+
+    def test_lines_are_short_and_paragraphs_are_separated(self):
+        for key, text in self.pages():
+            for line in text.split('\n'):
+                self.assertLessEqual(len(line), 60, (key, line))
+            self.assertNotIn('\n\n\n', text)
+            self.assertEqual(text, text.strip(), key)
+
+    def test_key_instructions_and_values_are_preserved(self):
+        joined = '\n'.join(text for _, text in self.pages())
+        for fact in ('[첫 업무 시작]', 'Server A: GPU 4개 · 전력 4단위', '[자원 정보 확인]', '[요청 확인]',
+                     'GPU 7개', '최대 4개', '[배정 계획 비교·선택]', '배정안 1(추천)', '[선택한 계획으로 작업 시작]',
+                     '+10분', '+30분 · +60분', '[운영 상태 확인]', '[Chapter 2 시작]'):
+            self.assertIn(fact, joined)
+
+    def test_no_number_or_version_is_split_across_lines(self):
+        import re
+        for key, text in self.pages():
+            self.assertIsNone(re.search(r'\d[.:]\n\d', text), key)
+
+    def test_ordered_items_start_their_own_line(self):
+        for key, text in self.pages():
+            for marker in ('①', '②', '③', '④', '· '):
+                for line in text.split('\n'):
+                    if marker in line and marker != '· ':
+                        self.assertTrue(line.startswith(marker), (key, line))
 
 
 class PipTextTests(unittest.TestCase):
@@ -162,6 +207,19 @@ class FrameOffsetTests(unittest.TestCase):
         hidden = self.widget((100, 100), (100, 100), viewable=False)
         parent = self.widget((18, 41), (10, 10))
         self.assertEqual(frame_offset(hidden, parent), (8, 31))
+
+    def test_correction_moves_the_outer_frame_by_the_measured_difference(self):
+        from aidc.ui.window_placement import corrected_outer
+        self.assertIsNone(corrected_outer((542, 261), (550, 292), (550, 292)))
+        self.assertIsNone(corrected_outer((542, 261), (550, 292), (551, 291)))  # 1px 이내는 그대로
+        self.assertEqual(corrected_outer((542, 261), (550, 292), (530, 300)), (562, 253))
+
+    def test_record_compares_dialog_center_with_parent_center(self):
+        from aidc.ui.window_placement import placement_record
+        record = placement_record((0, 23, 1920, 1009), (820, 470), (550, 292), (550, 292))
+        self.assertEqual(record['offset'], (0, 0))
+        shifted = placement_record((0, 23, 1920, 1009), (820, 470), (550, 292), (420, 292))
+        self.assertEqual(shifted['offset'], (-130, 0))  # 왼쪽 치우침을 수치로 드러냅니다.
 
     def test_never_negative(self):
         self.assertEqual(frame_offset(self.widget((0, 0), (5, 5)), self.widget((0, 0), (5, 5))), (0, 0))
