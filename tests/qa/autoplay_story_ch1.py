@@ -1,4 +1,4 @@
-"""story-001: 기존 하네스로 제1장을 실제 마우스 입력으로 한 번 플레이합니다.
+"""story-002: 기존 하네스로 제1장을 실제 마우스 입력으로 한 번 플레이합니다.
 
 Windows 저장소 루트: python tests/qa/autoplay_story_ch1.py <새 출력 디렉터리>
 실행 중 마우스/키보드를 사용하지 마세요. 게임 코드와 사용자 저장은 변경하지 않습니다.
@@ -13,6 +13,7 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 from dataclasses import asdict
 from datetime import datetime
@@ -23,7 +24,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from gui_driver import (ROOT, AbortQA, Harness, POINT, _mouse, owner_at,
                         user32, window_pid, window_rect, MOUSEEVENTF_LEFTDOWN,
                         MOUSEEVENTF_LEFTUP)
-from autoplay_tutorial import centered, layout_issues, placement, top_by_title
+from autoplay_tutorial import centered, placement, top_by_title
+from tutorial_highlight import widget_visible
 
 
 def db_hashes():
@@ -50,49 +52,113 @@ def request_numbers(labels):
     return tuple(int(lines[lines.index(title)+1].strip()) for title in ('GPU 요구량', '전력 요구량'))
 
 
+def intersection(a, b):
+    box = (max(a[0], b[0]), max(a[1], b[1]), min(a[2], b[2]), min(a[3], b[3]))
+    return box if box[0] < box[2] and box[1] < box[3] else None
+
+
+class OcclusionWatch:
+    """창 제목·PID·핸들을 보존하지 않는 가림 구간 기록. 시계는 호출자가 제공합니다."""
+    def __init__(self):
+        self.events, self.current = [], None
+
+    def observe(self, regions, now, step):
+        if regions:
+            if self.current is None:
+                self.current = {'start': now, 'step': step, 'status': 'blocked', 'samples': []}
+                self.events.append(self.current)
+            event = self.current
+            if not event['samples'] or event['samples'][-1]['regions'] != regions:
+                event['samples'].append({'t': now, 'regions': regions})
+            event['duration'] = round(now-event['start'], 3)
+        elif self.current is not None:
+            self.current.update(end=now, duration=round(now-self.current['start'], 3), status='cleared')
+            self.current = None
+        return self.current is not None and self.current['duration'] >= 5
+
+
 class StoryHarness(Harness):
     """공용/튜토리얼 코드는 보존하고 이번 실행에만 더 엄격한 입력·캡처 보호를 적용."""
-    def _grab(self, bbox_phys=None):
-        if bbox_phys is None:  # 기존 calibrate의 메모리 내 해상도 측정(저장하지 않음)
-            return super()._grab()
-        # 클라이언트 영역만 저장: 바깥 앱/작업 표시줄/투명 창틀을 제외합니다.
+    def __init__(self, out_dir):
+        super().__init__(out_dir)
+        self.watch, self.guard_lock = OcclusionWatch(), threading.Lock()
+        self.occlusions = self.watch.events
+
+    def root_bounds(self):
         import ctypes.wintypes as wt
         hwnd = user32.GetAncestor(self.root.winfo_id(), 2)
         rect, point = wt.RECT(), POINT(0, 0)
         user32.GetClientRect(hwnd, ctypes.byref(rect))
         user32.ClientToScreen(hwnd, ctypes.byref(point))
         bounds = self.phys((point.x, point.y, point.x+rect.right, point.y+rect.bottom))
-        work = self.phys(self.work_area())
-        box = (max(bbox_phys[0], bounds[0], work[0]), max(bbox_phys[1], bounds[1], work[1]),
-               min(bbox_phys[2], bounds[2], work[2]), min(bbox_phys[3], bounds[3], work[3]))
-        if box[2] <= box[0] or box[3] <= box[1]:
-            raise AbortQA('게임 클라이언트 바깥 캡처 중단')
-        # EnumWindows는 Z 순서입니다. 루트 위 외부 창이 캡처 사각형과 겹치면 저장하지 않습니다.
-        foreign = []
+        return hwnd, bounds
+
+    def foreign_regions(self):
+        """루트 위 외부 창의 교차 영역만 조회. 감시·클릭에서 같은 전체 루트 영역을 검사합니다."""
+        import ctypes.wintypes as wt
+        hwnd, bounds = self.root_bounds()
+        foreign, found_root = [], []
         callback_type = ctypes.WINFUNCTYPE(wt.BOOL, wt.HWND, wt.LPARAM)
 
         def visit(other, _):
             if other == hwnd:
+                found_root.append(True)
                 return False
             if user32.IsWindowVisible(other) and window_pid(other) != os.getpid():
                 cloaked = wt.DWORD()
                 ctypes.windll.dwmapi.DwmGetWindowAttribute(other, 14, ctypes.byref(cloaked), ctypes.sizeof(cloaked))
                 if not cloaked.value:
                     r = self.phys(window_rect(other))
-                    if max(r[0], box[0]) < min(r[2], box[2]) and max(r[1], box[1]) < min(r[3], box[3]):
-                        foreign.append(True)
+                    overlap = intersection(r, bounds)
+                    if overlap:
+                        foreign.append({'window_rect': r, 'overlap': overlap,
+                                        'overlap_pixels': (overlap[2]-overlap[0])*(overlap[3]-overlap[1])})
             return True
         user32.EnumWindows(callback_type(visit), 0)
-        if foreign:
-            self.capture_blocked = True
-            self.occlusions.append({'step': self.step, 't': round(time.perf_counter()-self.t0, 3),
-                                    'capture_box': box})
-            raise AbortQA('외부 창이 캡처 영역을 가려 화면 저장/추가 클릭 중단')
-        return super()._grab(box)
+        if not found_root:
+            raise AbortQA('게임 루트 창의 Z 순서 확인 불가')
+        now = round(time.perf_counter()-self.t0, 3)
+        with self.guard_lock:
+            expired = self.watch.observe(foreign, now, self.step)
+        return foreign, expired
+
+    def wait_clear(self):
+        """최대 5초만 기다리며 외부 앱의 창·포커스를 변경하지 않습니다."""
+        deadline, clear_since, waited = time.monotonic()+5, None, False
+        while True:
+            regions, expired = self.foreign_regions()
+            now = time.monotonic()
+            if not regions:
+                clear_since = now if clear_since is None else clear_since
+                if not waited or now-clear_since >= .3:
+                    return
+            else:
+                clear_since, waited = None, True
+            if expired or now >= deadline:
+                raise AbortQA('외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)')
+            time.sleep(.1)
+
+    def _grab(self, bbox_phys=None):
+        if bbox_phys is None:  # calibrate의 메모리 내 해상도 측정(저장하지 않음)
+            return super()._grab()
+        _, bounds = self.root_bounds()
+        box = intersection(bbox_phys, bounds)
+        box = intersection(box, self.phys(self.work_area())) if box else None
+        if box is None:
+            raise AbortQA('게임 클라이언트 바깥 캡처 중단')
+        if self.foreign_regions()[0]:
+            raise AbortQA('외부 창 가림 중 캡처 금지')
+        frame = super()._grab(box)
+        if self.foreign_regions()[0]:
+            raise AbortQA('캡처 도중 외부 창 등장: 프레임 폐기')
+        return frame
+
+    def shot(self, *args, **kwargs):
+        self.wait_clear()
+        return super().shot(*args, **kwargs)
 
     def click(self, item, dx=None, dy=None, settle=.6):
-        if getattr(self, 'capture_blocked', False):
-            raise AbortQA('외부 창 감지 후 입력 중단')
+        self.wait_clear()
         # 현재 좌표를 다시 조회합니다. 가려진 위젯이나 화면 밖은 대체 좌표를 추측하지 않습니다.
         if item.get('path'):
             item = self.call(lambda: self.widget_info(self.root.nametowidget(item['path'])))
@@ -105,6 +171,8 @@ class StoryHarness(Harness):
             raise AbortQA('다른 창이 클릭 좌표를 차지함: 입력 없이 중단')
         user32.SetCursorPos(x, y)
         time.sleep(.08)
+        if self.foreign_regions()[0]:
+            self.wait_clear()
         if owner_at(x, y)[1] != os.getpid() or user32.GetAncestor(owner_at(x, y)[0], 2) != expected:
             raise AbortQA('입력 직전 창 변경: 클릭 중단')
         _mouse(MOUSEEVENTF_LEFTDOWN)
@@ -115,6 +183,23 @@ class StoryHarness(Harness):
         time.sleep(.15)
         self.park()
         time.sleep(settle)
+
+    def scroll_to(self, top_path, target_path, direction):
+        """스크롤바 화살표를 실제 클릭. Tk yview/see/event_generate로 이동하지 않습니다."""
+        def status():
+            top, target = self.root.nametowidget(top_path), self.root.nametowidget(target_path)
+            return {'visible': widget_visible(target), 'view': top.scroll.canvas.yview(),
+                    'scrollbar': self.widget_info(top.scroll.scrollbar)}
+        history = []
+        for _ in range(16):
+            current = self.call(status)
+            history.append({k:v for k,v in current.items() if k != 'scrollbar'})
+            ready = current['visible'] if direction == 'down' else current['view'][0] <= .001
+            if ready:
+                return history
+            bar = current['scrollbar']
+            self.click(bar, dy=bar['h']-8 if direction == 'down' else 8, settle=.08)
+        raise AbortQA('실제 스크롤 16회 내 대상 접근/원위치 복귀 실패')
 
 
 def scenario(h):
@@ -140,8 +225,36 @@ def scenario(h):
         h.check(h.step, item, ok, str(detail))
 
     def geometry(part=None):
-        issues = layout_issues(h, part)
-        h.layouts.append({'step': h.step, 'window': part, 'issues': issues, 'snapshot': h.snapshot()})
+        snap = h.snapshot()
+        # 스크롤 본문 밖의 라벨은 별도 후보로 보존하고 실제 스크롤 접근 검사로 판정합니다.
+        def clipped_paths():
+            paths = set()
+            for top in snap['tops']:
+                for item in top['buttons']+top['labels']:
+                    w = h.root.nametowidget(item['path'])
+                    parent = w.master
+                    while parent is not None:
+                        if parent.winfo_class() == 'Canvas' and hasattr(parent.master, 'scrollbar'):
+                            viewport = (parent.winfo_rootx(), parent.winfo_rooty(),
+                                        parent.winfo_rootx()+parent.winfo_width(), parent.winfo_rooty()+parent.winfo_height())
+                            rect = (item['x'], item['y'], item['x']+item['w'], item['y']+item['h'])
+                            if intersection(rect, viewport) != rect:
+                                paths.add(item['path'])
+                        parent = parent.master
+            return paths
+        clipped = h.call(clipped_paths)
+        issues, deferred = [], []
+        for top in snap['tops']:
+            if part and part not in top['title']:
+                continue
+            for item in top['buttons']+top['labels']:
+                flags = [k for k in ('covered', 'offscreen', 'clipped_text') if item[k]]
+                if not item['inside_top']:
+                    flags.append('outside_window')
+                if flags:
+                    record = {'window': top['title'], 'path': item['path'], 'text': item['text'], 'flags': flags}
+                    (deferred if item['path'] in clipped and 'clipped_text' not in flags else issues).append(record)
+        h.layouts.append({'step': h.step, 'window': part, 'issues': issues, 'scroll_candidates': deferred, 'snapshot': snap})
         check('버튼·라벨 가려짐/잘림/화면 밖 없음'+(' · '+part if part else ''), not issues, issues)
         if part:
             placement(h, part)
@@ -160,12 +273,19 @@ def scenario(h):
               and f'업무 {number}/3' in data['kicker'], data)
         check('스토리에서 튜토리얼 금색 강조 잔존 없음(설계상 비활성)', data['edges'] == 0, data['highlight'])
 
+    def lists():
+        def read():
+            return {name: {'selected': tree.selection(), 'height': tree.winfo_height(),
+                           'rows': [{'id': rid, 'values': tree.item(rid, 'values'), 'bbox': tree.bbox(rid)}
+                                    for rid in tree.get_children()]}
+                    for name, tree in (('inbox', app().inbox), ('active', app().active_list))}
+        return h.call(read)
+
     h.step = '시작 메뉴'
     h.env = h.call(lambda: {'tk': h.root.tk.call('info', 'patchlevel'), 'scaling': float(h.root.tk.call('tk', 'scaling')),
                             'screen': [h.root.winfo_screenwidth(), h.root.winfo_screenheight()], 'work_area': h.work_area(),
                             'capture_scale': h.scale})
     geometry()
-    h.shot('title', note='실제 메인 메뉴')
     h.click(h.call(lambda: h.widget_info(h.selector.buttons['story'])))
     geometry()
     h.shot('story_menu', note='스토리 도전 · 제1장 새 시작 메뉴')
@@ -199,10 +319,15 @@ def scenario(h):
         job = {'request': h.call(lambda: state(rid)), 'frames': []}
         h.jobs.append(job)
         request = job['request']
+        job['request_lists'] = lists()
         check('요청 순서·독립 접수·직전 완료 고객 수', request['country'] == country
               and len(request['request_ids']) == index and len(request['completed']) == index-1, request)
         check('새 고객은 진행 0·미배정·전체 자원 가용', request['progress'] == 0 and request['plan'] is None
               and request['avail'] == request['center'] == (10, 10) and not request['ledger'])
+        inbox = job['request_lists']['inbox']
+        row = next((r for r in inbox['rows'] if r['id'] == str(rid)), None)
+        check('새 고객 요청함 행 생성·현재 선택 일치', row is not None and str(rid) in inbox['selected'], inbox)
+        check('새 고객 요청함 행이 스크롤 없이 실제 노출', bool(row and row['bbox']), row)
         goal(index, 'request')
         geometry()
         h.click_text('요청 확인', settle=1)
@@ -237,6 +362,13 @@ def scenario(h):
         preview = h.call(lambda: state(rid))
         check('모드·배정안 조회/선택은 GPU·전력 미점유', preview['avail'] == preview['center'] == (10, 10) and not preview['ledger'])
         h.shot(f'{index}_allocation', note=f'{country} 고성능·배정안 1 선택(시작 전 미점유)')
+        top_path, notice_path = h.call(lambda: (str(app().allocation_window), str(app().allocation_window.notice)))
+        probe = {'before_visible': h.call(lambda: widget_visible(app().allocation_window.notice))}
+        probe['down'] = h.scroll_to(top_path, notice_path, 'down')
+        probe['after_visible'] = h.call(lambda: widget_visible(app().allocation_window.notice))
+        check('배정창 설명은 실제 스크롤로 접근 가능', probe['after_visible'], probe)
+        probe['up'] = h.scroll_to(top_path, notice_path, 'up')
+        job['scroll_probe'] = probe
         h.click_text('선택한 계획으로 작업 시작', settle=1)
         started = job['started'] = h.call(lambda: state(rid))
         check('실제 실행·진행 0·선택한 GPU 슬롯/전력 원장과 일치', started['phase'] == 'running'
@@ -275,6 +407,9 @@ def scenario(h):
               and persisted['runtime'][str(rid)]['state']['succeeded']
               and rid in persisted['simulation']['story']['onboarding']['completed'])
         check('장 시작 체크포인트 내용 보존', hashlib.sha256(checkpoint.read_bytes()).hexdigest() == h.checkpoint_hash)
+        job['completed_lists'] = lists()
+        if index < 3:
+            h.shot(f'{index}_completed_next_arrival', note=f'{country} 완료·자원 반환·다음 고객 접수')
 
     h.step = '제1장 결과'
     check('세 고객 정상 완료·제1장 클리어·다음 장 미시작', h.call(lambda: session().story.chapter1_cleared
@@ -297,7 +432,16 @@ def scenario(h):
           and '3/3건' in [x['text'] for x in top['labels']], h.chapter_result)
     check('제2장 시작 버튼 활성·다음 근무 안내 표시', any('제2장' in b['text'] and b['state'] == 'normal' for b in top['buttons'])
           and any('다음 근무' in x['text'] for x in top['labels']))
+    # 결과창 본문의 다음 장 안내까지 실제 스크롤로 읽고, 제2장 시작 버튼은 누르지 않습니다.
+    result_path, next_path = h.call(lambda: (str(app().chapter_window), str(app().chapter_window.next_notice)))
+    h.result_scroll = h.scroll_to(result_path, next_path, 'down')
+    check('결과창 다음 근무 안내 실제 접근 가능', h.call(lambda: widget_visible(app().chapter_window.next_notice)))
     h.shot('success', note='실제 제1장 성공 결과·다음 장 안내(이동하지 않음)')
+    h.final_disk = disk_state(h.slot)
+    check('최종 저장에 세 고객 성공·완료 이력·제2장 미시작', len(h.final_disk['runtime']) == 3
+          and all(r['state']['succeeded'] for r in h.final_disk['runtime'].values())
+          and len(h.final_disk['simulation']['story']['onboarding']['completed']) == 3
+          and not h.final_disk['simulation']['story'].get('chapter2'))
     h.completed = True
 
 
@@ -306,6 +450,15 @@ def self_check():
     from aidc.story.onboarding import COUNTRIES
     assert COUNTRIES == ('싱가포르', '일본', '미국')
     assert request_numbers('GPU 요구량\n3\n 개\n전력 요구량\n4\n 단위') == (3, 4)
+    assert intersection((0, 0, 10, 10), (5, 5, 20, 20)) == (5, 5, 10, 10)
+    assert intersection((0, 0, 10, 10), (10, 0, 20, 10)) is None
+    watch = OcclusionWatch()
+    regions = [{'overlap': (1, 1, 2, 2)}]
+    assert not watch.observe(regions, 1, 'click') and watch.current is not None
+    assert not watch.observe([], 2, 'click') and watch.current is None
+    assert watch.events[0]['duration'] == 1 and watch.events[0]['status'] == 'cleared'
+    assert not watch.observe(regions, 3, 'shot')
+    assert watch.observe(regions, 8, 'shot') and watch.current is not None
     for country, scenario_name in zip(COUNTRIES, ('intro_sg_v1', 'intro_jp_v1', 'intro_us_v1')):
         state = GameState(country=country, scenario=scenario_name)
         assert state.work_total == 30 and state.estimate_minutes('performance') == 30
@@ -325,7 +478,7 @@ def main():
     if '--self-check' in sys.argv:
         self_check()
         return
-    out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.gettempdir())/'srs_qa_story_001'
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.gettempdir())/'srs_qa_story_002'
     out.mkdir(parents=True, exist_ok=True)
     # 덮어쓰기/암묵적 반복 실행 금지. 재실행은 새로운 출력 디렉터리를 명시해야 합니다.
     marker = out/'attempt.json'
@@ -334,7 +487,7 @@ def main():
     print('실제 GUI 자동 플레이 1회: 마우스/키보드를 사용하지 마세요.', flush=True)
     before = db_hashes()
     h = StoryHarness(out)
-    h.env, h.placements, h.layouts, h.goals, h.jobs, h.occlusions = {}, [], [], [], [], []
+    h.env, h.placements, h.layouts, h.goals, h.jobs = {}, [], [], [], []
     error = None
     try:
         error = h.run(scenario)['error']
@@ -357,6 +510,8 @@ def main():
                   'repo_db_unchanged': before == after, 'repo_db_count': len(before), 'temp_files_removed': removed,
                   'checks': h.checks, 'jobs': h.jobs, 'goals': h.goals, 'layouts': h.layouts, 'placements': h.placements,
                   'chapter_result': getattr(h, 'chapter_result', None), 'result_screen': getattr(h, 'result_screen', None),
+                  'final_disk': getattr(h, 'final_disk', None), 'result_scroll': getattr(h, 'result_scroll', None),
+                  'qa_source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   'shots': h.shots, 'window_events': getattr(getattr(h, 'monitor', None), 'events', []),
                   'capture_occlusions': h.occlusions,
                   'frame_offset_trace': h.frame_trace,
