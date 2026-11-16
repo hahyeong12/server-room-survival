@@ -1,0 +1,802 @@
+{
+ "schema_version": 1,
+ "qa_id": "story-002",
+ "outcome": "safety_abort_before_first_click",
+ "completed": false,
+ "gui_attempts": 2,
+ "gui_attempt_limit": 2,
+ "clicks": 0,
+ "passed": 4,
+ "failed": 0,
+ "execution_errors": 2,
+ "screenshot_count": 0,
+ "warning": "PASS counts cover only initial Tk layout and protected file hashes; no chapter gameplay checks ran.",
+ "game_baseline": "01eeeeaabcd4a33b1144957ec70b8784a03afdd5",
+ "qa_commits": [
+  "85ed59a",
+  "dabc471"
+ ],
+ "repo_db_unchanged_all_attempts": true,
+ "validation": {
+  "headless": {
+   "passed": 746,
+   "failed": 0,
+   "excluded_gui_and_other": 281
+  },
+  "self_check": "PASS",
+  "syntax": [
+   "tests/qa/autoplay_story_ch1.py",
+   "tests/qa/gui_driver.py",
+   "tests/qa/autoplay_tutorial.py"
+  ],
+  "imports": [
+   "main",
+   "session",
+   "game",
+   "database",
+   "allocation_dialog"
+  ],
+  "git_diff_check": "PASS"
+ },
+ "runs": [
+  {
+   "started": "2026-11-17T00:57:50+09:00",
+   "commit": "85ed59ae2e9525109c9afc395dc849140aee861e",
+   "python": "3.14.6",
+   "os": "Windows 11",
+   "env": {
+    "tk": "8.6.15",
+    "scaling": 1.334646962233169,
+    "screen": [
+     1536,
+     864
+    ],
+    "work_area": [
+     0,
+     0,
+     1536,
+     816
+    ],
+    "capture_scale": 1.25
+   },
+   "completed": false,
+   "error": "AbortQA: 외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)",
+   "clicks": 0,
+   "passed": 2,
+   "failed": 0,
+   "repo_db_unchanged": true,
+   "repo_db_count": 24,
+   "temp_files_removed": [],
+   "checks": [
+    {
+     "step": "시작 메뉴",
+     "item": "버튼·라벨 가려짐/잘림/화면 밖 없음",
+     "result": "PASS",
+     "detail": "[]",
+     "kind": "auto"
+    },
+    {
+     "step": "보존",
+     "item": "사용자 DB·슬롯·체크포인트·보조 파일 해시/파일 집합 동일",
+     "result": "PASS",
+     "detail": "기존 파일 24개 / 실행 후 24개",
+     "kind": "auto"
+    }
+   ],
+   "jobs": [],
+   "goals": [],
+   "layouts": [
+    {
+     "step": "시작 메뉴",
+     "window": null,
+     "issues": [],
+     "scroll_candidates": [],
+     "snapshot": {
+      "tops": [
+       {
+        "path": ".",
+        "title": "서버실 생존기 v0.9-4b | 모드 선택",
+        "x": 268,
+        "y": 94,
+        "w": 1000,
+        "h": 650,
+        "buttons": [
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!primarybutton",
+          "class": "Button",
+          "text": "시작 / 이어하기  ▶",
+          "x": 330,
+          "y": 589,
+          "w": 263,
+          "h": 51,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!primarybutton",
+          "class": "Button",
+          "text": "시작 / 이어하기  ▶",
+          "x": 645,
+          "y": 589,
+          "w": 255,
+          "h": 51,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!primarybutton",
+          "class": "Button",
+          "text": "시작 / 이어하기  ▶",
+          "x": 952,
+          "y": 589,
+          "w": 254,
+          "h": 51,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         }
+        ],
+        "labels": [
+         {
+          "path": ".!frame.!frame.!frame.!label",
+          "class": "Label",
+          "text": "서버실 생존기",
+          "x": 603,
+          "y": 190,
+          "w": 330,
+          "h": 74,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame.!label2",
+          "class": "Label",
+          "text": "Server Room Survival · 울산 AI 데이터센터 운영 시뮬레이션",
+          "x": 537,
+          "y": 266,
+          "w": 462,
+          "h": 29,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!label",
+          "class": "Label",
+          "text": "튜토리얼",
+          "x": 330,
+          "y": 417,
+          "w": 114,
+          "h": 43,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!label2",
+          "class": "Label",
+          "text": "관제실 기본 조작을 따라 해 보세요.",
+          "x": 330,
+          "y": 462,
+          "w": 263,
+          "h": 27,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!label3",
+          "class": "Label",
+          "text": "목적 · 요청 확인부터 작업 완료까지, 고객 요청 한 건을 처음부터 끝까지 익힙니다.",
+          "x": 330,
+          "y": 497,
+          "w": 263,
+          "h": 40,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!label",
+          "class": "Label",
+          "text": "스토리 도전",
+          "x": 645,
+          "y": 417,
+          "w": 150,
+          "h": 43,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!label2",
+          "class": "Label",
+          "text": "신입 엔지니어가 되어 서버실에서 살아남으세요.",
+          "x": 645,
+          "y": 462,
+          "w": 255,
+          "h": 48,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!label3",
+          "class": "Label",
+          "text": "목적 · 제1장~제5장을 순서대로 진행합니다. 실제 업무와 학습으로 다음 장이 열립니다.",
+          "x": 645,
+          "y": 518,
+          "w": 255,
+          "h": 57,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!label",
+          "class": "Label",
+          "text": "자유·연습",
+          "x": 952,
+          "y": 417,
+          "w": 121,
+          "h": 43,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!label2",
+          "class": "Label",
+          "text": "내 방식대로 운영하거나 장별로 연습하세요.",
+          "x": 952,
+          "y": 462,
+          "w": 254,
+          "h": 48,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!label3",
+          "class": "Label",
+          "text": "목적 · 자유 운영, 장별 연습, Engineering Lab. 본편 진급 기록과는 별도입니다.",
+          "x": 952,
+          "y": 518,
+          "w": 254,
+          "h": 40,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!label",
+          "class": "Label",
+          "text": "Server Room Survival v0.9-4b · 제1장~제5장 / Lab 학습 과제 1~5 (프로토타입)",
+          "x": 308,
+          "y": 672,
+          "w": 473,
+          "h": 23,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         }
+        ],
+        "texts": [],
+        "gold_edges": []
+       }
+      ],
+      "screen": [
+       1536,
+       864
+      ]
+     }
+    }
+   ],
+   "placements": [],
+   "chapter_result": null,
+   "result_screen": null,
+   "final_disk": null,
+   "result_scroll": null,
+   "qa_source_sha256": "1e6d8f902f8e848d887a91d04f93fdf62a5ade4109000471f35bdf16faf57f67",
+   "shots": [],
+   "window_events": [
+    {
+     "t": 1.921,
+     "step": "시작 메뉴",
+     "event": "appear",
+     "title": "서버실 생존기 v0.9-4b | 모드 선택",
+     "rect": [
+      260,
+      63,
+      1276,
+      752
+     ],
+     "white_ratio": null
+    }
+   ],
+   "capture_occlusions": [
+    {
+     "start": 1.923,
+     "step": "시작 메뉴",
+     "status": "blocked",
+     "samples": [
+      {
+       "t": 1.923,
+       "regions": [
+        {
+         "window_rect": [
+          -14,
+          0,
+          1415,
+          1020
+         ],
+         "overlap": [
+          335,
+          118,
+          1415,
+          930
+         ],
+         "overlap_pixels": 876960
+        }
+       ]
+      }
+     ],
+     "duration": 5.08
+    }
+   ],
+   "frame_offset_trace": [],
+   "log": [
+    "[   1.92s] [boot] 캡처 해상도 (1920, 1080), 논리 해상도 (1536, 864), 배율 1.250",
+    "[   2.00s] [시작 메뉴] CHECK PASS: 버튼·라벨 가려짐/잘림/화면 밖 없음 []",
+    "[   7.00s] [시작 메뉴] 중단: Traceback (most recent call last):\n  File \"<repo>\\tests\\qa\\gui_driver.py\", line 432, in worker\n    scenario(self)\n    ~~~~~~~~^^^^^^\n  File \"<repo>\\tests\\qa\\autoplay_story_ch1.py\", line 289, in scenario\n    h.click(h.call(lambda: h.widget_info(h.selector.buttons['story'])))\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\qa\\autoplay_story_ch1.py\", line 161, in click\n    self.wait_clear()\n    ~~~~~~~~~~~~~~~^^\n  File \"<repo>\\tests\\qa\\autoplay_story_ch1.py\", line 138, in wait_clear\n    raise AbortQA('외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)')\ngui_driver.AbortQA: 외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)\n",
+    "[   7.55s] [시작 메뉴] CHECK PASS: 사용자 DB·슬롯·체크포인트·보조 파일 해시/파일 집합 동일 기존 파일 24개 / 실행 후 24개"
+   ],
+   "attempt": 1
+  },
+  {
+   "started": "2026-11-17T00:59:31+09:00",
+   "commit": "85ed59ae2e9525109c9afc395dc849140aee861e",
+   "python": "3.14.6",
+   "os": "Windows 11",
+   "env": {
+    "tk": "8.6.15",
+    "scaling": 1.334646962233169,
+    "screen": [
+     1536,
+     864
+    ],
+    "work_area": [
+     0,
+     0,
+     1536,
+     816
+    ],
+    "capture_scale": 1.25
+   },
+   "completed": false,
+   "error": "AbortQA: 외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)",
+   "clicks": 0,
+   "passed": 2,
+   "failed": 0,
+   "repo_db_unchanged": true,
+   "repo_db_count": 24,
+   "temp_files_removed": [],
+   "checks": [
+    {
+     "step": "시작 메뉴",
+     "item": "버튼·라벨 가려짐/잘림/화면 밖 없음",
+     "result": "PASS",
+     "detail": "[]",
+     "kind": "auto"
+    },
+    {
+     "step": "보존",
+     "item": "사용자 DB·슬롯·체크포인트·보조 파일 해시/파일 집합 동일",
+     "result": "PASS",
+     "detail": "기존 파일 24개 / 실행 후 24개",
+     "kind": "auto"
+    }
+   ],
+   "jobs": [],
+   "goals": [],
+   "layouts": [
+    {
+     "step": "시작 메뉴",
+     "window": null,
+     "issues": [],
+     "scroll_candidates": [],
+     "snapshot": {
+      "tops": [
+       {
+        "path": ".",
+        "title": "서버실 생존기 v0.9-4b | 모드 선택",
+        "x": 268,
+        "y": 94,
+        "w": 1000,
+        "h": 650,
+        "buttons": [
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!primarybutton",
+          "class": "Button",
+          "text": "시작 / 이어하기  ▶",
+          "x": 330,
+          "y": 589,
+          "w": 263,
+          "h": 51,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!primarybutton",
+          "class": "Button",
+          "text": "시작 / 이어하기  ▶",
+          "x": 645,
+          "y": 589,
+          "w": 255,
+          "h": 51,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!primarybutton",
+          "class": "Button",
+          "text": "시작 / 이어하기  ▶",
+          "x": 952,
+          "y": 589,
+          "w": 254,
+          "h": 51,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         }
+        ],
+        "labels": [
+         {
+          "path": ".!frame.!frame.!frame.!label",
+          "class": "Label",
+          "text": "서버실 생존기",
+          "x": 603,
+          "y": 190,
+          "w": 330,
+          "h": 74,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame.!label2",
+          "class": "Label",
+          "text": "Server Room Survival · 울산 AI 데이터센터 운영 시뮬레이션",
+          "x": 537,
+          "y": 266,
+          "w": 462,
+          "h": 29,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!label",
+          "class": "Label",
+          "text": "튜토리얼",
+          "x": 330,
+          "y": 417,
+          "w": 114,
+          "h": 43,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!label2",
+          "class": "Label",
+          "text": "관제실 기본 조작을 따라 해 보세요.",
+          "x": 330,
+          "y": 462,
+          "w": 263,
+          "h": 27,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame.!label3",
+          "class": "Label",
+          "text": "목적 · 요청 확인부터 작업 완료까지, 고객 요청 한 건을 처음부터 끝까지 익힙니다.",
+          "x": 330,
+          "y": 497,
+          "w": 263,
+          "h": 40,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!label",
+          "class": "Label",
+          "text": "스토리 도전",
+          "x": 645,
+          "y": 417,
+          "w": 150,
+          "h": 43,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!label2",
+          "class": "Label",
+          "text": "신입 엔지니어가 되어 서버실에서 살아남으세요.",
+          "x": 645,
+          "y": 462,
+          "w": 255,
+          "h": 48,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame2.!label3",
+          "class": "Label",
+          "text": "목적 · 제1장~제5장을 순서대로 진행합니다. 실제 업무와 학습으로 다음 장이 열립니다.",
+          "x": 645,
+          "y": 518,
+          "w": 255,
+          "h": 57,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!label",
+          "class": "Label",
+          "text": "자유·연습",
+          "x": 952,
+          "y": 417,
+          "w": 121,
+          "h": 43,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!label2",
+          "class": "Label",
+          "text": "내 방식대로 운영하거나 장별로 연습하세요.",
+          "x": 952,
+          "y": 462,
+          "w": 254,
+          "h": 48,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!frame2.!frame.!frame3.!label3",
+          "class": "Label",
+          "text": "목적 · 자유 운영, 장별 연습, Engineering Lab. 본편 진급 기록과는 별도입니다.",
+          "x": 952,
+          "y": 518,
+          "w": 254,
+          "h": 40,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         },
+         {
+          "path": ".!frame.!frame.!label",
+          "class": "Label",
+          "text": "Server Room Survival v0.9-4b · 제1장~제5장 / Lab 학습 과제 1~5 (프로토타입)",
+          "x": 308,
+          "y": 672,
+          "w": 473,
+          "h": 23,
+          "state": "normal",
+          "inside_top": true,
+          "clipped_text": false,
+          "covered": false,
+          "covered_by": "",
+          "offscreen": false,
+          "top": "."
+         }
+        ],
+        "texts": [],
+        "gold_edges": []
+       }
+      ],
+      "screen": [
+       1536,
+       864
+      ]
+     }
+    }
+   ],
+   "placements": [],
+   "chapter_result": null,
+   "result_screen": null,
+   "final_disk": null,
+   "result_scroll": null,
+   "qa_source_sha256": "a55af4b6add2ff3327e4fe7ee9e4c106eb1ae272a4c4caebef1de6907c5cc56e",
+   "shots": [],
+   "window_events": [
+    {
+     "t": 1.948,
+     "step": "시작 메뉴",
+     "event": "appear",
+     "title": "서버실 생존기 v0.9-4b | 모드 선택",
+     "rect": [
+      260,
+      63,
+      1276,
+      752
+     ],
+     "white_ratio": null
+    }
+   ],
+   "capture_occlusions": [
+    {
+     "start": 1.95,
+     "step": "시작 메뉴",
+     "status": "blocked",
+     "samples": [
+      {
+       "t": 1.95,
+       "regions": [
+        {
+         "window_rect": [
+          -14,
+          0,
+          1415,
+          1020
+         ],
+         "overlap": [
+          335,
+          118,
+          1415,
+          930
+         ],
+         "overlap_pixels": 876960
+        }
+       ]
+      }
+     ],
+     "duration": 5.059
+    }
+   ],
+   "startup_activation": {
+    "foreground_before": false,
+    "foreground_after": false,
+    "own_window_activated_once": true
+   },
+   "frame_offset_trace": [],
+   "log": [
+    "[   1.94s] [boot] 캡처 해상도 (1920, 1080), 논리 해상도 (1536, 864), 배율 1.250",
+    "[   2.02s] [시작 메뉴] CHECK PASS: 버튼·라벨 가려짐/잘림/화면 밖 없음 []",
+    "[   7.01s] [시작 메뉴] 중단: Traceback (most recent call last):\n  File \"<repo>\\tests\\qa\\gui_driver.py\", line 432, in worker\n    scenario(self)\n    ~~~~~~~~^^^^^^\n  File \"<repo>\\tests\\qa\\autoplay_story_ch1.py\", line 299, in scenario\n    h.click(h.call(lambda: h.widget_info(h.selector.buttons['story'])))\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\qa\\autoplay_story_ch1.py\", line 171, in click\n    self.wait_clear()\n    ~~~~~~~~~~~~~~~^^\n  File \"<repo>\\tests\\qa\\autoplay_story_ch1.py\", line 148, in wait_clear\n    raise AbortQA('외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)')\ngui_driver.AbortQA: 외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)\n",
+    "[   7.55s] [시작 메뉴] CHECK PASS: 사용자 DB·슬롯·체크포인트·보조 파일 해시/파일 집합 동일 기존 파일 24개 / 실행 후 24개"
+   ],
+   "attempt": 2
+  }
+ ]
+}
