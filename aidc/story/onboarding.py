@@ -9,13 +9,32 @@ CARD_STEPS = (('arrival', '안내 확인'), ('request', '요청 확인'), ('prev
 STEP_ACTIONS = {'arrival': '안내 창에서 [다음]을 눌러 시작하세요',
                 'request': '[요청 확인]을 눌러 고객 조건과 기한을 읽으세요',
                 'preview': '[배정 설정·선택]에서 운영 모드와 배정안을 고르세요',
-                'allocation': '[선택한 계획으로 작업 시작]을 누르세요',
+                'allocation': '[배정 설정·선택] 창에서 배정안을 확인하고 [선택한 계획으로 작업 시작]을 누르세요',
                 'time': '[⏩ 시간 빨리감기]로 작업을 끝까지 진행하세요'}
 STEP_MENTOR = {'arrival': '천천히 해도 괜찮아요. 한 번에 한 단계씩만 해요.',
                'request': '고객이 원하는 자원과 기한부터 확인해요.',
                'preview': '고르기만 해서는 자원을 쓰지 않아요. 편하게 비교해 봐요.',
                'allocation': '좋아요. 이제 선택한 안으로 시작해요.',
                'time': '시간을 흘려보내면 진행률이 올라가요. 완료되면 자원이 돌아와요.'}
+# 새 튜토리얼의 금색 강조 대상(관제실이 실제 위젯으로 바꿉니다)과 그 버튼 이름. 목표 카드 문구(STEP_ACTIONS)에는 그 단계에서
+# 강조될 수 있는 모든 버튼 이름이 들어 있어야 합니다(QA tutorial-001 Q-04: 카드와 강조가 서로 다른 곳을 가리킴).
+GUIDED_LABELS = {'arrival_button': '요청 확인', 'allocation_button': '배정 설정·선택', 'plan_card': '배정안',
+                 'dialog_start': '선택한 계획으로 작업 시작', 'time_buttons': '시간 빨리감기'}
+
+
+def guided_target(step, window_open=False, start_ready=False):
+    """새 튜토리얼 단계에서 강조할 대상 이름(순수 함수). window_open: 배정 설정창이 열림, start_ready: 창의 시작 버튼 활성."""
+    if step == 'request':
+        return 'arrival_button'
+    if step in ('preview', 'allocation'):
+        if not window_open:
+            return 'allocation_button'
+        return 'dialog_start' if step == 'allocation' and start_ready else 'plan_card'
+    if step == 'time':
+        return 'time_buttons'
+    return None
+
+
 EVENTS = tuple(f'intro_{kind}_{n}_{step}' for kind in ('tutorial', 'shift')
                for n in range(1, 4) for step in (*STEPS, 'closed'))
 

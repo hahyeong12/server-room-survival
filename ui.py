@@ -206,12 +206,22 @@ class MessageDialog(tk.Toplevel):
         self.render()
         self.reveal()
     def next(self):
-        if self.shown < len(self.full_text):
+        last = self.index >= len(self.steps)-1
+        if self.shown < len(self.full_text) and not last:
+            self.reveal()  # 중간 페이지: 첫 클릭은 이 페이지 글을 모두 보여 줍니다(버튼 이름 '다음 ▶').
+        elif self.shown < len(self.full_text):
+            # 마지막 페이지의 버튼은 '확인 · 운영실로'처럼 행동 이름을 달고 있으므로 한 번에 그 행동을 합니다.
+            # QA tutorial-001 Q-03: 첫 클릭이 글만 완성하고 창을 남겨, 이후 교육 강조가 모두 사라졌습니다.
             self.reveal()
-        elif self.index < len(self.steps)-1:
+            self._finish()
+        elif not last:
             self.index += 1
             self.render()
-        elif self.confirm:
+        else:
+            self._finish()
+
+    def _finish(self):
+        if self.confirm:
             self.confirm[1]()
         else:
             self.destroy()

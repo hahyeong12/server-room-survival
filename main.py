@@ -22,6 +22,7 @@ from result_summary import free_result_lines
 from aidc.ui.result_presentation import failure_explanation
 from aidc.ui.ui_kit import PrimaryButton, StatusChip
 from aidc.ui.goal_card import GoalCard
+from aidc.story.onboarding import guided_target
 from aidc.ui.window_placement import center_dialog, fit_main_window
 from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
@@ -415,6 +416,22 @@ class SimulatorApp:
             return
         step, widget, key = story.ui_step, None, story.ui_step
         plan_window = self.allocation_window
+        if guided_intro and step in ('request', 'preview', 'allocation', 'time'):
+            # 새 튜토리얼: 목표 카드가 말하는 버튼과 같은 대상을 강조합니다(onboarding.guided_target, Q-04).
+            # 기존 슬롯의 제1장 교육은 아래 기존 경로(Inspector 탭 등)를 그대로 씁니다.
+            window_open = plan_window is not None and plan_window.winfo_exists() and not plan_window.migration
+            start_ready = window_open and plan_window.start_button.cget('state') != 'disabled'
+            name = guided_target(step, window_open, start_ready)
+            target_id = story.onboarding.rid
+            widget, key = {
+                'arrival_button': (self.arrival_open_button if self.arrival_request_id == target_id else self.notice_button, 'request'),
+                'allocation_button': (self.action_buttons.get('start'), 'allocation_open'),
+                'plan_card': ((plan_window.plan_buttons or [None])[0] if window_open else None, 'plan'),
+                'dialog_start': (plan_window.start_button if window_open else None, 'allocation'),
+                'time_buttons': (self.time_group, step),
+            }[name]
+            highlight.show(key, widget, pointer=False)
+            return
         if plan_window is not None and plan_window.winfo_exists():
             # 팝업이 열려 있으면 팝업 안의 위젯만 대상으로 합니다. 부모 화면 버튼은 강조하지 않습니다.
             if plan_window.migration:
@@ -1534,6 +1551,7 @@ class SimulatorApp:
                 and run.request['status'] in ('new','review','waiting')):
             confirm = ('고객 답변 확인', lambda count=len(run.proposals): self.review_alternative(rid, count))
         self.message_window = self.build_popup(MessageDialog, self.root, run.mission['company_name'], run.mission['country'], steps,
+                                            animate=self.session.mode != 'tutorial',  # 튜토리얼 요청서는 글을 바로 보여 줍니다(Q-03)
                                             message_kind='새 메시지' if was_unread else '확인한 메시지 · 현재 상태',
                                             confirm=confirm, summary=request_summary(run),
                                             availability=self.available_for_request())

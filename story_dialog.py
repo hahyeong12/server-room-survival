@@ -41,17 +41,36 @@ class StoryDialogueDialog(MessageDialog):
         self.bubble.grid_configure(column=1, padx=(12, 20))
         self.skip_button.configure(text='마지막 안내')
         self.close_button = ActionButton(self.next_button.master, '업무로 돌아가기', self.destroy)
-        self.close_button.pack(side='right', padx=6)
-        self.render()
+        self.render()  # 페이지에 맞게 [마지막 안내]·[업무로 돌아가기]를 배치합니다.
         center_dialog(self, parent)
 
     def render(self):
         super().render()
+        self.update_page_buttons()
         speaker = self.steps[self.index][0]
         self.active_role = next((role for role, name in SPEAKERS.items() if name == speaker), 'system')
         for role, canvas in self.portraits.items():
             self.portrait_renderer(canvas, role, role == self.active_role)
         self.speaker.configure(fg=CYAN if self.active_role == 'player' else '#a9beff')
+
+
+    def update_page_buttons(self):
+        """마지막 페이지에서는 주 버튼([첫 업무 시작]·[확인 · 운영실로])이 이미 창을 닫으므로 같은 역할의
+        [업무로 돌아가기]와 이미 도착한 [마지막 안내]를 숨깁니다. 앞 페이지에서는 둘 다 그대로 보입니다."""
+        close = getattr(self, 'close_button', None)
+        if close is None:  # 부모 생성자 안의 첫 render에서는 아직 버튼이 없습니다.
+            return
+        hide = last_page_hides(self.index, len(self.steps))
+        for button in (self.skip_button, close):
+            button.pack_forget()
+        if not hide:
+            self.skip_button.pack(side='right')
+            close.pack(side='right', padx=6)
+
+
+def last_page_hides(index, total):
+    """교육창 페이지에서 [마지막 안내]·[업무로 돌아가기]를 숨길지(순수 함수). 마지막 페이지에서만 숨깁니다."""
+    return index >= total-1
 
 
 class StoryReviewDialog(StoryDialogueDialog):
