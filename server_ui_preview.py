@@ -4,6 +4,7 @@
 """
 from dataclasses import dataclass
 import tkinter as tk
+from version import APP_NAME
 from server_widgets import (ink, gpu_state, reset_hardware, gpu_module, animate_hardware, battery, availability_hint)
 
 
@@ -377,7 +378,7 @@ class ServerPreviewApp:
         self.animation_id = None
         self.animation_phase = 1
         self.closed = False
-        root.title('AIDC Simulator · 서버실 GUI 프로토타입')
+        root.title(f'{APP_NAME} · 서버실 GUI 프로토타입')
         root.geometry('1280x680')
         root.minsize(1000, 650)
         root.configure(bg=BG)

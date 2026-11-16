@@ -59,6 +59,12 @@
 - 작은 모듈부터 역할별 패키지로 옮기고 큰 세션·진행·GUI 모듈 및 기존 DB 경로는 유지합니다. 기능 단위 로컬 커밋 후 최종 fetch·검증을 거쳐 일반 push하는 방식을 요청받았습니다.
 - 실제 구현·검증·제한 사항: [모드 재구성 기록](PLAY_MODE_REORGANIZATION.md).
 
+## 2026-11-16 — 공식 명칭 변경 (확정)
+
+- v0.9-4b 개발 완료 후 공식 명칭을 **서버실 생존기**, 영문명을 **Server Room Survival**로 변경합니다. GitHub 저장소는 `hahyeong12/server-room-survival`입니다.
+- 현재 화면·프로젝트 소개·개발 지침에 새 명칭을 사용합니다. 과거 기록의 AIDC Simulator 명칭과 당시 경로·주소, 기존 DB 파일명·내부 식별자·`aidc` 패키지는 보존합니다.
+- 이번 작업은 명칭 변경에 한정하며 게임 기능·학습 설계·DB 구조·버전 번호는 유지합니다. 로컬 폴더는 앱과 편집기를 종료한 뒤 수동으로 변경할 수 있습니다.
+
 ## 아직 합의·검증이 필요한 설계 선택
 
 아래는 **제안**이며, 이미 구현됐거나 확정된 세부 사양이 아닙니다.
@@ -76,4 +82,4 @@
 
 **이 프로젝트의 최종 목적은 'AIDC 운영을 버튼으로 잘하는 게임'이 아니라, '눈에 보이지 않는 컴퓨터/네트워크 동작을 단계적으로 가시화하고 Linux/Unix 실습을 통해 독립적인 진단과 문제 해결로 성장하는 교육 게임'입니다.**
 
-새 요청을 받을 때 [프로젝트 헌장](../PROJECT_VISION.md)과 [학습 설계](LEARNING_DESIGN.md), [로드맵](DEVELOPMENT_ROADMAP.md)을 먼저 보고, 현재 구현과 새 비전을 구분한 뒤 개발합니다. 다른 교과목의 MySQL/Flask `AIDC-Workload-Matcher`와 이 OSS `AIDC-Simulator`의 저장소·코드를 혼동하지 않습니다.
+새 요청을 받을 때 [프로젝트 헌장](../PROJECT_VISION.md)과 [학습 설계](LEARNING_DESIGN.md), [로드맵](DEVELOPMENT_ROADMAP.md)을 먼저 보고, 현재 구현과 새 비전을 구분한 뒤 개발합니다. 다른 교과목의 MySQL/Flask `AIDC-Workload-Matcher`와 이 OSS `server-room-survival`(이전 `AIDC-Simulator`)의 저장소·코드를 혼동하지 않습니다.

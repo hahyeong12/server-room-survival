@@ -77,7 +77,7 @@ class PreviewSampleTests(unittest.TestCase):
                    if isinstance(node, (ast.Import, ast.ImportFrom))]
         modules = {node.module if isinstance(node, ast.ImportFrom) else alias.name
                    for node in imports for alias in node.names}
-        self.assertEqual(modules, {'tkinter', 'dataclasses', 'server_widgets'})
+        self.assertEqual(modules, {'tkinter', 'dataclasses', 'server_widgets', 'version'})
 
 
 class PreviewGuiTests(unittest.TestCase):

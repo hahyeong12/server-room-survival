@@ -1,4 +1,4 @@
-"""AIDC Simulator: 첫 출근부터 Chapter 2, 모드 전환과 결과 보고까지."""
+"""서버실 생존기: 첫 출근부터 Chapter 2, 모드 전환과 결과 보고까지."""
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -19,7 +19,7 @@ from aidc.storage.checkpoints import capture, restore, checkpoint_path
 from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload, heading, chapter_state, STATE_LABELS
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
-from version import VERSION
+from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
 from request_summary import request_summary
 from ui import (BG, PANEL, BORDER, TEXT, MUTED, CYAN, GREEN, RED, AMBER, FONT,
@@ -31,7 +31,7 @@ class SimulatorApp:
     def __init__(self, root, db=None, db_factory=Database, story_slots=None, checkpoint_start=False, **session_options):
         self.root = root
         self.db_factory, self.closed, self.transitioning = db_factory, False, False
-        root.title(f'AIDC Simulator {VERSION} | 울산 AI 데이터센터 관제실')
+        root.title(f'{APP_NAME} {VERSION} | 울산 AI 데이터센터 관제실')
         root.geometry(f'{min(1280, root.winfo_screenwidth()-40)}x{min(680, root.winfo_screenheight()-100)}')
         root.minsize(1000, 650)
         root.configure(bg=BG)
@@ -1506,7 +1506,7 @@ class ModeSelection:
         self.preferred_story = preferred_story
         self.starting = False
         root.protocol('WM_DELETE_WINDOW', root.destroy)
-        root.title(f'AIDC Simulator {VERSION} | 모드 선택')
+        root.title(f'{APP_NAME} {VERSION} | 모드 선택')
         if root.winfo_width() <= 1:
             root.geometry('1000x650')
         root.minsize(1000, 650)
@@ -1522,8 +1522,8 @@ class ModeSelection:
         icon.pack(side='left', padx=(0, 12))
         reset_hardware(icon)
         gpu_module(icon, 6, 6, 64, 27, 'available')
-        label(title, 'AIDC Simulator', 30, CYAN, True).pack(side='left')
-        label(self.content, '울산 AI 데이터센터 운영 시뮬레이션', 14, MUTED).pack(anchor='w', pady=(8, 12))
+        label(title, APP_NAME, 30, CYAN, True).pack(side='left')
+        label(self.content, f'{APP_NAME_EN} · 울산 AI 데이터센터 운영 시뮬레이션', 14, MUTED).pack(anchor='w', pady=(8, 12))
         self.menu_body = tk.Frame(self.content, bg=BG)
         self.menu_body.pack(fill='x')
         self.mode_panel = tk.Frame(self.menu_body, bg=BG)
@@ -1580,7 +1580,7 @@ class ModeSelection:
         self.tutorial_buttons = self.menu_buttons['tutorial']
         self.slot_choice = self.choices['story']
         self.paths_by_mode = {}
-        self.version_label = label(self.content, f'{VERSION} · 제1장~제5장 / Lab 학습 과제 1~5 (프로토타입)', 10, MUTED)
+        self.version_label = label(self.content, f'{APP_NAME_EN} {VERSION} · 제1장~제5장 / Lab 학습 과제 1~5 (프로토타입)', 10, MUTED)
         self.version_label.pack(anchor='w', pady=(12, 0))
 
     def layout_content(self, event):

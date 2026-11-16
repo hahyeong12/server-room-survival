@@ -1,6 +1,8 @@
-# AIDC Simulator
+# 서버실 생존기 (Server Room Survival)
 
 > **v0.9-4b** · 2026-11-16 · Python / Tkinter / SQLite · 추가 패키지 없음
+
+공식 저장소: [hahyeong12/server-room-survival](https://github.com/hahyeong12/server-room-survival). v0.9-4b 개발 완료 후 공식 명칭을 **서버실 생존기**, 영문명을 **Server Room Survival**로 변경했습니다. 이전 명칭은 AIDC Simulator이며, 과거 개발 기록과 `aidc` 패키지·기존 저장 파일 이름은 유지합니다.
 
 **Python 기반 AI 데이터센터 운영 시뮬레이션**입니다. OSS 텀프로젝트로 개발 중인 개인 프로젝트이며, 가상의 울산 AI 데이터센터를 배경으로 하는 미션 게임입니다.
 
@@ -736,6 +738,17 @@ v0.9-1e에서는 기존 547개를 유지하고 `tests/test_v091e.py` 9개와 튜
 이번 서버 관제실에서 검증한 창 크기는 1000×650, 1280×680, 1366×768입니다. 고배율 DPI·다중 모니터·장시간 사용감은 직접 확인이 필요합니다. 같은 DB를 여러 앱에서 동시에 운영하는 방식은 지원 범위에 포함하지 않습니다. 하드웨어 장애는 교육용 수동 주입이며 랜덤/일괄 장애·서버 증설·구매·성능 차이·실제 통신 비용은 없습니다. 운영일별 교대, 실제 자연어 협상이나 외부 서비스 연동도 구현하지 않았습니다.
 
 실제 게임 데이터 `aidc_game.db`와 Python 캐시·개인 IDE 설정은 Git에서 제외합니다. DB는 삭제하거나 초기화하지 않고 별도로 보관해 주세요. 저장 실패 시에는 상태를 되돌리고 정상 종료도 보류하므로 오류 원인을 확인한 뒤 다시 저장할 수 있습니다.
+
+## 로컬 폴더 이름 변경
+
+GitHub 저장소 이름과 로컬 폴더 이름은 독립적입니다. 기존 `AIDC-Simulator` 폴더에서도 새 origin으로 정상 작업할 수 있으므로, 이번 변경에서는 실행 중인 VS Code·GitHub Desktop의 작업 경로를 유지합니다.
+
+원하실 때 다음 순서로 수동 변경하세요.
+
+1. 게임을 정상 저장·종료하고 테스트·터미널 작업을 끝낸 뒤, VS Code와 GitHub Desktop을 모두 종료합니다.
+2. 파일 탐색기에서 `C:\Users\김하형\Desktop\AIDC-Simulator` 폴더 이름을 `server-room-survival`로 변경합니다. `.git`과 기존 DB를 포함한 폴더 전체를 유지하고 개별 저장 파일 이름은 바꾸지 않습니다.
+3. VS Code의 **폴더 열기**로 새 폴더를 엽니다. GitHub Desktop에서 기존 경로를 찾지 못하면 **Locate**로 새 폴더를 지정하거나 **File → Add local repository**로 추가합니다. 새로 clone하거나 Git 저장소를 초기화할 필요는 없습니다.
+4. 새 폴더에서 `git status`와 `git remote -v`를 확인합니다. origin은 `https://github.com/hahyeong12/server-room-survival.git`이어야 합니다.
 
 ## 향후 개발 계획
 

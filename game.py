@@ -1,4 +1,4 @@
-"""AIDC Simulator: GUI나 DB에 의존하지 않는 게임 규칙."""
+"""서버실 생존기: GUI나 DB에 의존하지 않는 게임 규칙."""
 from dataclasses import dataclass, field
 
 GPU_TOTAL = 10
