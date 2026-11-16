@@ -179,6 +179,7 @@ class SimulatorApp:
         self.inbox = self.make_list(left, ('client', 'status'), ('고객 / 국가', '상태 / 기한'), (110, 100), 4)
         self.inbox.grid(row=2, sticky='nsew')
         self.inbox.bind('<ButtonRelease-1>', self.on_inbox_click)
+        self.inbox.bind('<Configure>', self.reveal_inbox_selection)
         self.inbox.bind('<Return>', lambda _: self.open_selected_message())
         arrival = tk.Frame(left, bg=BORDER, padx=8, pady=6)
         arrival.grid(row=1, sticky='ew', pady=(0, 6))
@@ -535,7 +536,15 @@ class SimulatorApp:
         self.cancel_story_event()
         self.story_event_timer = self.root.after_idle(self.resume_story_event)
 
+    def reveal_inbox_selection(self, event=None):
+        # 접수 안내 높이가 바뀐 뒤에도 현재 고객을 보여 줍니다. 휠 스크롤에는 반응하지 않습니다.
+        selected = self.inbox.selection()
+        if selected:
+            self.inbox.see(selected[0])
+
     def update_status(self):
+        previous_rows = self.inbox.get_children()
+        previous_selection, previous_view = self.inbox.selection(), self.inbox.yview()
         active = [r for r in self.session.runs.values() if r.state.phase in ('running','incident','paused','recovering')]
         unread = sum(not r.request['is_read'] for r in self.session.runs.values())
         clock = getattr(self.session, 'time_label', '09:00')
@@ -576,6 +585,11 @@ class SimulatorApp:
                           else status_of(run.state)[0])
                 self.active_list.insert('', 'end', iid=str(rid), values=(run.mission['country'], f'{status} {getattr(run.state,"progress",0):.0f}%'))
         self.inbox.selection_set(str(self.session.selected_id))
+        if previous_rows != self.inbox.get_children() or previous_selection != self.inbox.selection():
+            self.reveal_inbox_selection()
+        else:
+            # 같은 고객의 일반 갱신은 사용자가 과거 기록을 읽던 위치를 유지합니다.
+            self.inbox.yview_moveto(previous_view[0])
         unread_new = [r for r in self.session.runs.values()
                       if not r.request['is_read'] and r.request['status']=='new']
         incoming = max(unread_new, key=lambda r:r.request['id']) if unread_new else None
