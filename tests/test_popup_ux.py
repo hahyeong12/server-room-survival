@@ -376,14 +376,17 @@ class CardTests(unittest.TestCase):
 
     def test_selected_card_has_distinct_background_and_border_and_previous_clears(self):
         self.d.plan_buttons[0].invoke(); self.root.update()
+        # QA tutorial-002 Q-05: 선택 상태는 교육 강조(금색)와 다른 흰 테두리(allocation_dialog.SELECTED)입니다.
+        from allocation_dialog import SELECTED
         first = self.d.plan_cards[0]
-        self.assertEqual(first.cget('highlightbackground'), GOLD)
+        self.assertEqual(first.cget('highlightbackground'), SELECTED)
+        self.assertNotEqual(SELECTED.lower(), GOLD.lower())
         self.assertGreaterEqual(int(first.cget('highlightthickness')), 3)
         self.assertNotEqual(first.cget('bg'), self.d.plan_cards[1].cget('bg'))
         self.d.select_card(1); self.root.update()
-        self.assertNotEqual(first.cget('highlightbackground'), GOLD)
+        self.assertNotEqual(first.cget('highlightbackground'), SELECTED)
         self.assertNotIn('선택 중', self.d.plan_buttons[0].cget('text'))
-        self.assertEqual(self.d.plan_cards[1].cget('highlightbackground'), GOLD)
+        self.assertEqual(self.d.plan_cards[1].cget('highlightbackground'), SELECTED)
 
     def test_hover_and_keyboard_select_cards(self):
         card = self.d.plan_cards[1]

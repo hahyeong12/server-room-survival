@@ -16,7 +16,8 @@ from ui import GREEN, AMBER
 from server_widgets import (BG, PANEL, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             gpu_module, reset_hardware, ink)
 
-GOLD = '#ffe08a'
+# 금색(#ffe08a)은 교육 강조(TutorialHighlight)에만 씁니다. 이 창의 선택 상태·점유 예정은 흰색 테두리로 구분합니다(Q-05).
+SELECTED = '#eef4ff'
 WARNING_BG = '#2a1218'
 
 
@@ -78,7 +79,7 @@ class AllocationDialog(tk.Toplevel):
         self.request_card.columnconfigure(0, weight=1)
         self.heading = tk.Label(self.request_card, bg=PANEL, fg=TEXT, font=(FONT, 13, 'bold'), anchor='w', justify='left')
         self.heading.grid(row=0, column=0, sticky='ew')
-        self.request_extra = tk.Label(self.request_card, bg=PANEL, fg=GOLD, font=(FONT, 11, 'bold'), anchor='e')
+        self.request_extra = tk.Label(self.request_card, bg=PANEL, fg=TEXT, font=(FONT, 11, 'bold'), anchor='e')
         self.request_extra.grid(row=0, column=1, sticky='e', padx=(12, 0))
 
         # 중단: 운영 모드 선택 카드 2개
@@ -127,7 +128,7 @@ class AllocationDialog(tk.Toplevel):
         info.columnconfigure(0, weight=1)
         self.notice = tk.Label(info, bg=BG, fg=MUTED, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
         self.notice.grid(row=0, sticky='ew')
-        self.change_label = tk.Label(info, bg=BG, fg=GOLD, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.change_label = tk.Label(info, bg=BG, fg=AMBER, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
         self.change_label.grid(row=1, sticky='ew')
         self.impact_label = tk.Label(info, bg=BG, fg=CYAN, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
         self.impact_label.grid(row=2, sticky='ew')
@@ -299,7 +300,7 @@ class AllocationDialog(tk.Toplevel):
 
     def paint_modes(self):
         for key, card in self.mode_cards.items():
-            card.configure(highlightbackground=GOLD if key == self.mode_var.get() else EDGE)
+            card.configure(highlightbackground=SELECTED if key == self.mode_var.get() else EDGE)
 
     def change_mode(self):
         """모드만 바꾸고 해당 모드의 요구량으로 배정안을 다시 계산합니다. 자원은 점유하지 않습니다."""
@@ -368,7 +369,7 @@ class AllocationDialog(tk.Toplevel):
         for index, card in enumerate(self.plan_cards):
             selected = self.selection.get() == index
             bg = '#253746' if selected else '#182a3b' if hover == index else PANEL
-            card.configure(bg=bg, highlightbackground=GOLD if selected else '#91a7c1' if hover == index else EDGE)
+            card.configure(bg=bg, highlightbackground=SELECTED if selected else '#91a7c1' if hover == index else EDGE)
             for widget in card.winfo_children():
                 widget.configure(bg=bg)
             self.plan_buttons[index].configure(text=self.plan_title(index)+
@@ -425,7 +426,7 @@ class AllocationDialog(tk.Toplevel):
         width = c.winfo_width()
         if width < 100:
             return
-        ink(c, 10, 5, '점유 예정 미리보기 · 금색 테두리 = 선택 예정 / 고객 코드 = 기존 작업', 9, MUTED)
+        ink(c, 10, 5, '점유 예정 미리보기 · 흰 테두리 = 선택 예정 / 고객 코드 = 기존 작업', 9, MUTED)
         cell = (width-20)/4
         module = max(28, min(52, (cell-14)/4-4))   # 서버당 최대 4개 GPU를 한 줄로 그립니다.
         for i, view in enumerate(self.views):
@@ -438,9 +439,9 @@ class AllocationDialog(tk.Toplevel):
                 gpu_module(c, mx, my, module, 24, 'fault' if view['health'] != 'HEALTHY' else 'busy' if owner else 'available',
                            owner['code'] if owner else None, slot)
                 if part and slot in part.gpu_slots:
-                    c.create_rectangle(mx-3, my-3, mx+module+3, my+27, outline=GOLD, width=3,
+                    c.create_rectangle(mx-3, my-3, mx+module+3, my+27, outline=SELECTED, width=3,
                                        tags=('planned-slot', f'planned-{spec.key}-{slot}'))
-                    c.create_rectangle(mx-5, my-5, mx+module+5, my+29, outline='#a97d31', width=1, tags='planned-glow')
+                    c.create_rectangle(mx-5, my-5, mx+module+5, my+29, outline='#6f86a8', width=1, tags='planned-glow')
 
     def start(self):
         if self.options and self.session.selected_id != self.request_id:
