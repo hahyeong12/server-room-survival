@@ -1,5 +1,6 @@
 """Chapter 1 교육 흐름. 실제 업무 규칙과 점수는 기존 세션을 사용합니다."""
 from dataclasses import dataclass, field, asdict
+from aidc.story.onboarding import OnboardingProgress, EVENTS as INTRO_EVENTS
 
 from aidc.story.chapter2 import Chapter2Progress, EVENTS2
 from aidc.story.chapter3 import Chapter3Progress, EVENTS3
@@ -336,8 +337,13 @@ class StoryProgress:
     chapter3b: Chapter3bProgress | None = None
     # v0.9-4a-1 심화 연수(Stage 1~5). Chapter 3b를 성공한 정규 슬롯 또는 [Engineering Lab 연습] 슬롯에만 있습니다.
     training: TrainingProgress | None = None
+    onboarding: OnboardingProgress | None = None
 
     def __post_init__(self):
+        if isinstance(self.onboarding, dict):
+            self.onboarding = OnboardingProgress(**self.onboarding)
+        if self.onboarding is not None and (not isinstance(self.onboarding, OnboardingProgress) or self.practice):
+            raise ValueError('입문 진행은 정규/튜토리얼 슬롯에만 저장할 수 있습니다.')
         if isinstance(self.chapter2, dict):
             self.chapter2 = Chapter2Progress(**self.chapter2)
         if isinstance(self.chapter3, dict):
@@ -391,7 +397,7 @@ class StoryProgress:
                 or self.selected_server not in (None, 'A', 'B', 'C', 'D')):
             raise ValueError('저장된 스토리 진행 상태가 올바르지 않습니다.')
         if (not isinstance(self.dialogue_seen, list)
-                or any(not isinstance(key, str) or key not in (*STEPS, 'closed', 'skipped', *EVENTS2, *EVENTS3, *EVENTS3B, *EVENTS_T) for key in self.dialogue_seen)
+                or any(not isinstance(key, str) or key not in (*STEPS, 'closed', 'skipped', *EVENTS2, *EVENTS3, *EVENTS3B, *EVENTS_T, *INTRO_EVENTS) for key in self.dialogue_seen)
                 or len(set(self.dialogue_seen)) != len(self.dialogue_seen)):
             raise ValueError('저장된 대화 표시 이력이 올바르지 않습니다.')
         expected = STEPS[min(len(self.completed_steps), len(STEPS)-1)]
@@ -443,6 +449,8 @@ class StoryProgress:
 
     def payload(self):
         data = asdict(self)
+        if data['onboarding'] is None:
+            data.pop('onboarding')
         if data['chapter2'] is None:
             data.pop('chapter2')  # Chapter 1 저장 형식을 그대로 유지합니다.
         if not data['practice']:
@@ -456,6 +464,14 @@ class StoryProgress:
         if data['practice_chapter'] == 2:
             data.pop('practice_chapter')  # Chapter 2 연습/이전 저장 형식을 그대로 유지합니다.
         return data
+
+    @property
+    def chapter1_cleared(self):
+        return self.onboarding.done if self.onboarding else self.chapter_completed
+
+    @property
+    def intro_active(self):
+        return self.onboarding is not None and self.chapter2 is None
 
     @property
     def chapter2_active(self):
@@ -482,7 +498,9 @@ class StoryProgress:
             return self.chapter3b.completed
         if self.chapter3 is not None:
             return self.chapter3.completed
-        return self.chapter2.completed if self.chapter2 is not None else self.chapter_completed
+        if self.chapter2 is not None:
+            return self.chapter2.completed
+        return self.onboarding.done if self.onboarding else self.chapter_completed
 
     @property
     def ui_step(self):
@@ -493,7 +511,7 @@ class StoryProgress:
         if self.chapter3 is not None:
             return 'c3_done' if self.chapter3.completed else 'c3_'+self.chapter3.step
         if self.chapter2 is None:
-            return self.step
+            return self.onboarding.step if self.onboarding else self.step
         return 'c2_done' if self.chapter2.completed else 'c2_'+self.chapter2.step
 
     @property
@@ -505,7 +523,7 @@ class StoryProgress:
         if self.chapter3 is not None:
             return ['c3_'+key for key in self.chapter3.completed_steps]
         if self.chapter2 is None:
-            return self.completed_steps
+            return list(STEPS[:STEPS.index(self.onboarding.step)]) if self.onboarding and self.onboarding.step in STEPS else self.completed_steps
         return ['c2_'+key for key in self.chapter2.completed_steps]
 
     @property
@@ -522,6 +540,8 @@ class StoryProgress:
     def dialogue_event(self):
         if self.chapter2 is not None or self.chapter3 is not None or self.chapter3b is not None or self.training is not None:
             return self.ui_step
+        if self.onboarding:
+            return self.onboarding.event
         if self.chapter_completed:
             return 'complete'
         if self.mission_status == 'closed':
@@ -530,6 +550,8 @@ class StoryProgress:
 
     @property
     def objective(self):
+        if self.onboarding and self.chapter2 is None:
+            return self.onboarding.objective
         if self.training is not None:
             if self.training.done:
                 return '심화 연수 완료 · 결과를 확인하세요.'
@@ -553,6 +575,8 @@ class StoryProgress:
 
     @property
     def dialogue(self):
+        if self.onboarding and self.chapter2 is None:
+            return [Dialogue('mentor', self.onboarding.dialogue)]
         if self.training is not None:
             if self.training.done:
                 return [Dialogue('mentor', RESULT_OUTRO)]

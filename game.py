@@ -93,6 +93,15 @@ MODE_SPEEDS = {"performance": 1, "economy": .7}
 # 저장된 요청은 GameState.scenario 이름으로 이 표를 다시 읽으므로, 이미 쓰인 이름의 수치는 바꾸지 않습니다.
 # 새 조건은 새 이름으로 추가하고 chapter2.CHAPTER2_SCENARIOS에서 새 시작에만 연결합니다.
 SCENARIOS = {
+    # 새 입문/첫 근무만 사용. 기존 저장의 국가별 조건은 변경하지 않습니다.
+    'intro_tutorial_v1': {'plans': CUSTOMER_PLANS['싱가포르'], 'work': 10,
+                          'window': ('입문 · 짧은 모델 학습', 60, 180, 300)},
+    'intro_sg_v1': {'plans': CUSTOMER_PLANS['싱가포르'], 'work': 30,
+                    'window': ('첫 근무 · 모델 학습', 60, 180, 300)},
+    'intro_jp_v1': {'plans': CUSTOMER_PLANS['일본'], 'work': 30,
+                    'window': ('첫 근무 · 로봇 추론', 60, 180, 300)},
+    'intro_us_v1': {'plans': CUSTOMER_PLANS['미국'], 'work': 30,
+                    'window': ('첫 근무 · 데이터 분석', 60, 180, 300)},
     "ch2_jp": {"plans": {"performance": {"label": "고성능 모드", "gpu": 4, "power": 5, "network": 3, "bonus": 15},
                          "economy": {"label": "절약형 모드", "gpu": 2, "power": 3, "network": 2, "bonus": 5}},
                "work": 40, "window": ("긴급 · 로봇 추론", 10, 50, 80)},

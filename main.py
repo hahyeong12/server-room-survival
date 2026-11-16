@@ -310,6 +310,16 @@ class SimulatorApp:
                     self.story_complete_button.grid(row=0, column=2)
                 else:
                     self.story_complete_button.grid_remove()
+            elif story.intro_active:
+                self.story_skip_button.grid_remove()
+                self.resource_confirm_button.pack_forget()
+                if story.ui_done or story.onboarding.step == 'closed':
+                    failed = story.onboarding.step == 'closed'
+                    self.story_complete_button.configure(text='실패 결과·재도전' if failed else '근무 결과',
+                                                         command=self.show_chapter_failure if failed else self.show_chapter_complete)
+                    self.story_complete_button.grid(row=0, column=2)
+                else:
+                    self.story_complete_button.grid_remove()
             elif story.chapter_completed:
                 self.story_skip_button.grid_remove()
                 self.story_complete_button.configure(text=current_chapter(story).label+' 결과')
@@ -335,14 +345,16 @@ class SimulatorApp:
             # 단계가 바뀐 직후에는 피드백/교육창이 먼저 열리므로, 다음 대상 강조를 그 뒤로 미룹니다(순간 점멸 방지).
             highlight.clear()
             return
-        if (self.closed or self.transitioning or not story or story.tutorial_completed or story.chapter2 is not None
+        guided_intro = bool(story and story.intro_active and self.session.mode == 'tutorial' and not story.ui_done)
+        if (self.closed or self.transitioning or not story or (story.intro_active and not guided_intro)
+                or (story.tutorial_completed and not guided_intro) or story.chapter2 is not None
                 or story.chapter3 is not None or story.chapter3b is not None or story.training is not None
-                or story.chapter_completed or story.mission_status == 'closed'
+                or (story.chapter_completed and not guided_intro) or story.mission_status == 'closed'
                 or any(w is not None and w.winfo_exists()
                        for w in (self.story_window, self.feedback_window, self.message_window, *self.story_reviews))):
             highlight.clear()
             return
-        step, widget, key = story.step, None, story.step
+        step, widget, key = story.ui_step, None, story.ui_step
         plan_window = self.allocation_window
         if plan_window is not None and plan_window.winfo_exists():
             # 팝업이 열려 있으면 팝업 안의 위젯만 대상으로 합니다. 부모 화면 버튼은 강조하지 않습니다.
@@ -363,7 +375,8 @@ class SimulatorApp:
             else:
                 widget, key = self.resources, 'inspector'
         elif step == 'request':
-            widget = self.arrival_open_button if self.arrival_request_id == story.request_id else self.notice_button
+            target_id = story.onboarding.rid if story.intro_active else story.request_id
+            widget = self.arrival_open_button if self.arrival_request_id == target_id else self.notice_button
         elif step == 'preview':
             # 탭은 이동 수단일 뿐입니다. 탭이 열려 있으면 실제 비교 버튼을 가리킵니다.
             if self.resources.book.select() == str(self.resources.review_frame):
@@ -414,6 +427,8 @@ class SimulatorApp:
 
     def queue_story_feedback(self, previous, anchor):
         story = self.session.story
+        if story and story.intro_active:
+            return  # 짧은 입문/첫 근무는 목표 카드로 안내하며 매 조작마다 창을 열지 않습니다.
         if (not story or previous not in FEEDBACK or story.skipped or story.ui_done
                 or story.mission_status == 'closed' or previous not in story.ui_completed_steps):
             return
@@ -721,7 +736,7 @@ class SimulatorApp:
                 return None
         if self.story_window is not None and self.story_window.winfo_exists():
             return self.story_window
-        if current_chapter(story).key == 1 and story.mission_status == 'closed':
+        if current_chapter(story).key == 1 and chapter_state(self.session)[0] == 'failed':
             return self.show_chapter_failure()
         if self.session.chapter2_failure_pending:
             return self.show_chapter2_failure()
@@ -758,6 +773,11 @@ class SimulatorApp:
             return self.feedback_window
         if self.feedback_window is not None and self.feedback_window.winfo_exists():
             return self.feedback_window
+        if story.intro_active:
+            if story.ui_step == 'arrival' and story.dialogue_event not in story.dialogue_seen:
+                return self.show_story_help()
+            self.update_tutorial_highlight()
+            return None
         if (story.dialogue_event in ('arrival', 'request', 'closed', 'skipped', 'c2_briefing', 'c3_briefing',
                                      'c3_a_diagnose', 'c3_b_start', 'c3_b_diagnose',
                                      'c3b_briefing', 'c3b_a_diagnose', 'c3b_b_start', 'c3b_b_diagnose', 't_structure')
@@ -874,7 +894,7 @@ class SimulatorApp:
         story = self.session.story
         if not story:
             return None
-        if current_chapter(story).key == 1 and story.mission_status == 'closed':
+        if current_chapter(story).key == 1 and chapter_state(self.session)[0] == 'failed':
             return self.show_chapter_failure()
         if self.feedback_window is not None and self.feedback_window.winfo_exists():
             self.feedback_window.destroy()
@@ -889,10 +909,10 @@ class SimulatorApp:
                     'c3b_briefing':('브리핑 확인', lambda:self.confirm_story_step(self.session.confirm_chapter3b_briefing))}
         confirm = confirms.get(story.ui_step) if not story.ui_done and not story.skipped else None
         pages = [line.page() for line in story.dialogue]
-        if story.ui_step in ('arrival', 'c2_briefing', 'c3_briefing', 'c3b_briefing', 't_structure') and pages:
+        if not story.intro_active and story.ui_step in ('arrival', 'c2_briefing', 'c3_briefing', 'c3b_briefing', 't_structure') and pages:
             speaker, text = pages[0]
             pages[0] = speaker, current_chapter(story).intro+'\n\n'+text
-        if story.step == 'operations' and not story.chapter_completed:
+        if not story.intro_active and story.step == 'operations' and not story.chapter_completed:
             run = self.session.runs[story.request_id]
             remaining = '\n'.join(f'Server {v["spec"].key}: GPU {v["gpu_available"]} · 전력 {v["power_available"]}'
                                   for v in server_views(self.session))
@@ -945,10 +965,10 @@ class SimulatorApp:
         for key, field in ((1, 'chapter_completed'), (2, 'chapter2'), (3, 'chapter3'), ('3b', 'chapter3b'), ('lab', 'training')):
             progress = getattr(story, field)
             if key == 1:
-                note = '클리어' if progress else '미완료'
+                note = '클리어' if story.chapter1_cleared else '미완료'
             elif progress is None:
                 available = (self.session.mode == 'story' and (
-                    (key == 2 and story.chapter_completed) or
+                    (key == 2 and story.chapter1_cleared) or
                     (key == 3 and not self.session.chapter3_unlock_reason()) or
                     (key == '3b' and not self.session.chapter3b_unlock_reason()) or
                     (key == 'lab' and not self.session.training_unlock_reason())))
@@ -1161,7 +1181,7 @@ class SimulatorApp:
         if self.db.path is None or not checkpoint_path(self.db.path, chapter.key).is_file():
             messagebox.showinfo('장 시작 기록 없음',
                                 '이전 버전 슬롯에는 장 시작 체크포인트가 없습니다. 현재 기록은 보존됩니다.\n'
-                                '자유·연습에서 이 장을 독립 연습하거나 스토리 도전을 새로 시작할 수 있습니다.', parent=self.root)
+                                '메인 메뉴의 스토리 도전에서 새로 시작하거나 다른 장 기록을 선택해 주세요.', parent=self.root)
             return False
         try:
             self.session.save()
@@ -1682,6 +1702,8 @@ class ModeSelection:
                 raise ValueError('이 슬롯에는 이어갈 진행 기록이 없습니다. 새 스토리 시작을 이용해 주세요.')
             self.frame.pack_forget()
             options = {'start_chapter': chapter} if chapter in (2, 3, '3b', 'lab') else {}
+            if fresh and chapter == 1:
+                options['intro_flow'] = True
             self.app = SimulatorApp(self.root, db=db, db_factory=self.db_factory,
                                     story_slots=self.story_slots, checkpoint_start=fresh or checkpoint_start, mode=mode, **options)
         except Exception as exc:

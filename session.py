@@ -8,6 +8,7 @@ from database import Database
 from game import DataCenter, GameState, RESPONSES, SCENARIOS, request_terms, request_conditions, game_time
 from aidc.core.server_resources import ServerPool, Allocation, SERVERS, ServerHealth
 from story import StoryProgress, chapter3_feedback_pages, chapter3_card
+from aidc.story.onboarding import OnboardingProgress, COUNTRIES as INTRO_COUNTRIES
 from aidc.story.chapter3 import Chapter3Progress, CHAPTER3_COUNTRIES, CHAPTER3_SCENARIOS, KIND_LABELS, RESPONSE_LABELS, network_diagnosis
 from aidc.story.chapter3b import (Chapter3bProgress, CHAPTER3B_COUNTRIES, CHAPTER3B_SCENARIOS, CHOICE_LABELS, fault_server_for,
                        impossible_reason, card as hw_card)
@@ -48,7 +49,7 @@ class MissionRun:
 
 
 class GameSession:
-    def __init__(self, db: Database, seed=None, incident_chance=None, mode='free', start_chapter=1):
+    def __init__(self, db: Database, seed=None, incident_chance=None, mode='free', start_chapter=1, intro_flow=False):
         self.db, self.center = db, DataCenter()
         self.servers = ServerPool()
         self.missions = {m['id']:m for m in db.get_missions()}
@@ -68,6 +69,8 @@ class GameSession:
         if mode in ('story', 'tutorial') and not saved:
             self.story = StoryProgress(practice=start_chapter in (2, 3, '3b', 'lab'),
                                        practice_chapter=start_chapter if start_chapter in (3, '3b', 'lab') else 2)
+            if intro_flow and start_chapter == 1:
+                self.story.onboarding = OnboardingProgress('tutorial' if mode == 'tutorial' else 'shift')
         self.minute = saved['minute'] if saved else 540
         self.seed = saved['seed'] if saved else (seed if seed is not None else random.SystemRandom().randrange(2**31))
         self.roll_index = saved['roll_index'] if saved else 0
@@ -93,6 +96,7 @@ class GameSession:
                 or self.runs[self.story.request_id].mission['country'] != '싱가포르'):
             raise ValueError('스토리의 첫 고객 요청을 찾을 수 없습니다.')
         if saved:
+            self._validate_onboarding()
             self._validate_chapter2()
             self._validate_chapter3()
             self._validate_chapter3b()
@@ -250,6 +254,8 @@ class GameSession:
                 if self.story and self.story.request_id in self.runs:
                     run = self.runs[self.story.request_id]
                     self.story.update(run, self.plan_agreed(run, run.state.plan))
+                if self.story and self.story.onboarding and self.story.chapter2 is None:
+                    self._advance_onboarding()
                 if self.story and self.story.chapter2 is not None:
                     self.story.chapter2.update(self.runs)
                     self._detect_chapter2_failure()
@@ -301,12 +307,24 @@ class GameSession:
             self.story.resources_confirmed = True
 
     def confirm_story_arrival(self):
+        if self.story and self.story.onboarding and self.story.chapter2 is None:
+            if self.story.onboarding.step != 'arrival':
+                raise ValueError('현재는 근무 안내 단계가 아닙니다.')
+            with self._atomic():
+                self.story.onboarding.introduced = True
+            return
         if not self.story or self.story.step != 'arrival':
             raise ValueError('현재는 첫 출근 안내 단계가 아닙니다.')
         with self._atomic():
             self.story.introduction_confirmed = True
 
     def inspect_story_preview(self, request_id):
+        if self.story and self.story.onboarding and self.story.chapter2 is None:
+            intro = self.story.onboarding
+            if request_id == intro.rid and request_id in intro.read and request_id not in intro.reviewed:
+                with self._atomic():
+                    intro.reviewed.append(request_id)
+            return
         if self.story and self.story.chapter2_active:
             # Chapter 2: 비교 창에서 계획을 직접 고른 요청만 검토로 기록합니다.
             if request_id in self.story.chapter2.request_ids and request_id not in self.story.chapter2.reviewed:
@@ -329,6 +347,8 @@ class GameSession:
             self.story.operations_confirmed = True
 
     def chapter_result(self):
+        if self.story and self.story.onboarding and self.story.chapter2 is None:
+            return self._onboarding_result()
         if not self.story or not self.story.chapter_completed:
             raise ValueError('첫 업무를 정상 완료한 뒤 결과를 확인할 수 있습니다.')
         run = self.runs[self.story.request_id]
@@ -344,6 +364,58 @@ class GameSession:
                 'gpu':s.gpu_used, 'power':s.power_used, 'servers':statuses,
                 'feedback':run.last_feedback, 'request_id':run.request['id'], 'playthrough_id':run.playthrough_id,
                 'summary':chapter1_summary({'score':s.score,'gpu':s.gpu_used,'power':s.power_used}, run)}
+
+    def _intro_scenario(self, index):
+        return ('intro_tutorial_v1' if self.story.onboarding.kind == 'tutorial'
+                else ('intro_sg_v1', 'intro_jp_v1', 'intro_us_v1')[index])
+
+    def _validate_onboarding(self):
+        intro = self.story.onboarding if self.story else None
+        if intro is None:
+            return
+        if intro.kind != ('tutorial' if self.mode == 'tutorial' else 'shift') or not intro.request_ids:
+            raise ValueError('입문 진행과 모드가 일치하지 않습니다.')
+        for index, rid in enumerate(intro.request_ids):
+            run = self.runs.get(rid)
+            if (run is None or run.mission['country'] != INTRO_COUNTRIES[index]
+                    or run.state.scenario != self._intro_scenario(index)):
+                raise ValueError('입문 고객과 시나리오가 일치하지 않습니다.')
+            if (rid in intro.completed) != bool(run.state.succeeded and run.request['status'] == 'completed'):
+                raise ValueError('입문 완료 이력과 실제 업무가 일치하지 않습니다.')
+        expected = deepcopy(intro)
+        expected.update(self.runs)
+        if expected != intro or (self.story.chapter2 is not None and not intro.done):
+            raise ValueError('입문 단계와 실제 업무 상태가 일치하지 않습니다.')
+
+    def _advance_onboarding(self):
+        intro = self.story.onboarding
+        intro.update(self.runs)
+        if intro.rid in intro.completed and not intro.done:
+            index = len(intro.request_ids)
+            mid = next(mid for mid, m in self.missions.items() if m['country'] == INTRO_COUNTRIES[index])
+            rid = self._receive(mid, f'intro:{index}', self._intro_scenario(index))
+            intro.request_ids.append(rid)
+            self.selected_id = rid
+            intro.update(self.runs)
+
+    def _onboarding_result(self):
+        intro = self.story.onboarding
+        if not intro.done:
+            raise ValueError('이번 근무의 모든 업무를 정상 완료해 주세요.')
+        jobs = [self.runs[rid] for rid in intro.request_ids]
+        if any(run.playthrough_id in self.servers.allocations for run in jobs):
+            raise ValueError('자원 반환을 확인할 수 없습니다.')
+        last = jobs[-1]
+        score = round(sum(run.state.score for run in jobs) / len(jobs), 1)
+        gpu, power = sum(r.state.gpu_used for r in jobs), sum(r.state.power_used for r in jobs)
+        return {'company': ' / '.join(r.mission['company_name'] for r in jobs), 'task': '첫 근무 완료' if intro.total > 1 else '관제실 입문 완료',
+                'score': score, 'on_time': all(r.terms.get('completed', self.minute) <= r.terms['due'] for r in jobs),
+                'gpu': gpu, 'power': power, 'servers': {s.key: self.servers.hardware[s.key].state for s in SERVERS},
+                'feedback': last.last_feedback, 'request_id': intro.rid, 'playthrough_id': last.playthrough_id,
+                'jobs': [job_summary(r) for r in jobs],
+                'summary': [('완료 업무', f'{len(jobs)}/{intro.total}건'), ('평균 운영 점수', f'{score}점'),
+                            ('자원 반환', f'GPU 누적 {gpu}개 · 전력 누적 {power}단위'),
+                            *[(r.mission['company_name'], f'정상 완료 · {r.state.score}점') for r in jobs]]}
 
     # ---- Chapter 2 -------------------------------------------------------------------------
     def _validate_chapter2(self):
@@ -367,6 +439,8 @@ class GameSession:
             raise ValueError('튜토리얼 결과는 본편 진행에 사용하지 않습니다. 스토리 도전에서 새로 시작해 주세요.')
         if not self.story or not self.story.chapter_completed:
             raise ValueError('Chapter 1을 정상 완료한 뒤 Chapter 2를 시작할 수 있습니다.')
+        if self.story.onboarding and not self.story.onboarding.done:
+            raise ValueError('첫 근무의 세 업무를 모두 완료해 주세요.')
         if self.story.chapter2 is not None:
             raise ValueError('이미 Chapter 2를 시작했습니다.')
         return self._open_chapter2()
@@ -1883,8 +1957,11 @@ class GameSession:
                 return self._open_chapter2()[0]
             mid = next(mid for mid, m in self.missions.items() if m['country'] == '싱가포르')
             with self._atomic():
-                rid = self._receive(mid, f'initial:{mid}')
+                scenario = self._intro_scenario(0) if self.story.onboarding else None
+                rid = self._receive(mid, f'initial:{mid}', scenario)
                 self.story.request_id = rid
+                if self.story.onboarding:
+                    self.story.onboarding.request_ids.append(rid)
             return rid
         received = {r.mission['id'] for r in self.runs.values()}
         for mid in self.missions:
@@ -2469,6 +2546,9 @@ class GameSession:
             self.selected_id = rid
             if self.story and self.story.request_id == rid:
                 self.story.request_read = True
+            if self.story and self.story.onboarding and rid in self.story.onboarding.request_ids:
+                if rid not in self.story.onboarding.read:
+                    self.story.onboarding.read.append(rid)
             if self.story and self.story.chapter2_active:
                 self.story.chapter2.mark_read(rid)
         return steps

@@ -19,7 +19,7 @@ class Chapter:
 
 
 CHAPTERS = {
-    1: Chapter(1, 1, '첫 출근', '울산 AIDC의 첫 근무가 시작됩니다. 낯선 관제실에 첫 고객의 요청이 도착했습니다.'),
+    1: Chapter(1, 1, '첫 근무', '기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.'),
     2: Chapter(2, 2, '한정된 자원', '두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.'),
     3: Chapter(3, 3, '끊어진 연결', '작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.'),
     '3b': Chapter('3b', 4, '서버실의 경보', '이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.'),
@@ -55,6 +55,14 @@ def chapter_state(session):
     if chapter.key == 'lab':
         return ('cleared', '학습 과제 1~5 통과') if story.training.done else ('in_progress', session.training_objective())
     if chapter.key == 1:
+        if story.intro_active:
+            if story.onboarding.done:
+                return 'cleared', f'고객 업무 {story.onboarding.total}건 정상 완료'
+            if story.onboarding.step == 'closed':
+                run = session.runs[story.onboarding.rid]
+                return 'failed', ('고객 요청을 거절했습니다.' if run.request['status'] == 'rejected' else
+                                  run.state.result_text or '고객 요청이 정상 완료되지 않았습니다.')
+            return 'in_progress', story.onboarding.objective
         if story.chapter_completed:
             return 'cleared', '첫 고객 업무 정상 완료'
         if story.mission_status == 'closed':

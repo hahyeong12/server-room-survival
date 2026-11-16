@@ -69,6 +69,10 @@ class StorySlots:
         story = data.get('story')
         if not isinstance(story, dict):
             return ' · 시작 전' if not data else ''
+        intro = story.get('onboarding')
+        if isinstance(intro, dict) and not story.get('chapter2'):
+            title = '짧은 튜토리얼' if intro.get('kind') == 'tutorial' else '제1장 — 첫 근무'
+            return f' · {title} · 완료 업무 {self._count(intro.get("completed"))}/{1 if intro.get("kind") == "tutorial" else 3}'
         if data.get('mode') == 'tutorial':
             return ' · 튜토리얼 '+('완료' if story.get('chapter_completed') else '진행 중')
         chapter = chapter_from_payload(story)
