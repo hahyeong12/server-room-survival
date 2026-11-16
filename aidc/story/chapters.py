@@ -10,8 +10,12 @@ class Chapter:
     intro: str
 
     @property
+    def label(self):
+        return f'제{self.number}장'
+
+    @property
     def heading(self):
-        return f'제{self.number}장 — {self.title}'
+        return f'{self.label} — {self.title}'
 
 
 CHAPTERS = {
@@ -54,7 +58,10 @@ def chapter_state(session):
         if story.chapter_completed:
             return 'cleared', '첫 고객 업무 정상 완료'
         if story.mission_status == 'closed':
-            return 'failed', '첫 고객 요청을 정상 완료하지 못했습니다.'
+            run = session.runs[story.request_id]
+            if run.request['status'] == 'rejected':
+                return 'failed', '고객 요청을 거절하여 첫 업무가 종료되었습니다.'
+            return 'failed', run.state.result_text or '첫 고객 요청을 정상 완료하지 못했습니다.'
         return 'in_progress', session.story_objective()
     if chapter.key == 2 and story.chapter2.failure:
         return 'failed', '고객 요청의 거절·만료·기한 초과 또는 처리 실패가 확정되었습니다.'

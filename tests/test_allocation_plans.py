@@ -324,7 +324,8 @@ class PlanDialogTests(unittest.TestCase):
         self.app.plan_var.set('economy'); self.app.refresh()
         d = self.dialog()
         self.assertEqual(d.options, ())
-        self.assertIn('고객 동의', d.notice.cget('text'))
+        self.assertIn('동의', d.notice.cget('text'))
+        self.assertFalse(self.app.session.plan_agreed(self.app.session.current, 'economy'))
         self.assertEqual(d.start_button.cget('state'), 'disabled')
         self.assertEqual(self.app.session.servers.allocations, {})
 
@@ -363,6 +364,7 @@ class PlanDialogTests(unittest.TestCase):
 
     def test_request_switch_cannot_start_different_customer(self):
         d = self.dialog()
+        d.plan_buttons[0].invoke(); self.root.update()
         self.app.session.deliver_next_request(); self.app.session.select(2)
         d.start_button.invoke(); self.root.update()
         self.assertIn('요청이 변경', d.notice.cget('text'))

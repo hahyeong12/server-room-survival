@@ -97,6 +97,27 @@ class PlayModesGuiTests(unittest.TestCase):
         self.assertIn('제2장', app.story_objective.cget('text'))
         self.assertIn('두 고객의 요청이 겹쳤습니다', app.story_window.full_text)
         self.assertTrue(app.session.story.chapter_completed)
+        snapshot = self.slots.payload(checkpoint_path(app.db.path, 2))
+        self.assertNotIn('c2_briefing', snapshot['story']['dialogue_seen'])
+        self.assertTrue(app.retry_chapter2())
+        self.root.update()
+        fresh = app.mode_selector.app
+        self.assertFalse(fresh.session.story.practice)
+        self.assertTrue(fresh.session.story.chapter_completed)
+        self.assertIn('두 고객의 요청이 겹쳤습니다', fresh.story_window.full_text)
+
+    def test_checkpoint_failure_after_chapter_start_keeps_committed_story(self):
+        app = self.menu.new_story(); self.root.update()
+        dismiss_story_popups(app, self.root)
+        prepare(app.session); finish(app.session)
+        app.refresh(); app.show_chapter_complete(); self.root.update()
+        with patch('main.capture', side_effect=OSError('disk full')), patch('main.messagebox.showerror') as error:
+            self.assertTrue(app.begin_chapter2())
+        error.assert_called_once()
+        self.assertIsNotNone(app.session.story.chapter2)
+        self.assertIsNotNone(app.db.get_simulation()['story']['chapter2'])
+        self.assertFalse(checkpoint_path(app.db.path, 2).exists())
+        self.assertFalse(app.closed)
 
     def test_save_failure_keeps_active_tutorial_and_menu_closed(self):
         app = self.menu.new_tutorial(); self.root.update()

@@ -432,7 +432,11 @@ class CardTests(unittest.TestCase):
                                    self.root.winfo_rooty()+self.root.winfo_height()/2, delta=2)
             for widget in (*self.d.plan_cards, self.d.canvas, self.d.start_button, self.d.close_button):
                 with self.subTest(size=size, widget=str(widget)):
+                    if widget in (*self.d.plan_cards, self.d.canvas):
+                        from tests.support import reveal_scroll_widget
+                        reveal_scroll_widget(self.d.scroll, widget)
                     self.assertTrue(widget.winfo_ismapped())
+                    self.assertGreaterEqual(widget.winfo_rooty(), self.d.winfo_rooty())
                     self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.d.winfo_rooty()+self.d.winfo_height())
 
 

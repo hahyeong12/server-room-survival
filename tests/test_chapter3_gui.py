@@ -81,7 +81,8 @@ class Chapter3PlayGuiTests(unittest.TestCase):
         self.assertIn('diagnose', self.app.action_buttons)
         for key in ('reroute', 'compress', 'ignore'):
             self.assertEqual(str(self.app.action_buttons[key].cget('state')), 'disabled')
-        self.assertIn('GPU·서버 장비 정상', self.app.action_hint.cget('text'))
+        self.assertIn('네트워크 장애', self.app.action_hint.cget('text'))
+        self.assertTrue(all(health.state == 'HEALTHY' for health in self.session.servers.hardware.values()))
         self.assertNotIn('우회', self.app.story_objective.cget('text'))
         self.app.action_buttons['diagnose'].invoke(); self.root.update()
         window = self.app.diagnosis_window
@@ -237,10 +238,11 @@ class Chapter3FailureCardGuiTests(unittest.TestCase):
         to_incident(session, a); session.view_network_diagnosis(a)
         for _ in range(3):
             session.respond('compress')
+        dismiss_story_popups(app, root)
         app.refresh(); app.show_story_event(); root.update()
         card = app.feedback_window
         self.assertEqual(card.heading.cget('text'), 'NETWORK RECOVERY FAILED')
-        self.assertEqual(set(card.buttons), {'Chapter 3 다시 도전', '후속 처리로 돌아가기'})
+        self.assertEqual(set(card.buttons), {'제3장 다시 도전', '후속 처리로 돌아가기'})
         card.buttons['후속 처리로 돌아가기'].invoke(); root.update()
         self.assertIn('retry', app.action_buttons); self.assertIn('report', app.action_buttons)
         self.assertIn('result3', app.action_buttons)                         # 닫은 뒤에도 결과를 다시 열 수 있음

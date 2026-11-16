@@ -125,7 +125,7 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
         self.assertTrue(dialog.summary.winfo_ismapped())
         app.db_factory = lambda path: Database(':memory:')
         dialog.buttons['retry'].invoke(); self.root.update()
-        fresh = self.selector.app if self.selector.app is not None else app.mode_selector.app
+        fresh = app.mode_selector.app
         self.addCleanup(fresh.db.close)
         self.assertTrue(fresh.session.story.practice)
         self.assertEqual(fresh.session.story.chapter2.completed_steps, [])

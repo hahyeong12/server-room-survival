@@ -29,6 +29,9 @@ class ResultButtonsGuiTests(unittest.TestCase):
     def finish(self, economy):
         s = self.app.session
         start(s, self.jp, 'performance')
+        if not economy:
+            while s.runs[self.jp].state.phase != 'finished':
+                s.advance_time(10)
         start(s, self.us, 'economy' if economy else 'performance')
         for _ in range(40):
             if s.story.chapter2.completed:

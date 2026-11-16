@@ -190,12 +190,12 @@ class ConsoleTests(unittest.TestCase):
         self.assertNotIn('delay', app.action_buttons)
         dialog = app.open_message(1)
         dialog.reveal()
-        self.assertIn('작업 완료', dialog.bubble.get('1.0','end'))
+        self.assertIn('완료', dialog.bubble.get('1.0','end'))
         self.assertNotIn('[신규 작업 요청]', dialog.bubble.get('1.0','end'))
         self.assertEqual(len(dialog.steps), 1)
         history = app.show_conversation_history()
         self.assertIn('[신규 작업 요청]', history.text.get('1.0','end'))
-        self.assertIn('작업 완료', history.text.get('1.0','end'))
+        self.assertIn('완료됐네요', history.text.get('1.0','end'))
         history.destroy(); dialog.destroy()
 
     def test_deadline_preview_colours_and_controls_at_laptop_size(self):

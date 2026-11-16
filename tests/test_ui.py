@@ -121,7 +121,7 @@ class GuiTests(unittest.TestCase):
         a.plan_var.set('economy'); a.preview_plan()
         self.assertEqual(a.action_buttons['start'].cget('state'),'disabled')
         a.session.propose_alternative(); self.assertTrue(a.session.review_alternative()); a.refresh()
-        a.plan_var.set('economy'); a.preview_plan(); a.action_buttons['start'].invoke()
+        a.plan_var.set('economy'); a.preview_plan(); start_via_dialog(a)
         self.assertEqual(a.session.current.request['status'],'operating')
         self.assertEqual(a.state.phase,'running')
         self.assertEqual(a.center.gpu_used,4)

@@ -138,13 +138,14 @@ class LiveServerRoom(tk.Canvas):
             status = v['status'] if v['health'] != 'HEALTHY' else 'NET' if v['network'] else v['status']
             ink(self,x+rw-12,y+10,status,8,RED if v['health'] != 'HEALTHY' else '#ffbf69' if v['network'] else MUTED,anchor='ne',tags=tags)
             tall = self.columns == 4
+            compact = not tall and rh < 110
             mw = min(60,(rw-36)/2) if tall else (rw-30)/4-3
             for j in range(4):
                 mx = x+(rw-2*mw-8)/2+(j%2)*(mw+8) if tall else x+12+j*(mw+3)
-                my = y+48+(j//2)*32 if tall else y+30
+                my = y+48+(j//2)*32 if tall else y+(25 if compact else 30)
                 owner = v['slots'][j] if j < spec.gpu else None
                 state = 'empty' if j >= spec.gpu else 'fault' if v['health'] != 'HEALTHY' else 'busy' if owner else 'available'
-                gpu_module(self,mx,my,mw,27,state,owner['code'] if owner else None,j,tags=tags,
+                gpu_module(self,mx,my,mw,20 if compact else 27,state,owner['code'] if owner else None,j,tags=tags,
                            body_tags=('gpu-slot',) if j < spec.gpu else ('spare-bay',))
             names = '/'.join(dict.fromkeys(o['code'].upper() for o in v['owners'])) or '미점유'
             if v['repair_left']:
@@ -161,6 +162,10 @@ class LiveServerRoom(tk.Canvas):
                 ink(self,x+12,y+rh-86,f'{v["gpu_available"]}/{spec.gpu}',20,CYAN,True,tags=tags)
                 ink(self,x+12,y+rh-55,f'전력 가용 {v["power_available"]}/{spec.power}',9,TEXT,tags=tags)
                 battery(self,x+12,y+rh-31,rw-24,19,v['power_available'],spec.power,tags)
+            elif compact:
+                ink(self,x+12,y+48,f'GPU {v["gpu_available"]}/{spec.gpu}',9,CYAN,True,tags=tags)
+                ink(self,x+rw-13,y+48,f'전력 {v["power_available"]}/{spec.power}',8,TEXT,anchor='ne',tags=tags)
+                ink(self,x+12,y+rh-10,names,8,CYAN if v['owners'] else MUTED,anchor='w',tags=tags+('owner-label',))
             else:
                 ink(self,x+12,y+64,f'GPU {v["gpu_available"]}/{spec.gpu}',11,CYAN,True,tags=tags)
                 battery(self,x+rw-96,y+65,83,18,v['power_available'],spec.power,tags)

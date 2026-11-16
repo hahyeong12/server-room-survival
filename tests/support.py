@@ -44,3 +44,13 @@ def start_via_dialog(app, index=None):
     dialog.start_button.invoke()
     app.root.update()
     return dialog
+
+
+def reveal_scroll_widget(area, widget):
+    """스크롤 본문의 개별 요소가 실제 화면에 닿는지 확인하기 위한 표시 조작입니다."""
+    area.update_idletasks()
+    top = widget.winfo_rooty()-area.body.winfo_rooty()
+    height = area.body.winfo_height()
+    maximum = max(0, height-area.canvas.winfo_height())
+    area.canvas.yview_moveto(min(top, maximum)/max(1, height))
+    area.update_idletasks()

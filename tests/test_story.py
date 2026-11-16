@@ -522,7 +522,7 @@ class ModeSelectionTests(unittest.TestCase):
 
     def test_selection_screen_does_not_open_any_save(self):
         self.assertEqual(self.paths, [])
-        self.assertEqual(set(self.selector.buttons), {'story', 'free'})
+        self.assertEqual(set(self.selector.buttons), {'tutorial', 'story', 'practice'})
         self.assertIsNone(self.selector.app)
 
     def test_mode_selection_cards_fit_three_resolutions(self):

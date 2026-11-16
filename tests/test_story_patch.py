@@ -341,7 +341,7 @@ class PatchGuiTests(unittest.TestCase):
 
     def test_completion_screen_uses_actual_results_and_four_actions(self):
         window = self.complete()
-        self.assertEqual(set(window.buttons), {'modes', 'free', 'status', 'review', 'chapter2'})
+        self.assertEqual(set(window.buttons), {'modes', 'free', 'status', 'review', 'chapter2', 'retry'})
         self.assertIn(f'{self.app.state.score}점', window.full_text)
         self.assertIn('반환 GPU: 7개', window.full_text)
         self.assertIn('반환 전력: 7단위', window.full_text)
@@ -369,7 +369,7 @@ class PatchGuiTests(unittest.TestCase):
         text = status.text.get('1.0', 'end')
         self.assertIn('제1장 — 첫 출근 · 클리어', text)
         self.assertIn('제2장 — 한정된 자원 · 시작 가능', text)
-        self.assertEqual(set(self.app.chapter_window.buttons), {'modes', 'free', 'status', 'review', 'chapter2'})
+        self.assertEqual(set(self.app.chapter_window.buttons), {'modes', 'free', 'status', 'review', 'chapter2', 'retry'})
 
     def test_completion_return_to_selection_closes_database_and_timer(self):
         win = self.complete(); old = self.app

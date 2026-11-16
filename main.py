@@ -228,12 +228,12 @@ class SimulatorApp:
             self.story_help_button.grid(row=0, column=1, padx=6)
             self.story_skip_button = ActionButton(self.story_bar, '튜토리얼 건너뛰기', self.skip_tutorial, accent=AMBER)
             self.story_skip_button.grid(row=0, column=2)
-            self.story_complete_button = ActionButton(self.story_bar, 'Chapter 1 완료', self.show_chapter_complete)
+            self.story_complete_button = ActionButton(self.story_bar, CHAPTERS[1].label+' 완료', self.show_chapter_complete)
             self.story_retry_button = ActionButton(self.story_bar, '이번 시도 종료 · 재도전', self.confirm_retry_chapter2, accent=AMBER)
-            self.story_retry3_button = ActionButton(self.story_bar, 'Chapter 3 다시 도전', self.confirm_retry_chapter3, accent=AMBER)
-            self.story_retry3b_button = ActionButton(self.story_bar, 'Chapter 3b 다시 도전', self.confirm_retry_chapter3b, accent=AMBER)
+            self.story_retry3_button = ActionButton(self.story_bar, CHAPTERS[3].label+' 다시 도전', self.confirm_retry_chapter3, accent=AMBER)
+            self.story_retry3b_button = ActionButton(self.story_bar, CHAPTERS['3b'].label+' 다시 도전', self.confirm_retry_chapter3b, accent=AMBER)
             # v0.9-4a-1 심화 연수: Chapter 3b 성공 정규 슬롯에서만 [심화 연수 시작], 연수 사건이 끝났을 때만 [연수 사건 다시 받기]
-            self.story_training_button = ActionButton(self.story_bar, '심화 연수 시작 ▶', self.begin_training)
+            self.story_training_button = ActionButton(self.story_bar, CHAPTERS['lab'].label+' 시작 ▶', self.begin_training)
             self.story_restart_button = ActionButton(self.story_bar, '연수 사건 다시 받기', self.restart_training_incident, accent=AMBER)
             self.resources.book.bind('<<NotebookTabChanged>>', self.on_story_preview, add='+')
             self.resource_confirm_button = tk.Button(
@@ -290,7 +290,7 @@ class SimulatorApp:
             elif story.chapter3b is not None:
                 self.story_skip_button.grid_remove()
                 if story.chapter3b.completed:
-                    self.story_complete_button.configure(text='Chapter 3b 결과')
+                    self.story_complete_button.configure(text=CHAPTERS['3b'].label+' 결과')
                     self.story_complete_button.grid(row=0, column=2)
                 else:
                     self.story_complete_button.grid_remove()
@@ -298,7 +298,7 @@ class SimulatorApp:
                 # Chapter 3(독립 연습 포함)에는 Chapter 1 건너뛰기가 없습니다. 완료한 뒤에는 결과 창을 다시 열 수 있습니다.
                 self.story_skip_button.grid_remove()
                 if story.chapter3.completed:
-                    self.story_complete_button.configure(text='Chapter 3 결과')
+                    self.story_complete_button.configure(text=CHAPTERS[3].label+' 결과')
                     self.story_complete_button.grid(row=0, column=2)
                 else:
                     self.story_complete_button.grid_remove()
@@ -306,13 +306,13 @@ class SimulatorApp:
                 # Chapter 2(연습 포함)에는 Chapter 1 건너뛰기가 없습니다. 완료한 뒤에는 결과 창을 다시 열 수 있습니다.
                 self.story_skip_button.grid_remove()
                 if story.chapter2.completed:
-                    self.story_complete_button.configure(text='Chapter 2 결과')
+                    self.story_complete_button.configure(text=CHAPTERS[2].label+' 결과')
                     self.story_complete_button.grid(row=0, column=2)
                 else:
                     self.story_complete_button.grid_remove()
             elif story.chapter_completed:
                 self.story_skip_button.grid_remove()
-                self.story_complete_button.configure(text=f'{story.chapter_label} 완료')
+                self.story_complete_button.configure(text=current_chapter(story).label+' 결과')
                 self.story_complete_button.grid(row=0, column=2)
             elif story.mission_status == 'closed':
                 self.story_complete_button.configure(text='실패 결과·재도전', command=self.show_chapter_failure)
@@ -671,6 +671,7 @@ class SimulatorApp:
 
     def _perform(self, action):
         story = self.session.story
+        previous_chapter = current_chapter(story).key if story else None
         previous = (story.ui_step, story.tutorial_completed, story.ui_done) if story else None
         anchor = self.story_anchor(story.ui_step) if story else None
         try:
@@ -679,6 +680,8 @@ class SimulatorApp:
             messagebox.showerror('처리 오류', str(exc), parent=self.root)
             return False
         current = self.session.story
+        if current and current_chapter(current).key != previous_chapter:
+            self.record_chapter_start()
         # 교육 단계가 바뀌면 refresh가 다음 대상을 먼저 강조했다가 곧바로 열리는 피드백 창이 지우는 순간 점멸이 생겼습니다.
         self.highlight_deferred = bool(story and current and (current.ui_step != previous[0] or current.ui_done != previous[2]))
         try:
@@ -778,7 +781,7 @@ class SimulatorApp:
         pages.insert(len(pages)-1, Dialogue('system', '현재 미션 평가\n'+'\n'.join(self.session.chapter2_evaluation_lines())).page())
         # 다른 고객의 작업이 진행 중이어도 바로 새 슬롯에서 다시 도전할 수 있습니다.
         self.story_window = self.build_popup(StoryDialogueDialog, self.root, pages,
-                                             confirm=('Chapter 2 다시 도전', self.retry_chapter2), chapter_label='Chapter 2')
+                                             confirm=(CHAPTERS[2].label+' 다시 도전', self.retry_chapter2), chapter_label=CHAPTERS[2].heading)
         self.story_window.close_button.configure(text='기존 진행 계속 보기')
         self.story_window.bind('<Destroy>', self.tutorial_window_closed, add='+')
         try:
@@ -797,7 +800,7 @@ class SimulatorApp:
             actions.append(('업무로 돌아가기', self.close_feedback))
             actions.append(('복구 준비 10분 진행', lambda: (self.close_feedback(), self.advance_time(10))))
         elif card['can_retry']:
-            actions.append(('Chapter 3 다시 도전', lambda: (self.close_feedback(), self.confirm_retry_chapter3())))
+            actions.append((CHAPTERS[3].label+' 다시 도전', lambda: (self.close_feedback(), self.confirm_retry_chapter3())))
             actions.append(('후속 처리로 돌아가기', self.close_feedback))
         else:
             actions.append(('업무로 돌아가기', self.close_feedback))
@@ -1021,7 +1024,7 @@ class SimulatorApp:
     def confirm_retry_chapter2(self):
         """플레이어가 직접 선택했을 때만 재도전합니다. 현재 슬롯과 진행 중인 작업은 그대로 저장됩니다."""
         if messagebox.askyesno('이번 시도 종료 · 재도전',
-                               '지금 진행은 현재 슬롯에 그대로 저장하고, 새 슬롯에서 Chapter 2를 처음부터 다시 시작할까요?',
+                               '지금 진행은 현재 슬롯에 그대로 저장하고, 새 슬롯에서 이 장을 다시 시작할까요?',
                                parent=self.root):
             return self.retry_chapter2()
         return False
@@ -1051,7 +1054,7 @@ class SimulatorApp:
 
     def chapter3b_card_actions(self, card):
         if card['can_retry']:
-            return [('Chapter 3b 다시 도전', lambda: (self.close_feedback(), self.confirm_retry_chapter3b())),
+            return [(CHAPTERS['3b'].label+' 다시 도전', lambda: (self.close_feedback(), self.confirm_retry_chapter3b())),
                     ('후속 처리로 돌아가기', self.close_feedback)]
         return [('업무로 돌아가기', self.close_feedback)]
 
@@ -1085,8 +1088,8 @@ class SimulatorApp:
         return window
 
     def confirm_retry_chapter3b(self):
-        if messagebox.askyesno('Chapter 3b 다시 도전',
-                               '지금 진행은 현재 슬롯에 그대로 저장하고, 새 슬롯에서 Chapter 3b를 처음부터 다시 시작할까요?',
+        if messagebox.askyesno(CHAPTERS['3b'].label+' 다시 도전',
+                               '지금 진행은 현재 슬롯에 그대로 저장하고, 새 슬롯에서 이 장을 다시 시작할까요?',
                                parent=self.root):
             return self.retry_chapter3b()
         return False
@@ -1101,7 +1104,6 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_training):
             return False
-        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1132,7 +1134,6 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_chapter3b):
             return False
-        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1141,8 +1142,8 @@ class SimulatorApp:
 
     def confirm_retry_chapter3(self):
         """플레이어가 직접 선택했을 때만 재도전합니다. 현재 슬롯과 기록은 그대로 저장되고 새 슬롯에서 시작합니다."""
-        if messagebox.askyesno('Chapter 3 다시 도전',
-                               '지금 진행은 현재 슬롯에 그대로 저장하고, 새 슬롯에서 Chapter 3을 처음부터 다시 시작할까요?',
+        if messagebox.askyesno(CHAPTERS[3].label+' 다시 도전',
+                               '지금 진행은 현재 슬롯에 그대로 저장하고, 새 슬롯에서 이 장을 다시 시작할까요?',
                                parent=self.root):
             return self.retry_chapter3()
         return False
@@ -1179,7 +1180,6 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_chapter3):
             return False
-        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
@@ -1193,7 +1193,6 @@ class SimulatorApp:
         old = self.chapter_window
         if not self._perform(self.session.start_chapter2):
             return False
-        self.record_chapter_start()
         if old is not None and old.winfo_exists():
             old.destroy()
         self.chapter_window = None
