@@ -225,8 +225,8 @@ class ResultTableTests(unittest.TestCase):
     def test_dialog_source_keeps_buttons_outside_the_scroll_area_and_detail_collapsed(self):
         src = (ROOT / 'chapter_dialog.py').read_text(encoding='utf-8')
         tail = src[src.index('class Chapter3CompleteDialog'):]
-        self.assertIn("buttons.grid(row=2", tail)
-        self.assertIn('result_actions(retry, select_chapter, select_mode', tail)
+        self.assertIn("action_bar.grid(row=2", tail)
+        self.assertIn('complete_actions(', tail)
         self.assertNotIn('자유 운영 모드 시작', tail)
         self.assertIn('failure_heading(top, self.failure)', tail)
         self.assertIn('상세 기록 보기', tail)

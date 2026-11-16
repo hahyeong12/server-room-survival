@@ -207,9 +207,10 @@ class FlowWiringTests(unittest.TestCase):
     def test_both_result_outcomes_receive_the_retry_callback(self):
         self.assertIn('retry=self.retry_chapter2', self.source)
         dialog = (ROOT / 'chapter_dialog.py').read_text(encoding='utf-8')
-        self.assertIn('if retry is not None:', dialog)
+        # 재도전 콜백은 성공/실패와 무관하게 결과 버튼 계산(complete_actions)에 전달됩니다.
+        self.assertIn('retry, select_chapter, select_mode', dialog.replace(chr(10)+' '*12, ' '))
         self.assertNotRegex(dialog, r"if success[^\n]*retry")
-        self.assertIn("buttons.grid(row=2", dialog)       # 버튼 영역은 스크롤 영역 밖 고정 행입니다.
+        self.assertIn("action_bar.grid(row=2", dialog)    # 버튼 영역은 스크롤 영역 밖 고정 행입니다.
 
     def test_no_stale_version_strings_in_the_ui(self):
         for name in ('main.py', 'allocation_dialog.py', 'chapter_dialog.py'):

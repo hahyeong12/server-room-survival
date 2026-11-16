@@ -53,3 +53,47 @@ def result_actions(retry, select_chapter, select_mode, retry_label='체크포인
         entries.append(('chapters', '장 선택', select_chapter))
     entries.append(('modes', '메인 메뉴', select_mode))
     return entries
+
+
+def success_tiles(result):
+    """성공 결과의 큰 타일 3개 (이름, 값, 색 역할). 실제 결과 기록에서 읽은 값만 씁니다."""
+    on_time = result.get('on_time')
+    deadline = ('기한 내 완료', 'green') if on_time is True else ('기한 초과', 'red') if on_time is False else ('평가 제외', 'gray')
+    return [('운영 점수', f'{result["score"]}점', 'green'), ('완료 기한', deadline[0], deadline[1]),
+            ('반환 자원', f'GPU {result["gpu"]} · 전력 {result["power"]}', 'cyan')]
+
+
+def success_headline(result, tutorial=False):
+    jobs = result.get('jobs')
+    if tutorial:
+        return '입문 완료 · 기본 흐름을 익혔습니다'
+    if jobs and len(jobs) > 1:
+        return f'첫 근무 완료 · 고객 업무 {len(jobs)}건 정상 처리'
+    return '업무 완료 · 고객 작업을 마치고 자원을 반환했습니다'
+
+
+def success_mentor_lines(tutorial=False):
+    """짧은 선배 한마디(문장 두 개 이하)."""
+    if tutorial:
+        return ['요청 확인 → 배정 → 시간 진행 → 완료. 이 흐름이 모든 업무의 기본입니다.']
+    return ['조건을 확인하고 배정한 뒤 끝까지 진행했습니다. 쓴 자원이 모두 돌아왔는지가 마무리입니다.']
+
+
+def complete_actions(tutorial, start_next, next_label, retry, select_chapter, select_mode, failed=False, practice=False):
+    """결과창 버튼 목록 [(key, 문구, 명령, 주요 여부)]. 주요 행동은 하나뿐이고 버튼은 최대 3개입니다."""
+    entries = []
+    if tutorial:
+        if retry:
+            entries.append(['retry', '다시 학습', retry, False])
+        entries.append(['modes', '메인 메뉴', select_mode, True])
+    else:
+        if start_next:
+            entries.append(['next', next_label, start_next, True])
+        if retry and (failed or not start_next):
+            entries.append(['retry', '다시 도전 · 새 슬롯' if (practice or not failed) else '체크포인트부터 다시 도전', retry, failed and not start_next])
+        if select_chapter:
+            entries.append(['chapters', '장 선택', select_chapter, False])
+        entries.append(['modes', '메인 메뉴', select_mode, False])
+        if not any(e[3] for e in entries):
+            entries[0][3] = True
+    return [tuple(e) for e in entries[:3]]
