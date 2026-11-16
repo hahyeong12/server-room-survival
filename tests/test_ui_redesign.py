@@ -190,9 +190,48 @@ class Chapter1DialogueLayoutTests(unittest.TestCase):
 class PipTextTests(unittest.TestCase):
     def test_state_is_not_color_only(self):
         self.assertEqual(pip_text('요청 확인', 'done')[0], '✔ 요청 확인')
-        self.assertEqual(pip_text('요청 확인', 'current')[0], '▶ 요청 확인')
+        self.assertEqual(pip_text('요청 확인', 'current')[0], '● 요청 확인')
         self.assertEqual(pip_text('요청 확인', 'todo')[0], '○ 요청 확인')
         self.assertTrue(pip_text('x', 'current')[2])
+
+    def test_goal_card_and_steps_leave_gold_to_the_action_button(self):
+        import aidc.ui.goal_card as goal
+        gold = '#ffe08a'
+        self.assertFalse(hasattr(goal, 'GOLD'))
+        for phase in ('ACTION', 'STORY', 'FEEDBACK', 'OTHER'):
+            self.assertNotIn(gold, goal.card_colors(phase).values())
+        for state in ('done', 'current', 'todo'):
+            self.assertNotEqual(pip_text('x', state)[1], gold)
+        self.assertEqual(goal.card_colors('ACTION')['border'], goal.BORDER)  # 중립 테두리
+
+
+class TimeHighlightTests(unittest.TestCase):
+    def test_group_parts_are_the_buttons_only(self):
+        from tutorial_highlight import highlight_parts
+        buttons = [NS(invoke=noop), NS(invoke=noop), NS(invoke=noop)]
+        group = NS(tutorial_parts=lambda: [NS(text='라벨'), *buttons])  # 라벨은 누를 수 없으므로 제외
+        self.assertEqual(highlight_parts(group), buttons)
+        self.assertEqual(highlight_parts(NS()), [])          # 일반 대상은 기존 단일 강조
+
+    def edges_for(self, rect):
+        from tutorial_highlight import edge_rect
+        return [edge_rect(rect, inset, thickness, side) for inset, thickness in ((0, 3), (5, 1))
+                for side in ('top', 'bottom', 'left', 'right')]
+
+    def test_each_button_gets_its_own_border_hugging_it(self):
+        rect = (100, 40, 60, 30)
+        edges = self.edges_for(rect)
+        xs = [x for x, _, _, _ in edges] + [x+w for x, _, w, _ in edges]
+        ys = [y for _, y, _, _ in edges] + [y+h for _, y, _, h in edges]
+        self.assertEqual((min(xs), max(xs), min(ys), max(ys)), (97, 163, 37, 73))  # 버튼 바깥 3px까지만
+
+    def test_gap_between_buttons_is_not_highlighted(self):
+        from main import TIME_BUTTON_GAP
+        first = (100, 40, 60, 30)
+        second = (100+60+TIME_BUTTON_GAP, 40, 60, 30)
+        right_of_first = max(x+w for x, _, w, _ in self.edges_for(first))
+        left_of_second = min(x for x, _, _, _ in self.edges_for(second))
+        self.assertGreater(left_of_second, right_of_first)  # 두 테두리 사이에 칠하지 않은 빈 공간이 남습니다.
 
 
 class FrameOffsetTests(unittest.TestCase):

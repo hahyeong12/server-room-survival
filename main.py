@@ -31,6 +31,9 @@ from ui import (BG, PANEL, BORDER, TEXT, MUTED, CYAN, GREEN, RED, AMBER, FONT,
                 TextDialog, label, request_status_of, status_of)
 
 
+TIME_BUTTON_GAP = 12  # 교육 강조 테두리(바깥 3px x 2)보다 넓어야 버튼 사이가 비어 보입니다.
+
+
 def status_tone(run, color):
     """요청 상태를 배지 색 역할로 바꿉니다(순수 함수, 표시 전용). 빨강=위험/실패, 청록=정상 진행, 회색=대기."""
     state = run.state
@@ -239,8 +242,11 @@ class SimulatorApp:
         label(self.time_group, '⏩ 시간 빨리감기', 11, CYAN, True).pack(side='left', padx=(0, 10))
         for minutes in (10, 30, 60):
             b = ActionButton(self.time_group, f'+{minutes}분', lambda m=minutes: self.advance_time(m))
-            b.pack(side='left', padx=(0, 6))
+            # 버튼마다 금색 테두리(바깥 3px)를 치므로 간격을 넓혀 버튼 사이 빈 공간이 강조되지 않게 합니다.
+            b.pack(side='left', padx=(0, TIME_BUTTON_GAP))
             self.time_buttons[minutes] = b
+        # 교육 강조는 묶음 프레임(라벨·빈 공간)이 아니라 세 버튼 각각에 테두리를 칩니다. 다른 장의 시간 안내도 같은 대상을 씁니다.
+        self.time_group.tutorial_parts = lambda: list(self.time_buttons.values())
         ActionButton(tools, '대화 기록', self.show_conversation_history).pack(side='right', padx=(6, 0))
         # v0.9-4a: 현재 교육 사건을 더 깊게 관찰하는 조회 전용 화면(지원하지 않는 미션에서는 이유만 안내합니다).
         self.lab_button = ActionButton(tools, 'Engineering Lab (Prototype)', self.open_engineering_lab, accent=AMBER)
@@ -436,7 +442,8 @@ class SimulatorApp:
             widget = self.time_group
         elif step == 'operations':
             widget = self.action_buttons.get('operations')
-        highlight.show(key, widget)
+        # 새 튜토리얼은 위쪽 목표 카드가 '지금 할 행동'을 이미 말하므로 같은 내용의 금색 클릭 안내를 따로 띄우지 않습니다.
+        highlight.show(key, widget, pointer=not guided_intro)
 
     def tutorial_window_closed(self, event):
         if event.widget is self.story_window:

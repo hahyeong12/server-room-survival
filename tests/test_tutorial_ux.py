@@ -262,11 +262,23 @@ class TutorialGuiTests(unittest.TestCase):
         self.assertIsNone(self.h.target)
         self.assertEqual(self.errors, [])
 
-    def test_time_group_pointer_text_and_pointer_click_uses_real_button(self):
+    def test_time_buttons_are_outlined_one_by_one_without_group_frame_or_pointer(self):
         self.running()
-        self.assertIn('시간 빨리감기', self.h.pointer.cget('text'))
+        buttons = list(self.app.time_buttons.values())
+        self.assertEqual(self.h.parts, buttons)                     # 라벨·묶음 프레임이 아니라 버튼 각각
+        self.assertIsNone(self.h.pointer)                           # 버튼을 가리는 별도 안내 없음
+        self.assertEqual(len(self.h.edges), 8*len(buttons))
+        self.assertNotEqual(self.app.time_group.cget('highlightbackground'), '#ffe08a')
+        self.assertEqual({e.tutorial_part for e in self.h.edges}, set(buttons))
         self.h.activate(); self.root.update()
         self.assertGreater(self.app.state.work_done, 0)
+
+    def test_time_highlight_restores_each_button_style(self):
+        self.running()
+        before = {m: (b.cget('bg'), b.cget('fg')) for m, b in self.app.time_buttons.items()}
+        self.h.clear()
+        self.assertTrue(all((b.cget('bg'), b.cget('fg')) != ('#3c3019', '#ffe08a') for b in self.app.time_buttons.values()))
+        self.assertTrue(before)
 
     def test_manual_help_and_review_suspend_then_restore_same_target(self):
         self.arrival()
