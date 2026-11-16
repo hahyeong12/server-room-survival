@@ -8,6 +8,42 @@ from main import SimulatorApp
 
 
 class RequestVisibilityGuiTests(unittest.TestCase):
+    def test_tutorial_and_free_requests_keep_selection_resources_and_history(self):
+        for mode in ('tutorial', 'free'):
+            with self.subTest(mode=mode), patch.object(SimulatorApp, 'show_story_event'):
+                root, db = tk.Tk(), Database(':memory:')
+                app = None
+                try:
+                    app = SimulatorApp(root, db=db, mode=mode, intro_flow=True)
+                    root.update()
+                    s = app.session
+                    if mode == 'tutorial':
+                        s.confirm_story_arrival()
+                        rid = s.selected_id
+                        s.read_conversation(rid)
+                        s.inspect_story_preview(rid)
+                        s.choose_plan('performance')
+                        s.advance_time(10)
+                        self.assertTrue(s.story.ui_done)
+                    else:
+                        s.deliver_next_request()
+                        rid = s.deliver_next_request()
+                        s.select(rid)
+                        self.assertIsNone(s.story)
+                    before = (s.selected_id, s.center.gpu_used, s.center.power_used, tuple(s.runs))
+                    app.refresh()
+                    root.update()
+                    self.assertTrue(app.inbox.bbox(str(s.selected_id)))
+                    self.assertEqual(app.inbox.selection(), (str(s.selected_id),))
+                    self.assertEqual(before, (s.selected_id, s.center.gpu_used, s.center.power_used, tuple(s.runs)))
+                    self.assertEqual(len(app.inbox.get_children()), len(s.runs))
+                finally:
+                    if app:
+                        app.network.stop()
+                        app.tutorial_highlight.stop()
+                    root.destroy()
+                    db.close()
+
     def test_new_customers_visible_without_losing_history_or_manual_scroll(self):
         root = tk.Tk()
         db = Database(':memory:')

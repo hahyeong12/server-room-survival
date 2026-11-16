@@ -1,4 +1,4 @@
-"""story-003: 전경 Preflight를 통과한 뒤 제1장을 실제 마우스로 한 번 플레이합니다.
+"""story-004: 전경 Preflight 뒤 제1장 완주·신규 요청 노출을 실제 마우스로 확인합니다.
 
 Windows 저장소 루트: python tests/qa/autoplay_story_ch1.py <새 출력 디렉터리>
 실행 중 마우스/키보드를 사용하지 마세요. 게임 코드와 사용자 저장은 변경하지 않습니다.
@@ -21,7 +21,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from gui_driver import (ROOT, AbortQA, Harness, POINT, _mouse, owner_at,
+from gui_driver import (ROOT, AbortQA, Harness, POINT, INPUT, MOUSEINPUT, _mouse, owner_at,
                         user32, window_pid, window_rect, MOUSEEVENTF_LEFTDOWN,
                         MOUSEEVENTF_LEFTUP)
 from autoplay_tutorial import centered, placement, top_by_title
@@ -125,6 +125,7 @@ class StoryHarness(Harness):
         self.preflight_data = {'status': 'not_started', 'samples': []}
         self.play_attempted = False
         self.guard_events = []
+        self.wheel_events = 0
 
     def calibrate(self):
         result = super().calibrate()
@@ -312,6 +313,30 @@ class StoryHarness(Harness):
         self.park()
         time.sleep(settle)
 
+    def wheel_inbox(self, delta):
+        """실제 휠 입력. 게임 창과 요청함의 노출·전경·소유를 입력 직전에 확인합니다."""
+        if self.preflight_data['status'] != 'passed':
+            raise AbortQA('Preflight 이전 휠 입력 금지')
+        item = self.call(lambda: self.widget_info(self.selector.app.inbox))
+        if item['offscreen'] or item['covered'] or not item['inside_top']:
+            raise AbortQA('보이지 않는 요청함 휠 입력 중단')
+        x, y = item['x']+item['w']//2, item['y']+item['h']-8
+        self.wait_clear(point=(x, y))
+        user32.SetCursorPos(x, y)
+        time.sleep(.08)
+        self.wait_clear(point=(x, y))
+        hwnd, pid = owner_at(x, y)
+        if pid != os.getpid() or user32.GetAncestor(hwnd, 2) != self.game_hwnd:
+            raise AbortQA('다른 창이 휠 좌표를 차지함: 입력 없이 중단')
+        inp = INPUT(type=0)
+        inp.mi = MOUSEINPUT(0, 0, delta & 0xffffffff, 0x0800, 0, None)
+        if user32.SendInput(1, ctypes.byref(inp), ctypes.sizeof(INPUT)) != 1:
+            raise OSError('휠 SendInput 실패')
+        self.wheel_events += 1
+        self.note(f'실제 요청함 휠 입력 delta={delta}')
+        time.sleep(.4)
+        self.park()
+
     def scroll_to(self, top_path, target_path, direction):
         """스크롤바 화살표를 실제 클릭. Tk yview/see/event_generate로 이동하지 않습니다."""
         def status():
@@ -403,7 +428,7 @@ def scenario(h):
 
     def lists():
         def read():
-            return {name: {'selected': tree.selection(), 'height': tree.winfo_height(),
+            return {name: {'selected': tree.selection(), 'height': tree.winfo_height(), 'view': tree.yview(),
                            'rows': [{'id': rid, 'values': tree.item(rid, 'values'), 'bbox': tree.bbox(rid)}
                                     for rid in tree.get_children()]}
                     for name, tree in (('inbox', app().inbox), ('active', app().active_list))}
@@ -456,9 +481,30 @@ def scenario(h):
         row = next((r for r in inbox['rows'] if r['id'] == str(rid)), None)
         check('새 고객 요청함 행 생성·현재 선택 일치', row is not None and str(rid) in inbox['selected'], inbox)
         check('새 고객 요청함 행이 스크롤 없이 실제 노출', bool(row and row['bbox']), row)
+        check('선택 고객 행 전체가 요청함 뷰포트 안에 표시', bool(row and row['bbox'])
+              and row['bbox'][1]+row['bbox'][3] <= inbox['height'], row)
+        if index > 1:
+            h.wheel_inbox(120*index)
+            old = lists()['inbox']
+            h.wheel_inbox(-120*index)
+            restored = lists()['inbox']
+            job['manual_scroll'] = {'past': old, 'restored': restored}
+            check('실제 휠로 완료 고객 접근·현재 고객 선택 유지', bool(old['rows'][0]['bbox'])
+                  and old['selected'] == inbox['selected'], old)
+            current_row = next(r for r in restored['rows'] if r['id'] == str(rid))
+            check('실제 휠로 현재 고객 복귀·완료 기록 유지', bool(current_row['bbox'])
+                  and len(restored['rows']) == index, restored)
+            if not current_row['bbox']:
+                raise AbortQA('현재 고객 행으로 실제 스크롤 복귀 실패')
         goal(index, 'request')
         geometry()
-        h.click_text('요청 확인', settle=1)
+        if index > 1:
+            h.click(h.call(lambda: h.widget_info(app().inbox)),
+                    dy=current_row['bbox'][1]+current_row['bbox'][3]//2, settle=1)
+            check('요청함 현재 고객 실제 클릭 후 상세·선택 일치',
+                  h.call(lambda: session().selected_id == rid and app().inbox.selection() == (str(rid),)))
+        else:
+            h.click_text('요청 확인', settle=1)
         h.wait_for(lambda: top_by_title(h.snapshot(), 'AIDC LINK |'), what='고객 요청서')
         top = top_by_title(h.snapshot(), 'AIDC LINK |')
         labels = '\n'.join(x['text'] for x in top['labels'])
@@ -618,7 +664,7 @@ def main():
     if '--self-check' in sys.argv:
         self_check()
         return
-    out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.gettempdir())/'srs_qa_story_003'
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(tempfile.gettempdir())/'srs_qa_story_004'
     out.mkdir(parents=True, exist_ok=True)
     # 덮어쓰기/암묵적 반복 실행 금지. 재실행은 새로운 출력 디렉터리를 명시해야 합니다.
     marker = out/'attempt.json'
@@ -646,6 +692,7 @@ def main():
                   'commit': subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip(),
                   'python': platform.python_version(), 'os': platform.system()+' '+platform.release(), 'env': h.env,
                   'completed': getattr(h, 'completed', False), 'error': error, 'clicks': h.clicks,
+                  'wheel_events': h.wheel_events,
                   'preflight': h.preflight_data, 'play_attempts': int(h.play_attempted),
                   'passed': sum(c['result'] == 'PASS' for c in h.checks), 'failed': sum(c['result'] == 'FAIL' for c in h.checks),
                   'repo_db_unchanged': before == after, 'repo_db_count': len(before), 'temp_files_removed': removed,
