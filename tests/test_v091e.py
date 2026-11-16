@@ -6,7 +6,7 @@ from database import Database
 from game import CUSTOMER_PLANS
 from main import SimulatorApp
 from request_summary import request_summary
-from server_resources import Allocation, ServerPool, ServerSlice
+from aidc.core.server_resources import Allocation, ServerPool, ServerSlice
 from tests.test_story_patch import prepare
 from ui import MessageDialog
 
@@ -155,7 +155,7 @@ class ChapterWindowTests(unittest.TestCase):
         self.root.geometry('1000x650+0+0'); self.root.update()
         d = self.complete()
         self.root.update()
-        from window_placement import work_area
+        from aidc.ui.window_placement import work_area
         left, top, right, bottom = work_area(self.root)
         self.assertGreaterEqual(d.winfo_rootx(), left)
         self.assertGreaterEqual(d.winfo_rooty(), top)

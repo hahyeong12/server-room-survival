@@ -9,7 +9,7 @@ import ast
 import unittest
 
 from database import Database
-from lab_model import LAB_NETWORK_TAB, diagnosis_lab_target, lab_mode
+from aidc.learning.lab_model import LAB_NETWORK_TAB, diagnosis_lab_target, lab_mode
 from session import GameSession
 from tests.test_chapter3 import practice3, start_a, to_incident, incident_b
 from tests.test_training import regular_after_3b, lab_practice, to_training_incident, game_snapshot

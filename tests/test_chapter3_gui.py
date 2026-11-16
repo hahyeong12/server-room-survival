@@ -10,7 +10,7 @@ import unittest
 from database import Database
 from main import ModeSelection, SimulatorApp
 from session import GameSession
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.support import dismiss_story_popups, start_with_consent
 from tests.test_chapter3 import to_incident, finish_job, play_a_correctly
 
@@ -212,7 +212,7 @@ class Chapter3bGuiTests(unittest.TestCase):
 
     def test_story_menu_offers_chapter_3b(self):
         from main import ModeSelection
-        from story_slots import StorySlots
+        from aidc.storage.story_slots import StorySlots
         import tempfile
         root = tk.Tk(); self.addCleanup(root.destroy)
         folder = tempfile.TemporaryDirectory(); self.addCleanup(folder.cleanup)

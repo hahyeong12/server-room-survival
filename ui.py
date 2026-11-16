@@ -122,7 +122,7 @@ class MessageDialog(tk.Toplevel):
 
     def add_request_summary(self, parent, summary, availability=None):
         """고객 주문서처럼 위에서 아래로 읽는 요청서. 값은 모두 실제 요청 데이터(summary)에서 옵니다."""
-        from window_placement import center_dialog
+        from aidc.ui.window_placement import center_dialog
         self.summary_values = dict(summary)
         # 기존 페이지/읽기 커서/동의 버튼은 그대로 두고 상단에 조건을 추가합니다.
         for row in (4, 3, 2, 1):

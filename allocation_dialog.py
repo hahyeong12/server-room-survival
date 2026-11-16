@@ -2,11 +2,11 @@
 선택·모드 변경·재조회는 원장과 DB를 변경하지 않으며, [선택한 계획으로 작업 시작]만 실제 배정을 요청합니다."""
 import tkinter as tk
 
-from server_resources import SERVERS
+from aidc.core.server_resources import SERVERS
 from server_console import server_views
-from scroll_area import ScrollArea
+from aidc.ui.scroll_area import ScrollArea
 from version import VERSION
-from window_placement import center_dialog
+from aidc.ui.window_placement import center_dialog
 from server_widgets import (BG, PANEL, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             gpu_module, reset_hardware, ink)
 

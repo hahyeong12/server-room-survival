@@ -10,11 +10,11 @@ import unittest
 from unittest.mock import patch
 
 from database import Database
-from lab_model import LAB_NETWORK, lab_mode, lab_support, observe
+from aidc.learning.lab_model import LAB_NETWORK, lab_mode, lab_support, observe
 from session import GameSession
 from story import StoryProgress
-from story_slots import StorySlots
-from training import STAGES, TrainingProgress, fact_statements
+from aidc.storage.story_slots import StorySlots
+from aidc.learning.training import STAGES, TrainingProgress, fact_statements
 from tests.support import start_with_consent
 from tests.test_chapter2 import after_chapter1, start, finish_all
 from tests.test_chapter3 import open_db, to_incident, finish_job, play_a_correctly, practice3, ledger_matches_center

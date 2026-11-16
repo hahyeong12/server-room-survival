@@ -12,9 +12,9 @@ from story import GUIDES, STEPS, Dialogue, chapter2_failure_pages
 from chapter_dialog import ChapterCompleteDialog, Chapter2CompleteDialog, Chapter3CompleteDialog
 from network_dialog import NetworkDiagnosisDialog, HardwareDiagnosisDialog, Chapter3FeedbackDialog
 from engineering_lab import EngineeringLabDialog, TrainingResultDialog
-from lab_model import diagnosis_lab_target, lab_support
+from aidc.learning.lab_model import diagnosis_lab_target, lab_support
 from story_dialog import StoryDialogueDialog, StoryReviewDialog
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
 from version import VERSION

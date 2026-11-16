@@ -10,7 +10,7 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-import chapter2
+from aidc.story import chapter2
 from database import Database
 from result_summary import customer_reaction, free_result_lines, job_summary, outcome_key, chapter2_strategy
 from session import GameSession

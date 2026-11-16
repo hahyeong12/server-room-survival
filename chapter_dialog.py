@@ -10,8 +10,8 @@ from tkinter.scrolledtext import ScrolledText
 from story import chapter2_failure_pages
 from ui import BG, PANEL, CYAN, MUTED, TEXT, FONT, RED, GREEN, ActionButton, label
 from story_portraits import draw_portrait
-from scroll_area import ScrollArea
-from window_placement import center_dialog
+from aidc.ui.scroll_area import ScrollArea
+from aidc.ui.window_placement import center_dialog
 
 
 def _mentor_box(parent, title, lines):

@@ -3,7 +3,7 @@ import tkinter as tk
 
 from story_portraits import draw_portrait
 from ui import BG, TEXT, MUTED, FONT, ActionButton, label
-from window_placement import place_near
+from aidc.ui.window_placement import place_near
 
 
 FEEDBACK = {

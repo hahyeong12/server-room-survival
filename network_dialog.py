@@ -5,11 +5,11 @@
 """
 import tkinter as tk
 
-from chapter3 import RESPONSE_LABELS
+from aidc.story.chapter3 import RESPONSE_LABELS
 from story_portraits import draw_portrait
 from ui import BG, PANEL, CYAN, MUTED, TEXT, RED, GREEN, AMBER, ActionButton, label
-from scroll_area import ScrollArea
-from window_placement import center_dialog
+from aidc.ui.scroll_area import ScrollArea
+from aidc.ui.window_placement import center_dialog
 
 
 class NetworkDiagnosisDialog(tk.Toplevel):
@@ -126,7 +126,7 @@ class HardwareDiagnosisDialog(tk.Toplevel):
     def __init__(self, parent, diagnosis):
         super().__init__(parent, bg=BG)
         self.withdraw()
-        from chapter3b import diagnosis_rows
+        from aidc.story.chapter3b import diagnosis_rows
         self.title('Chapter 3b | 장비 진단')
         self.transient(parent)
         self.columnconfigure(0, weight=1)

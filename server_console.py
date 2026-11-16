@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from server_resources import SERVERS
+from aidc.core.server_resources import SERVERS
 from game import GameState, game_time
 from server_widgets import (BG, PANEL, SURFACE, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             ink, gpu_module, battery, reset_hardware, animate_hardware)

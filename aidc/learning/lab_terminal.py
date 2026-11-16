@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 import ipaddress
 import shlex
 
-from lab_model import LAB_NETWORK
+from aidc.learning.lab_model import LAB_NETWORK
 
 SUPPORTED = ('help', 'ping', 'ip addr', 'ip route', 'clear')
 FORBIDDEN = ('|', ';', '&', '>', '<', '`', '$', '\\')

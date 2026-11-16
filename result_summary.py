@@ -203,7 +203,7 @@ def chapter2_summary(result):
 
 def chapter3b_summary(result):
     """Chapter 3b 결과 요약표(미션 · 장애 · 선택 대응 · 결과 · 중단 · 점수)와 선배 분석. 저장된 기록에서만 계산합니다."""
-    from chapter3b import result_outcome, mentor_lines
+    from aidc.story.chapter3b import result_outcome, mentor_lines
     jobs = result['jobs']
     ok = sum(1 for j in jobs if j['success'])
     table, rows = [], []

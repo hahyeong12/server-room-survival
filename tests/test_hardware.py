@@ -10,7 +10,7 @@ from unittest.mock import patch
 from database import Database
 from main import SimulatorApp
 from server_console import server_views
-from server_resources import SERVERS, ServerPool, ServerSlice, ServerHealth
+from aidc.core.server_resources import SERVERS, ServerPool, ServerSlice, ServerHealth
 from session import GameSession
 
 

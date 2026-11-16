@@ -10,13 +10,13 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from chapter3b import Chapter3bProgress, STEPS3B, diagnosis_rows
+from aidc.story.chapter3b import Chapter3bProgress, STEPS3B, diagnosis_rows
 from database import Database
 from game import SCENARIOS
-from server_resources import Allocation, ServerSlice
+from aidc.core.server_resources import Allocation, ServerSlice
 from session import GameSession
 from story import StoryProgress, GUIDES3B
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.support import start_with_consent
 from tests.test_chapter3 import (practice3, start_a, to_incident, finish_job, play_a_correctly, open_db, ledger_matches_center)
 from tests.test_chapter3_recovery import free_with_two_customers

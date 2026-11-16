@@ -13,9 +13,9 @@ import unittest
 from unittest.mock import patch
 
 from database import Database
-from lab_model import job_symptom, observe
+from aidc.learning.lab_model import job_symptom, observe
 from session import GameSession
-from training import STAGES, BADGES
+from aidc.learning.training import STAGES, BADGES
 from tests.test_chapter3 import open_db, to_incident, finish_job
 from tests.test_training import (regular_after_3b, lab_practice, to_training_incident, pass_stage1, pass_stage2,
                                  pass_stage3, pass_stage4, stage5_evidence, finish_stage5, game_snapshot, SERVER, NEAR)

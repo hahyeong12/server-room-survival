@@ -10,9 +10,9 @@ from unittest.mock import patch
 
 from database import Database, DB_PATH
 from main import ModeSelection, SimulatorApp
-from save_lease import SaveLease
+from aidc.storage.save_lease import SaveLease
 from session import GameSession
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.test_story import gameplay
 from tests.test_story_patch import prepare, finish
 from tests.support import dismiss_story_popups
@@ -94,7 +94,7 @@ class SlotFilesTests(unittest.TestCase):
     def test_lease_blocks_separate_process_and_does_not_depend_on_lock_file_deletion(self):
         path = self.slots.reserve_new()
         lease = SaveLease(path)
-        script = ('from save_lease import SaveLease; import sys\n'
+        script = ('from aidc.storage.save_lease import SaveLease; import sys\n'
                   'try: lease=SaveLease(sys.argv[1])\n'
                   'except ValueError: sys.exit(17)\n'
                   'lease.close()\n')

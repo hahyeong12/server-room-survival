@@ -4,7 +4,7 @@ import json
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from save_lease import SaveLease
+from aidc.storage.save_lease import SaveLease
 
 DB_PATH = Path(__file__).with_name("aidc_game.db")
 STORY_DB_PATH = Path(__file__).with_name("aidc_story.db")

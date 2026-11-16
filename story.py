@@ -1,10 +1,10 @@
 """Chapter 1 교육 흐름. 실제 업무 규칙과 점수는 기존 세션을 사용합니다."""
 from dataclasses import dataclass, field, asdict
 
-from chapter2 import Chapter2Progress, EVENTS2
-from chapter3 import Chapter3Progress, EVENTS3
-from chapter3b import Chapter3bProgress, EVENTS3B
-from training import TrainingProgress, EVENTS_T, STAGE_INFO, START_INTRO, RESULT_OUTRO
+from aidc.story.chapter2 import Chapter2Progress, EVENTS2
+from aidc.story.chapter3 import Chapter3Progress, EVENTS3
+from aidc.story.chapter3b import Chapter3bProgress, EVENTS3B
+from aidc.learning.training import TrainingProgress, EVENTS_T, STAGE_INFO, START_INTRO, RESULT_OUTRO
 
 
 LEGACY_STEPS = ('server', 'resources', 'request', 'allocation', 'time', 'complete')

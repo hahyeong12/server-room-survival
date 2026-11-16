@@ -14,7 +14,7 @@ from session import GameSession
 from story_dialog import StoryDialogueDialog, StoryReviewDialog
 from tests.test_story import gameplay
 from tests.support import dismiss_story_popups
-from window_placement import centered_bounds, work_area
+from aidc.ui.window_placement import centered_bounds, work_area
 
 
 class PlacementTests(unittest.TestCase):

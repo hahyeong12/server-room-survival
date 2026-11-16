@@ -17,7 +17,7 @@ from session import GameSession
 from tests.support import dismiss_story_popups
 from tests.test_story import gameplay
 from tutorial_highlight import GOLD, GOLD_DIM
-from window_placement import nearby_bounds, work_area
+from aidc.ui.window_placement import nearby_bounds, work_area
 
 
 class SummaryTests(unittest.TestCase):
@@ -423,7 +423,7 @@ class CardTests(unittest.TestCase):
             if size == 'zoomed': self.root.state('zoomed')
             else: self.root.state('normal'); self.root.geometry(size+'+40+40')
             self.root.update()
-            from window_placement import center_dialog
+            from aidc.ui.window_placement import center_dialog
             center_dialog(self.d, self.root, size=(940, 570), minimum=(880, 540))
             self.root.update()
             self.assertAlmostEqual(self.d.winfo_rootx()+self.d.winfo_width()/2,

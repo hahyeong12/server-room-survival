@@ -4,7 +4,7 @@ from tkinter import ttk
 
 from story import GUIDES, STEPS, SPEAKERS
 from story_portraits import draw_portrait
-from window_placement import center_dialog
+from aidc.ui.window_placement import center_dialog
 from ui import BG, MUTED, CYAN, MessageDialog, label, ActionButton
 
 

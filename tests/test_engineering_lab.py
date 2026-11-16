@@ -11,8 +11,8 @@ import unittest
 from unittest.mock import patch
 
 from database import Database
-from lab_model import LAB_NETWORK, LabLearningTrace, lab_support, observe
-from lab_terminal import (CHOICE_FIT, COMMAND_SPECS, CommandError, assemble, block_feedback, choice_command,
+from aidc.learning.lab_model import LAB_NETWORK, LabLearningTrace, lab_support, observe
+from aidc.learning.lab_terminal import (CHOICE_FIT, COMMAND_SPECS, CommandError, assemble, block_feedback, choice_command,
                           interpret, parse_command, run_command)
 from session import GameSession
 from tests.test_chapter3 import (practice3, start_a, to_incident, finish_job, incident_a, incident_b, open_db,
@@ -213,14 +213,14 @@ class CommandParsingTests(unittest.TestCase):
         self.assertEqual(run_command('ping -c 1 127.0.0.1', self.o).facts['received'], 1)
 
     def test_terminal_never_executes_host_commands(self):
-        tree = ast.parse((ROOT / 'lab_terminal.py').read_text(encoding='utf-8'))
+        tree = ast.parse((ROOT / 'aidc/learning/lab_terminal.py').read_text(encoding='utf-8'))
         imported = {alias.name for node in ast.walk(tree) if isinstance(node, (ast.Import, ast.ImportFrom))
                     for alias in node.names} | {node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)}
         self.assertFalse(imported & {'os', 'subprocess', 'sys', 'shutil', 'socket'})
         calls = {node.func.id for node in ast.walk(tree) if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)}
         self.assertFalse(calls & {'eval', 'exec', 'compile', '__import__', 'open'})
         for name in ('lab_model.py', 'lab_terminal.py'):
-            self.assertNotIn('tkinter', (ROOT / name).read_text(encoding='utf-8'), name)
+            self.assertNotIn('tkinter', (ROOT / 'aidc/learning' / name).read_text(encoding='utf-8'), name)
 
     def test_parse_command_returns_structured_command(self):
         parsed = parse_command('ping -c 3 10.0.0.20')

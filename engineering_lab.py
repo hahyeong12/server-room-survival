@@ -12,16 +12,16 @@ v0.9-4a-1: 모드별 구성
 import tkinter as tk
 from tkinter import ttk
 
-from lab_model import LAB_NETWORK, LAB_NOTICE, UNSUPPORTED_INTERNALS, LabLearningTrace, job_symptom, lab_mode, observe
-from lab_terminal import (CHOICE_FIT, CHOICE_QUESTION, COMMAND_SPECS, BLOCKS, block_feedback, choice_command,
+from aidc.learning.lab_model import LAB_NETWORK, LAB_NOTICE, UNSUPPORTED_INTERNALS, LabLearningTrace, job_symptom, lab_mode, observe
+from aidc.learning.lab_terminal import (CHOICE_FIT, CHOICE_QUESTION, COMMAND_SPECS, BLOCKS, block_feedback, choice_command,
                           interpret, run_command)
-from scroll_area import ScrollArea
+from aidc.ui.scroll_area import ScrollArea
 from story import SPEAKERS
 from story_portraits import draw_portrait
-from training import QUESTIONS, STAGE_INFO, STAGES
+from aidc.learning.training import QUESTIONS, STAGE_INFO, STAGES
 from ui import BG, PANEL, RAISED, BORDER, TEXT, MUTED, CYAN, BLUE, GREEN, RED, AMBER, FONT, ActionButton, label
-from ui_kit import MONO, HEALTH_TONES, Gauge, PrimaryButton, StatusChip, ToggleButton, tone_color
-from window_placement import center_dialog
+from aidc.ui.ui_kit import MONO, HEALTH_TONES, Gauge, PrimaryButton, StatusChip, ToggleButton, tone_color
+from aidc.ui.window_placement import center_dialog
 
 TABS = ('운영 상태', '네트워크 구조', '서버 내부', '명령어 학습', '가상 터미널')
 TRAINING_TAB = '연수 진행'

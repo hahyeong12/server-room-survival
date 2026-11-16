@@ -11,7 +11,7 @@ from unittest.mock import patch
 from database import Database
 from game import CUSTOMER_PLANS
 from main import SimulatorApp
-from server_resources import SERVERS, Allocation, ServerPool, ServerSlice
+from aidc.core.server_resources import SERVERS, Allocation, ServerPool, ServerSlice
 from session import GameSession
 
 

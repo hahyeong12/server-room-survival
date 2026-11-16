@@ -14,8 +14,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-import chapter2
-from chapter2 import CHAPTER2_SCENARIOS
+from aidc.story import chapter2
+from aidc.story.chapter2 import CHAPTER2_SCENARIOS
 from database import Database
 from game import GameState, SCENARIOS
 from session import GameSession

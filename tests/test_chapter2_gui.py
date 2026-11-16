@@ -63,7 +63,7 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
     def setUp(self):
         import tempfile
         from main import ModeSelection
-        from story_slots import StorySlots
+        from aidc.storage.story_slots import StorySlots
         self.root = tk.Tk()
         self.addCleanup(self.root.destroy)
         self.directory = tempfile.TemporaryDirectory()
@@ -134,7 +134,7 @@ class FailureFeedbackGuiTests(unittest.TestCase):
     """실패 확정 즉시 선배 안내와 SUCCESS/FAILED 결과 창. 작성만 했으며 아직 실행하지 않았습니다."""
     def setUp(self):
         from main import ModeSelection
-        from story_slots import StorySlots
+        from aidc.storage.story_slots import StorySlots
         import tempfile
         self.root = tk.Tk()
         self.addCleanup(self.root.destroy)

@@ -6,7 +6,7 @@ GUI/SQLite와 독립입니다. 기존 하드웨어 엔진(ServerHealth·migratio
 """
 from dataclasses import dataclass, field
 
-from chapter3 import mission_over
+from aidc.story.chapter3 import mission_over
 from game import game_time
 
 STEPS3B = ('briefing', 'a_start', 'a_fault', 'a_diagnose', 'a_respond', 'a_finish',

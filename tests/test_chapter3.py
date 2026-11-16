@@ -11,12 +11,12 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from chapter3 import Chapter3Progress, STEPS3, network_diagnosis
+from aidc.story.chapter3 import Chapter3Progress, STEPS3, network_diagnosis
 from database import Database
 from game import GameState, SCENARIOS, RESPONSES, NETWORK_DURING_INCIDENT
 from session import GameSession
 from story import StoryProgress, GUIDES3, chapter3_feedback_pages
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.support import start_with_consent
 from tests.test_chapter2 import ready, start, finish_all, after_chapter1
 

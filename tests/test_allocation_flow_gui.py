@@ -5,7 +5,7 @@ import unittest
 
 from database import Database
 from main import SimulatorApp, ModeSelection
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.support import dismiss_story_popups
 from tests.test_chapter2 import start
 

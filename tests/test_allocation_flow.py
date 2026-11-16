@@ -13,9 +13,9 @@ import unittest
 
 from allocation_dialog import start_blocker
 from database import Database
-from scroll_area import needs_scroll
+from aidc.ui.scroll_area import needs_scroll
 from session import GameSession
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.test_chapter2 import ready, start, finish_all
 from tests.test_chapter2_balance import until_finished
 from tests.test_story_patch import prepare

@@ -513,7 +513,7 @@ class ModeSelectionTests(unittest.TestCase):
             db = Database(':memory:'); self.databases.append(db)
             self.addCleanup(db.close)
             return db
-        from story_slots import StorySlots
+        from aidc.storage.story_slots import StorySlots
         self.slots_directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.slots_directory.cleanup)
         self.selector = ModeSelection(self.root, db_factory=factory,

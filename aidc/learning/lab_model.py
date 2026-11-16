@@ -8,7 +8,7 @@
 """
 from dataclasses import dataclass, field
 
-from server_resources import SERVERS
+from aidc.core.server_resources import SERVERS
 
 # 첫 프로토타입은 Chapter 3a 미션 A(통신 경로 단절) 하나만 지원합니다.
 SUPPORTED_SCENARIOS = ('ch3_path',)

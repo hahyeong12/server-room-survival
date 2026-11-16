@@ -6,17 +6,17 @@ import random
 
 from database import Database
 from game import DataCenter, GameState, RESPONSES, SCENARIOS, request_terms, request_conditions, game_time
-from server_resources import ServerPool, Allocation, SERVERS, ServerHealth
+from aidc.core.server_resources import ServerPool, Allocation, SERVERS, ServerHealth
 from story import StoryProgress, chapter3_feedback_pages, chapter3_card
-from chapter3 import Chapter3Progress, CHAPTER3_COUNTRIES, CHAPTER3_SCENARIOS, KIND_LABELS, RESPONSE_LABELS, network_diagnosis
-from chapter3b import (Chapter3bProgress, CHAPTER3B_COUNTRIES, CHAPTER3B_SCENARIOS, CHOICE_LABELS, fault_server_for,
+from aidc.story.chapter3 import Chapter3Progress, CHAPTER3_COUNTRIES, CHAPTER3_SCENARIOS, KIND_LABELS, RESPONSE_LABELS, network_diagnosis
+from aidc.story.chapter3b import (Chapter3bProgress, CHAPTER3B_COUNTRIES, CHAPTER3B_SCENARIOS, CHOICE_LABELS, fault_server_for,
                        impossible_reason, card as hw_card)
 from result_summary import customer_reaction, outcome_key, job_summary, chapter1_summary, chapter2_summary, chapter3_summary, chapter3b_summary
-from chapter2 import Chapter2Progress, CHAPTER2_COUNTRIES, CHAPTER2_SCENARIOS, is_finished
-from training import (TrainingProgress, STAGES, STAGE_INFO, SOURCES, QUESTIONS, TRAINING_COUNTRY, TRAINING_SCENARIO, BADGES,
+from aidc.story.chapter2 import Chapter2Progress, CHAPTER2_COUNTRIES, CHAPTER2_SCENARIOS, is_finished
+from aidc.learning.training import (TrainingProgress, STAGES, STAGE_INFO, SOURCES, QUESTIONS, TRAINING_COUNTRY, TRAINING_SCENARIO, BADGES,
                       fact_statements, make_record, received_options)
-from lab_model import LAB_NETWORK, observe
-from lab_terminal import COMMAND_SPECS, assemble, choice_command, run_command
+from aidc.learning.lab_model import LAB_NETWORK, observe
+from aidc.learning.lab_terminal import COMMAND_SPECS, assemble, choice_command, run_command
 
 REQUEST_LABELS = {'new':'신규 요청','review':'검토 중','waiting':'대기',
                   'operating':'수락','rejected':'거절','completed':'처리 완료'}

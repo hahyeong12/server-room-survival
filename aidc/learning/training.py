@@ -11,7 +11,7 @@ Stage 통과는 탭 열기·버튼 클릭이 아니라 기록된 학습 행동(�
 """
 from dataclasses import dataclass, field
 
-from lab_model import LAB_NETWORK
+from aidc.learning.lab_model import LAB_NETWORK
 
 STAGES = ('structure', 'tool', 'assemble', 'terminal', 'independent')
 EVENTS_T = tuple('t_'+key for key in STAGES) + ('t_done',)

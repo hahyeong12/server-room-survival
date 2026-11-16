@@ -10,12 +10,12 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from chapter2 import Chapter2Progress, STEPS2, CHAPTER2_COUNTRIES, CHAPTER2_SCENARIOS
+from aidc.story.chapter2 import Chapter2Progress, STEPS2, CHAPTER2_COUNTRIES, CHAPTER2_SCENARIOS
 from database import Database
 from game import SCENARIOS, GameState
 from session import GameSession
 from story import StoryProgress
-from story_slots import StorySlots
+from aidc.storage.story_slots import StorySlots
 from tests.test_story import gameplay
 from tests.test_story_patch import prepare, finish
 
@@ -69,7 +69,7 @@ def ledger_matches_center(s):
 
 class ScenarioDataTests(unittest.TestCase):
     def test_server_capacity_and_free_mode_rules_are_unchanged(self):
-        from server_resources import SERVERS
+        from aidc.core.server_resources import SERVERS
         self.assertEqual([(s.key, s.gpu, s.power) for s in SERVERS], [('A', 4, 4), ('B', 3, 2), ('C', 2, 3), ('D', 1, 1)])
         self.assertEqual(GameState(country='일본').plans['performance']['gpu'], 3)
         self.assertEqual(GameState(country='일본').work_total, 60)
