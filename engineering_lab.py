@@ -292,8 +292,10 @@ class EngineeringLabDialog(tk.Toplevel):
         self.goal_title.configure(text=head['title'], fg=GREEN if head['action'] in ('next', 'focus') else TEXT)
         self.goal_detail.configure(text=head['detail'])
         self.goal_card.configure(highlightbackground=tone_color(head['tone']))
-        self.progress_gauge.set(st['count'], 5, f'{st["count"]} / 5', 'done' if st['done'] else 'ok',
-                                '체험한 Stage' if st['practice'] else '통과한 Stage')
+        # ui-polish-001: 높이 58px 게이지에서는 막대 위 보조 문구가 제목과 겹쳤습니다. 게이지·카드 높이를 늘리지 않도록
+        # 보조 문구를 제목 줄에 합칩니다(공용 Gauge와 다른 게이지의 배치는 그대로).
+        self.progress_gauge.title = '진행률 · ' + ('체험한 Stage' if st['practice'] else '통과한 Stage')
+        self.progress_gauge.set(st['count'], 5, f'{st["count"]} / 5', 'done' if st['done'] else 'ok')
         self.progress_label.configure(text=f'요청 #{st["rid"]} · {self.obs.time_label}')
         if st['practice']:
             self.mode_chip.set('warn', '연습 모드 · 정규 기록 아님')
