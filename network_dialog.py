@@ -6,6 +6,7 @@
 import tkinter as tk
 
 from aidc.story.chapter3 import RESPONSE_LABELS
+from aidc.story.chapters import CHAPTERS
 from story_portraits import draw_portrait
 from ui import BG, PANEL, CYAN, MUTED, TEXT, RED, GREEN, AMBER, ActionButton, label
 from aidc.ui.scroll_area import ScrollArea
@@ -13,12 +14,13 @@ from aidc.ui.window_placement import center_dialog
 
 
 class NetworkDiagnosisDialog(tk.Toplevel):
-    """2열 진단표. 보통 크기에서는 스크롤 없이 보이고, 창이 내용보다 작을 때만 ScrollArea가 스크롤바를 보입니다."""
-    def __init__(self, parent, diagnosis, on_open_lab=None):
+    """2열 진단표. 보통 크기에서는 스크롤 없이 보이고, 창이 내용보다 작을 때만 ScrollArea가 스크롤바를 보입니다.
+    chapter_label은 사용자에게 보이는 장 번호(예: '제3장')입니다. 내부 저장 키와 무관합니다."""
+    def __init__(self, parent, diagnosis, on_open_lab=None, chapter_label=CHAPTERS[3].label):
         super().__init__(parent, bg=BG)
         self.withdraw()
         self.parent, self.on_open_lab = parent, on_open_lab
-        self.title('Chapter 3 | 네트워크 진단')
+        self.title((f'{chapter_label} | ' if chapter_label else '')+'네트워크 진단')
         self.transient(parent)
         self.columnconfigure(0, weight=1)
         self.diagnosis = d = diagnosis
@@ -83,12 +85,13 @@ class NetworkDiagnosisDialog(tk.Toplevel):
 
 
 class Chapter3FeedbackDialog(tk.Toplevel):
-    """장애 결과 카드(FEEDBACK). actions: [(버튼 문구, 명령)]. 닫기는 항상 가능합니다."""
-    def __init__(self, parent, card, actions=()):
+    """장애 결과 카드(FEEDBACK). actions: [(버튼 문구, 명령)]. 닫기는 항상 가능합니다.
+    제3장 네트워크 카드와 제4장 장비 카드가 함께 쓰므로 호출자가 표시용 장 번호(chapter_label)를 넘깁니다."""
+    def __init__(self, parent, card, actions=(), chapter_label=CHAPTERS[3].label):
         super().__init__(parent, bg=BG)
         self.withdraw()
         self.card = card
-        self.title('FEEDBACK · Chapter 3 · '+card['title'])
+        self.title('FEEDBACK · '+(f'{chapter_label} · ' if chapter_label else '')+card['title'])
         self.transient(parent)
         self.columnconfigure(1, weight=1)
         color = {'success': GREEN, 'fail': RED, 'warn': AMBER}[card['tone']]
@@ -122,12 +125,12 @@ class Chapter3FeedbackDialog(tk.Toplevel):
 
 
 class HardwareDiagnosisDialog(tk.Toplevel):
-    """Chapter 3b 장비 진단창. 복구/이전의 자원과 예상 시간을 표로 비교해 보여 주기만 하고, 대응을 자동 선택·실행하지 않습니다."""
-    def __init__(self, parent, diagnosis):
+    """제4장(내부 키 '3b') 장비 진단창. 복구/이전의 자원과 예상 시간을 표로 비교해 보여 주기만 하고, 대응을 자동 선택·실행하지 않습니다."""
+    def __init__(self, parent, diagnosis, chapter_label=CHAPTERS['3b'].label):
         super().__init__(parent, bg=BG)
         self.withdraw()
         from aidc.story.chapter3b import diagnosis_rows
-        self.title('Chapter 3b | 장비 진단')
+        self.title((f'{chapter_label} | ' if chapter_label else '')+'장비 진단')
         self.transient(parent)
         self.columnconfigure(0, weight=1)
         self.diagnosis = d = diagnosis

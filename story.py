@@ -5,6 +5,7 @@ from aidc.story.onboarding import OnboardingProgress, EVENTS as INTRO_EVENTS
 from aidc.story.chapter2 import Chapter2Progress, EVENTS2
 from aidc.story.chapter3 import Chapter3Progress, EVENTS3
 from aidc.story.chapter3b import Chapter3bProgress, EVENTS3B
+from aidc.story.chapters import CHAPTERS
 from aidc.learning.training import TrainingProgress, EVENTS_T, STAGE_INFO, START_INTRO, RESULT_OUTRO
 
 
@@ -252,7 +253,7 @@ _HW_HELP = ('[장비 진단]에서 살펴볼 항목\n\n'
             '④ 【예상 시간】 — 복구와 이전을 하면 언제 끝나는가?\n\n'
             '비교한 뒤 대응 방법을 직접 선택해 보세요.')
 GUIDES3B = {
-    'briefing': ('선배의 Chapter 3b 브리핑을 읽고 확인하세요.', [
+    'briefing': (f'선배의 {CHAPTERS["3b"].label} 브리핑을 읽고 확인하세요.', [
         Dialogue('mentor', '이번에는 서버 장비 자체의 장애를 다룹니다. 네트워크 장애와 달리 GPU와 서버가 멈추고, 장애가 난 서버는 새 작업을 받을 수 없어요.'),
         Dialogue('mentor', '대응은 크게 두 가지입니다. 장비를 복구하거나, 작업을 정상 서버로 옮기거나. 어느 쪽이 나은지는 정상 서버의 여유 자원과 고객 완료 기한을 비교해서 직접 판단해 보세요.'),
         Dialogue('system', '장비 복구는 가상 시간 20분, 작업 이전 준비는 10분입니다. 대응을 선택하는 것만으로는 시간이 흐르지 않고 시간 빨리감기를 눌러야 진행됩니다. 이 장의 구성은 교육용입니다.')]),
@@ -276,7 +277,7 @@ GUIDES3B = {
         Dialogue('mentor', '이번 진단 값을 지난번과 비교해 보세요. 선택하는 순간에는 시간이 흐르지 않습니다.')]),
     'b_finish': ('시간 빨리감기로 작업을 끝까지 진행하세요.', [
         Dialogue('mentor', '선택한 대응은 가상 시간으로 진행됩니다. 관제실로 돌아가 시간을 진행해 주세요.')]),
-    'done': ('Chapter 3b 종료 · 결과 화면에서 두 장애의 선택과 결과를 확인하세요.', [
+    'done': (f'{CHAPTERS["3b"].label} 종료 · 결과 화면에서 두 장애의 선택과 결과를 확인하세요.', [
         Dialogue('system', '두 장애 미션이 끝났습니다. 결과 화면에서 장애별 선택 대응, 기한 준수, 중단 시간과 운영 점수를 확인할 수 있습니다.')]),
 }
 

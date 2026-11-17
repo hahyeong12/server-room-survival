@@ -102,7 +102,9 @@ class Chapter3PlayGuiTests(unittest.TestCase):
         state = self.session.runs[self.a].state
         self.assertEqual((state.phase, state.response_log), ('paused', ['compress']))
         self.assertTrue(self.app.feedback_window.winfo_exists())            # 짧은 결과 카드(FEEDBACK)
-        self.assertIn('Chapter 3', self.app.feedback_window.title())
+        # ui-consistency-001: 관제실과 같은 '제3장' 표기(장 번호는 그대로). 제4장으로 잘못 표시되지 않아야 합니다.
+        self.assertIn('제3장', self.app.feedback_window.title())
+        self.assertNotIn('제4장', self.app.feedback_window.title())
         observed = self.app.feedback_window.cells['실제 결과'].cget('text')
         self.assertIn('작업 재개 안 됨', observed)
         self.assertIn('주 경로 DOWN', observed)

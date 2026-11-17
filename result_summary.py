@@ -4,6 +4,7 @@
 원칙: 결과는 요약표로 먼저, 설명은 아래에, 고객 반응은 실제 결과에 맞게.
 """
 from game import game_time
+from aidc.story.chapters import CHAPTERS
 
 OUTCOME_NAMES = {'in_progress': '진행 중', 'on_time': '정상 완료 · 기한 준수', 'late': '정상 완료 · 기한 초과',
                  'failed': '작업 실패', 'rejected': '요청 거절', 'expired': '기한 만료 · 미처리'}
@@ -227,7 +228,7 @@ def chapter3b_summary(result):
                       + ('반환' if result.get('released') else '(반환 확인 필요)'))
     detail.append('서버 상태: '+' / '.join(f'{key} {value}' for key, value in result['servers'].items()))
     if result.get('practice'):
-        detail.append('이 기록은 Chapter 3b 독립 연습 슬롯의 것이며 이전 Chapter 진행·점수와 별개입니다.')
+        detail.append(f'이 기록은 {CHAPTERS["3b"].label} 독립 연습 슬롯의 것이며 이전 장의 진행·점수와 별개입니다.')
     detail.append('이 장의 서버 구성과 시간은 교육용 설정입니다.')
     return {'mission': result['mission'], 'ok': ok, 'total': len(jobs), 'table': table, 'rows': rows,
             'columns': ('미션', '장애', '선택 대응', '결과', '중단', '점수'), 'name': 'Chapter 3b',

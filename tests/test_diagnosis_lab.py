@@ -66,7 +66,8 @@ class WiringTests(unittest.TestCase):
         tree = ast.parse(text)
         dialog = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'NetworkDiagnosisDialog')
         body = ast.get_source_segment(text, dialog)
-        self.assertIn("def __init__(self, parent, diagnosis, on_open_lab=None)", body)
+        # ui-consistency-001: 표시용 chapter_label 인자가 뒤에 추가되었습니다. on_open_lab이 기본값 None인 선택 인자라는 점만 확인합니다.
+        self.assertIn("def __init__(self, parent, diagnosis, on_open_lab=None", body)
         self.assertIn("if on_open_lab is not None:", body)
         self.assertIn("'네트워크 구조 자세히 보기'", body)
         self.assertIn("ActionButton(bottom, '진단 확인 · 대응 선택', self.destroy)", body)   # [확인]은 닫기만

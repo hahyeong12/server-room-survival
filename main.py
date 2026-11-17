@@ -936,7 +936,8 @@ class SimulatorApp:
             if window is not None and window.winfo_exists():
                 window.destroy()
         self.tutorial_highlight.clear()
-        self.feedback_window = self.build_popup(Chapter3FeedbackDialog, self.root, card, self.chapter3_card_actions(card))
+        self.feedback_window = self.build_popup(Chapter3FeedbackDialog, self.root, card, self.chapter3_card_actions(card),
+                                                chapter_label=CHAPTERS[3].label)
         self.feedback_window.bind('<Destroy>', self.feedback_closed, add='+')
         return self.feedback_window
 
@@ -1162,7 +1163,7 @@ class SimulatorApp:
             return None
         if self.diagnosis_window is not None and self.diagnosis_window.winfo_exists():
             self.diagnosis_window.destroy()
-        self.diagnosis_window = self.build_popup(HardwareDiagnosisDialog, self.root, box[0])
+        self.diagnosis_window = self.build_popup(HardwareDiagnosisDialog, self.root, box[0], chapter_label=CHAPTERS['3b'].label)
         return self.diagnosis_window
 
     def repair_faulted_server(self):
@@ -1187,7 +1188,8 @@ class SimulatorApp:
             if window is not None and window.winfo_exists():
                 window.destroy()
         self.tutorial_highlight.clear()
-        self.feedback_window = self.build_popup(Chapter3FeedbackDialog, self.root, card, self.chapter3b_card_actions(card))
+        self.feedback_window = self.build_popup(Chapter3FeedbackDialog, self.root, card, self.chapter3b_card_actions(card),
+                                                chapter_label=CHAPTERS['3b'].label)
         self.feedback_window.bind('<Destroy>', self.feedback_closed, add='+')
         return self.feedback_window
 
@@ -1472,7 +1474,8 @@ class SimulatorApp:
         # v0.9-4a-2: Lab에서 관찰할 수 있는 장애일 때만 [네트워크 구조 자세히 보기]를 둡니다(미지원 요청에는 버튼 없음).
         target = diagnosis_lab_target(self.session, rid)
         on_open_lab = (lambda r=rid: self.open_lab_network(r)) if target else None
-        self.diagnosis_window = self.build_popup(NetworkDiagnosisDialog, self.root, box[0], on_open_lab=on_open_lab)
+        self.diagnosis_window = self.build_popup(NetworkDiagnosisDialog, self.root, box[0], on_open_lab=on_open_lab,
+                                                 chapter_label=CHAPTERS[3].label)
         return self.diagnosis_window
 
     def open_lab_network(self, rid):
