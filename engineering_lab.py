@@ -101,16 +101,21 @@ class EngineeringLabDialog(tk.Toplevel):
         left.grid(row=0, column=0, sticky='w')
         label(left, 'ENGINEERING LAB', 17, CYAN, True).pack(side='left')
         StatusChip(left, 'warn', 'PROTOTYPE', 9).pack(side='left', padx=(10, 0))
-        self.mission_label = label(top, '', 11, TEXT, True, anchor='w')
-        self.mission_label.grid(row=0, column=1, sticky='w', padx=16)
+        # chapter5-ux-001: 모드(연수/연습/미리보기)는 짧은 칩으로 첫 줄에, 요청 번호·고객·국가·업무는 창 전체 폭을 쓰는
+        # 둘째 줄에 둡니다. 긴 업무명은 잘리지 않고 창 폭에 맞춰 줄바꿈됩니다.
+        self.mode_head = StatusChip(left, 'idle', size=9)
+        self.mode_head.pack(side='left', padx=(8, 0))
         right = tk.Frame(top, bg=BG)
         right.grid(row=0, column=2, sticky='e')
         self.clock_label = label(right, '', 16, TEXT, True)
         self.clock_label.pack(side='left', padx=(0, 10))
         self.status_chip = StatusChip(right, 'idle', size=11)
         self.status_chip.pack(side='left')
+        self.mission_label = label(top, '', 11, TEXT, True, anchor='w', justify='left')
+        self.mission_label.grid(row=1, column=0, columnspan=3, sticky='ew', pady=(4, 0))
+        top.bind('<Configure>', lambda e: self.mission_label.configure(wraplength=max(240, e.width-8)), add='+')
         info = tk.Frame(top, bg=BG)
-        info.grid(row=1, column=0, columnspan=3, sticky='ew', pady=(6, 0))
+        info.grid(row=2, column=0, columnspan=3, sticky='ew', pady=(4, 0))
         info.columnconfigure(0, weight=1)
         text = ('관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.'
                 if self.training_mode else
@@ -119,9 +124,13 @@ class EngineeringLabDialog(tk.Toplevel):
             text = 'Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n'+text
         self.readonly_label = label(info, text, 9, MUTED, anchor='w', justify='left', wraplength=760)
         self.readonly_label.grid(row=0, column=0, sticky='w')
-        ActionButton(info, '새로고침', self.refresh).grid(row=0, column=1, padx=(8, 6))
+        refresh_button = ActionButton(info, '새로고침', self.refresh)
+        refresh_button.grid(row=0, column=1, padx=(8, 6))
         self.return_button = PrimaryButton(info, '관제실로 돌아가기', self.destroy)
         self.return_button.grid(row=0, column=2)
+        # 좁은 창(900px)에서도 안내 문구가 버튼 옆 남은 폭 안에서 줄바꿈되게 합니다(고정 760px이면 미리보기 문구가 잘림).
+        info.bind('<Configure>', lambda e: self.readonly_label.configure(wraplength=max(
+            240, min(760, e.width-refresh_button.winfo_reqwidth()-self.return_button.winfo_reqwidth()-24))), add='+')
         self.notice_label = label(info, '', 10, AMBER, True, anchor='w', justify='left', wraplength=900)
         self.notice_label.grid(row=1, column=0, columnspan=3, sticky='w', pady=(4, 0))
 
@@ -134,9 +143,10 @@ class EngineeringLabDialog(tk.Toplevel):
             return
         self.obs = o = observe(self.session, self.rid)
         self.status = self.session.training_status() if self.training_mode else None
-        head = {'training': '심화 연수', 'practice': 'Engineering Lab 연습 · 정규 기록 아님',
-                'preview': 'Chapter 3a · 미션 A · 관찰 미리보기'}[self.mode]
-        self.mission_label.configure(text=f'{head}  |  요청 #{o.request_id} · {o.customer} / {o.country} · {o.task}')
+        tone, head = {'training': ('ok', '심화 연수'), 'practice': ('warn', '연습 · 정규 기록 아님'),
+                      'preview': ('idle', 'Chapter 3a · 미션 A · 관찰 미리보기')}[self.mode]
+        self.mode_head.set(tone, head)
+        self.mission_label.configure(text=f'요청 #{o.request_id} · {o.customer} / {o.country} · {o.task}')
         self.clock_label.configure(text=o.time_label)
         if self.hide_answers:
             self.status_chip.set('warn', '작업 중단 · 원인 미확인' if o.tone == 'fault' else o.phase_label)
