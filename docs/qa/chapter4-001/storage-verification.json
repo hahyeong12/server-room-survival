@@ -1,0 +1,29 @@
+[
+ {
+  "run": "focus1",
+  "files_before": 24,
+  "files_after": 24,
+  "same_file_list": true,
+  "same_sha256": true,
+  "catalog_sha256_before": "e143aa11d4dc237335f51699e735b50d84eb97c94983271d69c8e5e157aa8092",
+  "catalog_sha256_after": "e143aa11d4dc237335f51699e735b50d84eb97c94983271d69c8e5e157aa8092"
+ },
+ {
+  "run": "focus2",
+  "files_before": 24,
+  "files_after": 24,
+  "same_file_list": true,
+  "same_sha256": true,
+  "catalog_sha256_before": "e143aa11d4dc237335f51699e735b50d84eb97c94983271d69c8e5e157aa8092",
+  "catalog_sha256_after": "e143aa11d4dc237335f51699e735b50d84eb97c94983271d69c8e5e157aa8092"
+ },
+ {
+  "run": "regular_play1",
+  "files_before": 24,
+  "files_after": 24,
+  "same_file_list": true,
+  "same_sha256": true,
+  "catalog_sha256_before": "e143aa11d4dc237335f51699e735b50d84eb97c94983271d69c8e5e157aa8092",
+  "catalog_sha256_after": "e143aa11d4dc237335f51699e735b50d84eb97c94983271d69c8e5e157aa8092"
+ }
+]

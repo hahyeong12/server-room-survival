@@ -1,0 +1,128 @@
+[
+ {
+  "file": "screenshots/ch3_success.png",
+  "source_file": "47_c3_success.png",
+  "sha256": "88999cce7667fb0d0a2e41bf4126b9a789e73374c5cb9f678fda4d5754a9cb30",
+  "step": "제3장 최종 결과",
+  "note": "제3장 최종 성공·두 미션 결과·제4장 버튼 클릭하지 않음"
+ },
+ {
+  "file": "screenshots/a_request.png",
+  "source_file": "48_c4_A_request.png",
+  "sha256": "a7d2f2c57d29c09dc425d8089e89f9ea1747b8614c0b6b8ef2df0c96e2a360c4",
+  "step": "제4장 미션 A 요청·시작",
+  "note": "고객 요청·원래 허용 조건·기한"
+ },
+ {
+  "file": "screenshots/a_allocation.png",
+  "source_file": "49_c4_A_allocation.png",
+  "sha256": "8e6c8723f52e89b32dd349e6193e9be2d526d79ff0b22d90e7c9d2b023b46b15",
+  "step": "제4장 미션 A 요청·시작",
+  "note": "허용 고성능의 실제 서버 배정 선택"
+ },
+ {
+  "file": "screenshots/a_fault.png",
+  "source_file": "50_c4_A_fault.png",
+  "sha256": "2a335ef9c5180b1192f2bad0f8aa7a592b9c818f0361beabb371fa0cb24bfd0c",
+  "step": "제4장 미션 A 장비 장애·진단",
+  "note": "FAULT 서버·GPU 표시·장비 중단·네트워크와 구분"
+ },
+ {
+  "file": "screenshots/a_diagnosis.png",
+  "source_file": "52_c4_A_diagnosis.png",
+  "sha256": "eaeb343f4ef909c4a0cee6b6e99d57fa0e1314be56f8246b8873182b96e46fae",
+  "step": "제4장 미션 A 장비 장애·진단",
+  "note": "장애/정상 서버·필요 자원·복구/이전 예상 시각·기한"
+ },
+ {
+  "file": "screenshots/a_migration_plan.png",
+  "source_file": "53_c4_A_migration_plan.png",
+  "sha256": "13778949dc2f7c7830ddff5f99733d39ad9b2d019602fb7e611229a8d327ada1",
+  "step": "제4장 미션 A 장비 장애·진단",
+  "note": "정상 서버로 옮길 실제 슬롯·전력 선택"
+ },
+ {
+  "file": "screenshots/a_preparing.png",
+  "source_file": "54_c4_A_preparing.png",
+  "sha256": "d8fc954c99f5e7a86ac21d1121814cb276852284c0e088c011a6c0515d8be593",
+  "step": "제4장 미션 A 장비 장애·진단",
+  "note": "이전 준비/장비 복구 시작·작업량 유지"
+ },
+ {
+  "file": "screenshots/a_feedback.png",
+  "source_file": "55_c4_feedback.png",
+  "sha256": "6b1192fd810aafe2e144857e04d4238a10698dddb6781dba2f1778625fa8ff98",
+  "step": "제4장 미션 A 준비·재개·완료",
+  "note": "실제 장비 대응 결과 카드"
+ },
+ {
+  "file": "screenshots/a_resumed.png",
+  "source_file": "56_c4_A_resumed.png",
+  "sha256": "d8c3ed05219fc879011d74fabdfd2b83cbd38f5da0f702f02f8d974c84573c6c",
+  "step": "제4장 미션 A 준비·재개·완료",
+  "note": "준비 종료·정상 실행·서버 상태"
+ },
+ {
+  "file": "screenshots/a_returned.png",
+  "source_file": "57_c4_A_returned.png",
+  "sha256": "3ff59cfa4b40658ab0904f2d044bf1a388ce268e167d1b3e64810e0267a049b5",
+  "step": "제4장 미션 A 준비·재개·완료",
+  "note": "고객 완료·서버 정상·전량 반환"
+ },
+ {
+  "file": "screenshots/b_request.png",
+  "source_file": "58_c4_B_request.png",
+  "sha256": "a1fedf9dac27684ae07e50be598beb45564a7f2048e2ac0d495f328b31bb9335",
+  "step": "제4장 미션 B 요청·시작",
+  "note": "고객 요청·원래 허용 조건·기한"
+ },
+ {
+  "file": "screenshots/b_fault.png",
+  "source_file": "60_c4_B_fault.png",
+  "sha256": "7bbce9a192287e01a9573751e306ba1989aa62e3b3ed4fd760d6a7262c60f5ce",
+  "step": "제4장 미션 B 장비 장애·진단",
+  "note": "FAULT 서버·GPU 표시·장비 중단·네트워크와 구분"
+ },
+ {
+  "file": "screenshots/b_diagnosis.png",
+  "source_file": "62_c4_B_diagnosis.png",
+  "sha256": "89371c94d7ab51d45706113bc6cd50b2b446512eda4b132b412153efcc4714d2",
+  "step": "제4장 미션 B 장비 장애·진단",
+  "note": "장애/정상 서버·필요 자원·복구/이전 예상 시각·기한"
+ },
+ {
+  "file": "screenshots/b_preparing.png",
+  "source_file": "64_c4_B_preparing.png",
+  "sha256": "d2537aa971245ce59e6e78fe2baf5940534062830c5a4e3634929c89e925c906",
+  "step": "제4장 미션 B 장비 장애·진단",
+  "note": "이전 준비/장비 복구 시작·작업량 유지"
+ },
+ {
+  "file": "screenshots/b_resumed.png",
+  "source_file": "65_c4_B_resumed.png",
+  "sha256": "46d0a203aa57aeaa2d4b9c1e03e5bb5a4e5462660e4b43e678fb915e1f228454",
+  "step": "제4장 미션 B 준비·재개·완료",
+  "note": "준비 종료·정상 실행·서버 상태"
+ },
+ {
+  "file": "screenshots/b_returned.png",
+  "source_file": "66_c4_B_returned.png",
+  "sha256": "9e66489a2e9d3fc7841088cdf87af08f7d71420e136f7802cc417d4fc7d1fde2",
+  "step": "제4장 미션 B 준비·재개·완료",
+  "note": "고객 완료·서버 정상·전량 반환"
+ },
+ {
+  "file": "screenshots/chapter4_success.png",
+  "source_file": "67_c4_success.png",
+  "sha256": "e784d9743d68822a11422fdac07e31000e9af0c88b9130c6f76a4e1603740c9d",
+  "step": "제4장 최종 결과",
+  "note": "제4장 최종 결과·제5장 버튼 미클릭"
+ },
+ {
+  "file": "screenshots/white_frame.png",
+  "source_file": "flash_064_146.871s.png",
+  "sha256": "ab518faa6a4560d9bb12bab13499c9e6c4fa928d93979536f6bdb9b5ba1364f6",
+  "step": "제3장 진입",
+  "note": "새 창 등장 순간 프레임(흰 비율 0.502)"
+ }
+]

@@ -1,0 +1,32 @@
+{
+ "kind": "read_only_postrun_comparison",
+ "full_play_attempts": 0,
+ "checks": [
+  {
+   "request_id": 8,
+   "display_normal": [
+    6,
+    6
+   ],
+   "display_need": [
+    3,
+    4
+   ],
+   "normal_servers_match_ledger": true,
+   "forecast_vs_deadline_match": true
+  },
+  {
+   "request_id": 9,
+   "display_normal": [
+    6,
+    6
+   ],
+   "display_need": [
+    7,
+    7
+   ],
+   "normal_servers_match_ledger": true,
+   "forecast_vs_deadline_match": true
+  }
+ ]
+}
