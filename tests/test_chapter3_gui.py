@@ -156,8 +156,8 @@ class Chapter3ResultGuiTests(unittest.TestCase):
         self.assertEqual(dialog.verdict.cget('text'), 'MISSION SUCCESS')
         self.assertEqual([c.cget('text') for c in dialog.table_cells[0]][:4], ['A', '경로 단절', '우회 성공 · 1회', '성공'])
         self.assertEqual([c.cget('text') for c in dialog.table_cells[1]][:4], ['B', '대역폭 부족', '압축 성공 · 1회', '성공'])
-        for key in ('modes', 'free', 'status', 'review', 'retry'):
-            button = dialog.buttons[key]
+        self.assertEqual(set(dialog.buttons), {'retry', 'modes'})
+        for button in dialog.buttons.values():
             self.assertLessEqual(button.winfo_rooty()+button.winfo_height(), dialog.winfo_rooty()+dialog.winfo_height())
         self.assertFalse(dialog.summary.winfo_ismapped())                   # 상세 기록은 접혀 있음
         dialog.detail_button.invoke(); self.root.update()
