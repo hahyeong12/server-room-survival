@@ -281,7 +281,7 @@ class SimulatorApp:
             self.story_restart_button = ActionButton(self.story_bar, '연수 사건 다시 받기', self.restart_training_incident, accent=AMBER)
             self.resources.book.bind('<<NotebookTabChanged>>', self.on_story_preview, add='+')
             self.resource_confirm_button = tk.Button(
-                self.resources.inspector_frame, text='GPU·전력 정보 확인', bg=PANEL, fg=CYAN,
+                self.resources.inspector_actions, text='GPU·전력 정보 확인', bg=PANEL, fg=CYAN,
                 font=(FONT, 9), command=self.confirm_story_resources, relief='flat')
             self.resource_confirm_button.pack(fill='x', before=self.resources.fault_button.master)
 
@@ -469,7 +469,8 @@ class SimulatorApp:
         elif step == 'operations':
             widget = self.action_buttons.get('operations')
         # 새 튜토리얼은 위쪽 목표 카드가 '지금 할 행동'을 이미 말하므로 같은 내용의 금색 클릭 안내를 따로 띄우지 않습니다.
-        highlight.show(key, widget, pointer=not guided_intro)
+        # 고정 하단 버튼은 금색 테두리로 안내합니다. 떠 있는 화살표가 스크롤 본문의 자원 정보를 덮지 않게 합니다.
+        highlight.show(key, widget, pointer=not guided_intro and key not in ('resources', 'compare'))
 
     def tutorial_window_closed(self, event):
         if event.widget is self.story_window:

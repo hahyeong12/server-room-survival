@@ -5,6 +5,7 @@ from tkinter import ttk
 from aidc.core.server_resources import SERVERS
 from game import GameState, game_time
 from aidc.ui.job_status import job_status
+from aidc.ui.scroll_area import ScrollArea
 from server_widgets import (BG, PANEL, SURFACE, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             ink, gpu_module, battery, reset_hardware, animate_hardware)
 
@@ -269,31 +270,40 @@ class ServerPanel(tk.Frame):
         review=tk.Frame(self.book,bg=PANEL,padx=8,pady=6)
         self.book.add(inspector,text='서버 Inspector'); self.book.add(review,text='배정 미리보기')
         self.inspector_frame,self.review_frame=inspector,review
-        self.inspector=LiveInspector(inspector); self.inspector.pack(fill='x')
-        hardware_controls=tk.Frame(inspector,bg=PANEL)
+        # 조작 공간을 먼저 확보하고, 공간이 부족한 본문만 스크롤합니다.
+        self.inspector_actions=tk.Frame(inspector,bg=PANEL)
+        self.inspector_actions.pack(side='bottom',fill='x')
+        hardware_controls=tk.Frame(self.inspector_actions,bg=PANEL)
         hardware_controls.pack(fill='x',padx=3,pady=(0,3))
         self.fault_button=tk.Button(hardware_controls,text='교육용 서버 장애',bg=SURFACE,fg=RED,font=(FONT,8),relief='flat')
         self.repair_button=tk.Button(hardware_controls,text='장비 복구 · 20분',bg=SURFACE,fg=CYAN,font=(FONT,8),relief='flat')
         self.fault_button.pack(side='left',fill='x',expand=True,padx=(0,3))
         self.repair_button.pack(side='left',fill='x',expand=True)
-        self.owners=ttk.Treeview(inspector,columns=('client','resources'),show='headings',height=3)
+        self.inspector_scroll=ScrollArea(inspector,bg=PANEL)
+        self.inspector_scroll.canvas.configure(width=1,height=1)
+        self.inspector_scroll.pack(fill='both',expand=True)
+        self.inspector=LiveInspector(self.inspector_scroll.body); self.inspector.pack(fill='x')
+        self.owners=ttk.Treeview(self.inspector_scroll.body,columns=('client','resources'),show='headings',height=3)
         self.owners.heading('client',text='점유 고객 / 네트워크'); self.owners.heading('resources',text='GPU / 전력')
         self.owners.column('client',width=150,minwidth=80);self.owners.column('resources',width=80,minwidth=60)
         self.owners.pack(fill='both',expand=True)
         self.owners.bind('<MouseWheel>',lambda e:self.owners.yview_scroll(-int(e.delta/120),'units'))
-        self.preview_title=tk.Label(review,bg=PANEL,fg=TEXT,font=(FONT,10,'bold'),anchor='w')
-        self.preview_title.pack(fill='x')
-        self.preview_frame=review
-        self.preview=tk.Label(review,bg=PANEL,fg=CYAN,font=(FONT,9),anchor='nw',justify='left',wraplength=225)
-        self.preview.pack(fill='x',pady=(6,4))
         self.compare_button=tk.Button(review,text='배정 계획 비교·선택',bg=SURFACE,fg=CYAN,
                                       activebackground=EDGE,activeforeground=TEXT,font=(FONT,9),relief='flat',pady=5)
-        self.compare_button.pack(fill='x',pady=(0,5))
+        self.compare_button.pack(side='bottom',fill='x',pady=(0,5))
+        self.review_scroll=ScrollArea(review,bg=PANEL)
+        self.review_scroll.canvas.configure(width=1,height=1)
+        self.review_scroll.pack(fill='both',expand=True)
+        self.preview_title=tk.Label(self.review_scroll.body,bg=PANEL,fg=TEXT,font=(FONT,10,'bold'),anchor='w')
+        self.preview_title.pack(fill='x')
+        self.preview_frame=review
+        self.preview=tk.Label(self.review_scroll.body,bg=PANEL,fg=CYAN,font=(FONT,9),anchor='nw',justify='left',wraplength=225)
+        self.preview.pack(fill='x',pady=(6,4))
         self.tutorial_tab_edges = []
         self.tutorial_tab_color = None
         self.tutorial_tab_index = 1
         self.book.bind('<Configure>', lambda _: self.set_tutorial_highlight(self.tutorial_tab_color, self.tutorial_tab_index), add='+')
-        self.plan_text=tk.Text(review,bg='#0b1522',fg=TEXT,font=(FONT,9),height=5,width=1,wrap='word',bd=0)
+        self.plan_text=tk.Text(self.review_scroll.body,bg='#0b1522',fg=TEXT,font=(FONT,9),height=5,width=1,wrap='word',bd=0)
         self.plan_text.pack(fill='both',expand=True)
         self.refresh()
         self.show_preview()
