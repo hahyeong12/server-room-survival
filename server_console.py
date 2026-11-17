@@ -4,6 +4,7 @@ from tkinter import ttk
 
 from aidc.core.server_resources import SERVERS
 from game import GameState, game_time
+from aidc.ui.job_status import job_status
 from server_widgets import (BG, PANEL, SURFACE, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             ink, gpu_module, battery, reset_hardware, animate_hardware)
 
@@ -364,8 +365,9 @@ class ServerPanel(tk.Frame):
         if s.allocated:
             title='현재 작업 점유 자원'
             text=f'현재 작업 GPU {s.gpu_used} / 전력 {s.power_used}\n{s.plans[s.plan]["label"]} · 진행 {s.progress:.0f}%\n예상 잔여 {s.remaining_minutes}분'
-            if self.session.hardware_status(run):
-                text+='\n'+self.session.hardware_status(run)
+            status = job_status(self.session, run)
+            if status:
+                text+='\n'+status['label']+'\n'+status['detail']   # 관제실 하단 배지와 같은 판정
             parts=self.session.servers.allocations[run.playthrough_id].slices
             detail='실제 점유\n'+'\n'.join(f'Server {part.server_id}: GPU {part.gpu} / 전력 {part.power}' for part in parts)
         elif run.request['status'] in ('new','review','waiting') or (s.phase=='finished' and not s.succeeded and not run.followup_closed):

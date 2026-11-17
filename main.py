@@ -16,11 +16,12 @@ from aidc.learning.lab_model import diagnosis_lab_target, lab_support
 from story_dialog import StoryDialogueDialog, StoryReviewDialog
 from aidc.storage.story_slots import StorySlots
 from aidc.storage.checkpoints import capture, restore, checkpoint_path
+from aidc.ui.job_status import job_status, chip_label, INBOX_SHORT
 from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload, heading, chapter_state, STATE_LABELS
 from tutorial_highlight import TutorialHighlight
 from result_summary import free_result_lines
 from aidc.ui.result_presentation import failure_explanation
-from aidc.ui.ui_kit import PrimaryButton, StatusChip
+from aidc.ui.ui_kit import PrimaryButton, StatusChip, tone_color
 from aidc.ui.goal_card import GoalCard
 from aidc.story.onboarding import guided_target
 from aidc.ui.window_placement import center_dialog, fit_main_window
@@ -561,10 +562,10 @@ class SimulatorApp:
             elif run.state.phase == 'recovering': short = '복구'
             elif run.terms.get('expired'): short = '만료'
             elif run.state.phase == 'finished' and not run.state.succeeded: short = '실패'
-            if self.session.hardware_servers(run):
-                short, color = '장비', RED
-            elif run.state.allocated and run.migration_left:
-                short = '이전'
+            hardware = job_status(self.session, run)
+            if hardware and hardware['interrupted']:
+                # 장비 장애/복구/이전 준비는 네트워크 단계와 독립입니다. 공통 판정의 색 역할을 그대로 씁니다.
+                short, color = INBOX_SHORT[hardware['key']], tone_color(hardware['tone'])
             level = self.session.deadline_level(run)
             if level:
                 color = RED if level=='overdue' else AMBER
@@ -579,7 +580,7 @@ class SimulatorApp:
             country = {'싱가포르':'SG','일본':'JP','미국':'US'}.get(run.mission['country'],run.mission['country'])
             self.inbox.insert('', 'end', iid=str(rid), values=(f'{marker}{country} · {run.mission["company_name"]}', name), tags=(tag,))
             if run in active:
-                status = ('서버 장애' if self.session.hardware_servers(run) else '이전 준비' if run.migration_left else
+                status = (hardware['short'] if hardware and hardware['interrupted'] else
                           f'복구 준비 {run.state.recovery_left}분' if run.state.incident_kind and run.state.recovered_by and run.state.phase == 'recovering'
                           else status_of(run.state)[0])
                 self.active_list.insert('', 'end', iid=str(rid), values=(run.mission['country'], f'{status} {getattr(run.state,"progress",0):.0f}%'))
@@ -655,11 +656,13 @@ class SimulatorApp:
             self.action_frame.columnconfigure(column, weight=0)
         s, r = self.state, self.session.current.request
         name, color = request_status_of(self.session.current)
-        if self.session.hardware_status(self.session.current):
-            name += ' · '+self.session.hardware_status(self.session.current)
-            color = RED if self.session.hardware_servers(self.session.current) else AMBER
         self.detail_title.configure(text=f'요청 #{r["id"]} · {self.mission["company_name"]} / {self.mission["country"]}', fg=TEXT)
-        self.status_chip.set(status_tone(self.session.current, color), name)
+        hardware = job_status(self.session, self.session.current)
+        if hardware:
+            # 장비 FAULT·복구·이전 준비 중에는 phase가 running이어도 '정상 실행 중'·초록으로 보이지 않게 합니다.
+            self.status_chip.set(hardware['tone'], chip_label(hardware))
+        else:
+            self.status_chip.set(status_tone(self.session.current, color), name)
         eta = getattr(s, 'remaining_minutes', 0)
         self.action_hint.configure(text=f'{self.mission["title"]}  |  진행 {getattr(s,"progress",0):.0f}% · 예상 잔여 {eta}분 (장애·복구 지연 제외)')
         if s.phase in ('ready','accepted'):

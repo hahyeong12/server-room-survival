@@ -1783,8 +1783,13 @@ class GameSession:
     def hardware_status(self, run):
         servers = self.hardware_servers(run)
         issues = []
-        if servers:
-            issues.append('서버 장애 '+', '.join(servers)+f' · 하드웨어 중단 {run.hardware_downtime}분')
+        faulted = [key for key in servers if self.servers.hardware[key].state == 'FAULT']
+        if faulted:
+            issues.append('서버 장애 '+', '.join(faulted)+f' · 하드웨어 중단 {run.hardware_downtime}분')
+        elif servers:
+            # 표시 문구만 구분합니다(복구 중에도 작업은 중단 상태). 판정·시간은 바꾸지 않습니다.
+            left = max(self.servers.hardware[key].repair_left for key in servers)
+            issues.append('장비 복구 중 '+', '.join(servers)+f' · 복구 {left}분 남음 · 하드웨어 중단 {run.hardware_downtime}분')
         if run.state.allocated and run.migration_left:
             issues.append(f'작업 이전 준비 {run.migration_left}분')
         return ' / '.join(issues)
