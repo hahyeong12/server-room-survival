@@ -1,0 +1,9034 @@
+{
+ "method": "tests/qa/flash_bench.py: child process runs the real ModeSelection mainloop; parent observes the dialog HWND with GDI StretchBlt (~17 ms), SendMessageTimeout(WM_NULL) for input-ready; shared QPC clock",
+ "experiment1_three_variants_10x": {
+  "base/ch2": [
+   {
+    "trigger_to_build_ms": 386.5,
+    "trigger_to_shown_ms": 752.2,
+    "trigger_to_built_ms": 752.2,
+    "trigger_to_callback_end_ms": 833.4,
+    "trigger_to_visible_ms": 755.9,
+    "trigger_to_first_expose_ms": 947.4,
+    "trigger_to_first_normal_ms": 1101.1,
+    "trigger_to_input_ready_ms": 836.4,
+    "white_samples": 0,
+    "samples": 93,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 1085.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 493.8,
+    "trigger_to_shown_ms": 933.1,
+    "trigger_to_built_ms": 933.1,
+    "trigger_to_callback_end_ms": 1012.7,
+    "trigger_to_visible_ms": 937.9,
+    "trigger_to_first_expose_ms": 1158.2,
+    "trigger_to_first_normal_ms": 1348.0,
+    "trigger_to_input_ready_ms": 1016.7,
+    "white_samples": 0,
+    "samples": 82,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 16,
+    "not_final_last_ms": 1317.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 729.4,
+    "trigger_to_shown_ms": 1229.6,
+    "trigger_to_built_ms": 1229.6,
+    "trigger_to_callback_end_ms": 1337.7,
+    "trigger_to_visible_ms": 1234.6,
+    "trigger_to_first_expose_ms": 1531.5,
+    "trigger_to_first_normal_ms": 1704.4,
+    "trigger_to_input_ready_ms": 1343.7,
+    "white_samples": 0,
+    "samples": 71,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1671.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 503.5,
+    "trigger_to_shown_ms": 897.8,
+    "trigger_to_built_ms": 897.8,
+    "trigger_to_callback_end_ms": 974.7,
+    "trigger_to_visible_ms": 893.7,
+    "trigger_to_first_expose_ms": 1106.3,
+    "trigger_to_first_normal_ms": 1201.5,
+    "trigger_to_input_ready_ms": 977.9,
+    "white_samples": 0,
+    "samples": 89,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 11,
+    "not_final_last_ms": 1172.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 491.3,
+    "trigger_to_shown_ms": 878.1,
+    "trigger_to_built_ms": 878.1,
+    "trigger_to_callback_end_ms": 967.0,
+    "trigger_to_visible_ms": 880.4,
+    "trigger_to_first_expose_ms": 1099.3,
+    "trigger_to_first_normal_ms": 1197.9,
+    "trigger_to_input_ready_ms": 970.1,
+    "white_samples": 0,
+    "samples": 91,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 13,
+    "not_final_last_ms": 1180.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 525.1,
+    "trigger_to_shown_ms": 936.9,
+    "trigger_to_built_ms": 936.9,
+    "trigger_to_callback_end_ms": 1028.9,
+    "trigger_to_visible_ms": 928.9,
+    "trigger_to_first_expose_ms": 1166.9,
+    "trigger_to_first_normal_ms": 1339.9,
+    "trigger_to_input_ready_ms": 1031.9,
+    "white_samples": 0,
+    "samples": 91,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 20,
+    "not_final_last_ms": 1325.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 555.6,
+    "trigger_to_shown_ms": 995.8,
+    "trigger_to_built_ms": 995.8,
+    "trigger_to_callback_end_ms": 1091.5,
+    "trigger_to_visible_ms": 985.6,
+    "trigger_to_first_expose_ms": 1244.9,
+    "trigger_to_first_normal_ms": 1379.4,
+    "trigger_to_input_ready_ms": 1095.8,
+    "white_samples": 0,
+    "samples": 86,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 16,
+    "not_final_last_ms": 1363.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 582.3,
+    "trigger_to_shown_ms": 1035.7,
+    "trigger_to_built_ms": 1035.7,
+    "trigger_to_callback_end_ms": 1135.0,
+    "trigger_to_visible_ms": 1032.4,
+    "trigger_to_first_expose_ms": 1280.4,
+    "trigger_to_first_normal_ms": 1481.1,
+    "trigger_to_input_ready_ms": 1138.4,
+    "white_samples": 0,
+    "samples": 86,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 20,
+    "not_final_last_ms": 1454.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 538.7,
+    "trigger_to_shown_ms": 983.3,
+    "trigger_to_built_ms": 983.3,
+    "trigger_to_callback_end_ms": 1073.9,
+    "trigger_to_visible_ms": 983.1,
+    "trigger_to_first_expose_ms": 1222.3,
+    "trigger_to_first_normal_ms": 1320.3,
+    "trigger_to_input_ready_ms": 1077.7,
+    "white_samples": 0,
+    "samples": 87,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1285.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 510.8,
+    "trigger_to_shown_ms": 924.2,
+    "trigger_to_built_ms": 924.3,
+    "trigger_to_callback_end_ms": 1012.2,
+    "trigger_to_visible_ms": 924.0,
+    "trigger_to_first_expose_ms": 1153.5,
+    "trigger_to_first_normal_ms": 1202.1,
+    "trigger_to_input_ready_ms": 1015.4,
+    "white_samples": 2,
+    "samples": 89,
+    "white_first_ms": 1083.4,
+    "white_last_ms": 1119.9,
+    "white_duration_ms": 195.9,
+    "max_white": 0.33,
+    "not_final_samples": 11,
+    "not_final_last_ms": 1169.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "base/ch3b": [
+   {
+    "trigger_to_build_ms": 473.5,
+    "trigger_to_shown_ms": 855.8,
+    "trigger_to_built_ms": 855.8,
+    "trigger_to_callback_end_ms": 933.9,
+    "trigger_to_visible_ms": 859.2,
+    "trigger_to_first_expose_ms": 1071.2,
+    "trigger_to_first_normal_ms": 1068.8,
+    "trigger_to_input_ready_ms": 937.3,
+    "white_samples": 4,
+    "samples": 90,
+    "white_first_ms": 980.9,
+    "white_last_ms": 1049.2,
+    "white_duration_ms": 190.0,
+    "max_white": 0.601,
+    "not_final_samples": 8,
+    "not_final_last_ms": 1049.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 455.3,
+    "trigger_to_shown_ms": 813.1,
+    "trigger_to_built_ms": 813.1,
+    "trigger_to_callback_end_ms": 890.9,
+    "trigger_to_visible_ms": 813.1,
+    "trigger_to_first_expose_ms": 1017.5,
+    "trigger_to_first_normal_ms": 1147.4,
+    "trigger_to_input_ready_ms": 896.4,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1129.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 353.3,
+    "trigger_to_shown_ms": 611.9,
+    "trigger_to_built_ms": 611.9,
+    "trigger_to_callback_end_ms": 667.6,
+    "trigger_to_visible_ms": 615.1,
+    "trigger_to_first_expose_ms": 731.1,
+    "trigger_to_first_normal_ms": 883.0,
+    "trigger_to_input_ready_ms": 669.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 15,
+    "not_final_last_ms": 865.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 330.5,
+    "trigger_to_shown_ms": 591.3,
+    "trigger_to_built_ms": 591.3,
+    "trigger_to_callback_end_ms": 644.9,
+    "trigger_to_visible_ms": 595.0,
+    "trigger_to_first_expose_ms": 705.1,
+    "trigger_to_first_normal_ms": 892.4,
+    "trigger_to_input_ready_ms": 646.7,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 875.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 330.3,
+    "trigger_to_shown_ms": 575.9,
+    "trigger_to_built_ms": 575.9,
+    "trigger_to_callback_end_ms": 621.6,
+    "trigger_to_visible_ms": 580.6,
+    "trigger_to_first_expose_ms": 682.2,
+    "trigger_to_first_normal_ms": 835.8,
+    "trigger_to_input_ready_ms": 623.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 15,
+    "not_final_last_ms": 817.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 352.8,
+    "trigger_to_shown_ms": 615.2,
+    "trigger_to_built_ms": 615.3,
+    "trigger_to_callback_end_ms": 660.8,
+    "trigger_to_visible_ms": 613.9,
+    "trigger_to_first_expose_ms": 722.7,
+    "trigger_to_first_normal_ms": 876.5,
+    "trigger_to_input_ready_ms": 662.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 15,
+    "not_final_last_ms": 859.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 348.8,
+    "trigger_to_shown_ms": 601.8,
+    "trigger_to_built_ms": 601.8,
+    "trigger_to_callback_end_ms": 647.7,
+    "trigger_to_visible_ms": 596.7,
+    "trigger_to_first_expose_ms": 706.8,
+    "trigger_to_first_normal_ms": 903.5,
+    "trigger_to_input_ready_ms": 649.6,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 18,
+    "not_final_last_ms": 886.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 330.3,
+    "trigger_to_shown_ms": 600.4,
+    "trigger_to_built_ms": 600.4,
+    "trigger_to_callback_end_ms": 655.2,
+    "trigger_to_visible_ms": 596.3,
+    "trigger_to_first_expose_ms": 714.4,
+    "trigger_to_first_normal_ms": 892.9,
+    "trigger_to_input_ready_ms": 657.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 875.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 326.5,
+    "trigger_to_shown_ms": 582.5,
+    "trigger_to_built_ms": 582.5,
+    "trigger_to_callback_end_ms": 636.5,
+    "trigger_to_visible_ms": 581.5,
+    "trigger_to_first_expose_ms": 697.9,
+    "trigger_to_first_normal_ms": 878.3,
+    "trigger_to_input_ready_ms": 638.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 861.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 340.1,
+    "trigger_to_shown_ms": 599.7,
+    "trigger_to_built_ms": 599.7,
+    "trigger_to_callback_end_ms": 653.9,
+    "trigger_to_visible_ms": 596.0,
+    "trigger_to_first_expose_ms": 715.5,
+    "trigger_to_first_normal_ms": 893.0,
+    "trigger_to_input_ready_ms": 656.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 875.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "base/next2": [
+   {
+    "trigger_to_build_ms": 61.9,
+    "trigger_to_shown_ms": 235.2,
+    "trigger_to_built_ms": 235.2,
+    "trigger_to_callback_end_ms": 292.9,
+    "trigger_to_visible_ms": 237.7,
+    "trigger_to_first_expose_ms": 389.0,
+    "trigger_to_first_normal_ms": 591.0,
+    "trigger_to_input_ready_ms": 293.1,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 574.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 59.4,
+    "trigger_to_shown_ms": 246.1,
+    "trigger_to_built_ms": 246.1,
+    "trigger_to_callback_end_ms": 311.3,
+    "trigger_to_visible_ms": 252.8,
+    "trigger_to_first_expose_ms": 413.2,
+    "trigger_to_first_normal_ms": 552.0,
+    "trigger_to_input_ready_ms": 311.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 17,
+    "not_final_last_ms": 535.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 89.0,
+    "trigger_to_shown_ms": 273.9,
+    "trigger_to_built_ms": 273.9,
+    "trigger_to_callback_end_ms": 343.0,
+    "trigger_to_visible_ms": 267.4,
+    "trigger_to_first_expose_ms": 446.0,
+    "trigger_to_first_normal_ms": 559.9,
+    "trigger_to_input_ready_ms": 343.2,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 15,
+    "not_final_last_ms": 542.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 48.9,
+    "trigger_to_shown_ms": 242.0,
+    "trigger_to_built_ms": 242.0,
+    "trigger_to_callback_end_ms": 308.6,
+    "trigger_to_visible_ms": 237.3,
+    "trigger_to_first_expose_ms": 414.5,
+    "trigger_to_first_normal_ms": 615.0,
+    "trigger_to_input_ready_ms": 308.8,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 597.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 99.4,
+    "trigger_to_shown_ms": 290.7,
+    "trigger_to_built_ms": 290.7,
+    "trigger_to_callback_end_ms": 346.4,
+    "trigger_to_visible_ms": 284.0,
+    "trigger_to_first_expose_ms": 451.7,
+    "trigger_to_first_normal_ms": 647.1,
+    "trigger_to_input_ready_ms": 346.6,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 630.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 64.8,
+    "trigger_to_shown_ms": 260.2,
+    "trigger_to_built_ms": 260.2,
+    "trigger_to_callback_end_ms": 321.4,
+    "trigger_to_visible_ms": 266.9,
+    "trigger_to_first_expose_ms": 420.1,
+    "trigger_to_first_normal_ms": 613.3,
+    "trigger_to_input_ready_ms": 321.5,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 596.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 47.1,
+    "trigger_to_shown_ms": 233.7,
+    "trigger_to_built_ms": 233.7,
+    "trigger_to_callback_end_ms": 296.9,
+    "trigger_to_visible_ms": 235.5,
+    "trigger_to_first_expose_ms": 396.8,
+    "trigger_to_first_normal_ms": 512.6,
+    "trigger_to_input_ready_ms": 297.0,
+    "white_samples": 0,
+    "samples": 113,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 15,
+    "not_final_last_ms": 494.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 58.3,
+    "trigger_to_shown_ms": 249.1,
+    "trigger_to_built_ms": 249.1,
+    "trigger_to_callback_end_ms": 312.1,
+    "trigger_to_visible_ms": 252.4,
+    "trigger_to_first_expose_ms": 412.1,
+    "trigger_to_first_normal_ms": 602.0,
+    "trigger_to_input_ready_ms": 312.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 583.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 55.5,
+    "trigger_to_shown_ms": 242.1,
+    "trigger_to_built_ms": 242.1,
+    "trigger_to_callback_end_ms": 306.2,
+    "trigger_to_visible_ms": 249.6,
+    "trigger_to_first_expose_ms": 406.1,
+    "trigger_to_first_normal_ms": 595.9,
+    "trigger_to_input_ready_ms": 306.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 578.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 60.8,
+    "trigger_to_shown_ms": 249.9,
+    "trigger_to_built_ms": 249.9,
+    "trigger_to_callback_end_ms": 312.9,
+    "trigger_to_visible_ms": 251.0,
+    "trigger_to_first_expose_ms": 417.9,
+    "trigger_to_first_normal_ms": 529.4,
+    "trigger_to_input_ready_ms": 313.0,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 15,
+    "not_final_last_ms": 512.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   }
+  ],
+  "last/ch2": [
+   {
+    "trigger_to_build_ms": 380.8,
+    "trigger_to_shown_ms": 662.7,
+    "trigger_to_built_ms": 427.8,
+    "trigger_to_callback_end_ms": 708.1,
+    "trigger_to_visible_ms": 671.2,
+    "trigger_to_first_expose_ms": 766.0,
+    "trigger_to_first_normal_ms": 877.8,
+    "trigger_to_input_ready_ms": 709.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 12,
+    "not_final_last_ms": 861.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 331.4,
+    "trigger_to_shown_ms": 599.6,
+    "trigger_to_built_ms": 368.6,
+    "trigger_to_callback_end_ms": 646.0,
+    "trigger_to_visible_ms": 599.2,
+    "trigger_to_first_expose_ms": 705.7,
+    "trigger_to_first_normal_ms": 814.3,
+    "trigger_to_input_ready_ms": 647.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 12,
+    "not_final_last_ms": 797.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 357.9,
+    "trigger_to_shown_ms": 634.1,
+    "trigger_to_built_ms": 394.5,
+    "trigger_to_callback_end_ms": 677.1,
+    "trigger_to_visible_ms": 641.7,
+    "trigger_to_first_expose_ms": 733.0,
+    "trigger_to_first_normal_ms": 948.7,
+    "trigger_to_input_ready_ms": 679.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 933.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 365.6,
+    "trigger_to_shown_ms": 641.4,
+    "trigger_to_built_ms": 403.6,
+    "trigger_to_callback_end_ms": 690.7,
+    "trigger_to_visible_ms": 643.8,
+    "trigger_to_first_expose_ms": 753.6,
+    "trigger_to_first_normal_ms": 962.8,
+    "trigger_to_input_ready_ms": 692.8,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 946.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 401.2,
+    "trigger_to_shown_ms": 681.8,
+    "trigger_to_built_ms": 442.1,
+    "trigger_to_callback_end_ms": 730.1,
+    "trigger_to_visible_ms": 678.3,
+    "trigger_to_first_expose_ms": 796.3,
+    "trigger_to_first_normal_ms": 932.8,
+    "trigger_to_input_ready_ms": 733.1,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 916.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 356.1,
+    "trigger_to_shown_ms": 658.0,
+    "trigger_to_built_ms": 393.7,
+    "trigger_to_callback_end_ms": 714.6,
+    "trigger_to_visible_ms": 657.6,
+    "trigger_to_first_expose_ms": 785.2,
+    "trigger_to_first_normal_ms": 978.7,
+    "trigger_to_input_ready_ms": 716.8,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 962.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 385.3,
+    "trigger_to_shown_ms": 662.1,
+    "trigger_to_built_ms": 424.7,
+    "trigger_to_callback_end_ms": 710.8,
+    "trigger_to_visible_ms": 656.0,
+    "trigger_to_first_expose_ms": 767.7,
+    "trigger_to_first_normal_ms": 983.4,
+    "trigger_to_input_ready_ms": 712.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 19,
+    "not_final_last_ms": 968.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 342.1,
+    "trigger_to_shown_ms": 614.8,
+    "trigger_to_built_ms": 377.3,
+    "trigger_to_callback_end_ms": 664.9,
+    "trigger_to_visible_ms": 611.4,
+    "trigger_to_first_expose_ms": 733.0,
+    "trigger_to_first_normal_ms": 834.8,
+    "trigger_to_input_ready_ms": 667.0,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 13,
+    "not_final_last_ms": 819.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 339.4,
+    "trigger_to_shown_ms": 631.4,
+    "trigger_to_built_ms": 375.6,
+    "trigger_to_callback_end_ms": 678.7,
+    "trigger_to_visible_ms": 630.4,
+    "trigger_to_first_expose_ms": 735.6,
+    "trigger_to_first_normal_ms": 950.9,
+    "trigger_to_input_ready_ms": 680.6,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 934.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 341.8,
+    "trigger_to_shown_ms": 612.0,
+    "trigger_to_built_ms": 377.7,
+    "trigger_to_callback_end_ms": 654.5,
+    "trigger_to_visible_ms": 610.8,
+    "trigger_to_first_expose_ms": 713.0,
+    "trigger_to_first_normal_ms": 931.4,
+    "trigger_to_input_ready_ms": 656.6,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 915.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "last/ch3b": [
+   {
+    "trigger_to_build_ms": 344.6,
+    "trigger_to_shown_ms": 620.0,
+    "trigger_to_built_ms": 385.0,
+    "trigger_to_callback_end_ms": 667.3,
+    "trigger_to_visible_ms": 625.5,
+    "trigger_to_first_expose_ms": 732.6,
+    "trigger_to_first_normal_ms": 920.9,
+    "trigger_to_input_ready_ms": 669.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 902.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 343.4,
+    "trigger_to_shown_ms": 612.1,
+    "trigger_to_built_ms": 378.3,
+    "trigger_to_callback_end_ms": 655.3,
+    "trigger_to_visible_ms": 611.7,
+    "trigger_to_first_expose_ms": 715.1,
+    "trigger_to_first_normal_ms": 869.2,
+    "trigger_to_input_ready_ms": 657.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 15,
+    "not_final_last_ms": 851.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 332.1,
+    "trigger_to_shown_ms": 603.8,
+    "trigger_to_built_ms": 367.8,
+    "trigger_to_callback_end_ms": 649.7,
+    "trigger_to_visible_ms": 598.7,
+    "trigger_to_first_expose_ms": 711.8,
+    "trigger_to_first_normal_ms": 908.0,
+    "trigger_to_input_ready_ms": 651.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 18,
+    "not_final_last_ms": 890.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 338.7,
+    "trigger_to_shown_ms": 606.0,
+    "trigger_to_built_ms": 373.0,
+    "trigger_to_callback_end_ms": 648.2,
+    "trigger_to_visible_ms": 610.7,
+    "trigger_to_first_expose_ms": 711.3,
+    "trigger_to_first_normal_ms": 908.6,
+    "trigger_to_input_ready_ms": 650.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 892.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 358.5,
+    "trigger_to_shown_ms": 621.0,
+    "trigger_to_built_ms": 392.9,
+    "trigger_to_callback_end_ms": 663.1,
+    "trigger_to_visible_ms": 617.2,
+    "trigger_to_first_expose_ms": 727.5,
+    "trigger_to_first_normal_ms": 924.2,
+    "trigger_to_input_ready_ms": 665.4,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 907.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 356.8,
+    "trigger_to_shown_ms": 610.5,
+    "trigger_to_built_ms": 392.5,
+    "trigger_to_callback_end_ms": 653.3,
+    "trigger_to_visible_ms": 612.1,
+    "trigger_to_first_expose_ms": 716.3,
+    "trigger_to_first_normal_ms": 913.1,
+    "trigger_to_input_ready_ms": 655.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 895.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 368.2,
+    "trigger_to_shown_ms": 631.8,
+    "trigger_to_built_ms": 405.3,
+    "trigger_to_callback_end_ms": 674.7,
+    "trigger_to_visible_ms": 628.2,
+    "trigger_to_first_expose_ms": 733.1,
+    "trigger_to_first_normal_ms": 932.1,
+    "trigger_to_input_ready_ms": 676.5,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 16,
+    "not_final_last_ms": 914.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 341.8,
+    "trigger_to_shown_ms": 618.3,
+    "trigger_to_built_ms": 379.2,
+    "trigger_to_callback_end_ms": 671.8,
+    "trigger_to_visible_ms": 623.7,
+    "trigger_to_first_expose_ms": 747.0,
+    "trigger_to_first_normal_ms": 918.9,
+    "trigger_to_input_ready_ms": 675.1,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 16,
+    "not_final_last_ms": 901.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 322.5,
+    "trigger_to_shown_ms": 620.8,
+    "trigger_to_built_ms": 359.3,
+    "trigger_to_callback_end_ms": 673.0,
+    "trigger_to_visible_ms": 613.5,
+    "trigger_to_first_expose_ms": 745.3,
+    "trigger_to_first_normal_ms": 944.9,
+    "trigger_to_input_ready_ms": 675.2,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 18,
+    "not_final_last_ms": 928.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 352.8,
+    "trigger_to_shown_ms": 634.1,
+    "trigger_to_built_ms": 390.3,
+    "trigger_to_callback_end_ms": 687.1,
+    "trigger_to_visible_ms": 626.1,
+    "trigger_to_first_expose_ms": 763.8,
+    "trigger_to_first_normal_ms": 935.5,
+    "trigger_to_input_ready_ms": 689.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 18,
+    "not_final_last_ms": 917.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "last/next2": [
+   {
+    "trigger_to_build_ms": 59.9,
+    "trigger_to_shown_ms": 238.4,
+    "trigger_to_built_ms": 92.6,
+    "trigger_to_callback_end_ms": 290.5,
+    "trigger_to_visible_ms": 238.0,
+    "trigger_to_first_expose_ms": 390.5,
+    "trigger_to_first_normal_ms": 591.0,
+    "trigger_to_input_ready_ms": 290.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 574.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 65.1,
+    "trigger_to_shown_ms": 261.9,
+    "trigger_to_built_ms": 111.5,
+    "trigger_to_callback_end_ms": 315.7,
+    "trigger_to_visible_ms": 268.0,
+    "trigger_to_first_expose_ms": 416.7,
+    "trigger_to_first_normal_ms": 601.4,
+    "trigger_to_input_ready_ms": 315.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 583.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 71.2,
+    "trigger_to_shown_ms": 263.8,
+    "trigger_to_built_ms": 115.5,
+    "trigger_to_callback_end_ms": 319.0,
+    "trigger_to_visible_ms": 269.7,
+    "trigger_to_first_expose_ms": 418.6,
+    "trigger_to_first_normal_ms": 613.0,
+    "trigger_to_input_ready_ms": 319.2,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 596.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 62.9,
+    "trigger_to_shown_ms": 322.9,
+    "trigger_to_built_ms": 126.5,
+    "trigger_to_callback_end_ms": 403.0,
+    "trigger_to_visible_ms": 316.4,
+    "trigger_to_first_expose_ms": 552.8,
+    "trigger_to_first_normal_ms": 582.1,
+    "trigger_to_input_ready_ms": 403.2,
+    "white_samples": 4,
+    "samples": 114,
+    "white_first_ms": 462.0,
+    "white_last_ms": 517.0,
+    "white_duration_ms": 200.6,
+    "max_white": 0.836,
+    "not_final_samples": 10,
+    "not_final_last_ms": 551.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 45.8,
+    "trigger_to_shown_ms": 234.8,
+    "trigger_to_built_ms": 91.5,
+    "trigger_to_callback_end_ms": 287.2,
+    "trigger_to_visible_ms": 234.9,
+    "trigger_to_first_expose_ms": 389.1,
+    "trigger_to_first_normal_ms": 590.7,
+    "trigger_to_input_ready_ms": 287.3,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 573.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 59.4,
+    "trigger_to_shown_ms": 251.9,
+    "trigger_to_built_ms": 103.7,
+    "trigger_to_callback_end_ms": 318.4,
+    "trigger_to_visible_ms": 249.8,
+    "trigger_to_first_expose_ms": 419.2,
+    "trigger_to_first_normal_ms": 639.4,
+    "trigger_to_input_ready_ms": 318.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 22,
+    "not_final_last_ms": 622.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 76.6,
+    "trigger_to_shown_ms": 268.7,
+    "trigger_to_built_ms": 121.0,
+    "trigger_to_callback_end_ms": 321.4,
+    "trigger_to_visible_ms": 266.2,
+    "trigger_to_first_expose_ms": 421.8,
+    "trigger_to_first_normal_ms": 617.6,
+    "trigger_to_input_ready_ms": 321.6,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 600.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 68.9,
+    "trigger_to_shown_ms": 258.6,
+    "trigger_to_built_ms": 113.4,
+    "trigger_to_callback_end_ms": 317.4,
+    "trigger_to_visible_ms": 266.4,
+    "trigger_to_first_expose_ms": 428.8,
+    "trigger_to_first_normal_ms": 609.8,
+    "trigger_to_input_ready_ms": 318.0,
+    "white_samples": 0,
+    "samples": 103,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 591.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 90.8,
+    "trigger_to_shown_ms": 281.0,
+    "trigger_to_built_ms": 135.1,
+    "trigger_to_callback_end_ms": 331.6,
+    "trigger_to_visible_ms": 281.9,
+    "trigger_to_first_expose_ms": 437.0,
+    "trigger_to_first_normal_ms": 627.8,
+    "trigger_to_input_ready_ms": 331.7,
+    "white_samples": 0,
+    "samples": 103,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 610.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 72.2,
+    "trigger_to_shown_ms": 266.5,
+    "trigger_to_built_ms": 117.2,
+    "trigger_to_callback_end_ms": 320.3,
+    "trigger_to_visible_ms": 266.9,
+    "trigger_to_first_expose_ms": 417.2,
+    "trigger_to_first_normal_ms": 609.7,
+    "trigger_to_input_ready_ms": 320.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 592.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   }
+  ],
+  "idle/ch2": [
+   {
+    "trigger_to_build_ms": 395.9,
+    "trigger_to_shown_ms": 717.6,
+    "trigger_to_built_ms": 448.0,
+    "trigger_to_callback_end_ms": 497.1,
+    "trigger_to_visible_ms": 721.4,
+    "trigger_to_first_expose_ms": 772.9,
+    "trigger_to_first_normal_ms": 923.3,
+    "trigger_to_input_ready_ms": 745.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 11,
+    "not_final_last_ms": 907.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 349.4,
+    "trigger_to_shown_ms": 645.8,
+    "trigger_to_built_ms": 386.8,
+    "trigger_to_callback_end_ms": 427.3,
+    "trigger_to_visible_ms": 655.0,
+    "trigger_to_first_expose_ms": 697.2,
+    "trigger_to_first_normal_ms": 886.9,
+    "trigger_to_input_ready_ms": 673.1,
+    "white_samples": 0,
+    "samples": 97,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 14,
+    "not_final_last_ms": 869.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 334.4,
+    "trigger_to_shown_ms": 649.5,
+    "trigger_to_built_ms": 369.2,
+    "trigger_to_callback_end_ms": 435.8,
+    "trigger_to_visible_ms": 659.7,
+    "trigger_to_first_expose_ms": 701.6,
+    "trigger_to_first_normal_ms": 886.1,
+    "trigger_to_input_ready_ms": 674.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 870.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 344.9,
+    "trigger_to_shown_ms": 651.3,
+    "trigger_to_built_ms": 380.1,
+    "trigger_to_callback_end_ms": 429.3,
+    "trigger_to_visible_ms": 659.5,
+    "trigger_to_first_expose_ms": 709.5,
+    "trigger_to_first_normal_ms": 857.5,
+    "trigger_to_input_ready_ms": 681.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 11,
+    "not_final_last_ms": 841.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 355.5,
+    "trigger_to_shown_ms": 662.0,
+    "trigger_to_built_ms": 390.8,
+    "trigger_to_callback_end_ms": 444.5,
+    "trigger_to_visible_ms": 672.7,
+    "trigger_to_first_expose_ms": 716.9,
+    "trigger_to_first_normal_ms": 896.9,
+    "trigger_to_input_ready_ms": 691.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 880.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 363.0,
+    "trigger_to_shown_ms": 668.1,
+    "trigger_to_built_ms": 399.0,
+    "trigger_to_callback_end_ms": 446.8,
+    "trigger_to_visible_ms": 673.0,
+    "trigger_to_first_expose_ms": 720.5,
+    "trigger_to_first_normal_ms": 907.9,
+    "trigger_to_input_ready_ms": 695.3,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 890.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 344.1,
+    "trigger_to_shown_ms": 646.0,
+    "trigger_to_built_ms": 379.3,
+    "trigger_to_callback_end_ms": 426.8,
+    "trigger_to_visible_ms": 657.0,
+    "trigger_to_first_expose_ms": 699.3,
+    "trigger_to_first_normal_ms": 879.2,
+    "trigger_to_input_ready_ms": 694.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 863.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 358.2,
+    "trigger_to_shown_ms": 667.1,
+    "trigger_to_built_ms": 394.5,
+    "trigger_to_callback_end_ms": 445.4,
+    "trigger_to_visible_ms": 674.5,
+    "trigger_to_first_expose_ms": 721.9,
+    "trigger_to_first_normal_ms": 902.8,
+    "trigger_to_input_ready_ms": 697.6,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 884.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 336.1,
+    "trigger_to_shown_ms": 642.1,
+    "trigger_to_built_ms": 373.1,
+    "trigger_to_callback_end_ms": 423.6,
+    "trigger_to_visible_ms": 645.9,
+    "trigger_to_first_expose_ms": 696.5,
+    "trigger_to_first_normal_ms": 885.3,
+    "trigger_to_input_ready_ms": 670.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 14,
+    "not_final_last_ms": 867.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 349.6,
+    "trigger_to_shown_ms": 664.7,
+    "trigger_to_built_ms": 384.9,
+    "trigger_to_callback_end_ms": 437.7,
+    "trigger_to_visible_ms": 675.5,
+    "trigger_to_first_expose_ms": 722.3,
+    "trigger_to_first_normal_ms": 904.1,
+    "trigger_to_input_ready_ms": 693.7,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 887.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "idle/ch3b": [
+   {
+    "trigger_to_build_ms": 363.0,
+    "trigger_to_shown_ms": 658.7,
+    "trigger_to_built_ms": 399.1,
+    "trigger_to_callback_end_ms": 438.5,
+    "trigger_to_visible_ms": 673.4,
+    "trigger_to_first_expose_ms": 719.7,
+    "trigger_to_first_normal_ms": 899.7,
+    "trigger_to_input_ready_ms": 715.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 881.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 328.8,
+    "trigger_to_shown_ms": 638.6,
+    "trigger_to_built_ms": 363.7,
+    "trigger_to_callback_end_ms": 412.8,
+    "trigger_to_visible_ms": 656.9,
+    "trigger_to_first_expose_ms": 701.5,
+    "trigger_to_first_normal_ms": 881.9,
+    "trigger_to_input_ready_ms": 697.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 866.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 405.6,
+    "trigger_to_shown_ms": 755.1,
+    "trigger_to_built_ms": 446.3,
+    "trigger_to_callback_end_ms": 502.4,
+    "trigger_to_visible_ms": 771.3,
+    "trigger_to_first_expose_ms": 826.3,
+    "trigger_to_first_normal_ms": 1020.3,
+    "trigger_to_input_ready_ms": 790.1,
+    "white_samples": 0,
+    "samples": 89,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 10,
+    "not_final_last_ms": 993.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 394.1,
+    "trigger_to_shown_ms": 738.6,
+    "trigger_to_built_ms": 435.6,
+    "trigger_to_callback_end_ms": 496.2,
+    "trigger_to_visible_ms": 749.5,
+    "trigger_to_first_expose_ms": 794.3,
+    "trigger_to_first_normal_ms": 980.7,
+    "trigger_to_input_ready_ms": 767.1,
+    "white_samples": 0,
+    "samples": 97,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 14,
+    "not_final_last_ms": 964.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 386.7,
+    "trigger_to_shown_ms": 713.4,
+    "trigger_to_built_ms": 426.7,
+    "trigger_to_callback_end_ms": 475.4,
+    "trigger_to_visible_ms": 722.4,
+    "trigger_to_first_expose_ms": 775.7,
+    "trigger_to_first_normal_ms": 949.7,
+    "trigger_to_input_ready_ms": 745.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 931.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 357.9,
+    "trigger_to_shown_ms": 657.9,
+    "trigger_to_built_ms": 395.1,
+    "trigger_to_callback_end_ms": 443.5,
+    "trigger_to_visible_ms": 675.3,
+    "trigger_to_first_expose_ms": 711.3,
+    "trigger_to_first_normal_ms": 899.1,
+    "trigger_to_input_ready_ms": 710.5,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 883.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 327.9,
+    "trigger_to_shown_ms": 638.5,
+    "trigger_to_built_ms": 363.8,
+    "trigger_to_callback_end_ms": 416.8,
+    "trigger_to_visible_ms": 643.6,
+    "trigger_to_first_expose_ms": 697.2,
+    "trigger_to_first_normal_ms": 882.0,
+    "trigger_to_input_ready_ms": 667.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 14,
+    "not_final_last_ms": 865.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 346.0,
+    "trigger_to_shown_ms": 651.5,
+    "trigger_to_built_ms": 380.0,
+    "trigger_to_callback_end_ms": 432.3,
+    "trigger_to_visible_ms": 657.4,
+    "trigger_to_first_expose_ms": 707.0,
+    "trigger_to_first_normal_ms": 886.1,
+    "trigger_to_input_ready_ms": 676.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 13,
+    "not_final_last_ms": 869.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 361.3,
+    "trigger_to_shown_ms": 675.5,
+    "trigger_to_built_ms": 396.2,
+    "trigger_to_callback_end_ms": 448.3,
+    "trigger_to_visible_ms": 688.6,
+    "trigger_to_first_expose_ms": 733.2,
+    "trigger_to_first_normal_ms": 880.5,
+    "trigger_to_input_ready_ms": 729.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 11,
+    "not_final_last_ms": 864.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 331.8,
+    "trigger_to_shown_ms": 633.5,
+    "trigger_to_built_ms": 367.3,
+    "trigger_to_callback_end_ms": 411.1,
+    "trigger_to_visible_ms": 642.6,
+    "trigger_to_first_expose_ms": 692.8,
+    "trigger_to_first_normal_ms": 878.4,
+    "trigger_to_input_ready_ms": 662.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.05,
+    "not_final_samples": 14,
+    "not_final_last_ms": 862.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "idle/next2": [
+   {
+    "trigger_to_build_ms": 44.0,
+    "trigger_to_shown_ms": 280.2,
+    "trigger_to_built_ms": 76.9,
+    "trigger_to_callback_end_ms": 137.2,
+    "trigger_to_visible_ms": 297.6,
+    "trigger_to_first_expose_ms": 332.2,
+    "trigger_to_first_normal_ms": 457.8,
+    "trigger_to_input_ready_ms": 325.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 9,
+    "not_final_last_ms": 441.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 77.2,
+    "trigger_to_shown_ms": 322.6,
+    "trigger_to_built_ms": 121.8,
+    "trigger_to_callback_end_ms": 181.2,
+    "trigger_to_visible_ms": 331.3,
+    "trigger_to_first_expose_ms": 375.5,
+    "trigger_to_first_normal_ms": 499.9,
+    "trigger_to_input_ready_ms": 351.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 10,
+    "not_final_last_ms": 483.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 61.4,
+    "trigger_to_shown_ms": 325.3,
+    "trigger_to_built_ms": 110.0,
+    "trigger_to_callback_end_ms": 173.0,
+    "trigger_to_visible_ms": 329.8,
+    "trigger_to_first_expose_ms": 380.0,
+    "trigger_to_first_normal_ms": 499.7,
+    "trigger_to_input_ready_ms": 352.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 9,
+    "not_final_last_ms": 481.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 62.4,
+    "trigger_to_shown_ms": 308.6,
+    "trigger_to_built_ms": 106.8,
+    "trigger_to_callback_end_ms": 168.8,
+    "trigger_to_visible_ms": 316.4,
+    "trigger_to_first_expose_ms": 367.4,
+    "trigger_to_first_normal_ms": 471.9,
+    "trigger_to_input_ready_ms": 339.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 9,
+    "not_final_last_ms": 454.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 81.6,
+    "trigger_to_shown_ms": 376.2,
+    "trigger_to_built_ms": 133.9,
+    "trigger_to_callback_end_ms": 201.5,
+    "trigger_to_visible_ms": 390.9,
+    "trigger_to_first_expose_ms": 445.6,
+    "trigger_to_first_normal_ms": 541.5,
+    "trigger_to_input_ready_ms": 411.6,
+    "white_samples": 0,
+    "samples": 112,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 8,
+    "not_final_last_ms": 522.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 45.7,
+    "trigger_to_shown_ms": 285.3,
+    "trigger_to_built_ms": 89.5,
+    "trigger_to_callback_end_ms": 147.7,
+    "trigger_to_visible_ms": 296.7,
+    "trigger_to_first_expose_ms": 336.3,
+    "trigger_to_first_normal_ms": 462.0,
+    "trigger_to_input_ready_ms": 312.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 9,
+    "not_final_last_ms": 445.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 57.8,
+    "trigger_to_shown_ms": 300.5,
+    "trigger_to_built_ms": 102.1,
+    "trigger_to_callback_end_ms": 161.4,
+    "trigger_to_visible_ms": 313.3,
+    "trigger_to_first_expose_ms": 356.3,
+    "trigger_to_first_normal_ms": 466.1,
+    "trigger_to_input_ready_ms": 331.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 9,
+    "not_final_last_ms": 448.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 56.1,
+    "trigger_to_shown_ms": 304.9,
+    "trigger_to_built_ms": 99.6,
+    "trigger_to_callback_end_ms": 159.8,
+    "trigger_to_visible_ms": 316.0,
+    "trigger_to_first_expose_ms": 360.7,
+    "trigger_to_first_normal_ms": 482.1,
+    "trigger_to_input_ready_ms": 335.3,
+    "white_samples": 0,
+    "samples": 97,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 10,
+    "not_final_last_ms": 466.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 55.2,
+    "trigger_to_shown_ms": 304.0,
+    "trigger_to_built_ms": 101.5,
+    "trigger_to_callback_end_ms": 162.3,
+    "trigger_to_visible_ms": 313.9,
+    "trigger_to_first_expose_ms": 360.0,
+    "trigger_to_first_normal_ms": 480.9,
+    "trigger_to_input_ready_ms": 334.3,
+    "white_samples": 0,
+    "samples": 97,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 10,
+    "not_final_last_ms": 465.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 56.5,
+    "trigger_to_shown_ms": 309.2,
+    "trigger_to_built_ms": 102.1,
+    "trigger_to_callback_end_ms": 165.6,
+    "trigger_to_visible_ms": 315.4,
+    "trigger_to_first_expose_ms": 363.8,
+    "trigger_to_first_normal_ms": 482.1,
+    "trigger_to_input_ready_ms": 337.5,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.051,
+    "not_final_samples": 9,
+    "not_final_last_ms": 466.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": null,
+    "geometry": [
+     716,
+     368,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   }
+  ]
+ },
+ "experiment2_show_inside_idle_interleaved_15x": {
+  "base/ch2": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.057,
+   "appear": "med 673 [637-813]",
+   "unpainted_visible": "med 116 [93-158]",
+   "normal": "med 999 [881-1093]",
+   "input": "med 729 [677-873]",
+   "dialogs": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "buttons": true,
+   "geometry": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "idle/ch2": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.05,
+   "appear": "med 671 [628-787]",
+   "unpainted_visible": "med 48 [36-55]",
+   "normal": "med 901 [832-1018]",
+   "input": "med 694 [643-810]",
+   "dialogs": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "buttons": true,
+   "geometry": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "base/ch3b": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.056,
+   "appear": "med 611 [579-690]",
+   "unpainted_visible": "med 122 [102-148]",
+   "normal": "med 903 [816-1016]",
+   "input": "med 668 [640-754]",
+   "dialogs": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "buttons": true,
+   "geometry": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "idle/ch3b": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.05,
+   "appear": "med 660 [641-861]",
+   "unpainted_visible": "med 52 [41-93]",
+   "normal": "med 886 [846-1084]",
+   "input": "med 680 [664-885]",
+   "dialogs": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "buttons": true,
+   "geometry": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "base/next2": {
+   "n": 15,
+   "white_runs": 2,
+   "white_ms": [
+    204.4,
+    132.6
+   ],
+   "max_white": 0.405,
+   "appear": "med 235 [218-299]",
+   "unpainted_visible": "med 158 [145-224]",
+   "normal": "med 572 [451-615]",
+   "input": "med 290 [276-378]",
+   "dialogs": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "buttons": true,
+   "geometry": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "idle/next2": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.051,
+   "appear": "med 328 [313-394]",
+   "unpainted_visible": "med 47 [37-66]",
+   "normal": "med 478 [468-555]",
+   "input": "med 351 [330-410]",
+   "dialogs": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "buttons": true,
+   "geometry": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  }
+ },
+ "final_interleaved_15x": {
+  "base/ch2": {
+   "n": 15,
+   "white_runs": 2,
+   "white_ms": [
+    125.9,
+    112.6
+   ],
+   "max_white": 0.321,
+   "appear_ms": {
+    "median": 738.4,
+    "min": 630.7,
+    "max": 766.9
+   },
+   "unpainted_visible_ms": {
+    "median": 133.3,
+    "min": 108.5,
+    "max": 171.20000000000005
+   },
+   "first_normal_ms": {
+    "median": 1031.6,
+    "min": 884.8,
+    "max": 1114.0
+   },
+   "input_ready_ms": {
+    "median": 798.6,
+    "min": 697.1,
+    "max": 839.3
+   },
+   "dialog_count": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "placement_offset_zero": true,
+   "buttons_visible": true,
+   "size": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "final/ch2": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.057,
+   "appear_ms": {
+    "median": 758.5,
+    "min": 696.0,
+    "max": 1363.6
+   },
+   "unpainted_visible_ms": {
+    "median": 71.3,
+    "min": 60.80000000000007,
+    "max": 143.9000000000001
+   },
+   "first_normal_ms": {
+    "median": 999.2,
+    "min": 926.4,
+    "max": 1616.5
+   },
+   "input_ready_ms": {
+    "median": 781.8,
+    "min": 715.6,
+    "max": 1428.7
+   },
+   "dialog_count": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "placement_offset_zero": true,
+   "buttons_visible": true,
+   "size": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "base/ch3b": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.056,
+   "appear_ms": {
+    "median": 676.0,
+    "min": 595.3,
+    "max": 1249.9
+   },
+   "unpainted_visible_ms": {
+    "median": 143.1,
+    "min": 125.80000000000007,
+    "max": 225.0
+   },
+   "first_normal_ms": {
+    "median": 1006.3,
+    "min": 858.4,
+    "max": 1567.3
+   },
+   "input_ready_ms": {
+    "median": 747.0,
+    "min": 654.3,
+    "max": 1334.0
+   },
+   "dialog_count": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "placement_offset_zero": true,
+   "buttons_visible": true,
+   "size": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "final/ch3b": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.056,
+   "appear_ms": {
+    "median": 812.7,
+    "min": 675.1,
+    "max": 1240.4
+   },
+   "unpainted_visible_ms": {
+    "median": 103.9,
+    "min": 62.10000000000002,
+    "max": 127.29999999999995
+   },
+   "first_normal_ms": {
+    "median": 1059.9,
+    "min": 902.9,
+    "max": 1541.2
+   },
+   "input_ready_ms": {
+    "median": 829.1,
+    "min": 698.5,
+    "max": 1299.1
+   },
+   "dialog_count": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "placement_offset_zero": true,
+   "buttons_visible": true,
+   "size": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "base/next2": {
+   "n": 15,
+   "white_runs": 4,
+   "white_ms": [
+    138.7,
+    184.5,
+    208.0,
+    134.4
+   ],
+   "max_white": 0.596,
+   "appear_ms": {
+    "median": 237.7,
+    "min": 233.3,
+    "max": 297.0
+   },
+   "unpainted_visible_ms": {
+    "median": 163.4,
+    "min": 148.70000000000002,
+    "max": 228.7
+   },
+   "first_normal_ms": {
+    "median": 576.6,
+    "min": 458.3,
+    "max": 660.1
+   },
+   "input_ready_ms": {
+    "median": 301.3,
+    "min": 281.7,
+    "max": 371.1
+   },
+   "dialog_count": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "placement_offset_zero": true,
+   "buttons_visible": true,
+   "size": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  },
+  "final/next2": {
+   "n": 15,
+   "white_runs": 0,
+   "white_ms": [],
+   "max_white": 0.058,
+   "appear_ms": {
+    "median": 331.1,
+    "min": 313.1,
+    "max": 364.2
+   },
+   "unpainted_visible_ms": {
+    "median": 57.0,
+    "min": 45.19999999999999,
+    "max": 67.60000000000002
+   },
+   "first_normal_ms": {
+    "median": 488.9,
+    "min": 471.2,
+    "max": 533.2
+   },
+   "input_ready_ms": {
+    "median": 348.7,
+    "min": 329.8,
+    "max": 387.3
+   },
+   "dialog_count": [
+    1
+   ],
+   "alive": [
+    1
+   ],
+   "placement_inside": true,
+   "placement_offset_zero": true,
+   "buttons_visible": true,
+   "size": [
+    [
+     820,
+     470
+    ]
+   ],
+   "errors": 0
+  }
+ },
+ "final_raw": {
+  "base/ch2": [
+   {
+    "trigger_to_build_ms": 349.9,
+    "trigger_to_shown_ms": 629.0,
+    "trigger_to_built_ms": 629.1,
+    "trigger_to_callback_end_ms": 694.8,
+    "trigger_to_visible_ms": 630.7,
+    "trigger_to_first_expose_ms": 764.0,
+    "trigger_to_first_normal_ms": 944.4,
+    "trigger_to_input_ready_ms": 697.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 929.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 401.2,
+    "trigger_to_shown_ms": 704.9,
+    "trigger_to_built_ms": 704.9,
+    "trigger_to_callback_end_ms": 774.4,
+    "trigger_to_visible_ms": 706.6,
+    "trigger_to_first_expose_ms": 849.5,
+    "trigger_to_first_normal_ms": 916.0,
+    "trigger_to_input_ready_ms": 777.1,
+    "white_samples": 2,
+    "samples": 95,
+    "white_first_ms": 817.1,
+    "white_last_ms": 832.5,
+    "white_duration_ms": 125.9,
+    "max_white": 0.321,
+    "not_final_samples": 11,
+    "not_final_last_ms": 898.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 389.7,
+    "trigger_to_shown_ms": 668.1,
+    "trigger_to_built_ms": 668.1,
+    "trigger_to_callback_end_ms": 724.4,
+    "trigger_to_visible_ms": 676.6,
+    "trigger_to_first_expose_ms": 791.2,
+    "trigger_to_first_normal_ms": 884.8,
+    "trigger_to_input_ready_ms": 726.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 12,
+    "not_final_last_ms": 868.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 428.0,
+    "trigger_to_shown_ms": 748.8,
+    "trigger_to_built_ms": 748.8,
+    "trigger_to_callback_end_ms": 815.2,
+    "trigger_to_visible_ms": 755.6,
+    "trigger_to_first_expose_ms": 918.6,
+    "trigger_to_first_normal_ms": 1092.4,
+    "trigger_to_input_ready_ms": 818.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 20,
+    "not_final_last_ms": 1075.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 422.8,
+    "trigger_to_shown_ms": 711.8,
+    "trigger_to_built_ms": 711.8,
+    "trigger_to_callback_end_ms": 774.4,
+    "trigger_to_visible_ms": 720.7,
+    "trigger_to_first_expose_ms": 847.0,
+    "trigger_to_first_normal_ms": 1021.6,
+    "trigger_to_input_ready_ms": 776.6,
+    "white_samples": 0,
+    "samples": 97,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 1006.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 439.7,
+    "trigger_to_shown_ms": 737.8,
+    "trigger_to_built_ms": 737.8,
+    "trigger_to_callback_end_ms": 800.9,
+    "trigger_to_visible_ms": 741.5,
+    "trigger_to_first_expose_ms": 872.5,
+    "trigger_to_first_normal_ms": 954.5,
+    "trigger_to_input_ready_ms": 803.6,
+    "white_samples": 1,
+    "samples": 96,
+    "white_first_ms": 854.0,
+    "white_last_ms": 854.0,
+    "white_duration_ms": 112.6,
+    "max_white": 0.272,
+    "not_final_samples": 12,
+    "not_final_last_ms": 938.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 398.0,
+    "trigger_to_shown_ms": 742.5,
+    "trigger_to_built_ms": 742.5,
+    "trigger_to_callback_end_ms": 803.2,
+    "trigger_to_visible_ms": 738.4,
+    "trigger_to_first_expose_ms": 899.5,
+    "trigger_to_first_normal_ms": 1050.0,
+    "trigger_to_input_ready_ms": 805.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1034.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 438.4,
+    "trigger_to_shown_ms": 750.7,
+    "trigger_to_built_ms": 750.8,
+    "trigger_to_callback_end_ms": 811.7,
+    "trigger_to_visible_ms": 750.9,
+    "trigger_to_first_expose_ms": 886.8,
+    "trigger_to_first_normal_ms": 1069.0,
+    "trigger_to_input_ready_ms": 814.5,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1053.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 378.0,
+    "trigger_to_shown_ms": 651.7,
+    "trigger_to_built_ms": 651.7,
+    "trigger_to_callback_end_ms": 708.8,
+    "trigger_to_visible_ms": 658.7,
+    "trigger_to_first_expose_ms": 771.7,
+    "trigger_to_first_normal_ms": 967.6,
+    "trigger_to_input_ready_ms": 711.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 952.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 448.0,
+    "trigger_to_shown_ms": 770.3,
+    "trigger_to_built_ms": 770.3,
+    "trigger_to_callback_end_ms": 836.7,
+    "trigger_to_visible_ms": 766.9,
+    "trigger_to_first_expose_ms": 938.1,
+    "trigger_to_first_normal_ms": 1114.0,
+    "trigger_to_input_ready_ms": 839.3,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 19,
+    "not_final_last_ms": 1097.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 416.5,
+    "trigger_to_shown_ms": 746.5,
+    "trigger_to_built_ms": 746.5,
+    "trigger_to_callback_end_ms": 810.2,
+    "trigger_to_visible_ms": 740.8,
+    "trigger_to_first_expose_ms": 911.0,
+    "trigger_to_first_normal_ms": 1067.3,
+    "trigger_to_input_ready_ms": 812.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 19,
+    "not_final_last_ms": 1052.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 415.3,
+    "trigger_to_shown_ms": 714.4,
+    "trigger_to_built_ms": 714.4,
+    "trigger_to_callback_end_ms": 773.0,
+    "trigger_to_visible_ms": 723.0,
+    "trigger_to_first_expose_ms": 843.6,
+    "trigger_to_first_normal_ms": 1031.6,
+    "trigger_to_input_ready_ms": 775.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 18,
+    "not_final_last_ms": 1016.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 424.9,
+    "trigger_to_shown_ms": 740.1,
+    "trigger_to_built_ms": 740.1,
+    "trigger_to_callback_end_ms": 796.3,
+    "trigger_to_visible_ms": 739.6,
+    "trigger_to_first_expose_ms": 863.6,
+    "trigger_to_first_normal_ms": 1058.2,
+    "trigger_to_input_ready_ms": 798.6,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1042.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 439.5,
+    "trigger_to_shown_ms": 755.3,
+    "trigger_to_built_ms": 755.3,
+    "trigger_to_callback_end_ms": 821.0,
+    "trigger_to_visible_ms": 757.1,
+    "trigger_to_first_expose_ms": 920.2,
+    "trigger_to_first_normal_ms": 1071.4,
+    "trigger_to_input_ready_ms": 823.3,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1055.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 386.8,
+    "trigger_to_shown_ms": 659.3,
+    "trigger_to_built_ms": 659.3,
+    "trigger_to_callback_end_ms": 716.2,
+    "trigger_to_visible_ms": 661.3,
+    "trigger_to_first_expose_ms": 769.8,
+    "trigger_to_first_normal_ms": 982.1,
+    "trigger_to_input_ready_ms": 717.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 19,
+    "not_final_last_ms": 966.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "base/ch3b": [
+   {
+    "trigger_to_build_ms": 445.0,
+    "trigger_to_shown_ms": 769.7,
+    "trigger_to_built_ms": 769.7,
+    "trigger_to_callback_end_ms": 842.8,
+    "trigger_to_visible_ms": 772.9,
+    "trigger_to_first_expose_ms": 956.2,
+    "trigger_to_first_normal_ms": 1098.4,
+    "trigger_to_input_ready_ms": 846.7,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 19,
+    "not_final_last_ms": 1082.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 369.1,
+    "trigger_to_shown_ms": 633.3,
+    "trigger_to_built_ms": 633.3,
+    "trigger_to_callback_end_ms": 688.5,
+    "trigger_to_visible_ms": 630.1,
+    "trigger_to_first_expose_ms": 758.3,
+    "trigger_to_first_normal_ms": 928.8,
+    "trigger_to_input_ready_ms": 690.7,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 911.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 366.3,
+    "trigger_to_shown_ms": 641.8,
+    "trigger_to_built_ms": 641.8,
+    "trigger_to_callback_end_ms": 705.0,
+    "trigger_to_visible_ms": 649.6,
+    "trigger_to_first_expose_ms": 777.1,
+    "trigger_to_first_normal_ms": 922.1,
+    "trigger_to_input_ready_ms": 707.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 16,
+    "not_final_last_ms": 906.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 365.6,
+    "trigger_to_shown_ms": 638.5,
+    "trigger_to_built_ms": 638.5,
+    "trigger_to_callback_end_ms": 701.1,
+    "trigger_to_visible_ms": 642.2,
+    "trigger_to_first_expose_ms": 773.5,
+    "trigger_to_first_normal_ms": 939.8,
+    "trigger_to_input_ready_ms": 703.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 922.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 779.3,
+    "trigger_to_shown_ms": 1247.9,
+    "trigger_to_built_ms": 1247.9,
+    "trigger_to_callback_end_ms": 1329.8,
+    "trigger_to_visible_ms": 1249.9,
+    "trigger_to_first_expose_ms": 1474.9,
+    "trigger_to_first_normal_ms": 1567.3,
+    "trigger_to_input_ready_ms": 1334.0,
+    "white_samples": 0,
+    "samples": 110,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1549.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 381.2,
+    "trigger_to_shown_ms": 682.6,
+    "trigger_to_built_ms": 682.7,
+    "trigger_to_callback_end_ms": 754.5,
+    "trigger_to_visible_ms": 676.0,
+    "trigger_to_first_expose_ms": 863.0,
+    "trigger_to_first_normal_ms": 1014.2,
+    "trigger_to_input_ready_ms": 757.8,
+    "white_samples": 0,
+    "samples": 93,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 997.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 426.3,
+    "trigger_to_shown_ms": 750.7,
+    "trigger_to_built_ms": 750.7,
+    "trigger_to_callback_end_ms": 819.0,
+    "trigger_to_visible_ms": 753.2,
+    "trigger_to_first_expose_ms": 925.5,
+    "trigger_to_first_normal_ms": 1050.8,
+    "trigger_to_input_ready_ms": 821.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1034.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 365.9,
+    "trigger_to_shown_ms": 643.2,
+    "trigger_to_built_ms": 643.2,
+    "trigger_to_callback_end_ms": 705.1,
+    "trigger_to_visible_ms": 639.1,
+    "trigger_to_first_expose_ms": 776.6,
+    "trigger_to_first_normal_ms": 941.6,
+    "trigger_to_input_ready_ms": 707.6,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 923.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 389.0,
+    "trigger_to_shown_ms": 675.0,
+    "trigger_to_built_ms": 675.0,
+    "trigger_to_callback_end_ms": 733.7,
+    "trigger_to_visible_ms": 678.6,
+    "trigger_to_first_expose_ms": 812.6,
+    "trigger_to_first_normal_ms": 968.9,
+    "trigger_to_input_ready_ms": 736.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 949.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 390.6,
+    "trigger_to_shown_ms": 683.9,
+    "trigger_to_built_ms": 683.9,
+    "trigger_to_callback_end_ms": 744.6,
+    "trigger_to_visible_ms": 675.9,
+    "trigger_to_first_expose_ms": 819.0,
+    "trigger_to_first_normal_ms": 1006.3,
+    "trigger_to_input_ready_ms": 747.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 19,
+    "not_final_last_ms": 991.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 438.1,
+    "trigger_to_shown_ms": 772.7,
+    "trigger_to_built_ms": 772.7,
+    "trigger_to_callback_end_ms": 839.0,
+    "trigger_to_visible_ms": 770.8,
+    "trigger_to_first_expose_ms": 954.3,
+    "trigger_to_first_normal_ms": 1075.3,
+    "trigger_to_input_ready_ms": 841.5,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 1057.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 335.3,
+    "trigger_to_shown_ms": 593.4,
+    "trigger_to_built_ms": 593.4,
+    "trigger_to_callback_end_ms": 652.4,
+    "trigger_to_visible_ms": 595.3,
+    "trigger_to_first_expose_ms": 721.1,
+    "trigger_to_first_normal_ms": 889.9,
+    "trigger_to_input_ready_ms": 654.3,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 17,
+    "not_final_last_ms": 872.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 452.4,
+    "trigger_to_shown_ms": 784.9,
+    "trigger_to_built_ms": 784.9,
+    "trigger_to_callback_end_ms": 854.2,
+    "trigger_to_visible_ms": 785.9,
+    "trigger_to_first_expose_ms": 969.2,
+    "trigger_to_first_normal_ms": 1089.5,
+    "trigger_to_input_ready_ms": 856.7,
+    "white_samples": 0,
+    "samples": 93,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 16,
+    "not_final_last_ms": 1070.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 350.2,
+    "trigger_to_shown_ms": 618.0,
+    "trigger_to_built_ms": 618.0,
+    "trigger_to_callback_end_ms": 681.5,
+    "trigger_to_visible_ms": 612.5,
+    "trigger_to_first_expose_ms": 756.2,
+    "trigger_to_first_normal_ms": 858.4,
+    "trigger_to_input_ready_ms": 683.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 842.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 438.0,
+    "trigger_to_shown_ms": 741.4,
+    "trigger_to_built_ms": 741.4,
+    "trigger_to_callback_end_ms": 805.1,
+    "trigger_to_visible_ms": 742.7,
+    "trigger_to_first_expose_ms": 879.9,
+    "trigger_to_first_normal_ms": 1042.7,
+    "trigger_to_input_ready_ms": 807.4,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 16,
+    "not_final_last_ms": 1025.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "base/next2": [
+   {
+    "trigger_to_build_ms": 75.1,
+    "trigger_to_shown_ms": 243.2,
+    "trigger_to_built_ms": 243.2,
+    "trigger_to_callback_end_ms": 301.1,
+    "trigger_to_visible_ms": 252.4,
+    "trigger_to_first_expose_ms": 413.8,
+    "trigger_to_first_normal_ms": 458.3,
+    "trigger_to_input_ready_ms": 301.3,
+    "white_samples": 2,
+    "samples": 105,
+    "white_first_ms": 376.4,
+    "white_last_ms": 391.2,
+    "white_duration_ms": 138.7,
+    "max_white": 0.405,
+    "not_final_samples": 11,
+    "not_final_last_ms": 441.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 52.5,
+    "trigger_to_shown_ms": 228.9,
+    "trigger_to_built_ms": 228.9,
+    "trigger_to_callback_end_ms": 292.8,
+    "trigger_to_visible_ms": 236.1,
+    "trigger_to_first_expose_ms": 386.9,
+    "trigger_to_first_normal_ms": 582.0,
+    "trigger_to_input_ready_ms": 292.9,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 563.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 91.7,
+    "trigger_to_shown_ms": 297.0,
+    "trigger_to_built_ms": 297.0,
+    "trigger_to_callback_end_ms": 370.9,
+    "trigger_to_visible_ms": 297.0,
+    "trigger_to_first_expose_ms": 507.8,
+    "trigger_to_first_normal_ms": 580.1,
+    "trigger_to_input_ready_ms": 371.1,
+    "white_samples": 1,
+    "samples": 115,
+    "white_first_ms": 481.5,
+    "white_last_ms": 481.5,
+    "white_duration_ms": 184.5,
+    "max_white": 0.331,
+    "not_final_samples": 15,
+    "not_final_last_ms": 562.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 57.1,
+    "trigger_to_shown_ms": 230.4,
+    "trigger_to_built_ms": 230.4,
+    "trigger_to_callback_end_ms": 283.8,
+    "trigger_to_visible_ms": 234.9,
+    "trigger_to_first_expose_ms": 383.6,
+    "trigger_to_first_normal_ms": 579.3,
+    "trigger_to_input_ready_ms": 284.0,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 562.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 61.9,
+    "trigger_to_shown_ms": 272.5,
+    "trigger_to_built_ms": 272.5,
+    "trigger_to_callback_end_ms": 356.0,
+    "trigger_to_visible_ms": 269.6,
+    "trigger_to_first_expose_ms": 498.3,
+    "trigger_to_first_normal_ms": 576.6,
+    "trigger_to_input_ready_ms": 356.2,
+    "white_samples": 1,
+    "samples": 129,
+    "white_first_ms": 477.5,
+    "white_last_ms": 477.5,
+    "white_duration_ms": 208.0,
+    "max_white": 0.297,
+    "not_final_samples": 16,
+    "not_final_last_ms": 560.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 85.6,
+    "trigger_to_shown_ms": 261.2,
+    "trigger_to_built_ms": 261.2,
+    "trigger_to_callback_end_ms": 316.2,
+    "trigger_to_visible_ms": 267.2,
+    "trigger_to_first_expose_ms": 423.5,
+    "trigger_to_first_normal_ms": 480.8,
+    "trigger_to_input_ready_ms": 316.3,
+    "white_samples": 2,
+    "samples": 96,
+    "white_first_ms": 381.2,
+    "white_last_ms": 401.5,
+    "white_duration_ms": 134.4,
+    "max_white": 0.596,
+    "not_final_samples": 12,
+    "not_final_last_ms": 464.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 51.8,
+    "trigger_to_shown_ms": 231.2,
+    "trigger_to_built_ms": 231.2,
+    "trigger_to_callback_end_ms": 298.3,
+    "trigger_to_visible_ms": 237.7,
+    "trigger_to_first_expose_ms": 417.2,
+    "trigger_to_first_normal_ms": 521.1,
+    "trigger_to_input_ready_ms": 298.9,
+    "white_samples": 0,
+    "samples": 127,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 16,
+    "not_final_last_ms": 503.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 58.6,
+    "trigger_to_shown_ms": 232.7,
+    "trigger_to_built_ms": 232.7,
+    "trigger_to_callback_end_ms": 292.3,
+    "trigger_to_visible_ms": 234.9,
+    "trigger_to_first_expose_ms": 393.4,
+    "trigger_to_first_normal_ms": 585.4,
+    "trigger_to_input_ready_ms": 292.5,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 569.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 75.5,
+    "trigger_to_shown_ms": 247.5,
+    "trigger_to_built_ms": 247.5,
+    "trigger_to_callback_end_ms": 315.8,
+    "trigger_to_visible_ms": 250.1,
+    "trigger_to_first_expose_ms": 432.3,
+    "trigger_to_first_normal_ms": 539.3,
+    "trigger_to_input_ready_ms": 316.3,
+    "white_samples": 0,
+    "samples": 97,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 16,
+    "not_final_last_ms": 521.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 87.7,
+    "trigger_to_shown_ms": 262.9,
+    "trigger_to_built_ms": 262.9,
+    "trigger_to_callback_end_ms": 326.4,
+    "trigger_to_visible_ms": 264.4,
+    "trigger_to_first_expose_ms": 423.9,
+    "trigger_to_first_normal_ms": 616.0,
+    "trigger_to_input_ready_ms": 326.6,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 598.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 62.3,
+    "trigger_to_shown_ms": 233.4,
+    "trigger_to_built_ms": 233.4,
+    "trigger_to_callback_end_ms": 292.8,
+    "trigger_to_visible_ms": 236.5,
+    "trigger_to_first_expose_ms": 412.5,
+    "trigger_to_first_normal_ms": 509.4,
+    "trigger_to_input_ready_ms": 292.9,
+    "white_samples": 0,
+    "samples": 143,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 15,
+    "not_final_last_ms": 491.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 53.7,
+    "trigger_to_shown_ms": 228.5,
+    "trigger_to_built_ms": 228.5,
+    "trigger_to_callback_end_ms": 281.5,
+    "trigger_to_visible_ms": 236.0,
+    "trigger_to_first_expose_ms": 387.6,
+    "trigger_to_first_normal_ms": 575.5,
+    "trigger_to_input_ready_ms": 281.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 19,
+    "not_final_last_ms": 558.1,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 56.7,
+    "trigger_to_shown_ms": 250.5,
+    "trigger_to_built_ms": 250.6,
+    "trigger_to_callback_end_ms": 328.8,
+    "trigger_to_visible_ms": 250.4,
+    "trigger_to_first_expose_ms": 457.3,
+    "trigger_to_first_normal_ms": 660.1,
+    "trigger_to_input_ready_ms": 329.4,
+    "white_samples": 0,
+    "samples": 138,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 22,
+    "not_final_last_ms": 643.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 61.5,
+    "trigger_to_shown_ms": 237.1,
+    "trigger_to_built_ms": 237.1,
+    "trigger_to_callback_end_ms": 302.9,
+    "trigger_to_visible_ms": 236.7,
+    "trigger_to_first_expose_ms": 400.1,
+    "trigger_to_first_normal_ms": 592.6,
+    "trigger_to_input_ready_ms": 303.1,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 20,
+    "not_final_last_ms": 575.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 56.0,
+    "trigger_to_shown_ms": 228.9,
+    "trigger_to_built_ms": 228.9,
+    "trigger_to_callback_end_ms": 288.2,
+    "trigger_to_visible_ms": 233.3,
+    "trigger_to_first_expose_ms": 403.1,
+    "trigger_to_first_normal_ms": 511.7,
+    "trigger_to_input_ready_ms": 288.4,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 15,
+    "not_final_last_ms": 494.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   }
+  ],
+  "final/ch2": [
+   {
+    "trigger_to_build_ms": 397.3,
+    "trigger_to_shown_ms": 748.4,
+    "trigger_to_built_ms": 437.3,
+    "trigger_to_callback_end_ms": 484.0,
+    "trigger_to_visible_ms": 751.9,
+    "trigger_to_first_expose_ms": 816.6,
+    "trigger_to_first_normal_ms": 999.2,
+    "trigger_to_input_ready_ms": 781.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 982.8,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 401.0,
+    "trigger_to_shown_ms": 772.0,
+    "trigger_to_built_ms": 444.1,
+    "trigger_to_callback_end_ms": 507.8,
+    "trigger_to_visible_ms": 769.2,
+    "trigger_to_first_expose_ms": 840.3,
+    "trigger_to_first_normal_ms": 1013.2,
+    "trigger_to_input_ready_ms": 788.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 13,
+    "not_final_last_ms": 996.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 345.2,
+    "trigger_to_shown_ms": 735.1,
+    "trigger_to_built_ms": 396.2,
+    "trigger_to_callback_end_ms": 460.8,
+    "trigger_to_visible_ms": 740.4,
+    "trigger_to_first_expose_ms": 821.9,
+    "trigger_to_first_normal_ms": 994.2,
+    "trigger_to_input_ready_ms": 765.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 978.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 389.4,
+    "trigger_to_shown_ms": 760.1,
+    "trigger_to_built_ms": 430.7,
+    "trigger_to_callback_end_ms": 487.3,
+    "trigger_to_visible_ms": 758.5,
+    "trigger_to_first_expose_ms": 830.9,
+    "trigger_to_first_normal_ms": 975.7,
+    "trigger_to_input_ready_ms": 778.9,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 11,
+    "not_final_last_ms": 960.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 733.8,
+    "trigger_to_shown_ms": 1366.1,
+    "trigger_to_built_ms": 818.8,
+    "trigger_to_callback_end_ms": 920.9,
+    "trigger_to_visible_ms": 1363.6,
+    "trigger_to_first_expose_ms": 1507.5,
+    "trigger_to_first_normal_ms": 1616.5,
+    "trigger_to_input_ready_ms": 1428.7,
+    "white_samples": 0,
+    "samples": 65,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 7,
+    "not_final_last_ms": 1582.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 361.7,
+    "trigger_to_shown_ms": 709.6,
+    "trigger_to_built_ms": 401.0,
+    "trigger_to_callback_end_ms": 454.0,
+    "trigger_to_visible_ms": 711.1,
+    "trigger_to_first_expose_ms": 774.6,
+    "trigger_to_first_normal_ms": 926.4,
+    "trigger_to_input_ready_ms": 726.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 12,
+    "not_final_last_ms": 910.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 351.5,
+    "trigger_to_shown_ms": 699.1,
+    "trigger_to_built_ms": 390.9,
+    "trigger_to_callback_end_ms": 443.6,
+    "trigger_to_visible_ms": 696.0,
+    "trigger_to_first_expose_ms": 767.3,
+    "trigger_to_first_normal_ms": 948.1,
+    "trigger_to_input_ready_ms": 715.6,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 932.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 412.1,
+    "trigger_to_shown_ms": 791.3,
+    "trigger_to_built_ms": 454.2,
+    "trigger_to_callback_end_ms": 511.1,
+    "trigger_to_visible_ms": 785.3,
+    "trigger_to_first_expose_ms": 860.1,
+    "trigger_to_first_normal_ms": 1042.5,
+    "trigger_to_input_ready_ms": 809.3,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1026.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 376.6,
+    "trigger_to_shown_ms": 753.9,
+    "trigger_to_built_ms": 422.9,
+    "trigger_to_callback_end_ms": 469.7,
+    "trigger_to_visible_ms": 755.4,
+    "trigger_to_first_expose_ms": 823.6,
+    "trigger_to_first_normal_ms": 970.3,
+    "trigger_to_input_ready_ms": 771.3,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 10,
+    "not_final_last_ms": 955.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 361.4,
+    "trigger_to_shown_ms": 707.3,
+    "trigger_to_built_ms": 399.3,
+    "trigger_to_callback_end_ms": 453.4,
+    "trigger_to_visible_ms": 708.4,
+    "trigger_to_first_expose_ms": 771.1,
+    "trigger_to_first_normal_ms": 963.2,
+    "trigger_to_input_ready_ms": 724.4,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 947.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 398.8,
+    "trigger_to_shown_ms": 778.5,
+    "trigger_to_built_ms": 439.9,
+    "trigger_to_callback_end_ms": 497.6,
+    "trigger_to_visible_ms": 785.4,
+    "trigger_to_first_expose_ms": 846.2,
+    "trigger_to_first_normal_ms": 1033.7,
+    "trigger_to_input_ready_ms": 812.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1018.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 398.6,
+    "trigger_to_shown_ms": 779.6,
+    "trigger_to_built_ms": 443.3,
+    "trigger_to_callback_end_ms": 493.4,
+    "trigger_to_visible_ms": 783.3,
+    "trigger_to_first_expose_ms": 875.2,
+    "trigger_to_first_normal_ms": 1031.9,
+    "trigger_to_input_ready_ms": 799.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1018.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 365.9,
+    "trigger_to_shown_ms": 718.9,
+    "trigger_to_built_ms": 406.4,
+    "trigger_to_callback_end_ms": 451.5,
+    "trigger_to_visible_ms": 719.9,
+    "trigger_to_first_expose_ms": 789.2,
+    "trigger_to_first_normal_ms": 970.6,
+    "trigger_to_input_ready_ms": 737.4,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 13,
+    "not_final_last_ms": 954.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 458.0,
+    "trigger_to_shown_ms": 843.3,
+    "trigger_to_built_ms": 501.0,
+    "trigger_to_callback_end_ms": 560.9,
+    "trigger_to_visible_ms": 846.0,
+    "trigger_to_first_expose_ms": 940.1,
+    "trigger_to_first_normal_ms": 1094.0,
+    "trigger_to_input_ready_ms": 861.4,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1078.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 424.8,
+    "trigger_to_shown_ms": 826.0,
+    "trigger_to_built_ms": 473.4,
+    "trigger_to_callback_end_ms": 532.6,
+    "trigger_to_visible_ms": 818.1,
+    "trigger_to_first_expose_ms": 920.0,
+    "trigger_to_first_normal_ms": 1102.5,
+    "trigger_to_input_ready_ms": 842.8,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.057,
+    "not_final_samples": 15,
+    "not_final_last_ms": 1087.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "final/ch3b": [
+   {
+    "trigger_to_build_ms": 453.4,
+    "trigger_to_shown_ms": 874.8,
+    "trigger_to_built_ms": 502.0,
+    "trigger_to_callback_end_ms": 559.3,
+    "trigger_to_visible_ms": 877.3,
+    "trigger_to_first_expose_ms": 991.0,
+    "trigger_to_first_normal_ms": 1134.1,
+    "trigger_to_input_ready_ms": 898.5,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1118.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 352.7,
+    "trigger_to_shown_ms": 730.5,
+    "trigger_to_built_ms": 390.8,
+    "trigger_to_callback_end_ms": 443.4,
+    "trigger_to_visible_ms": 734.4,
+    "trigger_to_first_expose_ms": 829.6,
+    "trigger_to_first_normal_ms": 967.5,
+    "trigger_to_input_ready_ms": 749.3,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 950.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 453.6,
+    "trigger_to_shown_ms": 862.3,
+    "trigger_to_built_ms": 501.3,
+    "trigger_to_callback_end_ms": 561.8,
+    "trigger_to_visible_ms": 866.0,
+    "trigger_to_first_expose_ms": 971.2,
+    "trigger_to_first_normal_ms": 1127.3,
+    "trigger_to_input_ready_ms": 881.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1108.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 466.4,
+    "trigger_to_shown_ms": 878.7,
+    "trigger_to_built_ms": 517.8,
+    "trigger_to_callback_end_ms": 574.1,
+    "trigger_to_visible_ms": 877.4,
+    "trigger_to_first_expose_ms": 981.3,
+    "trigger_to_first_normal_ms": 1119.2,
+    "trigger_to_input_ready_ms": 897.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 1102.7,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 681.9,
+    "trigger_to_shown_ms": 1247.5,
+    "trigger_to_built_ms": 743.6,
+    "trigger_to_callback_end_ms": 847.2,
+    "trigger_to_visible_ms": 1240.4,
+    "trigger_to_first_expose_ms": 1367.7,
+    "trigger_to_first_normal_ms": 1541.2,
+    "trigger_to_input_ready_ms": 1299.1,
+    "white_samples": 0,
+    "samples": 126,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1525.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 352.2,
+    "trigger_to_shown_ms": 693.0,
+    "trigger_to_built_ms": 389.7,
+    "trigger_to_callback_end_ms": 444.6,
+    "trigger_to_visible_ms": 690.9,
+    "trigger_to_first_expose_ms": 762.7,
+    "trigger_to_first_normal_ms": 924.3,
+    "trigger_to_input_ready_ms": 709.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 906.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 408.8,
+    "trigger_to_shown_ms": 798.8,
+    "trigger_to_built_ms": 451.3,
+    "trigger_to_callback_end_ms": 510.0,
+    "trigger_to_visible_ms": 802.4,
+    "trigger_to_first_expose_ms": 904.4,
+    "trigger_to_first_normal_ms": 1059.9,
+    "trigger_to_input_ready_ms": 816.9,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 15,
+    "not_final_last_ms": 1045.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 361.5,
+    "trigger_to_shown_ms": 750.2,
+    "trigger_to_built_ms": 406.6,
+    "trigger_to_callback_end_ms": 477.8,
+    "trigger_to_visible_ms": 751.8,
+    "trigger_to_first_expose_ms": 847.6,
+    "trigger_to_first_normal_ms": 977.4,
+    "trigger_to_input_ready_ms": 767.8,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 960.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 542.6,
+    "trigger_to_shown_ms": 1008.8,
+    "trigger_to_built_ms": 598.3,
+    "trigger_to_callback_end_ms": 664.8,
+    "trigger_to_visible_ms": 1006.8,
+    "trigger_to_first_expose_ms": 1120.2,
+    "trigger_to_first_normal_ms": 1284.8,
+    "trigger_to_input_ready_ms": 1054.8,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1267.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 342.4,
+    "trigger_to_shown_ms": 673.4,
+    "trigger_to_built_ms": 378.7,
+    "trigger_to_callback_end_ms": 430.8,
+    "trigger_to_visible_ms": 676.8,
+    "trigger_to_first_expose_ms": 740.9,
+    "trigger_to_first_normal_ms": 903.3,
+    "trigger_to_input_ready_ms": 704.0,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 885.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 439.6,
+    "trigger_to_shown_ms": 835.7,
+    "trigger_to_built_ms": 486.3,
+    "trigger_to_callback_end_ms": 543.7,
+    "trigger_to_visible_ms": 832.0,
+    "trigger_to_first_expose_ms": 943.3,
+    "trigger_to_first_normal_ms": 1073.9,
+    "trigger_to_input_ready_ms": 854.7,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 1054.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 339.7,
+    "trigger_to_shown_ms": 669.1,
+    "trigger_to_built_ms": 376.1,
+    "trigger_to_callback_end_ms": 419.1,
+    "trigger_to_visible_ms": 675.1,
+    "trigger_to_first_expose_ms": 737.2,
+    "trigger_to_first_normal_ms": 902.9,
+    "trigger_to_input_ready_ms": 698.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 12,
+    "not_final_last_ms": 884.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 419.3,
+    "trigger_to_shown_ms": 810.0,
+    "trigger_to_built_ms": 463.1,
+    "trigger_to_callback_end_ms": 514.0,
+    "trigger_to_visible_ms": 812.7,
+    "trigger_to_first_expose_ms": 917.3,
+    "trigger_to_first_normal_ms": 1046.1,
+    "trigger_to_input_ready_ms": 829.1,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 1029.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 409.1,
+    "trigger_to_shown_ms": 784.6,
+    "trigger_to_built_ms": 452.2,
+    "trigger_to_callback_end_ms": 517.0,
+    "trigger_to_visible_ms": 780.9,
+    "trigger_to_first_expose_ms": 855.0,
+    "trigger_to_first_normal_ms": 1025.7,
+    "trigger_to_input_ready_ms": 801.0,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 13,
+    "not_final_last_ms": 1007.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 448.7,
+    "trigger_to_shown_ms": 875.2,
+    "trigger_to_built_ms": 496.8,
+    "trigger_to_callback_end_ms": 558.8,
+    "trigger_to_visible_ms": 867.6,
+    "trigger_to_first_expose_ms": 981.1,
+    "trigger_to_first_normal_ms": 1128.5,
+    "trigger_to_input_ready_ms": 896.0,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.056,
+    "not_final_samples": 14,
+    "not_final_last_ms": 1111.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 3,
+    "result_window_open": null,
+    "error": null
+   }
+  ],
+  "final/next2": [
+   {
+    "trigger_to_build_ms": 65.7,
+    "trigger_to_shown_ms": 329.4,
+    "trigger_to_built_ms": 110.8,
+    "trigger_to_callback_end_ms": 168.1,
+    "trigger_to_visible_ms": 328.0,
+    "trigger_to_first_expose_ms": 395.3,
+    "trigger_to_first_normal_ms": 488.9,
+    "trigger_to_input_ready_ms": 355.7,
+    "white_samples": 0,
+    "samples": 139,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 472.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 66.8,
+    "trigger_to_shown_ms": 325.4,
+    "trigger_to_built_ms": 111.3,
+    "trigger_to_callback_end_ms": 171.8,
+    "trigger_to_visible_ms": 329.9,
+    "trigger_to_first_expose_ms": 377.6,
+    "trigger_to_first_normal_ms": 481.3,
+    "trigger_to_input_ready_ms": 347.7,
+    "white_samples": 0,
+    "samples": 100,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 464.2,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 61.1,
+    "trigger_to_shown_ms": 359.6,
+    "trigger_to_built_ms": 110.7,
+    "trigger_to_callback_end_ms": 174.3,
+    "trigger_to_visible_ms": 364.2,
+    "trigger_to_first_expose_ms": 427.9,
+    "trigger_to_first_normal_ms": 516.0,
+    "trigger_to_input_ready_ms": 387.3,
+    "white_samples": 0,
+    "samples": 113,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 7,
+    "not_final_last_ms": 497.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 51.0,
+    "trigger_to_shown_ms": 316.2,
+    "trigger_to_built_ms": 95.8,
+    "trigger_to_callback_end_ms": 157.9,
+    "trigger_to_visible_ms": 313.1,
+    "trigger_to_first_expose_ms": 368.9,
+    "trigger_to_first_normal_ms": 476.5,
+    "trigger_to_input_ready_ms": 338.8,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 460.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 91.4,
+    "trigger_to_shown_ms": 369.2,
+    "trigger_to_built_ms": 138.1,
+    "trigger_to_callback_end_ms": 198.4,
+    "trigger_to_visible_ms": 363.2,
+    "trigger_to_first_expose_ms": 430.8,
+    "trigger_to_first_normal_ms": 533.2,
+    "trigger_to_input_ready_ms": 381.4,
+    "white_samples": 0,
+    "samples": 133,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 515.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 60.4,
+    "trigger_to_shown_ms": 318.3,
+    "trigger_to_built_ms": 105.9,
+    "trigger_to_callback_end_ms": 167.3,
+    "trigger_to_visible_ms": 315.5,
+    "trigger_to_first_expose_ms": 370.3,
+    "trigger_to_first_normal_ms": 471.2,
+    "trigger_to_input_ready_ms": 339.8,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 454.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 69.5,
+    "trigger_to_shown_ms": 345.3,
+    "trigger_to_built_ms": 116.4,
+    "trigger_to_callback_end_ms": 177.6,
+    "trigger_to_visible_ms": 346.6,
+    "trigger_to_first_expose_ms": 407.1,
+    "trigger_to_first_normal_ms": 498.7,
+    "trigger_to_input_ready_ms": 370.6,
+    "white_samples": 0,
+    "samples": 121,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 480.3,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 64.3,
+    "trigger_to_shown_ms": 326.8,
+    "trigger_to_built_ms": 108.7,
+    "trigger_to_callback_end_ms": 170.6,
+    "trigger_to_visible_ms": 331.8,
+    "trigger_to_first_expose_ms": 378.8,
+    "trigger_to_first_normal_ms": 480.7,
+    "trigger_to_input_ready_ms": 348.7,
+    "white_samples": 0,
+    "samples": 94,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 463.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 59.1,
+    "trigger_to_shown_ms": 320.4,
+    "trigger_to_built_ms": 103.8,
+    "trigger_to_callback_end_ms": 162.7,
+    "trigger_to_visible_ms": 314.1,
+    "trigger_to_first_expose_ms": 378.5,
+    "trigger_to_first_normal_ms": 472.6,
+    "trigger_to_input_ready_ms": 331.3,
+    "white_samples": 0,
+    "samples": 125,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 7,
+    "not_final_last_ms": 455.0,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 62.5,
+    "trigger_to_shown_ms": 324.9,
+    "trigger_to_built_ms": 108.1,
+    "trigger_to_callback_end_ms": 171.6,
+    "trigger_to_visible_ms": 328.1,
+    "trigger_to_first_expose_ms": 379.1,
+    "trigger_to_first_normal_ms": 478.5,
+    "trigger_to_input_ready_ms": 348.2,
+    "white_samples": 0,
+    "samples": 96,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 461.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 77.9,
+    "trigger_to_shown_ms": 344.2,
+    "trigger_to_built_ms": 122.3,
+    "trigger_to_callback_end_ms": 183.6,
+    "trigger_to_visible_ms": 346.3,
+    "trigger_to_first_expose_ms": 401.6,
+    "trigger_to_first_normal_ms": 497.5,
+    "trigger_to_input_ready_ms": 368.1,
+    "white_samples": 0,
+    "samples": 140,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 479.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 64.3,
+    "trigger_to_shown_ms": 325.9,
+    "trigger_to_built_ms": 109.2,
+    "trigger_to_callback_end_ms": 170.5,
+    "trigger_to_visible_ms": 331.1,
+    "trigger_to_first_expose_ms": 376.3,
+    "trigger_to_first_normal_ms": 492.6,
+    "trigger_to_input_ready_ms": 347.5,
+    "white_samples": 0,
+    "samples": 95,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 9,
+    "not_final_last_ms": 477.9,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 76.1,
+    "trigger_to_shown_ms": 348.3,
+    "trigger_to_built_ms": 121.5,
+    "trigger_to_callback_end_ms": 179.9,
+    "trigger_to_visible_ms": 344.6,
+    "trigger_to_first_expose_ms": 406.9,
+    "trigger_to_first_normal_ms": 507.6,
+    "trigger_to_input_ready_ms": 360.4,
+    "white_samples": 0,
+    "samples": 133,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 491.4,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 58.4,
+    "trigger_to_shown_ms": 318.2,
+    "trigger_to_built_ms": 103.1,
+    "trigger_to_callback_end_ms": 164.3,
+    "trigger_to_visible_ms": 314.4,
+    "trigger_to_first_expose_ms": 371.4,
+    "trigger_to_first_normal_ms": 477.5,
+    "trigger_to_input_ready_ms": 329.8,
+    "white_samples": 0,
+    "samples": 113,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 461.5,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   },
+   {
+    "trigger_to_build_ms": 70.5,
+    "trigger_to_shown_ms": 356.6,
+    "trigger_to_built_ms": 117.8,
+    "trigger_to_callback_end_ms": 180.1,
+    "trigger_to_visible_ms": 362.1,
+    "trigger_to_first_expose_ms": 421.6,
+    "trigger_to_first_normal_ms": 518.1,
+    "trigger_to_input_ready_ms": 384.4,
+    "white_samples": 0,
+    "samples": 109,
+    "white_first_ms": null,
+    "white_last_ms": null,
+    "white_duration_ms": 0.0,
+    "max_white": 0.058,
+    "not_final_samples": 8,
+    "not_final_last_ms": 500.6,
+    "dialog_count": 1,
+    "alive_dialogs": 1,
+    "story_window_is_last": true,
+    "placement": {
+     "parent_center": [
+      768.0,
+      419.5
+     ],
+     "target_client": [
+      358,
+      184
+     ],
+     "actual_client": [
+      358,
+      184
+     ],
+     "actual_center": [
+      768.0,
+      419.0
+     ],
+     "offset": [
+      0,
+      0
+     ],
+     "inside_work_area": true
+    },
+    "geometry": [
+     358,
+     184,
+     820,
+     470
+    ],
+    "buttons_viewable": true,
+    "primary_inside": true,
+    "pages": 5,
+    "result_window_open": true,
+    "error": null
+   }
+  ]
+ }
+}

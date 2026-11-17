@@ -1,0 +1,336 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_story_dialogue",
+    "tests.test_tutorial_ux",
+    "tests.test_popup_ux",
+    "tests.test_play_modes_gui",
+    "tests.test_onboarding"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "ran": 112,
+  "passed": [
+    "tests.test_story_dialogue.DialogueGuiTests.test_close_and_last_page_do_not_select_server",
+    "tests.test_story_dialogue.DialogueGuiTests.test_comparison_close_triggers_actual_preview_event_without_start",
+    "tests.test_story_dialogue.DialogueGuiTests.test_customer_read_defers_short_mentor_scene_until_customer_closes",
+    "tests.test_story_dialogue.DialogueGuiTests.test_display_failure_destroys_dialog_and_leaves_event_retryable",
+    "tests.test_story_dialogue.DialogueGuiTests.test_free_mode_has_no_story_dialog_or_portraits",
+    "tests.test_story_dialogue.DialogueGuiTests.test_inspector_confirmation_is_real_and_not_dialogue_next",
+    "tests.test_story_dialogue.DialogueGuiTests.test_pending_dialog_callback_is_cancelled_on_mode_transition",
+    "tests.test_story_dialogue.DialogueGuiTests.test_portrait_renderer_is_independent_and_replaceable",
+    "tests.test_story_dialogue.DialogueGuiTests.test_portraits_text_and_controls_fit_three_resolutions",
+    "tests.test_story_dialogue.DialogueGuiTests.test_refresh_and_repeat_server_click_do_not_reopen_seen_scene",
+    "tests.test_story_dialogue.DialogueGuiTests.test_resource_confirmation_cannot_use_hidden_inspector",
+    "tests.test_story_dialogue.DialogueGuiTests.test_review_selects_single_topic_and_does_not_change_sql_or_progress",
+    "tests.test_story_dialogue.DialogueGuiTests.test_seen_scene_can_be_manually_reopened_without_progress_or_write",
+    "tests.test_story_dialogue.DialogueGuiTests.test_selected_plan_start_progress_and_completion_use_actual_rules",
+    "tests.test_story_dialogue.DialogueGuiTests.test_two_original_portraits_and_active_speaker_change",
+    "tests.test_story_dialogue.DialogueStateTests.test_closed_request_has_failure_specific_mentor_response",
+    "tests.test_story_dialogue.DialogueStateTests.test_disk_resume_preserves_seen_events_and_real_progress",
+    "tests.test_story_dialogue.DialogueStateTests.test_display_does_not_satisfy_actual_action",
+    "tests.test_story_dialogue.DialogueStateTests.test_display_save_failure_rolls_back_sql_game_and_history",
+    "tests.test_story_dialogue.DialogueStateTests.test_duplicate_display_is_idempotent_without_database_write",
+    "tests.test_story_dialogue.DialogueStateTests.test_free_mode_rejects_story_history_without_writing",
+    "tests.test_story_dialogue.DialogueStateTests.test_future_event_cannot_be_recorded",
+    "tests.test_story_dialogue.DialogueStateTests.test_invalid_display_history_is_rejected",
+    "tests.test_story_dialogue.DialogueStateTests.test_refresh_equivalent_queries_do_not_create_display_history",
+    "tests.test_story_dialogue.DialogueStateTests.test_scene_lengths_are_bounded",
+    "tests.test_story_dialogue.DialogueStateTests.test_v091a_completed_record_is_not_restarted_or_rescored",
+    "tests.test_story_dialogue.DialogueStateTests.test_v091a_in_progress_missing_display_field_preserves_every_game_fact",
+    "tests.test_tutorial_ux.PlacementTests.test_center_on_offset_parent",
+    "tests.test_tutorial_ux.PlacementTests.test_center_on_secondary_monitor",
+    "tests.test_tutorial_ux.PlacementTests.test_negative_monitor_coordinates",
+    "tests.test_tutorial_ux.PlacementTests.test_partially_offscreen_parent_clamps_entire_frame",
+    "tests.test_tutorial_ux.PlacementTests.test_smaller_work_area_reduces_size",
+    "tests.test_tutorial_ux.ResumeHighlightTests.test_every_saved_action_resumes_only_current_target_without_changing_facts",
+    "tests.test_tutorial_ux.ResumeHighlightTests.test_initial_screen_failure_cleans_started_highlight_and_gpu_timers",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_animation_does_not_change_fault_or_gpu_colors",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_auto_recommendation_needs_explicit_click_to_count_as_review",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_busy_gpu_and_existing_led_animation_remain_unchanged",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_closed_request_has_no_remaining_target",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_compare_dialog_start_is_single_target_and_does_not_allocate_on_view",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_destroyed_target_cancels_callback",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_dialog_centered_on_actual_maximized_parent",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_disallowed_mode_points_to_allowed_mode_then_start",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_failed_transition_preserves_current_target_and_single_timer",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_guide_close_alone_cannot_complete_arrival",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_inspector_tab_is_pointed_at_when_resources_step_is_on_preview_tab",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_manual_help_and_review_suspend_then_restore_same_target",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_mode_transition_cancels_highlight_and_free_mode_has_none",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_only_server_a_outer_border_pulses_and_wrong_server_does_not_complete",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_plus_10_is_valid_time_action",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_plus_30_is_valid_time_action",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_plus_60_is_valid_time_action_even_if_job_finishes_at_once",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_preview_tab_is_highlighted_from_inspector_without_completing_preview",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_real_server_a_click_removes_rack_highlight_before_resource_guide",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_request_button_and_customer_dialogue_suspend",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_resource_confirmation_button_and_actual_fact",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_root_destruction_cancels_all_animation",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_skip_stops_highlight_without_advancing_time",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_start_button_recreated_by_refresh_rebinds_without_extra_timers",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_static_highlight_has_no_animation_timer",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_time_buttons_are_outlined_one_by_one_without_group_frame_or_pointer",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_time_highlight_restores_each_button_style",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_time_requires_work_and_operations_reopens_real_information",
+    "tests.test_popup_ux.CardTests.test_card_background_and_all_label_regions_select_exact_plan_without_resources",
+    "tests.test_popup_ux.CardTests.test_dialog_center_and_internal_cards_controls_at_resolutions_and_zoomed",
+    "tests.test_popup_ux.CardTests.test_gpu_planned_tags_and_changes_are_calculated_from_real_parts",
+    "tests.test_popup_ux.CardTests.test_hover_and_keyboard_select_cards",
+    "tests.test_popup_ux.CardTests.test_selected_card_has_distinct_background_and_border_and_previous_clears",
+    "tests.test_popup_ux.FeedbackResumeTests.test_nearby_bounds_avoid_action_and_screen_edges",
+    "tests.test_popup_ux.FeedbackResumeTests.test_request_with_read_marker_resumes_with_visible_clickable_emphasis",
+    "tests.test_popup_ux.FeedbackResumeTests.test_resume_does_not_replay_completed_action_feedback_or_reset_old_history",
+    "tests.test_popup_ux.PopupFlowTests.test_allocation_success_waits_for_comparison_close",
+    "tests.test_popup_ux.PopupFlowTests.test_conditions_visible_above_customer_dialogue_and_page_controls_remain",
+    "tests.test_popup_ux.PopupFlowTests.test_customer_window_defers_feedback_until_after_reading",
+    "tests.test_popup_ux.PopupFlowTests.test_emphasis_has_double_rack_border_caption_and_distinct_color",
+    "tests.test_popup_ux.PopupFlowTests.test_failed_actual_action_has_no_success_feedback",
+    "tests.test_popup_ux.PopupFlowTests.test_failed_feedback_history_save_preserves_actual_action_and_can_retry",
+    "tests.test_popup_ux.PopupFlowTests.test_feedback_acknowledgment_never_completes_next_action",
+    "tests.test_popup_ux.PopupFlowTests.test_feedback_has_no_expiry_timer_and_remains_until_confirmed",
+    "tests.test_popup_ux.PopupFlowTests.test_free_mode_shows_agreed_summary_without_changing_conversation_or_resources",
+    "tests.test_popup_ux.PopupFlowTests.test_mode_switch_closes_feedback_and_cancels_deferred_work",
+    "tests.test_popup_ux.PopupFlowTests.test_partial_feedback_screen_failure_cleans_only_new_window_and_preserves_action",
+    "tests.test_popup_ux.PopupFlowTests.test_plus_ten_feedback_is_near_button_and_does_not_cover_it",
+    "tests.test_popup_ux.PopupFlowTests.test_repeated_action_refresh_and_reopening_do_not_duplicate_feedback",
+    "tests.test_popup_ux.PopupFlowTests.test_request_target_survives_read_marker_refresh_and_button_replacement",
+    "tests.test_popup_ux.PopupFlowTests.test_small_feedback_layout_and_condition_table_fit_resolutions",
+    "tests.test_popup_ux.PopupFlowTests.test_story_to_action_to_success_feedback_to_next_action",
+    "tests.test_popup_ux.PopupFlowTests.test_wrong_server_and_dialogue_pages_do_not_complete_server_action",
+    "tests.test_popup_ux.SummaryTests.test_accepted_proposal_keeps_original_and_separates_changed_conditions",
+    "tests.test_popup_ux.SummaryTests.test_different_customers_have_their_own_requirements",
+    "tests.test_popup_ux.SummaryTests.test_legacy_does_not_invent_requested_mode_resources_or_deadline",
+    "tests.test_popup_ux.SummaryTests.test_legacy_proposal_preserves_recorded_original",
+    "tests.test_popup_ux.SummaryTests.test_original_fields_use_real_request_and_are_read_only",
+    "tests.test_popup_ux.SummaryTests.test_pending_proposal_is_not_presented_as_agreement",
+    "tests.test_popup_ux.SummaryTests.test_rejected_proposal_keeps_original_permission",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_checkpoint_failure_after_chapter_start_keeps_committed_story",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_legacy_mid_chapter_does_not_get_a_fake_start_checkpoint",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_next_chapter_creates_boundary_checkpoint_and_heading",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_save_failure_keeps_active_tutorial_and_menu_closed",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_story_checkpoint_retry_opens_new_regular_slot",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_three_top_modes_and_submenus_open_no_database",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_tutorial_finish_cannot_offer_next_story_chapter",
+    "tests.test_onboarding.OnboardingTests.test_automatic_next_request_and_save_failure_are_one_transaction",
+    "tests.test_onboarding.OnboardingTests.test_corrupt_completed_records_are_rejected_without_repair",
+    "tests.test_onboarding.OnboardingTests.test_flexible_customer_economy_is_still_allowed",
+    "tests.test_onboarding.OnboardingTests.test_legacy_slot_does_not_gain_new_jobs_or_fields",
+    "tests.test_onboarding.OnboardingTests.test_rejected_second_customer_is_failure_even_when_first_succeeded",
+    "tests.test_onboarding.OnboardingTests.test_resume_each_job_and_checkpoint_retry_preserve_original",
+    "tests.test_onboarding.OnboardingTests.test_short_tutorial_uses_one_ten_minute_job_and_cannot_advance",
+    "tests.test_onboarding.OnboardingTests.test_three_sequential_jobs_release_resources_and_gate_chapter_two"
+  ],
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "seconds": 293.864,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}
