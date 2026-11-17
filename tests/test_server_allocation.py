@@ -353,6 +353,7 @@ class ServerConsoleTests(unittest.TestCase):
                     first=a.active_list.get_children()[0]
                     _,row_y,_,row_height=a.active_list.bbox(first)
                     self.assertLessEqual(row_y+row_height,a.active_list.winfo_height())
-                    self.assertLessEqual(a.active_list.winfo_rooty()+a.active_list.winfo_height(),
-                                         a.body.winfo_rooty()+a.body.winfo_height())
+                    from tests.support import assert_tree_row_visible
+                    with self.subTest(state=state, size=size, area='active_row'):
+                        assert_tree_row_visible(self, a.active_list, first, a.body)
         self.assertEqual(self.errors,[])

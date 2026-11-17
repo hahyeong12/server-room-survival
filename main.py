@@ -169,7 +169,7 @@ class SimulatorApp:
         body.columnconfigure(1, weight=1, minsize=300)
         body.columnconfigure(2, minsize=244)
         body.rowconfigure(0, weight=1)
-        left = tk.Frame(body, bg=PANEL, padx=6, pady=5)
+        left = tk.Frame(body, bg=PANEL, padx=6, pady=2)
         left.grid(row=0, column=0, sticky='nsew', padx=(0, 10))
         left.columnconfigure(0, weight=1)
         # 필수 행동([요청 확인])이 있는 새 요청 박스를 제목 바로 아래에 둡니다. 창 높이가 부족하면 grid가 아래쪽 목록부터
@@ -546,6 +546,7 @@ class SimulatorApp:
     def update_status(self):
         previous_rows = self.inbox.get_children()
         previous_selection, previous_view = self.inbox.selection(), self.inbox.yview()
+        active_selection, active_view = self.active_list.selection(), self.active_list.yview()
         active = [r for r in self.session.runs.values() if r.state.phase in ('running','incident','paused','recovering')]
         unread = sum(not r.request['is_read'] for r in self.session.runs.values())
         clock = getattr(self.session, 'time_label', '09:00')
@@ -586,6 +587,14 @@ class SimulatorApp:
                           else status_of(run.state)[0])
                 self.active_list.insert('', 'end', iid=str(rid), values=(run.mission['country'], f'{status} {getattr(run.state,"progress",0):.0f}%'))
         self.inbox.selection_set(str(self.session.selected_id))
+        selected = str(self.session.selected_id)
+        if self.active_list.exists(selected):
+            self.active_list.selection_set(selected)
+            self.active_list.focus(selected)
+            if active_selection != (selected,):
+                self.active_list.see(selected)
+            else:
+                self.active_list.yview_moveto(active_view[0])
         if previous_rows != self.inbox.get_children() or previous_selection != self.inbox.selection():
             self.reveal_inbox_selection()
         else:

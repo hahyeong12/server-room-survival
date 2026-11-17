@@ -147,21 +147,36 @@ class LiveServerRoom(tk.Canvas):
                                 width=2, tags=tags+('rack-border',))
             for rail in (x+5, x+rw-7):
                 self.create_line(rail,y+24,rail,y+rh-8,fill=EDGE,width=2,tags=tags)
-            ink(self,x+12,y+7,spec.name,10,TEXT,True,tags=tags)
+            tiny = rh < 75
+            owner_names = '/'.join(dict.fromkeys(o['code'].upper() for o in v['owners']))
+            ink(self,x+(6 if tiny else 12),y+(2 if tiny else 7),
+                spec.name+(' · '+owner_names if tiny and owner_names else ''),8 if tiny else 10,TEXT,True,tags=tags)
             status = v['status'] if v['health'] != 'HEALTHY' else 'NET' if v['network'] else v['status']
-            ink(self,x+rw-12,y+10,status,8,RED if v['health'] != 'HEALTHY' else '#ffbf69' if v['network'] else MUTED,anchor='ne',tags=tags)
+            if tiny and v['repair_left']:
+                status += f' {v["repair_left"]}분'
+            ink(self,x+rw-(6 if tiny else 12),y+(2 if tiny else 10),status,7 if tiny else 8,
+                RED if v['health'] != 'HEALTHY' else '#ffbf69' if v['network'] else MUTED,anchor='ne',tags=tags)
             layout = rack_layout(self.columns, rh)
             tall = layout in ('tall', 'tall_mid')
             compact = layout == 'compact'
             mw = min(60,(rw-36)/2) if tall else (rw-30)/4-3
             module_h, row_gap = (27, 32) if layout == 'tall' or (layout == 'tall_mid' and rh >= 175) else (20, 24) if tall else (20 if compact else 27, 0)
+            if tiny:
+                # 낮은 카드에서는 아이콘과 수치를 좌우로 나눠 GPU·전력·서버 상태를 유지합니다.
+                mw, module_h = (rw*.5-18)/4-3, 17
             for j in range(4):
                 mx = x+(rw-2*mw-8)/2+(j%2)*(mw+8) if tall else x+12+j*(mw+3)
                 my = y+(48 if layout == 'tall' else 46)+(j//2)*row_gap if tall else y+(25 if compact else 30)
+                if tiny:
+                    mx, my = x+6+j*(mw+3), y+rh-19
                 owner = v['slots'][j] if j < spec.gpu else None
                 state = 'empty' if j >= spec.gpu else 'fault' if v['health'] != 'HEALTHY' else 'busy' if owner else 'available'
                 gpu_module(self,mx,my,mw,module_h,state,owner['code'] if owner else None,j,tags=tags,
-                           body_tags=('gpu-slot',) if j < spec.gpu else ('spare-bay',))
+                           body_tags=('gpu-slot',) if j < spec.gpu else ('spare-bay',), summary=tiny)
+            if tiny:
+                ink(self,x+rw*.55,y+rh-26,f'GPU {v["gpu_available"]}/{spec.gpu}',7,CYAN,tags=tags)
+                ink(self,x+rw*.55,y+rh-13,f'전력 {v["power_available"]}/{spec.power}',7,TEXT,tags=tags)
+                continue
             names = '/'.join(dict.fromkeys(o['code'].upper() for o in v['owners'])) or '미점유'
             if v['repair_left']:
                 names += f' · 복구 {v["repair_left"]}분'

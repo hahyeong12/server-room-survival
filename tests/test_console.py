@@ -3,7 +3,7 @@ import tkinter as tk
 import unittest
 from unittest.mock import patch
 
-from tests.support import start_with_consent, start_legacy_plan
+from tests.support import start_with_consent, start_legacy_plan, assert_tree_row_visible
 from database import Database
 from main import SimulatorApp
 from ui import MessageDialog
@@ -129,8 +129,9 @@ class ConsoleTests(unittest.TestCase):
         self.root.geometry('1000x650')
         self.root.update()
         bottom=app.body.winfo_rooty()+app.body.winfo_height()
-        for widget in (app.arrival_notice,app.arrival_open_button,app.arrival_schedule,app.active_list):
+        for widget in (app.arrival_notice,app.arrival_open_button,app.arrival_schedule):
             self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),bottom)
+        assert_tree_row_visible(self, app.active_list, '1', app.body)
         app.arrival_open_button.invoke()
         self.root.update()
         self.assertIn(incoming.mission['company_name'],app.message_window.title())

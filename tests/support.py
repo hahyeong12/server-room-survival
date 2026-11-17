@@ -56,6 +56,22 @@ def reveal_scroll_widget(area, widget):
     area.update_idletasks()
 
 
+def assert_tree_row_visible(case, tree, item, boundary):
+    """외곽 테두리 대신 실제 행의 끝·클릭 좌표가 부모 안에서 노출되는지 검사합니다."""
+    box = tree.bbox(item)
+    case.assertTrue(box, f'표시되지 않은 행: {item}')
+    x, y, width, height = box
+    left, top = tree.winfo_rootx()+x, tree.winfo_rooty()+y
+    case.assertGreaterEqual(left, boundary.winfo_rootx())
+    case.assertGreaterEqual(top, boundary.winfo_rooty())
+    case.assertLessEqual(left+width, boundary.winfo_rootx()+boundary.winfo_width())
+    case.assertLessEqual(top+height, boundary.winfo_rooty()+boundary.winfo_height())
+    case.assertIs(tree.winfo_containing(left+width//2, top+height//2), tree)
+    case.assertIs(tree.winfo_containing(left+width//2, top+height-1), tree)
+    case.assertEqual(tree.identify_row(y+height//2), str(item))
+    return box
+
+
 def complete_onboarding(s, mode='performance'):
     """v0.9-4b 메뉴의 [튜토리얼]/[스토리 새로 시작]은 새 입문(onboarding: 튜토리얼 1건, 첫 근무 3건) 흐름입니다.
     구형 10단계 교육용 test_story_patch.prepare()/finish()는 'Inspector 확인' 단계를 가정하므로 이 흐름에 맞지 않습니다.
