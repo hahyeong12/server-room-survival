@@ -1,8 +1,7 @@
-"""chapter2-001: 기존 제1장 실제 플레이 후 결과 버튼으로 제2장을 검증합니다.
+"""chapter2-002: 실제 휠 집중 검사 통과 후 정규 제1장→제2장을 검증합니다.
 
-python tests/qa/autoplay_chapter2.py <새 출력 디렉터리>
+python tests/qa/autoplay_chapter2.py <새 출력 디렉터리> <집중 검사 result.json>
 --self-check는 창/입력 없이 QA 로직만 검증합니다. 게임 상태 변경은 실제 클릭만 사용합니다.
-알려진 한계: chapter2-001의 두 실행 모두 요청함 행 탐색에서 중단됐습니다. 완주 검증된 코드가 아닙니다.
 """
 import hashlib
 import json
@@ -98,8 +97,7 @@ def scenario(h):
             h.chapter2_data['row_access'].append({'id': rid, **row})
             if row['box'] and row['box'][1]+row['box'][3] <= row['height']:
                 break
-            # Tcl 산술상 한 행 이동을 시도했지만 실제 재검증에서는 +60 두 번마다 두 행 이동했습니다(보고서 참조).
-            h.wheel_inbox(60)
+            h.wheel_inbox(120)  # 게임의 중복 바인딩 제거 뒤 실제 집중 검사로 검증한 표준 한 칸 입력.
         else:
             raise AbortQA('실제 휠로 고객 행 접근 실패')
         h.click(row['widget'], dy=row['box'][1]+row['box'][3]//2, settle=.9)
@@ -128,6 +126,8 @@ def scenario(h):
           and [j['scenario'] for j in initial['jobs']] == ['ch2_jp', 'ch2_us_v2'])
     check('두 고객 동시 접수·자원 미점유', initial['jobs'][0]['terms']['received'] == initial['jobs'][1]['terms']['received']
           and initial['available'] == initial['center_available'] == (10, 10) and initial['used'] == (0, 0))
+    needs = tuple(sum(j['plans']['performance'][key] for j in initial['jobs']) for key in ('gpu', 'power'))
+    check('두 고성능 합계 GPU10·전력11, 가용10/10 대비 전력만 부족', needs == (10, 11), needs)
     from aidc.storage.checkpoints import checkpoint_path
     checkpoint = checkpoint_path(h.slot, 2)
     checkpoint_hash = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
@@ -143,14 +143,30 @@ def scenario(h):
         top = h.wait_for(lambda: top_by_title(h.snapshot(), 'AIDC LINK |'), what='고객 요청서')
         h.wait_for(lambda: h.call(lambda: app().message_window.shown == len(app().message_window.full_text)),
                    timeout=30, what='요청서 본문 타이핑 완료')
+        # 요청서 본문 아래 네트워크 요구량까지 실제 스크롤바 화살표로 읽습니다.
+        scroll = []
+        for _ in range(30):
+            def text_position():
+                text = app().message_window.bubble
+                index = text.search('요청 GPU:', '1.0')
+                line = text.dlineinfo(index) if index else None
+                return {'visible': bool(line and line[1]+line[3] <= text.winfo_height()),
+                        'view': text.yview(), 'bar': h.widget_info(text.vbar)}
+            position = h.call(text_position)
+            scroll.append({k:v for k,v in position.items() if k != 'bar'})
+            if position['visible']:
+                break
+            h.click(position['bar'], dy=position['bar']['h']-8, settle=.08)
+        else:
+            raise AbortQA('요청서 네트워크 요구량 실제 스크롤 접근 실패')
         top = top_by_title(h.snapshot(), 'AIDC LINK |')
         labels = '\n'.join(x['text'] for x in top['labels'])
         job = next(j for j in initial['jobs'] if j['id'] == rid)
-        h.chapter2_data['requests'].append({'id': rid, 'screen': top})
+        h.chapter2_data['requests'].append({'id': rid, 'screen': top, 'scroll': scroll})
         h.shot(f'request_{rid}', note=job['country']+' 실제 요청서·원래 조건·허용 모드·기한')
         p = job['plans']['performance']
         check(job['country']+' 요청서 GPU·전력·네트워크·허용 모드 표시',
-              ch1.request_numbers(labels) == (p['gpu'], p['power']) and '네트워크' in '\n'.join(top['texts'])
+              ch1.request_numbers(labels) == (p['gpu'], p['power']) and f'네트워크: {p["network"]}단위' in '\n'.join(top['texts'])
               and '허용 운영 모드' in labels, labels)
         h.click_text('확인 · 운영실로', settle=.8)
         guide()
@@ -266,6 +282,10 @@ def scenario(h):
     h.chapter2_data['result_screen'] = top_by_title(h.snapshot(), '결과')
     check('제2장 성공·동시 실행·두 고객 결과 표시', h.chapter2_data['result']['mission'] == 'success'
           and h.chapter2_data['result']['concurrent'] and len(h.chapter2_data['result']['jobs']) == 2)
+    unlock = h.call(lambda: session().chapter3_unlock_reason())
+    h.chapter2_data['next_unlock_reason'] = unlock
+    check('제3장 해제·실제 시작 버튼 활성, 진입하지 않음', not unlock
+          and any('제3장' in b['text'] and b['state'] == 'normal' for b in h.chapter2_data['result_screen']['buttons']))
     h.shot('chapter2_success', note='제2장 MISSION SUCCESS·고객별 결과·종합 평가(다음 장 미진입)')
     h.final_disk = ch1.disk_state(h.slot)
     check('제2장 디스크 완료·시작 체크포인트 불변·제3장 미시작', h.final_disk['integrity'] == 'ok'
@@ -280,11 +300,11 @@ def main():
         ch1.self_check()
         assert viable_impact('고성능 모드 GPU 6/전력 6 배정 불가 · 절약형 모드 GPU 4/전력 3 배정 가능')
         assert not viable_impact('절약형 모드 GPU 4/전력 3 배정 불가')
-        import tkinter as tk
-        interpreter = tk.Tcl()  # Tk 창 없이 Windows용 Tk 휠 바인딩의 Tcl 산술만 확인합니다.
-        assert -int(60/120) == 0 and interpreter.eval('expr {-60 / 120}') == '-1'
         print('chapter2 QA self-check PASS')
         return
+    focused = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
+    if focused['error'] or focused['failed'] or not focused['probe']['passed'] or focused['kind'] != 'focused_gui_not_full_play':
+        raise SystemExit('실제 입력 집중 검사 통과 자료가 필요합니다. 전체 플레이를 시작하지 않습니다.')
     out = Path(sys.argv[1])
     out.mkdir(parents=True, exist_ok=True)
     marker = out/'attempt.json'
@@ -321,6 +341,7 @@ def main():
                   'capture_occlusions': h.occlusions, 'native_guard_events': h.guard_events,
                   'qa_source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   'reused_source_sha256': hashlib.sha256(Path(ch1.__file__).read_bytes()).hexdigest(),
+                  'focused_gui_passed': True,
                   'log': [line.replace(str(ROOT), '<repo>').replace(str(h.tmp), '<qa-temp>') for line in h.log]}
         (out/'result.json').write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding='utf-8')
         print(f'완주={completed} error={error} PASS={report["passed"]} FAIL={report["failed"]} clicks={h.clicks}', flush=True)
