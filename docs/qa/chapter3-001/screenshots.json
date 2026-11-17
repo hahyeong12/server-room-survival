@@ -1,0 +1,114 @@
+[
+ {
+  "file": "screenshots/ch1_success.png",
+  "source_file": "15_success.png",
+  "sha256": "ec06ab12f64a7ac2a83ce8616b2f171a658b0193bf5ffa4176a77c516e7d1862",
+  "step": "제1장 결과",
+  "note": "실제 제1장 성공 결과·다음 장 안내(이동하지 않음)"
+ },
+ {
+  "file": "screenshots/ch2_success.png",
+  "source_file": "30_chapter2_success.png",
+  "sha256": "dfe214d6f1c3fe117cc3144d93fb9b68a8524393ad484b970cdfdf13d4e31495",
+  "step": "제2장 결과",
+  "note": "제2장 MISSION SUCCESS·고객별 결과·종합 평가(다음 장 미진입)"
+ },
+ {
+  "file": "screenshots/a_request.png",
+  "source_file": "31_c3_A_request.png",
+  "sha256": "b369186edd71db20d1995a386719e3d98490dc1b073ef2b0b6e81cf7e5df54c7",
+  "step": "제3장 미션 A 요청·시작",
+  "note": "실제 요청·허용 조건·기한"
+ },
+ {
+  "file": "screenshots/a_allocation.png",
+  "source_file": "32_c3_A_allocation.png",
+  "sha256": "a14e5cdf78db4238d5900fda58ed03401356e9ee6d5ea926836b374215f0a818",
+  "step": "제3장 미션 A 요청·시작",
+  "note": "실제 허용 고성능·서버 배정 선택"
+ },
+ {
+  "file": "screenshots/a_incident.png",
+  "source_file": "33_c3_A_incident.png",
+  "sha256": "9852b7a4275908f54c07577742cac37dc12f5b3b5f3dbaec04aa2e713b73feae",
+  "step": "미션 A 장애 관측·진단",
+  "note": "작업 중단·대응 비활성·네트워크 장애"
+ },
+ {
+  "file": "screenshots/a_diagnosis.png",
+  "source_file": "34_c3_A_diagnosis.png",
+  "sha256": "50ef6cf809414439e6953bb6d5bb3a0f3b65f66cd904be737d4cff302c642457",
+  "step": "미션 A 장애 관측·진단",
+  "note": "원인 판단에 실제 사용한 주 경로·필요/가용·백업·장비 수치"
+ },
+ {
+  "file": "screenshots/a_feedback.png",
+  "source_file": "35_c3_feedback.png",
+  "sha256": "148c5965f47c93cce41930f69c4d74fafb856c093e65b9c0f9de04504240a1fd",
+  "step": "미션 A 장애 관측·진단",
+  "note": "실제 대응/완료 결과 카드"
+ },
+ {
+  "file": "screenshots/a_resumed.png",
+  "source_file": "37_c3_A_resumed.png",
+  "sha256": "743fa72085f5d76d05343abf41a808f8ba893cbc554a8d1e1469390b27371094",
+  "step": "미션 A 복구·완료",
+  "note": "정상 실행으로 전환·네트워크 진단 행동 제거"
+ },
+ {
+  "file": "screenshots/a_returned.png",
+  "source_file": "38_c3_A_returned.png",
+  "sha256": "9a1f448e9c1c58f65857dcff85710a2dbd573a58c4c881e698e539d4b00501a5",
+  "step": "미션 A 복구·완료",
+  "note": "고객 완료·GPU/전력 전량 반환"
+ },
+ {
+  "file": "screenshots/b_request.png",
+  "source_file": "39_c3_B_request.png",
+  "sha256": "427ad6d283e19927ff98dc5853cfceb5da0625d77d5f44e59740431d903904b0",
+  "step": "제3장 미션 B 요청·시작",
+  "note": "실제 요청·허용 조건·기한"
+ },
+ {
+  "file": "screenshots/b_incident.png",
+  "source_file": "41_c3_B_incident.png",
+  "sha256": "429141244908f18b70e5bae226e9f6bce9258afb05024017a244f24e878f6c61",
+  "step": "미션 B 장애 관측·진단",
+  "note": "작업 중단·대응 비활성·네트워크 장애"
+ },
+ {
+  "file": "screenshots/b_diagnosis.png",
+  "source_file": "42_c3_B_diagnosis.png",
+  "sha256": "b86fb4a933a9df52d45732585ff10c250dce30a5b932d96e13d570f30d8644af",
+  "step": "미션 B 장애 관측·진단",
+  "note": "원인 판단에 실제 사용한 주 경로·필요/가용·백업·장비 수치"
+ },
+ {
+  "file": "screenshots/b_feedback.png",
+  "source_file": "43_c3_feedback.png",
+  "sha256": "42c97026665e4c4b321866b27fa4a21069227d779243a0ea6f08912ee6b13768",
+  "step": "미션 B 장애 관측·진단",
+  "note": "실제 대응/완료 결과 카드"
+ },
+ {
+  "file": "screenshots/b_returned.png",
+  "source_file": "46_c3_B_returned.png",
+  "sha256": "0ff09e9fd8037dc4d517b1f1ab75aaf76ea3bdc54b42e42e54bbc0d26569c915",
+  "step": "미션 B 복구·완료",
+  "note": "고객 완료·GPU/전력 전량 반환"
+ },
+ {
+  "file": "screenshots/chapter3_success.png",
+  "source_file": "47_c3_success.png",
+  "sha256": "7145f66eefaf8ff084286a638a76caa2af9f710e2897f36a9eec72aa959b9fdb",
+  "step": "제3장 최종 결과",
+  "note": "제3장 최종 성공·두 미션 결과·제4장 버튼 클릭하지 않음"
+ },
+ {
+  "file": "screenshots/white_frame.png",
+  "source_file": "flash_029_69.179s.png",
+  "sha256": "15104a6f3763f46b9c27106961c3b18a06c89e5340970e4a672ff33883a8faee",
+  "step": "제2장 정규 진입",
+  "note": "새 창 등장 순간 프레임(흰 비율 0.533)"
+ }
+]
