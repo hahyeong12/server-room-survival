@@ -54,3 +54,23 @@ def reveal_scroll_widget(area, widget):
     maximum = max(0, height-area.canvas.winfo_height())
     area.canvas.yview_moveto(min(top, maximum)/max(1, height))
     area.update_idletasks()
+
+
+def complete_onboarding(s, mode='performance'):
+    """v0.9-4b 메뉴의 [튜토리얼]/[스토리 새로 시작]은 새 입문(onboarding: 튜토리얼 1건, 첫 근무 3건) 흐름입니다.
+    구형 10단계 교육용 test_story_patch.prepare()/finish()는 'Inspector 확인' 단계를 가정하므로 이 흐름에 맞지 않습니다.
+    실제 세션 행동(도착 확인 → 요청 열람 → 미리보기 → 배정 → 시간 진행)만으로 입문을 끝냅니다."""
+    if s.story.ui_step == 'arrival':
+        s.confirm_story_arrival()
+    for _ in range(6):
+        if s.story.ui_done:
+            return
+        rid = s.story.onboarding.rid
+        s.read_conversation(rid)
+        s.inspect_story_preview(rid)
+        s.choose_plan(mode)
+        for _ in range(30):
+            if not s.runs[rid].state.allocated:
+                break
+            s.advance_time(10)
+    raise AssertionError('입문 업무가 끝나지 않습니다.')

@@ -8,8 +8,7 @@ from database import Database
 from main import ModeSelection
 from aidc.storage.story_slots import StorySlots
 from aidc.storage.checkpoints import checkpoint_path
-from tests.support import dismiss_story_popups
-from tests.test_story_patch import prepare, finish
+from tests.support import dismiss_story_popups, complete_onboarding
 
 
 class PlayModesGuiTests(unittest.TestCase):
@@ -63,7 +62,7 @@ class PlayModesGuiTests(unittest.TestCase):
     def test_tutorial_finish_cannot_offer_next_story_chapter(self):
         app = self.menu.new_tutorial(); self.root.update()
         dismiss_story_popups(app, self.root)
-        prepare(app.session); finish(app.session)
+        complete_onboarding(app.session)                          # 현재 메뉴는 새 입문 흐름(구형 prepare 아님)
         app.refresh(); app.show_chapter_complete(); self.root.update()
         self.assertNotIn('chapter2', app.chapter_window.buttons)
         self.assertIn('튜토리얼', app.chapter_window.title())
@@ -95,7 +94,7 @@ class PlayModesGuiTests(unittest.TestCase):
     def test_next_chapter_creates_boundary_checkpoint_and_heading(self):
         app = self.menu.new_story(); self.root.update()
         dismiss_story_popups(app, self.root)
-        prepare(app.session); finish(app.session)
+        complete_onboarding(app.session)                          # 현재 메뉴는 새 입문 흐름(구형 prepare 아님)
         app.refresh(); app.show_chapter_complete(); self.root.update()
         app.chapter_window.buttons['chapter2'].invoke(); self.root.update()
         self.assertTrue(checkpoint_path(app.db.path, 2).is_file())
@@ -114,7 +113,7 @@ class PlayModesGuiTests(unittest.TestCase):
     def test_checkpoint_failure_after_chapter_start_keeps_committed_story(self):
         app = self.menu.new_story(); self.root.update()
         dismiss_story_popups(app, self.root)
-        prepare(app.session); finish(app.session)
+        complete_onboarding(app.session)                          # 현재 메뉴는 새 입문 흐름(구형 prepare 아님)
         app.refresh(); app.show_chapter_complete(); self.root.update()
         with patch('main.capture', side_effect=OSError('disk full')), patch('main.messagebox.showerror') as error:
             self.assertTrue(app.begin_chapter2())
