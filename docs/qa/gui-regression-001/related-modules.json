@@ -1,0 +1,376 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_story_slots",
+    "tests.test_story_patch.PatchGuiTests",
+    "tests.test_conditions.ConditionGuiTests",
+    "tests.test_console.ConsoleTests",
+    "tests.test_allocation_flow_gui.ResultButtonsGuiTests",
+    "tests.test_chapter2_gui",
+    "tests.test_v091e.ChapterWindowTests",
+    "tests.test_tutorial_ux.TutorialGuiTests",
+    "tests.test_story.StoryGuiTests",
+    "tests.test_regression_runner"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "ran": 125,
+  "passed": [
+    "tests.test_story_slots.SlotFilesTests.test_discovery_ignores_other_files_and_sqlite_auxiliary_files",
+    "tests.test_story_slots.SlotFilesTests.test_exclusive_create_retries_if_another_launcher_reserves_same_number",
+    "tests.test_story_slots.SlotFilesTests.test_git_ignores_slots_journal_wal_shm_and_lease",
+    "tests.test_story_slots.SlotFilesTests.test_lease_blocks_same_file_and_releases_on_close",
+    "tests.test_story_slots.SlotFilesTests.test_lease_blocks_separate_process_and_does_not_depend_on_lock_file_deletion",
+    "tests.test_story_slots.SlotFilesTests.test_menu_discovery_does_not_create_any_files",
+    "tests.test_story_slots.SlotFilesTests.test_new_slots_never_overwrite_legacy_or_previous_slot",
+    "tests.test_story_slots.SlotFilesTests.test_slot_labels_clearly_distinguish_legacy_and_new_records",
+    "tests.test_story_slots.SlotMenuGuiTests.test_actual_maximized_window_keeps_balanced_margins",
+    "tests.test_story_slots.SlotMenuGuiTests.test_both_menus_are_centered_at_three_resolutions",
+    "tests.test_story_slots.SlotMenuGuiTests.test_continue_is_disabled_when_there_is_no_saved_story",
+    "tests.test_story_slots.SlotMenuGuiTests.test_continue_missing_file_does_not_create_a_replacement",
+    "tests.test_story_slots.SlotMenuGuiTests.test_duplicate_file_connection_cannot_start_second_game",
+    "tests.test_story_slots.SlotMenuGuiTests.test_duplicate_same_connection_cannot_start_second_gui",
+    "tests.test_story_slots.SlotMenuGuiTests.test_empty_slot_continue_does_not_silently_start_new_game",
+    "tests.test_story_slots.SlotMenuGuiTests.test_legacy_completed_record_resumes_with_same_score_and_history",
+    "tests.test_story_slots.SlotMenuGuiTests.test_legacy_slot_retains_server_inspector_and_operations_steps",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_database_open_failure_keeps_legacy_and_usable_menu",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_initial_save_failure_keeps_old_record_and_stops_timers",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_story_character_emphasis_and_events_are_unchanged",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_story_full_chapter_through_real_widgets_preserves_old_record",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_story_starts_at_first_monologue_even_with_legacy_completion",
+    "tests.test_story_slots.SlotMenuGuiTests.test_partial_new_ui_failure_preserves_saved_slot_and_allows_resume",
+    "tests.test_story_slots.SlotMenuGuiTests.test_repeated_new_start_click_does_not_create_second_game_or_slot",
+    "tests.test_story_slots.SlotMenuGuiTests.test_return_to_menu_prefers_current_slot_and_resumes_last_save",
+    "tests.test_story_slots.SlotMenuGuiTests.test_save_failure_keeps_active_slot_dialog_and_timer",
+    "tests.test_story_slots.SlotMenuGuiTests.test_story_choice_and_back_open_no_database",
+    "tests.test_story_slots.SlotMenuGuiTests.test_switch_to_free_preserves_both_story_slots_and_free_progress",
+    "tests.test_story_slots.SlotMenuGuiTests.test_target_open_failure_preserves_previous_slot_after_safe_save",
+    "tests.test_story_slots.SlotMenuGuiTests.test_two_new_slots_keep_time_resources_score_and_progress_separate",
+    "tests.test_story_patch.PatchGuiTests.test_all_three_customer_colors_use_actual_allocated_slots",
+    "tests.test_story_patch.PatchGuiTests.test_choosing_recommended_or_alternative_plan_records_review_without_starting",
+    "tests.test_story_patch.PatchGuiTests.test_comparison_open_and_close_without_choice_does_not_record_review",
+    "tests.test_story_patch.PatchGuiTests.test_completed_slots_and_power_return_to_on_and_idle",
+    "tests.test_story_patch.PatchGuiTests.test_completion_all_controls_fit_three_resolutions_and_minimum_dialog",
+    "tests.test_story_patch.PatchGuiTests.test_completion_can_be_closed_and_reopened_from_control_room",
+    "tests.test_story_patch.PatchGuiTests.test_completion_return_to_selection_closes_database_and_timer",
+    "tests.test_story_patch.PatchGuiTests.test_completion_screen_uses_actual_results_and_current_actions",
+    "tests.test_story_patch.PatchGuiTests.test_direct_free_transition_resumes_its_own_existing_game",
+    "tests.test_story_patch.PatchGuiTests.test_fault_red_migration_and_animation_preserve_owner_marking",
+    "tests.test_story_patch.PatchGuiTests.test_gpu_owner_colors_match_between_story_and_free_and_differ_from_available",
+    "tests.test_story_patch.PatchGuiTests.test_in_progress_transition_saves_and_cancels_customer_typewriter",
+    "tests.test_story_patch.PatchGuiTests.test_operations_help_shows_live_estimate_deadline_and_server_residuals",
+    "tests.test_story_patch.PatchGuiTests.test_partial_target_ui_failure_cancels_timer_and_restores_selection",
+    "tests.test_story_patch.PatchGuiTests.test_preview_save_failure_keeps_comparison_open_without_advancing",
+    "tests.test_story_patch.PatchGuiTests.test_preview_tab_alone_never_records_plan_review",
+    "tests.test_story_patch.PatchGuiTests.test_repeated_mode_round_trips_use_one_root_and_one_server_timer",
+    "tests.test_story_patch.PatchGuiTests.test_review_dialog_is_read_only_and_speakers_are_separate",
+    "tests.test_story_patch.PatchGuiTests.test_status_offers_chapter_two_start_button_after_chapter_one",
+    "tests.test_story_patch.PatchGuiTests.test_target_load_failure_leaves_usable_selection_after_safe_save",
+    "tests.test_story_patch.PatchGuiTests.test_transition_save_failure_keeps_window_timer_and_database_open",
+    "tests.test_story_patch.PatchGuiTests.test_v091_completed_save_opens_completion_without_replaying_customer",
+    "tests.test_conditions.ConditionGuiTests.test_agreement_and_subsequent_shortage_are_both_visible",
+    "tests.test_conditions.ConditionGuiTests.test_flexible_modes_need_no_proposal_button_or_conversation",
+    "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage",
+    "tests.test_conditions.ConditionGuiTests.test_original_and_unapproved_modes_are_distinguished_and_direct_call_is_blocked",
+    "tests.test_conditions.ConditionGuiTests.test_rejection_is_visible_and_cannot_be_resubmitted",
+    "tests.test_console.ConsoleTests.test_actual_next_previous_skip_buttons_keep_sequence_consistent",
+    "tests.test_console.ConsoleTests.test_deadline_preview_colours_and_controls_at_laptop_size",
+    "tests.test_console.ConsoleTests.test_expired_requests_appear_in_history_separately_from_failed_jobs",
+    "tests.test_console.ConsoleTests.test_finished_job_dialog_does_not_replay_request_or_allow_delay",
+    "tests.test_console.ConsoleTests.test_japan_time_button_updates_progress_clock_and_saved_allocation",
+    "tests.test_console.ConsoleTests.test_long_details_are_separate_windows",
+    "tests.test_console.ConsoleTests.test_messenger_previous_next_full_view_and_skip",
+    "tests.test_console.ConsoleTests.test_mode_preview_never_allocates_real_resources",
+    "tests.test_console.ConsoleTests.test_notification_opens_large_message_and_marks_read",
+    "tests.test_console.ConsoleTests.test_primary_controls_fit_work_area_without_page_scroll",
+    "tests.test_console.ConsoleTests.test_typewriter_can_be_revealed_and_cancelled",
+    "tests.test_allocation_flow_gui.ResultButtonsGuiTests.test_failed_result_keeps_retry_button_visible",
+    "tests.test_allocation_flow_gui.ResultButtonsGuiTests.test_success_result_keeps_next_chapter_and_menu_buttons_visible",
+    "tests.test_chapter2_gui.Chapter2GuiTests.test_briefing_confirm_moves_to_requests_and_feedback_appears",
+    "tests.test_chapter2_gui.Chapter2GuiTests.test_chapter_one_dialog_offers_chapter_two_and_start_opens_briefing",
+    "tests.test_chapter2_gui.Chapter2GuiTests.test_comparison_dialog_lists_other_request_impact_in_chapter_two",
+    "tests.test_chapter2_gui.FailureFeedbackGuiTests.test_failed_result_dialog_does_not_celebrate",
+    "tests.test_chapter2_gui.FailureFeedbackGuiTests.test_us_first_does_not_show_failure_until_the_request_is_actually_lost",
+    "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_new_chapter_two_practice_starts_clean_in_a_new_slot",
+    "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_result_dialog_has_retry_and_retry_opens_a_new_practice_slot",
+    "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_story_menu_offers_chapter_one_chapter_two_and_continue",
+    "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window",
+    "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_when_maximized",
+    "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_stays_inside_work_area_on_small_window",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_animation_does_not_change_fault_or_gpu_colors",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_auto_recommendation_needs_explicit_click_to_count_as_review",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_busy_gpu_and_existing_led_animation_remain_unchanged",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_closed_request_has_no_remaining_target",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_compare_dialog_start_is_single_target_and_does_not_allocate_on_view",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_destroyed_target_cancels_callback",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_dialog_centered_on_actual_maximized_parent",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_disallowed_mode_points_to_allowed_mode_then_start",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_failed_transition_preserves_current_target_and_single_timer",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_guide_close_alone_cannot_complete_arrival",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_inspector_tab_is_pointed_at_when_resources_step_is_on_preview_tab",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_manual_help_and_review_suspend_then_restore_same_target",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_mode_transition_cancels_highlight_and_free_mode_has_none",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_only_server_a_outer_border_pulses_and_wrong_server_does_not_complete",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_plus_10_is_valid_time_action",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_plus_30_is_valid_time_action",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_plus_60_is_valid_time_action_even_if_job_finishes_at_once",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_preview_tab_is_highlighted_from_inspector_without_completing_preview",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_real_server_a_click_removes_rack_highlight_before_resource_guide",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_request_button_and_customer_dialogue_suspend",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_resource_confirmation_button_and_actual_fact",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_root_destruction_cancels_all_animation",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_skip_stops_highlight_without_advancing_time",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_start_button_recreated_by_refresh_rebinds_without_extra_timers",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_static_highlight_has_no_animation_timer",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_time_buttons_are_outlined_one_by_one_without_group_frame_or_pointer",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_time_highlight_restores_each_button_style",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_time_requires_work_and_operations_reopens_real_information",
+    "tests.test_story.StoryGuiTests.test_comparison_preview_then_actual_selected_plan_and_time",
+    "tests.test_story.StoryGuiTests.test_failed_gui_server_observation_restores_selection",
+    "tests.test_story.StoryGuiTests.test_failed_gui_start_does_not_advance_stage",
+    "tests.test_story.StoryGuiTests.test_first_day_dialogue_identifies_teacher_and_can_be_reopened",
+    "tests.test_story.StoryGuiTests.test_rack_click_displays_resources_and_confirmation_advances",
+    "tests.test_story.StoryGuiTests.test_real_customer_dialogue_advances_and_stays_distinct_from_teacher",
+    "tests.test_story.StoryGuiTests.test_reopening_resources_help_after_close_preserves_progress",
+    "tests.test_story.StoryGuiTests.test_skip_requires_confirmation_and_does_not_advance_time_or_allocate",
+    "tests.test_story.StoryGuiTests.test_story_close_saves_and_stops_server_timer",
+    "tests.test_regression_runner.RegressionRunnerTests.test_existing_and_future_root_saves_are_blocked",
+    "tests.test_regression_runner.RegressionRunnerTests.test_memory_and_temporary_fixtures_are_allowed",
+    "tests.test_regression_runner.RegressionRunnerTests.test_parent_segments_cannot_bypass_the_save_guard"
+  ],
+  "failures": [
+    {
+      "id": "tests.test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_console.py\", line 133, in test_automatic_notice_opens_matching_request_without_advancing_time\n    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),bottom)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 493 not less than or equal to 492\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='resources', size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='resources', size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='preview', size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages (widget='.!frame2.!serverpanel.!notebook.!frame.!liveinspector')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 473, in assert_fits\n    self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 132 not greater than or equal to 190\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages (widget='.!frame2.!serverpanel.!notebook.!frame.!liveinspector')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 473, in assert_fits\n    self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 190\n"
+    }
+  ],
+  "errors": [],
+  "skipped": [],
+  "seconds": 317.84,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}

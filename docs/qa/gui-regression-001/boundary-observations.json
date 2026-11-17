@@ -1,0 +1,124 @@
+{
+  "kind": "read-only geometry/content hit checks in existing unittest fixtures",
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "notice": {
+    "root": [
+      38,
+      61,
+      1000,
+      650
+    ],
+    "body": {
+      "rect": [
+        50,
+        201,
+        976,
+        313
+      ],
+      "requested": [
+        870,
+        469
+      ],
+      "mapped": true,
+      "class": "Frame",
+      "text": ""
+    },
+    "tree": {
+      "rect": [
+        56,
+        455,
+        214,
+        60
+      ],
+      "requested": [
+        214,
+        118
+      ],
+      "mapped": true,
+      "class": "Treeview",
+      "text": ""
+    },
+    "body_bottom": 514,
+    "tree_bottom": 515,
+    "rows": [
+      {
+        "id": "1",
+        "bbox": [
+          2,
+          29,
+          210,
+          29
+        ],
+        "bottom": 513,
+        "inside_body": true,
+        "last_pixel_hit": ".!frame2.!frame.!treeview2",
+        "last_pixel_is_tree": true
+      }
+    ]
+  },
+  "allocation": {
+    "root": [
+      38,
+      61,
+      1000,
+      650
+    ],
+    "body": {
+      "rect": [
+        50,
+        201,
+        976,
+        313
+      ],
+      "requested": [
+        870,
+        469
+      ],
+      "mapped": true,
+      "class": "Frame",
+      "text": ""
+    },
+    "tree": {
+      "rect": [
+        56,
+        455,
+        214,
+        60
+      ],
+      "requested": [
+        214,
+        118
+      ],
+      "mapped": true,
+      "class": "Treeview",
+      "text": ""
+    },
+    "body_bottom": 514,
+    "tree_bottom": 515,
+    "rows": [
+      {
+        "id": "1",
+        "bbox": [
+          2,
+          29,
+          210,
+          29
+        ],
+        "bottom": 513,
+        "inside_body": true,
+        "last_pixel_hit": ".!frame2.!frame.!treeview2",
+        "last_pixel_is_tree": true
+      }
+    ]
+  },
+  "user_data_unchanged": true
+}

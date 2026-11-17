@@ -1,0 +1,65 @@
+{
+  "historical_before": {
+    "ran": 29,
+    "passed": 5,
+    "failures": 30,
+    "errors": 6
+  },
+  "headless": {
+    "command": "python -m tests.run_headless",
+    "ran": 759,
+    "passed": 759,
+    "excluded_gui": 292,
+    "seconds": 17.958
+  },
+  "full_suite": {
+    "ran": 1051,
+    "passed": 1046,
+    "failures": 8,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 617.041
+  },
+  "gui_subset": {
+    "ran": 292,
+    "passed": 287,
+    "failing_methods": 5,
+    "failures": 8,
+    "errors": 0
+  },
+  "remaining": [
+    {
+      "id": "tests.test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_console.py\", line 133, in test_automatic_notice_opens_matching_request_without_advancing_time\n    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),bottom)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 493 not less than or equal to 492\n"
+    },
+    {
+      "id": "tests.test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_play_modes_gui.py\", line 57, in test_all_menu_buttons_fit_three_resolutions\n    self.assertGreaterEqual(panel.winfo_y(), 0)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\nAssertionError: -31 not greater than or equal to 0\n"
+    },
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 356, in test_layout_and_chip_text_at_three_resolutions\n    self.assertLessEqual(a.active_list.winfo_rooty()+a.active_list.winfo_height(),\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                         a.body.winfo_rooty()+a.body.winfo_height())\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 493 not less than or equal to 492\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages (widget='.!frame2.!serverpanel.!notebook.!frame.!liveinspector')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 473, in assert_fits\n    self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 132 not greater than or equal to 190\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages (widget='.!frame2.!serverpanel.!notebook.!frame.!liveinspector')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 473, in assert_fits\n    self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 190\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='resources', size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='resources', size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='preview', size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    }
+  ],
+  "user_data_unchanged": true
+}

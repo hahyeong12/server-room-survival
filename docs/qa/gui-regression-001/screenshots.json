@@ -1,0 +1,42 @@
+[
+  {
+    "file": "screenshots/allocated_tree_boundary.png",
+    "sha256": "249dff3cec4cc5df3dc71c981c3815b2fe38bd0a3dd25d574cdcb15961346d2e"
+  },
+  {
+    "file": "screenshots/completion_scroll_bottom.png",
+    "sha256": "0da981b4246d250bd11843008f71516c2276c58ce105e2317ac210c0f102266b"
+  },
+  {
+    "file": "screenshots/completion_scroll_top.png",
+    "sha256": "c25f571b4029a25c32086b75b234b52fbf3bcd15da58335e9eaab31f69ef6971"
+  },
+  {
+    "file": "screenshots/condition_minimum.png",
+    "sha256": "6aa5f7db401d249f6cbda7ecff310ded5bccb1a02da3e0239f1ab28888050561"
+  },
+  {
+    "file": "screenshots/legacy_highlight_minimum.png",
+    "sha256": "c51d95959f7cdd5fbbe9abb6930484a9c48d2108c16aca306b48064dc60b5900"
+  },
+  {
+    "file": "screenshots/legacy_inspector_minimum.png",
+    "sha256": "428282e171acb8e704fb5d1c75be06071ce89bc9c3bdc1c72cb1e28fc8e90d4a"
+  },
+  {
+    "file": "screenshots/menu_practice.png",
+    "sha256": "64d7377ae64e91250191f880cdf9fd99d07f5af58cabf10ce2e02c18555c6327"
+  },
+  {
+    "file": "screenshots/menu_story.png",
+    "sha256": "ed475c94f0da54d2a2f99e50e6c1deb9028e98acf2def7e4b9d8803248b954c6"
+  },
+  {
+    "file": "screenshots/menu_tutorial.png",
+    "sha256": "2ef6984c10d3382536f9378a0aede91c3d5dceef58ee8ad3b0b52c45d4892633"
+  },
+  {
+    "file": "screenshots/notice_tree_boundary.png",
+    "sha256": "e388993a2d6783dbe2333a0b850da7819d4c42000bc98d2a855f6ae5324dfece"
+  }
+]

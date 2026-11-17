@@ -1,0 +1,399 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_tutorial_finish_cannot_offer_next_story_chapter",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_next_chapter_creates_boundary_checkpoint_and_heading",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_checkpoint_failure_after_chapter_start_keeps_committed_story",
+    "tests.test_chapter3_gui.Chapter3PlayGuiTests.test_wrong_response_shows_observed_feedback_and_keeps_the_mission_open",
+    "tests.test_story_slots.SlotMenuGuiTests.test_two_new_slots_keep_time_resources_score_and_progress_separate",
+    "tests.test_story_slots.SlotFilesTests.test_git_ignores_slots_journal_wal_shm_and_lease",
+    "tests.test_allocation_flow_gui.ResultButtonsGuiTests.test_success_result_keeps_retry_button_visible",
+    "tests.test_chapter2_gui.FailureFeedbackGuiTests.test_us_first_does_not_show_failure_until_the_request_is_actually_lost",
+    "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_result_dialog_has_retry_and_retry_opens_a_new_practice_slot",
+    "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_story_menu_offers_chapter_one_chapter_two_and_continue",
+    "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage",
+    "tests.test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time",
+    "tests.test_console.ConsoleTests.test_japan_time_button_updates_progress_clock_and_saved_allocation",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions",
+    "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions",
+    "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages",
+    "tests.test_story_patch.PatchGuiTests.test_completion_all_controls_fit_three_resolutions_and_minimum_dialog",
+    "tests.test_story_patch.PatchGuiTests.test_completion_screen_uses_actual_results_and_four_actions",
+    "tests.test_story_patch.PatchGuiTests.test_direct_free_transition_resumes_its_own_existing_game",
+    "tests.test_story_patch.PatchGuiTests.test_status_offers_chapter_two_start_button_after_chapter_one",
+    "tests.test_story_patch.PatchGuiTests.test_transition_save_failure_keeps_window_timer_and_database_open",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_story_character_emphasis_and_events_are_unchanged",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_story_full_chapter_through_real_widgets_preserves_old_record",
+    "tests.test_story_slots.SlotMenuGuiTests.test_new_story_starts_at_first_monologue_even_with_legacy_completion",
+    "tests.test_story_slots.SlotMenuGuiTests.test_story_choice_and_back_open_no_database",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game",
+    "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window",
+    "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_stays_inside_work_area_on_small_window"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "ran": 29,
+  "passed": [
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_tutorial_finish_cannot_offer_next_story_chapter",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_next_chapter_creates_boundary_checkpoint_and_heading",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_checkpoint_failure_after_chapter_start_keeps_committed_story",
+    "tests.test_chapter3_gui.Chapter3PlayGuiTests.test_wrong_response_shows_observed_feedback_and_keeps_the_mission_open",
+    "tests.test_story_slots.SlotFilesTests.test_git_ignores_slots_journal_wal_shm_and_lease"
+  ],
+  "failures": [
+    {
+      "id": "tests.test_allocation_flow_gui.ResultButtonsGuiTests.test_success_result_keeps_retry_button_visible",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_allocation_flow_gui.py\", line 56, in test_success_result_keeps_retry_button_visible\n    self.assert_buttons_visible()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"<repo>\\tests\\test_allocation_flow_gui.py\", line 46, in assert_buttons_visible\n    self.assertIn('retry', dialog.buttons)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'retry' not found in {'next': <aidc.ui.ui_kit.PrimaryButton object .!chapter2completedialog.!frame2.!frame.!primarybutton>, 'chapters': <ui.ActionButton object .!chapter2completedialog.!frame2.!frame.!actionbutton>, 'modes': <ui.ActionButton object .!chapter2completedialog.!frame2.!frame.!actionbutton2>, 'chapter3': <aidc.ui.ui_kit.PrimaryButton object .!chapter2completedialog.!frame2.!frame.!primarybutton>}\n"
+    },
+    {
+      "id": "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_result_dialog_has_retry_and_retry_opens_a_new_practice_slot",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_chapter2_gui.py\", line 116, in test_result_dialog_has_retry_and_retry_opens_a_new_practice_slot\n    self.assertIn('retry', dialog.buttons)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'retry' not found in {'next': <aidc.ui.ui_kit.PrimaryButton object .!chapter2completedialog.!frame2.!frame.!primarybutton>, 'chapters': <ui.ActionButton object .!chapter2completedialog.!frame2.!frame.!actionbutton>, 'modes': <ui.ActionButton object .!chapter2completedialog.!frame2.!frame.!actionbutton2>, 'chapter3': <aidc.ui.ui_kit.PrimaryButton object .!chapter2completedialog.!frame2.!frame.!primarybutton>}\n"
+    },
+    {
+      "id": "tests.test_chapter2_gui.PracticeAndRetryGuiTests.test_story_menu_offers_chapter_one_chapter_two_and_continue",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_chapter2_gui.py\", line 82, in test_story_menu_offers_chapter_one_chapter_two_and_continue\n    self.assertEqual({'new', 'continue', 'back'}, set(self.selector.story_buttons))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the second set but not the first:\n'chapters'\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='original', widget='.!frame3.!frame2.!actionbutton5')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='pending', widget='.!frame3.!frame2.!actionbutton9')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='accepted', widget='.!frame3.!frame2.!actionbutton13')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='shortage', widget='.!frame3.!frame2.!actionbutton17')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='flexible', widget='.!frame3.!frame2.!actionbutton32')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 161 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='rejected', widget='.!frame3.!frame2.!actionbutton39')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 161 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage (stage='legacy', widget='.!frame3.!frame2.!actionbutton42')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_conditions.py\", line 439, in test_mode_labels_fit_minimum_window_during_negotiation_and_shortage\n    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 165 not greater than or equal to 179\n"
+    },
+    {
+      "id": "tests.test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_console.py\", line 133, in test_automatic_notice_opens_matching_request_without_advancing_time\n    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),bottom)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 493 not less than or equal to 492\n"
+    },
+    {
+      "id": "tests.test_console.ConsoleTests.test_japan_time_button_updates_progress_clock_and_saved_allocation",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_console.py\", line 148, in test_japan_time_button_updates_progress_clock_and_saved_allocation\n    self.assertIn('+10',app.action_hint.cget('text'))\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '+10' not found in '자원 배정 완료 · 진행 0% · [시간 빨리감기]로 시간을 진행하면 모든 정상 작업이 함께 진행됩니다.\\n긴급 · 로봇 추론 · 접수 D1 09:00 · 대기 0분\\n배정 권장 D1 09:20 · 완료 기한 D1 10:10 · 남은 70분'\n"
+    },
+    {
+      "id": "tests.test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_play_modes_gui.py\", line 57, in test_all_menu_buttons_fit_three_resolutions\n    self.assertGreaterEqual(panel.winfo_y(), 0)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\nAssertionError: -31 not greater than or equal to 0\n"
+    },
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 356, in test_layout_and_chip_text_at_three_resolutions\n    self.assertLessEqual(a.active_list.winfo_rooty()+a.active_list.winfo_height(),\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                         a.body.winfo_rooty()+a.body.winfo_height())\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 493 not less than or equal to 492\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages (widget='.!frame2.!serverpanel.!notebook.!frame.!liveinspector')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 473, in assert_fits\n    self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 132 not greater than or equal to 190\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages (widget='.!frame2.!serverpanel.!notebook.!frame.!liveinspector')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 473, in assert_fits\n    self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 162 not greater than or equal to 190\n"
+    },
+    {
+      "id": "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story.py\", line 492, in test_actual_tk_three_resolutions_through_all_tutorial_stages\n    self.assertIn('첫 번째 고객 업무', a.chapter_window.full_text)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '첫 번째 고객 업무' not found in '이번 근무의 고객 업무를 완료했습니다.\\n고객: Merlion AI\\n작업: 생성형 AI 모델 학습 요청\\n운영 점수: 100점 · 완료 기한: 기한 내 완료\\n반환 GPU: 7개 · 반환 전력: 7단위\\n서버 상태: A IDLE / B IDLE / C IDLE / D IDLE\\n고객 완료 안내: 요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다.'\n"
+    },
+    {
+      "id": "tests.test_story_patch.PatchGuiTests.test_completion_all_controls_fit_three_resolutions_and_minimum_dialog",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_patch.py\", line 494, in test_completion_all_controls_fit_three_resolutions_and_minimum_dialog\n    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), host.winfo_rooty()+host.winfo_height())\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 690 not less than or equal to 610\n"
+    },
+    {
+      "id": "tests.test_story_patch.PatchGuiTests.test_completion_screen_uses_actual_results_and_four_actions",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_patch.py\", line 344, in test_completion_screen_uses_actual_results_and_four_actions\n    self.assertEqual(set(window.buttons), {'modes', 'free', 'status', 'review', 'chapter2', 'retry'})\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n'chapters'\n'next'\nItems in the second set but not the first:\n'retry'\n'free'\n'review'\n'status'\n"
+    },
+    {
+      "id": "tests.test_story_patch.PatchGuiTests.test_status_offers_chapter_two_start_button_after_chapter_one",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_patch.py\", line 370, in test_status_offers_chapter_two_start_button_after_chapter_one\n    self.assertIn('제1장 — 첫 출근 · 클리어', text)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '제1장 — 첫 출근 · 클리어' not found in '제1장 — 첫 근무\\n\\n클리어 · 첫 고객 업무 정상 완료\\n\\n기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.\\n\\n각 장 시작 체크포인트는 재도전 시 새 슬롯으로 복원합니다.\\n\\n제1장 — 첫 근무 · 클리어\\n\\n제2장 — 한정된 자원 · 시작 가능\\n\\n제3장 — 끊어진 연결 · 아직 시작하지 않음\\n\\n제4장 — 서버실의 경보 · 아직 시작하지 않음\\n\\n제5장 — 홀로 선 엔지니어 · 아직 시작하지 않음\\n'\n"
+    },
+    {
+      "id": "tests.test_story_slots.SlotMenuGuiTests.test_new_story_character_emphasis_and_events_are_unchanged",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_slots.py\", line 226, in test_new_story_character_emphasis_and_events_are_unchanged\n    self.assertEqual(dialog.active_role, 'player')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'mentor' != 'player'\n- mentor\n+ player\n\n"
+    },
+    {
+      "id": "tests.test_story_slots.SlotMenuGuiTests.test_new_story_full_chapter_through_real_widgets_preserves_old_record",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_slots.py\", line 246, in test_new_story_full_chapter_through_real_widgets_preserves_old_record\n    self.assertEqual(app.session.story.step, 'server')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'arrival' != 'server'\n- arrival\n+ server\n\n"
+    },
+    {
+      "id": "tests.test_story_slots.SlotMenuGuiTests.test_new_story_starts_at_first_monologue_even_with_legacy_completion",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_slots.py\", line 216, in test_new_story_starts_at_first_monologue_even_with_legacy_completion\n    self.assertEqual(app.story_window.active_role, 'player')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'mentor' != 'player'\n- mentor\n+ player\n\n"
+    },
+    {
+      "id": "tests.test_story_slots.SlotMenuGuiTests.test_story_choice_and_back_open_no_database",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_slots.py\", line 186, in test_story_choice_and_back_open_no_database\n    self.assertEqual(set(self.menu.story_buttons), {'new', 'continue', 'back'})\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Items in the first set but not the second:\n'chapters'\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets (size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 426, in test_dialogues_center_on_game_at_three_resolutions_and_offsets\n    self.assert_centered_and_visible(d)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 432, in assert_centered_and_visible\n    self.assertTrue(widget.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets (size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 426, in test_dialogues_center_on_game_at_three_resolutions_and_offsets\n    self.assert_centered_and_visible(d)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 432, in assert_centered_and_visible\n    self.assertTrue(widget.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets (size='1366x768')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 426, in test_dialogues_center_on_game_at_three_resolutions_and_offsets\n    self.assert_centered_and_visible(d)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 432, in assert_centered_and_visible\n    self.assertTrue(widget.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='resources', size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='resources', size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game (step='preview', size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 359, in check_sizes\n    self.assertTrue(target.winfo_ismapped())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 is not true\n"
+    }
+  ],
+  "errors": [
+    {
+      "id": "tests.test_story_slots.SlotMenuGuiTests.test_two_new_slots_keep_time_resources_score_and_progress_separate",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_slots.py\", line 285, in test_two_new_slots_keep_time_resources_score_and_progress_separate\n    prepare(first.session); finish(first.session)\n    ~~~~~~~^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\test_story_patch.py\", line 20, in prepare\n    s.confirm_story_arrival(); s.select_story_server('A'); s.confirm_story_resources()\n                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"<repo>\\session.py\", line 305, in confirm_story_resources\n    raise ValueError('먼저 Server A를 선택하고 Inspector를 확인해 주세요.')\nValueError: 먼저 Server A를 선택하고 Inspector를 확인해 주세요.\n"
+    },
+    {
+      "id": "tests.test_chapter2_gui.FailureFeedbackGuiTests.test_us_first_does_not_show_failure_until_the_request_is_actually_lost",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_chapter2_gui.py\", line 164, in test_us_first_does_not_show_failure_until_the_request_is_actually_lost\n    self.assertIn('일본 고객', window.full_text)\n                               ^^^^^^^^^^^^^^^^\nAttributeError: 'ChapterFailureDialog' object has no attribute 'full_text'\n"
+    },
+    {
+      "id": "tests.test_story_patch.PatchGuiTests.test_direct_free_transition_resumes_its_own_existing_game",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_patch.py\", line 391, in test_direct_free_transition_resumes_its_own_existing_game\n    win = self.complete(); win.buttons['free'].invoke(); self.root.update()\n                           ~~~~~~~~~~~^^^^^^^^\nKeyError: 'free'\n"
+    },
+    {
+      "id": "tests.test_story_patch.PatchGuiTests.test_transition_save_failure_keeps_window_timer_and_database_open",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_story_patch.py\", line 410, in test_transition_save_failure_keeps_window_timer_and_database_open\n    with patch('main.messagebox.showerror') as error: win.buttons['free'].invoke()\n                                                      ~~~~~~~~~~~^^^^^^^^\nKeyError: 'free'\n"
+    },
+    {
+      "id": "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_v091e.py\", line 151, in test_chapter_dialog_is_centered_on_game_window\n    self.assertTrue(d.buttons[key].winfo_ismapped())\n                    ~~~~~~~~~^^^^^\nKeyError: 'free'\n"
+    },
+    {
+      "id": "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_stays_inside_work_area_on_small_window",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_v091e.py\", line 165, in test_chapter_dialog_stays_inside_work_area_on_small_window\n    self.assertLessEqual(d.buttons[key].winfo_rooty()+d.buttons[key].winfo_height(),\n                         ~~~~~~~~~^^^^^\nKeyError: 'free'\n"
+    }
+  ],
+  "skipped": [],
+  "seconds": 93.823,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}
