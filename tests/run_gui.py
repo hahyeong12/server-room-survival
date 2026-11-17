@@ -35,6 +35,17 @@ def check_test_path(path):
         raise AssertionError('사용자 저장 디렉터리는 회귀 테스트에서 쓸 수 없습니다.')
 
 
+def load_suite(names):
+    loader = unittest.TestLoader()
+    # tests는 __init__.py가 없는 namespace 디렉터리입니다. 기존 run_headless와 같은 탐색을 씁니다.
+    return loader.loadTestsFromNames(names) if names else loader.discover(str(ROOT/'tests'))
+
+
+def test_id(test):
+    name = test.id()
+    return name if name.startswith('tests.') else 'tests.'+name
+
+
 def preflight():
     """Tk 표시·전경·화면 배율을 확인합니다. DPI 설정이나 게임 상태를 바꾸지 않습니다."""
     root = tk.Tk()
@@ -78,7 +89,7 @@ class RecordedResult(unittest.TextTestResult):
 
     def addSuccess(self, test):
         super().addSuccess(test)
-        self.passed.append(test.id())
+        self.passed.append(test_id(test))
 
 
 def main():
@@ -111,13 +122,12 @@ def main():
             stack.enter_context(patch.object(Database, '__init__', temporary_only))
             stack.enter_context(patch.object(StorySlots, 'reserve_new', temporary_slot))
             stack.enter_context(patch('tkinter.messagebox._show', side_effect=unexpected_message))
-            suite = (unittest.defaultTestLoader.loadTestsFromNames(args.names) if args.names else
-                     unittest.defaultTestLoader.discover(str(ROOT/'tests'), top_level_dir=str(ROOT)))
+            suite = load_suite(args.names)
             result = unittest.TextTestRunner(verbosity=2, resultclass=RecordedResult).run(suite)
         report.update(ran=result.testsRun, passed=result.passed,
-                      failures=[{'id': t.id(), 'traceback': detail} for t, detail in result.failures],
-                      errors=[{'id': t.id(), 'traceback': detail} for t, detail in result.errors],
-                      skipped=[{'id': t.id(), 'reason': detail} for t, detail in result.skipped])
+                      failures=[{'id': test_id(t), 'traceback': detail} for t, detail in result.failures],
+                      errors=[{'id': test_id(t), 'traceback': detail} for t, detail in result.errors],
+                      skipped=[{'id': test_id(t), 'reason': detail} for t, detail in result.skipped])
     except Exception as exc:
         report['environment_error'] = repr(exc)
         raise
