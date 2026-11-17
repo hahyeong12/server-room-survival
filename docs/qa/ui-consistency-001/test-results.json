@@ -1,0 +1,95 @@
+{
+ "kind": "ui-consistency-001 test summary",
+ "full_suite_isolated_copy": {
+  "command": "python -m unittest discover -s tests -v (copied tracked sources in a temp folder)",
+  "code": "working tree after P0-1/2/3 fixes, before card-height fix and play_modes_gui prepare fix",
+  "ran": 1046,
+  "seconds": 697.387,
+  "failures": 32,
+  "errors": 9,
+  "failing_test_ids": 29
+ },
+ "baseline_8e49da5_same_ids": {
+  "still_failing_on_baseline": 28,
+  "only_after_change": [
+   "test_chapter3_gui.Chapter3PlayGuiTests.test_wrong_response_shows_observed_feedback_and_keeps_the_mission_open"
+  ]
+ },
+ "classification": {
+  "test_play_modes_gui.PlayModesGuiTests.test_tutorial_finish_cannot_offer_next_story_chapter": "old_tutorial_prepare (fixed in this work)",
+  "test_play_modes_gui.PlayModesGuiTests.test_next_chapter_creates_boundary_checkpoint_and_heading": "old_tutorial_prepare (fixed in this work)",
+  "test_play_modes_gui.PlayModesGuiTests.test_checkpoint_failure_after_chapter_start_keeps_committed_story": "old_tutorial_prepare (fixed in this work)",
+  "test_chapter3_gui.Chapter3PlayGuiTests.test_wrong_response_shows_observed_feedback_and_keeps_the_mission_open": "expected old title Chapter 3; intended label change to 제3장 (test updated)",
+  "test_story_slots.SlotMenuGuiTests.test_two_new_slots_keep_time_resources_score_and_progress_separate": "old_tutorial_prepare (pre-existing, not changed)",
+  "test_story_slots.SlotFilesTests.test_git_ignores_slots_journal_wal_shm_and_lease": "environment: copied folder is not a git repository",
+  "test_allocation_flow_gui.ResultButtonsGuiTests.test_success_result_keeps_retry_button_visible": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_chapter2_gui.FailureFeedbackGuiTests.test_us_first_does_not_show_failure_until_the_request_is_actually_lost": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_chapter2_gui.PracticeAndRetryGuiTests.test_result_dialog_has_retry_and_retry_opens_a_new_practice_slot": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_chapter2_gui.PracticeAndRetryGuiTests.test_story_menu_offers_chapter_one_chapter_two_and_continue": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_conditions.ConditionGuiTests.test_mode_labels_fit_minimum_window_during_negotiation_and_shortage": "pre-existing layout/pixel expectation",
+  "test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_console.ConsoleTests.test_japan_time_button_updates_progress_clock_and_saved_allocation": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions": "pre-existing layout/pixel expectation",
+  "test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions": "pre-existing layout/pixel expectation",
+  "test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages": "pre-existing layout/pixel expectation",
+  "test_story_patch.PatchGuiTests.test_completion_all_controls_fit_three_resolutions_and_minimum_dialog": "pre-existing layout/pixel expectation",
+  "test_story_patch.PatchGuiTests.test_completion_screen_uses_actual_results_and_four_actions": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_story_patch.PatchGuiTests.test_direct_free_transition_resumes_its_own_existing_game": "pre-existing KeyError 'free' (old menu key)",
+  "test_story_patch.PatchGuiTests.test_status_offers_chapter_two_start_button_after_chapter_one": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_story_patch.PatchGuiTests.test_transition_save_failure_keeps_window_timer_and_database_open": "pre-existing KeyError 'free' (old menu key)",
+  "test_story_slots.SlotMenuGuiTests.test_new_story_character_emphasis_and_events_are_unchanged": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_story_slots.SlotMenuGuiTests.test_new_story_full_chapter_through_real_widgets_preserves_old_record": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_story_slots.SlotMenuGuiTests.test_new_story_starts_at_first_monologue_even_with_legacy_completion": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_story_slots.SlotMenuGuiTests.test_story_choice_and_back_open_no_database": "pre-existing outdated expectation (menu/result/onboarding text or flow)",
+  "test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets": "pre-existing layout/pixel expectation",
+  "test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game": "pre-existing layout/pixel expectation",
+  "test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window": "pre-existing layout/pixel expectation",
+  "test_v091e.ChapterWindowTests.test_chapter_dialog_stays_inside_work_area_on_small_window": "pre-existing layout/pixel expectation"
+ },
+ "white_frame_probe": {
+  "script": "flash_probe.py (memory DB, chapter start practice, Story dialogue first appearance)",
+  "baseline_white_ratio_after_constructor_before_event_loop": {
+   "ch2": [
+    0.0,
+    0.0,
+    0.873,
+    0.959,
+    1.0
+   ],
+   "ch3": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "baseline_white_ratio_after_root_update": 0.007,
+  "redraw_window_variant": "no effect (1.0 x3)",
+  "alpha_variant": "no effect (1.0 x3)",
+  "window_events_only_variant_end_of_ctor": "0.007 x6, but white duration not reduced",
+  "last_white_ms_baseline": {
+   "ch2": [
+    1386.5,
+    1171.0,
+    1186.9
+   ],
+   "ch3": [
+    1759.8,
+    1264.5,
+    1332.0
+   ]
+  },
+  "last_white_ms_window_events_only": {
+   "ch2": [
+    1391.7,
+    966.3,
+    1067.2
+   ],
+   "ch3": [
+    1313.7,
+    877.7,
+    968.2
+   ]
+  },
+  "decision": "not shipped (no meaningful reduction); reverted"
+ }
+}
