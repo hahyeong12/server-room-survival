@@ -1,0 +1,747 @@
+[
+  {
+    "chapter": 1,
+    "practice": false,
+    "result": {
+      "company": "Merlion AI / Sakura Robotics / Northstar AI",
+      "task": "첫 근무 완료",
+      "score": 100.0,
+      "on_time": true,
+      "gpu": 16,
+      "power": 17,
+      "servers": {
+        "A": "HEALTHY",
+        "B": "HEALTHY",
+        "C": "HEALTHY",
+        "D": "HEALTHY"
+      },
+      "feedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+      "request_id": 3,
+      "playthrough_id": 3,
+      "jobs": [
+        {
+          "request_id": 1,
+          "company": "Merlion AI",
+          "country": "싱가포르",
+          "task": "생성형 AI 모델 학습 요청",
+          "key": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "mode": "고성능 모드",
+          "gpu": 7,
+          "power": 7,
+          "deadline": "준수",
+          "due": "D1 12:00",
+          "completed": "D1 09:30",
+          "score": 100
+        },
+        {
+          "request_id": 2,
+          "company": "Sakura Robotics",
+          "country": "일본",
+          "task": "로봇 AI 모델 추론 작업",
+          "key": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "mode": "고성능 모드",
+          "gpu": 3,
+          "power": 4,
+          "deadline": "준수",
+          "due": "D1 12:30",
+          "completed": "D1 10:00",
+          "score": 100
+        },
+        {
+          "request_id": 3,
+          "company": "Northstar AI",
+          "country": "미국",
+          "task": "대규모 데이터 분석 작업",
+          "key": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "mode": "고성능 모드",
+          "gpu": 6,
+          "power": 6,
+          "deadline": "준수",
+          "due": "D1 13:00",
+          "completed": "D1 10:30",
+          "score": 100
+        }
+      ],
+      "summary": [
+        [
+          "완료 업무",
+          "3/3건"
+        ],
+        [
+          "평균 운영 점수",
+          "100.0점"
+        ],
+        [
+          "자원 반환",
+          "GPU 누적 16개 · 전력 누적 17단위"
+        ],
+        [
+          "Merlion AI",
+          "정상 완료 · 100점"
+        ],
+        [
+          "Sakura Robotics",
+          "정상 완료 · 100점"
+        ],
+        [
+          "Northstar AI",
+          "정상 완료 · 100점"
+        ]
+      ]
+    }
+  },
+  {
+    "chapter": 2,
+    "practice": false,
+    "result": {
+      "jobs": [
+        {
+          "request_id": 4,
+          "company": "Sakura Robotics",
+          "country": "일본",
+          "task": "로봇 AI 모델 추론 작업",
+          "outcome": "정상 완료",
+          "succeeded": true,
+          "score": 100,
+          "on_time": true,
+          "mode": "고성능 모드",
+          "gpu": 4,
+          "power": 5,
+          "placement": "A GPU 3/전력 4, B GPU 1/전력 1",
+          "started": 630,
+          "completed": 670,
+          "waited": 0,
+          "late_minutes": 0,
+          "penalty": 0,
+          "expired": false,
+          "expiry": 710,
+          "wait_choices": 0,
+          "proposals": [],
+          "eval_score": 100,
+          "state": "success",
+          "reason": null,
+          "deadline": "준수"
+        },
+        {
+          "request_id": 5,
+          "company": "Northstar AI",
+          "country": "미국",
+          "task": "대규모 데이터 분석 작업",
+          "outcome": "정상 완료",
+          "succeeded": true,
+          "score": 95,
+          "on_time": true,
+          "mode": "절약형 모드",
+          "gpu": 4,
+          "power": 3,
+          "placement": "B GPU 2/전력 1, C GPU 2/전력 2",
+          "started": 630,
+          "completed": 730,
+          "waited": 0,
+          "late_minutes": 0,
+          "penalty": 0,
+          "expired": false,
+          "expiry": 750,
+          "wait_choices": 0,
+          "proposals": [],
+          "eval_score": 95,
+          "state": "success",
+          "reason": null,
+          "deadline": "준수"
+        }
+      ],
+      "concurrent": true,
+      "servers": {
+        "A": "IDLE",
+        "B": "IDLE",
+        "C": "IDLE",
+        "D": "IDLE"
+      },
+      "decisions": [
+        "두 작업을 같은 시각(D1 10:30)에 시작했습니다.",
+        "일본: 고성능 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료",
+        "미국: 절약형 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료"
+      ],
+      "practice": false,
+      "mission": "success",
+      "overall": 97.5,
+      "failure": null,
+      "highlights": [
+        "일본 Sakura Robotics: 고객이 원래 요청한 고성능 모드(GPU 4/전력 5 · 배정 A GPU 3/전력 4, B GPU 1/전력 1)로 D1 10:30에 시작해 D1 11:10에 완료했습니다. 완료 기한 D1 11:20보다 10분 먼저 끝냈습니다.",
+        "미국 Northstar AI: 고객이 허용한 절약형 모드(GPU 4/전력 3 · 배정 B GPU 2/전력 1, C GPU 2/전력 2)로 D1 10:30에 시작해 D1 12:10에 완료했습니다. 완료 기한 D1 12:10에 맞춰 끝냈습니다.",
+        "두 작업을 동시에 실행하며 GPU 8개와 전력 8단위를 나누어 썼습니다(데이터센터 총 GPU 10/전력 10)."
+      ],
+      "summary": {
+        "mission": "success",
+        "overall": 97.5,
+        "ok": 2,
+        "total": 2,
+        "strategy": "일본 고성능 + 미국 절약형",
+        "arrangement": "두 작업 동시 실행",
+        "resources": "GPU 8개 / 전력 8단위 사용 후 반환",
+        "verdict": "두 고객 모두 기한 내 완료"
+      }
+    }
+  },
+  {
+    "chapter": 3,
+    "practice": false,
+    "result": {
+      "jobs": [
+        {
+          "request_id": 6,
+          "company": "Merlion AI",
+          "country": "싱가포르",
+          "scenario": "ch3_path",
+          "kind": "path_down",
+          "kind_label": "통신 경로 단절",
+          "record": {
+            "kind": "path_down",
+            "responses": [
+              "reroute"
+            ],
+            "attempts": 1,
+            "recovered_by": "reroute",
+            "downtime": 0,
+            "primary_up": false,
+            "rerouted": true,
+            "needed": 5,
+            "available": 6,
+            "backup": 6,
+            "diagnosed": true,
+            "initial_needed": 5,
+            "final": null
+          },
+          "responses": [
+            "백업 경로 우회"
+          ],
+          "recovered": true,
+          "diagnosed": true,
+          "downtime": 0,
+          "attempts": 1,
+          "job": {
+            "request_id": 6,
+            "company": "Merlion AI",
+            "country": "싱가포르",
+            "task": "생성형 AI 모델 학습 요청",
+            "key": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "mode": "고성능 모드",
+            "gpu": 4,
+            "power": 4,
+            "deadline": "준수",
+            "due": "D1 14:40",
+            "completed": "D1 13:20",
+            "score": 90
+          },
+          "success": true,
+          "late": false
+        },
+        {
+          "request_id": 7,
+          "company": "Northstar AI",
+          "country": "미국",
+          "scenario": "ch3_bw",
+          "kind": "bandwidth",
+          "kind_label": "가용 대역폭 부족",
+          "record": {
+            "kind": "bandwidth",
+            "responses": [
+              "compress"
+            ],
+            "attempts": 1,
+            "recovered_by": "compress",
+            "downtime": 0,
+            "primary_up": true,
+            "rerouted": false,
+            "needed": 4,
+            "available": 4,
+            "backup": 4,
+            "diagnosed": true,
+            "initial_needed": 6,
+            "final": null
+          },
+          "responses": [
+            "전송 데이터 압축"
+          ],
+          "recovered": true,
+          "diagnosed": true,
+          "downtime": 0,
+          "attempts": 1,
+          "job": {
+            "request_id": 7,
+            "company": "Northstar AI",
+            "country": "미국",
+            "task": "대규모 데이터 분석 작업",
+            "key": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "mode": "고성능 모드",
+            "gpu": 4,
+            "power": 3,
+            "deadline": "준수",
+            "due": "D1 15:40",
+            "completed": "D1 14:20",
+            "score": 95
+          },
+          "success": true,
+          "late": false
+        }
+      ],
+      "mission": "success",
+      "practice": false,
+      "servers": {
+        "A": "HEALTHY",
+        "B": "HEALTHY",
+        "C": "HEALTHY",
+        "D": "HEALTHY"
+      },
+      "released": true,
+      "summary": {
+        "mission": "success",
+        "ok": 2,
+        "total": 2,
+        "table": [
+          [
+            "A",
+            "경로 단절",
+            "우회 성공 · 1회",
+            "성공",
+            "90점"
+          ],
+          [
+            "B",
+            "대역폭 부족",
+            "압축 성공 · 1회",
+            "성공",
+            "95점"
+          ]
+        ],
+        "mentor": [
+          "A: 끊어진 경로에는 정상 백업 경로로 우회한 조치가 적절했습니다.",
+          "B: 경로는 연결되어 있었고 용량이 문제여서 필요량을 줄이는 압축이 적절했습니다.",
+          "최종 결과: 2개 장애 중 2개를 복구하고 정상 완료했습니다."
+        ],
+        "rows": [
+          [
+            [
+              "장애",
+              "통신 경로 단절"
+            ],
+            [
+              "진단",
+              "주 경로 DOWN / 백업 경로 정상(용량 6) / GPU·서버 정상"
+            ],
+            [
+              "선택 대응",
+              "백업 경로 우회"
+            ],
+            [
+              "복구 결과",
+              "성공"
+            ],
+            [
+              "중단 시간",
+              "0분 (대응 1회)"
+            ],
+            [
+              "작업 결과",
+              "정상 완료 · 기한 준수"
+            ],
+            [
+              "운영 점수",
+              "90점"
+            ]
+          ],
+          [
+            [
+              "장애",
+              "가용 대역폭 부족"
+            ],
+            [
+              "진단",
+              "주 경로 UP / 필요 대역폭 6 > 가용 4 / 백업 경로는 같은 병목 공유 / GPU·서버 정상"
+            ],
+            [
+              "선택 대응",
+              "전송 데이터 압축"
+            ],
+            [
+              "복구 결과",
+              "성공"
+            ],
+            [
+              "중단 시간",
+              "0분 (대응 1회)"
+            ],
+            [
+              "작업 결과",
+              "정상 완료 · 기한 준수"
+            ],
+            [
+              "운영 점수",
+              "95점"
+            ]
+          ]
+        ],
+        "verdict": "두 장애 모두 원인에 맞게 복구하고 정상 완료"
+      },
+      "mentor": [
+        "A: 끊어진 경로에는 정상 백업 경로로 우회한 조치가 적절했습니다.",
+        "B: 경로는 연결되어 있었고 용량이 문제여서 필요량을 줄이는 압축이 적절했습니다.",
+        "최종 결과: 2개 장애 중 2개를 복구하고 정상 완료했습니다."
+      ]
+    }
+  },
+  {
+    "chapter": 4,
+    "practice": false,
+    "result": {
+      "jobs": [
+        {
+          "request_id": 8,
+          "company": "Sakura Robotics",
+          "country": "일본",
+          "record": {
+            "server": "A",
+            "fault_minute": 890,
+            "choices": [
+              "migrate"
+            ],
+            "slice_gpu": 3,
+            "slice_power": 4,
+            "repair_finish": 940,
+            "migrate_finish": 930,
+            "due": 935,
+            "repair_minutes": 20,
+            "normal_gpu": 6,
+            "need_gpu": 3,
+            "parts": "Server B GPU 2/전력 2, Server C GPU 1/전력 2"
+          },
+          "job": {
+            "request_id": 8,
+            "company": "Sakura Robotics",
+            "country": "일본",
+            "task": "로봇 AI 모델 추론 작업",
+            "key": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "mode": "고성능 모드",
+            "gpu": 3,
+            "power": 4,
+            "deadline": "준수",
+            "due": "D1 15:35",
+            "completed": "D1 15:30",
+            "score": 100
+          },
+          "choices": [
+            "작업 이전"
+          ],
+          "downtime": 10,
+          "on_time": true,
+          "success": true,
+          "allocations": 2,
+          "last_placement": "Server B GPU 2/전력 2 → Server C GPU 1/전력 2"
+        },
+        {
+          "request_id": 9,
+          "company": "Merlion AI",
+          "country": "싱가포르",
+          "record": {
+            "server": "A",
+            "fault_minute": 960,
+            "choices": [
+              "repair"
+            ],
+            "slice_gpu": 4,
+            "slice_power": 4,
+            "repair_finish": 1010,
+            "migrate_finish": null,
+            "due": 1080,
+            "repair_minutes": 20,
+            "normal_gpu": 6,
+            "need_gpu": 7
+          },
+          "job": {
+            "request_id": 9,
+            "company": "Merlion AI",
+            "country": "싱가포르",
+            "task": "생성형 AI 모델 학습 요청",
+            "key": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "mode": "고성능 모드",
+            "gpu": 7,
+            "power": 7,
+            "deadline": "준수",
+            "due": "D1 18:00",
+            "completed": "D1 16:50",
+            "score": 100
+          },
+          "choices": [
+            "장비 복구"
+          ],
+          "downtime": 20,
+          "on_time": true,
+          "success": true,
+          "allocations": 1,
+          "last_placement": "Server A GPU 4/전력 4 → Server B GPU 2/전력 2 → Server C GPU 1/전력 1"
+        }
+      ],
+      "mission": "success",
+      "practice": false,
+      "servers": {
+        "A": "HEALTHY",
+        "B": "HEALTHY",
+        "C": "HEALTHY",
+        "D": "HEALTHY"
+      },
+      "released": true,
+      "summary": {
+        "mission": "success",
+        "ok": 2,
+        "total": 2,
+        "table": [
+          [
+            "A",
+            "Server A 장애",
+            "작업 이전",
+            "기한 내 완료",
+            "10분",
+            "100점"
+          ],
+          [
+            "B",
+            "Server A 장애",
+            "장비 복구",
+            "기한 내 완료",
+            "20분",
+            "100점"
+          ]
+        ],
+        "rows": [
+          [
+            [
+              "장애 서버",
+              "Server A"
+            ],
+            [
+              "선택 대응",
+              "작업 이전"
+            ],
+            [
+              "선택 시 예상",
+              "복구 완료 D1 15:40 / 이전 완료 D1 15:30 / 기한 D1 15:35"
+            ],
+            [
+              "서버 배정(마지막)",
+              "Server B GPU 2/전력 2 → Server C GPU 1/전력 2"
+            ],
+            [
+              "배정 기록 수",
+              "2"
+            ],
+            [
+              "중단 시간",
+              "10분 (하드웨어 중단 + 이전 준비)"
+            ]
+          ],
+          [
+            [
+              "장애 서버",
+              "Server A"
+            ],
+            [
+              "선택 대응",
+              "장비 복구"
+            ],
+            [
+              "선택 시 예상",
+              "복구 완료 D1 16:50 / 이전 불가 / 기한 D1 18:00"
+            ],
+            [
+              "서버 배정(마지막)",
+              "Server A GPU 4/전력 4 → Server B GPU 2/전력 2 → Server C GPU 1/전력 1"
+            ],
+            [
+              "배정 기록 수",
+              "1"
+            ],
+            [
+              "중단 시간",
+              "20분 (하드웨어 중단 + 이전 준비)"
+            ]
+          ]
+        ],
+        "columns": [
+          "미션",
+          "장애",
+          "선택 대응",
+          "결과",
+          "중단",
+          "점수"
+        ],
+        "name": "Chapter 3b",
+        "subtitle": "서버 장비 장애 · 복구와 이전",
+        "detail_text": "미션 A · 일본 Sakura Robotics — 로봇 AI 모델 추론 작업\n  장애 서버: Server A\n  선택 대응: 작업 이전\n  선택 시 예상: 복구 완료 D1 15:40 / 이전 완료 D1 15:30 / 기한 D1 15:35\n  서버 배정(마지막): Server B GPU 2/전력 2 → Server C GPU 1/전력 2\n  배정 기록 수: 2\n  중단 시간: 10분 (하드웨어 중단 + 이전 준비)\n  운영 모드 고성능 모드 · GPU 3 / 전력 4 사용 후 반환\n미션 B · 싱가포르 Merlion AI — 생성형 AI 모델 학습 요청\n  장애 서버: Server A\n  선택 대응: 장비 복구\n  선택 시 예상: 복구 완료 D1 16:50 / 이전 불가 / 기한 D1 18:00\n  서버 배정(마지막): Server A GPU 4/전력 4 → Server B GPU 2/전력 2 → Server C GPU 1/전력 1\n  배정 기록 수: 1\n  중단 시간: 20분 (하드웨어 중단 + 이전 준비)\n  운영 모드 고성능 모드 · GPU 7 / 전력 7 사용 후 반환\n서버 상태: A HEALTHY / B HEALTHY / C HEALTHY / D HEALTHY\n이 장의 서버 구성과 시간은 교육용 설정입니다.",
+        "verdict": "두 장애 모두 기한 내 정상 완료",
+        "mentor": [
+          "A: 정상 서버에 자원이 있어 작업을 이전했고 기한 내에 끝냈습니다. 복구를 기다렸다면 기한을 넘겼을 것입니다.",
+          "B: 정상 서버 GPU 6개로는 GPU 7개 작업을 옮길 수 없어 장비 복구가 맞는 선택이었습니다.",
+          "최종 결과: 두 장애 중 2개를 기한 내 정상 완료했습니다."
+        ]
+      },
+      "mentor": [
+        "A: 정상 서버에 자원이 있어 작업을 이전했고 기한 내에 끝냈습니다. 복구를 기다렸다면 기한을 넘겼을 것입니다.",
+        "B: 정상 서버 GPU 6개로는 GPU 7개 작업을 옮길 수 없어 장비 복구가 맞는 선택이었습니다.",
+        "최종 결과: 두 장애 중 2개를 기한 내 정상 완료했습니다."
+      ]
+    }
+  },
+  {
+    "chapter": 5,
+    "practice": false,
+    "request_id": 10,
+    "training_result": {
+      "practice": false,
+      "rows": [
+        [
+          "Stage 1 · 시스템 구조 관찰",
+          "통과",
+          "관측·실행 0회 · 답변 2회"
+        ],
+        [
+          "Stage 2 · 진단 도구 선택",
+          "통과",
+          "관측·실행 2회 · 답변 3회"
+        ],
+        [
+          "Stage 3 · 명령어 조립",
+          "통과",
+          "관측·실행 2회 · 답변 1회"
+        ],
+        [
+          "Stage 4 · 터미널 직접 입력",
+          "통과",
+          "관측·실행 4회 · 답변 1회"
+        ],
+        [
+          "Stage 5 · 독립 진단",
+          "통과",
+          "관측·실행 4회 · 답변 1회"
+        ]
+      ],
+      "restarts": 0,
+      "stage5": {
+        "evidence": 3,
+        "cause_attempts": 1,
+        "recovered_by": "백업 경로 우회",
+        "job": "완료"
+      },
+      "notice": "Stage 5는 이미 경험한 경로 단절 사건을 재사용한 독립 진단 흐름의 시연입니다. 처음 보는 장애에 대한 숙련도 인증이 아닙니다.",
+      "outro": "관찰 → 판단 → 조치 → 검증을 혼자 끝까지 해냈어요. 다음에는 원인을 미리 모르는 새 장애로 연습하게 될 거예요."
+    },
+    "job": {
+      "id": 10,
+      "state": {
+        "center": {
+          "gpu_total": 10,
+          "power_total": 10,
+          "gpu_used": 0,
+          "power_used": 0
+        },
+        "phase": "finished",
+        "plan": "performance",
+        "response": "reroute",
+        "gpu_used": 4,
+        "power_used": 4,
+        "network_needed": 5,
+        "network_available": 6,
+        "score": 90,
+        "succeeded": true,
+        "result_text": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 90점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+        "country": "싱가포르",
+        "work_done": 60,
+        "elapsed": 70,
+        "downtime": 0,
+        "recovery_left": 0,
+        "incident_at": 24.0,
+        "incident_occurred": true,
+        "response_attempts": 1,
+        "cost_penalty": 15,
+        "retry_count": 0,
+        "scenario": "ch3_path",
+        "incident_kind": "path_down",
+        "primary_up": false,
+        "rerouted": true,
+        "backup_capacity": 6,
+        "response_log": [
+          "reroute"
+        ],
+        "recovered_by": "reroute"
+      },
+      "progress": 100,
+      "request": {
+        "id": 10,
+        "mission_id": 1,
+        "message": "[신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 4단위 / 네트워크: 5단위\n절약형: GPU 3개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 19:20 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 60분 / 절약형 모드 90분",
+        "source_key": "training:1:1",
+        "status": "completed",
+        "is_read": 0,
+        "rejection_reason": null,
+        "playthrough_id": 10,
+        "received_at": "2026-11-17T19:02:44+09:00",
+        "updated_at": "2026-11-17T19:04:24+09:00"
+      },
+      "terms": {
+        "priority": "일반 · 모델 학습",
+        "received": 1010,
+        "start_due": 1020,
+        "due": 1160,
+        "expires": 1250,
+        "alerts": [],
+        "started": 1010,
+        "completed": 1080,
+        "late_minutes": 0,
+        "penalty": 0,
+        "evaluation": 90
+      },
+      "conditions": {
+        "type": "fixed",
+        "task": "생성형 AI 모델 학습 요청",
+        "requested_mode": "performance",
+        "allowed_modes": [
+          "performance"
+        ],
+        "plans": {
+          "performance": {
+            "label": "고성능 모드",
+            "gpu": 4,
+            "power": 4,
+            "network": 5,
+            "bonus": 15,
+            "mode": "performance"
+          },
+          "economy": {
+            "label": "절약형 모드",
+            "gpu": 3,
+            "power": 2,
+            "network": 3,
+            "bonus": 5,
+            "mode": "economy"
+          }
+        },
+        "due": 1160
+      }
+    },
+    "final_minute": 1080,
+    "used": [
+      0,
+      0
+    ],
+    "available": [
+      10,
+      10
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "ran": 759,
+  "passed": 759,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "excluded_gui": 298,
+  "seconds": 21.443,
+  "tk_creation_blocked": true,
+  "log": "headless.txt"
+}

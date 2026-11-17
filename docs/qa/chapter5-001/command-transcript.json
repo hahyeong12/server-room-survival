@@ -1,0 +1,72 @@
+[
+  {
+    "stage": "Stage 2 진단 도구 선택",
+    "source": "choice",
+    "line": null,
+    "displayed_output": "[가상 시각 D1 17:20 · 교육용 출력]\nengineer@sg-edge:~$ ping -c 3 10.0.0.20\nPING 10.0.0.20 (10.0.0.20) 56(84) bytes of data.\n\n--- 10.0.0.20 ping statistics ---\n3 packets transmitted, 0 received, 100% packet loss, time 2036ms\n",
+    "minute": null
+  },
+  {
+    "stage": "Stage 3 명령어 조립",
+    "source": "blocks",
+    "line": null,
+    "displayed_output": "[가상 시각 D1 17:20 · 교육용 출력]\nengineer@sg-edge:~$ ping -c 3 10.0.0.20\nPING 10.0.0.20 (10.0.0.20) 56(84) bytes of data.\n\n--- 10.0.0.20 ping statistics ---\n3 packets transmitted, 0 received, 100% packet loss, time 2036ms\n",
+    "minute": null
+  },
+  {
+    "stage": "Stage 4 터미널 직접 입력",
+    "source": "native keyboard",
+    "line": "ping -z 192.168.10.1",
+    "displayed_output": "engineer@sg-edge:~$ ping -z 192.168.10.1\n[가상 시각 D1 17:20 · 교육용 출력]\nping: invalid option -- 'z'\n입력 안내: [교육용 안내] 이 터미널의 ping은 -c(보낼 횟수) 옵션만 지원합니다.\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 4 터미널 직접 입력",
+    "source": "native keyboard",
+    "line": "ping -c 3 192.168.10.1",
+    "displayed_output": "engineer@sg-edge:~$ ping -c 3 192.168.10.1\n[가상 시각 D1 17:20 · 교육용 출력]\nPING 192.168.10.1 (192.168.10.1) 56(84) bytes of data.\n64 bytes from 192.168.10.1: icmp_seq=1 ttl=64 time=1.0 ms\n64 bytes from 192.168.10.1: icmp_seq=2 ttl=64 time=1.4 ms\n64 bytes from 192.168.10.1: icmp_seq=3 ttl=64 time=0.7 ms\n\n--- 192.168.10.1 ping statistics ---\n3 packets transmitted, 3 received, 0% packet loss, time 2009ms\nrtt min/avg/max/mdev = 0.700/1.033/1.400/0.287 ms\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 4 터미널 직접 입력",
+    "source": "native keyboard",
+    "line": "ping -c 3 10.0.0.20",
+    "displayed_output": "engineer@sg-edge:~$ ping -c 3 10.0.0.20\n[가상 시각 D1 17:20 · 교육용 출력]\nPING 10.0.0.20 (10.0.0.20) 56(84) bytes of data.\n\n--- 10.0.0.20 ping statistics ---\n3 packets transmitted, 0 received, 100% packet loss, time 2036ms\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 4 터미널 직접 입력",
+    "source": "native keyboard",
+    "line": "ip route",
+    "displayed_output": "engineer@sg-edge:~$ ip route\n[가상 시각 D1 17:20 · 교육용 출력]\n10.0.0.0/24 via 192.168.10.1 dev eth0 proto static\n192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.5\n192.168.20.0/24 dev eth1 proto kernel scope link src 192.168.20.5\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 5 독립 진단 시연",
+    "source": "native keyboard",
+    "line": "ping -c 3 192.168.10.1",
+    "displayed_output": "engineer@sg-edge:~$ ping -c 3 192.168.10.1\n[가상 시각 D1 17:20 · 교육용 출력]\nPING 192.168.10.1 (192.168.10.1) 56(84) bytes of data.\n64 bytes from 192.168.10.1: icmp_seq=1 ttl=64 time=1.0 ms\n64 bytes from 192.168.10.1: icmp_seq=2 ttl=64 time=1.4 ms\n64 bytes from 192.168.10.1: icmp_seq=3 ttl=64 time=0.7 ms\n\n--- 192.168.10.1 ping statistics ---\n3 packets transmitted, 3 received, 0% packet loss, time 2009ms\nrtt min/avg/max/mdev = 0.700/1.033/1.400/0.287 ms\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 5 독립 진단 시연",
+    "source": "native keyboard",
+    "line": "ping -c 3 10.0.0.20",
+    "displayed_output": "engineer@sg-edge:~$ ping -c 3 10.0.0.20\n[가상 시각 D1 17:20 · 교육용 출력]\nPING 10.0.0.20 (10.0.0.20) 56(84) bytes of data.\n\n--- 10.0.0.20 ping statistics ---\n3 packets transmitted, 0 received, 100% packet loss, time 2036ms\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 5 독립 진단 시연",
+    "source": "native keyboard",
+    "line": "ip route",
+    "displayed_output": "engineer@sg-edge:~$ ip route\n[가상 시각 D1 17:20 · 교육용 출력]\n10.0.0.0/24 via 192.168.10.1 dev eth0 proto static\n192.168.10.0/24 dev eth0 proto kernel scope link src 192.168.10.5\n192.168.20.0/24 dev eth1 proto kernel scope link src 192.168.20.5\n\n",
+    "minute": 1040
+  },
+  {
+    "stage": "Stage 5 독립 진단 시연",
+    "source": "native keyboard",
+    "line": "ping -c 3 10.0.0.20",
+    "displayed_output": "engineer@sg-edge:~$ ping -c 3 10.0.0.20\n[가상 시각 D1 17:20 · 교육용 출력]\nPING 10.0.0.20 (10.0.0.20) 56(84) bytes of data.\n64 bytes from 10.0.0.20: icmp_seq=1 ttl=61 time=32.2 ms\n64 bytes from 10.0.0.20: icmp_seq=2 ttl=61 time=32.6 ms\n64 bytes from 10.0.0.20: icmp_seq=3 ttl=61 time=31.9 ms\n\n--- 10.0.0.20 ping statistics ---\n3 packets transmitted, 3 received, 0% packet loss, time 2009ms\nrtt min/avg/max/mdev = 31.900/32.233/32.600/0.287 ms\n\n",
+    "minute": 1040
+  }
+]

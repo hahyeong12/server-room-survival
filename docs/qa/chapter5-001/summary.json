@@ -1,0 +1,62 @@
+{
+  "starting_commit": "74a6b41",
+  "tested_qa_commit": "270277f87077df00a7033afeb4585e3ef47e7542",
+  "python": "3.14.6",
+  "regular": {
+    "completed": true,
+    "error": null,
+    "passed": 321,
+    "failed": 0,
+    "full_play_attempts": 1,
+    "clicks": 361,
+    "wheel_events": 14,
+    "keyboard_events": 290
+  },
+  "focused": {
+    "completed": true,
+    "error": null,
+    "passed": 76,
+    "failed": 0,
+    "clicks": 139,
+    "keyboard_events": 290
+  },
+  "related_tk": {
+    "ran": 11,
+    "passed": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "headless": {
+    "ran": 759,
+    "passed": 759,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "excluded_gui": 298,
+    "seconds": 21.443,
+    "tk_creation_blocked": true,
+    "log": "headless.txt"
+  },
+  "source_hashes_match_focus": true,
+  "user_data": {
+    "before_count": 24,
+    "after_count": 24,
+    "unchanged": true,
+    "added": [],
+    "removed": [],
+    "changed": []
+  },
+  "production_files_changed": [],
+  "previous_qa_files_changed": [],
+  "known_ux": [
+    "long Lab mission heading clipped",
+    "learning completion precedes customer job completion"
+  ],
+  "limits": [
+    "reused known path-down demonstration, not mastery certification",
+    "other actual DPI/monitor settings unverified",
+    "white frame root cause unresolved",
+    "full GUI suite not repeated in this QA"
+  ]
+}
