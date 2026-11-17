@@ -123,19 +123,19 @@ def card(kind, record, closed=False):
     server = f'Server {record["server"]}'
     if kind == 'repair':
         rows = [('장애 서버', server), ('선택 대응', '장비 복구'),
-                ('실제 결과', f'복구 시작 · {record["repair_minutes"]}분 후 기존 배정으로 재개')]
+                ('선택 당시 결과', f'복구 시작 · {record["repair_minutes"]}분 후 기존 배정으로 재개')]
         if record.get('migrate_finish') is None:
             rows.insert(2, ('작업 이전', '불가능 · 정상 서버 자원 부족'))
             mentor = (f'{record["need_gpu"]}개 GPU가 필요하지만 정상 서버에는 {record["normal_gpu"]}개만 남아 있어 작업을 옮길 수 없습니다. '
                       '시간 빨리감기를 눌러 복구를 진행하세요.')
         else:
-            rows.append(('예상 완료', f'{game_time(record["repair_finish"])} · 기한 {game_time(record["due"])}'))
+            rows.append(('선택 시 예상 완료', f'{game_time(record["repair_finish"])} · 기한 {game_time(record["due"])}'))
             mentor = '장비 복구를 시작했습니다. 시간 빨리감기로 20분이 지나면 기존 배정 그대로 작업이 재개됩니다.'
         return {'kind': kind, 'title': '장비 복구 시작', 'tone': 'success', 'rows': rows, 'mentor': mentor}
     if kind == 'migrate':
         rows = [('장애 서버', server), ('선택 대응', '작업 이전'),
-                ('실제 결과', f'새 배정 {record.get("parts", "")} · 준비 10분'),
-                ('예상 완료', f'{game_time(record["migrate_finish"])} · 기한 {game_time(record["due"])}')]
+                ('선택 당시 결과', f'새 배정 {record.get("parts", "")} · 준비 10분'),
+                ('선택 시 예상 완료', f'{game_time(record["migrate_finish"])} · 기한 {game_time(record["due"])}')]
         return {'kind': kind, 'title': '작업 이전 확정', 'tone': 'success', 'rows': rows,
                 'mentor': '다른 서버에서 10분 준비 후 작업을 재개합니다. 진행률과 운영 모드, 완료 기한은 그대로 유지됩니다.'}
     if kind == 'failed':

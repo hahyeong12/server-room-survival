@@ -121,7 +121,9 @@ class Chapter3FeedbackDialog(tk.Toplevel):
         self.close_button = ActionButton(buttons, '닫기', self.destroy)
         self.close_button.pack(side='left')
         self.bind('<Escape>', lambda _: self.destroy())
-        center_dialog(self, parent, size=(560, 330), minimum=(460, 280))
+        # 행 수·줄바꿈에 따라 내용이 고정 높이(330)보다 길면 아래 버튼이 잘렸습니다. 실제 요구 높이 이상으로 잡습니다.
+        self.update_idletasks()
+        center_dialog(self, parent, size=(560, max(330, self.winfo_reqheight()+8)), minimum=(460, 280))
 
 
 class HardwareDiagnosisDialog(tk.Toplevel):

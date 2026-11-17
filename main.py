@@ -1442,10 +1442,14 @@ class SimulatorApp:
         if self.allocation_window is not None and self.allocation_window.winfo_exists():
             self.allocation_window.lift()
             return self.allocation_window
-        self.allocation_window = AllocationDialog(
+        self.allocation_window = self.build_popup(AllocationDialog,
             self.root, self.session, self.state.plan,
             lambda mode, parts:self._perform(lambda:self.session.migrate(parts, self.allocation_window.source)),
             migration=True)
+        if self.session.story:
+            # 이전 확정 시점에는 이 창이 아직 열려 있어 결과 카드가 보류됩니다. 배정창과 같이 창이 닫히면 바로 다시 확인해
+            # '작업 이전 확정·준비 10분' 카드가 다음 시간 진행 뒤(준비 종료 후)에 늦게 뜨지 않게 합니다(ui-consistency-001).
+            self.allocation_window.bind('<Destroy>', self.story_work_window_closed, add='+')
         return self.allocation_window
     def propose_alternative(self):
         if self._perform(self.session.propose_alternative):

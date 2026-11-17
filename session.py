@@ -1290,7 +1290,19 @@ class GameSession:
             return {**hw_card('failed', record, closed=run.followup_closed), 'can_retry': True, 'request_id': rid}
         if not record['choices'] or 'repair_finish' not in record:
             return None
-        return {**hw_card(record['choices'][-1], record), 'can_retry': False, 'request_id': rid}
+        card = hw_card(record['choices'][-1], record)
+        # 카드의 다른 행은 선택 당시 기록입니다. 다시 열었을 때 남은 준비 시간을 오해하지 않도록 현재 상태를 따로 보여 줍니다.
+        card['rows'] = card['rows'] + [('현재 상태', self._hardware_card_status(run))]
+        return {**card, 'can_retry': False, 'request_id': rid}
+
+    def _hardware_card_status(self, run):
+        """제4장 결과 카드의 '현재 상태' 문구(조회 전용). 관제실 배지와 같은 판정(job_status)을 씁니다."""
+        from aidc.ui.job_status import job_status
+        s = run.state
+        if s.phase == 'finished':
+            return '작업 완료' if s.succeeded else '작업 실패'
+        status = job_status(self, run)
+        return status['brief'] if status else ('정상 실행 중' if s.allocated else '배정 없음')
 
     def chapter3b_pending_feedback(self):
         chapter = self.story.chapter3b if self.story else None
