@@ -31,7 +31,7 @@ class Chapter3MenuGuiTests(unittest.TestCase):
 
     def test_story_menu_offers_chapter_three_start_and_resume(self):
         self.selector.show_story_menu(); self.root.update()
-        self.assertEqual({'new', 'continue', 'back'}, set(self.selector.story_buttons))
+        self.assertEqual({'new', 'continue', 'chapters', 'back'}, set(self.selector.story_buttons))
         self.selector.show_practice_menu(); self.root.update()
         self.assertIn('chapter3', self.selector.practice_buttons)
         self.assertEqual(str(self.selector.practice_buttons['continue'].cget('state')), 'disabled')
