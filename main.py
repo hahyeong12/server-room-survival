@@ -1676,16 +1676,17 @@ class ModeSelection:
         self.content.place(relx=.5, rely=.5, anchor='center', width=1060)
         self.frame.bind('<Configure>', self.layout_content)
         # 게임 타이틀 화면: 큰 로고와 한 줄 소개 → 독립 모드 카드 3장(아이콘·소개·목적·시작 버튼).
-        banner = tk.Frame(self.content, bg=BG)
+        banner = self.banner = tk.Frame(self.content, bg=BG)
         banner.pack(fill='x', pady=(0, 20))
-        icon = tk.Canvas(banner, width=76, height=40, bg=BG, highlightthickness=0)
+        icon = self.title_icon = tk.Canvas(banner, width=76, height=40, bg=BG, highlightthickness=0)
         icon.pack()
         reset_hardware(icon)
         gpu_module(icon, 6, 6, 64, 27, 'available')
         self.title_label = label(banner, APP_NAME, 38, CYAN, True)
         self.title_label.pack(pady=(6, 0))
         label(banner, f'{APP_NAME_EN} · 울산 AI 데이터센터 운영 시뮬레이션', 13, MUTED).pack(pady=(2, 0))
-        tk.Frame(banner, bg=CYAN, height=2, width=140).pack(pady=(12, 0))
+        self.title_rule = tk.Frame(banner, bg=CYAN, height=2, width=140)
+        self.title_rule.pack(pady=(12, 0))
         self.menu_body = tk.Frame(self.content, bg=BG)
         self.menu_body.pack(fill='x')
         self.mode_panel = tk.Frame(self.menu_body, bg=BG)
@@ -1766,8 +1767,17 @@ class ModeSelection:
         self.version_label = label(self.content, f'{APP_NAME_EN} {VERSION} · 제1장~제5장 / Lab 학습 과제 1~5 (프로토타입)', 10, MUTED)
         self.version_label.pack(anchor='w', pady=(12, 0))
 
-    def layout_content(self, event):
-        self.content.place_configure(width=min(1060, max(600, event.width-80)))
+    def layout_content(self, event=None):
+        self.content.place_configure(width=min(1060, max(600, self.frame.winfo_width()-80)))
+        if not hasattr(self, 'version_label'):
+            return
+        # 작은 창의 하위 메뉴는 제목 공간만 줄입니다. 카드 화면과 큰 창은 기존 크기를 유지합니다.
+        compact = self.frame.winfo_height() < 740 and not self.mode_panel.winfo_manager()
+        self.banner.pack_configure(pady=(0, 0 if compact else 20))
+        self.title_label.configure(font=(FONT, 24 if compact else 38, 'bold'))
+        self.title_label.pack_configure(pady=(0 if compact else 6, 0))
+        self.title_rule.pack_configure(pady=(2 if compact else 12, 0))
+        self.version_label.pack_configure(pady=(2 if compact else 12, 0))
 
     def show_menu(self, category):
         if self.starting or self.app is not None:
@@ -1790,6 +1800,7 @@ class ModeSelection:
         self.preview_slot(category)
         if category == 'story':
             self.slot_paths = paths
+        self.layout_content()
 
     def preview_slot(self, category):
         paths = self.paths_by_mode.get(category, [])
@@ -1848,6 +1859,7 @@ class ModeSelection:
         choice.bind('<<ComboboxSelected>>', render)
         render()
         ActionButton(panel, '메인 메뉴', self.show_modes).pack(anchor='w', pady=(4, 0))
+        self.layout_content()
 
     def start_checkpoint(self, source, chapter):
         if self.starting or self.app is not None:
@@ -1872,6 +1884,7 @@ class ModeSelection:
             for panel in self.panels.values():
                 panel.pack_forget()
             self.mode_panel.pack(fill='x')
+            self.layout_content()
 
     def new_tutorial(self):
         if self.app is not None or self.starting:
