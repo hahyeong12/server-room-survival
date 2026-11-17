@@ -92,5 +92,65 @@ class LabGaugeGuiTests(unittest.TestCase):
         self.run_case(practice=True)
 
 
+class DeferredStoryDialogGuiTests(unittest.TestCase):
+    """교육창은 숨긴 채 완성·기록한 뒤 idle 시점에 표시합니다. 부모 MessageDialog.reveal()(글 전체 표시)과 이름이
+    겹쳐 생성자에서 AttributeError가 나던 실험 회귀(ui-polish-001)도 함께 막습니다."""
+    def setUp(self):
+        self.root = tk.Tk()
+        self.root.geometry('1280x800+0+0')
+        self.addCleanup(self.root.destroy)
+        self.errors = []
+        self.root.report_callback_exception = lambda *a: self.errors.append(a)
+
+    def test_dialog_class_keeps_message_text_reveal(self):
+        from story_dialog import StoryDialogueDialog, StoryReviewDialog
+        pages = [('선배 엔지니어', '첫 페이지'), ('선배 엔지니어', '둘째 페이지')]
+        shown = StoryDialogueDialog(self.root, pages)                     # 기존 기본값: 생성 즉시 표시
+        self.root.update()
+        self.assertTrue(shown.winfo_viewable())
+        self.assertEqual(shown.shown, len(shown.full_text))               # MessageDialog.reveal()이 그대로 동작
+        shown.next(); self.root.update()
+        self.assertEqual((shown.index, shown.shown), (1, len(shown.full_text)))
+        hidden = StoryDialogueDialog(self.root, pages, show=False)
+        self.root.update()
+        self.assertFalse(hidden.winfo_viewable())
+        self.assertTrue(hidden.show_window())
+        self.assertFalse(hidden.show_window())                           # 한 번만 표시
+        self.root.update()
+        self.assertTrue(hidden.winfo_viewable())
+        self.assertTrue(hidden.placement['inside_work_area'])
+        hidden.destroy()
+        self.assertFalse(hidden.show_window())                           # 닫힌 창은 무시
+        review = StoryReviewDialog(self.root); self.root.update()
+        self.assertTrue(review.winfo_viewable())
+        self.assertEqual(self.errors, [])
+
+    def test_chapter_start_dialog_shows_once_after_control_room_idle(self):
+        db = Database(':memory:'); self.addCleanup(db.close)
+        app = SimulatorApp(self.root, db, mode='story', start_chapter=2, seed=5)
+        self.addCleanup(app.network.stop)
+        window = app.story_window
+        self.assertIsNotNone(window)
+        self.assertFalse(window.winfo_viewable())                        # 같은 콜백 안에서는 아직 숨김
+        self.assertIs(app.show_story_event(), window)                    # 표시 전 재호출도 새 창을 만들지 않음
+        self.root.update()
+        self.assertTrue(window.winfo_viewable())
+        self.assertEqual(window.geometry().split('+')[0], '820x470')
+        self.assertTrue(window.placement['inside_work_area'])
+        self.assertTrue(window.next_button.winfo_viewable())
+        dialogs = [w for w in self.root.winfo_children() if type(w).__name__ == 'StoryDialogueDialog']
+        self.assertEqual(len(dialogs), 1)
+        self.assertEqual(self.errors, [])
+
+    def test_dialog_closed_before_idle_is_never_shown(self):
+        db = Database(':memory:'); self.addCleanup(db.close)
+        app = SimulatorApp(self.root, db, mode='story', start_chapter='3b', seed=5)
+        self.addCleanup(app.network.stop)
+        app.story_window.destroy()                                        # 예약된 표시 전에 닫힘
+        self.root.update()
+        self.assertFalse([w for w in self.root.winfo_children() if type(w).__name__ == 'StoryDialogueDialog'])
+        self.assertEqual(self.errors, [])
+
+
 if __name__ == '__main__':
     unittest.main()
