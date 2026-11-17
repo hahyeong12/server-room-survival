@@ -289,8 +289,7 @@ class SimulatorApp:
         for key, name, width in zip(columns, names, widths):
             tree.heading(key, text=name)
             tree.column(key, width=width, minwidth=45, stretch=True)
-        # 긴 목록만 자체 스크롤하며 관제실 전체는 스크롤하지 않습니다.
-        tree.bind('<MouseWheel>', lambda e: tree.yview_scroll(-int(e.delta/120), 'units'))
+        # Tk Treeview 기본 휠 처리를 사용합니다. 위젯에도 바인딩하면 한 입력을 두 번 처리합니다.
         return tree
 
     def refresh(self):
