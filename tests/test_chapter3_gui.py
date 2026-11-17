@@ -1,4 +1,6 @@
-"""v0.9-3a: Chapter 3 화면 연결(실제 Tk). 작성만 했으며 사용자 데스크톱 보호를 위해 실행하지 않았습니다.
+"""v0.9-3a: Chapter 3 화면 연결(실제 Tk).
+
+제3장 관련 클래스 실행 기록은 docs/qa/chapter3-001/report.md에 보관합니다. 아래 제4장(내부 3b)은 별도 범위입니다.
 
 사용자가 직접 확인할 화면: 모드 선택의 Chapter 3 버튼, 브리핑/장애 안내 대화, [네트워크 진단] 창, 진단 전 대응 버튼 비활성,
 대응 뒤 선배 피드백, Chapter 3 결과창(고정 버튼), Chapter 2 성공 결과창의 [Chapter 3 시작].
@@ -101,13 +103,17 @@ class Chapter3PlayGuiTests(unittest.TestCase):
         self.assertEqual((state.phase, state.response_log), ('paused', ['compress']))
         self.assertTrue(self.app.feedback_window.winfo_exists())            # 짧은 결과 카드(FEEDBACK)
         self.assertIn('Chapter 3', self.app.feedback_window.title())
+        observed = self.app.feedback_window.cells['실제 결과'].cget('text')
+        self.assertIn('작업 재개 안 됨', observed)
+        self.assertIn('주 경로 DOWN', observed)
+        self.assertIn('남은 대응은 2회', self.app.feedback_window.mentor_label.cget('text'))
         self.assertFalse(self.app.diagnosis_window.winfo_exists())          # 대응 뒤 이전 진단 값은 닫힘
         dismiss_story_popups(self.app, self.root)
         self.assertIsNone(self.session.chapter3_pending_feedback())
         self.assertEqual(self.errors, [])
 
     def test_after_recovery_the_panel_shows_recovery_state_not_diagnosis(self):
-        """v0.9-3a-2 (작성만, 미실행): 복구 후에는 [네트워크 진단]/[고객 지연 안내]가 주요 행동으로 남지 않습니다."""
+        """복구 후에는 [네트워크 진단]/[고객 지연 안내]가 주요 행동으로 남지 않습니다."""
         self.begin()
         self.app.advance_time(60); dismiss_story_popups(self.app, self.root)
         self.app.action_buttons['diagnose'].invoke(); self.root.update()
