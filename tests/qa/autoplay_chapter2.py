@@ -103,12 +103,14 @@ def scenario(h):
         h.click(row['widget'], dy=row['box'][1]+row['box'][3]//2, settle=.9)
         check('요청 행 실제 클릭·현재 고객 일치', h.call(lambda: session().selected_id == rid))
 
-    def open_allocation(rid):
+    def open_allocation(rid, mode=None):
         select_request(rid)
         # 요청 행 클릭은 고객 대화를 열기도 합니다. 실제 버튼으로 닫습니다.
         if top_by_title(h.snapshot(), 'AIDC LINK |'):
             h.click_text('확인 · 운영실로')
         guide()
+        if mode:
+            h.click(h.call(lambda: h.widget_info(app().mode_buttons[mode])))
         h.click_text('배정 설정·선택', settle=.8)
         return h.call(lambda: app().allocation_window.mode_rows)
 
@@ -150,7 +152,7 @@ def scenario(h):
                 text = app().message_window.bubble
                 index = text.search('요청 GPU:', '1.0')
                 line = text.dlineinfo(index) if index else None
-                return {'visible': bool(line and line[1]+line[3] <= text.winfo_height()),
+                return {'visible': bool(line and line[1]+line[3] <= text.winfo_height()-int(text.cget('pady'))-6),
                         'view': text.yview(), 'bar': h.widget_info(text.vbar)}
             position = h.call(text_position)
             scroll.append({k:v for k,v in position.items() if k != 'bar'})
@@ -203,7 +205,7 @@ def scenario(h):
           and jp_started['jobs'][0]['phase'] == 'running' and jp_started['used'] == (4, 5))
 
     h.step = '미국 자원 부족·허용 모드 선택'
-    rows = open_allocation(ids[1])
+    rows = open_allocation(ids[1], 'economy')
     h.chapter2_data['us_modes'] = rows
     select_mode('performance')
     blocked = h.call(lambda: {'reason': app().allocation_window.mode_reason.cget('text'),
