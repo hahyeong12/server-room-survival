@@ -436,7 +436,14 @@ class ConditionGuiTests(unittest.TestCase):
             self.root.update()
             for widget in (*a.mode_buttons.values(), a.action_hint, a.resources.preview, *a.action_buttons.values()):
                 with self.subTest(stage=stage, widget=str(widget)):
-                    self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())
+                    if widget in a.action_buttons.values():
+                        # Tk의 요청 폭에는 여백도 포함됩니다. 실제 글자와 테두리가 들어가는지 검사합니다.
+                        from tkinter.font import Font
+                        text_width = Font(root=self.root, font=widget.cget('font')).measure(widget.cget('text'))
+                        border = int(widget.cget('bd'))+int(widget.cget('highlightthickness'))
+                        self.assertGreaterEqual(widget.winfo_width(), text_width+2*border+2)
+                    else:
+                        self.assertGreaterEqual(widget.winfo_width(), widget.winfo_reqwidth())
                     self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())
                     self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(), self.root.winfo_rootx()+self.root.winfo_width())
                     self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+self.root.winfo_height())

@@ -428,7 +428,11 @@ class TutorialGuiTests(unittest.TestCase):
 
     def assert_centered_and_visible(self, d):
         left, top, right, bottom = work_area(self.root)
-        for widget in (*d.portraits.values(), d.bubble, d.next_button, d.close_button, d.skip_button):
+        optional = (d.close_button, d.skip_button)
+        last = d.index == len(d.steps)-1
+        for button in optional:
+            self.assertEqual(bool(button.winfo_ismapped()), not last)
+        for widget in (*d.portraits.values(), d.bubble, d.next_button, *(optional if not last else ())):
             self.assertTrue(widget.winfo_ismapped())
             self.assertGreaterEqual(widget.winfo_rootx(), d.winfo_rootx())
             self.assertGreaterEqual(widget.winfo_rooty(), d.winfo_rooty())

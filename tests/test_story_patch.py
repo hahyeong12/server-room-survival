@@ -17,6 +17,8 @@ from tests.test_story import gameplay
 
 
 def prepare(s):
+    """onboarding 필드가 없는 구형 10단계 저장의 준비 절차입니다."""
+    assert s.story.onboarding is None, '새 입문 흐름에는 complete_onboarding()을 사용하세요.'
     s.confirm_story_arrival(); s.select_story_server('A'); s.confirm_story_resources()
     s.read_conversation(s.story.request_id); s.inspect_story_preview(s.story.request_id)
 
@@ -339,9 +341,10 @@ class PatchGuiTests(unittest.TestCase):
         self.assertEqual(gameplay(self.app.session), before)
         self.assertEqual(self.app.session.story.step, 'work_complete')
 
-    def test_completion_screen_uses_actual_results_and_four_actions(self):
+    def test_completion_screen_uses_actual_results_and_current_actions(self):
         window = self.complete()
-        self.assertEqual(set(window.buttons), {'modes', 'free', 'status', 'review', 'chapter2', 'retry'})
+        self.assertEqual(set(window.action_bar.buttons), {'next', 'chapters', 'modes'})
+        self.assertIs(window.buttons['chapter2'], window.buttons['next'])
         self.assertIn(f'{self.app.state.score}점', window.full_text)
         self.assertIn('반환 GPU: 7개', window.full_text)
         self.assertIn('반환 전력: 7단위', window.full_text)
@@ -367,9 +370,9 @@ class PatchGuiTests(unittest.TestCase):
         self.complete()
         status = self.app.show_story_status()
         text = status.text.get('1.0', 'end')
-        self.assertIn('제1장 — 첫 출근 · 클리어', text)
+        self.assertIn('제1장 — 첫 근무 · 클리어', text)
         self.assertIn('제2장 — 한정된 자원 · 시작 가능', text)
-        self.assertEqual(set(self.app.chapter_window.buttons), {'modes', 'free', 'status', 'review', 'chapter2', 'retry'})
+        self.assertEqual(set(self.app.chapter_window.action_bar.buttons), {'next', 'chapters', 'modes'})
 
     def test_completion_return_to_selection_closes_database_and_timer(self):
         win = self.complete(); old = self.app
@@ -388,7 +391,10 @@ class PatchGuiTests(unittest.TestCase):
         free = GameSession(db, seed=9, incident_chance=0)
         free.choose_plan('performance'); free.advance_time(30); free.close()
         before_story = Path(self.directory.name)/STORY_DB_PATH.name
-        win = self.complete(); win.buttons['free'].invoke(); self.root.update()
+        win = self.complete(); win.buttons['modes'].invoke(); self.root.update()
+        selector = self.app.mode_selector
+        selector.buttons['practice'].invoke()
+        selector.practice_buttons['free'].invoke(); self.root.update()
         app = self.app.mode_selector.app
         self.assertIs(app.root, self.root)
         self.assertIsNone(app.session.story)
@@ -407,7 +413,7 @@ class PatchGuiTests(unittest.TestCase):
     def test_transition_save_failure_keeps_window_timer_and_database_open(self):
         win = self.complete(); timer = self.app.network.timer
         with patch.object(self.app.db, 'save_runtime', side_effect=OSError('실패')):
-            with patch('main.messagebox.showerror') as error: win.buttons['free'].invoke()
+            with patch('main.messagebox.showerror') as error: win.buttons['modes'].invoke()
         error.assert_called_once()
         self.assertFalse(self.app.closed)
         self.assertFalse(self.app.transitioning)
@@ -481,10 +487,20 @@ class PatchGuiTests(unittest.TestCase):
         self.assertEqual(self.errors, [])
 
     def test_completion_all_controls_fit_three_resolutions_and_minimum_dialog(self):
+        from tests.support import reveal_scroll_widget
         win = self.complete()
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
             self.root.geometry(f'{width}x{height}'); win.geometry('700x510'); self.root.update()
-            for widget in (win.summary, win.next_notice, *win.buttons.values(), self.app.story_complete_button,
+            # 결과 본문은 스크롤로 접근하고 하단 행동은 항상 창 안에 있어야 합니다.
+            for widget in (win.summary, win.next_notice):
+                reveal_scroll_widget(win.scroll, widget)
+                viewport = win.scroll.canvas
+                self.assertTrue(widget.winfo_ismapped())
+                self.assertGreaterEqual(widget.winfo_rooty(), viewport.winfo_rooty())
+                self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),
+                                     viewport.winfo_rooty()+viewport.winfo_height())
+                self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())
+            for widget in (*win.action_bar.buttons.values(), self.app.story_complete_button,
                            self.app.story_objective, self.app.mode_select_button, *self.app.time_buttons.values()):
                 host = widget.winfo_toplevel()
                 self.assertTrue(widget.winfo_ismapped())

@@ -60,6 +60,7 @@ def complete_onboarding(s, mode='performance'):
     """v0.9-4b 메뉴의 [튜토리얼]/[스토리 새로 시작]은 새 입문(onboarding: 튜토리얼 1건, 첫 근무 3건) 흐름입니다.
     구형 10단계 교육용 test_story_patch.prepare()/finish()는 'Inspector 확인' 단계를 가정하므로 이 흐름에 맞지 않습니다.
     실제 세션 행동(도착 확인 → 요청 열람 → 미리보기 → 배정 → 시간 진행)만으로 입문을 끝냅니다."""
+    assert s.story.onboarding is not None, '구형 저장에는 test_story_patch.prepare()/finish()를 사용하세요.'
     if s.story.ui_step == 'arrival':
         s.confirm_story_arrival()
     for _ in range(6):

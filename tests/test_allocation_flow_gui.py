@@ -43,14 +43,15 @@ class ResultButtonsGuiTests(unittest.TestCase):
             self.root.geometry(f'{width}x{height}'); self.root.update()
             self.app.chapter_window = None
             dialog = self.app.show_chapter_complete(); self.root.update()
-            self.assertIn('retry', dialog.buttons)
+            expected = {'next', 'chapters', 'modes'} if dialog.result['mission'] == 'success' else {'retry', 'chapters', 'modes'}
+            self.assertEqual(set(dialog.action_bar.buttons), expected)
             bottom = dialog.winfo_height()
             for key, button in dialog.buttons.items():
                 self.assertLessEqual(button.winfo_rooty()+button.winfo_height(), dialog.winfo_rooty()+bottom, (width, key))
                 self.assertTrue(button.winfo_ismapped(), key)
             dialog.destroy(); self.root.update()
 
-    def test_success_result_keeps_retry_button_visible(self):
+    def test_success_result_keeps_next_chapter_and_menu_buttons_visible(self):
         self.finish(economy=True)
         self.assertEqual(self.app.session.chapter2_result()['mission'], 'success')
         self.assert_buttons_visible()

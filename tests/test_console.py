@@ -145,7 +145,8 @@ class ConsoleTests(unittest.TestCase):
         app=self.app
         app.next_request(); app.select_request(2); app.choose_plan('performance')
         self.assertEqual(app.state.progress,0)
-        self.assertIn('+10',app.action_hint.cget('text'))
+        self.assertIn('시간 빨리감기',app.action_hint.cget('text'))
+        self.assertIn('+10', app.time_buttons[10].cget('text'))
         app.time_buttons[10].invoke()
         self.assertAlmostEqual(app.state.progress,100/6)
         self.assertIn('17%',app.active_list.item('2','values')[1])

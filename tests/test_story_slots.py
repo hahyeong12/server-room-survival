@@ -15,7 +15,7 @@ from session import GameSession
 from aidc.storage.story_slots import StorySlots
 from tests.test_story import gameplay
 from tests.test_story_patch import prepare, finish
-from tests.support import dismiss_story_popups
+from tests.support import dismiss_story_popups, complete_onboarding
 
 
 def saved_story(path, complete=False):
@@ -183,7 +183,7 @@ class SlotMenuGuiTests(unittest.TestCase):
     def test_story_choice_and_back_open_no_database(self):
         self.story_menu()
         self.assertTrue(self.menu.story_panel.winfo_ismapped())
-        self.assertEqual(set(self.menu.story_buttons), {'new', 'continue', 'back'})
+        self.assertEqual(set(self.menu.story_buttons), {'new', 'chapters', 'continue', 'back'})
         self.menu.story_buttons['back'].invoke(); self.root.update()
         self.assertTrue(self.menu.mode_panel.winfo_ismapped())
         self.assertEqual(self.opened, [])
@@ -213,8 +213,8 @@ class SlotMenuGuiTests(unittest.TestCase):
         self.assertEqual(app.session.story.step, 'arrival')
         self.assertFalse(app.session.story.chapter_completed)
         self.assertIsNone(app.chapter_window)
-        self.assertEqual(app.story_window.active_role, 'player')
-        self.assertIn('여기가 오늘부터', app.story_window.full_text)
+        self.assertEqual(app.story_window.active_role, 'mentor')
+        self.assertEqual(app.story_window.full_text, app.session.story.onboarding.pages[0][1])
         self.assertEqual(app.center.gpu_used, 0)
         self.assertEqual(app.center.power_used, 0)
         self.assertEqual(len(app.session.runs), 1)
@@ -223,55 +223,86 @@ class SlotMenuGuiTests(unittest.TestCase):
 
     def test_new_story_character_emphasis_and_events_are_unchanged(self):
         app = self.new(); dialog = app.story_window
+        self.assertEqual(dialog.active_role, 'mentor')
+        self.assertTrue(dialog.portraits['player'].find_withtag('inactive'))
+        dialog.reveal(); dialog.next_button.invoke()
         self.assertEqual(dialog.active_role, 'player')
         self.assertTrue(dialog.portraits['mentor'].find_withtag('inactive'))
-        dialog.next_button.invoke()
-        self.assertEqual(dialog.active_role, 'mentor')
         dialog.skip_button.invoke(); dialog.next_button.invoke()
-        self.assertEqual(app.session.story.step, 'server')
-        dismiss_story_popups(app, self.root)
-        app.select_server('B'); self.root.update()
-        self.assertEqual(app.session.story.step, 'server')
-        app.select_server('A'); self.root.update()
-        self.assertEqual(app.session.story.step, 'resources')
-        self.assertIn('resources', app.session.story.dialogue_seen)
-        old = app.feedback_window; old.destroy(); app.refresh(); app.select_server('A')
-        self.assertFalse(old.winfo_exists())
+        self.root.update()
+        self.assertEqual(app.session.story.ui_step, 'request')
+        self.assertTrue(app.session.story.onboarding.introduced)
+        app.refresh(); app.select_server('B'); app.select_server('A'); self.root.update()
+        self.assertEqual(app.session.story.ui_step, 'request')
+        self.assertFalse(dialog.winfo_exists())
+        self.assertFalse(app.story_window is not None and app.story_window.winfo_exists())
+        self.assertEqual(self.errors, [])
 
     def test_new_story_full_chapter_through_real_widgets_preserves_old_record(self):
         saved_story(self.slots.legacy_path, complete=True)
         original = self.slots.legacy_path.read_bytes()
         app = self.new()
         dialog = app.story_window; dialog.skip_button.invoke(); dialog.next_button.invoke()
+        self.assertEqual(app.session.story.ui_step, 'request')
+        for country in ('싱가포르', '일본', '미국'):
+            rid = app.session.story.onboarding.rid
+            self.assertEqual(app.session.runs[rid].mission['country'], country)
+            app.arrival_open_button.invoke(); self.root.update()
+            self.assertIn(app.session.runs[rid].mission['company_name'], app.message_window.title())
+            app.message_window.destroy(); self.root.update()
+            self.assertEqual(app.session.story.ui_step, 'preview')
+            plans = app.open_allocation_plans(); plans.plan_buttons[1].invoke()
+            selected = plans.options[1]
+            self.assertEqual((app.center.gpu_used, app.center.power_used), (0, 0))
+            plans.start_button.invoke(); self.root.update()
+            run = app.session.runs[rid]
+            self.assertEqual(run.server_allocations[-1].slices, selected)
+            self.assertEqual(app.session.story.ui_step, 'time')
+            self.assertEqual((app.center.gpu_used, app.center.power_used),
+                             (run.state.gpu_used, run.state.power_used))
+            app.time_buttons[10].invoke(); self.root.update()
+            self.assertGreater(run.state.work_done, 0)
+            app.time_buttons[10].invoke(); app.time_buttons[10].invoke(); self.root.update()
+            self.assertTrue(run.state.succeeded)
+            self.assertEqual((app.center.gpu_used, app.center.power_used), (0, 0))
+            self.assertFalse(app.session.servers.allocations)
+        self.assertTrue(app.session.story.chapter1_cleared)
+        self.assertTrue(app.session.story.ui_done)
+        self.assertEqual(app.chapter_window.result, app.session.chapter_result())
+        self.assertEqual(len(app.db.get_recent_records()), 3)
+        self.assertEqual(self.slots.legacy_path.read_bytes(), original)
+        self.assertEqual(self.errors, [])
+
+    def test_legacy_slot_retains_server_inspector_and_operations_steps(self):
+        saved_story(self.slots.legacy_path)
+        app = self.resume(self.slots.legacy_path)
+        self.assertIsNone(app.session.story.onboarding)
+        dialog = app.story_window; dialog.skip_button.invoke(); dialog.next_button.invoke()
         self.assertEqual(app.session.story.step, 'server')
         dismiss_story_popups(app, self.root)
+        app.network.select('B'); self.root.update()
+        self.assertEqual(app.session.story.step, 'server')
         bounds = app.network.rack_bounds['A']
         app.network.event_generate('<Button-1>', x=int((bounds[0]+bounds[2])/2),
-                                    y=int((bounds[1]+bounds[3])/2))
+                                   y=int((bounds[1]+bounds[3])/2))
         self.root.update()
         self.assertEqual(app.session.story.step, 'resources')
         dismiss_story_popups(app, self.root); app.resource_confirm_button.invoke()
         self.assertEqual(app.session.story.step, 'request')
+        dismiss_story_popups(app, self.root)
         app.arrival_open_button.invoke(); self.root.update()
-        self.assertIn('Merlion AI', app.message_window.title())
         app.message_window.destroy(); self.root.update()
-        self.assertEqual(app.session.story.step, 'preview')
         plans = app.open_allocation_plans(); plans.plan_buttons[1].invoke()
         selected = plans.options[1]; plans.start_button.invoke(); self.root.update()
         self.assertEqual(app.session.current.server_allocations[-1].slices, selected)
-        self.assertEqual(app.session.story.step, 'time')
-        self.assertEqual((app.center.gpu_used, app.center.power_used), (7,7))
         app.time_buttons[10].invoke(); self.root.update()
-        self.assertGreater(app.state.work_done, 0)
-        app.show_story_help()
-        app.story_window.skip_button.invoke(); app.story_window.next_button.invoke()
+        self.assertEqual(app.session.story.step, 'operations')
+        app.show_story_help(); app.story_window.skip_button.invoke(); app.story_window.next_button.invoke()
         app.time_buttons[60].invoke(); app.time_buttons[60].invoke(); self.root.update()
-        self.assertTrue(app.session.story.chapter_completed)
         self.assertTrue(app.session.story.tutorial_completed)
-        self.assertEqual((app.center.gpu_used, app.center.power_used), (0,0))
-        self.assertEqual(app.chapter_window.result['score'], app.state.score)
+        self.assertTrue(app.session.story.chapter_completed)
         self.assertEqual(len(app.db.get_recent_records()), 1)
-        self.assertEqual(self.slots.legacy_path.read_bytes(), original)
+        self.assertEqual((app.center.gpu_used, app.center.power_used), (0, 0))
         self.assertEqual(self.errors, [])
 
     def test_repeated_new_start_click_does_not_create_second_game_or_slot(self):
@@ -282,7 +313,7 @@ class SlotMenuGuiTests(unittest.TestCase):
 
     def test_two_new_slots_keep_time_resources_score_and_progress_separate(self):
         first = self.new(); path1 = first.db.path
-        prepare(first.session); finish(first.session)
+        complete_onboarding(first.session)
         expected = deepcopy(gameplay(first.session))
         first.return_to_modes(); self.root.update()
         second = self.new(first.mode_selector); path2 = second.db.path
@@ -290,13 +321,15 @@ class SlotMenuGuiTests(unittest.TestCase):
         self.assertEqual(second.session.minute, 540)
         self.assertIsNone(second.session.current.state.score)
         self.assertFalse(second.session.story.chapter_completed)
-        second.session.read_conversation(1); second.session.choose_plan('performance'); second.advance_time(10)
+        second.session.confirm_story_arrival()
+        second.session.read_conversation(1); second.session.inspect_story_preview(1)
+        second.session.choose_plan('performance'); second.advance_time(10)
         self.assertEqual(second.center.gpu_used, 7)
         second.return_to_modes(); self.root.update()
         resumed = self.resume(path1, second.mode_selector)
         self.assertEqual(gameplay(resumed.session), expected)
         self.assertEqual(resumed.center.gpu_used, 0)
-        self.assertEqual(len(resumed.db.get_recent_records()), 1)
+        self.assertEqual(len(resumed.db.get_recent_records()), 3)
 
     def test_return_to_menu_prefers_current_slot_and_resumes_last_save(self):
         app = self.new(); path = app.db.path

@@ -489,7 +489,8 @@ class StoryGuiTests(unittest.TestCase):
         a.time_buttons[10].invoke(); self.root.update()
         a.time_buttons[60].invoke(); a.time_buttons[60].invoke(); self.root.update()
         self.assertTrue(a.session.story.first_work_completed)
-        self.assertIn('첫 번째 고객 업무', a.chapter_window.full_text)
+        self.assertIn(a.session.current.mission['company_name'], a.chapter_window.full_text)
+        self.assertEqual(a.chapter_window.result, a.session.chapter_result())
         self.assertNotIn('restart', a.action_buttons)
         self.assertEqual(self.errors, [])
 

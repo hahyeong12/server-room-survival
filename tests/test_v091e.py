@@ -147,7 +147,7 @@ class ChapterWindowTests(unittest.TestCase):
         d = self.complete()
         self.assertTrue(d.winfo_exists())
         self.assert_centered(d)
-        for key in ('modes', 'free', 'status', 'review'):
+        for key in ('modes', 'chapters', 'next'):
             self.assertTrue(d.buttons[key].winfo_ismapped())
         self.assertIn('운영 점수', d.full_text)
 
@@ -161,7 +161,7 @@ class ChapterWindowTests(unittest.TestCase):
         self.assertGreaterEqual(d.winfo_rooty(), top)
         self.assertLessEqual(d.winfo_rootx()+d.winfo_width(), right)
         self.assertLessEqual(d.winfo_rooty()+d.winfo_height(), bottom)
-        for key in ('modes', 'free', 'status', 'review'):
+        for key in ('modes', 'chapters', 'next'):
             self.assertLessEqual(d.buttons[key].winfo_rooty()+d.buttons[key].winfo_height(),
                                  d.winfo_rooty()+d.winfo_height())
 

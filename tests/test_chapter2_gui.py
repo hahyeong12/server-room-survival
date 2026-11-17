@@ -79,7 +79,7 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
 
     def test_story_menu_offers_chapter_one_chapter_two_and_continue(self):
         self.selector.show_story_menu(); self.root.update()
-        self.assertEqual({'new', 'continue', 'back'}, set(self.selector.story_buttons))
+        self.assertEqual({'new', 'chapters', 'continue', 'back'}, set(self.selector.story_buttons))
         self.selector.show_practice_menu(); self.root.update()
         self.assertTrue({'chapter2', 'chapter3', 'chapter3b', 'lab'} <= set(self.selector.practice_buttons))
 
@@ -113,7 +113,7 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
             s.advance_time(10)
         app.refresh(); app.show_chapter_complete(); self.root.update()
         dialog = app.chapter_window
-        self.assertIn('retry', dialog.buttons)
+        self.assertEqual(set(dialog.action_bar.buttons), {'next', 'chapters', 'modes'})
         self.assertIn('주요 운영 결정', dialog.full_text)
         self.assertEqual(dialog.verdict.cget('text'), 'MISSION SUCCESS')
         self.assertIn('기한을 지킨 방법', dialog.full_text)      # v0.9-2a-4 성공 설명(작성만, 미실행)
@@ -124,7 +124,8 @@ class PracticeAndRetryGuiTests(unittest.TestCase):
         dialog.detail_button.invoke(); self.root.update()
         self.assertTrue(dialog.summary.winfo_ismapped())
         app.db_factory = lambda path: Database(':memory:')
-        dialog.buttons['retry'].invoke(); self.root.update()
+        # 성공창은 다음 장을 우선합니다. 재도전 기능은 기존 관제실 경로로 확인합니다.
+        self.assertTrue(app.retry_chapter2()); self.root.update()
         fresh = app.mode_selector.app
         self.addCleanup(fresh.db.close)
         self.assertTrue(fresh.session.story.practice)
@@ -161,8 +162,10 @@ class FailureFeedbackGuiTests(unittest.TestCase):
         self.app._perform(lambda: self.app.session.reject_request('현재 GPU 자원 부족')); self.root.update()
         window = self.app.story_window
         self.assertTrue(window.winfo_exists())
-        self.assertIn('일본 고객', window.full_text)
-        self.assertEqual(window.close_button.cget('text'), '기존 진행 계속 보기')
+        self.assertIn('Sakura Robotics', window.failure_title.cget('text'))
+        self.assertEqual(window.verdict.cget('text'), 'MISSION FAILED')
+        self.assertIn('retry', window.buttons)
+        self.assertIn('거절', window.cards.cards['cause'].body.cget('text'))
         self.assertFalse(self.app.session.chapter2_failure_pending)
         window.destroy(); self.root.update()
         self.app.advance_time(10); self.root.update()
