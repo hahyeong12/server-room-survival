@@ -1041,8 +1041,11 @@ class SimulatorApp:
             comparison = self.session.chapter2_comparison_lines()
             if comparison:
                 pages.append(Dialogue('system', '\n'.join(comparison)).page())
+        # ui-polish-001: 교육창은 숨긴 채 완성·기록한 뒤, 관제실의 밀린 그리기가 끝난 idle 시점에 보여 줍니다.
+        # 바로 보이면 Windows가 아직 칠해지지 않은 창(흰 사각형)을 먼저 합성할 수 있었습니다(측정: 그리기 전 노출
+        # 약 120~160ms → 약 50ms). 창 객체는 지금 만들어지므로 story_window·중복 방지 판단은 그대로입니다.
         self.story_window = self.build_popup(StoryDialogueDialog, self.root, pages, confirm=confirm,
-                                             chapter_label=heading(self.session))
+                                             chapter_label=heading(self.session), show=False)
         self.story_window.bind('<Destroy>', self.tutorial_window_closed, add='+')
         try:
             self.session.mark_story_dialogue(story.dialogue_event)
@@ -1050,6 +1053,10 @@ class SimulatorApp:
             self.story_window.destroy()
             messagebox.showerror('대화 저장 오류', str(exc), parent=self.root)
             return None
+        window = self.story_window
+        # idle(밀린 창 이벤트가 모두 처리된 시점)을 기다린 뒤 타이머 이벤트에서 표시합니다. idle 콜백 안에서 바로
+        # center_dialog를 부르면 그 안의 update_idletasks가 중첩 idle 처리라 부모 크기·실측 좌표가 틀어졌습니다.
+        self.root.after_idle(lambda: self.root.after(0, window.show_window))
         self.update_tutorial_highlight()
         return self.story_window
 

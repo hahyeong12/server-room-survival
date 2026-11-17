@@ -9,7 +9,8 @@ from ui import BG, MUTED, CYAN, MessageDialog, label, ActionButton
 
 
 class StoryDialogueDialog(MessageDialog):
-    def __init__(self, parent, pages, confirm=None, portrait_renderer=draw_portrait, chapter_label='Chapter 1'):
+    def __init__(self, parent, pages, confirm=None, portrait_renderer=draw_portrait, chapter_label='Chapter 1',
+                 show=True):
         self.portrait_renderer = portrait_renderer
         self.portraits = {}
         super().__init__(parent, '교육 담당자', '울산 AIDC 운영팀', pages,
@@ -42,7 +43,21 @@ class StoryDialogueDialog(MessageDialog):
         self.skip_button.configure(text='마지막 안내')
         self.close_button = ActionButton(self.next_button.master, '업무로 돌아가기', self.destroy)
         self.render()  # 페이지에 맞게 [마지막 안내]·[업무로 돌아가기]를 배치합니다.
-        center_dialog(self, parent)
+        # 주의: MessageDialog.reveal()(현재 페이지 글 전체 표시)과 이름이 겹치지 않게 show_window를 씁니다.
+        self.show_parent, self.window_shown = parent, False
+        if show:
+            self.show_window()
+
+    def show_window(self):
+        """숨긴 채 완성한 교육창을 배치해 보여 줍니다. 이미 보였거나 닫힌 창이면 아무것도 하지 않습니다."""
+        try:
+            if self.window_shown or not self.winfo_exists():
+                return False
+        except tk.TclError:  # 예약한 표시 전에 앱(루트)이 이미 닫힌 경우
+            return False
+        self.window_shown = True
+        center_dialog(self, self.show_parent)
+        return True
 
     def render(self):
         super().render()
