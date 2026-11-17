@@ -1327,7 +1327,8 @@ class TrainingResultDialog(tk.Toplevel):
         head = tk.Frame(self, bg=BG)
         head.grid(row=0, sticky='ew', padx=16, pady=(12, 4))
         label(head, 'TRAINING COMPLETE', 9, MUTED, True).pack(anchor='w')
-        self.heading = label(head, 'Engineering Lab 연습 · 다섯 Stage 체험' if practice else '심화 연수 완료 · Stage 5 / 5', 17,
+        # chapter5-ux-001: 제목은 학습(Stage) 통과만 말합니다. 고객 작업 완료 여부는 아래 '현재 상태' 표에서 따로 보여 줍니다.
+        self.heading = label(head, 'Engineering Lab 연습 · 다섯 Stage 체험' if practice else '심화 연수 · Stage 5 / 5 통과', 17,
                              GREEN, True)
         self.heading.pack(anchor='w')
         if practice:
@@ -1335,21 +1336,23 @@ class TrainingResultDialog(tk.Toplevel):
         area = ScrollArea(self)
         area.grid(row=1, sticky='nsew')
         body = area.body
+        self._build_status(body)
         table = tk.Frame(body, bg=PANEL, padx=10, pady=8)
-        table.grid(row=0, sticky='ew', padx=16, pady=6)
+        table.grid(row=1, sticky='ew', padx=16, pady=6)
         table.columnconfigure(2, weight=1)
         for row, (name, state, detail) in enumerate(result['rows']):
             label(table, name, 10, TEXT, True, anchor='w').grid(row=row, column=0, sticky='w', padx=(0, 12), pady=2)
             label(table, '■ '+state, 10, CYAN, True).grid(row=row, column=1, sticky='w', padx=(0, 12))
             label(table, detail, 10, MUTED, anchor='w').grid(row=row, column=2, sticky='w')
         s5 = result['stage5']
+        # 고객 작업 상태는 시간에 따라 바뀌므로 위 '현재 상태' 표에서만 보여 줍니다(열 때 값이 굳은 채 남지 않게).
         label(body, f'Stage 5 독립 진단 · 조치 전 증거 {s5["evidence"]}개 · 원인 판단 {s5["cause_attempts"]}회 · '
-              f'조치 {s5["recovered_by"]} · 고객 작업 {s5["job"]}' + (f' · 연수 사건 다시 받기 {result["restarts"]}회' if result['restarts'] else ''),
-              10, TEXT, anchor='w', justify='left', wraplength=620).grid(row=1, sticky='w', padx=16, pady=4)
-        label(body, result['notice'], 10, AMBER, True, anchor='w', justify='left', wraplength=620).grid(row=2, sticky='w', padx=16, pady=4)
-        label(body, '선배: “'+result['outro']+'”', 10, TEXT, anchor='w', justify='left', wraplength=620).grid(row=3, sticky='w', padx=16, pady=4)
+              f'조치 {s5["recovered_by"]}' + (f' · 연수 사건 다시 받기 {result["restarts"]}회' if result['restarts'] else ''),
+              10, TEXT, anchor='w', justify='left', wraplength=620).grid(row=2, sticky='w', padx=16, pady=4)
+        label(body, result['notice'], 10, AMBER, True, anchor='w', justify='left', wraplength=620).grid(row=3, sticky='w', padx=16, pady=4)
+        label(body, '선배: “'+result['outro']+'”', 10, TEXT, anchor='w', justify='left', wraplength=620).grid(row=4, sticky='w', padx=16, pady=4)
         label(body, '향후 전문 엔지니어 과정(미구현): 원인을 미리 알 수 없는 새 장애, 더 많은 관측 도구, 조치 후 검증 평가.', 10, MUTED,
-              anchor='w', justify='left', wraplength=620).grid(row=4, sticky='w', padx=16, pady=(4, 8))
+              anchor='w', justify='left', wraplength=620).grid(row=5, sticky='w', padx=16, pady=(4, 8))
         buttons = tk.Frame(self, bg=BG)
         buttons.grid(row=2, sticky='ew', padx=16, pady=(4, 12))
         self.lab_button = PrimaryButton(buttons, 'Engineering Lab 복습', on_lab)
@@ -1358,4 +1361,37 @@ class TrainingResultDialog(tk.Toplevel):
         self.close_button = ActionButton(buttons, '닫기', self.destroy)
         self.close_button.pack(side='right')
         self.bind('<Escape>', lambda _: self.destroy())
-        center_dialog(self, parent, size=(680, 500), minimum=(560, 400))
+        self.refresh(result)
+        center_dialog(self, parent, size=(700, 640), minimum=(560, 420))
+
+    def _build_status(self, body):
+        """학습 결과와 고객 작업의 '현재 상태'를 나눠 보여 주는 표. 값은 refresh()가 세션 조회 결과로 채웁니다."""
+        card = tk.Frame(body, bg=PANEL, highlightthickness=2, highlightbackground=BORDER, padx=12, pady=8)
+        card.grid(row=0, sticky='ew', padx=16, pady=(6, 2))
+        card.columnconfigure(1, weight=1)
+        self.status_card = card
+        label(card, '현재 상태 · 학습 통과와 고객 작업 완료는 따로 확인합니다', 10, MUTED, True, anchor='w').grid(
+            row=0, column=0, columnspan=2, sticky='w', pady=(0, 4))
+        self.status_rows = {}
+        for row, (key, name) in enumerate((('training', '심화 연수' if not self.result['practice'] else 'Lab 연습'),
+                                           ('network', '네트워크'), ('job', '고객 작업'), ('remaining', '남은 업무')), 1):
+            label(card, name, 10, TEXT, True, anchor='w').grid(row=row, column=0, sticky='nw', padx=(0, 14), pady=2)
+            value = label(card, '', 10, TEXT, key != 'remaining', anchor='w', justify='left', wraplength=470)
+            value.grid(row=row, column=1, sticky='w', pady=2)
+            self.status_rows[key] = value
+
+    def refresh(self, result=None):
+        """현재 세션 상태로 '현재 상태' 표를 다시 채웁니다(조회 전용). 결과창을 연 채 관제실에서 시간을 진행해도 사실과 맞습니다."""
+        if result is not None:
+            self.result = result
+        if not self.winfo_exists():
+            return
+        status = self.result['status']
+        rows = self.status_rows
+        rows['training'].configure(text='다섯 Stage 체험 · 정규 기록 아님' if self.result['practice'] else 'Stage 5 / 5 통과',
+                                   fg=GREEN)
+        rows['network'].configure(text=status['network'], fg=CYAN if '복구 확인' in status['network'] else AMBER)
+        rows['job'].configure(text=f'요청 #{status["rid"]} · {status["job_label"]}\n{status["job_detail"]}',
+                              fg=tone_color(status['job_tone']))
+        rows['remaining'].configure(text=status['remaining'], fg=MUTED if status['finished'] else AMBER)
+        self.status_card.configure(highlightbackground=tone_color('done' if status['finished'] else 'recover'))

@@ -376,6 +376,12 @@ class SimulatorApp:
         lab = getattr(self, 'lab_window', None)
         if lab is not None and lab.winfo_exists():
             lab.refresh()  # 같은 세션 상태를 다시 읽기만 합니다.
+        # chapter5-ux-001: 연수 결과창을 연 채 시간을 진행해도 고객 작업의 현재 상태(조회 전용)가 맞게 보이도록 다시 읽습니다.
+        window = self.chapter_window
+        training = self.session.story.training if self.session.story else None
+        if (isinstance(window, TrainingResultDialog) and window.winfo_exists()
+                and training is not None and training.done):
+            window.refresh(self.session.training_result())
 
     def update_goal_card(self):
         """세션의 현재 목표를 위쪽 목표 카드에 반영합니다(표시 전용, 게임 상태를 바꾸지 않음)."""

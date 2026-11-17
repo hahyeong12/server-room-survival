@@ -12,7 +12,7 @@ from aidc.story.onboarding import OnboardingProgress, COUNTRIES as INTRO_COUNTRI
 from aidc.story.chapter3 import Chapter3Progress, CHAPTER3_COUNTRIES, CHAPTER3_SCENARIOS, KIND_LABELS, RESPONSE_LABELS, network_diagnosis
 from aidc.story.chapter3b import (Chapter3bProgress, CHAPTER3B_COUNTRIES, CHAPTER3B_SCENARIOS, CHOICE_LABELS, fault_server_for,
                        impossible_reason, card as hw_card)
-from result_summary import customer_reaction, outcome_key, job_summary, chapter1_summary, chapter2_summary, chapter3_summary, chapter3b_summary
+from result_summary import OUTCOME_NAMES, customer_reaction, outcome_key, job_summary, chapter1_summary, chapter2_summary, chapter3_summary, chapter3b_summary
 from aidc.story.chapter2 import Chapter2Progress, CHAPTER2_COUNTRIES, CHAPTER2_SCENARIOS, is_finished
 from aidc.learning.training import (TrainingProgress, STAGES, STAGE_INFO, SOURCES, QUESTIONS, TRAINING_COUNTRY, TRAINING_SCENARIO, BADGES,
                       fact_statements, make_record, received_options)
@@ -1683,6 +1683,11 @@ class GameSession:
     def training_objective(self):
         t = self.training
         if t.done:
+            job = self.training_job_status()
+            if not job['finished']:
+                head = 'Engineering Lab 연습 Stage 체험 완료' if t.practice else '심화 연수 Stage 5/5 통과'
+                return (f'{head} · 고객 작업은 아직 {job["job_label"]} — 시간 빨리감기로 남은 작업을 진행해 '
+                        '고객 완료를 확인하세요.')
             return ('Engineering Lab 연습의 모든 Stage를 체험했습니다.' if t.practice
                     else '심화 연수 완료 · [연수 결과]에서 결과를 확인하세요.')
         info = STAGE_INFO[t.current]
@@ -1747,8 +1752,12 @@ class GameSession:
         """Lab 상단 현재 목표 카드: 상태(tone·chip) · 큰 제목 · 짧은 설명 · 주요 행동(action). 조회 전용입니다."""
         info = STAGE_INFO[t.current]
         if t.done:
+            job = self.training_job_status()
+            detail = ('결과 화면에서 기록을 확인하세요. 완료한 Stage는 언제든 복습할 수 있습니다.' if job['finished'] else
+                      f'학습 기록은 완료됐지만 고객 작업(요청 #{job["rid"]})은 아직 {job["job_label"]}입니다. '
+                      '관제실에서 시간을 진행해 최종 완료를 확인하세요.')
             return {'tone': 'done', 'chip': '연습 완료' if t.practice else '연수 완료', 'title': '다섯 Stage를 모두 통과했습니다',
-                    'detail': '결과 화면에서 기록을 확인하세요. 완료한 Stage는 언제든 복습할 수 있습니다.', 'action': 'result'}
+                    'detail': detail, 'action': 'result'}
         if t.current_passed() and t.can_advance():
             nxt = STAGE_INFO[t.next_stage]
             return {'tone': 'ok', 'chip': '진행 가능', 'title': f'Stage {nxt["no"]} · {nxt["short"]}',
@@ -1780,7 +1789,46 @@ class GameSession:
                                    else f'진행 {state.progress:.0f}%')},
                 'notice': 'Stage 5는 이미 경험한 경로 단절 사건을 재사용한 독립 진단 흐름의 시연입니다. '
                           '처음 보는 장애에 대한 숙련도 인증이 아닙니다.',
-                'outro': STAGE_INFO['independent']['done']}
+                'outro': STAGE_INFO['independent']['done'], 'status': self.training_job_status()}
+
+    def training_job_status(self):
+        """chapter5-ux-001: 연수 사건의 **현재** 네트워크·고객 작업 상태(조회 전용, 저장·시간·자원 변경 없음).
+
+        Stage 5 통과(학습 기록)와 고객 작업 완료는 별개입니다. 사후 ping으로 통신을 재확인한 순간에도 작업은
+        복구 준비 중이거나 진행 중일 수 있으므로, 결과창·Lab 목표·관제실 목표가 이 값을 함께 씁니다."""
+        t = self._require_training()
+        run = self.runs[t.rid]
+        s = run.state
+        key = outcome_key(run)
+        response = RESPONSE_LABELS.get(s.recovered_by)
+        if response:
+            network = (f'{response} 후 통신 복구 확인' if t.stage5_verified(t.rid)
+                       else f'{response} 조치 완료 · 같은 관측으로 재확인 전')
+        elif s.incident_kind and s.phase in ('incident', 'paused'):
+            network = '장애 조치 전 · 원격 통신 단절'
+        else:
+            network = '장애 대응 기록 없음'
+        progress = f'작업 진행률 {s.progress:.0f}%'
+        returned = run.playthrough_id not in self.servers.allocations
+        if key != 'in_progress':
+            tone = {'on_time': 'done', 'late': 'warn'}.get(key, 'failed')
+            done_at = run.terms.get('completed')
+            detail = ((f'{game_time(done_at)} 완료 · ' if key in ('on_time', 'late') and done_at is not None else '')
+                      + ('GPU·전력 반환 완료' if returned else 'GPU·전력 점유 중'))
+            return {'rid': t.rid, 'finished': True, 'job_key': key, 'job_label': OUTCOME_NAMES[key], 'job_detail': detail,
+                    'job_tone': tone, 'network': network, 'returned': returned,
+                    'remaining': '없음 · 고객 작업이 종료되었습니다.'}
+        if not s.allocated:
+            label, tone, detail = '배정 전', 'idle', '관제실에서 배정해야 작업이 시작됩니다'
+        elif s.phase in ('incident', 'paused'):
+            label, tone, detail = '작업 중단 · 장애 조치 전', 'fault', progress
+        elif s.phase == 'recovering':
+            label, tone, detail = f'복구 준비 중 · {s.recovery_left}분 남음', 'recover', progress+' · 준비 후 작업 재개'
+        else:
+            label, tone, detail = '진행 중', 'ok', progress
+        return {'rid': t.rid, 'finished': False, 'job_key': key, 'job_label': label, 'job_detail': detail, 'job_tone': tone,
+                'network': network, 'returned': returned,
+                'remaining': '관제실에서 시간을 진행해 고객 작업의 최종 완료와 자원 반환을 확인하세요.'}
 
     def skip_tutorial(self):
         if self.story and not self.story.tutorial_completed:
