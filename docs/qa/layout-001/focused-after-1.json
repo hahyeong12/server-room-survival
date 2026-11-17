@@ -1,0 +1,233 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions",
+    "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions",
+    "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "ran": 5,
+  "passed": [
+    "tests.test_console.ConsoleTests.test_automatic_notice_opens_matching_request_without_advancing_time",
+    "tests.test_play_modes_gui.PlayModesGuiTests.test_all_menu_buttons_fit_three_resolutions",
+    "tests.test_story.StoryGuiTests.test_actual_tk_three_resolutions_through_all_tutorial_stages",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_each_target_fits_three_resolutions_and_maximized_game"
+  ],
+  "failures": [
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 357, in test_layout_and_chip_text_at_three_resolutions\n    assert_tree_row_visible(self, a.active_list, first, a.body)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\support.py\", line 68, in assert_tree_row_visible\n    case.assertLessEqual(top+height, boundary.winfo_rooty()+boundary.winfo_height())\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 491 not less than or equal to 488\n"
+    }
+  ],
+  "errors": [],
+  "skipped": [],
+  "seconds": 61.89,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}

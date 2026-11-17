@@ -1,0 +1,1193 @@
+{
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "kind": "real Tk fixture layout observations",
+  "inspector": [
+    {
+      "size": "1000x650",
+      "target": {
+        "rect": [
+          784,
+          542,
+          240,
+          26
+        ],
+        "requested": [
+          117,
+          26
+        ],
+        "mapped": false,
+        "class": "Button",
+        "text": "GPU·전력 정보 확인"
+      },
+      "highlight_key": "resources",
+      "highlight_matches_button": true,
+      "panel": {
+        "rect": [
+          782,
+          323,
+          244,
+          140
+        ],
+        "requested": [
+          240,
+          391
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "inspector": {
+        "rect": [
+          784,
+          352,
+          240,
+          109
+        ],
+        "requested": [
+          236,
+          190
+        ],
+        "mapped": true,
+        "class": "Canvas",
+        "text": ""
+      }
+    },
+    {
+      "size": "1280x680",
+      "target": {
+        "rect": [
+          1064,
+          519,
+          240,
+          26
+        ],
+        "requested": [
+          117,
+          26
+        ],
+        "mapped": false,
+        "class": "Button",
+        "text": "GPU·전력 정보 확인"
+      },
+      "highlight_key": "resources",
+      "highlight_matches_button": true,
+      "panel": {
+        "rect": [
+          1062,
+          300,
+          244,
+          193
+        ],
+        "requested": [
+          240,
+          391
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "inspector": {
+        "rect": [
+          1064,
+          329,
+          240,
+          162
+        ],
+        "requested": [
+          236,
+          190
+        ],
+        "mapped": true,
+        "class": "Canvas",
+        "text": ""
+      }
+    },
+    {
+      "size": "1366x768",
+      "target": {
+        "rect": [
+          1150,
+          519,
+          240,
+          26
+        ],
+        "requested": [
+          117,
+          26
+        ],
+        "mapped": true,
+        "class": "Button",
+        "text": "GPU·전력 정보 확인"
+      },
+      "highlight_key": "resources",
+      "highlight_matches_button": true,
+      "panel": {
+        "rect": [
+          1148,
+          300,
+          244,
+          281
+        ],
+        "requested": [
+          240,
+          391
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "inspector": {
+        "rect": [
+          1150,
+          329,
+          240,
+          190
+        ],
+        "requested": [
+          236,
+          190
+        ],
+        "mapped": true,
+        "class": "Canvas",
+        "text": ""
+      }
+    }
+  ],
+  "preview": [
+    {
+      "size": "1000x650",
+      "target": {
+        "rect": [
+          792,
+          487,
+          224,
+          34
+        ],
+        "requested": [
+          118,
+          34
+        ],
+        "mapped": false,
+        "class": "Button",
+        "text": "배정 계획 비교·선택"
+      },
+      "highlight_key": "compare",
+      "highlight_matches_button": true,
+      "panel": {
+        "rect": [
+          782,
+          323,
+          244,
+          140
+        ],
+        "requested": [
+          240,
+          391
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "inspector": {
+        "rect": [
+          784,
+          352,
+          240,
+          190
+        ],
+        "requested": [
+          236,
+          190
+        ],
+        "mapped": false,
+        "class": "Canvas",
+        "text": ""
+      }
+    },
+    {
+      "size": "1280x680",
+      "target": {
+        "rect": [
+          1072,
+          464,
+          224,
+          16
+        ],
+        "requested": [
+          118,
+          34
+        ],
+        "mapped": true,
+        "class": "Button",
+        "text": "배정 계획 비교·선택"
+      },
+      "highlight_key": "compare",
+      "highlight_matches_button": true,
+      "panel": {
+        "rect": [
+          1062,
+          300,
+          244,
+          193
+        ],
+        "requested": [
+          240,
+          391
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "inspector": {
+        "rect": [
+          1064,
+          329,
+          240,
+          190
+        ],
+        "requested": [
+          236,
+          190
+        ],
+        "mapped": false,
+        "class": "Canvas",
+        "text": ""
+      }
+    },
+    {
+      "size": "1366x768",
+      "target": {
+        "rect": [
+          1158,
+          464,
+          224,
+          34
+        ],
+        "requested": [
+          118,
+          34
+        ],
+        "mapped": true,
+        "class": "Button",
+        "text": "배정 계획 비교·선택"
+      },
+      "highlight_key": "compare",
+      "highlight_matches_button": true,
+      "panel": {
+        "rect": [
+          1148,
+          300,
+          244,
+          281
+        ],
+        "requested": [
+          240,
+          391
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "inspector": {
+        "rect": [
+          1150,
+          329,
+          240,
+          190
+        ],
+        "requested": [
+          236,
+          190
+        ],
+        "mapped": false,
+        "class": "Canvas",
+        "text": ""
+      }
+    }
+  ],
+  "menus": [
+    {
+      "category": "tutorial",
+      "size": "1000x650",
+      "root": [
+        38,
+        61,
+        1000,
+        650
+      ],
+      "content": {
+        "rect": [
+          78,
+          117,
+          920,
+          539
+        ],
+        "requested": [
+          924,
+          539
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "new": {
+          "rect": [
+            230,
+            396,
+            616,
+            38
+          ],
+          "requested": [
+            205,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "튜토리얼 처음부터 · 별도 슬롯"
+        },
+        "continue": {
+          "rect": [
+            230,
+            521,
+            616,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            230,
+            569,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "story",
+      "size": "1000x650",
+      "root": [
+        38,
+        61,
+        1000,
+        650
+      ],
+      "content": {
+        "rect": [
+          78,
+          75,
+          920,
+          623
+        ],
+        "requested": [
+          924,
+          623
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "new": {
+          "rect": [
+            230,
+            394,
+            616,
+            38
+          ],
+          "requested": [
+            215,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "새 도전 시작 · 제1장 — 첫 근무"
+        },
+        "chapters": {
+          "rect": [
+            230,
+            438,
+            616,
+            38
+          ],
+          "requested": [
+            184,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "장 선택 · 저장된 시작 지점"
+        },
+        "continue": {
+          "rect": [
+            230,
+            563,
+            616,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            230,
+            611,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "practice",
+      "size": "1000x650",
+      "root": [
+        38,
+        61,
+        1000,
+        650
+      ],
+      "content": {
+        "rect": [
+          78,
+          30,
+          920,
+          712
+        ],
+        "requested": [
+          886,
+          712
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "free": {
+          "rect": [
+            230,
+            273,
+            616,
+            38
+          ],
+          "requested": [
+            210,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "자유 운영 · 기존 기록 이어하기"
+        },
+        "chapter2": {
+          "rect": [
+            230,
+            321,
+            616,
+            38
+          ],
+          "requested": [
+            192,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제2장 — 한정된 자원 · 연습"
+        },
+        "chapter3": {
+          "rect": [
+            230,
+            363,
+            616,
+            38
+          ],
+          "requested": [
+            192,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제3장 — 끊어진 연결 · 연습"
+        },
+        "chapter3b": {
+          "rect": [
+            230,
+            405,
+            616,
+            38
+          ],
+          "requested": [
+            205,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제4장 — 서버실의 경보 · 연습"
+        },
+        "lab": {
+          "rect": [
+            230,
+            447,
+            616,
+            38
+          ],
+          "requested": [
+            258,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "Engineering Lab · 학습 과제 1~5 연습"
+        },
+        "continue": {
+          "rect": [
+            230,
+            607,
+            616,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            230,
+            655,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "tutorial",
+      "size": "1280x680",
+      "root": [
+        38,
+        61,
+        1280,
+        680
+      ],
+      "content": {
+        "rect": [
+          148,
+          132,
+          1060,
+          539
+        ],
+        "requested": [
+          924,
+          539
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "new": {
+          "rect": [
+            300,
+            411,
+            756,
+            38
+          ],
+          "requested": [
+            205,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "튜토리얼 처음부터 · 별도 슬롯"
+        },
+        "continue": {
+          "rect": [
+            300,
+            536,
+            756,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            300,
+            584,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "story",
+      "size": "1280x680",
+      "root": [
+        38,
+        61,
+        1280,
+        680
+      ],
+      "content": {
+        "rect": [
+          148,
+          100,
+          1060,
+          603
+        ],
+        "requested": [
+          1006,
+          603
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "new": {
+          "rect": [
+            300,
+            399,
+            756,
+            38
+          ],
+          "requested": [
+            215,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "새 도전 시작 · 제1장 — 첫 근무"
+        },
+        "chapters": {
+          "rect": [
+            300,
+            443,
+            756,
+            38
+          ],
+          "requested": [
+            184,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "장 선택 · 저장된 시작 지점"
+        },
+        "continue": {
+          "rect": [
+            300,
+            568,
+            756,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            300,
+            616,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "practice",
+      "size": "1280x680",
+      "root": [
+        38,
+        61,
+        1280,
+        680
+      ],
+      "content": {
+        "rect": [
+          148,
+          45,
+          1060,
+          712
+        ],
+        "requested": [
+          886,
+          712
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "free": {
+          "rect": [
+            300,
+            288,
+            756,
+            38
+          ],
+          "requested": [
+            210,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "자유 운영 · 기존 기록 이어하기"
+        },
+        "chapter2": {
+          "rect": [
+            300,
+            336,
+            756,
+            38
+          ],
+          "requested": [
+            192,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제2장 — 한정된 자원 · 연습"
+        },
+        "chapter3": {
+          "rect": [
+            300,
+            378,
+            756,
+            38
+          ],
+          "requested": [
+            192,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제3장 — 끊어진 연결 · 연습"
+        },
+        "chapter3b": {
+          "rect": [
+            300,
+            420,
+            756,
+            38
+          ],
+          "requested": [
+            205,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제4장 — 서버실의 경보 · 연습"
+        },
+        "lab": {
+          "rect": [
+            300,
+            462,
+            756,
+            38
+          ],
+          "requested": [
+            258,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "Engineering Lab · 학습 과제 1~5 연습"
+        },
+        "continue": {
+          "rect": [
+            300,
+            622,
+            756,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            300,
+            670,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "tutorial",
+      "size": "1366x768",
+      "root": [
+        38,
+        61,
+        1366,
+        768
+      ],
+      "content": {
+        "rect": [
+          191,
+          176,
+          1060,
+          539
+        ],
+        "requested": [
+          924,
+          539
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "new": {
+          "rect": [
+            343,
+            455,
+            756,
+            38
+          ],
+          "requested": [
+            205,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "튜토리얼 처음부터 · 별도 슬롯"
+        },
+        "continue": {
+          "rect": [
+            343,
+            580,
+            756,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            343,
+            628,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "story",
+      "size": "1366x768",
+      "root": [
+        38,
+        61,
+        1366,
+        768
+      ],
+      "content": {
+        "rect": [
+          191,
+          144,
+          1060,
+          603
+        ],
+        "requested": [
+          1006,
+          603
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "new": {
+          "rect": [
+            343,
+            443,
+            756,
+            38
+          ],
+          "requested": [
+            215,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "새 도전 시작 · 제1장 — 첫 근무"
+        },
+        "chapters": {
+          "rect": [
+            343,
+            487,
+            756,
+            38
+          ],
+          "requested": [
+            184,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "장 선택 · 저장된 시작 지점"
+        },
+        "continue": {
+          "rect": [
+            343,
+            612,
+            756,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            343,
+            660,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    },
+    {
+      "category": "practice",
+      "size": "1366x768",
+      "root": [
+        38,
+        61,
+        1366,
+        768
+      ],
+      "content": {
+        "rect": [
+          191,
+          89,
+          1060,
+          712
+        ],
+        "requested": [
+          886,
+          712
+        ],
+        "mapped": true,
+        "class": "Frame",
+        "text": ""
+      },
+      "buttons": {
+        "free": {
+          "rect": [
+            343,
+            332,
+            756,
+            38
+          ],
+          "requested": [
+            210,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "자유 운영 · 기존 기록 이어하기"
+        },
+        "chapter2": {
+          "rect": [
+            343,
+            380,
+            756,
+            38
+          ],
+          "requested": [
+            192,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제2장 — 한정된 자원 · 연습"
+        },
+        "chapter3": {
+          "rect": [
+            343,
+            422,
+            756,
+            38
+          ],
+          "requested": [
+            192,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제3장 — 끊어진 연결 · 연습"
+        },
+        "chapter3b": {
+          "rect": [
+            343,
+            464,
+            756,
+            38
+          ],
+          "requested": [
+            205,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "제4장 — 서버실의 경보 · 연습"
+        },
+        "lab": {
+          "rect": [
+            343,
+            506,
+            756,
+            38
+          ],
+          "requested": [
+            258,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "Engineering Lab · 학습 과제 1~5 연습"
+        },
+        "continue": {
+          "rect": [
+            343,
+            666,
+            756,
+            38
+          ],
+          "requested": [
+            153,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "선택한 기록 이어하기"
+        },
+        "back": {
+          "rect": [
+            343,
+            714,
+            78,
+            38
+          ],
+          "requested": [
+            78,
+            38
+          ],
+          "mapped": true,
+          "class": "Button",
+          "text": "돌아가기"
+        }
+      }
+    }
+  ],
+  "user_data_unchanged": true
+}

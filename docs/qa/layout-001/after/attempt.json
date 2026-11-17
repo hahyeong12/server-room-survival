@@ -1,0 +1,6 @@
+{
+  "status": "aborted",
+  "reason": "native QA harness pumped Tk while mouse was held; own QA process stopped and mouse released",
+  "completed_native_checks": false,
+  "user_data_unchanged": true
+}

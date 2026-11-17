@@ -1,0 +1,259 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_layout_gui",
+    "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "ran": 7,
+  "passed": [
+    "tests.test_layout_gui.LayoutGuiTests.test_inspector_items_scroll_into_view_with_confirmation_fixed",
+    "tests.test_layout_gui.LayoutGuiTests.test_menu_header_version_and_buttons_fit_and_restore_large_size",
+    "tests.test_layout_gui.LayoutGuiTests.test_new_tutorial_completes_through_small_window_controls",
+    "tests.test_layout_gui.LayoutGuiTests.test_preview_compare_stays_clickable_without_reserving_resources"
+  ],
+  "failures": [
+    {
+      "id": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body (size='1000x650')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 179, in test_multiple_active_rows_scroll_select_and_keep_text_inside_body\n    self.assertEqual(tree.selection(), (rid,))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Tuples differ: () != ('1',)\n\nSecond tuple contains 1 additional elements.\nFirst extra element 0:\n'1'\n\n- ()\n+ ('1',)\n"
+    },
+    {
+      "id": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body (size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 179, in test_multiple_active_rows_scroll_select_and_keep_text_inside_body\n    self.assertEqual(tree.selection(), (rid,))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Tuples differ: () != ('1',)\n\nSecond tuple contains 1 additional elements.\nFirst extra element 0:\n'1'\n\n- ()\n+ ('1',)\n"
+    },
+    {
+      "id": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body (size='1366x768')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 179, in test_multiple_active_rows_scroll_select_and_keep_text_inside_body\n    self.assertEqual(tree.selection(), (rid,))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Tuples differ: () != ('1',)\n\nSecond tuple contains 1 additional elements.\nFirst extra element 0:\n'1'\n\n- ()\n+ ('1',)\n"
+    },
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions (state='finished', size='1000x650', text='GPU 2/2')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 349, in test_layout_and_chip_text_at_three_resolutions\n    self.assertLessEqual(x2,a.network.winfo_width());self.assertLessEqual(y2,a.network.winfo_height())\n                                                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 142 not less than or equal to 130\n"
+    },
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions (state='finished', size='1000x650', text='전력 3/3')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 349, in test_layout_and_chip_text_at_three_resolutions\n    self.assertLessEqual(x2,a.network.winfo_width());self.assertLessEqual(y2,a.network.winfo_height())\n                                                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 140 not less than or equal to 130\n"
+    },
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions (state='finished', size='1000x650', text='GPU 1/1')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 349, in test_layout_and_chip_text_at_three_resolutions\n    self.assertLessEqual(x2,a.network.winfo_width());self.assertLessEqual(y2,a.network.winfo_height())\n                                                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 142 not less than or equal to 130\n"
+    },
+    {
+      "id": "tests.test_server_allocation.ServerConsoleTests.test_layout_and_chip_text_at_three_resolutions (state='finished', size='1000x650', text='전력 1/1')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_server_allocation.py\", line 349, in test_layout_and_chip_text_at_three_resolutions\n    self.assertLessEqual(x2,a.network.winfo_width());self.assertLessEqual(y2,a.network.winfo_height())\n                                                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 140 not less than or equal to 130\n"
+    }
+  ],
+  "errors": [
+    {
+      "id": "tests.test_layout_gui.LayoutGuiTests.test_legacy_disk_resume_keeps_progress_and_can_confirm_resources",
+      "traceback": "Traceback (most recent call last):\n  File \"<python>\\Lib\\shutil.py\", line 701, in _rmtree_unsafe\n    os.unlink(fullname)\n    ~~~~~~~~~^^^^^^^^^^\nPermissionError: [WinError 32] 다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다: '<temp>\\\\tmp8891ubqx\\\\legacy.db'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 110, in test_legacy_disk_resume_keeps_progress_and_can_confirm_resources\n    with tempfile.TemporaryDirectory() as folder:\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"<python>\\Lib\\tempfile.py\", line 971, in __exit__\n    self.cleanup()\n    ~~~~~~~~~~~~^^\n  File \"<python>\\Lib\\tempfile.py\", line 975, in cleanup\n    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<python>\\Lib\\tempfile.py\", line 955, in _rmtree\n    _shutil.rmtree(name, onexc=onexc)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"<python>\\Lib\\shutil.py\", line 852, in rmtree\n    _rmtree_impl(path, dir_fd, onexc)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\n  File \"<python>\\Lib\\shutil.py\", line 705, in _rmtree_unsafe\n    onexc(os.unlink, fullname, err)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<python>\\Lib\\tempfile.py\", line 930, in onexc\n    _os.unlink(path)\n    ~~~~~~~~~~^^^^^^\nPermissionError: [WinError 32] 다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다: '<temp>\\\\tmp8891ubqx\\\\legacy.db'\n"
+    }
+  ],
+  "skipped": [],
+  "seconds": 34.477,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}

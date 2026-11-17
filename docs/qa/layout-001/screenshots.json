@@ -1,0 +1,554 @@
+[
+  {
+    "file": "after/screenshots/inspector_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "a8ab95353b95c1a0376f285635b796becd751f60ae2a42aa3d90e1dd0c471ce0"
+  },
+  {
+    "file": "after/screenshots/inspector_1000x650_scrolled.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "ce0fc338c82378ee4f9ae2a07494a5dad86d3b41ea6a9d6055787239245781d5"
+  },
+  {
+    "file": "after/screenshots/inspector_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "b0ccd40da19db46d355082c1c26debc938cec8883227a6e004b8afeb3e081fe7"
+  },
+  {
+    "file": "after/screenshots/inspector_1280x680_scrolled.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "2daf56b461ce426e0197c632715534489ceae18b8d61d7df6acfa37d0aef3157"
+  },
+  {
+    "file": "after/screenshots/inspector_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "22307f403b3ca4fd33a482bd3d60ac6ddc8d9fe3cdbf8525adb2d4f3e37293d1"
+  },
+  {
+    "file": "after/screenshots/inspector_1366x768_scrolled.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "c3ebc4441bbea3859f18dfd5215b092ae48229a9df26edeb6f33213c9af680bf"
+  },
+  {
+    "file": "after/screenshots/menu_practice.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "cfdf2462cbcbbd77f2fdcadc21263388295dbc6b54e89a20a6234bc7fded05d6"
+  },
+  {
+    "file": "after/screenshots/menu_practice_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "7721a5fa14badbd8dd875c2f470f93336ade3611cd9d6d1d329391912566df8d"
+  },
+  {
+    "file": "after/screenshots/menu_practice_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "7a44ecbabb63d888f8eca2b50e8e2b807eb9857d0fef93bdbf70d9e0513a524a"
+  },
+  {
+    "file": "after/screenshots/menu_story.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "0579fba2b085e8b0ea3485f4a125be1e6ccf88081643cea70525ae15c9188cdc"
+  },
+  {
+    "file": "after/screenshots/menu_tutorial.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "1c8e690c4ba365589dd8012231ec0fd7f1941f6613e831e2f4feeb6d89d8c421"
+  },
+  {
+    "file": "after/screenshots/preview_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "a1a98e703e7c14824bda49644b8a4b654bb793d280a2c785cb195ffed3138226"
+  },
+  {
+    "file": "after/screenshots/preview_1000x650_scrolled.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "78538de214660720eb8ff352bfd43fad8cc2c9b07b984e42b03247d81a79ce65"
+  },
+  {
+    "file": "after/screenshots/preview_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "09fd0ac2499dfb3ae80a032686c279ddb34ea9b3d29c2f92f16184320c86146a"
+  },
+  {
+    "file": "after/screenshots/preview_1280x680_scrolled.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "01f213d0b1608e0c752061f12b3875262600d50754f7b33a8f0539b50300d986"
+  },
+  {
+    "file": "after/screenshots/preview_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "cc78e5cb6130d999635c887e66a606771a896a9444a0e3511f4540ad75959232"
+  },
+  {
+    "file": "after/screenshots/preview_1366x768_scrolled.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "cd3b18639f471c190ac1f2da22273c84c4830afc1a4945a655f2cc850206ccf7"
+  },
+  {
+    "file": "after-final/screenshots/inspector_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "1787e8eb7921763d39aee290ff48f2258d057e9c712d3bbdac9a2c57216b5644"
+  },
+  {
+    "file": "after-final/screenshots/inspector_1000x650_scrolled.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "91b14462758b7934465adc8a3ad81bd240fc5b932e18c3207d7425e4b3e7873f"
+  },
+  {
+    "file": "after-final/screenshots/inspector_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "4e52e78a0762290701a27385cb88126839476a6e99499158ffd74c8b4d2088b5"
+  },
+  {
+    "file": "after-final/screenshots/inspector_1280x680_scrolled.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "f459403f606d3f4b9cd3b26aaf4a05c07993e4f560764d6d229bfaa23786170d"
+  },
+  {
+    "file": "after-final/screenshots/inspector_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "b5b2d68dc46cab10ab39563fdd9e48ca42c983019a2ed6c4d0f105272c5265bd"
+  },
+  {
+    "file": "after-final/screenshots/inspector_1366x768_scrolled.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "e7a6cc5bf14db3cb8575af3d7bda41b511e7aa4f74bce1f24554fa05232d772f"
+  },
+  {
+    "file": "after-final/screenshots/menu_practice.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "cfdf2462cbcbbd77f2fdcadc21263388295dbc6b54e89a20a6234bc7fded05d6"
+  },
+  {
+    "file": "after-final/screenshots/menu_practice_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "7721a5fa14badbd8dd875c2f470f93336ade3611cd9d6d1d329391912566df8d"
+  },
+  {
+    "file": "after-final/screenshots/menu_practice_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "7a44ecbabb63d888f8eca2b50e8e2b807eb9857d0fef93bdbf70d9e0513a524a"
+  },
+  {
+    "file": "after-final/screenshots/menu_story.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "0579fba2b085e8b0ea3485f4a125be1e6ccf88081643cea70525ae15c9188cdc"
+  },
+  {
+    "file": "after-final/screenshots/menu_tutorial.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "1c8e690c4ba365589dd8012231ec0fd7f1941f6613e831e2f4feeb6d89d8c421"
+  },
+  {
+    "file": "after-final/screenshots/native_active_rows_1000x650.png",
+    "pixels": [
+      1250,
+      812
+    ],
+    "sha256": "d84e140f7d51eb415d19aff76b473f504ad4e8683a83265ac18666b5fcb5750d"
+  },
+  {
+    "file": "after-final/screenshots/native_active_rows_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "a6b3a31b17de974ea4e59108b0f63b7805aa5873d8380fd403b6ce22b68e7381"
+  },
+  {
+    "file": "after-final/screenshots/native_active_rows_1366x768.png",
+    "pixels": [
+      1708,
+      960
+    ],
+    "sha256": "c9265ad28930cf1999eac1d7592660d2c71fca6ca232cb3af802aabc80c57e68"
+  },
+  {
+    "file": "after-final/screenshots/native_inspector_power_1000x650.png",
+    "pixels": [
+      1250,
+      812
+    ],
+    "sha256": "104650bf6bf6622afa87592c972d9ecf82ff73d50bcb9305d229cd908b6e4fa9"
+  },
+  {
+    "file": "after-final/screenshots/native_inspector_power_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "8047a978d35eadda7fae392f4f38dfa3efde883d0373e5c318d3070562a7cf19"
+  },
+  {
+    "file": "after-final/screenshots/native_inspector_power_1366x768.png",
+    "pixels": [
+      1708,
+      960
+    ],
+    "sha256": "5916a0667a361b3f2358e04158fd4dc521bdc13b67ec86821e46b22accb038ee"
+  },
+  {
+    "file": "after-final/screenshots/preview_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "84b18ae1736d0845735d1d2617f2d472a02d89a1fae158b1ccbb1245a9bf0bd3"
+  },
+  {
+    "file": "after-final/screenshots/preview_1000x650_scrolled.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "20cc1f70bbf5724a8d8271c9bcccfbbd853e582eac4fc8394ce177cb4bbc23c5"
+  },
+  {
+    "file": "after-final/screenshots/preview_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "a47155803cc531655fb730642b897bdc6f2053ee9f6f40667da6b2dcc319bdbb"
+  },
+  {
+    "file": "after-final/screenshots/preview_1280x680_scrolled.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "85fed3090dab384dfcd074e3376e792e1d96f8482da44587fab9a77f2dd89e45"
+  },
+  {
+    "file": "after-final/screenshots/preview_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "b8e75ed106b1564976ce749cf2cb16d77cbf1ee4e5b239bfe78b015ee903f02c"
+  },
+  {
+    "file": "after-final/screenshots/preview_1366x768_scrolled.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "b0c53401ad879b792847830ef3a34ab2144554b7908db51b56a189de5691a100"
+  },
+  {
+    "file": "after-verified/screenshots/inspector_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "266e98452a1492118a518f09a170cbd684c6bb9998a99621a896955a4da2978e"
+  },
+  {
+    "file": "after-verified/screenshots/inspector_1000x650_scrolled.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "a5a1d7c86eff8a5d4ce529944b55e0428a11a8c84e6f8c9706578646a96cbdab"
+  },
+  {
+    "file": "after-verified/screenshots/inspector_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "0ba560972edc72942e0abd022b2a9a95e9d837baa83bd0a0fccd8cfef4554fc5"
+  },
+  {
+    "file": "after-verified/screenshots/inspector_1280x680_scrolled.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "74a5c313e6779c7c1605107ce6c65eef287bc36ac493964a74f39f4a28af0116"
+  },
+  {
+    "file": "after-verified/screenshots/inspector_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "6069972cca4db588f1c4b36e824f9227e6c5844de627e9b21fc054e06086f979"
+  },
+  {
+    "file": "after-verified/screenshots/inspector_1366x768_scrolled.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "c3ebc4441bbea3859f18dfd5215b092ae48229a9df26edeb6f33213c9af680bf"
+  },
+  {
+    "file": "after-verified/screenshots/menu_practice.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "cfdf2462cbcbbd77f2fdcadc21263388295dbc6b54e89a20a6234bc7fded05d6"
+  },
+  {
+    "file": "after-verified/screenshots/menu_practice_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "7721a5fa14badbd8dd875c2f470f93336ade3611cd9d6d1d329391912566df8d"
+  },
+  {
+    "file": "after-verified/screenshots/menu_practice_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "7a44ecbabb63d888f8eca2b50e8e2b807eb9857d0fef93bdbf70d9e0513a524a"
+  },
+  {
+    "file": "after-verified/screenshots/menu_story.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "0579fba2b085e8b0ea3485f4a125be1e6ccf88081643cea70525ae15c9188cdc"
+  },
+  {
+    "file": "after-verified/screenshots/menu_tutorial.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "1c8e690c4ba365589dd8012231ec0fd7f1941f6613e831e2f4feeb6d89d8c421"
+  },
+  {
+    "file": "after-verified/screenshots/native_inspector_power_1000x650.png",
+    "pixels": [
+      1250,
+      812
+    ],
+    "sha256": "61361cf60f420343b167eab60d283fce212c27a7a6764310c46e6279d9a341c3"
+  },
+  {
+    "file": "after-verified/screenshots/preview_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "9d73665b2e70aca519f1d332f7fe59a06f2ab7a2969914ac88383fd0bb30ef51"
+  },
+  {
+    "file": "after-verified/screenshots/preview_1000x650_scrolled.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "78538de214660720eb8ff352bfd43fad8cc2c9b07b984e42b03247d81a79ce65"
+  },
+  {
+    "file": "after-verified/screenshots/preview_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "09fd0ac2499dfb3ae80a032686c279ddb34ea9b3d29c2f92f16184320c86146a"
+  },
+  {
+    "file": "after-verified/screenshots/preview_1280x680_scrolled.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "01f213d0b1608e0c752061f12b3875262600d50754f7b33a8f0539b50300d986"
+  },
+  {
+    "file": "after-verified/screenshots/preview_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "ccbc22f4556a0640f826d8f2b18c85dc32d851ecfff3863720f5d5ee326222f5"
+  },
+  {
+    "file": "after-verified/screenshots/preview_1366x768_scrolled.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "c7b5337a932c1ce21a4235c83b4e5bbba3e4dd965d2ae90809e5a553ae0c7738"
+  },
+  {
+    "file": "before/screenshots/inspector_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "d3634a25964a5b4ce83fff780e46e7aeb0c4d30955937dd9c1f688beeaff2cb8"
+  },
+  {
+    "file": "before/screenshots/inspector_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "099639e1026b83007ce1ad454ab15edcd27d3ae32372a00d071dc9496cd73d50"
+  },
+  {
+    "file": "before/screenshots/inspector_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "b14c2ba129c8f307c440d18fbf390f4a02d20582a4b06c59ce15f065818cdf4f"
+  },
+  {
+    "file": "before/screenshots/menu_practice.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "64d7377ae64e91250191f880cdf9fd99d07f5af58cabf10ce2e02c18555c6327"
+  },
+  {
+    "file": "before/screenshots/menu_practice_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "3df206e179751ad0b189864ae50acc9333a67281e486cc04b57d27238962a768"
+  },
+  {
+    "file": "before/screenshots/menu_practice_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "03c0cb37634da77d69c69c1a0a8860e6f5b28aae837cb64566eaface7488d30f"
+  },
+  {
+    "file": "before/screenshots/menu_story.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "ed475c94f0da54d2a2f99e50e6c1deb9028e98acf2def7e4b9d8803248b954c6"
+  },
+  {
+    "file": "before/screenshots/menu_tutorial.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "2ef6984c10d3382536f9378a0aede91c3d5dceef58ee8ad3b0b52c45d4892633"
+  },
+  {
+    "file": "before/screenshots/preview_1000x650.png",
+    "pixels": [
+      1250,
+      813
+    ],
+    "sha256": "c4eb8e6763d9559eee2152db6b95010a6c6cc824cc8f249316816c088e5d88c0"
+  },
+  {
+    "file": "before/screenshots/preview_1280x680.png",
+    "pixels": [
+      1600,
+      850
+    ],
+    "sha256": "2e566f6891f22bae504bb59fd82ae355a68609512423d77a8f28f276ae9fa21c"
+  },
+  {
+    "file": "before/screenshots/preview_1366x768.png",
+    "pixels": [
+      1707,
+      960
+    ],
+    "sha256": "e8f139286f17603eb006d4d443dea3a365f9a6b8162ce73f866ea16a9819554e"
+  }
+]

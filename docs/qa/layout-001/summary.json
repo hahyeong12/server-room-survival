@@ -1,0 +1,107 @@
+{
+  "starting_commit": "b548278",
+  "tested_code_commit": "c3ad0d7",
+  "full_suite": {
+    "ran": 1057,
+    "passed": 1057,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 650.664,
+    "user_data_unchanged": true
+  },
+  "gui_passed": 298,
+  "headless_passed_in_full": 759,
+  "discovered": 1057,
+  "runs": {
+    "focused-after-1": {
+      "ran": 5,
+      "passed": 4,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 61.89,
+      "user_data_unchanged": true
+    },
+    "focused-before": {
+      "ran": 5,
+      "passed": 0,
+      "failures": 8,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 43.651,
+      "user_data_unchanged": true
+    },
+    "focused-final": {
+      "ran": 11,
+      "passed": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 97.443,
+      "user_data_unchanged": true
+    },
+    "full-suite": {
+      "ran": 1057,
+      "passed": 1057,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 650.664,
+      "user_data_unchanged": true
+    },
+    "layout-tests-1": {
+      "ran": 7,
+      "passed": 4,
+      "failures": 7,
+      "errors": 1,
+      "skipped": 0,
+      "seconds": 34.477,
+      "user_data_unchanged": true
+    },
+    "layout-tests-2": {
+      "ran": 8,
+      "passed": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 23.785,
+      "user_data_unchanged": true
+    },
+    "p0-first": {
+      "ran": 2,
+      "passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 67.33,
+      "user_data_unchanged": true
+    },
+    "related-modules": {
+      "ran": 142,
+      "passed": 142,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 351.83,
+      "user_data_unchanged": true
+    }
+  },
+  "user_data": {
+    "before_count": 24,
+    "after_count": 24,
+    "unchanged": true,
+    "added": [],
+    "removed": [],
+    "changed": []
+  },
+  "native_sizes": [
+    "1000x650",
+    "1280x680",
+    "1366x768"
+  ],
+  "remaining": [
+    "white frame cause/frequency",
+    "DPI blur and other actual DPI/monitor configurations"
+  ]
+}
