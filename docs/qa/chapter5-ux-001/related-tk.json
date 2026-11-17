@@ -1,0 +1,246 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_chapter5_ux_gui",
+    "tests.test_chapter5_ux",
+    "tests.test_training_gui",
+    "tests.test_engineering_lab_gui"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.334646962233169,
+    "screen": [
+      1536,
+      864
+    ],
+    "visible": true
+  },
+  "ran": 23,
+  "passed": [
+    "tests.test_chapter5_ux_gui.Chapter5UxGuiTests.test_lab_header_fits_in_chapter3_preview",
+    "tests.test_chapter5_ux_gui.Chapter5UxGuiTests.test_lab_header_fits_in_practice",
+    "tests.test_chapter5_ux_gui.Chapter5UxGuiTests.test_lab_header_fits_in_regular_training",
+    "tests.test_chapter5_ux_gui.Chapter5UxGuiTests.test_practice_result_window_keeps_practice_label_and_job_state",
+    "tests.test_chapter5_ux_gui.Chapter5UxGuiTests.test_result_after_save_and_resume_shows_current_job_state",
+    "tests.test_chapter5_ux_gui.Chapter5UxGuiTests.test_result_window_separates_learning_and_customer_job_over_time",
+    "tests.test_chapter5_ux.StatusTimelineTests.test_failed_or_unassigned_jobs_are_not_reported_as_completed",
+    "tests.test_chapter5_ux.StatusTimelineTests.test_practice_timeline",
+    "tests.test_chapter5_ux.StatusTimelineTests.test_regular_training_timeline",
+    "tests.test_chapter5_ux.StatusTimelineTests.test_same_play_with_and_without_viewing_ends_identically",
+    "tests.test_chapter5_ux.StatusTimelineTests.test_status_matches_after_save_and_resume",
+    "tests.test_chapter5_ux.StatusTimelineTests.test_viewing_does_not_change_time_score_resources_or_consent",
+    "tests.test_training_gui.RegularTrainingGuiTests.test_3b_result_offers_training_and_lab_follows_stages",
+    "tests.test_training_gui.RegularTrainingGuiTests.test_stage5_hides_answers_and_locks_response_until_judged",
+    "tests.test_training_gui.StageFlowGuiTests.test_clicking_on_the_broken_segment_midpoint_selects_it",
+    "tests.test_training_gui.StageFlowGuiTests.test_practice_lab_before_assignment_shows_setup_not_a_broken_link_task",
+    "tests.test_training_gui.StageFlowGuiTests.test_stage5_available_banner_and_result_after_verification",
+    "tests.test_engineering_lab_gui.Chapter1HighlightGuiTests.test_no_highlight_flash_before_feedback",
+    "tests.test_engineering_lab_gui.Chapter3PreviewGuiTests.test_preview_locks_learning_and_terminal",
+    "tests.test_engineering_lab_gui.EngineeringLabGuiTests.test_lab_timer_is_cancelled_when_closed_and_on_mode_switch",
+    "tests.test_engineering_lab_gui.EngineeringLabGuiTests.test_open_lab_shows_same_incident_in_every_tab_without_changing_state",
+    "tests.test_engineering_lab_gui.EngineeringLabGuiTests.test_recovery_in_control_room_updates_open_lab",
+    "tests.test_engineering_lab_gui.EngineeringLabGuiTests.test_unsupported_mission_only_shows_reason"
+  ],
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "seconds": 71.11,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}

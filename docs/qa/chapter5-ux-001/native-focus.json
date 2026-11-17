@@ -1,0 +1,559 @@
+{
+  "kind": "chapter5_focused_fixture",
+  "commit": "e75efe05b1229a6715e99ff60cd7782a8d75bec5",
+  "completed": true,
+  "error": null,
+  "passed": 76,
+  "failed": 0,
+  "full_play_attempts": 0,
+  "clicks": 151,
+  "wheel_events": 0,
+  "keyboard_events": 290,
+  "repo_data_unchanged": true,
+  "repo_data_count": 24,
+  "temp_files_removed": [
+    "aidc_story_slot_001.db",
+    "aidc_story_slot_001.db.lock"
+  ],
+  "checks": [
+    {
+      "step": "제5장 독립 연습 fixture",
+      "item": "연습/정규 구분·새 요청·미배정",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "제5장 독립 연습 fixture",
+      "item": "정규 시작 체크포인트와 연습 구분",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "제5장 독립 연습 fixture",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "제5장 독립 연습 fixture",
+      "item": "Stage 지도·목표 표시·미배정 상태 안내",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "제5장 독립 연습 fixture",
+      "item": "실제 경로 장애·자원 배정 유지",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "실제 탭 선택: 네트워크 구조",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "탭 열기만으로 Stage 1 통과하지 않음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "구간 실제 클릭은 선택만 기록·영향 답변 필요",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "구조 선택·영향 판단으로 통과·운영 상태 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "현재 Stage 실제 통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 1 시스템 구조 관찰",
+      "item": "실제 GUI로 다음 Stage 이동",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "실제 탭 선택: 명령어 학습",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "목적에 맞지 않는 도구는 통과하지 않음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "도구 선택만으로 통과하지 않음·장애 출력",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "ping 한계 판단으로 통과·운영 상태 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "현재 Stage 실제 통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 2 진단 도구 선택",
+      "item": "실제 GUI로 다음 Stage 이동",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "실제 탭 선택: 명령어 학습",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "불완전한 조립은 통과하지 않음·오류 안내",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "실제 -c 3 서버 ping·결과 질문 필요",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "응답 수 읽기로 통과·운영 상태 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "현재 Stage 실제 통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 3 명령어 조립",
+      "item": "실제 GUI로 다음 Stage 이동",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "잘못된 명령 피드백·미통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "현재 장애 상태와 가까운/원격/경로 출력 일치",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "관측3종만으로 통과하지 않음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "사실/원인 추정 구분으로 통과·운영 상태 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "현재 Stage 실제 통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 4 터미널 직접 입력",
+      "item": "실제 GUI로 다음 Stage 이동",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 네트워크 구조",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "판단 전 구조도 정답 숨김",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "Stage 4 증거를 Stage 5 증거로 대신하지 않음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "직접 관측한 증거 확보·아직 미통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 연수 진행",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "원인 판단 뒤 대응 가능·아직 미통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "복구 버튼만으로 Stage 5 통과하지 않음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "기존 대응은 가상 시각·GPU/전력 배정 유지",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 탭 선택: 가상 터미널",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "직접 입력 관측은 시간·자원·점수·동의 불변",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "실제 터미널에 입력문·교육용 시각 표시",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "동일 도구의 조치 후 응답3/3으로5개 모두 통과",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "연수 고객 정상 완료·기한 준수·전량 반환",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "기존 제1~4장 진행 기록 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "장 시작 체크포인트 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "Stage 5 독립 진단 시연",
+      "item": "5개 Stage·실제 행동·사후 관측 디스크 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "보존",
+      "item": "사용자 저장·잠금·체크포인트 보존",
+      "result": "PASS",
+      "detail": "24→24개",
+      "kind": "auto"
+    }
+  ],
+  "source_sha256": {
+    "autoplay_chapter5.py": "7931a33cd658fff3637744c30109cf5243cc172c88e06c1c864ebbc31fb7b4eb",
+    "autoplay_story_ch1.py": "8ca66ea1b0cefc01c508b0ee5a8eab645643b7662fc4c065679ff6e5e4f7dc93",
+    "autoplay_chapter2.py": "3254f83b812e536d4ba847e31e326a216dbcfd9e892d4da7d27d75ff807b1c10",
+    "autoplay_chapter3.py": "ba82a43e262e3fd9ccb456a59324730f9f55f2fab6c8530f9f50a81489a91add",
+    "autoplay_chapter4.py": "e0d344d36f7203ad074ef9256480e857a43fc1b28453121bd557c490d53b3744"
+  }
+}

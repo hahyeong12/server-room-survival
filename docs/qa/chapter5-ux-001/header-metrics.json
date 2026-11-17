@@ -1,0 +1,1991 @@
+{
+  "before": {
+    "environment": {
+      "python": "3.14.6",
+      "tk": "8.6.15",
+      "tk_scaling": 1.334646962233169,
+      "screen": [
+        1536,
+        864
+      ],
+      "visible": true
+    },
+    "user_data_unchanged": true,
+    "runs": {
+      "regular": {
+        "1060x700/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 398,
+              "clipped": true
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1060x700/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 398,
+              "clipped": true
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 238,
+              "clipped": true
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 238,
+              "clipped": true
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 500,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 500,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 500,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "심화 연수  |  요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 500,
+              "width": 500,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        }
+      },
+      "practice": {
+        "1060x700/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 398,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1060x700/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 398,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 238,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 238,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 618,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 618,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/연수 진행": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 697,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/가상 터미널": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Engineering Lab 연습 · 정규 기록 아님  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 697,
+              "width": 697,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        }
+      },
+      "preview": {
+        "1060x700/운영 상태": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 682,
+              "width": 398,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 695,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/운영 상태": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+            "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요."
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 682,
+              "width": 238,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 639,
+              "clipped": true
+            }
+          ]
+        },
+        "1280x720/운영 상태": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [
+            "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청"
+          ],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 682,
+              "width": 618,
+              "clipped": true
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 695,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/운영 상태": {
+          "header_height": 110,
+          "notebook_top": 126,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "Chapter 3a · 미션 A · 관찰 미리보기  |  요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 682,
+              "width": 682,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 695,
+              "clipped": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "after": {
+    "environment": {
+      "python": "3.14.6",
+      "tk": "8.6.15",
+      "tk_scaling": 1.334646962233169,
+      "screen": [
+        1536,
+        864
+      ],
+      "visible": true
+    },
+    "user_data_unchanged": true,
+    "runs": {
+      "regular": {
+        "1060x700/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1032,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1060x700/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1032,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 872,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 872,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1252,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1252,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1338,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "● 심화 연수",
+              "req": 86,
+              "width": 86,
+              "clipped": false
+            },
+            {
+              "text": "D1 18:00",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #8 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1338,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        }
+      },
+      "practice": {
+        "1060x700/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1032,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1060x700/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1032,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 872,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 872,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1252,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1252,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/연수 진행": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": true,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1338,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/가상 터미널": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "▲ 연습 · 정규 기록 아님",
+              "req": 149,
+              "width": 149,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1338,
+              "clipped": false
+            },
+            {
+              "text": "Lab 학습 과제 1~5 (Stage) · 본편 장 번호와 별개\n관찰·명령은 게임 시간·자원·점수를 바꾸지 않습니다. 배정·시간 진행·복구 조치는 관제실에서 합니다.",
+              "req": 543,
+              "width": 543,
+              "clipped": false
+            }
+          ]
+        }
+      },
+      "preview": {
+        "1060x700/운영 상태": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "○ Chapter 3a · 미션 A · 관찰 미리보기",
+              "req": 233,
+              "width": 233,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1032,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 695,
+              "clipped": false
+            }
+          ]
+        },
+        "900x620/운영 상태": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "○ Chapter 3a · 미션 A · 관찰 미리보기",
+              "req": 233,
+              "width": 233,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 872,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 628,
+              "width": 628,
+              "clipped": false
+            }
+          ]
+        },
+        "1280x720/운영 상태": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "○ Chapter 3a · 미션 A · 관찰 미리보기",
+              "req": 233,
+              "width": 233,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1252,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 695,
+              "clipped": false
+            }
+          ]
+        },
+        "1366x768/운영 상태": {
+          "header_height": 138,
+          "notebook_top": 154,
+          "clipped": [],
+          "return_button_inside": 1,
+          "training_bar_visible": false,
+          "labels": [
+            {
+              "text": "ENGINEERING LAB",
+              "req": 210,
+              "width": 210,
+              "clipped": false
+            },
+            {
+              "text": "▲ PROTOTYPE",
+              "req": 101,
+              "width": 101,
+              "clipped": false
+            },
+            {
+              "text": "○ Chapter 3a · 미션 A · 관찰 미리보기",
+              "req": 233,
+              "width": 233,
+              "clipped": false
+            },
+            {
+              "text": "D1 09:30",
+              "req": 94,
+              "width": 94,
+              "clipped": false
+            },
+            {
+              "text": "▲ 중단 · 네트워크 장애",
+              "req": 177,
+              "width": 177,
+              "clipped": false
+            },
+            {
+              "text": "요청 #1 · Merlion AI / 싱가포르 · 생성형 AI 모델 학습 요청",
+              "req": 410,
+              "width": 1338,
+              "clipped": false
+            },
+            {
+              "text": "관찰 미리보기입니다. 명령어 학습과 가상 터미널은 제5장에서 열리며, 자유 체험은 자유·연습의 [Engineering Lab]을 이용하세요.",
+              "req": 695,
+              "width": 695,
+              "clipped": false
+            }
+          ]
+        }
+      }
+    }
+  }
+}

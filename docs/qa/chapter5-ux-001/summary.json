@@ -1,0 +1,112 @@
+{
+  "starting_commit": "14a950c",
+  "code_commits": {
+    "header": "05bb769",
+    "job_status": "884ccad",
+    "tests": "e75efe0"
+  },
+  "python": "3.14.6",
+  "tk": "8.6.15",
+  "screen_logical": [
+    1536,
+    864
+  ],
+  "scaling_percent": 125,
+  "header": {
+    "sizes": [
+      "1060x700",
+      "900x620",
+      "1280x720",
+      "1366x768"
+    ],
+    "modes": [
+      "training",
+      "practice",
+      "preview"
+    ],
+    "clipped_cases_before": 13,
+    "clipped_cases_after": 0,
+    "header_height_px": {
+      "before": 110,
+      "after": 138
+    },
+    "metrics": "header-metrics.json"
+  },
+  "timeline": {
+    "points": [
+      "stage5_pending",
+      "after_reroute",
+      "stage5_passed",
+      "recovery_done_running",
+      "job_finished_returned"
+    ],
+    "file": "timeline.json",
+    "viewing_changed_state": false
+  },
+  "tests": {
+    "new_non_gui": 6,
+    "new_gui": 6,
+    "related_tk": {
+      "ran": 23,
+      "passed": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "file": "related-tk.json"
+    },
+    "headless": {
+      "ran": 765,
+      "passed": 765,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "excluded_gui": 304,
+      "log": "headless.txt"
+    },
+    "full": {
+      "ran": 1069,
+      "passed": 1069,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "baseline": 1057,
+      "delta_reason": "new tests/test_chapter5_ux.py (6 non-GUI) + tests/test_chapter5_ux_gui.py (6 GUI)",
+      "file": "full-regression.json"
+    },
+    "native_focus": {
+      "completed": true,
+      "passed": 76,
+      "failed": 0,
+      "clicks": 151,
+      "keyboard_events": 290,
+      "previous": {
+        "passed": 76,
+        "clicks": 139
+      },
+      "click_delta_reason": "12 extra scrollbar clicks in the Stage task area (header one line taller)",
+      "file": "native-focus.json"
+    }
+  },
+  "user_data": {
+    "before_count": 24,
+    "after_count": 24,
+    "added": [],
+    "removed": [],
+    "changed": [],
+    "unchanged": true
+  },
+  "unchanged_rules": [
+    "Stage 5 pass condition",
+    "time",
+    "score",
+    "GPU/power ledger",
+    "consent",
+    "save format (no new field)"
+  ],
+  "not_done": [
+    "white frame",
+    "global DPI",
+    "gauge caption overlap in Lab goal card (pre-existing)",
+    "full regular native replay"
+  ]
+}
