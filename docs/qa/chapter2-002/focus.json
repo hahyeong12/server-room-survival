@@ -1,0 +1,4701 @@
+{
+ "error": null,
+ "kind": "focused_gui_not_full_play",
+ "full_play_attempts": 0,
+ "preflight": {
+  "status": "passed",
+  "samples": [
+   {
+    "foreground_matches_game": true,
+    "button_point_owned_and_correct_top": true,
+    "root_in_z_order": true,
+    "own_dialogs_above_root": 0,
+    "occlusions": [],
+    "state": "stable",
+    "elapsed": 0.035
+   },
+   {
+    "foreground_matches_game": true,
+    "button_point_owned_and_correct_top": true,
+    "root_in_z_order": true,
+    "own_dialogs_above_root": 0,
+    "occlusions": [],
+    "state": "countdown",
+    "elapsed": 1.155
+   },
+   {
+    "foreground_matches_game": true,
+    "button_point_owned_and_correct_top": true,
+    "root_in_z_order": true,
+    "own_dialogs_above_root": 0,
+    "occlusions": [],
+    "state": "passed",
+    "elapsed": 4.048
+   }
+  ],
+  "game_hwnds": {
+   "client": "0x1b018a",
+   "frame": "0x4a044a",
+   "ancestor": "0x4a044a"
+  },
+  "frame_matches_ancestor": true,
+  "handles_owned_and_valid": true,
+  "elapsed": 4.048
+ },
+ "checks": [
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "수정 후 세 목록은 위젯 휠 바인딩 없음",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "수정 전 실제 한 칸 입력이 두 행씩 건너뜀 재현",
+   "result": "PASS",
+   "detail": "[['3'], ['5']]",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "실제 Tk 전달 delta 계측·위젯/클래스 각 이동 확인",
+   "result": "PASS",
+   "detail": "[{'list': 'baseline', 'stage': 'before_widget', 'delta': -120, 'input': 0, 'yview': (0.0, 0.2), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': (1, 25, 212, 29), '2': (1, 54, 212, 29), '3': '', '4': '', '5': ''}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': -120, 'input': 0, 'yview': (0.2, 0.4), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': (1, 25, 212, 29), '3': (1, 54, 212, 29), '4': '', '5': ''}}, {'list': 'baseline', 'stage': 'after_class', 'delta': -120, 'input': 0, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'list': 'baseline', 'stage': 'before_widget', 'delta': -120, 'input': 1, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': -120, 'input': 1, 'yview': (0.6, 0.8), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'list': 'baseline', 'stage': 'after_class', 'delta': -120, 'input': 1, 'yview': (0.8, 1.0), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 25, 212, 29)}}, {'list': 'baseline', 'stage': 'before_widget', 'delta': 120, 'input': 3, 'yview': (0.8, 1.0), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 25, 212, 29)}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': 120, 'input': 3, 'yview': (0.6, 0.8), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'list': 'baseline', 'stage': 'after_class', 'delta': 120, 'input': 3, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}]",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "tutorial 실제 휠로 인접 5행 모두 왕복 접근",
+   "result": "PASS",
+   "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "tutorial 휠 스크롤은 선택3 보존",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "story 실제 휠로 인접 5행 모두 왕복 접근",
+   "result": "PASS",
+   "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "story 휠 스크롤은 선택3 보존",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "free 실제 휠로 인접 5행 모두 왕복 접근",
+   "result": "PASS",
+   "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "free 휠 스크롤은 선택3 보존",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  },
+  {
+   "step": "독립 Tk 휠 집중 검사",
+   "item": "실제 Down/Up 키로 1→5→1 탐색·행 노출",
+   "result": "PASS",
+   "detail": "[{'yview': (0.2, 0.4), 'selection': ('2',), 'focus': '2', 'height': 58, 'rows': {'1': '', '2': (1, 25, 212, 29), '3': (1, 54, 212, 29), '4': '', '5': ''}}, {'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '3', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'yview': (0.6, 0.8), 'selection': ('4',), 'focus': '4', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'yview': (0.8, 1.0), 'selection': ('5',), 'focus': '5', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 25, 212, 29)}}, {'yview': (0.6, 0.8), 'selection': ('4',), 'focus': '4', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '3', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'yview': (0.2, 0.4), 'selection': ('2',), 'focus': '2', 'height': 58, 'rows': {'1': '', '2': (1, 25, 212, 29), '3': (1, 54, 212, 29), '4': '', '5': ''}}, {'yview': (0.0, 0.2), 'selection': ('1',), 'focus': '1', 'height': 58, 'rows': {'1': (1, 25, 212, 29), '2': (1, 54, 212, 29), '3': '', '4': '', '5': ''}}]",
+   "kind": "auto"
+  },
+  {
+   "step": "보존",
+   "item": "기존 사용자 저장 파일 집합·해시 동일",
+   "result": "PASS",
+   "detail": "",
+   "kind": "auto"
+  }
+ ],
+ "probe": {
+  "kind": "component_native_input",
+  "full_play_attempts": 0,
+  "events": [
+   {
+    "list": "baseline",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 0,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 0,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 0,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 1,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 1,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 1,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 3,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 3,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "baseline",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 3,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 4,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 4,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 4,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 5,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 5,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 5,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 6,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 6,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 6,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 7,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 7,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 7,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 8,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 8,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 8,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 9,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 9,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 9,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 10,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 10,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 10,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 11,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 11,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "tutorial",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 11,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 12,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 12,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 12,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 13,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 13,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 13,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 14,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 14,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 14,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 15,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 15,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 15,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 16,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 16,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 16,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 17,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 17,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 17,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 18,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 18,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 18,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 19,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 19,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "story",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 19,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 20,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 20,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 20,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 21,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 21,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 21,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 22,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 22,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 22,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": -120,
+    "input": 23,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": -120,
+    "input": 23,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": -120,
+    "input": 23,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 24,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 24,
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 24,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 25,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 25,
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 25,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 26,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 26,
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 26,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "before_widget",
+    "delta": 120,
+    "input": 27,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_widget_before_class",
+    "delta": 120,
+    "input": 27,
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "list": "free",
+    "stage": "after_class",
+    "delta": 120,
+    "input": 27,
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   }
+  ],
+  "inputs": [
+   {
+    "list": "baseline",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "baseline",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "baseline",
+    "sent_delta": 60,
+    "before": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "baseline",
+    "sent_delta": 60,
+    "before": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "tutorial",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "story",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": -120,
+    "before": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.8,
+      1.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": [
+       1,
+       25,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.6,
+      0.8
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "5": [
+       1,
+       54,
+       212,
+       29
+      ]
+     }
+    },
+    "after": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.4,
+      0.6
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": "",
+      "3": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "4": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   {
+    "list": "free",
+    "sent_delta": 120,
+    "before": {
+     "yview": [
+      0.2,
+      0.4
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": "",
+      "2": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "3": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "4": "",
+      "5": ""
+     }
+    },
+    "after": {
+     "yview": [
+      0.0,
+      0.2
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 58,
+     "rows": {
+      "1": [
+       1,
+       25,
+       212,
+       29
+      ],
+      "2": [
+       1,
+       54,
+       212,
+       29
+      ],
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   }
+  ],
+  "lists": {
+   "baseline": {
+    "bindtags": [
+     ".!frame2.!frame.!frame.!treeview",
+     "Treeview",
+     ".",
+     "all"
+    ],
+    "widget_binding": "if {\"[2817143717504<lambda> %# %b %f %h %k %s %t %w %x %y %A %E %K %N %W %T %X %Y %D]\" == \"break\"} break\n",
+    "class_binding": " %W yview scroll [expr {-%D / 120}] units ",
+    "initial": {
+     "yview": [
+      0.0,
+      0.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 1,
+     "rows": {
+      "1": [
+       1,
+       2,
+       210,
+       29
+      ],
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   "tutorial": {
+    "bindtags": [
+     ".!frame2.!frame.!frame2.!treeview",
+     "Treeview",
+     ".",
+     "all"
+    ],
+    "widget_binding": "",
+    "class_binding": " %W yview scroll [expr {-%D / 120}] units ",
+    "initial": {
+     "yview": [
+      0.0,
+      0.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 1,
+     "rows": {
+      "1": [
+       1,
+       2,
+       210,
+       29
+      ],
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   "story": {
+    "bindtags": [
+     ".!frame2.!frame.!frame3.!treeview",
+     "Treeview",
+     ".",
+     "all"
+    ],
+    "widget_binding": "",
+    "class_binding": " %W yview scroll [expr {-%D / 120}] units ",
+    "initial": {
+     "yview": [
+      0.0,
+      0.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 1,
+     "rows": {
+      "1": [
+       1,
+       2,
+       210,
+       29
+      ],
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   },
+   "free": {
+    "bindtags": [
+     ".!frame2.!frame.!frame4.!treeview",
+     "Treeview",
+     ".",
+     "all"
+    ],
+    "widget_binding": "",
+    "class_binding": " %W yview scroll [expr {-%D / 120}] units ",
+    "initial": {
+     "yview": [
+      0.0,
+      0.0
+     ],
+     "selection": [
+      "3"
+     ],
+     "focus": "",
+     "height": 1,
+     "rows": {
+      "1": [
+       1,
+       2,
+       210,
+       29
+      ],
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": ""
+     }
+    }
+   }
+  },
+  "keyboard": [
+   {
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "2"
+    ],
+    "focus": "2",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "3",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "4"
+    ],
+    "focus": "4",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "yview": [
+     0.8,
+     1.0
+    ],
+    "selection": [
+     "5"
+    ],
+    "focus": "5",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": "",
+     "5": [
+      1,
+      25,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "yview": [
+     0.6,
+     0.8
+    ],
+    "selection": [
+     "4"
+    ],
+    "focus": "4",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": "",
+     "4": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "5": [
+      1,
+      54,
+      212,
+      29
+     ]
+    }
+   },
+   {
+    "yview": [
+     0.4,
+     0.6
+    ],
+    "selection": [
+     "3"
+    ],
+    "focus": "3",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": "",
+     "3": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "4": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "5": ""
+    }
+   },
+   {
+    "yview": [
+     0.2,
+     0.4
+    ],
+    "selection": [
+     "2"
+    ],
+    "focus": "2",
+    "height": 58,
+    "rows": {
+     "1": "",
+     "2": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "3": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "4": "",
+     "5": ""
+    }
+   },
+   {
+    "yview": [
+     0.0,
+     0.2
+    ],
+    "selection": [
+     "1"
+    ],
+    "focus": "1",
+    "height": 58,
+    "rows": {
+     "1": [
+      1,
+      25,
+      212,
+      29
+     ],
+     "2": [
+      1,
+      54,
+      212,
+      29
+     ],
+     "3": "",
+     "4": "",
+     "5": ""
+    }
+   }
+  ],
+  "passed": true
+ },
+ "shots": [
+  {
+   "file": "01_wheel_before.png",
+   "step": "독립 Tk 휠 집중 검사",
+   "note": "수정 전: 실제 휠 2회에 1→3→5, 선택3 유지",
+   "rect": [
+    260,
+    63,
+    1276,
+    752
+   ],
+   "keep": true
+  },
+  {
+   "file": "02_wheel_after.png",
+   "step": "독립 Tk 휠 집중 검사",
+   "note": "수정 후 세 목록: 인접 행 모두 접근·선택 유지, 실제 키보드 왕복",
+   "rect": [
+    260,
+    63,
+    1276,
+    752
+   ],
+   "keep": true
+  }
+ ],
+ "windows": [
+  {
+   "t": 5.997,
+   "step": "독립 Tk 휠 집중 검사",
+   "event": "appear",
+   "title": "서버실 생존기 v0.9-4b | 모드 선택",
+   "rect": [
+    260,
+    63,
+    1276,
+    752
+   ],
+   "white_ratio": 0.0
+  }
+ ],
+ "occlusions": [],
+ "repo_db_unchanged": true,
+ "repo_db_count": 24,
+ "passed": 11,
+ "failed": 0
+}
