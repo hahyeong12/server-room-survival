@@ -37,12 +37,15 @@ def work_area(parent):
 
 
 def centered_bounds(parent_bounds, area, size, margin=12, decoration=(16, 40)):
+    """클라이언트 중심을 맞추되, 각 방향의 창틀과 여백까지 작업 영역 안에 둡니다."""
     left, top, right, bottom = area
     width = min(size[0], max(1, right-left-2*margin-decoration[0]))
     height = min(size[1], max(1, bottom-top-2*margin-decoration[1]))
     px, py, pw, ph = parent_bounds
-    x = max(left+margin, min(round(px+(pw-width)/2), right-margin-width-decoration[0]))
-    y = max(top+margin, min(round(py+(ph-height)/2), bottom-margin-height-decoration[1]))
+    border = decoration[0] // 2
+    # 클라이언트 아래에는 제목줄이 없으므로 아래 테두리만 남깁니다.
+    x = max(left+margin+border, min(round(px+(pw-width)/2), right-margin-width-border))
+    y = max(top+margin+decoration[1]-border, min(round(py+(ph-height)/2), bottom-margin-height-border))
     return width, height, x, y
 
 

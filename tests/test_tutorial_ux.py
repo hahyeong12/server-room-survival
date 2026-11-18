@@ -14,7 +14,7 @@ from session import GameSession
 from story_dialog import StoryDialogueDialog, StoryReviewDialog
 from tests.test_story import gameplay
 from tests.support import dismiss_story_popups
-from aidc.ui.window_placement import centered_bounds, work_area
+from aidc.ui.window_placement import centered_bounds, center_dialog, frame_offset, work_area
 from aidc.ui import dpi
 
 
@@ -33,14 +33,74 @@ class PlacementTests(unittest.TestCase):
 
     def test_partially_offscreen_parent_clamps_entire_frame(self):
         w, h, x, y = centered_bounds((900, 600, 1000, 650), (0, 0, 1366, 728), (820, 470))
-        self.assertGreaterEqual(x, 12); self.assertGreaterEqual(y, 12)
-        self.assertLessEqual(x+w+16, 1366-12)
-        self.assertLessEqual(y+h+40, 728-12)
+        self.assertEqual((w, h, x, y), (820, 470, 526, 238))
+        self.assertGreaterEqual(x-8, 12); self.assertGreaterEqual(y-32, 12)
+        self.assertLessEqual(x+w+8, 1366-12)
+        self.assertLessEqual(y+h+8, 728-12)
+
+    def test_tall_allocation_centers_when_frame_fits_both_dpi_modes(self):
+        for parent, area, size, margin, frame, expected in (
+                ((0, 23, 1536, 793), (0, 0, 1536, 816), (1000, 740), 12, (16, 40),
+                 (1000, 740, 268, 50)),
+                ((0, 29, 1920, 991), (0, 0, 1920, 1020), (1250, 925), 15, (20, 50),
+                 (1250, 925, 335, 62))):
+            with self.subTest(size=size):
+                self.assertEqual(centered_bounds(parent, area, size, margin, frame), expected)
+
+    def test_nearly_full_width_centers_on_negative_monitor(self):
+        self.assertEqual(centered_bounds((-1920, 100, 1920, 800), (-1920, 0, 0, 1040), (1870, 470)),
+                         (1870, 470, -1895, 265))
+
+    def test_oversized_dialog_keeps_frame_and_margins_inside(self):
+        w, h, x, y = centered_bounds((-1920, 0, 640, 400), (-1920, 0, -1280, 400), (2000, 1400))
+        self.assertEqual((w, h, x, y), (600, 336, -1900, 44))
+        self.assertEqual((x-8, y-32, x+w+8, y+h+8), (-1908, 12, -1292, 388))
 
     def test_smaller_work_area_reduces_size(self):
         w, h, x, y = centered_bounds((0, 0, 640, 400), (0, 0, 640, 400), (820, 470))
         self.assertLess(w, 640); self.assertLess(h, 400)
         self.assertGreaterEqual(x, 0); self.assertGreaterEqual(y, 0)
+
+
+class CenteringGuiTests(unittest.TestCase):
+    def setUp(self):
+        self.root = tk.Tk()
+        self.addCleanup(self.root.destroy)
+        self.root.state('zoomed')
+        self.root.update()
+
+    def assert_frame_inside(self, dialog):
+        left, top, right, bottom = work_area(self.root)
+        dx, dy = frame_offset(dialog, self.root)
+        self.assertGreaterEqual(dialog.winfo_rootx()-dx, left)
+        self.assertGreaterEqual(dialog.winfo_rooty()-dy, top)
+        self.assertLessEqual(dialog.winfo_rootx()+dialog.winfo_width()+dx, right)
+        self.assertLessEqual(dialog.winfo_rooty()+dialog.winfo_height()+dx, bottom)
+
+    def test_major_popup_sizes_center_on_maximized_parent(self):
+        for size in ((820, 470), (880, 660), (1000, 740), (600, 340), (1060, 700), (700, 640)):
+            with self.subTest(size=size):
+                dialog = tk.Toplevel(self.root)
+                dialog.withdraw()
+                center_dialog(dialog, self.root, size=size)
+                self.root.update()
+                self.assertLessEqual(max(map(abs, dialog.placement['offset'])), 1)
+                self.assert_frame_inside(dialog)
+                dialog.destroy()
+
+    def test_offscreen_parent_and_oversized_popup_keep_frame_inside(self):
+        left, top, right, bottom = work_area(self.root)
+        self.root.state('normal')
+        self.root.geometry(f'640x400{right-100:+d}{bottom-100:+d}')
+        self.root.update()
+        for size in ((1000, 740), (3000, 2000)):
+            with self.subTest(size=size):
+                dialog = tk.Toplevel(self.root)
+                dialog.withdraw()
+                center_dialog(dialog, self.root, size=size)
+                self.root.update()
+                self.assert_frame_inside(dialog)
+                dialog.destroy()
 
 
 class TutorialGuiTests(unittest.TestCase):
