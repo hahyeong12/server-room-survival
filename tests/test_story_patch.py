@@ -14,6 +14,7 @@ from server_console import server_views
 from server_widgets import OWNER_COLORS, OWNER_BOARDS, CYAN, RED, animate_hardware
 from story import LEGACY_STEPS, STEPS, GUIDES
 from tests.test_story import gameplay
+from aidc.ui import dpi
 
 
 def prepare(s):
@@ -490,7 +491,7 @@ class PatchGuiTests(unittest.TestCase):
         from tests.support import reveal_scroll_widget
         win = self.complete()
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
-            self.root.geometry(f'{width}x{height}'); win.geometry('700x510'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); win.geometry(dpi.geometry('700x510')); self.root.update()
             # 결과 본문은 스크롤로 접근하고 하단 행동은 항상 창 안에 있어야 합니다.
             for widget in (win.summary, win.next_notice):
                 reveal_scroll_widget(win.scroll, widget)

@@ -14,6 +14,7 @@ from story_dialog import StoryDialogueDialog
 from tests.test_story import gameplay
 from tests.test_story_patch import prepare, finish
 from tests.support import dismiss_story_popups
+from aidc.ui import dpi
 
 
 class DialogueStateTests(unittest.TestCase):
@@ -251,9 +252,9 @@ class DialogueGuiTests(unittest.TestCase):
         d = self.app.story_window
         review = self.app.show_story_review()
         for width, height in ((1000,650), (1280,680), (1366,768)):
-            self.root.geometry(f'{width}x{height}')
+            self.root.geometry(dpi.geometry(f'{width}x{height}'))
             for dialog in (d, review):
-                dialog.geometry('740x430'); self.root.update()
+                dialog.geometry(dpi.geometry('740x430')); self.root.update()
                 for widget in (*dialog.portraits.values(), dialog.speaker, dialog.bubble,
                                dialog.next_button, dialog.previous_button, dialog.close_button,
                                dialog.skip_button, dialog.page):

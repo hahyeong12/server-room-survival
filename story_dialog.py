@@ -5,6 +5,7 @@ from tkinter import ttk
 from story import GUIDES, STEPS, SPEAKERS
 from story_portraits import draw_portrait
 from aidc.ui.window_placement import center_dialog
+from aidc.ui import dpi
 from ui import BG, MUTED, CYAN, MessageDialog, label, ActionButton
 
 
@@ -17,8 +18,8 @@ class StoryDialogueDialog(MessageDialog):
                          animate=False, message_kind='현장 교육', confirm=confirm,
                          history_hint='교육 도움말에서 다시 보기')
         self.title(f'현장 교육 | 교육 담당자 · {chapter_label}')
-        self.geometry('820x470')
-        self.minsize(740, 430)
+        self.geometry(dpi.geometry('820x470'))
+        self.minsize(*dpi.size((740, 430)))
         self.columnconfigure(0, weight=0)
         self.columnconfigure(1, weight=1)
         header = self.grid_slaves(row=0)[0]

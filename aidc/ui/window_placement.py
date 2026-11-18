@@ -3,9 +3,14 @@
 중앙 배치는 '계산 → 표시 → 실제 좌표 측정 → 차이가 있으면 한 번 보정' 순서입니다. 함수가 호출됐다는 사실이 아니라
 실제 클라이언트 영역의 중심이 부모 최상위 창 중심과 맞는지로 확인합니다(dialog.placement에 기록).
 환경 변수 SRS_PLACEMENT_LOG=1이면 계산값과 실제값을 출력합니다(수동 확인용).
+
+창 크기·최소 크기 인자는 설계 기준(96DPI) px입니다. center_dialog·place_near·fit_main_window가 실험용
+DPI 배율(aidc.ui.dpi, 기본 1.0)을 한 번만 곱합니다. 아래 순수 계산 함수는 화면 px만 다룹니다.
 """
 import os
 import sys
+
+from aidc.ui import dpi
 
 
 def work_area(parent):
@@ -82,7 +87,8 @@ def fit_main_window(root, size):
             return None
     except Exception:
         pass
-    width, height, x, y = main_window_bounds(work_area(root), size)
+    width, height, x, y = main_window_bounds(work_area(root), dpi.size(size), frame=dpi.size((16, 39)),
+                                             margin=dpi.px(8))
     root.geometry(f'{width}x{height}{x:+d}{y:+d}')
     return width, height, x, y
 
@@ -127,7 +133,8 @@ def center_dialog(dialog, parent, size=(820, 470), minimum=(740, 430)):
     parent.update_idletasks()
     bounds = (parent.winfo_rootx(), parent.winfo_rooty(), parent.winfo_width(), parent.winfo_height())
     area = work_area(parent)
-    width, height, x, y = centered_bounds(bounds, area, size)
+    size, minimum = dpi.size(size), dpi.size(minimum)
+    width, height, x, y = centered_bounds(bounds, area, size, margin=dpi.px(12), decoration=dpi.size((16, 40)))
     target = (x, y)  # 원하는 클라이언트 영역 왼쪽 위
     dialog.minsize(min(minimum[0], width), min(minimum[1], height))
     # geometry의 좌표는 창틀 기준이고 Tk 위젯 좌표는 클라이언트 기준입니다.
@@ -191,7 +198,7 @@ def nearby_bounds(anchor, area, size, avoid=(), gap=14):
 
 def place_near(dialog, parent, anchor, size=(390, 210), avoid=()):
     parent.update_idletasks()
-    width, height, x, y = nearby_bounds(anchor, work_area(parent), size, avoid)
+    width, height, x, y = nearby_bounds(anchor, work_area(parent), dpi.size(size), avoid, gap=dpi.px(14))
     dialog.geometry(f'{width}x{height}{x:+d}{y:+d}')
     # center_dialog과 같은 음수 모니터 좌표 처리.
     if sys.platform == 'win32' and (x < 0 or y < 0):

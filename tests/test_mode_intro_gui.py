@@ -6,6 +6,7 @@ import unittest
 from aidc.storage.story_slots import StorySlots
 from aidc.story.chapters import CHAPTERS
 from main import ModeSelection
+from aidc.ui import dpi
 
 
 class ModeIntroGuiTests(unittest.TestCase):
@@ -18,7 +19,7 @@ class ModeIntroGuiTests(unittest.TestCase):
             intro = next(w for w in menu.story_panel.winfo_children()
                          if 'text' in w.keys() and w.cget('text') == text)
             for width, height in ((1280, 760), (1000, 650), (1366, 768)):
-                root.geometry(f'{width}x{height}')
+                root.geometry(dpi.geometry(f'{width}x{height}'))
                 menu.show_modes()
                 root.update()
                 buttons = list(menu.buttons.values())

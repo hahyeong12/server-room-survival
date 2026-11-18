@@ -61,7 +61,7 @@ class SimulatorApp:
         root.title(f'{APP_NAME} {VERSION} | 울산 AI 데이터센터 관제실')
         # 작업 영역(작업 표시줄 제외) 안에서 가능한 큰 창으로 배치합니다. 사용자가 최대화한 창은 그대로 둡니다(Q-01·Q-07).
         fit_main_window(root, MAIN_WINDOW_SIZE)
-        root.minsize(1000, 650)
+        root.minsize(*dpi.size((1000, 650)))
         root.configure(bg=BG)
         self.db = db if db is not None else Database(
             (story_slots or StorySlots()).reserve_new() if session_options.get('mode') == 'tutorial' else
@@ -1691,7 +1691,7 @@ class ModeSelection:
         root.title(f'{APP_NAME} {VERSION} | 모드 선택')
         if root.winfo_width() <= 1:
             fit_main_window(root, (1000, 650))  # 첫 실행 창도 작업 표시줄 아래로 내려가지 않게 합니다(Q-07).
-        root.minsize(1000, 650)
+        root.minsize(*dpi.size((1000, 650)))
         root.configure(bg=BG)
         self.frame = tk.Frame(root, bg=BG)
         self.frame.pack(fill='both', expand=True)

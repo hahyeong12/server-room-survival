@@ -7,6 +7,7 @@ from tests.support import start_with_consent, start_legacy_plan, assert_tree_row
 from database import Database
 from main import SimulatorApp
 from ui import MessageDialog
+from aidc.ui import dpi
 
 
 class ConsoleTests(unittest.TestCase):
@@ -35,7 +36,7 @@ class ConsoleTests(unittest.TestCase):
         app.state.trigger_incident()
         app.refresh()
         for width, height in ((1280, 680), (1000, 650), (1840, 980)):
-            self.root.geometry(f'{width}x{height}')
+            self.root.geometry(dpi.geometry(f'{width}x{height}'))
             self.root.update()
             widgets = [app.inbox, app.active_list, app.resources.preview, app.network,
                        app.controls, app.arrival_notice, app.arrival_open_button, app.arrival_schedule,
@@ -52,7 +53,7 @@ class ConsoleTests(unittest.TestCase):
             self.assertGreaterEqual(app.resources.preview.winfo_height(), app.resources.preview.winfo_reqheight())
         for _ in range(3):
             app.respond('ignore')
-        self.root.geometry('1000x650')
+        self.root.geometry(dpi.geometry('1000x650'))
         self.root.update()
         for widget in (app.resources.preview, app.action_hint, *app.action_buttons.values(), *app.time_buttons.values()):
             self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+self.root.winfo_height())
@@ -126,7 +127,7 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn('가용 GPU 6',notice)
         self.assertEqual(app.session.selected_id,1)
         self.assertEqual(state.work_done,21)
-        self.root.geometry('1000x650')
+        self.root.geometry(dpi.geometry('1000x650'))
         self.root.update()
         bottom=app.body.winfo_rooty()+app.body.winfo_height()
         for widget in (app.arrival_notice,app.arrival_open_button,app.arrival_schedule):
@@ -216,7 +217,7 @@ class ConsoleTests(unittest.TestCase):
         app.advance_time(30)
         self.assertEqual(app.inbox.tag_configure('request-2')['foreground'], RED)
         for width,height in ((1280,680),(1000,650),(1366,700)):
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             for widget in (app.resources.preview, app.inbox, app.action_hint,
                            *app.action_buttons.values(), *app.time_buttons.values()):
                 self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+height)

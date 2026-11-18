@@ -8,6 +8,7 @@ from main import SimulatorApp, ModeSelection
 from aidc.storage.story_slots import StorySlots
 from tests.support import dismiss_story_popups
 from tests.test_chapter2 import start
+from aidc.ui import dpi
 
 SIZES = ((1000, 650), (1280, 680), (1366, 768))
 
@@ -40,7 +41,7 @@ class ResultButtonsGuiTests(unittest.TestCase):
 
     def assert_buttons_visible(self):
         for width, height in SIZES:
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             self.app.chapter_window = None
             dialog = self.app.show_chapter_complete(); self.root.update()
             expected = {'next', 'chapters', 'modes'} if dialog.result['mission'] == 'success' else {'retry', 'chapters', 'modes'}
@@ -109,7 +110,7 @@ class AllocationSettingsGuiTests(unittest.TestCase):
 
     def test_footer_buttons_stay_visible_on_small_windows(self):
         for width, height in SIZES:
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             d = self.app.open_allocation_plans(); self.root.update()
             for button in (d.start_button, d.close_button):
                 self.assertTrue(button.winfo_ismapped())

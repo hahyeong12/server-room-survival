@@ -10,6 +10,7 @@ from database import Database
 from main import SimulatorApp
 from tests.support import dismiss_story_popups
 from tests.test_training import pass_stage1, pass_stage2, pass_stage3, regular_after_3b, to_training_incident
+from aidc.ui import dpi
 
 SIZES = ('900x620', '1060x700', '1280x720', '1366x768')
 PARTS = ('title', 'value', 'caption', 'track')
@@ -31,7 +32,7 @@ def all_gauges(widget):
 class LabGaugeGuiTests(unittest.TestCase):
     def make_app(self, practice):
         self.root = tk.Tk()
-        self.root.geometry('1280x800+0+0')
+        self.root.geometry(dpi.geometry('1280x800+0+0'))
         self.addCleanup(self.root.destroy)
         db = Database(':memory:'); self.addCleanup(db.close)
         if practice:
@@ -50,7 +51,7 @@ class LabGaugeGuiTests(unittest.TestCase):
     def check_gauges(self, lab, label):
         for size in SIZES:
             for tab in ('연수 진행', '운영 상태', '서버 내부'):
-                lab.geometry(size); lab.show_tab(tab)
+                lab.geometry(dpi.geometry(size)); lab.show_tab(tab)
                 lab.update(); lab.update_idletasks(); lab.update()
                 gauges = [g for g in all_gauges(lab.tabs[tab]) if g.winfo_ismapped()]
                 self.assertTrue(gauges)
@@ -97,7 +98,7 @@ class DeferredStoryDialogGuiTests(unittest.TestCase):
     겹쳐 생성자에서 AttributeError가 나던 실험 회귀(ui-polish-001)도 함께 막습니다."""
     def setUp(self):
         self.root = tk.Tk()
-        self.root.geometry('1280x800+0+0')
+        self.root.geometry(dpi.geometry('1280x800+0+0'))
         self.addCleanup(self.root.destroy)
         self.errors = []
         self.root.report_callback_exception = lambda *a: self.errors.append(a)
@@ -135,7 +136,7 @@ class DeferredStoryDialogGuiTests(unittest.TestCase):
         self.assertIs(app.show_story_event(), window)                    # 표시 전 재호출도 새 창을 만들지 않음
         self.root.update()
         self.assertTrue(window.winfo_viewable())
-        self.assertEqual(window.geometry().split('+')[0], '820x470')
+        self.assertEqual(window.geometry().split('+')[0], dpi.geometry('820x470'))  # 설계 크기(배율 1.0이면 그대로)
         self.assertTrue(window.placement['inside_work_area'])
         self.assertTrue(window.next_button.winfo_viewable())
         dialogs = [w for w in self.root.winfo_children() if type(w).__name__ == 'StoryDialogueDialog']

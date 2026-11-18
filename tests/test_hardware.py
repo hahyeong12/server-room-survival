@@ -12,6 +12,7 @@ from main import SimulatorApp
 from server_console import server_views
 from aidc.core.server_resources import SERVERS, ServerPool, ServerSlice, ServerHealth
 from session import GameSession
+from aidc.ui import dpi
 
 
 class HardwareTests(unittest.TestCase):
@@ -546,7 +547,7 @@ class HardwareGuiTests(unittest.TestCase):
             if phase == 'migration':
                 d = a.open_migration_plans(); self.root.update()
             for width,height in ((1000,650), (1280,680), (1366,768)):
-                self.root.geometry(f'{width}x{height}'); self.root.update()
+                self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
                 widgets = (a.resources.fault_button, a.resources.repair_button, a.resources.inspector,
                            *a.action_buttons.values(), *a.time_buttons.values())
                 for widget in widgets:

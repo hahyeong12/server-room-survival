@@ -12,6 +12,7 @@ from main import ModeSelection, SimulatorApp
 from session import GameSession
 from story import STEPS
 from tests.support import dismiss_story_popups
+from aidc.ui import dpi
 
 
 def gameplay(s):
@@ -475,7 +476,7 @@ class StoryGuiTests(unittest.TestCase):
     def test_actual_tk_three_resolutions_through_all_tutorial_stages(self):
         a = self.app
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             self.assert_fits((a.story_bar, a.story_objective, a.story_help_button, a.story_skip_button,
                               a.resources.inspector, a.inbox, a.active_list, a.controls,
                               a.arrival_notice, *a.time_buttons.values(), *a.action_buttons.values()))
@@ -483,7 +484,7 @@ class StoryGuiTests(unittest.TestCase):
         self.prepare()
         start_via_dialog(a); self.root.update()
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             self.assert_fits((a.story_bar, a.story_objective, a.controls, a.resources.preview,
                               *a.time_buttons.values()))
         a.time_buttons[10].invoke(); self.root.update()
@@ -528,7 +529,7 @@ class ModeSelectionTests(unittest.TestCase):
 
     def test_mode_selection_cards_fit_three_resolutions(self):
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             for card in self.selector.frame.winfo_children():
                 self.assertTrue(card.winfo_ismapped())
                 self.assertGreaterEqual(card.winfo_rootx(), self.root.winfo_rootx())

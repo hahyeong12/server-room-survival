@@ -10,6 +10,7 @@ from main import SimulatorApp
 from session import GameSession
 from tests.support import assert_tree_row_visible, dismiss_story_popups, start_legacy_plan
 from tests import test_play_modes_gui as modes_fixture, test_tutorial_ux as tutorial_fixture
+from aidc.ui import dpi
 
 SIZES = ('1000x650', '1280x680', '1366x768')
 
@@ -40,7 +41,7 @@ class LayoutGuiTests(unittest.TestCase):
         heights = []
         for size in SIZES:
             with self.subTest(size=size):
-                c.root.geometry(size); c.root.update()
+                c.root.geometry(dpi.geometry(size)); c.root.update()
                 area = p.inspector_scroll
                 heights.append(area.canvas.winfo_height())
                 self.assertEqual(p.inspector.winfo_height(), 190)
@@ -68,7 +69,7 @@ class LayoutGuiTests(unittest.TestCase):
                 self.assertGreaterEqual(button.winfo_rooty(), area.canvas.winfo_rooty()+area.canvas.winfo_height())
         self.assertGreater(heights[-1], heights[0])
         before = (c.app.session.minute, c.app.center.gpu_used, c.app.center.power_used)
-        c.root.geometry(SIZES[0]); c.root.update()
+        c.root.geometry(dpi.geometry(SIZES[0])); c.root.update()
         click_button(self, c.app.resource_confirm_button)
         self.assertEqual(c.app.session.story.step, 'request')
         self.assertTrue(c.app.session.story.resources_confirmed)
@@ -81,7 +82,7 @@ class LayoutGuiTests(unittest.TestCase):
         p.show_preview(); c.root.update(); c.close_guide()
         for size in SIZES:
             with self.subTest(size=size):
-                c.root.geometry(size); c.root.update()
+                c.root.geometry(dpi.geometry(size)); c.root.update()
                 self.assertIs(c.h.target, p.compare_button)
                 p.review_scroll.canvas.yview_moveto(1); c.root.update()
                 self.assertTrue(p.compare_button.winfo_viewable())
@@ -95,7 +96,7 @@ class LayoutGuiTests(unittest.TestCase):
 
     def test_new_tutorial_completes_through_small_window_controls(self):
         c = self.fixture(modes_fixture.PlayModesGuiTests)
-        c.root.geometry(SIZES[0])
+        c.root.geometry(dpi.geometry(SIZES[0]))
         app = c.menu.new_tutorial(); c.root.update()
         app.story_window.skip_button.invoke(); app.story_window.next_button.invoke(); c.root.update()
         click_button(self, app.arrival_open_button)
@@ -123,7 +124,7 @@ class LayoutGuiTests(unittest.TestCase):
         db = Database(path); self.addCleanup(db.close)
         app = SimulatorApp(root, db, mode='story')
         self.addCleanup(app.network.stop)
-        root.geometry(SIZES[0]); root.update(); dismiss_story_popups(app, root)
+        root.geometry(dpi.geometry(SIZES[0])); root.update(); dismiss_story_popups(app, root)
         self.assertIsNone(app.session.story.onboarding)
         self.assertEqual(app.session.story.step, 'resources')
         click_button(self, app.resource_confirm_button)
@@ -142,7 +143,7 @@ class LayoutGuiTests(unittest.TestCase):
         for size in SIZES:
             for category in ('tutorial', 'story', 'practice'):
                 with self.subTest(size=size, category=category):
-                    c.root.geometry(size); c.menu.show_menu(category); c.root.update()
+                    c.root.geometry(dpi.geometry(size)); c.menu.show_menu(category); c.root.update()
                     for widget in (c.menu.title_icon, c.menu.title_label, c.menu.version_label,
                                    c.menu.choices[category], *c.menu.menu_buttons[category].values()):
                         self.assertTrue(widget.winfo_viewable())
@@ -150,7 +151,7 @@ class LayoutGuiTests(unittest.TestCase):
                         self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), c.root.winfo_rooty()+c.root.winfo_height())
                         self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())
         self.assertEqual(Font(root=c.root, font=c.menu.title_label.cget('font')).cget('size'), 38)
-        c.root.geometry(SIZES[0]); c.menu.show_modes(); c.root.update()
+        c.root.geometry(dpi.geometry(SIZES[0])); c.menu.show_modes(); c.root.update()
         self.assertEqual(Font(root=c.root, font=c.menu.title_label.cget('font')).cget('size'), 38)
 
     def test_multiple_active_rows_scroll_select_and_keep_text_inside_body(self):
@@ -165,7 +166,7 @@ class LayoutGuiTests(unittest.TestCase):
         self.assertEqual(len(app.active_list.get_children()), 3)
         for size in SIZES:
             with self.subTest(size=size):
-                c.root.geometry(size); c.root.update()
+                c.root.geometry(dpi.geometry(size)); c.root.update()
                 tree = app.active_list
                 tree.yview_moveto(0); c.root.update()
                 top = tree.yview()

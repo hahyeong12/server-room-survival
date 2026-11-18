@@ -11,6 +11,7 @@ from unittest.mock import patch
 from database import Database
 from main import SimulatorApp
 from session import GameSession
+from aidc.ui import dpi
 
 
 class AlternativeTests(unittest.TestCase):
@@ -417,7 +418,7 @@ class AlternativeGuiTests(unittest.TestCase):
         app.action_buttons['propose'].invoke()
         self.assertEqual(len(app.session.current.proposals), count)
         self.assertIn('원래 요청:', app.message_window.steps[0][1])
-        self.root.geometry('1000x650')
+        self.root.geometry(dpi.geometry('1000x650'))
         self.root.update()
         for widget in (*app.action_buttons.values(), app.action_hint, app.resources.preview, app.time_buttons[60]):
             self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(), self.root.winfo_rootx()+self.root.winfo_width())

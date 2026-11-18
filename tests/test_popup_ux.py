@@ -18,6 +18,7 @@ from tests.support import dismiss_story_popups
 from tests.test_story import gameplay
 from tutorial_highlight import GOLD, GOLD_DIM
 from aidc.ui.window_placement import nearby_bounds, work_area
+from aidc.ui import dpi
 
 
 class SummaryTests(unittest.TestCase):
@@ -312,7 +313,7 @@ class PopupFlowTests(unittest.TestCase):
         for size in ('1000x650', '1280x680', '1366x768', 'zoomed'):
             with self.subTest(size=size):
                 if size == 'zoomed': self.root.state('zoomed')
-                else: self.root.state('normal'); self.root.geometry(size)
+                else: self.root.state('normal'); self.root.geometry(dpi.geometry(size))
                 self.root.update()
                 # 표시만 검증하며 업무 상태는 바꾸지 않습니다.
                 from story_feedback import StoryFeedbackDialog
@@ -356,7 +357,7 @@ class PopupFlowTests(unittest.TestCase):
 class CardTests(unittest.TestCase):
     def setUp(self):
         self.root = tk.Tk(); self.addCleanup(self.root.destroy)
-        self.root.geometry('1000x650+50+40')
+        self.root.geometry(dpi.geometry('1000x650+50+40'))
         self.db = Database(':memory:'); self.addCleanup(self.db.close)
         self.s = GameSession(self.db, seed=9, incident_chance=0)
         self.d = AllocationDialog(self.root, self.s, 'performance', lambda *_: False)
@@ -424,7 +425,7 @@ class CardTests(unittest.TestCase):
     def test_dialog_center_and_internal_cards_controls_at_resolutions_and_zoomed(self):
         for size in ('1000x650', '1280x680', '1366x768', 'zoomed'):
             if size == 'zoomed': self.root.state('zoomed')
-            else: self.root.state('normal'); self.root.geometry(size+'+40+40')
+            else: self.root.state('normal'); self.root.geometry(dpi.geometry(size+'+40+40'))
             self.root.update()
             from aidc.ui.window_placement import center_dialog
             center_dialog(self.d, self.root, size=(940, 570), minimum=(880, 540))

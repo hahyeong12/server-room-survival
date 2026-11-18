@@ -380,8 +380,8 @@ class ServerPreviewApp:
         self.animation_phase = 1
         self.closed = False
         root.title(f'{APP_NAME} · 서버실 GUI 프로토타입')
-        root.geometry('1280x680')
-        root.minsize(1000, 650)
+        root.geometry(dpi.geometry('1280x680'))
+        root.minsize(*dpi.size((1000, 650)))
         root.configure(bg=BG)
         root.columnconfigure(0, weight=1)
         root.rowconfigure(2, weight=1)

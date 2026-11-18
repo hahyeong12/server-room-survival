@@ -9,6 +9,7 @@ from main import ModeSelection
 from aidc.storage.story_slots import StorySlots
 from aidc.storage.checkpoints import checkpoint_path
 from tests.support import dismiss_story_popups, complete_onboarding
+from aidc.ui import dpi
 
 
 class PlayModesGuiTests(unittest.TestCase):
@@ -51,7 +52,7 @@ class PlayModesGuiTests(unittest.TestCase):
             db.close()
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
             for category in ('tutorial', 'story', 'practice'):
-                self.root.geometry(f'{width}x{height}')
+                self.root.geometry(dpi.geometry(f'{width}x{height}'))
                 self.menu.show_menu(category); self.root.update()
                 panel = self.menu.content
                 self.assertGreaterEqual(panel.winfo_y(), 0)

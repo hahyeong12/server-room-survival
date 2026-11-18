@@ -12,6 +12,7 @@ from aidc.ui.scroll_area import ScrollArea
 from aidc.ui.ui_kit import PrimaryButton
 from version import VERSION
 from aidc.ui.window_placement import center_dialog
+from aidc.ui import dpi
 from ui import GREEN, AMBER
 from server_widgets import (BG, PANEL, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             gpu_module, reset_hardware, ink)
@@ -62,7 +63,7 @@ class AllocationDialog(tk.Toplevel):
         self.configure(bg=BG)
         self.withdraw()  # center_dialog가 위치를 정한 뒤 보여 줍니다(기본 위치의 빈 흰 창 점멸 방지).
         self.transient(parent)
-        self.geometry('1000x740')
+        self.geometry(dpi.geometry('1000x740'))
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         # 화면이 작을 때만 스크롤합니다. 시작 요약/[작업 시작]/[닫기]는 항상 보이게 아래에 고정합니다.

@@ -11,6 +11,7 @@ from database import Database
 from main import SimulatorApp
 from session import GameSession
 from ui import MessageDialog, CUSTOMER_COLORS
+from aidc.ui import dpi
 
 
 class DelayNoticeTests(unittest.TestCase):
@@ -295,7 +296,7 @@ class UsabilityGuiTests(unittest.TestCase):
             elif state=='recovering':app.respond('reroute')
             elif state=='finished':app.state.work_done=app.state.work_total-1;app.advance_time(30)
             for width,height in ((1366,768),(1280,680),(1000,650)):
-                self.root.geometry(f'{width}x{height}');app.resources.show_preview();self.root.update()
+                self.root.geometry(dpi.geometry(f'{width}x{height}'));app.resources.show_preview();self.root.update()
                 for widget in (app.resources.preview,app.resources.preview_title,app.network,app.overview,
                                app.action_hint,*app.action_buttons.values(),*app.time_buttons.values()):
                     self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(),self.root.winfo_rootx()+width)

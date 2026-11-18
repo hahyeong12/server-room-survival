@@ -14,6 +14,7 @@ from tests.support import dismiss_story_popups
 from tests.test_chapter3 import to_incident
 from tests.test_chapter5_ux import to_stage5_judged
 from tests.test_training import SERVER, game_snapshot, regular_after_3b
+from aidc.ui import dpi
 
 SIZES = ('1060x700', '900x620', '1280x720', '1366x768')
 
@@ -33,7 +34,7 @@ def header_labels(lab):
 class Chapter5UxGuiTests(unittest.TestCase):
     def make_app(self, db=None, practice=False, fresh=True):
         self.root = tk.Tk()
-        self.root.geometry('1280x800+0+0')
+        self.root.geometry(dpi.geometry('1280x800+0+0'))
         self.addCleanup(safe_destroy, self.root)
         if db is None:
             db = Database(':memory:')
@@ -62,7 +63,7 @@ class Chapter5UxGuiTests(unittest.TestCase):
         run = self.app.session.runs[rid]
         for size in SIZES:
             for tab in ('연수 진행', '가상 터미널'):
-                lab.geometry(size); lab.show_tab(tab)
+                lab.geometry(dpi.geometry(size)); lab.show_tab(tab)
                 lab.update(); lab.update_idletasks(); lab.update()
                 right = lab.winfo_rootx()+lab.winfo_width()
                 for item in header_labels(lab):
@@ -117,7 +118,7 @@ class Chapter5UxGuiTests(unittest.TestCase):
         lab = app.open_engineering_lab(); self.root.update()
         self.assertEqual(lab.mode, 'preview')
         for size in SIZES:
-            lab.geometry(size); lab.update(); lab.update_idletasks(); lab.update()
+            lab.geometry(dpi.geometry(size)); lab.update(); lab.update_idletasks(); lab.update()
             right = lab.winfo_rootx()+lab.winfo_width()
             for item in header_labels(lab):
                 with self.subTest(size=size, text=item.cget('text')):

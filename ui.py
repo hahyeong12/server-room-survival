@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 from tkinter.scrolledtext import ScrolledText
 from game import game_time, GameState
 from aidc.ui.window_placement import center_dialog
+from aidc.ui import dpi
 
 BG, PANEL, RAISED, BORDER = '#080f1d', '#101c2e', '#17273d', '#263b54'
 TEXT, MUTED, CYAN, BLUE = '#e3edf8', '#91a7c1', '#38d9d0', '#6d9fff'
@@ -76,7 +77,7 @@ class TextDialog(tk.Toplevel):
         super().__init__(parent, bg=BG)
         self.withdraw()  # 내용을 만든 뒤 부모 중앙에 한 번만 보여 줍니다.
         self.title(title)
-        self.minsize(520, 330)
+        self.minsize(*dpi.size((520, 330)))
         box = ScrolledText(self, wrap='word', bg=PANEL, fg=TEXT, font=(FONT, 11), padx=18, pady=15)
         box.pack(fill='both', expand=True, padx=10, pady=10)
         box.insert('1.0', text)
@@ -92,8 +93,8 @@ class MessageDialog(tk.Toplevel):
         super().__init__(parent, bg=BG)
         self.withdraw()  # 내용을 모두 만든 뒤 center_dialog가 보여 줍니다(기본 위치의 빈 흰 창 점멸 방지).
         self.title(f'AIDC LINK | {company} · {country}')
-        self.geometry('760x470')
-        self.minsize(610, 390)
+        self.geometry(dpi.geometry('760x470'))
+        self.minsize(*dpi.size((610, 390)))
         self.steps, self.index, self.animate = steps, 0, animate
         self.message_kind = message_kind
         self.history_hint = history_hint
@@ -536,7 +537,7 @@ class RejectionDialog(tk.Toplevel):
         super().__init__(parent, bg=PANEL)
         self.withdraw()
         self.title('고객 요청 거절')
-        self.minsize(450, 280)
+        self.minsize(*dpi.size((450, 280)))
         self.transient(parent)
         self.submit = submit
         label(self, '거절 사유를 선택해 주세요', 13, bold=True).pack(anchor='w', padx=18, pady=15)

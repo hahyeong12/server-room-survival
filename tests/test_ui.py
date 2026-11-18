@@ -9,6 +9,7 @@ from database import Database
 from main import SimulatorApp
 from test_operations import finish_current
 from ui import CYAN
+from aidc.ui import dpi
 
 
 class GuiTests(unittest.TestCase):
@@ -59,7 +60,7 @@ class GuiTests(unittest.TestCase):
     def test_resize_keeps_panels_inside_console(self):
         a=self.app; a.next_request(); a.next_request(); a.wait_request(); self.root.deiconify()
         for w,h in ((1280,680),(1000,650),(1840,980)):
-            self.root.geometry(f'{w}x{h}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{w}x{h}')); self.root.update()
             for widget in (a.resources.preview,a.network,a.action_frame,*a.time_buttons.values()):
                 self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(),self.root.winfo_rootx()+self.root.winfo_width())
                 self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),self.root.winfo_rooty()+self.root.winfo_height())

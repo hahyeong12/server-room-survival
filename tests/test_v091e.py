@@ -9,6 +9,7 @@ from request_summary import request_summary
 from aidc.core.server_resources import Allocation, ServerPool, ServerSlice
 from tests.test_story_patch import prepare
 from ui import MessageDialog
+from aidc.ui import dpi
 
 
 class DistinctOptionTests(unittest.TestCase):
@@ -98,7 +99,7 @@ class FreeModeGuiTests(unittest.TestCase):
         for size in ('1000x650', '1280x680', '1366x768', 'zoomed'):
             with self.subTest(size=size):
                 if size == 'zoomed': self.root.state('zoomed')
-                else: self.root.state('normal'); self.root.geometry(size)
+                else: self.root.state('normal'); self.root.geometry(dpi.geometry(size))
                 self.root.update()
                 d = MessageDialog(self.root, run.mission['company_name'], run.mission['country'],
                                   self.app.session.conversation(run.request['id']), animate=False,
@@ -143,7 +144,7 @@ class ChapterWindowTests(unittest.TestCase):
         self.assertGreater(d.winfo_rooty(), 0)
 
     def test_chapter_dialog_is_centered_on_game_window(self):
-        self.root.geometry('1280x680+200+60'); self.root.update()
+        self.root.geometry(dpi.geometry('1280x680+200+60')); self.root.update()
         d = self.complete()
         self.assertTrue(d.winfo_exists())
         self.assert_centered(d)
@@ -152,7 +153,7 @@ class ChapterWindowTests(unittest.TestCase):
         self.assertIn('운영 점수', d.full_text)
 
     def test_chapter_dialog_stays_inside_work_area_on_small_window(self):
-        self.root.geometry('1000x650+0+0'); self.root.update()
+        self.root.geometry(dpi.geometry('1000x650+0+0')); self.root.update()
         d = self.complete()
         self.root.update()
         from aidc.ui.window_placement import work_area

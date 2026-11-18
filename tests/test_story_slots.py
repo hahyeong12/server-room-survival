@@ -16,6 +16,7 @@ from aidc.storage.story_slots import StorySlots
 from tests.test_story import gameplay
 from tests.test_story_patch import prepare, finish
 from tests.support import dismiss_story_popups, complete_onboarding
+from aidc.ui import dpi
 
 
 def saved_story(path, complete=False):
@@ -169,7 +170,7 @@ class SlotMenuGuiTests(unittest.TestCase):
 
     def test_both_menus_are_centered_at_three_resolutions(self):
         for width, height in ((1000,650), (1280,680), (1366,768)):
-            self.root.geometry(f'{width}x{height}')
+            self.root.geometry(dpi.geometry(f'{width}x{height}'))
             self.menu.show_modes(); self.assert_centered(self.menu)
             self.story_menu(); self.assert_centered(self.menu)
 

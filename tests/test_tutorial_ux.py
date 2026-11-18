@@ -15,6 +15,7 @@ from story_dialog import StoryDialogueDialog, StoryReviewDialog
 from tests.test_story import gameplay
 from tests.support import dismiss_story_popups
 from aidc.ui.window_placement import centered_bounds, work_area
+from aidc.ui import dpi
 
 
 class PlacementTests(unittest.TestCase):
@@ -352,7 +353,7 @@ class TutorialGuiTests(unittest.TestCase):
                     if size == 'zoomed':
                         self.root.state('zoomed')
                     else:
-                        self.root.state('normal'); self.root.geometry(size)
+                        self.root.state('normal'); self.root.geometry(dpi.geometry(size))
                     self.root.update()
                     target = self.h.target
                     self.assertIsNotNone(target)
@@ -419,7 +420,7 @@ class TutorialGuiTests(unittest.TestCase):
         self.close_guide()
         for size, offset in (('1000x650', '+40+40'), ('1280x680', '+170+70'), ('1366x768', '+0+0')):
             with self.subTest(size=size):
-                self.root.geometry(size+offset); self.root.update()
+                self.root.geometry(dpi.geometry(size+offset)); self.root.update()
                 for cls in (StoryDialogueDialog, StoryReviewDialog):
                     d = cls(self.root, [('교육 담당자', '중앙 배치 확인')]) if cls is StoryDialogueDialog else cls(self.root)
                     self.root.update()

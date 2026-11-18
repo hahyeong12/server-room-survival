@@ -5,6 +5,7 @@ from database import Database
 from main import SimulatorApp
 from tests.support import start_with_consent, start_legacy_plan
 from server_console import server_views
+from aidc.ui import dpi
 
 class ResourceHudTests(unittest.TestCase):
     def setUp(self):
@@ -95,7 +96,7 @@ class ResourceHudTests(unittest.TestCase):
     def test_hud_fits_laptop_and_minimum_window(self):
         a=self.app
         for size,cols in (('1000x650',2),('1280x680',4),('1366x768',4)):
-            self.root.geometry(size);self.root.update()
+            self.root.geometry(dpi.geometry(size));self.root.update()
             self.assertEqual(a.network.columns,cols)
             for widget in (a.overview,a.network,a.resources,a.action_hint,*a.action_buttons.values(),*a.time_buttons.values()):
                 self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(),self.root.winfo_rootx()+self.root.winfo_width())

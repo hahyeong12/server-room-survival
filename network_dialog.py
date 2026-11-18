@@ -11,6 +11,7 @@ from story_portraits import draw_portrait
 from ui import BG, PANEL, CYAN, MUTED, TEXT, RED, GREEN, AMBER, ActionButton, label
 from aidc.ui.scroll_area import ScrollArea
 from aidc.ui.window_placement import center_dialog
+from aidc.ui import dpi
 
 
 class NetworkDiagnosisDialog(tk.Toplevel):
@@ -123,7 +124,8 @@ class Chapter3FeedbackDialog(tk.Toplevel):
         self.bind('<Escape>', lambda _: self.destroy())
         # 행 수·줄바꿈에 따라 내용이 고정 높이(330)보다 길면 아래 버튼이 잘렸습니다. 실제 요구 높이 이상으로 잡습니다.
         self.update_idletasks()
-        center_dialog(self, parent, size=(560, max(330, self.winfo_reqheight()+8)), minimum=(460, 280))
+        # 요구 높이는 이미 화면 px이므로 설계 기준으로 되돌려 넘깁니다(center_dialog가 배율을 한 번만 곱함).
+        center_dialog(self, parent, size=(560, max(330, round(dpi.unpx(self.winfo_reqheight()))+8)), minimum=(460, 280))
 
 
 class HardwareDiagnosisDialog(tk.Toplevel):

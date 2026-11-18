@@ -12,6 +12,7 @@ from database import Database
 from game import CUSTOMER_PLANS
 from main import SimulatorApp
 from session import GameSession
+from aidc.ui import dpi
 
 
 class ConditionTests(unittest.TestCase):
@@ -417,7 +418,7 @@ class ConditionGuiTests(unittest.TestCase):
 
     def test_mode_labels_fit_minimum_window_during_negotiation_and_shortage(self):
         a = self.app
-        self.root.geometry('1000x650')
+        self.root.geometry(dpi.geometry('1000x650'))
         for stage in ('original', 'pending', 'accepted', 'shortage', 'flexible', 'rejected', 'legacy'):
             if stage == 'pending':
                 a.session.propose_alternative()

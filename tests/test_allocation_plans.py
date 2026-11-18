@@ -13,6 +13,7 @@ from game import CUSTOMER_PLANS
 from main import SimulatorApp
 from aidc.core.server_resources import SERVERS, Allocation, ServerPool, ServerSlice
 from session import GameSession
+from aidc.ui import dpi
 
 
 class PlanGenerationTests(unittest.TestCase):
@@ -373,7 +374,7 @@ class PlanDialogTests(unittest.TestCase):
     def test_gui_layout_at_all_three_resolutions_including_internal_text(self):
         a = self.app
         for width, height in ((1000, 650), (1280, 680), (1366, 768)):
-            self.root.geometry(f'{width}x{height}'); self.root.update()
+            self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             d = self.dialog()
             self.root.update()
             for widget in (a.resources.compare_button, d.heading, d.auto_button, d.cards, d.canvas,

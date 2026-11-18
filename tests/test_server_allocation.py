@@ -14,6 +14,7 @@ from main import SimulatorApp
 from aidc.core.server_resources import SERVERS, ServerPool, ServerSlice, Allocation
 from server_console import server_views
 from session import GameSession
+from aidc.ui import dpi
 
 
 class ServerPoolTests(unittest.TestCase):
@@ -340,7 +341,7 @@ class ServerConsoleTests(unittest.TestCase):
             elif state=='incident':a.state.trigger_incident();a.refresh()
             elif state=='finished':a._perform(a.session.report_failure)
             for size in ('1000x650','1280x680','1366x768'):
-                self.root.geometry(size);self.root.update()
+                self.root.geometry(dpi.geometry(size));self.root.update()
                 for item in a.network.find_all():
                     if a.network.type(item)=='text':
                         x1,y1,x2,y2=a.network.bbox(item)

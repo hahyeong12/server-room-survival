@@ -7,6 +7,7 @@ import unittest
 
 from server_ui_preview import (CUSTOMERS, EMPTY, RED, SCENARIOS, SERVERS,
                                SampleUsage, Scenario, ServerPreviewApp, animate_hardware, server_status)
+from aidc.ui import dpi
 
 
 class PreviewSampleTests(unittest.TestCase):
@@ -145,7 +146,7 @@ class PreviewGuiTests(unittest.TestCase):
     def test_three_window_sizes_keep_text_gauges_and_controls_inside_panels(self):
         a = self.app
         for size, columns in (('1280x680', 4), ('1366x768', 4), ('1000x650', 2)):
-            self.root.geometry(size)
+            self.root.geometry(dpi.geometry(size))
             self.root.update()
             for scene in SCENARIOS:
                 a.set_scenario(scene.key)
@@ -268,7 +269,7 @@ class PreviewGuiTests(unittest.TestCase):
         a = self.app
         a.set_scenario('fault')
         for size in ('1280x680', '1366x768', '1000x650'):
-            self.root.geometry(size)
+            self.root.geometry(dpi.geometry(size))
             self.root.update()
             for key, (left, top, right, bottom) in a.room.rack_bounds.items():
                 for item in a.room.find_withtag('server-'+key):
@@ -301,7 +302,7 @@ class PreviewGuiTests(unittest.TestCase):
         a.set_scenario('fault')
         chip_sizes = []
         for size in ('1000x650', '1280x680', '1366x768'):
-            self.root.geometry(size)
+            self.root.geometry(dpi.geometry(size))
             self.root.update()
             for canvas in (a.overview, a.room, a.details):
                 self.assertFalse(canvas.find_withtag('gpu-fan'))
@@ -375,7 +376,7 @@ class PreviewGuiTests(unittest.TestCase):
         a = self.app
         a.set_comparison(True)
         for size in ('1000x650', '1280x680', '1366x768'):
-            self.root.geometry(size)
+            self.root.geometry(dpi.geometry(size))
             for scene in ('initial', 'distributed', 'fault'):
                 a.set_scenario(scene)
                 for spec in SERVERS:
