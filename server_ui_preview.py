@@ -139,14 +139,14 @@ def server_status(usage):
 
 class Overview(tk.Canvas):
     def __init__(self, parent):
-        super().__init__(parent, bg=PANEL, height=94, highlightthickness=1, highlightbackground=EDGE)
+        super().__init__(parent, bg=PANEL, height=dpi.px(94), highlightthickness=1, highlightbackground=EDGE)
         self.scenario = SCENARIOS[0]
         self.bind('<Configure>', lambda _: self.draw())
 
     def draw(self):
         self.delete('all')
         reset_hardware(self)
-        w = self.winfo_width()
+        w = dpi.unpx(self.winfo_width())  # 설계 기준 px로 그리고 끝에서 좌표만 늘립니다.
         if w < 50:
             return
         summary = self.scenario.summary()
@@ -180,6 +180,7 @@ class Overview(tk.Canvas):
             color = RED if key == 'fault_servers' and summary[key] else TEXT
             ink(self, x, 38, f'{summary[key]:02d}', 23, color, True, anchor='n')
             ink(self, x, 77, '/ 4' if key != 'jobs' else '고객 작업 수', 9, MUTED, anchor='n')
+        dpi.finish_canvas(self)
 
 
 class Inbox(tk.Canvas):
@@ -190,7 +191,7 @@ class Inbox(tk.Canvas):
 
     def draw(self):
         self.delete('all')
-        w, h = self.winfo_width(), self.winfo_height()
+        w, h = dpi.logical_size(self)
         ink(self, 15, 16, 'AIDC LINK', 12, CYAN, True)
         ink(self, 15, 40, '고객 요청함 / 샘플 03', 10, MUTED)
         card_h = min(106, (h-91)/3)
@@ -208,6 +209,7 @@ class Inbox(tk.Canvas):
             elif customer.key in self.scenario.completed:
                 text = '완료 · 자원 반환'
             ink(self, 25, y+card_h-19, text, 9, customer.color if occupied else MUTED)
+        dpi.finish_canvas(self)
 
 
 class ServerRoom(tk.Canvas):
@@ -231,7 +233,7 @@ class ServerRoom(tk.Canvas):
         self.delete('all')
         reset_hardware(self)
         self.rack_bounds.clear()
-        w, h = self.winfo_width(), self.winfo_height()
+        w, h = dpi.logical_size(self)
         if w < 80 or h < 80:
             return
         ink(self, 18, 15, 'SERVER FLOOR', 12, TEXT, True)
@@ -241,7 +243,7 @@ class ServerRoom(tk.Canvas):
         for i in range(9):
             x = w*i/8
             self.create_line(w/2+(x-w/2)*.6, 68, max(4, min(w-4, x)), h-4, fill='#132437')
-        for y in range(80, h, 36):
+        for y in range(80, int(h), 36):
             self.create_line(4, y, w-4, y, fill='#132437')
         self.columns = 4 if w >= 640 else 2
         rows = 1 if self.columns == 4 else 2
@@ -253,6 +255,8 @@ class ServerRoom(tk.Canvas):
             y = top+(i//self.columns)*(rh+gap)
             self.rack_bounds[spec.key] = (x, y, x+rw, y+rh)
             self.draw_rack(spec, used, x, y, rw, rh)
+        dpi.finish_canvas(self)
+        self.rack_bounds = {key: tuple(dpi.px(float(v)) for v in box) for key, box in self.rack_bounds.items()}
 
     def draw_rack(self, spec, used, x, y, w, h):
         tag = f'server-{spec.key}'
@@ -331,7 +335,7 @@ class ServerDetails(tk.Canvas):
     def draw(self):
         self.delete('all')
         reset_hardware(self)
-        w, h = self.winfo_width(), self.winfo_height()
+        w, h = dpi.logical_size(self)
         spec, used = self.spec, self.usage
         ga, pa = spec.gpu-used.gpu, spec.power-used.power
         self.values = {'name':spec.name, 'gpu_total':spec.gpu, 'gpu_used':used.gpu, 'gpu_available':ga,
@@ -369,6 +373,7 @@ class ServerDetails(tk.Canvas):
         ink(self, 16, 337, self.values['owner'], 12, color if used.owner else TEXT, True, tags=('detail-owner',))
         if h >= 433:
             ink(self, 16, h-22, '샘플 정보 · 실제 게임과 미연결', 9, MUTED, anchor='sw')
+        dpi.finish_canvas(self)
 
 
 class ServerPreviewApp:
@@ -385,7 +390,7 @@ class ServerPreviewApp:
         root.configure(bg=BG)
         root.columnconfigure(0, weight=1)
         root.rowconfigure(2, weight=1)
-        header = tk.Frame(root, bg=BG, height=52)
+        header = tk.Frame(root, bg=BG, height=dpi.px(52))
         header.grid(row=0, sticky='ew', padx=16)
         tk.Label(header, text='AIDC', bg=BG, fg=CYAN, font=(MONO, 24, 'bold')).pack(side='left', pady=8)
         tk.Label(header, text='ULSAN  /  SERVER CONTROL', bg=BG, fg=TEXT,
@@ -406,12 +411,12 @@ class ServerPreviewApp:
         self.body.columnconfigure(1, weight=1)
         self.body.rowconfigure(0, weight=1)
         self.inbox = Inbox(self.body)
-        self.inbox.configure(width=208)
+        self.inbox.configure(width=dpi.px(208))
         self.inbox.grid(row=0, column=0, sticky='nsew', padx=(0, 10))
         self.room = ServerRoom(self.body, self.select_server)
         self.room.grid(row=0, column=1, sticky='nsew')
         self.details = ServerDetails(self.body)
-        self.details.configure(width=244)
+        self.details.configure(width=dpi.px(244))
         self.details.grid(row=0, column=2, sticky='nsew', padx=(10, 0))
         controls = tk.Frame(root, bg=BG)
         controls.grid(row=3, sticky='ew', padx=16, pady=(12, 0))

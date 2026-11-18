@@ -6,6 +6,7 @@
 import tkinter as tk
 
 from ui import BG, PANEL, RAISED, BORDER, TEXT, MUTED, CYAN, BLUE, GREEN, RED, AMBER, FONT
+from aidc.ui import dpi
 
 MONO = 'Consolas'
 # tone -> (색, 아이콘, 기본 문구). 아이콘은 Windows 기본 글꼴에서 보이는 단순 기호만 사용합니다.
@@ -56,7 +57,9 @@ class Gauge(tk.Canvas):
 
     def draw(self):
         self.delete('all')
-        width, height = max(self.winfo_width(), 160), max(self.winfo_height(), 40)
+        # 설계 기준 px로 그린 뒤 좌표만 실험용 DPI 배율로 늘립니다(배율 1.0이면 그대로).
+        width, height = dpi.logical_size(self)
+        width, height = max(width, 160), max(height, 40)
         color = tone_color(self.tone)
         self.create_text(12, 10, text=self.title, anchor='nw', fill=MUTED, font=(FONT, 9, 'bold'), tags='title')
         self.create_text(width-12, 6, text=self.text, anchor='ne', fill=color, font=(FONT, 15, 'bold'), tags='value')
@@ -67,6 +70,7 @@ class Gauge(tk.Canvas):
             self.create_rectangle(12, top, 12+(width-24)*ratio, top+self.bar, fill=color, outline=color, tags='fill')
         if self.caption:
             self.create_text(12, top-4, text=self.caption, anchor='sw', fill=MUTED, font=(FONT, 8), tags='caption')
+        dpi.finish_canvas(self)
 
 
 class PrimaryButton(tk.Button):

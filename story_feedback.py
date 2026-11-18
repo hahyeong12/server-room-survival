@@ -4,6 +4,7 @@ import tkinter as tk
 from story_portraits import draw_portrait
 from ui import BG, TEXT, MUTED, FONT, ActionButton, label
 from aidc.ui.window_placement import place_near
+from aidc.ui import dpi
 
 
 FEEDBACK = {
@@ -35,7 +36,7 @@ class StoryFeedbackDialog(tk.Toplevel):
         self.rowconfigure(1, weight=1)
         self.heading = label(self, '✓ '+title, 11, '#ffe08a', True)
         self.heading.grid(row=0, columnspan=2, sticky='w', padx=12, pady=(10, 3))
-        self.portrait = tk.Canvas(self, width=66, height=88, bg=BG, highlightthickness=0)
+        self.portrait = tk.Canvas(self, width=dpi.px(66), height=dpi.px(88), bg=BG, highlightthickness=0)
         self.portrait.grid(row=1, column=0, padx=(8, 2), sticky='n')
         # 기존 독창적 선배 초상화를 작은 아이콘으로 재사용합니다.
         draw_portrait(self.portrait, 'mentor', True)

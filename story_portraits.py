@@ -1,4 +1,5 @@
 """독창적인 Canvas 인물화. 대화 데이터와 독립된 교체 가능한 렌더러."""
+from aidc.ui import dpi
 
 
 def draw_portrait(canvas, role, active=True):
@@ -13,6 +14,7 @@ def draw_portrait(canvas, role, active=True):
             canvas.create_oval(60-radius, 80-radius, 60+radius, 80+radius,
                                outline=accent, width=2, tags='signal')
         canvas.create_line(12, 80, 108, 80, fill=accent, tags='signal')
+        dpi.finish_canvas(canvas)
         return
     tags = ('character', role)
     canvas.create_line(10, 12, 34, 12, 34, 18, fill=accent, tags=tags)
@@ -45,3 +47,5 @@ def draw_portrait(canvas, role, active=True):
     if not active:
         canvas.create_rectangle(0, 0, 120, 165, fill='#07101b', stipple='gray50',
                                 outline='', tags='inactive')
+    # 120x165 설계 좌표를 실험용 DPI 배율로 늘립니다. 호출자의 축소(.37 등)는 그 뒤에 곱해집니다.
+    dpi.finish_canvas(canvas)

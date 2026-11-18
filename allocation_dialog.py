@@ -121,7 +121,7 @@ class AllocationDialog(tk.Toplevel):
             self.auto_button.grid_remove()
         self.cards = tk.Frame(body, bg=BG)
         self.cards.grid(row=5, sticky='ew', padx=12, pady=4)
-        self.canvas = tk.Canvas(body, bg=PANEL, height=96, highlightthickness=1, highlightbackground=EDGE)
+        self.canvas = tk.Canvas(body, bg=PANEL, height=dpi.px(96), highlightthickness=1, highlightbackground=EDGE)
         self.canvas.grid(row=6, sticky='ew', padx=12)
         self.canvas.bind('<Configure>', lambda _: self.draw_preview())
         info = tk.Frame(body, bg=BG)
@@ -424,7 +424,7 @@ class AllocationDialog(tk.Toplevel):
         index = self.selection.get()
         parts = self.options[max(0, index)] if self.options else ()
         self.update_selection(parts)
-        width = c.winfo_width()
+        width = dpi.unpx(c.winfo_width())  # 설계 기준 px로 그리고 끝에서 좌표만 늘립니다.
         if width < 100:
             return
         ink(c, 10, 5, '점유 예정 미리보기 · 흰 테두리 = 선택 예정 / 고객 코드 = 기존 작업', 9, MUTED)
@@ -443,6 +443,7 @@ class AllocationDialog(tk.Toplevel):
                     c.create_rectangle(mx-3, my-3, mx+module+3, my+27, outline=SELECTED, width=3,
                                        tags=('planned-slot', f'planned-{spec.key}-{slot}'))
                     c.create_rectangle(mx-5, my-5, mx+module+5, my+29, outline='#6f86a8', width=1, tags='planned-glow')
+        dpi.finish_canvas(c)
 
     def start(self):
         if self.options and self.session.selected_id != self.request_id:

@@ -10,6 +10,7 @@ from tkinter.scrolledtext import ScrolledText
 from story import chapter2_failure_pages
 from ui import BG, PANEL, CYAN, MUTED, TEXT, FONT, RED, GREEN, ActionButton, label
 from story_portraits import draw_portrait
+from aidc.ui import dpi
 from aidc.ui.scroll_area import ScrollArea
 from aidc.ui.window_placement import center_dialog
 from aidc.story.chapters import CHAPTERS
@@ -22,7 +23,7 @@ def _mentor_box(parent, title, lines):
     """선배 초상화와 짧은 분석 문장을 PANEL 박스로 묶어 반환합니다."""
     box = tk.Frame(parent, bg=PANEL)
     box.columnconfigure(1, weight=1)
-    portrait = tk.Canvas(box, width=44, height=60, bd=0, highlightthickness=0)
+    portrait = tk.Canvas(box, width=dpi.px(44), height=dpi.px(60), bd=0, highlightthickness=0)
     portrait.grid(row=0, column=0, sticky='n', padx=8, pady=6)
     draw_portrait(portrait, 'mentor')
     portrait.scale('all', 0, 0, .37, .37)

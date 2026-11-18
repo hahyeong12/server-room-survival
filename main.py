@@ -1678,6 +1678,7 @@ def draw_mode_icon(canvas, kind):
             canvas.create_rectangle(6, top, 58, top+14, outline='#6d9fff', width=2)
             canvas.create_oval(12, top+4, 18, top+10, fill=led, outline='')
             canvas.create_line(26, top+7, 50, top+7, fill='#6d9fff', width=2)
+    dpi.finish_canvas(canvas)  # 64x58 설계 좌표 → 화면 px(배율 1.0이면 그대로)
 
 
 class ModeSelection:
@@ -1701,10 +1702,11 @@ class ModeSelection:
         # 게임 타이틀 화면: 큰 로고와 한 줄 소개 → 독립 모드 카드 3장(아이콘·소개·목적·시작 버튼).
         banner = self.banner = tk.Frame(self.content, bg=BG)
         banner.pack(fill='x', pady=(0, 20))
-        icon = self.title_icon = tk.Canvas(banner, width=76, height=40, bg=BG, highlightthickness=0)
+        icon = self.title_icon = tk.Canvas(banner, width=dpi.px(76), height=dpi.px(40), bg=BG, highlightthickness=0)
         icon.pack()
         reset_hardware(icon)
         gpu_module(icon, 6, 6, 64, 27, 'available')
+        dpi.finish_canvas(icon)
         self.title_label = label(banner, APP_NAME, 38, CYAN, True)
         self.title_label.pack(pady=(6, 0))
         label(banner, f'{APP_NAME_EN} · 울산 AI 데이터센터 운영 시뮬레이션', 13, MUTED).pack(pady=(2, 0))
@@ -1726,7 +1728,7 @@ class ModeSelection:
             card = self.mode_cards[mode] = tk.Frame(self.mode_panel, bg=PANEL, highlightthickness=2,
                                                     highlightbackground=BORDER, padx=20, pady=18, cursor='hand2')
             card.grid(row=0, column=column, sticky='nsew', padx=(0 if column == 0 else 8, 0))
-            art = tk.Canvas(card, width=72, height=60, bg=PANEL, highlightthickness=0)
+            art = tk.Canvas(card, width=dpi.px(72), height=dpi.px(60), bg=PANEL, highlightthickness=0)
             art.pack(anchor='w')
             draw_mode_icon(art, kind)
             heading_label = label(card, title, 20, TEXT, True)

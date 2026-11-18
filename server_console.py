@@ -6,6 +6,7 @@ from aidc.core.server_resources import SERVERS
 from game import GameState, game_time
 from aidc.ui.job_status import job_status
 from aidc.ui.scroll_area import ScrollArea
+from aidc.ui import dpi
 from server_widgets import (BG, PANEL, SURFACE, EDGE, TEXT, MUTED, CYAN, RED, FONT,
                             ink, gpu_module, battery, reset_hardware, animate_hardware)
 
@@ -50,13 +51,13 @@ def server_views(session, exclude_playthrough=None):
 
 class LiveOverview(tk.Canvas):
     def __init__(self, parent, session):
-        super().__init__(parent, height=76, bg=PANEL, highlightthickness=1, highlightbackground=EDGE)
+        super().__init__(parent, height=dpi.px(76), bg=PANEL, highlightthickness=1, highlightbackground=EDGE)
         self.session = session
         self.bind('<Configure>', lambda _: self.refresh())
 
     def refresh(self):
         self.delete('all'); reset_hardware(self)
-        w = self.winfo_width()
+        w = dpi.unpx(self.winfo_width())  # 설계 기준 px로 그리고 끝에서 좌표만 늘립니다.
         if w < 100:
             return
         views = server_views(self.session)
@@ -94,6 +95,7 @@ class LiveOverview(tk.Canvas):
             ink(self, x, 30, str(self.values[key]), 22,
                 '#ffbf69' if key == 'network' and self.values[key] else TEXT, True, anchor='n')
         ink(self, p_end+8, 62, f'장비 사용 불가 {self.values["hardware"]}대', 8, RED if self.values['hardware'] else MUTED)
+        dpi.finish_canvas(self)
 
 
 def rack_layout(columns, rack_height):
@@ -129,7 +131,7 @@ class LiveServerRoom(tk.Canvas):
     def redraw(self):
         self.delete('all'); reset_hardware(self)
         self.views = server_views(self.session)
-        w, h = self.winfo_width(), self.winfo_height()
+        w, h = dpi.logical_size(self)  # 설계 기준 px(배율 1.0이면 실제 크기)
         if min(w, h) < 80:
             return
         self.columns = 4 if w >= 620 else 2
@@ -208,6 +210,9 @@ class LiveServerRoom(tk.Canvas):
                 ink(self,x+rw-13,y+86,f'전력 {v["power_available"]}/{spec.power}',8,MUTED,anchor='ne',tags=tags)
                 ink(self,x+12,y+rh-12,names,9,CYAN if v['owners'] else MUTED,anchor='w',tags=tags+('owner-label',))
             self.tag_bind(tag,'<Button-1>',lambda _, key=spec.key:self.select(key))
+        # 좌표를 화면 px로 늘리고, 다른 화면이 쓰는 랙 경계도 같은 화면 좌표로 맞춥니다.
+        dpi.finish_canvas(self)
+        self.rack_bounds = {key: tuple(dpi.px(float(v)) for v in box) for key, box in self.rack_bounds.items()}
         animate_hardware(self,self.phase)
         self.draw_tutorial_highlight()
 
@@ -217,16 +222,17 @@ class LiveServerRoom(tk.Canvas):
 
     def draw_tutorial_highlight(self):
         self.delete('tutorial-highlight', 'tutorial-glow', 'tutorial-caption')
-        self.coords('room-heading', self.winfo_width()-12 if self.tutorial_color else 12, 9)
+        self.coords('room-heading', self.winfo_width()-dpi.px(12) if self.tutorial_color else dpi.px(12), dpi.px(9))
         self.itemconfigure('room-heading', anchor='ne' if self.tutorial_color else 'nw')
         if self.tutorial_color and 'A' in self.rack_bounds:
-            x, y, right, bottom = self.rack_bounds['A']
-            self.create_rectangle(x-4, y-4, right+4, bottom+4,
+            x, y, right, bottom = self.rack_bounds['A']  # 화면 좌표
+            d4, d7, d5 = dpi.px(4), dpi.px(7), dpi.px(5)
+            self.create_rectangle(x-d4, y-d4, right+d4, bottom+d4,
                                   outline=self.tutorial_color, width=4,
                                   tags=('tutorial-highlight', 'server-A'))
-            self.create_rectangle(x-7, y-7, right+7, bottom+7, outline='#aa7d31', width=1,
+            self.create_rectangle(x-d7, y-d7, right+d7, bottom+d7, outline='#aa7d31', width=1,
                                   tags=('tutorial-glow', 'server-A'))
-            self.create_text((x+right)/2, y-5, anchor='s', text='▼ 여기를 클릭',
+            self.create_text((x+right)/2, y-d5, anchor='s', text='▼ 여기를 클릭',
                              fill=self.tutorial_color, font=(FONT, 9, 'bold'), tags=('tutorial-caption', 'server-A'))
 
     def start(self):
@@ -257,7 +263,7 @@ class LiveInspector(tk.Canvas):
         self.delete('all'); reset_hardware(self)
         if self.view is None:
             return
-        v = self.values = self.view; spec=v['spec']; w=self.winfo_width()
+        v = self.values = self.view; spec=v['spec']; w=dpi.unpx(self.winfo_width())
         ink(self,10,10,spec.name,14,TEXT,True)
         ink(self,w-10,14,v['status'],9,CYAN if v['owners'] else MUTED,anchor='ne')
         ink(self,10,43,f'GPU 총{spec.gpu} · 사용{v["gpu_used"]} · 가용{v["gpu_available"]}',10,CYAN)
@@ -274,11 +280,12 @@ class LiveInspector(tk.Canvas):
             message = (f'장비 복구 중 · 잔여 {v["repair_left"]}분' if v['repair_left'] else '교육용 서버 장애 · 현재 사용 불가')
         ink(self,10,170,message,9,
             RED if v['health'] != 'HEALTHY' else '#ffbf69' if v['network'] else MUTED)
+        dpi.finish_canvas(self)
 
 
 class ServerPanel(tk.Frame):
     def __init__(self,parent,session):
-        super().__init__(parent,bg=PANEL,width=250)
+        super().__init__(parent,bg=PANEL,width=dpi.px(250))
         self.session, self.selected, self.preview_plan = session, 'A', 'performance'
         self.book=ttk.Notebook(self); self.book.pack(fill='both',expand=True)
         inspector=tk.Frame(self.book,bg=PANEL)

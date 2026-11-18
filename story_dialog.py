@@ -32,7 +32,7 @@ class StoryDialogueDialog(MessageDialog):
         for column, role in enumerate(('player', 'mentor')):
             frame = tk.Frame(self.cast, bg=BG)
             frame.grid(row=0, column=column, padx=3)
-            canvas = tk.Canvas(frame, width=120, height=165, bd=0)
+            canvas = tk.Canvas(frame, width=dpi.px(120), height=dpi.px(165), bd=0)
             canvas.pack()
             label(frame, '신입 엔지니어' if role == 'player' else '선배 엔지니어',
                   9, MUTED).pack(pady=5)

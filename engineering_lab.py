@@ -22,6 +22,7 @@ from aidc.learning.training import QUESTIONS, STAGE_INFO, STAGES
 from ui import BG, PANEL, RAISED, BORDER, TEXT, MUTED, CYAN, BLUE, GREEN, RED, AMBER, FONT, ActionButton, label
 from aidc.ui.ui_kit import MONO, HEALTH_TONES, Gauge, PrimaryButton, StatusChip, ToggleButton, tone_color
 from aidc.ui.window_placement import center_dialog
+from aidc.ui import dpi
 from aidc.ui.terminal_clipboard import bind_entry_paste, bind_output_copy
 
 TABS = ('운영 상태', '네트워크 구조', '서버 내부', '명령어 학습', '가상 터미널')
@@ -317,7 +318,7 @@ class EngineeringLabDialog(tk.Toplevel):
             row=0, column=0, columnspan=2, sticky='w', padx=8, pady=(6, 2))
         label(body, info['goal'], 10, TEXT, anchor='w', justify='left', wraplength=900).grid(
             row=1, column=0, columnspan=2, sticky='w', padx=8, pady=(0, 6))
-        portrait = tk.Canvas(body, width=44, height=60, bd=0, highlightthickness=0, bg=BG)
+        portrait = tk.Canvas(body, width=dpi.px(44), height=dpi.px(60), bd=0, highlightthickness=0, bg=BG)
         portrait.grid(row=2, column=0, sticky='nw', padx=(8, 6))
         draw_portrait(portrait, 'mentor', True)
         portrait.scale('all', 0, 0, .37, .37)
@@ -633,7 +634,9 @@ class EngineeringLabDialog(tk.Toplevel):
         self.flow_label.grid(row=3, sticky='w', padx=10, pady=(0, 8))
 
     def _layout(self):
-        w, h = max(self.net_canvas.winfo_width(), 700), max(self.net_canvas.winfo_height(), 360)
+        # 설계 기준 px 좌표. _draw_network·_draw_packets가 그린 뒤 좌표만 실험용 DPI 배율로 늘립니다.
+        w, h = dpi.logical_size(self.net_canvas)
+        w, h = max(w, 700), max(h, 360)
         nodes = {'edge': (.09*w, .5*h), 'primary': (.30*w, .25*h), 'backup': (.30*w, .76*h),
                  'gateway': (.52*w, .5*h), 'job': (.915*w, .5*h)}
         for index, server in enumerate('ABCD'):
@@ -709,10 +712,10 @@ class EngineeringLabDialog(tk.Toplevel):
         for seg_id, a, b in links:
             (x1, y1), (x2, y2) = nodes[a], nodes[b]
             if chosen and chosen['answer'] == seg_id:
-                canvas.create_line(x1, y1, x2, y2, fill=GREEN if chosen['correct'] else AMBER, width=12, capstyle='round',
+                canvas.create_line(x1, y1, x2, y2, fill=GREEN if chosen['correct'] else AMBER, width=dpi.px(12), capstyle='round',
                                    tags=tags(seg_id, 'chosen'))
             if a in used and b in used:
-                canvas.create_line(x1, y1, x2, y2, fill='#1b4b52', width=12, capstyle='round', tags=tags(seg_id, 'glow'))
+                canvas.create_line(x1, y1, x2, y2, fill='#1b4b52', width=dpi.px(12), capstyle='round', tags=tags(seg_id, 'glow'))
             color, width, dash = self._segment_style(seg[seg_id])
             canvas.create_line(x1, y1, x2, y2, fill=color, width=width, dash=dash, tags=tags(seg_id, 'link'))
             mx, my = (x1+x2)/2, (y1+y2)/2
@@ -779,6 +782,7 @@ class EngineeringLabDialog(tk.Toplevel):
         if not o.transferring:
             canvas.create_text(w/2, h-14, text=f'데이터 전송 없음 · 작업 {o.phase_label}', fill=MUTED, font=(FONT, 9), tags=('status',))
         self.net_task.configure(**dict(zip(('text', 'fg'), self._net_task_text())))
+        dpi.finish_canvas(canvas)
         if self.hover_segment:
             self._hover(self.hover_segment)
         self._draw_packets()
@@ -846,6 +850,7 @@ class EngineeringLabDialog(tk.Toplevel):
             x, y = ax+(bx-ax)*ratio, ay+(by-ay)*ratio
             color = RED if dropped and t > .85 else CYAN
             canvas.create_oval(x-5, y-5, x+5, y+5, fill=color, outline='', state='disabled', tags=('packet',))  # 클릭을 가로채지 않음
+        dpi.finish_canvas(canvas, 'packet')  # 구조도와 같은 설계 기준 좌표 → 화면 px
 
     # ── 서버 내부 ──────────────────────────────────────────
     def _build_servers(self, frame):
@@ -876,7 +881,7 @@ class EngineeringLabDialog(tk.Toplevel):
             gauge = Gauge(body, title, height=70, bar=16)
             gauge.grid(row=2+index//2, column=index % 2, sticky='ew', padx=(0, 8) if index % 2 == 0 else 0, pady=5)
             self.server_gauges[key] = gauge
-        self.slot_canvas = tk.Canvas(body, height=58, bg=PANEL, highlightthickness=1, highlightbackground=BORDER, bd=0)
+        self.slot_canvas = tk.Canvas(body, height=dpi.px(58), bg=PANEL, highlightthickness=1, highlightbackground=BORDER, bd=0)
         self.slot_canvas.grid(row=4, column=0, columnspan=2, sticky='ew', pady=5)
         self.slot_canvas.bind('<Configure>', lambda _: self._draw_slots())
         missing = tk.Frame(body, bg=PANEL, padx=10, pady=8)
@@ -938,6 +943,7 @@ class EngineeringLabDialog(tk.Toplevel):
                                     tags=('slot',))
             text = f'GPU{slot.index} · ' + ('FAULT' if fault else (slot.owner.upper() if slot.owner else '빈 슬롯'))
             canvas.create_text(x+42, 39, text=text, fill=BG if slot.owner or fault else MUTED, font=(FONT, 8, 'bold'))
+        dpi.finish_canvas(canvas)
 
     # ── 명령어 학습 ────────────────────────────────────────
     def _build_learning(self, frame):

@@ -106,7 +106,7 @@ class Chapter3FeedbackDialog(tk.Toplevel):
             label(table, name, 10, MUTED, anchor='w').grid(row=row, column=0, sticky='w', padx=(10, 14), pady=2)
             self.cells[name] = label(table, value, 11, TEXT, True, anchor='w', justify='left', wraplength=380)
             self.cells[name].grid(row=row, column=1, sticky='w', pady=2)
-        self.portrait = tk.Canvas(self, width=44, height=60, bd=0, highlightthickness=0)
+        self.portrait = tk.Canvas(self, width=dpi.px(44), height=dpi.px(60), bd=0, highlightthickness=0)
         self.portrait.grid(row=2, column=0, sticky='n', padx=(16, 4), pady=8)
         draw_portrait(self.portrait, 'mentor', True)
         self.portrait.scale('all', 0, 0, .37, .37)

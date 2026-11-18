@@ -310,8 +310,8 @@ class PreviewGuiTests(unittest.TestCase):
                 self.assertFalse(any(canvas.type(i) == 'arc' for i in canvas.find_all()))
                 for body in canvas.find_withtag('gpu-body'):
                     x1, y1, x2, y2 = canvas.bbox(body)
-                    self.assertLessEqual(x2-x1, 66)
-                    self.assertLessEqual(y2-y1, 29)
+                    self.assertLessEqual(x2-x1, dpi.px(66))  # 설계 기준 칩 크기 상한
+                    self.assertLessEqual(y2-y1, dpi.px(29))
             chip = a.room.find_withtag('gpu-die')[0]
             x1, y1, x2, y2 = a.room.bbox(chip)
             chip_sizes.append((x2-x1, y2-y1))
