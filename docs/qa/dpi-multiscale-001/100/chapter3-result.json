@@ -1,0 +1,205 @@
+{
+  "jobs": [
+    {
+      "request_id": 6,
+      "company": "Merlion AI",
+      "country": "싱가포르",
+      "scenario": "ch3_path",
+      "kind": "path_down",
+      "kind_label": "통신 경로 단절",
+      "record": {
+        "kind": "path_down",
+        "responses": [
+          "reroute"
+        ],
+        "attempts": 1,
+        "recovered_by": "reroute",
+        "downtime": 0,
+        "primary_up": false,
+        "rerouted": true,
+        "needed": 5,
+        "available": 6,
+        "backup": 6,
+        "diagnosed": true,
+        "initial_needed": 5,
+        "final": null
+      },
+      "responses": [
+        "백업 경로 우회"
+      ],
+      "recovered": true,
+      "diagnosed": true,
+      "downtime": 0,
+      "attempts": 1,
+      "job": {
+        "request_id": 6,
+        "company": "Merlion AI",
+        "country": "싱가포르",
+        "task": "생성형 AI 모델 학습 요청",
+        "key": "on_time",
+        "label": "정상 완료 · 기한 준수",
+        "mode": "고성능 모드",
+        "gpu": 4,
+        "power": 4,
+        "deadline": "준수",
+        "due": "D1 14:40",
+        "completed": "D1 13:20",
+        "score": 90
+      },
+      "success": true,
+      "late": false
+    },
+    {
+      "request_id": 7,
+      "company": "Northstar AI",
+      "country": "미국",
+      "scenario": "ch3_bw",
+      "kind": "bandwidth",
+      "kind_label": "가용 대역폭 부족",
+      "record": {
+        "kind": "bandwidth",
+        "responses": [
+          "compress"
+        ],
+        "attempts": 1,
+        "recovered_by": "compress",
+        "downtime": 0,
+        "primary_up": true,
+        "rerouted": false,
+        "needed": 4,
+        "available": 4,
+        "backup": 4,
+        "diagnosed": true,
+        "initial_needed": 6,
+        "final": null
+      },
+      "responses": [
+        "전송 데이터 압축"
+      ],
+      "recovered": true,
+      "diagnosed": true,
+      "downtime": 0,
+      "attempts": 1,
+      "job": {
+        "request_id": 7,
+        "company": "Northstar AI",
+        "country": "미국",
+        "task": "대규모 데이터 분석 작업",
+        "key": "on_time",
+        "label": "정상 완료 · 기한 준수",
+        "mode": "고성능 모드",
+        "gpu": 4,
+        "power": 3,
+        "deadline": "준수",
+        "due": "D1 15:40",
+        "completed": "D1 14:20",
+        "score": 95
+      },
+      "success": true,
+      "late": false
+    }
+  ],
+  "mission": "success",
+  "practice": false,
+  "servers": {
+    "A": "HEALTHY",
+    "B": "HEALTHY",
+    "C": "HEALTHY",
+    "D": "HEALTHY"
+  },
+  "released": true,
+  "summary": {
+    "mission": "success",
+    "ok": 2,
+    "total": 2,
+    "table": [
+      [
+        "A",
+        "경로 단절",
+        "우회 성공 · 1회",
+        "성공",
+        "90점"
+      ],
+      [
+        "B",
+        "대역폭 부족",
+        "압축 성공 · 1회",
+        "성공",
+        "95점"
+      ]
+    ],
+    "mentor": [
+      "A: 끊어진 경로에는 정상 백업 경로로 우회한 조치가 적절했습니다.",
+      "B: 경로는 연결되어 있었고 용량이 문제여서 필요량을 줄이는 압축이 적절했습니다.",
+      "최종 결과: 2개 장애 중 2개를 복구하고 정상 완료했습니다."
+    ],
+    "rows": [
+      [
+        [
+          "장애",
+          "통신 경로 단절"
+        ],
+        [
+          "진단",
+          "주 경로 DOWN / 백업 경로 정상(용량 6) / GPU·서버 정상"
+        ],
+        [
+          "선택 대응",
+          "백업 경로 우회"
+        ],
+        [
+          "복구 결과",
+          "성공"
+        ],
+        [
+          "중단 시간",
+          "0분 (대응 1회)"
+        ],
+        [
+          "작업 결과",
+          "정상 완료 · 기한 준수"
+        ],
+        [
+          "운영 점수",
+          "90점"
+        ]
+      ],
+      [
+        [
+          "장애",
+          "가용 대역폭 부족"
+        ],
+        [
+          "진단",
+          "주 경로 UP / 필요 대역폭 6 > 가용 4 / 백업 경로는 같은 병목 공유 / GPU·서버 정상"
+        ],
+        [
+          "선택 대응",
+          "전송 데이터 압축"
+        ],
+        [
+          "복구 결과",
+          "성공"
+        ],
+        [
+          "중단 시간",
+          "0분 (대응 1회)"
+        ],
+        [
+          "작업 결과",
+          "정상 완료 · 기한 준수"
+        ],
+        [
+          "운영 점수",
+          "95점"
+        ]
+      ]
+    ],
+    "verdict": "두 장애 모두 원인에 맞게 복구하고 정상 완료"
+  },
+  "mentor": [
+    "A: 끊어진 경로에는 정상 백업 경로로 우회한 조치가 적절했습니다.",
+    "B: 경로는 연결되어 있었고 용량이 문제여서 필요량을 줄이는 압축이 적절했습니다.",
+    "최종 결과: 2개 장애 중 2개를 복구하고 정상 완료했습니다."
+  ]
+}

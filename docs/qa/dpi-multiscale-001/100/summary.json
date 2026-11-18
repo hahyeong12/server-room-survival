@@ -1,0 +1,733 @@
+{
+  "percent": 100,
+  "environment_before": {
+    "dpi": {
+      "dpi": {
+        "mode": "system",
+        "scale": 1.0,
+        "dpi": 96,
+        "requested": true,
+        "reason": "System DPI Aware 적용"
+      },
+      "actual_process_awareness": 1,
+      "screen": [
+        1920,
+        1080
+      ],
+      "work_area": [
+        0,
+        0,
+        1920,
+        1032
+      ],
+      "tk_scaling": 1.3333333333333333,
+      "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+      "tk": "8.6.15"
+    },
+    "monitor": {
+      "monitor_effective_dpi": [
+        96,
+        96
+      ],
+      "percent": 100.0
+    }
+  },
+  "environment_after": {
+    "dpi": {
+      "dpi": {
+        "mode": "system",
+        "scale": 1.0,
+        "dpi": 96,
+        "requested": true,
+        "reason": "System DPI Aware 적용"
+      },
+      "actual_process_awareness": 1,
+      "screen": [
+        1920,
+        1080
+      ],
+      "work_area": [
+        0,
+        0,
+        1920,
+        1032
+      ],
+      "tk_scaling": 1.3333333333333333,
+      "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+      "tk": "8.6.15"
+    },
+    "monitor": {
+      "monitor_effective_dpi": [
+        96,
+        96
+      ],
+      "percent": 100.0
+    }
+  },
+  "protection_after": {
+    "user_files": 24,
+    "user_files_unchanged": true,
+    "existing_artifacts_unchanged": 1127,
+    "previous_qa_files_unchanged": 25
+  },
+  "tasks": [
+    {
+      "name": "capture",
+      "started": 1795014055.0192425,
+      "returncode": 0,
+      "seconds": 13.127,
+      "protection": {
+        "user_files": 24,
+        "user_files_unchanged": true,
+        "existing_artifacts_unchanged": 1127,
+        "previous_qa_files_unchanged": 25
+      },
+      "environment_after": {
+        "dpi": {
+          "dpi": {
+            "mode": "system",
+            "scale": 1.0,
+            "dpi": 96,
+            "requested": true,
+            "reason": "System DPI Aware 적용"
+          },
+          "actual_process_awareness": 1,
+          "screen": [
+            1920,
+            1080
+          ],
+          "work_area": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "tk_scaling": 1.3333333333333333,
+          "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+          "tk": "8.6.15"
+        },
+        "monitor": {
+          "monitor_effective_dpi": [
+            96,
+            96
+          ],
+          "percent": 100.0
+        }
+      }
+    },
+    {
+      "name": "treeview",
+      "started": 1795014071.621159,
+      "returncode": 0,
+      "seconds": 31.414,
+      "protection": {
+        "user_files": 24,
+        "user_files_unchanged": true,
+        "existing_artifacts_unchanged": 1127,
+        "previous_qa_files_unchanged": 25
+      },
+      "environment_after": {
+        "dpi": {
+          "dpi": {
+            "mode": "system",
+            "scale": 1.0,
+            "dpi": 96,
+            "requested": true,
+            "reason": "System DPI Aware 적용"
+          },
+          "actual_process_awareness": 1,
+          "screen": [
+            1920,
+            1080
+          ],
+          "work_area": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "tk_scaling": 1.3333333333333333,
+          "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+          "tk": "8.6.15"
+        },
+        "monitor": {
+          "monitor_effective_dpi": [
+            96,
+            96
+          ],
+          "percent": 100.0
+        }
+      }
+    },
+    {
+      "name": "racks",
+      "started": 1795014106.287706,
+      "returncode": 0,
+      "seconds": 24.72,
+      "protection": {
+        "user_files": 24,
+        "user_files_unchanged": true,
+        "existing_artifacts_unchanged": 1127,
+        "previous_qa_files_unchanged": 25
+      },
+      "environment_after": {
+        "dpi": {
+          "dpi": {
+            "mode": "system",
+            "scale": 1.0,
+            "dpi": 96,
+            "requested": true,
+            "reason": "System DPI Aware 적용"
+          },
+          "actual_process_awareness": 1,
+          "screen": [
+            1920,
+            1080
+          ],
+          "work_area": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "tk_scaling": 1.3333333333333333,
+          "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+          "tk": "8.6.15"
+        },
+        "monitor": {
+          "monitor_effective_dpi": [
+            96,
+            96
+          ],
+          "percent": 100.0
+        }
+      }
+    },
+    {
+      "name": "lab-focus",
+      "started": 1795014134.171349,
+      "returncode": 0,
+      "seconds": 114.872,
+      "protection": {
+        "user_files": 24,
+        "user_files_unchanged": true,
+        "existing_artifacts_unchanged": 1127,
+        "previous_qa_files_unchanged": 25
+      },
+      "environment_after": {
+        "dpi": {
+          "dpi": {
+            "mode": "system",
+            "scale": 1.0,
+            "dpi": 96,
+            "requested": true,
+            "reason": "System DPI Aware 적용"
+          },
+          "actual_process_awareness": 1,
+          "screen": [
+            1920,
+            1080
+          ],
+          "work_area": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "tk_scaling": 1.3333333333333333,
+          "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+          "tk": "8.6.15"
+        },
+        "monitor": {
+          "monitor_effective_dpi": [
+            96,
+            96
+          ],
+          "percent": 100.0
+        }
+      }
+    },
+    {
+      "name": "regular",
+      "started": 1795014252.2066617,
+      "returncode": 0,
+      "seconds": 378.976,
+      "protection": {
+        "user_files": 24,
+        "user_files_unchanged": true,
+        "existing_artifacts_unchanged": 1127,
+        "previous_qa_files_unchanged": 25
+      },
+      "environment_after": {
+        "dpi": {
+          "dpi": {
+            "mode": "system",
+            "scale": 1.0,
+            "dpi": 96,
+            "requested": true,
+            "reason": "System DPI Aware 적용"
+          },
+          "actual_process_awareness": 1,
+          "screen": [
+            1920,
+            1080
+          ],
+          "work_area": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "tk_scaling": 1.3333333333333333,
+          "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+          "tk": "8.6.15"
+        },
+        "monitor": {
+          "monitor_effective_dpi": [
+            96,
+            96
+          ],
+          "percent": 100.0
+        }
+      }
+    },
+    {
+      "name": "full",
+      "started": 1795014634.506101,
+      "returncode": 1,
+      "seconds": 734.712,
+      "protection": {
+        "user_files": 24,
+        "user_files_unchanged": true,
+        "existing_artifacts_unchanged": 1127,
+        "previous_qa_files_unchanged": 25
+      },
+      "environment_after": {
+        "dpi": {
+          "dpi": {
+            "mode": "system",
+            "scale": 1.0,
+            "dpi": 96,
+            "requested": true,
+            "reason": "System DPI Aware 적용"
+          },
+          "actual_process_awareness": 1,
+          "screen": [
+            1920,
+            1080
+          ],
+          "work_area": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "tk_scaling": 1.3333333333333333,
+          "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+          "tk": "8.6.15"
+        },
+        "monitor": {
+          "monitor_effective_dpi": [
+            96,
+            96
+          ],
+          "percent": 100.0
+        }
+      }
+    }
+  ],
+  "full": {
+    "ran": 1092,
+    "passed": 1090,
+    "failures": [
+      {
+        "id": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body (size='1000x650')",
+        "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 178, in test_multiple_active_rows_scroll_select_and_keep_text_inside_body\n    x, y, width, height = assert_tree_row_visible(self, tree, rid, app.body)\n                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\support.py\", line 69, in assert_tree_row_visible\n    case.assertIs(tree.winfo_containing(left+width//2, top+height//2), tree)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None is not <tkinter.ttk.Treeview object .!frame7.!frame.!treeview2>\n"
+      },
+      {
+        "id": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body (size='1280x680')",
+        "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 178, in test_multiple_active_rows_scroll_select_and_keep_text_inside_body\n    x, y, width, height = assert_tree_row_visible(self, tree, rid, app.body)\n                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\support.py\", line 69, in assert_tree_row_visible\n    case.assertIs(tree.winfo_containing(left+width//2, top+height//2), tree)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None is not <tkinter.ttk.Treeview object .!frame7.!frame.!treeview2>\n"
+      },
+      {
+        "id": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body (size='1366x768')",
+        "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 178, in test_multiple_active_rows_scroll_select_and_keep_text_inside_body\n    x, y, width, height = assert_tree_row_visible(self, tree, rid, app.body)\n                          ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\support.py\", line 69, in assert_tree_row_visible\n    case.assertIs(tree.winfo_containing(left+width//2, top+height//2), tree)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None is not <tkinter.ttk.Treeview object .!frame7.!frame.!treeview2>\n"
+      },
+      {
+        "id": "tests.test_layout_gui.LayoutGuiTests.test_new_tutorial_completes_through_small_window_controls",
+        "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 102, in test_new_tutorial_completes_through_small_window_controls\n    click_button(self, app.arrival_open_button)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\tests\\test_layout_gui.py\", line 24, in click_button\n    case.assertIs(root.winfo_containing(widget.winfo_rootx()+x, widget.winfo_rooty()+y), widget)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None is not <ui.ActionButton object .!frame3.!frame.!frame.!actionbutton>\n"
+      }
+    ],
+    "errors": [],
+    "skipped": [],
+    "user_data_unchanged": true
+  },
+  "native": {
+    "treeview": {
+      "passed": 11,
+      "failed": 0,
+      "error": null,
+      "preflight": {
+        "status": "passed",
+        "samples": [
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "stable",
+            "elapsed": 0.034
+          },
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "countdown",
+            "elapsed": 1.156
+          },
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "passed",
+            "elapsed": 4.044
+          }
+        ],
+        "game_hwnds": {
+          "client": "0xbb10772",
+          "frame": "0x90954",
+          "ancestor": "0x90954"
+        },
+        "frame_matches_ancestor": true,
+        "handles_owned_and_valid": true,
+        "elapsed": 4.044
+      },
+      "repo_db_unchanged": true,
+      "repo_db_count": 24
+    },
+    "racks": {
+      "passed": 16,
+      "failed": 0,
+      "error": null,
+      "clicks": 12,
+      "completed": true,
+      "preflight": "passed",
+      "repo_data_unchanged": true
+    },
+    "lab-focus": {
+      "passed": 76,
+      "failed": 0,
+      "error": null,
+      "clicks": 151,
+      "wheel_events": 0,
+      "keyboard_events": 290,
+      "completed": true,
+      "preflight": {
+        "status": "passed",
+        "samples": [
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "stable",
+            "elapsed": 0.033
+          },
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "countdown",
+            "elapsed": 1.156
+          },
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "passed",
+            "elapsed": 4.042
+          }
+        ],
+        "game_hwnds": {
+          "client": "0xc5e0742",
+          "frame": "0x10094e",
+          "ancestor": "0x10094e"
+        },
+        "frame_matches_ancestor": true,
+        "handles_owned_and_valid": true,
+        "elapsed": 4.042
+      },
+      "repo_data_unchanged": true,
+      "repo_data_count": 24
+    },
+    "regular": {
+      "passed": 321,
+      "failed": 0,
+      "error": null,
+      "clicks": 373,
+      "wheel_events": 12,
+      "keyboard_events": 290,
+      "completed": true,
+      "preflight": {
+        "status": "passed",
+        "samples": [
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "stable",
+            "elapsed": 0.034
+          },
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "countdown",
+            "elapsed": 1.036
+          },
+          {
+            "foreground_matches_game": true,
+            "button_point_owned_and_correct_top": true,
+            "root_in_z_order": true,
+            "own_dialogs_above_root": 0,
+            "occlusions": [],
+            "state": "passed",
+            "elapsed": 4.057
+          }
+        ],
+        "game_hwnds": {
+          "client": "0xac70788",
+          "frame": "0x9097a",
+          "ancestor": "0x9097a"
+        },
+        "frame_matches_ancestor": true,
+        "handles_owned_and_valid": true,
+        "elapsed": 4.057
+      },
+      "repo_data_unchanged": true,
+      "repo_data_count": 24,
+      "centering_checks": [
+        {
+          "step": "제1장 안내",
+          "item": "대화창 중앙 배치 ±8px · 현장 교육",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "1 싱가포르 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "1 싱가포르 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "2 일본 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "2 일본 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "3 미국 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "3 미국 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "제1장 결과",
+          "item": "대화창 중앙 배치 ±8px · 결과",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        }
+      ]
+    }
+  },
+  "comparison_to_125": {
+    "final_disk_except_seed": true,
+    "runtime_exact": true,
+    "chapter1_result": true,
+    "chapter2_result": true,
+    "chapter3_result": true,
+    "chapter4_result": true,
+    "chapter5_result": true
+  },
+  "capture_comparison": [
+    {
+      "screen": "education",
+      "physical_px": [
+        820,
+        470
+      ],
+      "physical_px_at_125": [
+        1025,
+        588
+      ],
+      "design_px": [
+        820,
+        470
+      ],
+      "center_offset": [
+        0,
+        0
+      ],
+      "inside_work_area": true,
+      "edge_sharpness": 0.9279,
+      "edge_sharpness_at_125": 0.9174
+    },
+    {
+      "screen": "control_room",
+      "physical_px": [
+        1280,
+        860
+      ],
+      "physical_px_at_125": [
+        1600,
+        951
+      ],
+      "design_px": [
+        1280,
+        860
+      ],
+      "center_offset": null,
+      "inside_work_area": true,
+      "edge_sharpness": 0.9029,
+      "edge_sharpness_at_125": 0.8851
+    },
+    {
+      "screen": "allocation",
+      "physical_px": [
+        1000,
+        740
+      ],
+      "physical_px_at_125": [
+        1250,
+        925
+      ],
+      "design_px": [
+        1000,
+        740
+      ],
+      "center_offset": [
+        0,
+        0
+      ],
+      "inside_work_area": true,
+      "edge_sharpness": 0.8908,
+      "edge_sharpness_at_125": 0.873
+    },
+    {
+      "screen": "hardware_diagnosis",
+      "physical_px": [
+        640,
+        470
+      ],
+      "physical_px_at_125": [
+        800,
+        588
+      ],
+      "design_px": [
+        640,
+        470
+      ],
+      "center_offset": [
+        0,
+        0
+      ],
+      "inside_work_area": true,
+      "edge_sharpness": 0.874,
+      "edge_sharpness_at_125": 0.8561
+    },
+    {
+      "screen": "result_card",
+      "physical_px": [
+        560,
+        334
+      ],
+      "physical_px_at_125": [
+        700,
+        412
+      ],
+      "design_px": [
+        560,
+        334
+      ],
+      "center_offset": [
+        0,
+        0
+      ],
+      "inside_work_area": true,
+      "edge_sharpness": 0.9008,
+      "edge_sharpness_at_125": 0.881
+    },
+    {
+      "screen": "engineering_lab",
+      "physical_px": [
+        1060,
+        700
+      ],
+      "physical_px_at_125": [
+        1325,
+        875
+      ],
+      "design_px": [
+        1060,
+        700
+      ],
+      "center_offset": [
+        0,
+        0
+      ],
+      "inside_work_area": true,
+      "edge_sharpness": 0.9125,
+      "edge_sharpness_at_125": 0.8984
+    }
+  ],
+  "hit_test_diagnostic": {
+    "ran": 2,
+    "passed": 0,
+    "failure_assertions": 4,
+    "errors": 0,
+    "recorded_assertions": 4,
+    "failed_assertions_with_foreign_window": 4
+  },
+  "comparison_note": "Only the per-new-game simulation.seed is excluded from final disk equality.",
+  "line_gray_ratio": 0.0,
+  "all_checks_passed": false
+}

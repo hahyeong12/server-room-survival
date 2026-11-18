@@ -1,0 +1,139 @@
+{
+  "pid": 24244,
+  "records": [
+    {
+      "test": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body",
+      "caller": "assert_tree_row_visible",
+      "line": 69,
+      "actual": null,
+      "expected": ".!frame7.!frame.!treeview2",
+      "assertion_matched": false,
+      "points": [
+        {
+          "point": [
+            445,
+            531
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        },
+        {
+          "point": [
+            445,
+            545
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        }
+      ],
+      "widget_bounds": [
+        338,
+        488,
+        214,
+        60
+      ]
+    },
+    {
+      "test": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body",
+      "caller": "assert_tree_row_visible",
+      "line": 69,
+      "actual": null,
+      "expected": ".!frame7.!frame.!treeview2",
+      "assertion_matched": false,
+      "points": [
+        {
+          "point": [
+            445,
+            541
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        },
+        {
+          "point": [
+            445,
+            555
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        }
+      ],
+      "widget_bounds": [
+        338,
+        498,
+        214,
+        76
+      ]
+    },
+    {
+      "test": "tests.test_layout_gui.LayoutGuiTests.test_multiple_active_rows_scroll_select_and_keep_text_inside_body",
+      "caller": "assert_tree_row_visible",
+      "line": 69,
+      "actual": null,
+      "expected": ".!frame7.!frame.!treeview2",
+      "assertion_matched": false,
+      "points": [
+        {
+          "point": [
+            445,
+            599
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        },
+        {
+          "point": [
+            445,
+            613
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        }
+      ],
+      "widget_bounds": [
+        338,
+        556,
+        214,
+        106
+      ]
+    },
+    {
+      "test": "tests.test_layout_gui.LayoutGuiTests.test_new_tutorial_completes_through_small_window_controls",
+      "caller": "click_button",
+      "line": 24,
+      "actual": null,
+      "expected": ".!frame3.!frame.!frame.!actionbutton",
+      "assertion_matched": false,
+      "points": [
+        {
+          "point": [
+            445,
+            439
+          ],
+          "hwnd": 329392,
+          "pid": 18412,
+          "owned_by_test": false,
+          "is_foreground": true
+        }
+      ],
+      "widget_bounds": [
+        346,
+        420,
+        198,
+        38
+      ]
+    }
+  ]
+}

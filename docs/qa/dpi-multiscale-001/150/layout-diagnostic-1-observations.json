@@ -1,0 +1,1042 @@
+[
+  {
+    "test": "tests.test_allocation_plans.PlanDialogTests.test_gui_layout_at_all_three_resolutions_including_internal_text",
+    "assertion": "assertLessEqual",
+    "values": [
+      "1013",
+      "978"
+    ],
+    "file": "test_allocation_plans.py",
+    "line": 386,
+    "locals": {
+      "width": 1000,
+      "height": 650
+    },
+    "widgets": {
+      "d": {
+        "path": ".!allocationdialog",
+        "class": "Toplevel",
+        "bounds": [
+          30,
+          66,
+          1500,
+          912
+        ],
+        "requested": [
+          932,
+          532
+        ]
+      },
+      "widget": {
+        "path": ".!allocationdialog.!scrollarea.!canvas.!frame.!frame6.!label",
+        "class": "Label",
+        "bounds": [
+          42,
+          951,
+          1450,
+          62
+        ],
+        "requested": [
+          1420,
+          62
+        ],
+        "text": "고르기만 해서는 자원을 점유하지 않습니다. 자동 추천을 포함해 계획을 직접 선택한 뒤 [선택한 계획으로 작업 시작]을 눌러야 시작하며, 시작 직전에 한 번 더 검사합니다.",
+        "font": "{Malgun Gothic} 10"
+      },
+      "host": {
+        "path": ".!allocationdialog",
+        "class": "Toplevel",
+        "bounds": [
+          30,
+          66,
+          1500,
+          912
+        ],
+        "requested": [
+          932,
+          532
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1500,
+          975
+        ],
+        "requested": [
+          1557,
+          1208
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_layout_gui.LayoutGuiTests.test_menu_header_version_and_buttons_fit_and_restore_large_size",
+    "assertion": "assertEqual",
+    "values": [
+      "24",
+      "38"
+    ],
+    "file": "test_layout_gui.py",
+    "line": 153,
+    "locals": {
+      "mode": "story",
+      "chapter": "lab",
+      "size": "1366x768",
+      "category": "practice"
+    },
+    "widgets": {
+      "widget": {
+        "path": ".!frame.!frame.!frame2.!frame4.!actionbutton7",
+        "class": "Button",
+        "bounds": [
+          528,
+          925,
+          112,
+          57
+        ],
+        "requested": [
+          112,
+          57
+        ],
+        "text": "돌아가기",
+        "font": "{Malgun Gothic} 10 bold"
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          209,
+          57,
+          1924,
+          1050
+        ],
+        "requested": [
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_popup_ux.CardTests.test_dialog_center_and_internal_cards_controls_at_resolutions_and_zoomed",
+    "assertion": "assertAlmostEqual",
+    "values": [
+      "550.5",
+      "592.5"
+    ],
+    "file": "test_popup_ux.py",
+    "line": 435,
+    "locals": {
+      "size": "1000x650"
+    },
+    "widgets": {},
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          71,
+          105,
+          1500,
+          975
+        ],
+        "requested": [
+          200,
+          200
+        ]
+      },
+      {
+        "path": ".!allocationdialog",
+        "class": "Toplevel",
+        "bounds": [
+          116,
+          123,
+          1410,
+          855
+        ],
+        "requested": [
+          932,
+          532
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_popup_ux.PopupFlowTests.test_small_feedback_layout_and_condition_table_fit_resolutions",
+    "assertion": "assertTrue",
+    "values": [
+      "False"
+    ],
+    "file": "test_popup_ux.py",
+    "line": 240,
+    "locals": {
+      "x": 35,
+      "y": 1005,
+      "w": 523,
+      "h": 67,
+      "dx": 46,
+      "dy": 698,
+      "anchor": [
+        35,
+        1005,
+        523,
+        67
+      ]
+    },
+    "widgets": {
+      "dialog": {
+        "path": ".!storyfeedbackdialog2",
+        "class": "Toplevel",
+        "bounds": [
+          46,
+          698,
+          585,
+          315
+        ],
+        "requested": [
+          550,
+          294
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1920,
+          1020
+        ],
+        "requested": [
+          1557,
+          1303
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets",
+    "assertion": "assertAlmostEqual",
+    "values": [
+      "625.5",
+      "660.0"
+    ],
+    "file": "test_tutorial_ux.py",
+    "line": 507,
+    "locals": {
+      "left": 0,
+      "top": 0,
+      "right": 1920,
+      "bottom": 1008,
+      "last": true
+    },
+    "widgets": {
+      "d": {
+        "path": ".!storydialoguedialog3",
+        "class": "Toplevel",
+        "bounds": [
+          611,
+          273,
+          1230,
+          705
+        ],
+        "requested": [
+          1014,
+          520
+        ]
+      },
+      "button": {
+        "path": ".!storydialoguedialog3.!frame2.!actionbutton4",
+        "class": "Button",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "requested": [
+          139,
+          57
+        ],
+        "text": "마지막 안내",
+        "font": "{Malgun Gothic} 10 bold"
+      },
+      "widget": {
+        "path": ".!storydialoguedialog3.!frame2.!actionbutton2",
+        "class": "Button",
+        "bounds": [
+          742,
+          903,
+          171,
+          57
+        ],
+        "requested": [
+          171,
+          57
+        ],
+        "text": "확인 · 운영실로",
+        "font": "{Malgun Gothic} 10 bold"
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          266,
+          150,
+          1920,
+          1020
+        ],
+        "requested": [
+          1557,
+          1303
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "practice",
+      "size": "900x620",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1350,
+          930
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1212,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "practice",
+      "size": "1060x700",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "tag": "track",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1590,
+          1050
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1452,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "practice",
+      "size": "1280x720",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "tag": "track",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1920,
+          1050
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1782,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "practice",
+      "size": "1366x768",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "tag": "track",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1924,
+          1050
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1786,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "regular",
+      "size": "900x620",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1350,
+          930
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1212,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "regular",
+      "size": "1060x700",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "tag": "track",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1590,
+          1050
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1452,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "regular",
+      "size": "1280x720",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "tag": "track",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1920,
+          1050
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1782,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap",
+    "assertion": "assertFalse",
+    "values": [
+      "True"
+    ],
+    "file": "test_ui_polish_gui.py",
+    "line": 65,
+    "locals": {
+      "label": "regular",
+      "size": "1366x768",
+      "tab": "연수 진행",
+      "width": 262,
+      "height": 89,
+      "i": 0,
+      "a": "title",
+      "b": "value",
+      "tag": "track",
+      "boxes": {
+        "title": [
+          17,
+          15,
+          198,
+          40
+        ],
+        "value": [
+          174,
+          9,
+          245,
+          50
+        ],
+        "track": [
+          17,
+          52,
+          245,
+          75
+        ]
+      }
+    },
+    "widgets": {
+      "lab": {
+        "path": ".!engineeringlabdialog",
+        "class": "Toplevel",
+        "bounds": [
+          164,
+          66,
+          1924,
+          1050
+        ],
+        "requested": [
+          1436,
+          1067
+        ]
+      },
+      "gauge": {
+        "path": ".!engineeringlabdialog.!notebook.!frame.!frame.!gauge",
+        "class": "Canvas",
+        "bounds": [
+          1786,
+          402,
+          262,
+          89
+        ],
+        "requested": [
+          262,
+          89
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          23,
+          57,
+          1872,
+          975
+        ],
+        "requested": [
+          1935,
+          1234
+        ]
+      }
+    ]
+  },
+  {
+    "test": "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window",
+    "assertion": "assertLessEqual",
+    "values": [
+      "123.0",
+      "60"
+    ],
+    "file": "test_v091e.py",
+    "line": 142,
+    "locals": {
+      "px": 1271.0,
+      "py": 645.0,
+      "dx": 1271.0,
+      "dy": 522.0
+    },
+    "widgets": {
+      "d": {
+        "path": ".!chaptercompletedialog",
+        "class": "Toplevel",
+        "bounds": [
+          656,
+          66,
+          1230,
+          912
+        ],
+        "requested": [
+          677,
+          670
+        ]
+      }
+    },
+    "top_levels": [
+      {
+        "path": ".",
+        "class": "Tk",
+        "bounds": [
+          311,
+          135,
+          1920,
+          1020
+        ],
+        "requested": [
+          1347,
+          1205
+        ]
+      }
+    ]
+  }
+]

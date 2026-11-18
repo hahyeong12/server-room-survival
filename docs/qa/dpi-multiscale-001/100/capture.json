@@ -1,0 +1,244 @@
+{
+  "mode": "system",
+  "dpi": {
+    "mode": "system",
+    "scale": 1.0,
+    "dpi": 96,
+    "requested": true,
+    "reason": "System DPI Aware 적용"
+  },
+  "line_gray_ratio": 0.0,
+  "tk_scaling": 1.3333333333333333,
+  "screens": [
+    {
+      "screen": "education",
+      "tk_client": [
+        820,
+        470
+      ],
+      "physical_client": [
+        820,
+        470
+      ],
+      "design_px": [
+        820,
+        470
+      ],
+      "edge_sharpness": 0.9279,
+      "edges": 32737,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          960.0,
+          527.0
+        ],
+        "target_client": [
+          550,
+          292
+        ],
+        "actual_client": [
+          550,
+          292
+        ],
+        "actual_center": [
+          960.0,
+          527.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "system_education.png"
+    },
+    {
+      "screen": "control_room",
+      "tk_client": [
+        1280,
+        860
+      ],
+      "physical_client": [
+        1280,
+        860
+      ],
+      "design_px": [
+        1280,
+        860
+      ],
+      "edge_sharpness": 0.9029,
+      "edges": 113141,
+      "inside_work_area": true,
+      "placement": null,
+      "file": "system_control_room.png"
+    },
+    {
+      "screen": "allocation",
+      "tk_client": [
+        1000,
+        740
+      ],
+      "physical_client": [
+        1000,
+        740
+      ],
+      "design_px": [
+        1000,
+        740
+      ],
+      "edge_sharpness": 0.8908,
+      "edges": 82949,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          960.0,
+          527.0
+        ],
+        "target_client": [
+          460,
+          157
+        ],
+        "actual_client": [
+          460,
+          157
+        ],
+        "actual_center": [
+          960.0,
+          527.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "system_allocation.png"
+    },
+    {
+      "screen": "hardware_diagnosis",
+      "tk_client": [
+        640,
+        470
+      ],
+      "physical_client": [
+        640,
+        470
+      ],
+      "design_px": [
+        640,
+        470
+      ],
+      "edge_sharpness": 0.874,
+      "edges": 18185,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          960.0,
+          527.0
+        ],
+        "target_client": [
+          640,
+          292
+        ],
+        "actual_client": [
+          640,
+          292
+        ],
+        "actual_center": [
+          960.0,
+          527.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "system_hardware_diagnosis.png"
+    },
+    {
+      "screen": "result_card",
+      "tk_client": [
+        560,
+        334
+      ],
+      "physical_client": [
+        560,
+        334
+      ],
+      "design_px": [
+        560,
+        334
+      ],
+      "edge_sharpness": 0.9008,
+      "edges": 16963,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          960.0,
+          527.0
+        ],
+        "target_client": [
+          680,
+          360
+        ],
+        "actual_client": [
+          680,
+          360
+        ],
+        "actual_center": [
+          960.0,
+          527.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "system_result_card.png"
+    },
+    {
+      "screen": "engineering_lab",
+      "tk_client": [
+        1060,
+        700
+      ],
+      "physical_client": [
+        1060,
+        700
+      ],
+      "design_px": [
+        1060,
+        700
+      ],
+      "edge_sharpness": 0.9125,
+      "edges": 92303,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          960.0,
+          527.0
+        ],
+        "target_client": [
+          430,
+          177
+        ],
+        "actual_client": [
+          430,
+          177
+        ],
+        "actual_center": [
+          960.0,
+          527.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "system_engineering_lab.png"
+    }
+  ]
+}

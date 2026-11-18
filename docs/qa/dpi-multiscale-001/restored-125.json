@@ -1,0 +1,41 @@
+{
+  "dpi": {
+    "dpi": {
+      "mode": "system",
+      "scale": 1.25,
+      "dpi": 120,
+      "requested": true,
+      "reason": "System DPI Aware 적용"
+    },
+    "actual_process_awareness": 1,
+    "screen": [
+      1920,
+      1080
+    ],
+    "work_area": [
+      0,
+      0,
+      1920,
+      1020
+    ],
+    "tk_scaling": 1.6683087027914612,
+    "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+    "tk": "8.6.15"
+  },
+  "monitor": {
+    "monitor_effective_dpi": [
+      120,
+      120
+    ],
+    "percent": 125.0
+  },
+  "verified_at": "2026-11-19T01:15:40+09:00",
+  "changed_by": "user, Windows Settings; no automatic display setting changes",
+  "default_without_flag": {
+    "mode": "unaware",
+    "scale": 1.0,
+    "dpi": 96,
+    "requested": false,
+    "reason": "기본 실행(DPI 비인식)"
+  }
+}

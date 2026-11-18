@@ -1,0 +1,290 @@
+{
+  "kind": "GUI regression (real Tk, unittest fixtures; not native autoplay)",
+  "selection": [
+    "tests.test_allocation_plans.PlanDialogTests.test_gui_layout_at_all_three_resolutions_including_internal_text",
+    "tests.test_layout_gui.LayoutGuiTests.test_menu_header_version_and_buttons_fit_and_restore_large_size",
+    "tests.test_popup_ux.CardTests.test_dialog_center_and_internal_cards_controls_at_resolutions_and_zoomed",
+    "tests.test_popup_ux.PopupFlowTests.test_small_feedback_layout_and_condition_table_fit_resolutions",
+    "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets",
+    "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap",
+    "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap",
+    "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window"
+  ],
+  "user_data_before": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "environment": {
+    "python": "3.14.6",
+    "tk": "8.6.15",
+    "tk_scaling": 1.99803343166175,
+    "screen": [
+      1920,
+      1080
+    ],
+    "visible": true,
+    "dpi": {
+      "mode": "system",
+      "scale": 1.5,
+      "dpi": 144,
+      "requested": true,
+      "reason": "System DPI Aware 적용"
+    }
+  },
+  "ran": 8,
+  "passed": [],
+  "failures": [
+    {
+      "id": "tests.test_allocation_plans.PlanDialogTests.test_gui_layout_at_all_three_resolutions_including_internal_text",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_allocation_plans.py\", line 386, in test_gui_layout_at_all_three_resolutions_including_internal_text\n    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), host.winfo_rooty()+host.winfo_height())\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1013 not less than or equal to 978\n"
+    },
+    {
+      "id": "tests.test_layout_gui.LayoutGuiTests.test_menu_header_version_and_buttons_fit_and_restore_large_size",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_layout_gui.py\", line 153, in test_menu_header_version_and_buttons_fit_and_restore_large_size\n    self.assertEqual(Font(root=c.root, font=c.menu.title_label.cget('font')).cget('size'), 38)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 24 != 38\n"
+    },
+    {
+      "id": "tests.test_popup_ux.CardTests.test_dialog_center_and_internal_cards_controls_at_resolutions_and_zoomed",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_popup_ux.py\", line 435, in test_dialog_center_and_internal_cards_controls_at_resolutions_and_zoomed\n    self.assertAlmostEqual(self.d.winfo_rooty()+self.d.winfo_height()/2,\n    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                           self.root.winfo_rooty()+self.root.winfo_height()/2, delta=2)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 550.5 != 592.5 within 2 delta (42.0 difference)\n"
+    },
+    {
+      "id": "tests.test_popup_ux.PopupFlowTests.test_small_feedback_layout_and_condition_table_fit_resolutions (size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_popup_ux.py\", line 323, in test_small_feedback_layout_and_condition_table_fit_resolutions\n    self.assert_no_overlap(d, anchor)\n    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"<repo>\\tests\\test_popup_ux.py\", line 240, in assert_no_overlap\n    self.assertTrue(dx+dialog.winfo_width() <= x or x+w <= dx or\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                    dy+dialog.winfo_height() <= y or y+h <= dy)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+    },
+    {
+      "id": "tests.test_tutorial_ux.TutorialGuiTests.test_dialogues_center_on_game_at_three_resolutions_and_offsets (size='1280x680')",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 487, in test_dialogues_center_on_game_at_three_resolutions_and_offsets\n    self.assert_centered_and_visible(d)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"<repo>\\tests\\test_tutorial_ux.py\", line 507, in assert_centered_and_visible\n    self.assertAlmostEqual(d.winfo_rooty()+d.winfo_height()/2, self.root.winfo_rooty()+self.root.winfo_height()/2, delta=2)\n    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 625.5 != 660.0 within 2 delta (34.5 difference)\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap (label='practice', size='900x620', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap (label='practice', size='1060x700', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap (label='practice', size='1280x720', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_practice_gauges_do_not_overlap (label='practice', size='1366x768', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap (label='regular', size='900x620', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap (label='regular', size='1060x700', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap (label='regular', size='1280x720', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_ui_polish_gui.LabGaugeGuiTests.test_regular_training_gauges_do_not_overlap (label='regular', size='1366x768', tab='연수 진행', pair=('title', 'value'))",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_ui_polish_gui.py\", line 65, in check_gauges\n    self.assertFalse(overlap(boxes[a], boxes[b]))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "id": "tests.test_v091e.ChapterWindowTests.test_chapter_dialog_is_centered_on_game_window",
+      "traceback": "Traceback (most recent call last):\n  File \"<repo>\\tests\\test_v091e.py\", line 150, in test_chapter_dialog_is_centered_on_game_window\n    self.assert_centered(d)\n    ~~~~~~~~~~~~~~~~~~~~^^^\n  File \"<repo>\\tests\\test_v091e.py\", line 142, in assert_centered\n    self.assertLessEqual(abs(py-dy), 60)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"<repo>\\artifacts\\dpi-multiscale-001\\diagnose_layout.py\", line 27, in call\n    try: return original(case,*args,**kwargs)\n                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 123.0 not less than or equal to 60\n"
+    }
+  ],
+  "errors": [],
+  "skipped": [],
+  "seconds": 32.537,
+  "user_data_after": {
+    "aidc_game.db": {
+      "bytes": 61440,
+      "sha256": "b9a2167ae56ed89e1c55ee01e2715697b0e9b92019525cd6ce3f6f3aeb766f2e"
+    },
+    "aidc_game.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_001.db": {
+      "bytes": 61440,
+      "sha256": "d5b98a2f2884d2fc9110ac79e81bbf9133965dd602d39f676927968ae1879ecb"
+    },
+    "aidc_story_slot_001.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_002.db": {
+      "bytes": 77824,
+      "sha256": "8feadf467d9879c25a064a5642d2d2494e1c0231db609827000697f71769a400"
+    },
+    "aidc_story_slot_002.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_003.db": {
+      "bytes": 77824,
+      "sha256": "80eb3d915aa1b1186ca01b53e6a02a8e5f1aecbd3125d74ecd4f51913f31ec80"
+    },
+    "aidc_story_slot_003.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_004.db": {
+      "bytes": 77824,
+      "sha256": "1dbd7a6582a282f16634328969653cd9c5306727314601318a598e68bc688e21"
+    },
+    "aidc_story_slot_004.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_005.db": {
+      "bytes": 77824,
+      "sha256": "e0887600b78f85b078163383d1c776cd34a54bb76575dbc4e9682399c25c8e46"
+    },
+    "aidc_story_slot_005.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_006.db": {
+      "bytes": 77824,
+      "sha256": "d805320fba0f204bcb1c3566b0de54ef5aa6eef229c4c44d1777000f170d6faa"
+    },
+    "aidc_story_slot_006.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_007.db": {
+      "bytes": 69632,
+      "sha256": "06fa6ddb24eb7c2f946fed5f5ece2848466eb4cd42f9510a55c496e4b8a44ecb"
+    },
+    "aidc_story_slot_007.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_008.db": {
+      "bytes": 61440,
+      "sha256": "5c0198f379f98b77a3651284aac4f281e1ac0281b06992bef29ede82e5f7ea02"
+    },
+    "aidc_story_slot_008.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_009.db": {
+      "bytes": 61440,
+      "sha256": "f3e0c6715b9aca1b2ed2d7e35a59f997fc41610101f476854190f82d175276cc"
+    },
+    "aidc_story_slot_009.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_010.db": {
+      "bytes": 61440,
+      "sha256": "a250a24b099b0bbebb265866823130d2e1d2f1a861102d6f8e2dd867dea336e0"
+    },
+    "aidc_story_slot_010.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "aidc_story_slot_011.db": {
+      "bytes": 77824,
+      "sha256": "698511d012bfdb5aa52fa9ce8d9f614dc7b2cd3d7a398da139cc78c09f6dceb8"
+    },
+    "aidc_story_slot_011.db.lock": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  },
+  "user_data_unchanged": true
+}

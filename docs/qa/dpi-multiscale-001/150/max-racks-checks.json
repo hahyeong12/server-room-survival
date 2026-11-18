@@ -1,0 +1,300 @@
+{
+  "kind": "dpi_acceptance_rack_check",
+  "passed": 6,
+  "failed": 0,
+  "error": "AbortQA: 외부 창 가림이 지속되어 입력·캡처 중단(최대 5초 대기)",
+  "completed": false,
+  "checks": [
+    {
+      "step": "랙 배치 기본(작업 영역 맞춤)",
+      "item": "Server B 실제 클릭 → 선택·Inspector·테두리",
+      "result": "PASS",
+      "detail": {
+        "key": "B",
+        "network_selected": "B",
+        "panel_selected": "B",
+        "inspector_name": "Server B",
+        "border_outline": "#4ce4cd"
+      },
+      "kind": "auto"
+    },
+    {
+      "step": "랙 배치 기본(작업 영역 맞춤)",
+      "item": "Server C 실제 클릭 → 선택·Inspector·테두리",
+      "result": "PASS",
+      "detail": {
+        "key": "C",
+        "network_selected": "C",
+        "panel_selected": "C",
+        "inspector_name": "Server C",
+        "border_outline": "#4ce4cd"
+      },
+      "kind": "auto"
+    },
+    {
+      "step": "랙 배치 기본(작업 영역 맞춤)",
+      "item": "Server D 실제 클릭 → 선택·Inspector·테두리",
+      "result": "PASS",
+      "detail": {
+        "key": "D",
+        "network_selected": "D",
+        "panel_selected": "D",
+        "inspector_name": "Server D",
+        "border_outline": "#4ce4cd"
+      },
+      "kind": "auto"
+    },
+    {
+      "step": "랙 배치 기본(작업 영역 맞춤)",
+      "item": "Server A 실제 클릭 → 선택·Inspector·테두리",
+      "result": "PASS",
+      "detail": {
+        "key": "A",
+        "network_selected": "A",
+        "panel_selected": "A",
+        "inspector_name": "Server A",
+        "border_outline": "#4ce4cd"
+      },
+      "kind": "auto"
+    },
+    {
+      "step": "랙 배치 기본(작업 영역 맞춤)",
+      "item": "랙 글자가 랙 경계 안",
+      "result": "PASS",
+      "detail": {},
+      "kind": "auto"
+    },
+    {
+      "step": "보존",
+      "item": "사용자 저장·잠금 보존",
+      "result": "PASS",
+      "detail": "24→24개",
+      "kind": "auto"
+    }
+  ],
+  "preflight": "passed",
+  "layouts": [
+    {
+      "size": "기본(작업 영역 맞춤)",
+      "scale": 1.5,
+      "canvas": [
+        1179,
+        224
+      ],
+      "columns": 4,
+      "rack_height_design_px": 109.3,
+      "layout": "compact",
+      "root": [
+        1920,
+        974
+      ],
+      "racks": {
+        "A": {
+          "bounds": [
+            21.0,
+            43.5,
+            294.0,
+            207.5
+          ],
+          "texts": [
+            "Server A",
+            "IDLE",
+            "1",
+            "ON",
+            "2",
+            "ON",
+            "3",
+            "ON",
+            "4",
+            "ON",
+            "GPU 4/4",
+            "전력 4/4",
+            "미점유"
+          ],
+          "outside": [],
+          "text_overlaps": [
+            [
+              "1",
+              "ON"
+            ],
+            [
+              "2",
+              "ON"
+            ],
+            [
+              "3",
+              "ON"
+            ],
+            [
+              "4",
+              "ON"
+            ]
+          ],
+          "origin": [
+            353,
+            401
+          ]
+        },
+        "B": {
+          "bounds": [
+            309.0,
+            43.5,
+            582.0,
+            207.5
+          ],
+          "texts": [
+            "Server B",
+            "IDLE",
+            "1",
+            "ON",
+            "2",
+            "ON",
+            "3",
+            "ON",
+            "OFF",
+            "GPU 3/3",
+            "전력 2/2",
+            "미점유"
+          ],
+          "outside": [],
+          "text_overlaps": [
+            [
+              "1",
+              "ON"
+            ],
+            [
+              "2",
+              "ON"
+            ],
+            [
+              "3",
+              "ON"
+            ]
+          ],
+          "origin": [
+            353,
+            401
+          ]
+        },
+        "C": {
+          "bounds": [
+            597.0,
+            43.5,
+            870.0,
+            207.5
+          ],
+          "texts": [
+            "Server C",
+            "IDLE",
+            "1",
+            "ON",
+            "2",
+            "ON",
+            "OFF",
+            "OFF",
+            "GPU 2/2",
+            "전력 3/3",
+            "미점유"
+          ],
+          "outside": [],
+          "text_overlaps": [
+            [
+              "1",
+              "ON"
+            ],
+            [
+              "2",
+              "ON"
+            ]
+          ],
+          "origin": [
+            353,
+            401
+          ]
+        },
+        "D": {
+          "bounds": [
+            885.0,
+            43.5,
+            1158.0,
+            207.5
+          ],
+          "texts": [
+            "Server D",
+            "IDLE",
+            "1",
+            "ON",
+            "OFF",
+            "OFF",
+            "OFF",
+            "GPU 1/1",
+            "전력 1/1",
+            "미점유"
+          ],
+          "outside": [],
+          "text_overlaps": [
+            [
+              "1",
+              "ON"
+            ]
+          ],
+          "origin": [
+            353,
+            401
+          ]
+        }
+      },
+      "clicks": [
+        {
+          "key": "B",
+          "network_selected": "B",
+          "panel_selected": "B",
+          "inspector_name": "Server B",
+          "border_outline": "#4ce4cd",
+          "ok": true,
+          "point": [
+            798,
+            469
+          ]
+        },
+        {
+          "key": "C",
+          "network_selected": "C",
+          "panel_selected": "C",
+          "inspector_name": "Server C",
+          "border_outline": "#4ce4cd",
+          "ok": true,
+          "point": [
+            1086,
+            469
+          ]
+        },
+        {
+          "key": "D",
+          "network_selected": "D",
+          "panel_selected": "D",
+          "inspector_name": "Server D",
+          "border_outline": "#4ce4cd",
+          "ok": true,
+          "point": [
+            1374,
+            469
+          ]
+        },
+        {
+          "key": "A",
+          "network_selected": "A",
+          "panel_selected": "A",
+          "inspector_name": "Server A",
+          "border_outline": "#4ce4cd",
+          "ok": true,
+          "point": [
+            510,
+            469
+          ]
+        }
+      ],
+      "overlap_count": 10
+    }
+  ]
+}

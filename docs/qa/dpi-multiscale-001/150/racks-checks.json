@@ -1,0 +1,18 @@
+{
+  "kind": "dpi_acceptance_rack_check",
+  "passed": 1,
+  "failed": 0,
+  "error": "AbortQA: Preflight 30초 실패 — 실제 플레이 시도 0회",
+  "completed": false,
+  "checks": [
+    {
+      "step": "보존",
+      "item": "사용자 저장·잠금 보존",
+      "result": "PASS",
+      "detail": "24→24개",
+      "kind": "auto"
+    }
+  ],
+  "preflight": "timeout",
+  "layouts": []
+}

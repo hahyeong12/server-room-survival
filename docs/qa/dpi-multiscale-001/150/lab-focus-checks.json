@@ -1,0 +1,91 @@
+{
+  "kind": "chapter5_focused_fixture",
+  "passed": 1,
+  "failed": 0,
+  "error": "AbortQA: Preflight 30초 실패 — 실제 플레이 시도 0회",
+  "completed": false,
+  "checks": [
+    {
+      "step": "보존",
+      "item": "사용자 저장·잠금·체크포인트 보존",
+      "result": "PASS",
+      "detail": "24→24개",
+      "kind": "auto"
+    }
+  ],
+  "preflight": {
+    "status": "timeout",
+    "samples": [
+      {
+        "foreground_matches_game": true,
+        "button_point_owned_and_correct_top": true,
+        "root_in_z_order": true,
+        "own_dialogs_above_root": 0,
+        "occlusions": [
+          {
+            "window_rect": [
+              0,
+              1008,
+              1920,
+              1080
+            ],
+            "overlap": [
+              209,
+              1008,
+              1709,
+              1032
+            ],
+            "overlap_pixels": 36000,
+            "covers_whole_game": false,
+            "covers_click_point": false
+          }
+        ],
+        "state": "waiting",
+        "elapsed": 0.035
+      },
+      {
+        "foreground_matches_game": true,
+        "button_point_owned_and_correct_top": true,
+        "root_in_z_order": true,
+        "own_dialogs_above_root": 0,
+        "occlusions": [
+          {
+            "window_rect": [
+              0,
+              1008,
+              1920,
+              1080
+            ],
+            "overlap": [
+              209,
+              1008,
+              1709,
+              1032
+            ],
+            "overlap_pixels": 36000,
+            "covers_whole_game": false,
+            "covers_click_point": false
+          }
+        ],
+        "state": "timeout",
+        "elapsed": 30.067
+      }
+    ],
+    "game_hwnds": {
+      "client": "0xec807aa",
+      "frame": "0x16a0958",
+      "ancestor": "0x16a0958"
+    },
+    "frame_matches_ancestor": true,
+    "handles_owned_and_valid": true,
+    "elapsed": 30.067,
+    "manual_activation_requested": true
+  },
+  "source_sha256": {
+    "autoplay_chapter5.py": "7931a33cd658fff3637744c30109cf5243cc172c88e06c1c864ebbc31fb7b4eb",
+    "autoplay_story_ch1.py": "8ca66ea1b0cefc01c508b0ee5a8eab645643b7662fc4c065679ff6e5e4f7dc93",
+    "autoplay_chapter2.py": "3254f83b812e536d4ba847e31e326a216dbcfd9e892d4da7d27d75ff807b1c10",
+    "autoplay_chapter3.py": "ba82a43e262e3fd9ccb456a59324730f9f55f2fab6c8530f9f50a81489a91add",
+    "autoplay_chapter4.py": "e0d344d36f7203ad074ef9256480e857a43fc1b28453121bd557c490d53b3744"
+  }
+}

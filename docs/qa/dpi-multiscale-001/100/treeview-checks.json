@@ -1,0 +1,82 @@
+{
+  "checks": [
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "수정 후 세 목록은 위젯 휠 바인딩 없음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "수정 전 실제 한 칸 입력이 두 행씩 건너뜀 재현",
+      "result": "PASS",
+      "detail": "[['3'], ['5']]",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "실제 Tk 전달 delta 계측·위젯/클래스 각 이동 확인",
+      "result": "PASS",
+      "detail": "[{'list': 'baseline', 'stage': 'before_widget', 'delta': -120, 'input': 0, 'yview': (0.0, 0.2), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': (1, 25, 212, 29), '2': (1, 54, 212, 29), '3': '', '4': '', '5': ''}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': -120, 'input': 0, 'yview': (0.2, 0.4), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': (1, 25, 212, 29), '3': (1, 54, 212, 29), '4': '', '5': ''}}, {'list': 'baseline', 'stage': 'after_class', 'delta': -120, 'input': 0, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'list': 'baseline', 'stage': 'before_widget', 'delta': -120, 'input': 1, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': -120, 'input': 1, 'yview': (0.6, 0.8), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'list': 'baseline', 'stage': 'after_class', 'delta': -120, 'input': 1, 'yview': (0.8, 1.0), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 25, 212, 29)}}, {'list': 'baseline', 'stage': 'before_widget', 'delta': 120, 'input': 3, 'yview': (0.8, 1.0), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 25, 212, 29)}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': 120, 'input': 3, 'yview': (0.6, 0.8), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'list': 'baseline', 'stage': 'after_class', 'delta': 120, 'input': 3, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}]",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "tutorial 실제 휠로 인접 5행 모두 왕복 접근",
+      "result": "PASS",
+      "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "tutorial 휠 스크롤은 선택3 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "story 실제 휠로 인접 5행 모두 왕복 접근",
+      "result": "PASS",
+      "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "story 휠 스크롤은 선택3 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "free 실제 휠로 인접 5행 모두 왕복 접근",
+      "result": "PASS",
+      "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "free 휠 스크롤은 선택3 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "실제 Down/Up 키로 1→5→1 탐색·행 노출",
+      "result": "PASS",
+      "detail": "[{'yview': (0.2, 0.4), 'selection': ('2',), 'focus': '2', 'height': 58, 'rows': {'1': '', '2': (1, 25, 212, 29), '3': (1, 54, 212, 29), '4': '', '5': ''}}, {'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '3', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'yview': (0.6, 0.8), 'selection': ('4',), 'focus': '4', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'yview': (0.8, 1.0), 'selection': ('5',), 'focus': '5', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 25, 212, 29)}}, {'yview': (0.6, 0.8), 'selection': ('4',), 'focus': '4', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 25, 212, 29), '5': (1, 54, 212, 29)}}, {'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '3', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 25, 212, 29), '4': (1, 54, 212, 29), '5': ''}}, {'yview': (0.2, 0.4), 'selection': ('2',), 'focus': '2', 'height': 58, 'rows': {'1': '', '2': (1, 25, 212, 29), '3': (1, 54, 212, 29), '4': '', '5': ''}}, {'yview': (0.0, 0.2), 'selection': ('1',), 'focus': '1', 'height': 58, 'rows': {'1': (1, 25, 212, 29), '2': (1, 54, 212, 29), '3': '', '4': '', '5': ''}}]",
+      "kind": "auto"
+    },
+    {
+      "step": "보존",
+      "item": "기존 사용자 저장 파일 집합·해시 동일",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    }
+  ],
+  "source_sha256": null
+}

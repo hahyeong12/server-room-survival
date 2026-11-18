@@ -1,0 +1,125 @@
+{
+  "kind": "focused_gui_not_full_play",
+  "passed": 11,
+  "failed": 0,
+  "error": null,
+  "checks": [
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "수정 후 세 목록은 위젯 휠 바인딩 없음",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "수정 전 실제 한 칸 입력이 두 행씩 건너뜀 재현",
+      "result": "PASS",
+      "detail": "[['3'], ['5']]",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "실제 Tk 전달 delta 계측·위젯/클래스 각 이동 확인",
+      "result": "PASS",
+      "detail": "[{'list': 'baseline', 'stage': 'before_widget', 'delta': -120, 'input': 0, 'yview': (0.0, 0.2), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': (1, 26, 315, 29), '2': (1, 55, 315, 29), '3': '', '4': '', '5': ''}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': -120, 'input': 0, 'yview': (0.2, 0.4), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': (1, 26, 315, 29), '3': (1, 55, 315, 29), '4': '', '5': ''}}, {'list': 'baseline', 'stage': 'after_class', 'delta': -120, 'input': 0, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 26, 315, 29), '4': (1, 55, 315, 29), '5': ''}}, {'list': 'baseline', 'stage': 'before_widget', 'delta': -120, 'input': 1, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 26, 315, 29), '4': (1, 55, 315, 29), '5': ''}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': -120, 'input': 1, 'yview': (0.6, 0.8), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 26, 315, 29), '5': (1, 55, 315, 29)}}, {'list': 'baseline', 'stage': 'after_class', 'delta': -120, 'input': 1, 'yview': (0.8, 1.0), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 26, 315, 29)}}, {'list': 'baseline', 'stage': 'before_widget', 'delta': 120, 'input': 3, 'yview': (0.8, 1.0), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 26, 315, 29)}}, {'list': 'baseline', 'stage': 'after_widget_before_class', 'delta': 120, 'input': 3, 'yview': (0.6, 0.8), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 26, 315, 29), '5': (1, 55, 315, 29)}}, {'list': 'baseline', 'stage': 'after_class', 'delta': 120, 'input': 3, 'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 26, 315, 29), '4': (1, 55, 315, 29), '5': ''}}]",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "tutorial 실제 휠로 인접 5행 모두 왕복 접근",
+      "result": "PASS",
+      "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "tutorial 휠 스크롤은 선택3 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "story 실제 휠로 인접 5행 모두 왕복 접근",
+      "result": "PASS",
+      "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "story 휠 스크롤은 선택3 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "free 실제 휠로 인접 5행 모두 왕복 접근",
+      "result": "PASS",
+      "detail": "{'down': [['2'], ['3'], ['4'], ['5']], 'up': [['4'], ['3'], ['2'], ['1']]}",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "free 휠 스크롤은 선택3 보존",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    },
+    {
+      "step": "독립 Tk 휠 집중 검사",
+      "item": "실제 Down/Up 키로 1→5→1 탐색·행 노출",
+      "result": "PASS",
+      "detail": "[{'yview': (0.2, 0.4), 'selection': ('2',), 'focus': '2', 'height': 58, 'rows': {'1': '', '2': (1, 26, 315, 29), '3': (1, 55, 315, 29), '4': '', '5': ''}}, {'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '3', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 26, 315, 29), '4': (1, 55, 315, 29), '5': ''}}, {'yview': (0.6, 0.8), 'selection': ('4',), 'focus': '4', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 26, 315, 29), '5': (1, 55, 315, 29)}}, {'yview': (0.8, 1.0), 'selection': ('5',), 'focus': '5', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': '', '5': (1, 26, 315, 29)}}, {'yview': (0.6, 0.8), 'selection': ('4',), 'focus': '4', 'height': 58, 'rows': {'1': '', '2': '', '3': '', '4': (1, 26, 315, 29), '5': (1, 55, 315, 29)}}, {'yview': (0.4, 0.6), 'selection': ('3',), 'focus': '3', 'height': 58, 'rows': {'1': '', '2': '', '3': (1, 26, 315, 29), '4': (1, 55, 315, 29), '5': ''}}, {'yview': (0.2, 0.4), 'selection': ('2',), 'focus': '2', 'height': 58, 'rows': {'1': '', '2': (1, 26, 315, 29), '3': (1, 55, 315, 29), '4': '', '5': ''}}, {'yview': (0.0, 0.2), 'selection': ('1',), 'focus': '1', 'height': 58, 'rows': {'1': (1, 26, 315, 29), '2': (1, 55, 315, 29), '3': '', '4': '', '5': ''}}]",
+      "kind": "auto"
+    },
+    {
+      "step": "보존",
+      "item": "기존 사용자 저장 파일 집합·해시 동일",
+      "result": "PASS",
+      "detail": "",
+      "kind": "auto"
+    }
+  ],
+  "preflight": {
+    "status": "passed",
+    "samples": [
+      {
+        "foreground_matches_game": true,
+        "button_point_owned_and_correct_top": true,
+        "root_in_z_order": true,
+        "own_dialogs_above_root": 0,
+        "occlusions": [],
+        "state": "stable",
+        "elapsed": 0.036
+      },
+      {
+        "foreground_matches_game": true,
+        "button_point_owned_and_correct_top": true,
+        "root_in_z_order": true,
+        "own_dialogs_above_root": 0,
+        "occlusions": [],
+        "state": "countdown",
+        "elapsed": 1.156
+      },
+      {
+        "foreground_matches_game": true,
+        "button_point_owned_and_correct_top": true,
+        "root_in_z_order": true,
+        "own_dialogs_above_root": 0,
+        "occlusions": [],
+        "state": "passed",
+        "elapsed": 4.038
+      }
+    ],
+    "game_hwnds": {
+      "client": "0xd430830",
+      "frame": "0x1830942",
+      "ancestor": "0x1830942"
+    },
+    "frame_matches_ancestor": true,
+    "handles_owned_and_valid": true,
+    "elapsed": 4.038
+  }
+}
