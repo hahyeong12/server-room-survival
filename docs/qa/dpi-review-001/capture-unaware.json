@@ -1,0 +1,244 @@
+{
+  "mode": "unaware",
+  "dpi": {
+    "mode": "unaware",
+    "scale": 1.0,
+    "dpi": 96,
+    "requested": false,
+    "reason": "기본 실행(DPI 비인식)"
+  },
+  "line_gray_ratio": 0.5978,
+  "tk_scaling": 1.334646962233169,
+  "screens": [
+    {
+      "screen": "education",
+      "tk_client": [
+        820,
+        470
+      ],
+      "physical_client": [
+        1025,
+        587
+      ],
+      "design_px": [
+        820,
+        470
+      ],
+      "edge_sharpness": 0.7345,
+      "edges": 34343,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          768.0,
+          419.5
+        ],
+        "target_client": [
+          358,
+          184
+        ],
+        "actual_client": [
+          358,
+          184
+        ],
+        "actual_center": [
+          768.0,
+          419.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "unaware_education.png"
+    },
+    {
+      "screen": "control_room",
+      "tk_client": [
+        1280,
+        761
+      ],
+      "physical_client": [
+        1600,
+        951
+      ],
+      "design_px": [
+        1280,
+        761
+      ],
+      "edge_sharpness": 0.7182,
+      "edges": 119124,
+      "inside_work_area": true,
+      "placement": null,
+      "file": "unaware_control_room.png"
+    },
+    {
+      "screen": "allocation",
+      "tk_client": [
+        1000,
+        740
+      ],
+      "physical_client": [
+        1250,
+        925
+      ],
+      "design_px": [
+        1000,
+        740
+      ],
+      "edge_sharpness": 0.7017,
+      "edges": 93148,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          768.0,
+          419.5
+        ],
+        "target_client": [
+          268,
+          43
+        ],
+        "actual_client": [
+          268,
+          43
+        ],
+        "actual_center": [
+          768.0,
+          413.0
+        ],
+        "offset": [
+          0,
+          -6
+        ],
+        "inside_work_area": true
+      },
+      "file": "unaware_allocation.png"
+    },
+    {
+      "screen": "hardware_diagnosis",
+      "tk_client": [
+        640,
+        470
+      ],
+      "physical_client": [
+        800,
+        587
+      ],
+      "design_px": [
+        640,
+        470
+      ],
+      "edge_sharpness": 0.6851,
+      "edges": 18934,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          768.0,
+          419.5
+        ],
+        "target_client": [
+          448,
+          184
+        ],
+        "actual_client": [
+          448,
+          184
+        ],
+        "actual_center": [
+          768.0,
+          419.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "unaware_hardware_diagnosis.png"
+    },
+    {
+      "screen": "result_card",
+      "tk_client": [
+        560,
+        334
+      ],
+      "physical_client": [
+        700,
+        417
+      ],
+      "design_px": [
+        560,
+        334
+      ],
+      "edge_sharpness": 0.7187,
+      "edges": 20396,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          768.0,
+          419.5
+        ],
+        "target_client": [
+          488,
+          252
+        ],
+        "actual_client": [
+          488,
+          252
+        ],
+        "actual_center": [
+          768.0,
+          419.0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "inside_work_area": true
+      },
+      "file": "unaware_result_card.png"
+    },
+    {
+      "screen": "engineering_lab",
+      "tk_client": [
+        1060,
+        700
+      ],
+      "physical_client": [
+        1325,
+        875
+      ],
+      "design_px": [
+        1060,
+        700
+      ],
+      "edge_sharpness": 0.7368,
+      "edges": 112637,
+      "inside_work_area": true,
+      "placement": {
+        "parent_center": [
+          768.0,
+          419.5
+        ],
+        "target_client": [
+          238,
+          64
+        ],
+        "actual_client": [
+          238,
+          64
+        ],
+        "actual_center": [
+          768.0,
+          414.0
+        ],
+        "offset": [
+          0,
+          -6
+        ],
+        "inside_work_area": true
+      },
+      "file": "unaware_engineering_lab.png"
+    }
+  ]
+}

@@ -136,6 +136,16 @@
 - ui-consistency-001 `aidc/ui/job_status.py`와 `tests/test_job_status.py`(비GUI)·`tests/test_ui_consistency_gui.py`(실제 Tk): 장비 장애는 네트워크 phase와 독립이라 `running`으로 남으므로, 관제실 하단 배지·진행 목록·요청함·Inspector·제4장 카드 '현재 상태'는 `job_status(session, run)`(장비 장애/장비 복구 중/작업 이전 준비 중/정상 재개, 조회 전용)로 같은 문구·색을 씁니다. 진단창·대응 카드 제목은 `CHAPTERS[...].label`(제3장/제4장)을 호출자가 넘기며 내부 `chapter3b` 키·`chapter_label`은 유지합니다. 이전 계획 창도 배정창처럼 닫힐 때 `story_work_window_closed`로 결과 카드를 바로 확인합니다. 제4장 카드 행은 '선택 당시 결과'·'선택 시 예상 완료'(기록)와 '현재 상태'(현재 판정)로 구분합니다. 기록: `docs/qa/ui-consistency-001/report.md`.
 - chapter5-ux-001 `tests/test_chapter5_ux.py`(비GUI 6)·`tests/test_chapter5_ux_gui.py`(실제 Tk 6): Lab 헤더는 모드 칩(제목 옆)과 창 폭에 맞춰 줄바꿈되는 `요청 #N · 고객 / 국가 · 업무` 줄로 나뉩니다. 조회 전용 `GameSession.training_job_status()`가 연수 요청의 현재 네트워크·고객 작업 상태(복구 준비/진행/정상 완료·반환 등)를 계산하며, `TrainingResultDialog`의 '현재 상태' 표(관제실 `refresh()`가 열린 창을 다시 읽음)·Lab 완료 목표·관제실 목표가 함께 씁니다. Stage 5 통과 조건·저장 형식은 그대로입니다. 기록: `docs/qa/chapter5-ux-001/report.md`.
 - ui-polish-001 `tests/test_ui_polish_gui.py`(실제 Tk 5): Lab 연수 진행률 게이지는 보조 문구를 제목 줄에 합칩니다(`진행률 · 통과한 Stage`, 공용 `Gauge`는 그대로). `show_story_help()`는 `StoryDialogueDialog(show=False)`로 숨긴 채 만들고 대화 기록 뒤 `after_idle → after(0)`로 `show_window()`를 예약합니다(idle 콜백 안에서 `center_dialog`를 부르면 배치가 틀어짐). `MessageDialog.reveal()`은 페이지 글 전체 표시이므로 자식에서 같은 이름을 쓰지 않습니다. 흰 프레임 측정 도구: `tests/qa/flash_bench.py`. 기록: `docs/qa/ui-polish-001/report.md`.
+- dpi-review-001 `aidc/ui/dpi.py`와 `tests/test_dpi.py`(비GUI 13): Windows 고배율 흐림은 DPI 비인식 + Windows 비트맵 확대가 원인입니다.
+  - **실험 플래그:** `SRS_DPI_AWARE=system`일 때만 `main()`이 Tk 생성 전에 System DPI Aware를 켭니다. 설정 결과와 실제 상태를 확인한 경우에만 `GetDpiForSystem()/96` 배율을 쓰며, 실패하면 1.0입니다. **기본은 비인식이며 기본값 전환은 사용자 결정 사항입니다.**
+  - **새 화면 코드 규칙:** 고정 px(창 크기·최소 크기, Canvas 크기·좌표, 고정 `wraplength`, Treeview 행·열, 격자 최소 크기)는 설계 기준(96DPI) px로 쓰고 다음처럼 배율을 적용합니다.
+    - 일반 값: `dpi.px()`/`dpi.size()`/`dpi.geometry()`
+    - Canvas: `dpi.logical_size()`로 그린 뒤 `dpi.finish_canvas()`(좌표만 확대, 글꼴은 Tk가 이미 실제 DPI로 키움)
+    - 배율을 적용하는 함수: `center_dialog`·`place_near`·`fit_main_window`와 공용 `label(wraplength=정수)`
+  - **독립 시안:** `server_ui_preview.py`는 import 규칙 때문에 `server_widgets.dpi`를 씁니다.
+  - **테스트:** `tests.run_gui --dpi system`으로 같은 스위트를 인식 모드로 실행합니다. 테스트 창 크기는 `dpi.geometry(...)`, 설계 크기 비교는 `dpi.px(...)`를 씁니다.
+  - **알려진 한계:** 글꼴은 정수 px 반올림으로 정확히 비례하지 않습니다(9~10pt 줄 높이 1.33~1.35배). Per-Monitor 인식은 Tk 8.6 미지원으로 범위 밖입니다.
+  - 화면 측정 도구: `tests/qa/capture_dpi.py`. 기록: `docs/qa/dpi-review-001/report.md`.
 - `tests/`: 자동화 테스트
 - 테스트 명령: `python -m unittest discover -s tests -v` (Windows에서는 `py -m unittest ...`; GUI 테스트는 사용자 요청 없이 실행하지 않습니다.)
 

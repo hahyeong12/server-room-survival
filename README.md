@@ -378,6 +378,16 @@ Anaconda를 사용하고 `python`이 Windows 실행 별칭을 가리키는 경�
 & "$env:USERPROFILE\anaconda3\python.exe" main.py
 ```
 
+### 실험: Windows 고배율 화면 선명도 (dpi-review-001)
+
+Windows 125% 이상 배율에서 글자가 흐린 것은 게임이 DPI 비인식으로 실행되어 Windows가 96DPI 화면을 비트맵으로 늘려 보여 주기 때문입니다. **기본 실행은 지금과 같습니다.** 선명한 화면을 시험하려면 환경 변수를 켠 뒤 실행합니다.
+
+```powershell
+$env:SRS_DPI_AWARE = 'system'; python main.py
+```
+
+System DPI Aware를 켜고, 설정 성공과 실제 상태를 확인한 경우에만 `화면 DPI/96` 배율로 창 크기·Canvas·줄바꿈 폭을 맞춥니다. 실패하면 기존 비인식 동작 그대로입니다. 125% 노트북 한 대(단일 모니터)에서만 검증했으며, 다른 배율·다중 모니터는 미검증입니다. 기록: [docs/qa/dpi-review-001/report.md](docs/qa/dpi-review-001/report.md)
+
 추가 pip 패키지 설치는 필요하지 않습니다. 자유 운영 기록은 `aidc_game.db`, 기존 스토리는 `aidc_story.db`, 새 스토리는 `aidc_story_slot_NNN.db`를 보관해 주세요. 모드 선택 후 스토리 메뉴에서 새 슬롯 생성이나 이어하기를 명시적으로 선택합니다. 실행에는 GUI를 표시할 수 있는 데스크톱 환경과 프로젝트 폴더의 쓰기 권한이 필요합니다.
 
 ## 기술 스택
