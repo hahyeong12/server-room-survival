@@ -1,7 +1,9 @@
 """실제 Git 작업 트리에서 GUI 포함 회귀 실행. 사용자 저장은 열지 않습니다.
 
-python -m tests.run_gui --output artifacts/gui-results.json [tests.test_module[.Class.test]]
+python -m tests.run_gui --output artifacts/gui-results.json [--dpi system] [tests.test_module[.Class.test]]
 이름을 생략하면 비GUI를 포함한 전체 스위트를 한 번 실행합니다.
+--dpi system은 게임의 실험 플래그(SRS_DPI_AWARE=system)와 같은 System DPI Aware 상태로 같은 스위트를 실행합니다.
+설정에 실패하면 테스트를 실행하지 않고 오류로 끝냅니다(다른 배율로 잘못 판정하지 않기 위해).
 """
 import argparse
 from contextlib import ExitStack
@@ -19,6 +21,7 @@ import unittest
 from unittest.mock import patch
 
 from database import Database
+from aidc.ui import dpi
 from aidc.storage.story_slots import StorySlots
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -95,6 +98,7 @@ class RecordedResult(unittest.TextTestResult):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--dpi', choices=('unaware', 'system'), default='unaware')
     parser.add_argument('names', nargs='*')
     args = parser.parse_args()
     before = saved_files()
@@ -103,7 +107,10 @@ def main():
     start = time.monotonic()
     try:
         subprocess.run(['git', 'rev-parse', '--show-toplevel'], cwd=ROOT, check=True, capture_output=True)
+        if args.dpi == 'system' and not dpi.enable_system_awareness():
+            raise RuntimeError('System DPI Aware 설정 실패: '+dpi.status()['reason'])
         report['environment'] = preflight()
+        report['environment']['dpi'] = dpi.status()
         original = Database.__init__
         reserve = StorySlots.reserve_new
 
