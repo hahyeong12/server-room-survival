@@ -1,0 +1,1449 @@
+{
+ "aware_regular_1to5": {
+  "dpi_mode": "system",
+  "kind": "regular_chapter1_2_3_4_5_full_play",
+  "completed": true,
+  "error": null,
+  "passed": 318,
+  "failed": 3,
+  "clicks": 339,
+  "wheel_events": 14,
+  "keyboard_events": 290,
+  "capture_scale": 1.0,
+  "env": {
+   "tk": "8.6.15",
+   "scaling": 1.6683087027914612,
+   "screen": [
+    1920,
+    1080
+   ],
+   "work_area": [
+    0,
+    0,
+    1920,
+    1020
+   ],
+   "capture_scale": 1.0
+  },
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": "36a62d2d2439d6cb2145b82d2e65344cb700fd6f",
+  "started": "2026-11-18T21:26:16+09:00",
+  "non_pass_checks": [
+   {
+    "step": "1 싱가포르 배정",
+    "item": "대화창 중앙 배치 ±8px · 배정 설정",
+    "result": "FAIL",
+    "detail": "(0, -11)",
+    "kind": "auto"
+   },
+   {
+    "step": "2 일본 배정",
+    "item": "대화창 중앙 배치 ±8px · 배정 설정",
+    "result": "FAIL",
+    "detail": "(0, -11)",
+    "kind": "auto"
+   },
+   {
+    "step": "3 미국 배정",
+    "item": "대화창 중앙 배치 ±8px · 배정 설정",
+    "result": "FAIL",
+    "detail": "(0, -11)",
+    "kind": "auto"
+   }
+  ],
+  "allocation_center_offsets": [
+   "(0, -11)",
+   "(0, -11)",
+   "(0, -11)"
+  ],
+  "lab_first_show_white_ratio": [
+   0.797
+  ],
+  "windows_with_white_over_0_35": [
+   {
+    "t": 274.683,
+    "title": "Engineering Lab (Prototype) | 교육용 관찰 · 학습 화면",
+    "white_ratio": 0.797
+   }
+  ],
+  "capture_occlusions": 0,
+  "layouts": null,
+  "note_commit": "QA 실행 커밋 36a62d2(래퍼 run_aware.py로 System DPI Aware)"
+ },
+ "aware_lab_focus": {
+  "dpi_mode": "system",
+  "kind": "chapter5_focused_fixture",
+  "completed": true,
+  "error": null,
+  "passed": 76,
+  "failed": 0,
+  "clicks": 129,
+  "wheel_events": 0,
+  "keyboard_events": 290,
+  "capture_scale": 1.0,
+  "env": {
+   "tk": "8.6.15",
+   "screen": [
+    1920,
+    1080
+   ],
+   "capture_scale": 1.0
+  },
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": "36a62d2d2439d6cb2145b82d2e65344cb700fd6f",
+  "started": "2026-11-18T21:24:20+09:00",
+  "non_pass_checks": [],
+  "allocation_center_offsets": [],
+  "lab_first_show_white_ratio": [
+   0.85
+  ],
+  "windows_with_white_over_0_35": [
+   {
+    "t": 12.677,
+    "title": "Engineering Lab (Prototype) | 교육용 관찰 · 학습 화면",
+    "white_ratio": 0.85
+   }
+  ],
+  "capture_occlusions": 0,
+  "layouts": null
+ },
+ "unaware_regular_1to5": {
+  "dpi_mode": "unaware",
+  "kind": "regular_chapter1_2_3_4_5_full_play",
+  "completed": true,
+  "error": null,
+  "passed": 321,
+  "failed": 0,
+  "clicks": 373,
+  "wheel_events": 14,
+  "keyboard_events": 290,
+  "capture_scale": 1.25,
+  "env": {
+   "tk": "8.6.15",
+   "scaling": 1.334646962233169,
+   "screen": [
+    1536,
+    864
+   ],
+   "work_area": [
+    0,
+    0,
+    1536,
+    816
+   ],
+   "capture_scale": 1.25
+  },
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": "36a62d2d2439d6cb2145b82d2e65344cb700fd6f",
+  "started": "2026-11-18T21:37:51+09:00",
+  "non_pass_checks": [],
+  "allocation_center_offsets": [
+   "(0, -6)",
+   "(0, -6)",
+   "(0, -6)"
+  ],
+  "lab_first_show_white_ratio": [
+   0.813
+  ],
+  "windows_with_white_over_0_35": [
+   {
+    "t": 279.277,
+    "title": "Engineering Lab (Prototype) | 교육용 관찰 · 학습 화면",
+    "white_ratio": 0.813
+   }
+  ],
+  "capture_occlusions": 0,
+  "layouts": null
+ },
+ "unaware_lab_focus": {
+  "dpi_mode": "unaware",
+  "kind": "chapter5_focused_fixture",
+  "completed": true,
+  "error": null,
+  "passed": 76,
+  "failed": 0,
+  "clicks": 151,
+  "wheel_events": 0,
+  "keyboard_events": 290,
+  "capture_scale": 1.25,
+  "env": {
+   "tk": "8.6.15",
+   "screen": [
+    1536,
+    864
+   ],
+   "capture_scale": 1.25
+  },
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": "36a62d2d2439d6cb2145b82d2e65344cb700fd6f",
+  "started": "2026-11-18T21:35:57+09:00",
+  "non_pass_checks": [],
+  "allocation_center_offsets": [],
+  "lab_first_show_white_ratio": [
+   0.806
+  ],
+  "windows_with_white_over_0_35": [
+   {
+    "t": 12.968,
+    "title": "Engineering Lab (Prototype) | 교육용 관찰 · 학습 화면",
+    "white_ratio": 0.806
+   }
+  ],
+  "capture_occlusions": 0,
+  "layouts": null
+ },
+ "unaware_lab_focus_pre_dpi_3f9cbd6": {
+  "dpi_mode": "unaware",
+  "kind": "chapter5_focused_fixture",
+  "completed": true,
+  "error": null,
+  "passed": 76,
+  "failed": 0,
+  "clicks": 151,
+  "wheel_events": 0,
+  "keyboard_events": 290,
+  "capture_scale": 1.25,
+  "env": {
+   "tk": "8.6.15",
+   "screen": [
+    1536,
+    864
+   ],
+   "capture_scale": 1.25
+  },
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": "36a62d2d2439d6cb2145b82d2e65344cb700fd6f",
+  "started": "2026-11-18T21:44:47+09:00",
+  "non_pass_checks": [],
+  "allocation_center_offsets": [],
+  "lab_first_show_white_ratio": [
+   0.824
+  ],
+  "windows_with_white_over_0_35": [
+   {
+    "t": 13.116,
+    "title": "Engineering Lab (Prototype) | 교육용 관찰 · 학습 화면",
+    "white_ratio": 0.824
+   }
+  ],
+  "capture_occlusions": 0,
+  "layouts": null,
+  "note_commit": "git archive 3f9cbd6 내보낸 폴더에서 실행(commit 필드는 GIT_DIR 기준 값이라 무시)"
+ },
+ "aware_treeview_input": {
+  "dpi_mode": "system",
+  "kind": "focused_gui_not_full_play",
+  "completed": null,
+  "error": null,
+  "passed": 11,
+  "failed": 0,
+  "clicks": null,
+  "wheel_events": null,
+  "keyboard_events": null,
+  "capture_scale": null,
+  "env": null,
+  "preflight": "passed",
+  "repo_data_unchanged": null,
+  "commit": null,
+  "started": null,
+  "non_pass_checks": [],
+  "allocation_center_offsets": [],
+  "lab_first_show_white_ratio": [],
+  "windows_with_white_over_0_35": [],
+  "capture_occlusions": 0,
+  "layouts": null
+ },
+ "unaware_rack_check": {
+  "dpi_mode": "unaware",
+  "kind": "dpi_acceptance_rack_check",
+  "completed": true,
+  "error": null,
+  "passed": 16,
+  "failed": 0,
+  "clicks": 12,
+  "wheel_events": null,
+  "keyboard_events": null,
+  "capture_scale": null,
+  "env": null,
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": null,
+  "started": null,
+  "non_pass_checks": [],
+  "allocation_center_offsets": [],
+  "lab_first_show_white_ratio": [],
+  "windows_with_white_over_0_35": [],
+  "capture_occlusions": 0,
+  "layouts": [
+   {
+    "size": "기본(작업 영역 맞춤)",
+    "scale": 1.0,
+    "canvas": [
+     766,
+     225
+    ],
+    "columns": 4,
+    "rack_height_design_px": 185.0,
+    "layout": "tall_mid",
+    "root": [
+     1280,
+     761
+    ],
+    "racks": {
+     "A": {
+      "bounds": [
+       14.0,
+       29.0,
+       191.0,
+       214.0
+      ],
+      "texts": [
+       "Server A",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "4",
+       "ON",
+       "미점유",
+       "GPU 4/4",
+       "전력 가용 4/4",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "B": {
+      "bounds": [
+       201.0,
+       29.0,
+       378.0,
+       214.0
+      ],
+      "texts": [
+       "Server B",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "OFF",
+       "미점유",
+       "GPU 3/3",
+       "전력 가용 2/2",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "C": {
+      "bounds": [
+       388.0,
+       29.0,
+       565.0,
+       214.0
+      ],
+      "texts": [
+       "Server C",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "OFF",
+       "OFF",
+       "미점유",
+       "GPU 2/2",
+       "전력 가용 3/3",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "D": {
+      "bounds": [
+       575.0,
+       29.0,
+       752.0,
+       214.0
+      ],
+      "texts": [
+       "Server D",
+       "IDLE",
+       "1",
+       "ON",
+       "OFF",
+       "OFF",
+       "OFF",
+       "미점유",
+       "GPU 1/1",
+       "전력 가용 1/1",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     }
+    },
+    "clicks": [
+     {
+      "key": "B",
+      "network_selected": "B",
+      "panel_selected": "B",
+      "inspector_name": "Server B",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       665,
+       357
+      ]
+     },
+     {
+      "key": "C",
+      "network_selected": "C",
+      "panel_selected": "C",
+      "inspector_name": "Server C",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       852,
+       357
+      ]
+     },
+     {
+      "key": "D",
+      "network_selected": "D",
+      "panel_selected": "D",
+      "inspector_name": "Server D",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       1039,
+       357
+      ]
+     },
+     {
+      "key": "A",
+      "network_selected": "A",
+      "panel_selected": "A",
+      "inspector_name": "Server A",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       478,
+       357
+      ]
+     }
+    ],
+    "overlap_count": 0
+   },
+   {
+    "size": "1280x680",
+    "scale": 1.0,
+    "canvas": [
+     766,
+     144
+    ],
+    "columns": 4,
+    "rack_height_design_px": 104.0,
+    "layout": "compact",
+    "root": [
+     1280,
+     680
+    ],
+    "racks": {
+     "A": {
+      "bounds": [
+       14.0,
+       29.0,
+       191.0,
+       133.0
+      ],
+      "texts": [
+       "Server A",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "4",
+       "ON",
+       "GPU 4/4",
+       "전력 4/4",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ],
+       [
+        "2",
+        "ON"
+       ],
+       [
+        "3",
+        "ON"
+       ],
+       [
+        "4",
+        "ON"
+       ]
+      ],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "B": {
+      "bounds": [
+       201.0,
+       29.0,
+       378.0,
+       133.0
+      ],
+      "texts": [
+       "Server B",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "OFF",
+       "GPU 3/3",
+       "전력 2/2",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ],
+       [
+        "2",
+        "ON"
+       ],
+       [
+        "3",
+        "ON"
+       ]
+      ],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "C": {
+      "bounds": [
+       388.0,
+       29.0,
+       565.0,
+       133.0
+      ],
+      "texts": [
+       "Server C",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "OFF",
+       "OFF",
+       "GPU 2/2",
+       "전력 3/3",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ],
+       [
+        "2",
+        "ON"
+       ]
+      ],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "D": {
+      "bounds": [
+       575.0,
+       29.0,
+       752.0,
+       133.0
+      ],
+      "texts": [
+       "Server D",
+       "IDLE",
+       "1",
+       "ON",
+       "OFF",
+       "OFF",
+       "OFF",
+       "GPU 1/1",
+       "전력 1/1",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ]
+      ],
+      "origin": [
+       376,
+       301
+      ]
+     }
+    },
+    "clicks": [
+     {
+      "key": "B",
+      "network_selected": "B",
+      "panel_selected": "B",
+      "inspector_name": "Server B",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       665,
+       345
+      ]
+     },
+     {
+      "key": "C",
+      "network_selected": "C",
+      "panel_selected": "C",
+      "inspector_name": "Server C",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       852,
+       345
+      ]
+     },
+     {
+      "key": "D",
+      "network_selected": "D",
+      "panel_selected": "D",
+      "inspector_name": "Server D",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       1039,
+       345
+      ]
+     },
+     {
+      "key": "A",
+      "network_selected": "A",
+      "panel_selected": "A",
+      "inspector_name": "Server A",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       478,
+       345
+      ]
+     }
+    ],
+    "overlap_count": 10
+   },
+   {
+    "size": "1000x650",
+    "scale": 1.0,
+    "canvas": [
+     486,
+     114
+    ],
+    "columns": 2,
+    "rack_height_design_px": 32.0,
+    "layout": "compact",
+    "root": [
+     1000,
+     650
+    ],
+    "racks": {
+     "A": {
+      "bounds": [
+       14.0,
+       29.0,
+       238.0,
+       61.0
+      ],
+      "texts": [
+       "Server A",
+       "IDLE",
+       "·",
+       "·",
+       "·",
+       "·",
+       "GPU 4/4",
+       "전력 4/4"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "B": {
+      "bounds": [
+       248.0,
+       29.0,
+       472.0,
+       61.0
+      ],
+      "texts": [
+       "Server B",
+       "IDLE",
+       "·",
+       "·",
+       "·",
+       "OFF",
+       "GPU 3/3",
+       "전력 2/2"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "C": {
+      "bounds": [
+       14.0,
+       71.0,
+       238.0,
+       103.0
+      ],
+      "texts": [
+       "Server C",
+       "IDLE",
+       "·",
+       "·",
+       "OFF",
+       "OFF",
+       "GPU 2/2",
+       "전력 3/3"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     },
+     "D": {
+      "bounds": [
+       248.0,
+       71.0,
+       472.0,
+       103.0
+      ],
+      "texts": [
+       "Server D",
+       "IDLE",
+       "·",
+       "OFF",
+       "OFF",
+       "OFF",
+       "GPU 1/1",
+       "전력 1/1"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       376,
+       301
+      ]
+     }
+    },
+    "clicks": [
+     {
+      "key": "B",
+      "network_selected": "B",
+      "panel_selected": "B",
+      "inspector_name": "Server B",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       736,
+       334
+      ]
+     },
+     {
+      "key": "C",
+      "network_selected": "C",
+      "panel_selected": "C",
+      "inspector_name": "Server C",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       502,
+       376
+      ]
+     },
+     {
+      "key": "D",
+      "network_selected": "D",
+      "panel_selected": "D",
+      "inspector_name": "Server D",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       736,
+       376
+      ]
+     },
+     {
+      "key": "A",
+      "network_selected": "A",
+      "panel_selected": "A",
+      "inspector_name": "Server A",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       502,
+       334
+      ]
+     }
+    ],
+    "overlap_count": 0
+   }
+  ]
+ },
+ "aware_rack_check": {
+  "dpi_mode": "system",
+  "kind": "dpi_acceptance_rack_check",
+  "completed": true,
+  "error": null,
+  "passed": 16,
+  "failed": 0,
+  "clicks": 12,
+  "wheel_events": null,
+  "keyboard_events": null,
+  "capture_scale": null,
+  "env": null,
+  "preflight": "passed",
+  "repo_data_unchanged": true,
+  "commit": null,
+  "started": null,
+  "non_pass_checks": [],
+  "allocation_center_offsets": [],
+  "lab_first_show_white_ratio": [],
+  "windows_with_white_over_0_35": [],
+  "capture_occlusions": 0,
+  "layouts": [
+   {
+    "size": "기본(작업 영역 맞춤)",
+    "scale": 1.25,
+    "canvas": [
+     972,
+     300
+    ],
+    "columns": 4,
+    "rack_height_design_px": 200.0,
+    "layout": "tall_mid",
+    "root": [
+     1600,
+     951
+    ],
+    "racks": {
+     "A": {
+      "bounds": [
+       17.5,
+       36.2,
+       242.4,
+       286.2
+      ],
+      "texts": [
+       "Server A",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "4",
+       "ON",
+       "미점유",
+       "GPU 4/4",
+       "전력 가용 4/4",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "B": {
+      "bounds": [
+       254.9,
+       36.2,
+       479.8,
+       286.2
+      ],
+      "texts": [
+       "Server B",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "OFF",
+       "미점유",
+       "GPU 3/3",
+       "전력 가용 2/2",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "C": {
+      "bounds": [
+       492.2,
+       36.2,
+       717.1,
+       286.2
+      ],
+      "texts": [
+       "Server C",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "OFF",
+       "OFF",
+       "미점유",
+       "GPU 2/2",
+       "전력 가용 3/3",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "D": {
+      "bounds": [
+       729.6,
+       36.2,
+       954.5,
+       286.2
+      ],
+      "texts": [
+       "Server D",
+       "IDLE",
+       "1",
+       "ON",
+       "OFF",
+       "OFF",
+       "OFF",
+       "미점유",
+       "GPU 1/1",
+       "전력 가용 1/1",
+       "가용 100%"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     }
+    },
+    "clicks": [
+     {
+      "key": "B",
+      "network_selected": "B",
+      "panel_selected": "B",
+      "inspector_name": "Server B",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       827,
+       437
+      ]
+     },
+     {
+      "key": "C",
+      "network_selected": "C",
+      "panel_selected": "C",
+      "inspector_name": "Server C",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       1064,
+       437
+      ]
+     },
+     {
+      "key": "D",
+      "network_selected": "D",
+      "panel_selected": "D",
+      "inspector_name": "Server D",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       1302,
+       437
+      ]
+     },
+     {
+      "key": "A",
+      "network_selected": "A",
+      "panel_selected": "A",
+      "inspector_name": "Server A",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       589,
+       437
+      ]
+     }
+    ],
+    "overlap_count": 0
+   },
+   {
+    "size": "1280x680",
+    "scale": 1.25,
+    "canvas": [
+     972,
+     199
+    ],
+    "columns": 4,
+    "rack_height_design_px": 119.2,
+    "layout": "wide",
+    "root": [
+     1600,
+     850
+    ],
+    "racks": {
+     "A": {
+      "bounds": [
+       17.5,
+       36.2,
+       242.4,
+       185.2
+      ],
+      "texts": [
+       "Server A",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "4",
+       "ON",
+       "GPU 4/4",
+       "가용 100%",
+       "전력 4/4",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ],
+       [
+        "2",
+        "ON"
+       ],
+       [
+        "3",
+        "ON"
+       ],
+       [
+        "4",
+        "ON"
+       ]
+      ],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "B": {
+      "bounds": [
+       254.9,
+       36.2,
+       479.8,
+       185.2
+      ],
+      "texts": [
+       "Server B",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "3",
+       "ON",
+       "OFF",
+       "GPU 3/3",
+       "가용 100%",
+       "전력 2/2",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ],
+       [
+        "2",
+        "ON"
+       ],
+       [
+        "3",
+        "ON"
+       ]
+      ],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "C": {
+      "bounds": [
+       492.2,
+       36.2,
+       717.1,
+       185.2
+      ],
+      "texts": [
+       "Server C",
+       "IDLE",
+       "1",
+       "ON",
+       "2",
+       "ON",
+       "OFF",
+       "OFF",
+       "GPU 2/2",
+       "가용 100%",
+       "전력 3/3",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ],
+       [
+        "2",
+        "ON"
+       ]
+      ],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "D": {
+      "bounds": [
+       729.6,
+       36.2,
+       954.5,
+       185.2
+      ],
+      "texts": [
+       "Server D",
+       "IDLE",
+       "1",
+       "ON",
+       "OFF",
+       "OFF",
+       "OFF",
+       "GPU 1/1",
+       "가용 100%",
+       "전력 1/1",
+       "미점유"
+      ],
+      "outside": [],
+      "text_overlaps": [
+       [
+        "1",
+        "ON"
+       ]
+      ],
+      "origin": [
+       460,
+       364
+      ]
+     }
+    },
+    "clicks": [
+     {
+      "key": "B",
+      "network_selected": "B",
+      "panel_selected": "B",
+      "inspector_name": "Server B",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       827,
+       422
+      ]
+     },
+     {
+      "key": "C",
+      "network_selected": "C",
+      "panel_selected": "C",
+      "inspector_name": "Server C",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       1064,
+       422
+      ]
+     },
+     {
+      "key": "D",
+      "network_selected": "D",
+      "panel_selected": "D",
+      "inspector_name": "Server D",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       1302,
+       422
+      ]
+     },
+     {
+      "key": "A",
+      "network_selected": "A",
+      "panel_selected": "A",
+      "inspector_name": "Server A",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       589,
+       422
+      ]
+     }
+    ],
+    "overlap_count": 10
+   },
+   {
+    "size": "1000x650",
+    "scale": 1.25,
+    "canvas": [
+     622,
+     161
+    ],
+    "columns": 2,
+    "rack_height_design_px": 39.4,
+    "layout": "compact",
+    "root": [
+     1250,
+     812
+    ],
+    "racks": {
+     "A": {
+      "bounds": [
+       17.5,
+       36.2,
+       304.8,
+       85.5
+      ],
+      "texts": [
+       "Server A",
+       "IDLE",
+       "·",
+       "·",
+       "·",
+       "·",
+       "GPU 4/4",
+       "전력 4/4"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "B": {
+      "bounds": [
+       317.2,
+       36.2,
+       604.5,
+       85.5
+      ],
+      "texts": [
+       "Server B",
+       "IDLE",
+       "·",
+       "·",
+       "·",
+       "OFF",
+       "GPU 3/3",
+       "전력 2/2"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "C": {
+      "bounds": [
+       17.5,
+       98.0,
+       304.8,
+       147.2
+      ],
+      "texts": [
+       "Server C",
+       "IDLE",
+       "·",
+       "·",
+       "OFF",
+       "OFF",
+       "GPU 2/2",
+       "전력 3/3"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     },
+     "D": {
+      "bounds": [
+       317.2,
+       98.0,
+       604.5,
+       147.2
+      ],
+      "texts": [
+       "Server D",
+       "IDLE",
+       "·",
+       "OFF",
+       "OFF",
+       "OFF",
+       "GPU 1/1",
+       "전력 1/1"
+      ],
+      "outside": [],
+      "text_overlaps": [],
+      "origin": [
+       460,
+       364
+      ]
+     }
+    },
+    "clicks": [
+     {
+      "key": "B",
+      "network_selected": "B",
+      "panel_selected": "B",
+      "inspector_name": "Server B",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       920,
+       407
+      ]
+     },
+     {
+      "key": "C",
+      "network_selected": "C",
+      "panel_selected": "C",
+      "inspector_name": "Server C",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       621,
+       469
+      ]
+     },
+     {
+      "key": "D",
+      "network_selected": "D",
+      "panel_selected": "D",
+      "inspector_name": "Server D",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       920,
+       469
+      ]
+     },
+     {
+      "key": "A",
+      "network_selected": "A",
+      "panel_selected": "A",
+      "inspector_name": "Server A",
+      "border_outline": "#4ce4cd",
+      "ok": true,
+      "point": [
+       621,
+       407
+      ]
+     }
+    ],
+    "overlap_count": 0
+   }
+  ]
+ }
+}
