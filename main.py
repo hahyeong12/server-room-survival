@@ -25,6 +25,7 @@ from aidc.ui.ui_kit import PrimaryButton, StatusChip, tone_color
 from aidc.ui.goal_card import GoalCard
 from aidc.story.onboarding import guided_target
 from aidc.ui.window_placement import center_dialog, fit_main_window
+from aidc.ui import dpi
 from version import APP_NAME, APP_NAME_EN, VERSION
 from story_feedback import StoryFeedbackDialog, FEEDBACK
 from request_summary import request_summary
@@ -1977,6 +1978,8 @@ class ModeSelection:
 
 
 def main():
+    # 실험 플래그(SRS_DPI_AWARE=system)가 있을 때만 DPI 인식을 켭니다. Tk 창보다 먼저여야 합니다.
+    dpi.configure_from_environment()
     root = tk.Tk()
     ModeSelection(root)
     root.mainloop()

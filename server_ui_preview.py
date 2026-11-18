@@ -5,6 +5,7 @@
 from dataclasses import dataclass
 import tkinter as tk
 from version import APP_NAME
+from aidc.ui import dpi
 from server_widgets import (ink, gpu_state, reset_hardware, gpu_module, animate_hardware, battery, availability_hint)
 
 
@@ -496,6 +497,7 @@ class ServerPreviewApp:
 
 
 def main():
+    dpi.configure_from_environment()  # 실험 플래그가 있을 때만(main.py와 같은 규칙)
     root = tk.Tk()
     ServerPreviewApp(root)
     root.mainloop()
