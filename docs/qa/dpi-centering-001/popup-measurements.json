@@ -1,0 +1,201 @@
+{
+  "line_gray_ratio": {
+    "unaware": 0.5978,
+    "system": 0.0
+  },
+  "screens": [
+    {
+      "screen": "education",
+      "physical_unaware": [
+        1025,
+        587
+      ],
+      "physical_system": [
+        1025,
+        588
+      ],
+      "size_ratio": [
+        1.0,
+        1.002
+      ],
+      "edge_sharpness": [
+        0.7345,
+        0.9174
+      ],
+      "inside_work_area": [
+        true,
+        true
+      ],
+      "center_offset": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "screen": "control_room",
+      "physical_unaware": [
+        1600,
+        951
+      ],
+      "physical_system": [
+        1600,
+        951
+      ],
+      "size_ratio": [
+        1.0,
+        1.0
+      ],
+      "edge_sharpness": [
+        0.7182,
+        0.8851
+      ],
+      "inside_work_area": [
+        true,
+        true
+      ],
+      "center_offset": [
+        null,
+        null
+      ]
+    },
+    {
+      "screen": "allocation",
+      "physical_unaware": [
+        1250,
+        925
+      ],
+      "physical_system": [
+        1250,
+        925
+      ],
+      "size_ratio": [
+        1.0,
+        1.0
+      ],
+      "edge_sharpness": [
+        0.7017,
+        0.873
+      ],
+      "inside_work_area": [
+        true,
+        true
+      ],
+      "center_offset": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "screen": "hardware_diagnosis",
+      "physical_unaware": [
+        800,
+        587
+      ],
+      "physical_system": [
+        800,
+        588
+      ],
+      "size_ratio": [
+        1.0,
+        1.002
+      ],
+      "edge_sharpness": [
+        0.6851,
+        0.8561
+      ],
+      "inside_work_area": [
+        true,
+        true
+      ],
+      "center_offset": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "screen": "result_card",
+      "physical_unaware": [
+        700,
+        417
+      ],
+      "physical_system": [
+        700,
+        412
+      ],
+      "size_ratio": [
+        1.0,
+        0.988
+      ],
+      "edge_sharpness": [
+        0.7187,
+        0.881
+      ],
+      "inside_work_area": [
+        true,
+        true
+      ],
+      "center_offset": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "screen": "engineering_lab",
+      "physical_unaware": [
+        1325,
+        875
+      ],
+      "physical_system": [
+        1325,
+        875
+      ],
+      "size_ratio": [
+        1.0,
+        1.0
+      ],
+      "edge_sharpness": [
+        0.7368,
+        0.8984
+      ],
+      "inside_work_area": [
+        true,
+        true
+      ],
+      "center_offset": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "user_data_unchanged": true
+}

@@ -1,0 +1,390 @@
+{
+  "base_commit": "88d057c",
+  "implementation_commit": "9856ab8",
+  "headless_passed": 781,
+  "focused": {
+    "focus-unaware": {
+      "ran": 111,
+      "passed": 111,
+      "seconds": 286.486,
+      "environment": {
+        "python": "3.14.6",
+        "tk": "8.6.15",
+        "tk_scaling": 1.334646962233169,
+        "screen": [
+          1536,
+          864
+        ],
+        "visible": true,
+        "dpi": {
+          "mode": "unaware",
+          "scale": 1.0,
+          "dpi": 96,
+          "requested": false,
+          "reason": "기본 실행(DPI 비인식)"
+        }
+      },
+      "user_data_unchanged": true
+    },
+    "focus-extra-unaware": {
+      "ran": 2,
+      "passed": 2,
+      "seconds": 1.671,
+      "environment": {
+        "python": "3.14.6",
+        "tk": "8.6.15",
+        "tk_scaling": 1.334646962233169,
+        "screen": [
+          1536,
+          864
+        ],
+        "visible": true,
+        "dpi": {
+          "mode": "unaware",
+          "scale": 1.0,
+          "dpi": 96,
+          "requested": false,
+          "reason": "기본 실행(DPI 비인식)"
+        }
+      },
+      "user_data_unchanged": true
+    },
+    "focus-system": {
+      "ran": 113,
+      "passed": 113,
+      "seconds": 249.236,
+      "environment": {
+        "python": "3.14.6",
+        "tk": "8.6.15",
+        "tk_scaling": 1.6683087027914612,
+        "screen": [
+          1920,
+          1080
+        ],
+        "visible": true,
+        "dpi": {
+          "mode": "system",
+          "scale": 1.25,
+          "dpi": 120,
+          "requested": true,
+          "reason": "System DPI Aware 적용"
+        }
+      },
+      "user_data_unchanged": true
+    }
+  },
+  "full_regression": {
+    "full-unaware": {
+      "ran": 1092,
+      "passed": 1092,
+      "seconds": 743.235,
+      "environment": {
+        "python": "3.14.6",
+        "tk": "8.6.15",
+        "tk_scaling": 1.334646962233169,
+        "screen": [
+          1536,
+          864
+        ],
+        "visible": true,
+        "dpi": {
+          "mode": "unaware",
+          "scale": 1.0,
+          "dpi": 96,
+          "requested": false,
+          "reason": "기본 실행(DPI 비인식)"
+        }
+      },
+      "user_data_unchanged": true
+    },
+    "full-system": {
+      "ran": 1092,
+      "passed": 1092,
+      "seconds": 783.9,
+      "environment": {
+        "python": "3.14.6",
+        "tk": "8.6.15",
+        "tk_scaling": 1.6683087027914612,
+        "screen": [
+          1920,
+          1080
+        ],
+        "visible": true,
+        "dpi": {
+          "mode": "system",
+          "scale": 1.25,
+          "dpi": 120,
+          "requested": true,
+          "reason": "System DPI Aware 적용"
+        }
+      },
+      "user_data_unchanged": true
+    }
+  },
+  "native_play": {
+    "native-focus-unaware": {
+      "commit": "9856ab81e3f4ae2f6b8f1c34689cce97c8dd4156",
+      "started": "2026-11-18T22:20:14+09:00",
+      "completed": true,
+      "error": null,
+      "passed": 76,
+      "failed": 0,
+      "clicks": 151,
+      "wheel_events": 0,
+      "keyboard_events": 290,
+      "env": {
+        "tk": "8.6.15",
+        "screen": [
+          1536,
+          864
+        ],
+        "capture_scale": 1.25
+      },
+      "repo_data_count": 24,
+      "repo_data_unchanged": true,
+      "capture_occlusions": [],
+      "source_sha256": {
+        "autoplay_chapter5.py": "7931a33cd658fff3637744c30109cf5243cc172c88e06c1c864ebbc31fb7b4eb",
+        "autoplay_story_ch1.py": "8ca66ea1b0cefc01c508b0ee5a8eab645643b7662fc4c065679ff6e5e4f7dc93",
+        "autoplay_chapter2.py": "3254f83b812e536d4ba847e31e326a216dbcfd9e892d4da7d27d75ff807b1c10",
+        "autoplay_chapter3.py": "ba82a43e262e3fd9ccb456a59324730f9f55f2fab6c8530f9f50a81489a91add",
+        "autoplay_chapter4.py": "e0d344d36f7203ad074ef9256480e857a43fc1b28453121bd557c490d53b3744"
+      },
+      "centering_checks": []
+    },
+    "native-regular-unaware": {
+      "commit": "9856ab81e3f4ae2f6b8f1c34689cce97c8dd4156",
+      "started": "2026-11-18T22:22:11+09:00",
+      "completed": true,
+      "error": null,
+      "passed": 321,
+      "failed": 0,
+      "clicks": 373,
+      "wheel_events": 14,
+      "keyboard_events": 290,
+      "env": {
+        "tk": "8.6.15",
+        "scaling": 1.334646962233169,
+        "screen": [
+          1536,
+          864
+        ],
+        "work_area": [
+          0,
+          0,
+          1536,
+          816
+        ],
+        "capture_scale": 1.25
+      },
+      "repo_data_count": 24,
+      "repo_data_unchanged": true,
+      "capture_occlusions": [],
+      "source_sha256": {
+        "autoplay_chapter5.py": "7931a33cd658fff3637744c30109cf5243cc172c88e06c1c864ebbc31fb7b4eb",
+        "autoplay_story_ch1.py": "8ca66ea1b0cefc01c508b0ee5a8eab645643b7662fc4c065679ff6e5e4f7dc93",
+        "autoplay_chapter2.py": "3254f83b812e536d4ba847e31e326a216dbcfd9e892d4da7d27d75ff807b1c10",
+        "autoplay_chapter3.py": "ba82a43e262e3fd9ccb456a59324730f9f55f2fab6c8530f9f50a81489a91add",
+        "autoplay_chapter4.py": "e0d344d36f7203ad074ef9256480e857a43fc1b28453121bd557c490d53b3744"
+      },
+      "centering_checks": [
+        {
+          "step": "제1장 안내",
+          "item": "대화창 중앙 배치 ±8px · 현장 교육",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "1 싱가포르 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "1 싱가포르 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "2 일본 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "2 일본 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "3 미국 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "3 미국 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "제1장 결과",
+          "item": "대화창 중앙 배치 ±8px · 결과",
+          "result": "PASS",
+          "detail": "(0, 1)",
+          "kind": "auto"
+        }
+      ]
+    },
+    "native-focus-system": {
+      "commit": "9856ab81e3f4ae2f6b8f1c34689cce97c8dd4156",
+      "started": "2026-11-18T22:28:33+09:00",
+      "completed": true,
+      "error": null,
+      "passed": 76,
+      "failed": 0,
+      "clicks": 129,
+      "wheel_events": 0,
+      "keyboard_events": 290,
+      "env": {
+        "tk": "8.6.15",
+        "screen": [
+          1920,
+          1080
+        ],
+        "capture_scale": 1.0
+      },
+      "repo_data_count": 24,
+      "repo_data_unchanged": true,
+      "capture_occlusions": [],
+      "source_sha256": {
+        "autoplay_chapter5.py": "7931a33cd658fff3637744c30109cf5243cc172c88e06c1c864ebbc31fb7b4eb",
+        "autoplay_story_ch1.py": "8ca66ea1b0cefc01c508b0ee5a8eab645643b7662fc4c065679ff6e5e4f7dc93",
+        "autoplay_chapter2.py": "3254f83b812e536d4ba847e31e326a216dbcfd9e892d4da7d27d75ff807b1c10",
+        "autoplay_chapter3.py": "ba82a43e262e3fd9ccb456a59324730f9f55f2fab6c8530f9f50a81489a91add",
+        "autoplay_chapter4.py": "e0d344d36f7203ad074ef9256480e857a43fc1b28453121bd557c490d53b3744"
+      },
+      "centering_checks": []
+    },
+    "native-regular-system": {
+      "commit": "9856ab81e3f4ae2f6b8f1c34689cce97c8dd4156",
+      "started": "2026-11-18T22:30:18+09:00",
+      "completed": true,
+      "error": null,
+      "passed": 321,
+      "failed": 0,
+      "clicks": 339,
+      "wheel_events": 14,
+      "keyboard_events": 290,
+      "env": {
+        "tk": "8.6.15",
+        "scaling": 1.6683087027914612,
+        "screen": [
+          1920,
+          1080
+        ],
+        "work_area": [
+          0,
+          0,
+          1920,
+          1020
+        ],
+        "capture_scale": 1.0
+      },
+      "repo_data_count": 24,
+      "repo_data_unchanged": true,
+      "capture_occlusions": [],
+      "source_sha256": {
+        "autoplay_chapter5.py": "7931a33cd658fff3637744c30109cf5243cc172c88e06c1c864ebbc31fb7b4eb",
+        "autoplay_story_ch1.py": "8ca66ea1b0cefc01c508b0ee5a8eab645643b7662fc4c065679ff6e5e4f7dc93",
+        "autoplay_chapter2.py": "3254f83b812e536d4ba847e31e326a216dbcfd9e892d4da7d27d75ff807b1c10",
+        "autoplay_chapter3.py": "ba82a43e262e3fd9ccb456a59324730f9f55f2fab6c8530f9f50a81489a91add",
+        "autoplay_chapter4.py": "e0d344d36f7203ad074ef9256480e857a43fc1b28453121bd557c490d53b3744"
+      },
+      "centering_checks": [
+        {
+          "step": "제1장 안내",
+          "item": "대화창 중앙 배치 ±8px · 현장 교육",
+          "result": "PASS",
+          "detail": "(-1, 1)",
+          "kind": "auto"
+        },
+        {
+          "step": "1 싱가포르 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "1 싱가포르 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "2 일본 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "2 일본 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "3 미국 요청",
+          "item": "대화창 중앙 배치 ±8px · AIDC LINK |",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "3 미국 배정",
+          "item": "대화창 중앙 배치 ±8px · 배정 설정",
+          "result": "PASS",
+          "detail": "(0, 0)",
+          "kind": "auto"
+        },
+        {
+          "step": "제1장 결과",
+          "item": "대화창 중앙 배치 ±8px · 결과",
+          "result": "PASS",
+          "detail": "(-1, 1)",
+          "kind": "auto"
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "unaware_final_disk_equals_previous_qa_except_new_game_seed": true,
+    "system_final_disk_equals_previous_qa_except_new_game_seed": true,
+    "both_dpi_final_disks_identical_except_new_game_seed": true,
+    "chapter1_results_identical_between_dpi_modes": true,
+    "chapter2_results_identical_between_dpi_modes": true,
+    "chapter3_results_identical_between_dpi_modes": true,
+    "chapter4_results_identical_between_dpi_modes": true,
+    "chapter5_results_identical_between_dpi_modes": true
+  },
+  "comparison_note": "Only simulation.seed is excluded: each new GUI game generates a SystemRandom seed.",
+  "new_game_seeds": {
+    "previous_qa": 1379104429,
+    "unaware": 1343534796,
+    "system": 1120078043
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "jobs": [
+    {
+      "request_id": 4,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "task": "로봇 AI 모델 추론 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 100,
+      "on_time": true,
+      "mode": "고성능 모드",
+      "gpu": 4,
+      "power": 5,
+      "placement": "A GPU 3/전력 4, B GPU 1/전력 1",
+      "started": 630,
+      "completed": 670,
+      "waited": 0,
+      "late_minutes": 0,
+      "penalty": 0,
+      "expired": false,
+      "expiry": 710,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 100,
+      "state": "success",
+      "reason": null,
+      "deadline": "준수"
+    },
+    {
+      "request_id": 5,
+      "company": "Northstar AI",
+      "country": "미국",
+      "task": "대규모 데이터 분석 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 95,
+      "on_time": true,
+      "mode": "절약형 모드",
+      "gpu": 4,
+      "power": 3,
+      "placement": "B GPU 2/전력 1, C GPU 2/전력 2",
+      "started": 630,
+      "completed": 730,
+      "waited": 0,
+      "late_minutes": 0,
+      "penalty": 0,
+      "expired": false,
+      "expiry": 750,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 95,
+      "state": "success",
+      "reason": null,
+      "deadline": "준수"
+    }
+  ],
+  "concurrent": true,
+  "servers": {
+    "A": "IDLE",
+    "B": "IDLE",
+    "C": "IDLE",
+    "D": "IDLE"
+  },
+  "decisions": [
+    "두 작업을 같은 시각(D1 10:30)에 시작했습니다.",
+    "일본: 고성능 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료",
+    "미국: 절약형 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료"
+  ],
+  "practice": false,
+  "mission": "success",
+  "overall": 97.5,
+  "failure": null,
+  "highlights": [
+    "일본 Sakura Robotics: 고객이 원래 요청한 고성능 모드(GPU 4/전력 5 · 배정 A GPU 3/전력 4, B GPU 1/전력 1)로 D1 10:30에 시작해 D1 11:10에 완료했습니다. 완료 기한 D1 11:20보다 10분 먼저 끝냈습니다.",
+    "미국 Northstar AI: 고객이 허용한 절약형 모드(GPU 4/전력 3 · 배정 B GPU 2/전력 1, C GPU 2/전력 2)로 D1 10:30에 시작해 D1 12:10에 완료했습니다. 완료 기한 D1 12:10에 맞춰 끝냈습니다.",
+    "두 작업을 동시에 실행하며 GPU 8개와 전력 8단위를 나누어 썼습니다(데이터센터 총 GPU 10/전력 10)."
+  ],
+  "summary": {
+    "mission": "success",
+    "overall": 97.5,
+    "ok": 2,
+    "total": 2,
+    "strategy": "일본 고성능 + 미국 절약형",
+    "arrangement": "두 작업 동시 실행",
+    "resources": "GPU 8개 / 전력 8단위 사용 후 반환",
+    "verdict": "두 고객 모두 기한 내 완료"
+  }
+}

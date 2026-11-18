@@ -1,0 +1,199 @@
+{
+  "jobs": [
+    {
+      "request_id": 8,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "record": {
+        "server": "A",
+        "fault_minute": 890,
+        "choices": [
+          "migrate"
+        ],
+        "slice_gpu": 3,
+        "slice_power": 4,
+        "repair_finish": 940,
+        "migrate_finish": 930,
+        "due": 935,
+        "repair_minutes": 20,
+        "normal_gpu": 6,
+        "need_gpu": 3,
+        "parts": "Server B GPU 2/전력 2, Server C GPU 1/전력 2"
+      },
+      "job": {
+        "request_id": 8,
+        "company": "Sakura Robotics",
+        "country": "일본",
+        "task": "로봇 AI 모델 추론 작업",
+        "key": "on_time",
+        "label": "정상 완료 · 기한 준수",
+        "mode": "고성능 모드",
+        "gpu": 3,
+        "power": 4,
+        "deadline": "준수",
+        "due": "D1 15:35",
+        "completed": "D1 15:30",
+        "score": 100
+      },
+      "choices": [
+        "작업 이전"
+      ],
+      "downtime": 10,
+      "on_time": true,
+      "success": true,
+      "allocations": 2,
+      "last_placement": "Server B GPU 2/전력 2 → Server C GPU 1/전력 2"
+    },
+    {
+      "request_id": 9,
+      "company": "Merlion AI",
+      "country": "싱가포르",
+      "record": {
+        "server": "A",
+        "fault_minute": 960,
+        "choices": [
+          "repair"
+        ],
+        "slice_gpu": 4,
+        "slice_power": 4,
+        "repair_finish": 1010,
+        "migrate_finish": null,
+        "due": 1080,
+        "repair_minutes": 20,
+        "normal_gpu": 6,
+        "need_gpu": 7
+      },
+      "job": {
+        "request_id": 9,
+        "company": "Merlion AI",
+        "country": "싱가포르",
+        "task": "생성형 AI 모델 학습 요청",
+        "key": "on_time",
+        "label": "정상 완료 · 기한 준수",
+        "mode": "고성능 모드",
+        "gpu": 7,
+        "power": 7,
+        "deadline": "준수",
+        "due": "D1 18:00",
+        "completed": "D1 16:50",
+        "score": 100
+      },
+      "choices": [
+        "장비 복구"
+      ],
+      "downtime": 20,
+      "on_time": true,
+      "success": true,
+      "allocations": 1,
+      "last_placement": "Server A GPU 4/전력 4 → Server B GPU 2/전력 2 → Server C GPU 1/전력 1"
+    }
+  ],
+  "mission": "success",
+  "practice": false,
+  "servers": {
+    "A": "HEALTHY",
+    "B": "HEALTHY",
+    "C": "HEALTHY",
+    "D": "HEALTHY"
+  },
+  "released": true,
+  "summary": {
+    "mission": "success",
+    "ok": 2,
+    "total": 2,
+    "table": [
+      [
+        "A",
+        "Server A 장애",
+        "작업 이전",
+        "기한 내 완료",
+        "10분",
+        "100점"
+      ],
+      [
+        "B",
+        "Server A 장애",
+        "장비 복구",
+        "기한 내 완료",
+        "20분",
+        "100점"
+      ]
+    ],
+    "rows": [
+      [
+        [
+          "장애 서버",
+          "Server A"
+        ],
+        [
+          "선택 대응",
+          "작업 이전"
+        ],
+        [
+          "선택 시 예상",
+          "복구 완료 D1 15:40 / 이전 완료 D1 15:30 / 기한 D1 15:35"
+        ],
+        [
+          "서버 배정(마지막)",
+          "Server B GPU 2/전력 2 → Server C GPU 1/전력 2"
+        ],
+        [
+          "배정 기록 수",
+          "2"
+        ],
+        [
+          "중단 시간",
+          "10분 (하드웨어 중단 + 이전 준비)"
+        ]
+      ],
+      [
+        [
+          "장애 서버",
+          "Server A"
+        ],
+        [
+          "선택 대응",
+          "장비 복구"
+        ],
+        [
+          "선택 시 예상",
+          "복구 완료 D1 16:50 / 이전 불가 / 기한 D1 18:00"
+        ],
+        [
+          "서버 배정(마지막)",
+          "Server A GPU 4/전력 4 → Server B GPU 2/전력 2 → Server C GPU 1/전력 1"
+        ],
+        [
+          "배정 기록 수",
+          "1"
+        ],
+        [
+          "중단 시간",
+          "20분 (하드웨어 중단 + 이전 준비)"
+        ]
+      ]
+    ],
+    "columns": [
+      "미션",
+      "장애",
+      "선택 대응",
+      "결과",
+      "중단",
+      "점수"
+    ],
+    "name": "Chapter 3b",
+    "subtitle": "서버 장비 장애 · 복구와 이전",
+    "detail_text": "미션 A · 일본 Sakura Robotics — 로봇 AI 모델 추론 작업\n  장애 서버: Server A\n  선택 대응: 작업 이전\n  선택 시 예상: 복구 완료 D1 15:40 / 이전 완료 D1 15:30 / 기한 D1 15:35\n  서버 배정(마지막): Server B GPU 2/전력 2 → Server C GPU 1/전력 2\n  배정 기록 수: 2\n  중단 시간: 10분 (하드웨어 중단 + 이전 준비)\n  운영 모드 고성능 모드 · GPU 3 / 전력 4 사용 후 반환\n미션 B · 싱가포르 Merlion AI — 생성형 AI 모델 학습 요청\n  장애 서버: Server A\n  선택 대응: 장비 복구\n  선택 시 예상: 복구 완료 D1 16:50 / 이전 불가 / 기한 D1 18:00\n  서버 배정(마지막): Server A GPU 4/전력 4 → Server B GPU 2/전력 2 → Server C GPU 1/전력 1\n  배정 기록 수: 1\n  중단 시간: 20분 (하드웨어 중단 + 이전 준비)\n  운영 모드 고성능 모드 · GPU 7 / 전력 7 사용 후 반환\n서버 상태: A HEALTHY / B HEALTHY / C HEALTHY / D HEALTHY\n이 장의 서버 구성과 시간은 교육용 설정입니다.",
+    "verdict": "두 장애 모두 기한 내 정상 완료",
+    "mentor": [
+      "A: 정상 서버에 자원이 있어 작업을 이전했고 기한 내에 끝냈습니다. 복구를 기다렸다면 기한을 넘겼을 것입니다.",
+      "B: 정상 서버 GPU 6개로는 GPU 7개 작업을 옮길 수 없어 장비 복구가 맞는 선택이었습니다.",
+      "최종 결과: 두 장애 중 2개를 기한 내 정상 완료했습니다."
+    ]
+  },
+  "mentor": [
+    "A: 정상 서버에 자원이 있어 작업을 이전했고 기한 내에 끝냈습니다. 복구를 기다렸다면 기한을 넘겼을 것입니다.",
+    "B: 정상 서버 GPU 6개로는 GPU 7개 작업을 옮길 수 없어 장비 복구가 맞는 선택이었습니다.",
+    "최종 결과: 두 장애 중 2개를 기한 내 정상 완료했습니다."
+  ]
+}

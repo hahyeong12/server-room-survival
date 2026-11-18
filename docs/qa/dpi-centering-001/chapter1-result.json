@@ -1,0 +1,90 @@
+{
+  "company": "Merlion AI / Sakura Robotics / Northstar AI",
+  "task": "첫 근무 완료",
+  "score": 100.0,
+  "on_time": true,
+  "gpu": 16,
+  "power": 17,
+  "servers": {
+    "A": "HEALTHY",
+    "B": "HEALTHY",
+    "C": "HEALTHY",
+    "D": "HEALTHY"
+  },
+  "feedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+  "request_id": 3,
+  "playthrough_id": 3,
+  "jobs": [
+    {
+      "request_id": 1,
+      "company": "Merlion AI",
+      "country": "싱가포르",
+      "task": "생성형 AI 모델 학습 요청",
+      "key": "on_time",
+      "label": "정상 완료 · 기한 준수",
+      "mode": "고성능 모드",
+      "gpu": 7,
+      "power": 7,
+      "deadline": "준수",
+      "due": "D1 12:00",
+      "completed": "D1 09:30",
+      "score": 100
+    },
+    {
+      "request_id": 2,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "task": "로봇 AI 모델 추론 작업",
+      "key": "on_time",
+      "label": "정상 완료 · 기한 준수",
+      "mode": "고성능 모드",
+      "gpu": 3,
+      "power": 4,
+      "deadline": "준수",
+      "due": "D1 12:30",
+      "completed": "D1 10:00",
+      "score": 100
+    },
+    {
+      "request_id": 3,
+      "company": "Northstar AI",
+      "country": "미국",
+      "task": "대규모 데이터 분석 작업",
+      "key": "on_time",
+      "label": "정상 완료 · 기한 준수",
+      "mode": "고성능 모드",
+      "gpu": 6,
+      "power": 6,
+      "deadline": "준수",
+      "due": "D1 13:00",
+      "completed": "D1 10:30",
+      "score": 100
+    }
+  ],
+  "summary": [
+    [
+      "완료 업무",
+      "3/3건"
+    ],
+    [
+      "평균 운영 점수",
+      "100.0점"
+    ],
+    [
+      "자원 반환",
+      "GPU 누적 16개 · 전력 누적 17단위"
+    ],
+    [
+      "Merlion AI",
+      "정상 완료 · 100점"
+    ],
+    [
+      "Sakura Robotics",
+      "정상 완료 · 100점"
+    ],
+    [
+      "Northstar AI",
+      "정상 완료 · 100점"
+    ]
+  ]
+}
