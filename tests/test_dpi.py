@@ -5,6 +5,18 @@ from unittest.mock import patch
 from aidc.ui import dpi
 
 
+def isolate_state(case):
+    """이 모듈의 검사만 초기 상태에서 시작하고, 끝나면 실행 전 상태(예: --dpi system)를 그대로 되돌립니다.
+    같은 프로세스에서 이어지는 GUI 테스트의 배율을 바꾸지 않기 위해서입니다."""
+    saved = dict(dpi._state)
+    dpi._reset()
+
+    def restore():
+        dpi._state.clear()
+        dpi._state.update(saved)
+    case.addCleanup(restore)
+
+
 class FakeApi:
     def __init__(self, result=0, actual=1, system_dpi=120, raise_on=None):
         self.result, self.actual, self.dpi, self.raise_on = result, actual, system_dpi, raise_on
@@ -29,8 +41,7 @@ class FakeApi:
 
 class DpiFlagTests(unittest.TestCase):
     def setUp(self):
-        dpi._reset()
-        self.addCleanup(dpi._reset)
+        isolate_state(self)
 
     def test_default_is_unaware_with_identity_scale(self):
         self.assertEqual(dpi.status()['mode'], 'unaware')
@@ -66,6 +77,14 @@ class DpiFlagTests(unittest.TestCase):
         self.assertEqual(dpi.size((1000, 650)), (1250, 812))
         self.assertEqual(dpi.geometry('1000x650+40+20'), '1250x812+50+25')
         self.assertEqual(dpi.unpx(1025), 820)
+
+    def test_state_is_restored_for_later_tests(self):
+        dpi._state.update(mode='system', scale=1.25, dpi=120)
+        outer = unittest.TestCase()
+        isolate_state(outer)
+        self.assertEqual(dpi.scale(), 1.0)
+        outer.doCleanups()
+        self.assertEqual(dpi.scale(), 1.25)
 
     def test_other_scales(self):
         for value, expected in ((96, 1.0), (144, 1.5), (168, 1.75), (192, 2.0)):
@@ -126,8 +145,7 @@ class DpiFlagTests(unittest.TestCase):
 
 class MainEntryTests(unittest.TestCase):
     def setUp(self):
-        dpi._reset()
-        self.addCleanup(dpi._reset)
+        isolate_state(self)
 
     def test_main_configures_dpi_before_creating_tk(self):
         import main

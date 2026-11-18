@@ -1,4 +1,7 @@
 """Reusable Canvas chip and battery drawing functions. No game or sample state."""
+# 게임과 독립 시안이 같은 Canvas 배율(실험용 DPI, 기본 1.0)을 쓰도록 여기서 함께 제공합니다.
+from aidc.ui import dpi  # noqa: F401  (server_ui_preview가 이 모듈을 통해 사용)
+
 BG = '#080e18'
 PANEL = '#101c2a'
 SURFACE = '#152536'
