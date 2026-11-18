@@ -299,8 +299,8 @@ class UsabilityGuiTests(unittest.TestCase):
                 self.root.geometry(dpi.geometry(f'{width}x{height}'));app.resources.show_preview();self.root.update()
                 for widget in (app.resources.preview,app.resources.preview_title,app.network,app.overview,
                                app.action_hint,*app.action_buttons.values(),*app.time_buttons.values()):
-                    self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(),self.root.winfo_rootx()+width)
-                    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),self.root.winfo_rooty()+height)
+                    self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(),self.root.winfo_rootx()+dpi.px(width))
+                    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(),self.root.winfo_rooty()+dpi.px(height))
                 self.assertGreaterEqual(app.resources.preview.winfo_height(),app.resources.preview.winfo_reqheight())
                 self.assertFalse(hasattr(app,'scroll'))
         self.assertEqual(self.errors,[])

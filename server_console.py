@@ -255,7 +255,7 @@ class LiveServerRoom(tk.Canvas):
 
 class LiveInspector(tk.Canvas):
     def __init__(self,parent):
-        super().__init__(parent,bg=PANEL,width=236,height=190,highlightthickness=0)
+        super().__init__(parent,bg=PANEL,width=dpi.px(236),height=dpi.px(190),highlightthickness=0)
         self.view = None
         self.bind('<Configure>',lambda _:self.draw())
 
@@ -307,7 +307,7 @@ class ServerPanel(tk.Frame):
         self.inspector=LiveInspector(self.inspector_scroll.body); self.inspector.pack(fill='x')
         self.owners=ttk.Treeview(self.inspector_scroll.body,columns=('client','resources'),show='headings',height=3)
         self.owners.heading('client',text='점유 고객 / 네트워크'); self.owners.heading('resources',text='GPU / 전력')
-        self.owners.column('client',width=150,minwidth=80);self.owners.column('resources',width=80,minwidth=60)
+        self.owners.column('client',width=dpi.px(150),minwidth=dpi.px(80));self.owners.column('resources',width=dpi.px(80),minwidth=dpi.px(60))
         self.owners.pack(fill='both',expand=True)
         self.owners.bind('<MouseWheel>',lambda e:self.owners.yview_scroll(-int(e.delta/120),'units'))
         self.compare_button=tk.Button(review,text='배정 계획 비교·선택',bg=SURFACE,fg=CYAN,
@@ -319,7 +319,7 @@ class ServerPanel(tk.Frame):
         self.preview_title=tk.Label(self.review_scroll.body,bg=PANEL,fg=TEXT,font=(FONT,10,'bold'),anchor='w')
         self.preview_title.pack(fill='x')
         self.preview_frame=review
-        self.preview=tk.Label(self.review_scroll.body,bg=PANEL,fg=CYAN,font=(FONT,9),anchor='nw',justify='left',wraplength=225)
+        self.preview=tk.Label(self.review_scroll.body,bg=PANEL,fg=CYAN,font=(FONT,9),anchor='nw',justify='left',wraplength=dpi.px(225))
         self.preview.pack(fill='x',pady=(6,4))
         self.tutorial_tab_edges = []
         self.tutorial_tab_color = None

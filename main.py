@@ -133,11 +133,11 @@ class SimulatorApp:
         style = ttk.Style(self.root)
         style.theme_use('clam')
         style.configure('Treeview', background=PANEL, fieldbackground=PANEL, foreground=TEXT,
-                        borderwidth=0, rowheight=29, font=(FONT, 10))
+                        borderwidth=0, rowheight=dpi.px(29), font=(FONT, 10))
         style.configure('Treeview.Heading', background=BORDER, foreground=TEXT, font=(FONT, 10, 'bold'))
         style.map('Treeview', background=[('selected', BORDER)], foreground=[('selected', CYAN)])
         style.configure('TNotebook',background=PANEL,borderwidth=0)
-        style.configure('TNotebook.Tab',background=BORDER,foreground=MUTED,padding=(7,4))
+        style.configure('TNotebook.Tab',background=BORDER,foreground=MUTED,padding=dpi.size((7,4)))
         style.map('TNotebook.Tab',background=[('selected',PANEL)],foreground=[('selected',CYAN)])
         style.configure('Treeview',bordercolor=BORDER,lightcolor=BORDER,darkcolor=BORDER)
         self.root.columnconfigure(0, weight=1)
@@ -166,17 +166,17 @@ class SimulatorApp:
         self.overview.grid(row=1, sticky='ew', padx=12, pady=(0,6))
         body = self.body = tk.Frame(self.root, bg=BG)
         body.grid(row=2, sticky='nsew', padx=12, pady=(0, 5))
-        body.columnconfigure(0, minsize=220)
-        body.columnconfigure(1, weight=1, minsize=300)
-        body.columnconfigure(2, minsize=244)
+        body.columnconfigure(0, minsize=dpi.px(220))
+        body.columnconfigure(1, weight=1, minsize=dpi.px(300))
+        body.columnconfigure(2, minsize=dpi.px(244))
         body.rowconfigure(0, weight=1)
         left = tk.Frame(body, bg=PANEL, padx=6, pady=2)
         left.grid(row=0, column=0, sticky='nsew', padx=(0, 10))
         left.columnconfigure(0, weight=1)
         # 필수 행동([요청 확인])이 있는 새 요청 박스를 제목 바로 아래에 둡니다. 창 높이가 부족하면 grid가 아래쪽 목록부터
         # 잘라내므로 버튼은 항상 보입니다(QA tutorial-001 Q-01: 이전 순서에서는 버튼이 본문 밖으로 밀려 가려졌습니다).
-        left.rowconfigure(2, weight=2, minsize=58 if self.session.story else 55)
-        left.rowconfigure(4, weight=1, minsize=60)
+        left.rowconfigure(2, weight=2, minsize=dpi.px(58 if self.session.story else 55))
+        left.rowconfigure(4, weight=1, minsize=dpi.px(60))
         label(left, 'AIDC LINK · 고객 요청함', 12, bold=True).grid(row=0, sticky='w', pady=(0, 5))
         self.inbox = self.make_list(left, ('client', 'status'), ('고객 / 국가', '상태 / 기한'), (110, 100), 4)
         self.inbox.grid(row=2, sticky='nsew')
@@ -290,7 +290,7 @@ class SimulatorApp:
         tree = ttk.Treeview(parent, columns=columns, show='headings', height=height, selectmode='browse')
         for key, name, width in zip(columns, names, widths):
             tree.heading(key, text=name)
-            tree.column(key, width=width, minwidth=45, stretch=True)
+            tree.column(key, width=dpi.px(width), minwidth=dpi.px(45), stretch=True)
         # Tk Treeview 기본 휠 처리를 사용합니다. 위젯에도 바인딩하면 한 입력을 두 번 처리합니다.
         return tree
 
@@ -1793,16 +1793,18 @@ class ModeSelection:
         self.version_label.pack(anchor='w', pady=(12, 0))
 
     def layout_content(self, event=None):
-        self.content.place_configure(width=min(1060, max(600, self.frame.winfo_width()-80)))
+        # 폭·높이 기준과 여백은 설계 기준 px입니다(실험용 DPI 배율, 기본 1.0).
+        px = dpi.px
+        self.content.place_configure(width=min(px(1060), max(px(600), self.frame.winfo_width()-px(80))))
         if not hasattr(self, 'version_label'):
             return
         # 작은 창의 하위 메뉴는 제목 공간만 줄입니다. 카드 화면과 큰 창은 기존 크기를 유지합니다.
-        compact = self.frame.winfo_height() < 740 and not self.mode_panel.winfo_manager()
-        self.banner.pack_configure(pady=(0, 0 if compact else 20))
+        compact = self.frame.winfo_height() < px(740) and not self.mode_panel.winfo_manager()
+        self.banner.pack_configure(pady=(0, px(0 if compact else 20)))
         self.title_label.configure(font=(FONT, 24 if compact else 38, 'bold'))
-        self.title_label.pack_configure(pady=(0 if compact else 6, 0))
-        self.title_rule.pack_configure(pady=(2 if compact else 12, 0))
-        self.version_label.pack_configure(pady=(2 if compact else 12, 0))
+        self.title_label.pack_configure(pady=(px(0 if compact else 6), 0))
+        self.title_rule.pack_configure(pady=(px(2 if compact else 12), 0))
+        self.version_label.pack_configure(pady=(px(2 if compact else 12), 0))
 
     def show_menu(self, category):
         if self.starting or self.app is not None:

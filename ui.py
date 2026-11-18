@@ -14,6 +14,9 @@ CUSTOMER_COLORS = (CYAN, BLUE, '#c5a1ff', AMBER)
 
 
 def label(parent, text='', size=10, color=TEXT, bold=False, **kwargs):
+    if isinstance(kwargs.get('wraplength'), int):
+        # 고정 줄바꿈 폭은 설계 기준 px입니다. 실험용 DPI 배율(기본 1.0)을 곱합니다.
+        kwargs['wraplength'] = dpi.px(kwargs['wraplength'])
     return tk.Label(parent, text=text, bg=parent.cget('bg'), fg=color,
                     font=(FONT, size, 'bold' if bold else 'normal'), **kwargs)
 
@@ -61,7 +64,7 @@ class Tooltip:
         self.window = tk.Toplevel(self.widget)
         self.window.overrideredirect(True)
         self.window.geometry(f'+{self.widget.winfo_rootx()}+{self.widget.winfo_rooty()+28}')
-        tk.Label(self.window, text=self.text, bg=BORDER, fg=TEXT, wraplength=280,
+        tk.Label(self.window, text=self.text, bg=BORDER, fg=TEXT, wraplength=dpi.px(280),
                  font=(FONT, 10), padx=10, pady=8).pack()
     def hide(self, _=None):
         if self.timer is not None:

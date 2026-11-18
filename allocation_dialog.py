@@ -96,7 +96,7 @@ class AllocationDialog(tk.Toplevel):
         self.warning_card = tk.Frame(body, bg=WARNING_BG, highlightthickness=1, highlightbackground=RED, padx=12, pady=6)
         tk.Label(self.warning_card, text='⚠', bg=WARNING_BG, fg=RED, font=(FONT, 14, 'bold')).pack(side='left', padx=(0, 8))
         self.mode_reason = tk.Label(self.warning_card, bg=WARNING_BG, fg='#ffd5d9', font=(FONT, 11, 'bold'), anchor='w',
-                                    justify='left', wraplength=880)
+                                    justify='left', wraplength=dpi.px(880))
         self.mode_reason.pack(side='left', fill='x', expand=True)
         self.warning_card.grid(row=3, sticky='ew', padx=12, pady=(0, 4))
         self.warning_card.grid_remove()
@@ -127,11 +127,11 @@ class AllocationDialog(tk.Toplevel):
         info = tk.Frame(body, bg=BG)
         info.grid(row=7, sticky='ew', padx=12, pady=(4, 8))
         info.columnconfigure(0, weight=1)
-        self.notice = tk.Label(info, bg=BG, fg=MUTED, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.notice = tk.Label(info, bg=BG, fg=MUTED, font=(FONT, 10), anchor='w', justify='left', wraplength=dpi.px(880))
         self.notice.grid(row=0, sticky='ew')
-        self.change_label = tk.Label(info, bg=BG, fg=AMBER, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.change_label = tk.Label(info, bg=BG, fg=AMBER, font=(FONT, 10), anchor='w', justify='left', wraplength=dpi.px(880))
         self.change_label.grid(row=1, sticky='ew')
-        self.impact_label = tk.Label(info, bg=BG, fg=CYAN, font=(FONT, 10), anchor='w', justify='left', wraplength=880)
+        self.impact_label = tk.Label(info, bg=BG, fg=CYAN, font=(FONT, 10), anchor='w', justify='left', wraplength=dpi.px(880))
         self.impact_label.grid(row=2, sticky='ew')
 
         # 고정 하단: 시작 요약 + 버튼
@@ -139,7 +139,7 @@ class AllocationDialog(tk.Toplevel):
         footer.grid(row=1, sticky='ew', padx=12, pady=(4, 10))
         footer.columnconfigure(0, weight=1)
         self.summary_label = tk.Label(footer, bg=PANEL, fg=TEXT, font=(FONT, 11, 'bold'), anchor='w', justify='left',
-                                      wraplength=880, padx=12, pady=6, highlightthickness=1, highlightbackground=EDGE)
+                                      wraplength=dpi.px(880), padx=12, pady=6, highlightthickness=1, highlightbackground=EDGE)
         self.summary_label.grid(row=0, columnspan=3, sticky='ew', pady=(0, 6))
         self.reload_button = self.button(footer, '현재 자원으로 다시 확인', self.reload)
         self.reload_button.grid(row=1, column=0, sticky='w')
@@ -192,7 +192,7 @@ class AllocationDialog(tk.Toplevel):
         self.heading.configure(text=f'요청 #{self.request_id} · {run.mission["company_name"]} · {p["label"]}'
                                f'  |  GPU {p["gpu"]} / 전력 {p["power"]}\n'
                                + ('이전할 새 서버 위치를 고르세요.' if self.migration else '운영 모드와 서버 배정안을 고른 뒤 작업을 시작하세요.'),
-                               wraplength=760)
+                               wraplength=dpi.px(760))
         if not self.migration:
             # Chapter 2: 모드별 처리 시간·기한은 모드 카드에 있으므로 두 고객 동시 실행 가능 여부만 덧붙입니다.
             briefing = [line for line in self.session.chapter2_briefing_lines(run) if line.startswith('두 고객')]
@@ -239,7 +239,7 @@ class AllocationDialog(tk.Toplevel):
                              font=(FONT, 10, 'bold' if part else 'normal')).grid(row=row, column=column, padx=4, pady=1)
             self.comparison_rows.append(rows)
             caption = tk.Label(card, text=self.caption(i, parts), bg=PANEL, fg=CYAN, font=(FONT, 10),
-                               justify='left', anchor='w', wraplength=290)
+                               justify='left', anchor='w', wraplength=dpi.px(290))
             caption.grid(row=6, columnspan=3, pady=(4, 0), sticky='w')
             self.card_captions.append(caption)
             for widget in (card, *card.winfo_children()):

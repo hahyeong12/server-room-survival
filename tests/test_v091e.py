@@ -109,7 +109,7 @@ class FreeModeGuiTests(unittest.TestCase):
                     self.assertTrue(widget.winfo_ismapped())
                     self.assertGreaterEqual(widget.winfo_rooty(), d.winfo_rooty())
                     self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), d.winfo_rooty()+d.winfo_height())
-                self.assertGreaterEqual(d.bubble.winfo_height(), 60)
+                self.assertGreaterEqual(d.bubble.winfo_height(), dpi.px(60))
                 d.destroy()
 
 

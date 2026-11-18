@@ -553,7 +553,7 @@ class HardwareGuiTests(unittest.TestCase):
                 for widget in widgets:
                     self.assertTrue(widget.winfo_ismapped())
                     self.assertGreaterEqual(widget.winfo_rooty(), self.root.winfo_rooty())
-                    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+height)
+                    self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+dpi.px(height))
                 for canvas in (a.network, a.overview, a.resources.inspector):
                     for item in canvas.find_all():
                         if canvas.type(item) == 'text':

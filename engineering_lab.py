@@ -366,7 +366,7 @@ class EngineeringLabDialog(tk.Toplevel):
         line.grid(row=row+1, sticky='w')
         for key, text in options:
             chosen = answered and answered['answer'] == key
-            button = ToggleButton(line, text, lambda k=key: self._answer(stage, question, k), wraplength=260, justify='left')
+            button = ToggleButton(line, text, lambda k=key: self._answer(stage, question, k), wraplength=dpi.px(260), justify='left')
             button.set_selected(chosen)
             button.pack(side='left', padx=(0, 6), pady=2)
 
@@ -707,8 +707,8 @@ class EngineeringLabDialog(tk.Toplevel):
             for server in o.servers:
                 hits.append(('gateway-servers', nodes['gateway'], nodes[server.key], HIT_WIDTH-8))
             for seg_id, (x1, y1), (x2, y2), width in hits:
-                canvas.create_line(x1, y1, x2, y2, fill=PANEL, width=width, capstyle='round',
-                                   tags=tags(seg_id, 'hit', 'hit:'+seg_id))
+                canvas.create_line(x1, y1, x2, y2, fill=PANEL, width=dpi.px(width), capstyle='round',
+                                   tags=tags(seg_id, 'hit', 'hit:'+seg_id))  # 선택 영역 굵기도 화면 px로
         for seg_id, a, b in links:
             (x1, y1), (x2, y2) = nodes[a], nodes[b]
             if chosen and chosen['answer'] == seg_id:

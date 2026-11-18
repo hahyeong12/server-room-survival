@@ -161,7 +161,7 @@ class SlotMenuGuiTests(unittest.TestCase):
         self.assertLessEqual(abs(left-right), 2)
         self.assertLessEqual(abs(top-bottom), 2)
         self.assertGreaterEqual(min(left, top, right, bottom), 0)
-        self.assertLessEqual(panel.winfo_width(), 1060)
+        self.assertLessEqual(panel.winfo_width(), dpi.px(1060))
         for button in (*menu.buttons.values(), *menu.story_buttons.values()):
             if not button.winfo_ismapped(): continue
             self.assertGreaterEqual(button.winfo_rootx(), self.root.winfo_rootx())

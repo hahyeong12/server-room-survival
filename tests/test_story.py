@@ -469,7 +469,7 @@ class StoryGuiTests(unittest.TestCase):
                 self.assertTrue(widget.winfo_ismapped())
                 if widget.winfo_class() == 'Treeview':
                     # 목록은 자체 스크롤합니다. 헤더와 한 행 이상은 보여야 합니다.
-                    self.assertGreaterEqual(widget.winfo_height(), 56)
+                    self.assertGreaterEqual(widget.winfo_height(), dpi.px(56))
                 else:
                     self.assertGreaterEqual(widget.winfo_height(), widget.winfo_reqheight())
 
@@ -534,8 +534,8 @@ class ModeSelectionTests(unittest.TestCase):
                 self.assertTrue(card.winfo_ismapped())
                 self.assertGreaterEqual(card.winfo_rootx(), self.root.winfo_rootx())
                 self.assertGreaterEqual(card.winfo_rooty(), self.root.winfo_rooty())
-                self.assertLessEqual(card.winfo_rootx()+card.winfo_width(), self.root.winfo_rootx()+width)
-                self.assertLessEqual(card.winfo_rooty()+card.winfo_height(), self.root.winfo_rooty()+height)
+                self.assertLessEqual(card.winfo_rootx()+card.winfo_width(), self.root.winfo_rootx()+dpi.px(width))
+                self.assertLessEqual(card.winfo_rooty()+card.winfo_height(), self.root.winfo_rooty()+dpi.px(height))
                 self.assertGreaterEqual(card.winfo_height(), card.winfo_reqheight())
 
     def test_story_button_uses_story_file_and_story_session(self):

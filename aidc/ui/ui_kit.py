@@ -43,7 +43,7 @@ class StatusChip(tk.Label):
 class Gauge(tk.Canvas):
     """제목·큰 값·막대로 이루어진 게이지. set(value, maximum, text, tone)."""
     def __init__(self, parent, title, height=64, bar=12):
-        super().__init__(parent, height=height, bg=PANEL, highlightthickness=1, highlightbackground=BORDER, bd=0)
+        super().__init__(parent, height=dpi.px(height), bg=PANEL, highlightthickness=1, highlightbackground=BORDER, bd=0)
         self.title, self.bar = title, bar
         self.value = self.maximum = 0
         self.text, self.caption, self.tone = '', '', 'idle'

@@ -220,10 +220,11 @@ class ConsoleTests(unittest.TestCase):
             self.root.geometry(dpi.geometry(f'{width}x{height}')); self.root.update()
             for widget in (app.resources.preview, app.inbox, app.action_hint,
                            *app.action_buttons.values(), *app.time_buttons.values()):
-                self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+height)
-                self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(), self.root.winfo_rootx()+width)
+                # 창 크기는 설계 기준 px이므로 같은 배율로 비교합니다(기본 모드는 배율 1.0).
+                self.assertLessEqual(widget.winfo_rooty()+widget.winfo_height(), self.root.winfo_rooty()+dpi.px(height))
+                self.assertLessEqual(widget.winfo_rootx()+widget.winfo_width(), self.root.winfo_rootx()+dpi.px(width))
             self.assertGreaterEqual(app.resources.preview.winfo_height(), app.resources.preview.winfo_reqheight())
-            self.assertGreaterEqual(app.inbox.winfo_height(), 55)
+            self.assertGreaterEqual(app.inbox.winfo_height(), dpi.px(55))
         self.assertEqual(self.errors, [])
 
     def test_expired_requests_appear_in_history_separately_from_failed_jobs(self):

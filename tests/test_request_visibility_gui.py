@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from database import Database
 from main import SimulatorApp
+from aidc.ui import dpi
 
 
 class RequestVisibilityGuiTests(unittest.TestCase):
@@ -83,7 +84,7 @@ class RequestVisibilityGuiTests(unittest.TestCase):
                 parent.rowconfigure(2, minsize=tree.winfo_height()+30)
                 root.update()
                 self.assertTrue(tree.bbox(str(s.selected_id)))
-                parent.rowconfigure(2, minsize=58)
+                parent.rowconfigure(2, minsize=dpi.px(58))  # 앱의 설계 최소 높이로 복원(기본 모드 58)
                 root.update()
                 self.assertTrue(tree.bbox(str(s.selected_id)))
 

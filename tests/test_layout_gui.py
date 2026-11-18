@@ -44,7 +44,7 @@ class LayoutGuiTests(unittest.TestCase):
                 c.root.geometry(dpi.geometry(size)); c.root.update()
                 area = p.inspector_scroll
                 heights.append(area.canvas.winfo_height())
-                self.assertEqual(p.inspector.winfo_height(), 190)
+                self.assertEqual(p.inspector.winfo_height(), dpi.px(190))  # 설계 높이(기본 모드 190)
                 self.assertIs(c.h.target, c.app.resource_confirm_button)
                 for item in p.inspector.find_all():
                     if p.inspector.type(item) != 'text':
