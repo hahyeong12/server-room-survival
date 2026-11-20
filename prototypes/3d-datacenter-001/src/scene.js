@@ -500,6 +500,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset, setLocation,
     focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
+    worldMarker: id => worldGeometry?.markerColor(id) ?? null,
     setLayer(name, visible) { ({ network: netLayer, cooling: coolLayer, power: powerLayer })[name].visible = visible; },
     visuals: () => Object.fromEntries(facility.assets.map(a => [a.id, { color: visuals.get(a.id).strip.material.color.getHexString(), selected: visuals.get(a.id).ring.visible, networkFlow: readings(a).network > 0 }])) };
 }

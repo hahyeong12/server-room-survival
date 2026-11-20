@@ -3,7 +3,7 @@ import landSource from './assets/land.geojson?raw';
 import { COUNTRIES, FACILITIES } from './world-store.js';
 
 const V=(x,y,z)=>new THREE.Vector3(x,y,z);
-const COLORS={normal:0x68dfce,fault:0xff657d,repairing:0xf8be68,awaiting:0x89baff};
+const COLORS={normal:0x68dfce,fault:0xff657d,repairing:0xf8be68,awaiting:0x89baff,request:0xf3c37b};
 export function createWorldGeometry() {
   const world=new THREE.Group(),campus=new THREE.Group(),pickables={world:[],campus:[]},markers={},buildings={},routes=[];
   const materials={ dark:new THREE.MeshStandardMaterial({color:0x172535,roughness:.66,metalness:.42}), metal:new THREE.MeshStandardMaterial({color:0x506574,roughness:.45,metalness:.65}), roof:new THREE.MeshStandardMaterial({color:0x344a60,roughness:.56,metalness:.52}), road:new THREE.MeshStandardMaterial({color:0x1b2836,roughness:.95}), ground:new THREE.MeshStandardMaterial({color:0x304453,roughness:.82}), glass:new THREE.MeshStandardMaterial({color:0x237789,roughness:.22,metalness:.8}), green:new THREE.MeshStandardMaterial({color:0x204a45,roughness:.9}), light:new THREE.MeshBasicMaterial({color:0x90cfe4,toneMapped:false}), gold:new THREE.MeshBasicMaterial({color:0xc1a46e}), cyan:new THREE.MeshBasicMaterial({color:0x62dacd,toneMapped:false}) };
@@ -119,10 +119,12 @@ export function createWorldGeometry() {
     b.items.forEach(([x,y,z,w,h,d],i)=>{matrix.compose(V(x,y,z),q,V(w,h,d));instance.setMatrixAt(i,matrix);});instance.castShadow=true;instance.receiveShadow=true;b.root.add(instance);
   }
   function update(time,state){
-    const phase=state.request.phase,bad=phase==='fault',repair=phase==='repairing',awaiting=phase==='awaiting';
+    const phase=state.request.phase,bad=phase==='fault',repair=phase==='repairing',awaiting=phase==='awaiting',incoming=['new','reviewed'].includes(phase);
     const color=bad?COLORS.fault:repair?COLORS.repairing:awaiting?COLORS.awaiting:COLORS.normal;
-    for(const r of routes){r.material.color.setHex(r.id==='SG'?color:0x3d718d);r.dot.visible=r.id==='SG'&&!bad&&!repair;r.dot.position.copy(r.curve.getPoint((time*.1)%1));}
-    for(const [id,m]of Object.entries(markers)){m.ring.scale.setScalar(1+(id==='SG'?.15*Math.sin(time*2):0));if(id==='SG')m.node.material.color.setHex(color);}
+    // The SG marker keeps the legend's gold "incoming request" colour until the request is accepted.
+    const sgColor=incoming?COLORS.request:color,pulse=incoming||bad?.3:.12;
+    for(const r of routes){r.material.color.setHex(r.id==='SG'?sgColor:0x3d718d);r.dot.visible=r.id==='SG'&&!bad&&!repair;r.dot.position.copy(r.curve.getPoint((time*.1)%1));}
+    for(const [id,m]of Object.entries(markers)){m.ring.scale.setScalar(1+(id==='SG'?pulse*(.5+.5*Math.sin(time*3)):0));if(id==='SG')m.node.material.color.setHex(sgColor);}
     for(const {id,rim}of outlines){rim.visible=state.navigation.facility===id;rim.material.color.setHex(id==='HALL-01'?color:COLORS.normal);}
     campusLinkMat.color.setHex(color);
     buildings['HALL-01'].body.material.color.copy(buildings['HALL-01'].baseColor);
@@ -131,5 +133,5 @@ export function createWorldGeometry() {
   function project(kind,id,camera,rect){
     const p=kind==='world'?markers[id]?.point:buildings[id]?.point;if(!p)return null;const v=p.clone().project(camera);return {x:rect.left+(v.x+1)/2*rect.width,y:rect.top+(1-v.y)/2*rect.height,visible:v.z>-1&&v.z<1};
   }
-  return {world,campus,pickables,update,project,focusPoint:(kind,id)=>(kind==='world'?markers[id]?.point:buildings[id]?.point)?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?COUNTRIES[key]?.name:FACILITIES[key]?.name;}};
+  return {world,campus,pickables,update,project,markerColor:id=>markers[id]?.node.material.color.getHexString(),focusPoint:(kind,id)=>(kind==='world'?markers[id]?.point:buildings[id]?.point)?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?COUNTRIES[key]?.name:FACILITIES[key]?.name;}};
 }

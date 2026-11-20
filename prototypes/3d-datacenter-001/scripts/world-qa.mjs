@@ -17,6 +17,13 @@ try{
   await page.goto(url,{waitUntil:'networkidle'});await page.waitForFunction(()=>!!window.worldQA);await page.waitForTimeout(3000);report.url=url;
   report.initial=await snap();
   await check('hardware WebGL on RTX 5070',async()=>assert.match(report.initial.renderer.renderer,/RTX 5070/));
+  await check('readable title, request card rendered from state, gold incoming SG marker',async()=>{
+    assert.equal(await page.title(),'서버실 생존기 · 3D World');
+    const r=report.initial.state.request;
+    for(const key of ['gpu','powerKW','networkGbps'])assert.equal(await page.locator(`[data-term="${key}"]`).innerText(),String(r.terms[key]));
+    assert.equal(await page.locator('#request-location').innerText(),`${r.facilityId} / ${r.buildingId} / ${r.rackId}`);
+    assert.equal(report.initial.state.request.phase,'new');assert.equal((await snap()).worldMarkers.SG,'f3c37b');
+  });
   await check('four scenes and unchanged domain after navigation and idle',async()=>{
     const before=(await snap()).domain;
     for(const route of ['world','noc','campus','hall']){await go(route);const s=await snap();assert.equal(s.renderer.location,route);assert.equal(s.state.navigation.route,route);assert.deepEqual(s.domain,before);await shot(`phase1-${route}.png`);}
@@ -48,10 +55,11 @@ try{
           const before=(await snap()).domain;
           await page.waitForTimeout(1200);assert.deepEqual((await snap()).domain,before);
           for(const place of ['world','noc','campus','hall']){await go(place);assert.deepEqual((await snap()).domain,before);assert.equal(await page.locator('#phase-chip').innerText(),({fault:'업링크 장애',repairing:'복구 중',awaiting:'사후 확인 대기'})[phase]);if(phase==='fault')await shot(`sync-fault-${place}.png`);}
-          const s=await snap();if(phase==='fault'){assert.equal(s.visuals['D-06'].networkFlow,false);assert.equal(s.state.facility.assets.find(a=>a.id==='D-06').state,'fault');}
+          const s=await snap();if(phase==='fault'){assert.equal(s.visuals['D-06'].networkFlow,false);assert.equal(s.state.facility.assets.find(a=>a.id==='D-06').state,'fault');assert.equal(s.worldMarkers.SG,'ff657d');}
         }
       }
       assert.equal((await snap()).state.request.steps,9);assert.equal(await page.locator('#demo-result').count(),1);
+      assert.equal((await snap()).worldMarkers.SG,'68dfce');
     });
   }
   await check('no runtime or console errors',async()=>{assert.deepEqual(report.errors,[]);assert.deepEqual(report.consoleErrors,[]);});
