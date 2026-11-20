@@ -14,7 +14,12 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-브라우저에서 **http://127.0.0.1:5173/** 를 여세요. 종료는 서버를 실행한 터미널에서 `Ctrl+C`입니다. PowerShell의 `npm.ps1` 실행 정책을 바꾸지 않도록 `npm.cmd`를 사용합니다. 로컬 접속만 허용하며, 개발 서버의 파일 접근 허용 범위도 이 시제품 폴더로 제한했습니다.
+브라우저에서 **http://127.0.0.1:5173/** 를 여세요.
+
+- `http://127.0.0.1:5173/` — **3D 세계 시연(Issue #1 Phase 0~2)**: 세계 운영 지도 → 울산 관제실 → 데이터센터 시설 지도 → 서버실을 오가며 싱가포르 가상 요청 `SG-2026-001` 한 건을 끝까지 처리합니다. 모든 화면에 `시연 모드 · 가상 요청 데이터`가 표시되며, 진행은 오른쪽 패널의 버튼 클릭으로만 일어납니다(이동·대기·카메라 조작은 진행시키지 않음). 상세 설계와 QA는 [docs/3d-world-expansion](../../docs/3d-world-expansion/) 참고.
+- `http://127.0.0.1:5173/lab.html` — 아래에 설명한 **기존 독립 서버실 실험실**(장애 주입·6초 자동 복구 포함)을 그대로 보존한 화면입니다.
+
+종료는 서버를 실행한 터미널에서 `Ctrl+C`입니다. PowerShell의 `npm.ps1` 실행 정책을 바꾸지 않도록 `npm.cmd`를 사용합니다. 로컬 접속만 허용하며, 개발 서버의 파일 접근 허용 범위도 이 시제품 폴더로 제한했습니다.
 
 빌드 결과 실행:
 
@@ -52,7 +57,8 @@ RTX 5070 데스크톱을 목표로 고정한 Desktop High 설정: PBR 금속 재
 npm.cmd test
 npm.cmd run build
 # dev 또는 preview 서버 실행 중, 설치된 Chrome을 별도 임시 프로필로 실행
-npm.cmd run qa
+npm.cmd run qa       # 3D 세계 시연 QA → docs/3d-world-expansion/qa/world-qa.json
+npm.cmd run qa:lab   # 기존 실험실(lab.html) 회귀 → docs/3d-world-expansion/qa/lab-regression/
 # 기존 게임·사용자 DB·과거 QA 파일의 해시 비교 (SQLite 연결 없음)
 & 'C:\Users\hahye\anaconda3\python.exe' scripts/protect.py after
 ```
