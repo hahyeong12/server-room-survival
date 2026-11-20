@@ -2,6 +2,9 @@ import {chromium} from 'playwright-core';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+const exec=promisify(execFile);
 
 const phase1=process.argv.includes('--phase1'),out=resolve('../../docs/3d-world-expansion/qa');await mkdir(out,{recursive:true});
 const url=process.argv.find(x=>x.startsWith('--url='))?.slice(6)||'http://127.0.0.1:5173';
@@ -42,6 +45,24 @@ try{
     const p=await page.evaluate(()=>worldQA.projectAsset('D-06'));await page.mouse.click(p.x,p.y);assert.equal((await snap()).state.facility.selectedId,'D-06');
   });
   if(!phase1){
+    await check('per-scene FPS / frame time / GPU timer measured on the real canvas (avg >= 60 FPS)',async()=>{
+      for(const route of ['world','noc','campus','hall']){
+        await go(route);await page.waitForTimeout(2000);const samples=[];
+        for(let n=0;n<5;n++){await page.waitForTimeout(1000);const s=await snap();samples.push({...s.stats,heapMiB:s.heap?+(s.heap.used/1048576).toFixed(1):null,calls:s.renderer.calls,triangles:s.renderer.triangles,geometries:s.renderer.geometries,textures:s.renderer.textures,canvas:`${s.renderer.width}x${s.renderer.height}`,dpr:s.renderer.dpr});}
+        let nvidia=null;try{nvidia=(await exec('nvidia-smi',['--query-gpu=name,utilization.gpu,memory.used,memory.total','--format=csv,noheader,nounits'],{windowsHide:true})).stdout.trim();}catch(e){nvidia=`미측정: ${e.message}`;}
+        const fps=samples.map(x=>x.fps),summary={fpsAvg:+(fps.reduce((a,b)=>a+b,0)/fps.length).toFixed(1),fpsMin:+Math.min(...fps).toFixed(1),p95FrameMsMax:+Math.max(...samples.map(x=>x.p95FrameMs)).toFixed(2),gpuMsAvg:samples.every(x=>x.gpuMs!=null)?+(samples.reduce((a,x)=>a+x.gpuMs,0)/samples.length).toFixed(2):null,calls:samples.at(-1).calls,triangles:samples.at(-1).triangles,canvas:samples.at(-1).canvas,nvidiaSmiWholeGpu:nvidia};
+        report.performance.push({route,summary,samples});console.log(`PERF ${route} ${JSON.stringify(summary)}`);
+        assert.ok(summary.fpsAvg>=60,`${route} avg FPS ${summary.fpsAvg}`);
+      }
+    });
+    await check('10 navigation cycles keep geometries/textures bounded and domain unchanged',async()=>{
+      await go('hall');await page.waitForTimeout(1000);const before=await snap();
+      for(let i=0;i<10;i++)for(const route of ['world','noc','campus','hall']){await page.locator(`[data-route="${route}"]`).click();await page.waitForTimeout(250);}
+      await page.waitForTimeout(1500);const after=await snap();
+      report.stability={cycles:10,before:{geometries:before.renderer.geometries,textures:before.renderer.textures,heapMiB:before.heap&&+(before.heap.used/1048576).toFixed(1)},after:{geometries:after.renderer.geometries,textures:after.renderer.textures,heapMiB:after.heap&&+(after.heap.used/1048576).toFixed(1)}};
+      assert.equal(after.renderer.geometries,before.renderer.geometries);assert.equal(after.renderer.textures,before.renderer.textures);assert.deepEqual(after.domain,before.domain);
+      if(before.heap)assert.ok(after.heap.used-before.heap.used<32*1048576,'JS heap growth < 32 MiB');
+    });
     await check('SG click-only walkthrough with immutable IDs, terms and synchronized scenes',async()=>{
       await go('world');await page.locator('[data-country="SG"]').click();
       const initial=(await snap()).state.request;
