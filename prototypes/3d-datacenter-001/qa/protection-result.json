@@ -1,0 +1,14 @@
+{
+  "phase": "after",
+  "protected_files": 717,
+  "original_user_baseline": {
+    "count": 53,
+    "changed": []
+  },
+  "original_qa_baseline": {
+    "count": 508,
+    "changed": []
+  },
+  "all_existing_files_identical": true,
+  "differences": []
+}

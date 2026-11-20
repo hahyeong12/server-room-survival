@@ -1,0 +1,246 @@
+{
+  "browser": "157.0.8103.80",
+  "mode": "Chrome headed / isolated temporary profile",
+  "renderer": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "width": 1560,
+    "height": 839,
+    "dpr": 1,
+    "calls": 736,
+    "triangles": 126794,
+    "geometries": 157,
+    "textures": 56,
+    "camera": [
+      26.999999999999993,
+      25.000000000000007,
+      29.999999999999996
+    ],
+    "target": [
+      -0.5,
+      0,
+      0
+    ],
+    "contextLost": false,
+    "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+    "layers": {
+      "network": true,
+      "cooling": true,
+      "power": true
+    }
+  },
+  "checks": {
+    "passed": 15,
+    "failed": 0,
+    "total": 15
+  },
+  "failure": null,
+  "runtimeErrors": [],
+  "consoleErrors": [],
+  "networkFailures": [],
+  "performance": [
+    {
+      "label": "normal-overview",
+      "fps": {
+        "min": 236.8171771392483,
+        "max": 237.62376237623764,
+        "mean": 236.9184020048211,
+        "samples": 10
+      },
+      "p95FrameMs": {
+        "min": 4.200000000000728,
+        "max": 4.300000000001091,
+        "mean": 4.269999999999891,
+        "samples": 10
+      },
+      "gpuMs": {
+        "min": 3.0920608000000005,
+        "max": 3.3461845333333335,
+        "mean": 3.173824106666667,
+        "samples": 10
+      },
+      "heapMiB": {
+        "min": 15.55052661895752,
+        "max": 25.86154079437256,
+        "mean": 19.867682647705077,
+        "samples": 10
+      },
+      "geometries": [
+        157
+      ],
+      "textures": [
+        56
+      ],
+      "calls": {
+        "min": 736,
+        "max": 736,
+        "mean": 736,
+        "samples": 10
+      }
+    },
+    {
+      "label": "network-fault",
+      "fps": {
+        "min": 238.39796567069266,
+        "max": 239.1963004305532,
+        "mean": 238.5404944817915,
+        "samples": 6
+      },
+      "p95FrameMs": {
+        "min": 4.200000000004366,
+        "max": 4.299999999995634,
+        "mean": 4.283333333330423,
+        "samples": 6
+      },
+      "gpuMs": {
+        "min": 2.920312533333332,
+        "max": 3.1281424000000007,
+        "mean": 3.0305744000000003,
+        "samples": 6
+      },
+      "heapMiB": {
+        "min": 13.509980201721191,
+        "max": 19.538917541503906,
+        "mean": 16.58979908625285,
+        "samples": 6
+      },
+      "geometries": [
+        157
+      ],
+      "textures": [
+        56
+      ],
+      "calls": {
+        "min": 732,
+        "max": 732,
+        "mean": 732,
+        "samples": 6
+      }
+    },
+    {
+      "label": "after-four-repair-cycles",
+      "fps": {
+        "min": 238.3979656706913,
+        "max": 239.19630043055392,
+        "mean": 238.50723053346402,
+        "samples": 8
+      },
+      "p95FrameMs": {
+        "min": 4.2000000000116415,
+        "max": 4.30000000000291,
+        "mean": 4.287500000004002,
+        "samples": 8
+      },
+      "gpuMs": {
+        "min": 1.6644501333333332,
+        "max": 3.281419733333333,
+        "mean": 2.385936,
+        "samples": 8
+      },
+      "heapMiB": {
+        "min": 17.27479839324951,
+        "max": 30.082189559936523,
+        "mean": 23.707599759101868,
+        "samples": 8
+      },
+      "geometries": [
+        157
+      ],
+      "textures": [
+        56
+      ],
+      "calls": {
+        "min": 736,
+        "max": 736,
+        "mean": 736,
+        "samples": 8
+      }
+    }
+  ],
+  "gpu": {
+    "scope": "system-wide NVIDIA-SMI samples",
+    "baseline": {
+      "label": "baseline-before-browser",
+      "cols": [
+        "2026/11/20 19:20:25.333",
+        "NVIDIA GeForce RTX 5070",
+        "3",
+        "1",
+        "1043",
+        "12227",
+        "32",
+        "35.17"
+      ]
+    },
+    "utilizationPercent": {
+      "min": 19,
+      "max": 48,
+      "mean": 28.38095238095238,
+      "samples": 42
+    },
+    "vramMiB": {
+      "min": 1348,
+      "max": 1506,
+      "mean": 1461.595238095238,
+      "samples": 42
+    },
+    "temperatureC": {
+      "min": 36,
+      "max": 41,
+      "mean": 37.714285714285715,
+      "samples": 42
+    },
+    "afterClose": {
+      "label": "after-browser-close",
+      "cols": [
+        "2026/11/20 19:21:53.698",
+        "NVIDIA GeForce RTX 5070",
+        "28",
+        "4",
+        "1041",
+        "12227",
+        "38",
+        "69.94"
+      ]
+    }
+  },
+  "ownedBrowserMemory": {
+    "scope": "QA Chrome tree; sums may double-count shared pages in working sets",
+    "workingSetMiB": {
+      "min": 622.54296875,
+      "max": 731.59765625,
+      "mean": 654.1346726190476,
+      "samples": 42
+    },
+    "privateMiB": {
+      "min": 784.3515625,
+      "max": 1056.41796875,
+      "mean": 825.6443452380952,
+      "samples": 42
+    }
+  },
+  "screenshots": [
+    "01-overview-normal.png",
+    "02-server-hall.png",
+    "03-control-room.png",
+    "04-cold-aisle.png",
+    "05-overview-selected.png",
+    "06-network-fault.png",
+    "07-network-repairing.png",
+    "08-network-awaiting.png",
+    "09-network-verified.png",
+    "06-power-fault.png",
+    "07-power-repairing.png",
+    "08-power-awaiting.png",
+    "09-power-verified.png",
+    "06-cooling-fault.png",
+    "07-cooling-repairing.png",
+    "08-cooling-awaiting.png",
+    "09-cooling-verified.png",
+    "10-layout-1440.png",
+    "10-layout-1280.png",
+    "10-layout-720.png",
+    "11-performance.png",
+    "12-final-overview.png"
+  ]
+}

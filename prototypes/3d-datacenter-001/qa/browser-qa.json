@@ -1,0 +1,4980 @@
+{
+  "mode": "Chrome headed / isolated temporary profile",
+  "startedAt": "2026-11-20T10:20:25.285Z",
+  "checks": [
+    {
+      "name": "RTX 5070 hardware WebGL renderer",
+      "pass": true
+    },
+    {
+      "name": "initial scene: 24 racks, four utility devices, normal state",
+      "pass": true
+    },
+    {
+      "name": "raycast selection with real canvas mouse input",
+      "pass": true
+    },
+    {
+      "name": "orbit / wheel zoom / right drag pan / keyboard move / focus",
+      "pass": true
+    },
+    {
+      "name": "layer toggles affect scene; restored after test",
+      "pass": true
+    },
+    {
+      "name": "network: UI fault / repair / explicit post-check; consistent visuals and telemetry",
+      "pass": true
+    },
+    {
+      "name": "power: UI fault / repair / explicit post-check; consistent visuals and telemetry",
+      "pass": true
+    },
+    {
+      "name": "cooling: UI fault / repair / explicit post-check; consistent visuals and telemetry",
+      "pass": true
+    },
+    {
+      "name": "utility equipment selection and independent state change",
+      "pass": true
+    },
+    {
+      "name": "geometry and textures stay bounded after state cycles",
+      "pass": true
+    },
+    {
+      "name": "layout 1440x900 no horizontal overflow or canvas zero size",
+      "pass": true
+    },
+    {
+      "name": "layout 1280x800 no horizontal overflow or canvas zero size",
+      "pass": true
+    },
+    {
+      "name": "layout 720x900 no horizontal overflow or canvas zero size",
+      "pass": true
+    },
+    {
+      "name": "reload resets only memory demo; no persistence or external requests",
+      "pass": true
+    },
+    {
+      "name": "no browser runtime / console errors / failed requests",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "networkFailures": [],
+  "performance": [
+    {
+      "label": "normal-overview",
+      "samples": [
+        {
+          "fps": 236.8358727401909,
+          "p95FrameMs": 4.200000000000728,
+          "averageFrameMs": 4.222333333333336,
+          "gpuMs": 3.3461845333333335,
+          "frameCount": 1900,
+          "heap": {
+            "used": 24519607,
+            "total": 35586191,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 237.62376237623764,
+          "p95FrameMs": 4.299999999999272,
+          "averageFrameMs": 4.208333333333333,
+          "gpuMs": 3.1189791999999996,
+          "frameCount": 2139,
+          "heap": {
+            "used": 27117791,
+            "total": 36110479,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.8545712932259,
+          "p95FrameMs": 4.299999999999272,
+          "averageFrameMs": 4.222000000000001,
+          "gpuMs": 3.1626922666666664,
+          "frameCount": 2378,
+          "heap": {
+            "used": 21378275,
+            "total": 36634767,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.8171771392483,
+          "p95FrameMs": 4.299999999999272,
+          "averageFrameMs": 4.222666666666671,
+          "gpuMs": 3.1644490666666667,
+          "frameCount": 2617,
+          "heap": {
+            "used": 22613411,
+            "total": 37421199,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.8545712932259,
+          "p95FrameMs": 4.200000000000728,
+          "averageFrameMs": 4.222000000000001,
+          "gpuMs": 3.1823498666666667,
+          "frameCount": 2856,
+          "heap": {
+            "used": 17730630,
+            "total": 37941802,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.83587274019126,
+          "p95FrameMs": 4.300000000001091,
+          "averageFrameMs": 4.22233333333333,
+          "gpuMs": 3.1713359999999997,
+          "frameCount": 3095,
+          "heap": {
+            "used": 19894010,
+            "total": 37940938,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.8358727401909,
+          "p95FrameMs": 4.299999999999272,
+          "averageFrameMs": 4.222333333333336,
+          "gpuMs": 3.180917866666667,
+          "frameCount": 3333,
+          "heap": {
+            "used": 21144045,
+            "total": 37940941,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.85457129322623,
+          "p95FrameMs": 4.200000000000728,
+          "averageFrameMs": 4.221999999999995,
+          "gpuMs": 3.161607466666667,
+          "frameCount": 3572,
+          "heap": {
+            "used": 16305909,
+            "total": 37940941,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.81717713924863,
+          "p95FrameMs": 4.299999999999272,
+          "averageFrameMs": 4.222666666666664,
+          "gpuMs": 3.1576640000000014,
+          "frameCount": 3810,
+          "heap": {
+            "used": 18421473,
+            "total": 37940941,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 236.85457129322555,
+          "p95FrameMs": 4.299999999999272,
+          "averageFrameMs": 4.2220000000000075,
+          "gpuMs": 3.0920608000000005,
+          "frameCount": 4049,
+          "heap": {
+            "used": 19202601,
+            "total": 37940941,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              0,
+              0
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "network-fault",
+      "samples": [
+        {
+          "fps": 239.1963004305532,
+          "p95FrameMs": 4.200000000004366,
+          "averageFrameMs": 4.180666666666669,
+          "gpuMs": 2.9260522666666664,
+          "frameCount": 7398,
+          "heap": {
+            "used": 19737577,
+            "total": 35320345,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 732,
+            "triangles": 126602,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.4169117062698,
+          "p95FrameMs": 4.299999999995634,
+          "averageFrameMs": 4.1943333333333435,
+          "gpuMs": 2.920312533333332,
+          "frameCount": 7637,
+          "heap": {
+            "used": 20488040,
+            "total": 35320348,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 732,
+            "triangles": 126602,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.39796567069266,
+          "p95FrameMs": 4.299999999995634,
+          "averageFrameMs": 4.194666666666672,
+          "gpuMs": 3.0351056,
+          "frameCount": 7875,
+          "heap": {
+            "used": 16140596,
+            "total": 35320348,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 732,
+            "triangles": 126602,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.39796567069405,
+          "p95FrameMs": 4.299999999995634,
+          "averageFrameMs": 4.194666666666647,
+          "gpuMs": 3.0925760000000015,
+          "frameCount": 8114,
+          "heap": {
+            "used": 14166241,
+            "total": 40300977,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 732,
+            "triangles": 126602,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.4169117062698,
+          "p95FrameMs": 4.299999999995634,
+          "averageFrameMs": 4.1943333333333435,
+          "gpuMs": 3.0812576000000016,
+          "frameCount": 8353,
+          "heap": {
+            "used": 16308425,
+            "total": 46854577,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 732,
+            "triangles": 126602,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.4169117062698,
+          "p95FrameMs": 4.299999999995634,
+          "averageFrameMs": 4.1943333333333435,
+          "gpuMs": 3.1281424000000007,
+          "frameCount": 8592,
+          "heap": {
+            "used": 17533112,
+            "total": 46854580,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 732,
+            "triangles": 126602,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "after-four-repair-cycles",
+      "samples": [
+        {
+          "fps": 238.4169117062698,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.1943333333333435,
+          "gpuMs": 1.6644501333333332,
+          "frameCount": 15740,
+          "heap": {
+            "used": 18113939,
+            "total": 46068663,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 239.19630043055392,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.1806666666666565,
+          "gpuMs": 1.688134933333333,
+          "frameCount": 15979,
+          "heap": {
+            "used": 19887218,
+            "total": 46068666,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.41691170627257,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.194333333333295,
+          "gpuMs": 1.8981589333333326,
+          "frameCount": 16218,
+          "heap": {
+            "used": 21440942,
+            "total": 46068666,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.3979656706913,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.194666666666696,
+          "gpuMs": 2.1410768,
+          "frameCount": 16457,
+          "heap": {
+            "used": 23546394,
+            "total": 46068666,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.3979656706913,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.194666666666696,
+          "gpuMs": 2.5872282666666666,
+          "frameCount": 16696,
+          "heap": {
+            "used": 26125958,
+            "total": 46855098,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.39796567069405,
+          "p95FrameMs": 4.2000000000116415,
+          "averageFrameMs": 4.194666666666647,
+          "gpuMs": 2.793856533333334,
+          "frameCount": 16935,
+          "heap": {
+            "used": 28738034,
+            "total": 47641530,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.4169117062698,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.1943333333333435,
+          "gpuMs": 3.033162666666667,
+          "frameCount": 17174,
+          "heap": {
+            "used": 29477814,
+            "total": 48165818,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        },
+        {
+          "fps": 238.4169117062698,
+          "p95FrameMs": 4.30000000000291,
+          "averageFrameMs": 4.1943333333333435,
+          "gpuMs": 3.281419733333333,
+          "frameCount": 17413,
+          "heap": {
+            "used": 31543462,
+            "total": 48952250,
+            "limit": 4395630592
+          },
+          "renderer": {
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "width": 1560,
+            "height": 839,
+            "dpr": 1,
+            "calls": 736,
+            "triangles": 126794,
+            "geometries": 157,
+            "textures": 56,
+            "camera": [
+              26.999999999999993,
+              25.000000000000007,
+              29.999999999999996
+            ],
+            "target": [
+              -0.5,
+              3.6962018704369796e-79,
+              -2.0435409466752593e-79
+            ],
+            "contextLost": false,
+            "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+            "layers": {
+              "network": true,
+              "cooling": true,
+              "power": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "gpu": [
+    {
+      "label": "baseline-before-browser",
+      "csv": "2026/11/20 19:20:25.333, NVIDIA GeForce RTX 5070, 3, 1, 1043, 12227, 32, 35.17",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:35.560, NVIDIA GeForce RTX 5070, 28, 4, 1462, 12227, 36, 71.12",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:37.420, NVIDIA GeForce RTX 5070, 28, 4, 1470, 12227, 36, 70.71",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:39.267, NVIDIA GeForce RTX 5070, 28, 4, 1467, 12227, 36, 69.77",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:41.115, NVIDIA GeForce RTX 5070, 28, 4, 1463, 12227, 37, 70.46",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:42.972, NVIDIA GeForce RTX 5070, 28, 4, 1463, 12227, 36, 70.12",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:44.816, NVIDIA GeForce RTX 5070, 28, 4, 1459, 12227, 37, 70.50",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "normal-overview",
+      "csv": "2026/11/20 19:20:45.694, NVIDIA GeForce RTX 5070, 29, 4, 1468, 12227, 37, 69.95",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:46.654, NVIDIA GeForce RTX 5070, 26, 4, 1472, 12227, 36, 68.60",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:48.499, NVIDIA GeForce RTX 5070, 29, 4, 1473, 12227, 37, 69.98",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:50.359, NVIDIA GeForce RTX 5070, 48, 5, 1469, 12227, 41, 97.19",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:52.212, NVIDIA GeForce RTX 5070, 32, 4, 1462, 12227, 39, 87.90",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:54.065, NVIDIA GeForce RTX 5070, 36, 4, 1461, 12227, 40, 88.37",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:55.937, NVIDIA GeForce RTX 5070, 39, 4, 1454, 12227, 40, 96.25",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:57.813, NVIDIA GeForce RTX 5070, 29, 4, 1473, 12227, 38, 84.24",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:20:59.677, NVIDIA GeForce RTX 5070, 29, 4, 1482, 12227, 38, 72.04",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:01.532, NVIDIA GeForce RTX 5070, 28, 4, 1475, 12227, 37, 69.97",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:03.380, NVIDIA GeForce RTX 5070, 28, 4, 1480, 12227, 38, 70.91",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "network-fault",
+      "csv": "2026/11/20 19:21:04.757, NVIDIA GeForce RTX 5070, 29, 4, 1475, 12227, 38, 71.78",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:05.234, NVIDIA GeForce RTX 5070, 26, 4, 1478, 12227, 38, 71.69",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:07.087, NVIDIA GeForce RTX 5070, 28, 4, 1466, 12227, 38, 70.56",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:08.947, NVIDIA GeForce RTX 5070, 26, 4, 1462, 12227, 38, 70.42",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:10.793, NVIDIA GeForce RTX 5070, 27, 4, 1456, 12227, 38, 70.57",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:12.655, NVIDIA GeForce RTX 5070, 30, 4, 1462, 12227, 38, 71.04",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:14.546, NVIDIA GeForce RTX 5070, 28, 4, 1462, 12227, 38, 70.67",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:16.391, NVIDIA GeForce RTX 5070, 28, 4, 1457, 12227, 38, 69.49",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:18.233, NVIDIA GeForce RTX 5070, 28, 4, 1461, 12227, 38, 69.83",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:20.089, NVIDIA GeForce RTX 5070, 28, 4, 1458, 12227, 38, 70.63",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:21.953, NVIDIA GeForce RTX 5070, 29, 4, 1462, 12227, 38, 70.49",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:23.812, NVIDIA GeForce RTX 5070, 28, 4, 1463, 12227, 38, 69.68",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:25.656, NVIDIA GeForce RTX 5070, 28, 4, 1465, 12227, 38, 69.16",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:27.496, NVIDIA GeForce RTX 5070, 29, 4, 1472, 12227, 38, 70.22",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:29.358, NVIDIA GeForce RTX 5070, 28, 4, 1463, 12227, 38, 70.15",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:31.208, NVIDIA GeForce RTX 5070, 28, 4, 1462, 12227, 38, 69.42",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:33.052, NVIDIA GeForce RTX 5070, 27, 4, 1461, 12227, 38, 69.89",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:34.910, NVIDIA GeForce RTX 5070, 25, 4, 1467, 12227, 37, 70.79",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:36.758, NVIDIA GeForce RTX 5070, 28, 4, 1468, 12227, 38, 70.76",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:38.615, NVIDIA GeForce RTX 5070, 29, 4, 1468, 12227, 38, 69.58",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:40.482, NVIDIA GeForce RTX 5070, 28, 4, 1460, 12227, 38, 69.59",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "after-four-repair-cycles",
+      "csv": "2026/11/20 19:21:42.186, NVIDIA GeForce RTX 5070, 28, 4, 1459, 12227, 38, 70.32",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:42.338, NVIDIA GeForce RTX 5070, 28, 4, 1387, 12227, 38, 70.32",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:44.200, NVIDIA GeForce RTX 5070, 19, 3, 1348, 12227, 36, 58.83",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:46.044, NVIDIA GeForce RTX 5070, 19, 3, 1413, 12227, 36, 55.37",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:47.937, NVIDIA GeForce RTX 5070, 26, 4, 1485, 12227, 38, 70.89",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:49.874, NVIDIA GeForce RTX 5070, 26, 4, 1506, 12227, 38, 65.70",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "sampling",
+      "csv": "2026/11/20 19:21:51.728, NVIDIA GeForce RTX 5070, 26, 4, 1490, 12227, 37, 69.64",
+      "scope": "whole GPU, includes all other applications"
+    },
+    {
+      "label": "after-browser-close",
+      "csv": "2026/11/20 19:21:53.698, NVIDIA GeForce RTX 5070, 28, 4, 1041, 12227, 38, 69.94",
+      "scope": "whole GPU, includes all other applications"
+    }
+  ],
+  "memory": [
+    {
+      "time": "2026-11-20T10:20:35.867Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135335936,
+          "PrivateMemorySize64": 42971136
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 200105984,
+          "PrivateMemorySize64": 652017664
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 157356032,
+          "PrivateMemorySize64": 90492928
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38842368,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:37.712Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135454720,
+          "PrivateMemorySize64": 43089920
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 198307840,
+          "PrivateMemorySize64": 630661120
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 158720000,
+          "PrivateMemorySize64": 91029504
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38846464,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:39.562Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135454720,
+          "PrivateMemorySize64": 43089920
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 204627968,
+          "PrivateMemorySize64": 620597248
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 160915456,
+          "PrivateMemorySize64": 93417472
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38858752,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:41.416Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135454720,
+          "PrivateMemorySize64": 43089920
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 204533760,
+          "PrivateMemorySize64": 617345024
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 162742272,
+          "PrivateMemorySize64": 94937088
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38858752,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:43.268Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135462912,
+          "PrivateMemorySize64": 43089920
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 204292096,
+          "PrivateMemorySize64": 617082880
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 162942976,
+          "PrivateMemorySize64": 95121408
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:45.107Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135475200,
+          "PrivateMemorySize64": 43094016
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 204292096,
+          "PrivateMemorySize64": 617082880
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 163143680,
+          "PrivateMemorySize64": 95281152
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:46.951Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 135954432,
+          "PrivateMemorySize64": 43110400
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 200396800,
+          "PrivateMemorySize64": 612683776
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 164712448,
+          "PrivateMemorySize64": 94810112
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:48.802Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 136069120,
+          "PrivateMemorySize64": 43122688
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 200437760,
+          "PrivateMemorySize64": 612691968
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 165339136,
+          "PrivateMemorySize64": 95399936
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:50.655Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 136085504,
+          "PrivateMemorySize64": 43122688
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 206639104,
+          "PrivateMemorySize64": 618872832
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 162947072,
+          "PrivateMemorySize64": 92565504
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:52.512Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137117696,
+          "PrivateMemorySize64": 44175360
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213622784,
+          "PrivateMemorySize64": 634105856
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 163147776,
+          "PrivateMemorySize64": 92651520
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:54.377Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137150464,
+          "PrivateMemorySize64": 44187648
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19423232,
+          "PrivateMemorySize64": 8237056
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213213184,
+          "PrivateMemorySize64": 642633728
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32313344,
+          "PrivateMemorySize64": 15478784
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 163172352,
+          "PrivateMemorySize64": 92667904
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69718016,
+          "PrivateMemorySize64": 32931840
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15200256
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:56.263Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137891840,
+          "PrivateMemorySize64": 44654592
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 210608128,
+          "PrivateMemorySize64": 639385600
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 162000896,
+          "PrivateMemorySize64": 91283456
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 70479872,
+          "PrivateMemorySize64": 31117312
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15093760
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:58.119Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137871360,
+          "PrivateMemorySize64": 44564480
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 210587648,
+          "PrivateMemorySize64": 642555904
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 162295808,
+          "PrivateMemorySize64": 91549696
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 70479872,
+          "PrivateMemorySize64": 31117312
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15093760
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:20:59.984Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137281536,
+          "PrivateMemorySize64": 43995136
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 210345984,
+          "PrivateMemorySize64": 651149312
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 163868672,
+          "PrivateMemorySize64": 93167616
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 70479872,
+          "PrivateMemorySize64": 31117312
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15093760
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:01.829Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137281536,
+          "PrivateMemorySize64": 43995136
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 208912384,
+          "PrivateMemorySize64": 631660544
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 163950592,
+          "PrivateMemorySize64": 93241344
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 70479872,
+          "PrivateMemorySize64": 31117312
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15093760
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:03.686Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137281536,
+          "PrivateMemorySize64": 43995136
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 208781312,
+          "PrivateMemorySize64": 623861760
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 174354432,
+          "PrivateMemorySize64": 103264256
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 70479872,
+          "PrivateMemorySize64": 31117312
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15093760
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:05.538Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137285632,
+          "PrivateMemorySize64": 43995136
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 209874944,
+          "PrivateMemorySize64": 625029120
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 175349760,
+          "PrivateMemorySize64": 104509440
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38862848,
+          "PrivateMemorySize64": 15093760
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:07.393Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 138981376,
+          "PrivateMemorySize64": 45731840
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 210067456,
+          "PrivateMemorySize64": 634085376
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177614848,
+          "PrivateMemorySize64": 106811392
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:09.242Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 138981376,
+          "PrivateMemorySize64": 45731840
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 205385728,
+          "PrivateMemorySize64": 621457408
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177516544,
+          "PrivateMemorySize64": 106696704
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:11.093Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 139026432,
+          "PrivateMemorySize64": 46780416
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 205127680,
+          "PrivateMemorySize64": 631988224
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 179920896,
+          "PrivateMemorySize64": 109182976
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:12.988Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 138784768,
+          "PrivateMemorySize64": 46538752
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 204255232,
+          "PrivateMemorySize64": 648802304
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 176709632,
+          "PrivateMemorySize64": 105824256
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:14.835Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137338880,
+          "PrivateMemorySize64": 45064192
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213065728,
+          "PrivateMemorySize64": 657891328
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177852416,
+          "PrivateMemorySize64": 107155456
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:16.682Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137338880,
+          "PrivateMemorySize64": 45064192
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 214106112,
+          "PrivateMemorySize64": 649179136
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 179425280,
+          "PrivateMemorySize64": 108609536
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:18.534Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137338880,
+          "PrivateMemorySize64": 45064192
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213581824,
+          "PrivateMemorySize64": 633618432
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177438720,
+          "PrivateMemorySize64": 106737664
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:20.397Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 137338880,
+          "PrivateMemorySize64": 45068288
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213303296,
+          "PrivateMemorySize64": 644284416
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 178360320,
+          "PrivateMemorySize64": 107655168
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:22.258Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 138817536,
+          "PrivateMemorySize64": 46567424
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213454848,
+          "PrivateMemorySize64": 656773120
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 180350976,
+          "PrivateMemorySize64": 110227456
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:24.105Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 138817536,
+          "PrivateMemorySize64": 46567424
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19369984,
+          "PrivateMemorySize64": 8134656
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213749760,
+          "PrivateMemorySize64": 642478080
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32251904,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 182411264,
+          "PrivateMemorySize64": 115056640
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69447680,
+          "PrivateMemorySize64": 29949952
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38825984,
+          "PrivateMemorySize64": 15056896
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:25.949Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 134979584,
+          "PrivateMemorySize64": 42491904
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19525632,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 212254720,
+          "PrivateMemorySize64": 623800320
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32350208,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 176508928,
+          "PrivateMemorySize64": 106364928
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69156864,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38653952,
+          "PrivateMemorySize64": 14819328
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:27.796Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 136597504,
+          "PrivateMemorySize64": 44167168
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 212238336,
+          "PrivateMemorySize64": 632647680
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32366592,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 176832512,
+          "PrivateMemorySize64": 107769856
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38662144,
+          "PrivateMemorySize64": 14819328
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:29.654Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 145305600,
+          "PrivateMemorySize64": 48410624
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 219766784,
+          "PrivateMemorySize64": 645046272
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177131520,
+          "PrivateMemorySize64": 108113920
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38670336,
+          "PrivateMemorySize64": 14782464
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:31.504Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 145678336,
+          "PrivateMemorySize64": 48439296
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213782528,
+          "PrivateMemorySize64": 622305280
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 173895680,
+          "PrivateMemorySize64": 103084032
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38670336,
+          "PrivateMemorySize64": 14782464
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:33.349Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 145698816,
+          "PrivateMemorySize64": 48664576
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 213422080,
+          "PrivateMemorySize64": 621944832
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177180672,
+          "PrivateMemorySize64": 109776896
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38694912,
+          "PrivateMemorySize64": 14766080
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:35.208Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 145870848,
+          "PrivateMemorySize64": 48836608
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 211984384,
+          "PrivateMemorySize64": 626163712
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 174186496,
+          "PrivateMemorySize64": 103415808
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38678528,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:37.058Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 145870848,
+          "PrivateMemorySize64": 48836608
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 207724544,
+          "PrivateMemorySize64": 621903872
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 173678592,
+          "PrivateMemorySize64": 102723584
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38678528,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:38.925Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 146006016,
+          "PrivateMemorySize64": 48971776
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 207364096,
+          "PrivateMemorySize64": 621334528
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 173748224,
+          "PrivateMemorySize64": 102584320
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38686720,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:40.786Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 146010112,
+          "PrivateMemorySize64": 48971776
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 207937536,
+          "PrivateMemorySize64": 621907968
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 175144960,
+          "PrivateMemorySize64": 103952384
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38686720,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:42.645Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 146313216,
+          "PrivateMemorySize64": 49250304
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 208003072,
+          "PrivateMemorySize64": 788045824
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 175513600,
+          "PrivateMemorySize64": 104235008
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38686720,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:44.495Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 147447808,
+          "PrivateMemorySize64": 50421760
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 230866944,
+          "PrivateMemorySize64": 762982400
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 177057792,
+          "PrivateMemorySize64": 105820160
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38686720,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:46.379Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 147234816,
+          "PrivateMemorySize64": 50221056
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19537920,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 240635904,
+          "PrivateMemorySize64": 882528256
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 178999296,
+          "PrivateMemorySize64": 107302912
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69160960,
+          "PrivateMemorySize64": 29421568
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38686720,
+          "PrivateMemorySize64": 14749696
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:48.321Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 148422656,
+          "PrivateMemorySize64": 51118080
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19566592,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 218169344,
+          "PrivateMemorySize64": 615772160
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 188145664,
+          "PrivateMemorySize64": 118378496
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69308416,
+          "PrivateMemorySize64": 29761536
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38789120,
+          "PrivateMemorySize64": 14729216
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:50.180Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 146210816,
+          "PrivateMemorySize64": 48844800
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19566592,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 273199104,
+          "PrivateMemorySize64": 714465280
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 187740160,
+          "PrivateMemorySize64": 117923840
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69308416,
+          "PrivateMemorySize64": 29761536
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38735872,
+          "PrivateMemorySize64": 14663680
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    },
+    {
+      "time": "2026-11-20T10:21:52.024Z",
+      "processes": [
+        {
+          "Id": 528,
+          "ProcessName": "chrome",
+          "WorkingSet64": 146210816,
+          "PrivateMemorySize64": 48844800
+        },
+        {
+          "Id": 3080,
+          "ProcessName": "chrome",
+          "WorkingSet64": 19566592,
+          "PrivateMemorySize64": 8142848
+        },
+        {
+          "Id": 4888,
+          "ProcessName": "chrome",
+          "WorkingSet64": 267460608,
+          "PrivateMemorySize64": 708907008
+        },
+        {
+          "Id": 5004,
+          "ProcessName": "chrome",
+          "WorkingSet64": 32374784,
+          "PrivateMemorySize64": 15368192
+        },
+        {
+          "Id": 13232,
+          "ProcessName": "chrome",
+          "WorkingSet64": 186728448,
+          "PrivateMemorySize64": 116174848
+        },
+        {
+          "Id": 13812,
+          "ProcessName": "chrome",
+          "WorkingSet64": 69308416,
+          "PrivateMemorySize64": 29761536
+        },
+        {
+          "Id": 28504,
+          "ProcessName": "chrome",
+          "WorkingSet64": 38735872,
+          "PrivateMemorySize64": 14663680
+        }
+      ],
+      "scope": "owned QA Chrome process tree, working set / private bytes"
+    }
+  ],
+  "screenshots": [
+    "01-overview-normal.png",
+    "02-server-hall.png",
+    "03-control-room.png",
+    "04-cold-aisle.png",
+    "05-overview-selected.png",
+    "06-network-fault.png",
+    "07-network-repairing.png",
+    "08-network-awaiting.png",
+    "09-network-verified.png",
+    "06-power-fault.png",
+    "07-power-repairing.png",
+    "08-power-awaiting.png",
+    "09-power-verified.png",
+    "06-cooling-fault.png",
+    "07-cooling-repairing.png",
+    "08-cooling-awaiting.png",
+    "09-cooling-verified.png",
+    "10-layout-1440.png",
+    "10-layout-1280.png",
+    "10-layout-720.png",
+    "11-performance.png",
+    "12-final-overview.png"
+  ],
+  "browserVersion": "157.0.8103.80",
+  "initial": {
+    "facility": {
+      "assets": [
+        {
+          "id": "A-01",
+          "kind": "rack",
+          "name": "RACK A-01",
+          "location": "서버홀 · A열 · 1번",
+          "x": -10.7,
+          "z": -5.8,
+          "base": {
+            "gpu": 58,
+            "power": 16.4,
+            "temp": 21.4,
+            "network": 68
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-02",
+          "kind": "rack",
+          "name": "RACK A-02",
+          "location": "서버홀 · A열 · 2번",
+          "x": -8.979999999999999,
+          "z": -5.8,
+          "base": {
+            "gpu": 61,
+            "power": 17.5,
+            "temp": 22,
+            "network": 75
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-03",
+          "kind": "rack",
+          "name": "RACK A-03",
+          "location": "서버홀 · A열 · 3번",
+          "x": -7.26,
+          "z": -5.8,
+          "base": {
+            "gpu": 64,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 82
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-04",
+          "kind": "rack",
+          "name": "RACK A-04",
+          "location": "서버홀 · A열 · 4번",
+          "x": -5.539999999999999,
+          "z": -5.8,
+          "base": {
+            "gpu": 67,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 89
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-05",
+          "kind": "rack",
+          "name": "RACK A-05",
+          "location": "서버홀 · A열 · 5번",
+          "x": -3.8199999999999994,
+          "z": -5.8,
+          "base": {
+            "gpu": 70,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-06",
+          "kind": "rack",
+          "name": "RACK A-06",
+          "location": "서버홀 · A열 · 6번",
+          "x": -2.0999999999999996,
+          "z": -5.8,
+          "base": {
+            "gpu": 73,
+            "power": 16.4,
+            "temp": 22,
+            "network": 73
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-01",
+          "kind": "rack",
+          "name": "RACK B-01",
+          "location": "서버홀 · B열 · 1번",
+          "x": -10.7,
+          "z": -2.55,
+          "base": {
+            "gpu": 65,
+            "power": 17.5,
+            "temp": 22,
+            "network": 71
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-02",
+          "kind": "rack",
+          "name": "RACK B-02",
+          "location": "서버홀 · B열 · 2번",
+          "x": -8.979999999999999,
+          "z": -2.55,
+          "base": {
+            "gpu": 68,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 78
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-03",
+          "kind": "rack",
+          "name": "RACK B-03",
+          "location": "서버홀 · B열 · 3번",
+          "x": -7.26,
+          "z": -2.55,
+          "base": {
+            "gpu": 71,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 85
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-04",
+          "kind": "rack",
+          "name": "RACK B-04",
+          "location": "서버홀 · B열 · 4번",
+          "x": -5.539999999999999,
+          "z": -2.55,
+          "base": {
+            "gpu": 74,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 92
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-05",
+          "kind": "rack",
+          "name": "RACK B-05",
+          "location": "서버홀 · B열 · 5번",
+          "x": -3.8199999999999994,
+          "z": -2.55,
+          "base": {
+            "gpu": 77,
+            "power": 16.4,
+            "temp": 22,
+            "network": 69
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-06",
+          "kind": "rack",
+          "name": "RACK B-06",
+          "location": "서버홀 · B열 · 6번",
+          "x": -2.0999999999999996,
+          "z": -2.55,
+          "base": {
+            "gpu": 80,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 76
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-01",
+          "kind": "rack",
+          "name": "RACK C-01",
+          "location": "서버홀 · C열 · 1번",
+          "x": -10.7,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 72,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 74
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-02",
+          "kind": "rack",
+          "name": "RACK C-02",
+          "location": "서버홀 · C열 · 2번",
+          "x": -8.979999999999999,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 75,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 81
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-03",
+          "kind": "rack",
+          "name": "RACK C-03",
+          "location": "서버홀 · C열 · 3번",
+          "x": -7.26,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 78,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 88
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-04",
+          "kind": "rack",
+          "name": "RACK C-04",
+          "location": "서버홀 · C열 · 4번",
+          "x": -5.539999999999999,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 81,
+            "power": 16.4,
+            "temp": 22,
+            "network": 95
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-05",
+          "kind": "rack",
+          "name": "RACK C-05",
+          "location": "서버홀 · C열 · 5번",
+          "x": -3.8199999999999994,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 84,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 72
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-06",
+          "kind": "rack",
+          "name": "RACK C-06",
+          "location": "서버홀 · C열 · 6번",
+          "x": -2.0999999999999996,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 87,
+            "power": 18.599999999999998,
+            "temp": 23.2,
+            "network": 79
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-01",
+          "kind": "rack",
+          "name": "RACK D-01",
+          "location": "서버홀 · D열 · 1번",
+          "x": -10.7,
+          "z": 3.95,
+          "base": {
+            "gpu": 79,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 77
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-02",
+          "kind": "rack",
+          "name": "RACK D-02",
+          "location": "서버홀 · D열 · 2번",
+          "x": -8.979999999999999,
+          "z": 3.95,
+          "base": {
+            "gpu": 82,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 84
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-03",
+          "kind": "rack",
+          "name": "RACK D-03",
+          "location": "서버홀 · D열 · 3번",
+          "x": -7.26,
+          "z": 3.95,
+          "base": {
+            "gpu": 85,
+            "power": 16.4,
+            "temp": 22,
+            "network": 91
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-04",
+          "kind": "rack",
+          "name": "RACK D-04",
+          "location": "서버홀 · D열 · 4번",
+          "x": -5.539999999999999,
+          "z": 3.95,
+          "base": {
+            "gpu": 58,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 68
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-05",
+          "kind": "rack",
+          "name": "RACK D-05",
+          "location": "서버홀 · D열 · 5번",
+          "x": -3.8199999999999994,
+          "z": 3.95,
+          "base": {
+            "gpu": 61,
+            "power": 18.599999999999998,
+            "temp": 23.2,
+            "network": 75
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-06",
+          "kind": "rack",
+          "name": "RACK D-06",
+          "location": "서버홀 · D열 · 6번",
+          "x": -2.0999999999999996,
+          "z": 3.95,
+          "base": {
+            "gpu": 64,
+            "power": 19.7,
+            "temp": 21.4,
+            "network": 82
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "UPS-01",
+          "name": "UPS / PDU 01",
+          "kind": "power",
+          "x": -13.7,
+          "z": -5.3,
+          "location": "전력 설비 · A/B 이중 급전 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "CRAC-01",
+          "name": "COOLING 01",
+          "kind": "cooling",
+          "x": -13.7,
+          "z": -0.6,
+          "location": "냉각 설비 · 저온 공기 공급 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "CRAC-02",
+          "name": "COOLING 02",
+          "kind": "cooling",
+          "x": -13.7,
+          "z": 4.4,
+          "location": "냉각 설비 · 저온 공기 공급 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "NET-01",
+          "name": "NETWORK CORE",
+          "kind": "network",
+          "x": 1.6,
+          "z": -6.6,
+          "location": "네트워크 설비 · 가상 코어 스위치",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        }
+      ],
+      "selectedId": "A-01",
+      "elapsed": 7.258200000000026,
+      "events": [
+        {
+          "time": 0,
+          "text": "가상 시설 초기화 완료. 장비를 선택하여 상태를 확인하세요."
+        }
+      ]
+    },
+    "renderer": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "width": 1560,
+      "height": 839,
+      "dpr": 1,
+      "calls": 736,
+      "triangles": 126794,
+      "geometries": 157,
+      "textures": 56,
+      "camera": [
+        26.999999999999993,
+        25.000000000000007,
+        29.999999999999996
+      ],
+      "target": [
+        -0.5,
+        0,
+        0
+      ],
+      "contextLost": false,
+      "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+      "layers": {
+        "network": true,
+        "cooling": true,
+        "power": true
+      }
+    },
+    "stats": {
+      "fps": 236.8545712932259,
+      "p95FrameMs": 4.299999999999272,
+      "averageFrameMs": 4.222000000000001,
+      "gpuMs": 14.624802909090906,
+      "frameCount": 1661
+    },
+    "heap": {
+      "used": 23424852,
+      "total": 33714256,
+      "limit": 4395630592
+    },
+    "visuals": {
+      "A-01": {
+        "color": "63e4c1",
+        "selected": true,
+        "networkFlow": true
+      },
+      "A-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "UPS-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "CRAC-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "CRAC-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "NET-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      }
+    }
+  },
+  "systemGPU": {
+    "devices": [
+      {
+        "vendorId": 4318,
+        "deviceId": 12036,
+        "subSysId": 1098126424,
+        "revision": 161,
+        "vendorString": "",
+        "deviceString": "NVIDIA GeForce RTX 5070",
+        "driverVendor": "NVIDIA",
+        "driverVersion": "32.0.16.1088"
+      },
+      {
+        "vendorId": 5140,
+        "deviceId": 140,
+        "subSysId": 0,
+        "revision": 0,
+        "vendorString": "",
+        "deviceString": "Microsoft Basic Render Driver",
+        "driverVendor": "",
+        "driverVersion": "10.0.26100.9818"
+      }
+    ],
+    "auxAttributes": {
+      "amdSwitchable": false,
+      "bgra8OverlaySupport": "SCALING",
+      "canSupportThreadedTextureMailbox": false,
+      "directComposition": true,
+      "directMLFeatureLevel": "Not supported",
+      "directRenderingVersion": "",
+      "displayType": "ANGLE_D3D11",
+      "dx12FeatureLevel": "Not supported",
+      "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_copy_texture_3d GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_multiview_multisample GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_texture_usage GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_compressed_texture GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_EGL_image_external_wrap_modes GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_clip_cull_distance GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_border_clamp GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_storage GL_EXT_texture_type_2_10_10_10_REV GL_EXT_unpack_subimage GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_NV_EGL_stream_consumer_external GL_NV_fence GL_NV_framebuffer_blit GL_NV_pack_subimage GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_EGL_image_external_essl3 GL_OES_depth24 GL_OES_depth32 GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_border_clamp GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_vertex_array_object GL_OVR_multiview GL_OVR_multiview2 ",
+      "glImplementationParts": "(gl=egl-angle,angle=d3d11)",
+      "glRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.16.1088)",
+      "glResetNotificationStrategy": 33362,
+      "glVendor": "Google Inc. (NVIDIA)",
+      "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.29101 git hash: c56e2a4a9b8c)",
+      "glWsExtensions": "EGL_EXT_create_context_robustness EGL_ANGLE_d3d_share_handle_client_buffer EGL_ANGLE_d3d_texture_client_buffer EGL_ANGLE_surface_d3d_texture_2d_share_handle EGL_ANGLE_query_surface_pointer EGL_ANGLE_window_fixed_size EGL_ANGLE_keyed_mutex EGL_ANGLE_surface_orientation EGL_ANGLE_direct_composition EGL_NV_post_sub_buffer EGL_KHR_create_context EGL_KHR_image EGL_KHR_image_base EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_get_all_proc_addresses EGL_KHR_stream EGL_KHR_stream_consumer_gltexture EGL_NV_stream_consumer_gltexture_yuv EGL_ANGLE_stream_producer_d3d_texture EGL_ANGLE_create_context_webgl_compatibility EGL_CHROMIUM_create_context_bind_generates_resource EGL_CHROMIUM_sync_control EGL_EXT_pixel_format_float EGL_KHR_surfaceless_context EGL_ANGLE_display_texture_share_group EGL_ANGLE_display_semaphore_share_group EGL_ANGLE_create_context_client_arrays EGL_ANGLE_program_cache_control EGL_ANGLE_robust_resource_initialization EGL_ANGLE_create_context_extensions_enabled EGL_ANDROID_blob_cache EGL_ANDROID_recordable EGL_ANGLE_image_d3d11_texture EGL_ANGLE_create_context_backwards_compatible EGL_KHR_no_config_context EGL_KHR_create_context_no_error EGL_KHR_reusable_sync EGL_ANGLE_memory_usage_report ",
+      "glWsVendor": "Google Inc. (NVIDIA)",
+      "glWsVersion": "1.5 (ANGLE 2.1.29101 git hash: c56e2a4a9b8c)",
+      "inProcessGpu": false,
+      "initializationTime": 0.154789,
+      "isAsan": false,
+      "isClangCoverage": false,
+      "jpegDecodeAcceleratorSupported": false,
+      "maxMsaaSamples": "8",
+      "nv12OverlaySupport": "SCALING",
+      "optimus": false,
+      "p010OverlaySupport": "SCALING",
+      "passthroughCmdDecoder": true,
+      "pixelShaderVersion": "5.0",
+      "processCrashCount": 0,
+      "rgb10a2OverlaySupport": "SCALING",
+      "sandboxed": false,
+      "skiaBackendType": "GaneshGL",
+      "subpixelFontRendering": true,
+      "supportsD3dSharedImages": true,
+      "supportsDirectML": false,
+      "supportsDx12": false,
+      "supportsOverlays": true,
+      "supportsVulkan": false,
+      "targetCpuBits": 64,
+      "vertexShaderVersion": "5.0",
+      "visibilityCallbackCallCount": 0,
+      "vulkanVersion": "Not supported",
+      "yuy2OverlaySupport": "SCALING"
+    },
+    "featureStatus": {
+      "2d_canvas": "enabled",
+      "direct_rendering_display_compositor": "disabled_off_ok",
+      "gpu_compositing": "enabled",
+      "multiple_raster_threads": "enabled_on",
+      "opengl": "enabled_on",
+      "rasterization": "enabled",
+      "skia_graphite": "disabled_off",
+      "trees_in_viz": "disabled_off",
+      "video_decode": "enabled",
+      "video_encode": "enabled",
+      "webgl": "enabled",
+      "webgpu": "enabled",
+      "webnn": "disabled_off"
+    },
+    "driverBugWorkarounds": [
+      "disable_d3d11_vp9_ksvc_decoding",
+      "enable_webgl_timer_query_extensions",
+      "exit_on_context_lost",
+      "unpack_overlapping_rows_separately_unpack_buffer",
+      "use_g22_topleft_color_space_for_yuv_vp",
+      "disabled_extension_GL_KHR_blend_equation_advanced",
+      "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+    ],
+    "videoDecoding": [],
+    "videoEncoding": []
+  },
+  "screen": {
+    "screen": {
+      "width": 1920,
+      "height": 1080
+    },
+    "innerWidth": 1920,
+    "innerHeight": 1080,
+    "devicePixelRatio": 1,
+    "visibility": "visible"
+  },
+  "final": {
+    "facility": {
+      "assets": [
+        {
+          "id": "A-01",
+          "kind": "rack",
+          "name": "RACK A-01",
+          "location": "서버홀 · A열 · 1번",
+          "x": -10.7,
+          "z": -5.8,
+          "base": {
+            "gpu": 58,
+            "power": 16.4,
+            "temp": 21.4,
+            "network": 68
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-02",
+          "kind": "rack",
+          "name": "RACK A-02",
+          "location": "서버홀 · A열 · 2번",
+          "x": -8.979999999999999,
+          "z": -5.8,
+          "base": {
+            "gpu": 61,
+            "power": 17.5,
+            "temp": 22,
+            "network": 75
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-03",
+          "kind": "rack",
+          "name": "RACK A-03",
+          "location": "서버홀 · A열 · 3번",
+          "x": -7.26,
+          "z": -5.8,
+          "base": {
+            "gpu": 64,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 82
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-04",
+          "kind": "rack",
+          "name": "RACK A-04",
+          "location": "서버홀 · A열 · 4번",
+          "x": -5.539999999999999,
+          "z": -5.8,
+          "base": {
+            "gpu": 67,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 89
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-05",
+          "kind": "rack",
+          "name": "RACK A-05",
+          "location": "서버홀 · A열 · 5번",
+          "x": -3.8199999999999994,
+          "z": -5.8,
+          "base": {
+            "gpu": 70,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-06",
+          "kind": "rack",
+          "name": "RACK A-06",
+          "location": "서버홀 · A열 · 6번",
+          "x": -2.0999999999999996,
+          "z": -5.8,
+          "base": {
+            "gpu": 73,
+            "power": 16.4,
+            "temp": 22,
+            "network": 73
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-01",
+          "kind": "rack",
+          "name": "RACK B-01",
+          "location": "서버홀 · B열 · 1번",
+          "x": -10.7,
+          "z": -2.55,
+          "base": {
+            "gpu": 65,
+            "power": 17.5,
+            "temp": 22,
+            "network": 71
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-02",
+          "kind": "rack",
+          "name": "RACK B-02",
+          "location": "서버홀 · B열 · 2번",
+          "x": -8.979999999999999,
+          "z": -2.55,
+          "base": {
+            "gpu": 68,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 78
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-03",
+          "kind": "rack",
+          "name": "RACK B-03",
+          "location": "서버홀 · B열 · 3번",
+          "x": -7.26,
+          "z": -2.55,
+          "base": {
+            "gpu": 71,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 85
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-04",
+          "kind": "rack",
+          "name": "RACK B-04",
+          "location": "서버홀 · B열 · 4번",
+          "x": -5.539999999999999,
+          "z": -2.55,
+          "base": {
+            "gpu": 74,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 92
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-05",
+          "kind": "rack",
+          "name": "RACK B-05",
+          "location": "서버홀 · B열 · 5번",
+          "x": -3.8199999999999994,
+          "z": -2.55,
+          "base": {
+            "gpu": 77,
+            "power": 16.4,
+            "temp": 22,
+            "network": 69
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-06",
+          "kind": "rack",
+          "name": "RACK B-06",
+          "location": "서버홀 · B열 · 6번",
+          "x": -2.0999999999999996,
+          "z": -2.55,
+          "base": {
+            "gpu": 80,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 76
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-01",
+          "kind": "rack",
+          "name": "RACK C-01",
+          "location": "서버홀 · C열 · 1번",
+          "x": -10.7,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 72,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 74
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-02",
+          "kind": "rack",
+          "name": "RACK C-02",
+          "location": "서버홀 · C열 · 2번",
+          "x": -8.979999999999999,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 75,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 81
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-03",
+          "kind": "rack",
+          "name": "RACK C-03",
+          "location": "서버홀 · C열 · 3번",
+          "x": -7.26,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 78,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 88
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-04",
+          "kind": "rack",
+          "name": "RACK C-04",
+          "location": "서버홀 · C열 · 4번",
+          "x": -5.539999999999999,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 81,
+            "power": 16.4,
+            "temp": 22,
+            "network": 95
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-05",
+          "kind": "rack",
+          "name": "RACK C-05",
+          "location": "서버홀 · C열 · 5번",
+          "x": -3.8199999999999994,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 84,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 72
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-06",
+          "kind": "rack",
+          "name": "RACK C-06",
+          "location": "서버홀 · C열 · 6번",
+          "x": -2.0999999999999996,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 87,
+            "power": 18.599999999999998,
+            "temp": 23.2,
+            "network": 79
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-01",
+          "kind": "rack",
+          "name": "RACK D-01",
+          "location": "서버홀 · D열 · 1번",
+          "x": -10.7,
+          "z": 3.95,
+          "base": {
+            "gpu": 79,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 77
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-02",
+          "kind": "rack",
+          "name": "RACK D-02",
+          "location": "서버홀 · D열 · 2번",
+          "x": -8.979999999999999,
+          "z": 3.95,
+          "base": {
+            "gpu": 82,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 84
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-03",
+          "kind": "rack",
+          "name": "RACK D-03",
+          "location": "서버홀 · D열 · 3번",
+          "x": -7.26,
+          "z": 3.95,
+          "base": {
+            "gpu": 85,
+            "power": 16.4,
+            "temp": 22,
+            "network": 91
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-04",
+          "kind": "rack",
+          "name": "RACK D-04",
+          "location": "서버홀 · D열 · 4번",
+          "x": -5.539999999999999,
+          "z": 3.95,
+          "base": {
+            "gpu": 58,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 68
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-05",
+          "kind": "rack",
+          "name": "RACK D-05",
+          "location": "서버홀 · D열 · 5번",
+          "x": -3.8199999999999994,
+          "z": 3.95,
+          "base": {
+            "gpu": 61,
+            "power": 18.599999999999998,
+            "temp": 23.2,
+            "network": 75
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-06",
+          "kind": "rack",
+          "name": "RACK D-06",
+          "location": "서버홀 · D열 · 6번",
+          "x": -2.0999999999999996,
+          "z": 3.95,
+          "base": {
+            "gpu": 64,
+            "power": 19.7,
+            "temp": 21.4,
+            "network": 82
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "UPS-01",
+          "name": "UPS / PDU 01",
+          "kind": "power",
+          "x": -13.7,
+          "z": -5.3,
+          "location": "전력 설비 · A/B 이중 급전 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "CRAC-01",
+          "name": "COOLING 01",
+          "kind": "cooling",
+          "x": -13.7,
+          "z": -0.6,
+          "location": "냉각 설비 · 저온 공기 공급 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "CRAC-02",
+          "name": "COOLING 02",
+          "kind": "cooling",
+          "x": -13.7,
+          "z": 4.4,
+          "location": "냉각 설비 · 저온 공기 공급 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "NET-01",
+          "name": "NETWORK CORE",
+          "kind": "network",
+          "x": 1.6,
+          "z": -6.6,
+          "location": "네트워크 설비 · 가상 코어 스위치",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        }
+      ],
+      "selectedId": "A-01",
+      "elapsed": 3.6894640000003895,
+      "events": [
+        {
+          "time": 0,
+          "text": "가상 시설 초기화 완료. 장비를 선택하여 상태를 확인하세요."
+        }
+      ]
+    },
+    "renderer": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "width": 1560,
+      "height": 839,
+      "dpr": 1,
+      "calls": 736,
+      "triangles": 126794,
+      "geometries": 157,
+      "textures": 56,
+      "camera": [
+        26.999999999999993,
+        25.000000000000007,
+        29.999999999999996
+      ],
+      "target": [
+        -0.5,
+        0,
+        0
+      ],
+      "contextLost": false,
+      "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+      "layers": {
+        "network": true,
+        "cooling": true,
+        "power": true
+      }
+    },
+    "stats": {
+      "fps": 238.39796567069294,
+      "p95FrameMs": 4.299999999999727,
+      "averageFrameMs": 4.1946666666666665,
+      "gpuMs": 29.426855680000003,
+      "frameCount": 759
+    },
+    "heap": {
+      "used": 25968599,
+      "total": 54551195,
+      "limit": 4395630592
+    },
+    "visuals": {
+      "A-01": {
+        "color": "63e4c1",
+        "selected": true,
+        "networkFlow": true
+      },
+      "A-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "UPS-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "CRAC-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "CRAC-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "NET-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      }
+    }
+  },
+  "cdpMetrics": {
+    "metrics": [
+      {
+        "name": "Timestamp",
+        "value": 2761.223286
+      },
+      {
+        "name": "AudioHandlers",
+        "value": 0
+      },
+      {
+        "name": "AudioWorkletProcessors",
+        "value": 0
+      },
+      {
+        "name": "Documents",
+        "value": 1
+      },
+      {
+        "name": "Frames",
+        "value": 1
+      },
+      {
+        "name": "JSEventListeners",
+        "value": 69
+      },
+      {
+        "name": "LayoutObjects",
+        "value": 325
+      },
+      {
+        "name": "MediaKeySessions",
+        "value": 0
+      },
+      {
+        "name": "MediaKeys",
+        "value": 0
+      },
+      {
+        "name": "Nodes",
+        "value": 628
+      },
+      {
+        "name": "Resources",
+        "value": 14
+      },
+      {
+        "name": "ContextLifecycleStateObservers",
+        "value": 6
+      },
+      {
+        "name": "V8PerContextDatas",
+        "value": 2
+      },
+      {
+        "name": "WorkerGlobalScopes",
+        "value": 0
+      },
+      {
+        "name": "UACSSResources",
+        "value": 0
+      },
+      {
+        "name": "RTCPeerConnections",
+        "value": 0
+      },
+      {
+        "name": "ResourceFetchers",
+        "value": 1
+      },
+      {
+        "name": "AdSubframes",
+        "value": 0
+      },
+      {
+        "name": "DetachedScriptStates",
+        "value": 0
+      },
+      {
+        "name": "ArrayBufferContents",
+        "value": 652
+      },
+      {
+        "name": "LayoutCount",
+        "value": 1572
+      },
+      {
+        "name": "RecalcStyleCount",
+        "value": 2189
+      },
+      {
+        "name": "LayoutDuration",
+        "value": 0.276863
+      },
+      {
+        "name": "RecalcStyleDuration",
+        "value": 0.105975
+      },
+      {
+        "name": "DevToolsCommandDuration",
+        "value": 0.229171
+      },
+      {
+        "name": "ScriptDuration",
+        "value": 36.789742
+      },
+      {
+        "name": "V8CompileDuration",
+        "value": 0
+      },
+      {
+        "name": "TaskDuration",
+        "value": 40.748961
+      },
+      {
+        "name": "TaskOtherDuration",
+        "value": 3.34721
+      },
+      {
+        "name": "ThreadTime",
+        "value": 34.43263
+      },
+      {
+        "name": "ProcessTime",
+        "value": 42.429878
+      },
+      {
+        "name": "JSHeapUsedSize",
+        "value": 25435304
+      },
+      {
+        "name": "JSHeapTotalSize",
+        "value": 51757056
+      },
+      {
+        "name": "FirstMeaningfulPaint",
+        "value": 2757.691305
+      },
+      {
+        "name": "DomContentLoaded",
+        "value": 2756.936589
+      },
+      {
+        "name": "NavigationStart",
+        "value": 2756.847165
+      }
+    ]
+  },
+  "finishedAt": "2026-11-20T10:21:53.705Z"
+}
