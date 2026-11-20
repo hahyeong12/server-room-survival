@@ -16,7 +16,7 @@ document.querySelector('#app').innerHTML=`
 <div class="scene-caption"><b id="scene-code"></b><span id="scene-footnote"></span><span class="caption-line"></span><span>DESKTOP HIGH</span></div>
 <div class="camera-help"><kbd>드래그</kbd> 회전 <kbd>우클릭</kbd> 이동 <kbd>휠</kbd> 확대 <kbd>W A S D</kbd> 이동 <kbd>F</kbd> 초점</div></section>
 <aside id="panel" aria-label="현재 공간과 고객 요청"><div class="panel-label"><span id="panel-eyebrow">OPERATIONS</span><span id="request-counter">1 REQUEST</span></div><div id="context-panel"></div>
-<section class="request-card"><div class="request-card-top"><span>SG / SINGAPORE</span><span id="phase-chip" class="chip"></span></div><h2>싱가포르 고객 요청</h2><div class="identity"><strong data-request-id></strong><span data-customer-id></span></div><p class="workload" id="request-workload"></p><div class="original-label">원래 요청 조건 · 시연 전용</div><div class="terms"><div><strong data-term="gpu"></strong><span>가상 GPU</span></div><div><strong><span data-term="powerKW"></span><small>kW</small></strong><span>가상 전력</span></div><div><strong><span data-term="networkGbps"></span><small>Gbps</small></strong><span>필요 대역폭</span></div></div><p class="terms-note" id="terms-note"></p><div class="assigned"><span>처리 위치</span><strong id="request-location"></strong></div>
+<section class="request-card"><div class="request-card-top"><span>SG / SINGAPORE</span><span id="phase-chip" class="chip"></span></div><h2>싱가포르 고객 요청</h2><div class="identity"><strong data-request-id></strong><span data-customer-id></span></div><p class="workload" id="request-workload"></p><div class="original-label">원래 요청 조건 · 시연 전용</div><div class="terms"><div><strong data-term="gpu"></strong><span>가상 GPU</span></div><div><strong><b data-term="powerKW"></b><small>kW</small></strong><span>가상 전력</span></div><div><strong><b data-term="networkGbps"></b><small>Gbps</small></strong><span>필요 대역폭</span></div></div><p class="terms-note" id="terms-note"></p><div class="assigned"><span>처리 위치</span><strong id="request-location"></strong></div>
 <div class="progress-label"><span id="progress-text">접수 전</span><strong id="progress-value">0%</strong></div><div class="progress-track"><i id="progress-bar"></i></div>
 <div class="step-note" id="step-note"></div><div id="request-actions"></div><div id="action-feedback" role="status" aria-live="polite"></div></section>
 <section id="asset-panel" hidden></section><section class="mini-status"><div><span>링크 상태</span><strong id="link-status">정상</strong></div><div><span>가상 GPU 온라인</span><strong id="gpu-online">192 / 192</strong></div><div><span>시연 진행</span><strong id="step-count">0회</strong></div></section><p class="panel-note">가상 요청을 사용하는 독립 시연입니다. 이동·대기·카메라 조작으로 작업이 진행되지 않습니다.</p></aside>
@@ -25,7 +25,7 @@ document.querySelector('#app').innerHTML=`
 <dialog id="help"><button id="help-close" aria-label="안내 닫기">닫기</button><span class="eyebrow">시연 플레이 안내</span><h2>한 고객의 요청을 따라가 보세요.</h2><ol><li>세계지도에서 싱가포르를 선택하고 요청을 확인합니다.</li><li>울산 관제실에서 원래 조건을 읽고 접수합니다.</li><li>시설 지도에서 서버동 01을 선택해 들어갑니다.</li><li>랙 D-06을 선택하고 시연 작업을 시작합니다.</li><li>다음 단계 버튼으로 장애·복구·사후 확인을 살펴봅니다.</li><li>관제실과 세계지도로 돌아가 같은 요청 상태를 확인합니다.</li></ol><p>모든 진행은 명시적 클릭으로만 일어납니다. 아무리 기다려도 자동으로 완료되지 않습니다. 새로고침하면 이 시연만 초기화됩니다.</p><p>3D 화면에 포커스를 둔 뒤 W/A/S/D로 이동, Q/E로 높이 조절, F로 초점을 맞출 수 있습니다. 카메라 충돌 판정은 없습니다.</p></dialog>`;
 
 const $=id=>document.getElementById(id),store=createWorldStore();
-let scene,lastRoute=null,visualSeconds=0,frame=0,lastTime=performance.now(),lastPerf=0,perfOpen=false;
+let scene,lastRoute=null,resultScrolledFor=null,visualSeconds=0,frame=0,lastTime=performance.now(),lastPerf=0,perfOpen=false;
 const frameTimes=[],gpuTimes=[];let stats={fps:0,p95FrameMs:0,gpuMs:null};
 const descriptions={world:'세계의 고객, 그리고 울산의 하나의 데이터센터.',noc:'요청을 검토하고, 시설과 작업의 상태를 연결하세요.',campus:'전력에서 냉각까지. 하나의 작업을 뒷받침하는 시설들.',hall:'요청이 처리되는 물리적 위치를 직접 확인하세요.'};
 const notes={world:'Made with Natural Earth / 연결 경로는 가상',noc:'기존 관제실 재사용 / 화면과 HUD는 동일 상태',campus:'직접 제작한 시설 배치 / 실제 울산 설계 아님',hall:'기존 24랙·장비·가상 센서 재사용'};
@@ -50,7 +50,7 @@ function contextPanel(){
     root.append(button('울산 관제실 진입',()=>navigate('noc'),false,'enter-noc'));
     root.append(button('선택 거점 가까이 보기',()=>scene.focusWorld(state.navigation.country),false,'focus-country'));
   }else if(route==='noc'){
-    root.innerHTML='<h2>울산 AIDC 관제실</h2><p>한 요청의 접수부터 결과까지 확인하는 운영 거점입니다.</p><div class="inbox-row"><span>요청함</span><strong>SG · 1건</strong></div>';
+    root.innerHTML=`<h2>울산 AIDC 관제실</h2><p>한 요청의 접수부터 결과까지 확인하는 운영 거점입니다.</p><div class="inbox-row"><span>요청함</span><strong>SG · 1건 · ${PHASES[state.request.phase]}</strong></div>`;
     root.append(button('연결 시설 살펴보기',()=>navigate('campus'),false,'enter-campus'));
   }else if(route==='campus'){
     const list=document.createElement('div');list.className='facility-list';
@@ -84,13 +84,27 @@ function render(){
   const a=state.facility.assets.find(a=>a.id===state.facility.selectedId),v=readings(a);$('asset-panel').hidden=route!=='hall';
   $('asset-panel').innerHTML=`<div class="panel-label">ASSET INSPECTOR</div><h3>${a.name}</h3><div class="asset-chip" data-state="${a.state}">${STATES[a.state]}</div><p>${a.id===r.rackId?`관련 요청 ${r.id} / ${PHASES[r.phase]}`:'이 장비에는 이번 시연 요청이 배정되지 않았습니다.'}</p><div class="asset-readings"><div><span>GPU 부하</span><strong>${v.gpu}%</strong></div><div><span>소비 전력</span><strong>${v.power.toFixed(1)} kW</strong></div><div><span>유입 온도</span><strong>${v.temp.toFixed(1)} °C</strong></div><div><span>네트워크</span><strong>${v.network} Gbps</strong></div></div>`;
 }
+// Result summary is derived only from the recorded request history; nothing is scored or saved.
+function resultCard(r){
+  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
+  const card=el('section','result-box');card.id='demo-result';card.append(el('div','result-title','처리 결과 · 가상 시연'));
+  const rows=el('dl','result-rows');
+  for(const [k,v]of [['요청 / 고객',`${r.id} / ${r.customerId}`],['처리 위치',`${r.facilityId} / ${r.buildingId} / ${r.rackId}`],['원래 조건',`GPU ${r.terms.gpu} · ${r.terms.powerKW} kW · ${r.terms.networkGbps} Gbps · ${r.terms.mode} (변경 없음)`],['진행',`${r.progress}% · 시연 조작 ${r.steps}회`]]){rows.append(el('dt','',k),el('dd','',v));}
+  card.append(rows,el('div','result-subtitle','처리 이력'));
+  const list=el('ol','result-timeline');for(const h of r.history)list.append(el('li',`phase-${h.phase}`,`${PHASES[h.phase]} · ${h.progress}%`));card.append(list);
+  card.append(el('p','result-note','점수·게임 시계·자원 원장과 연결되지 않은 가상 결과입니다.'));
+  return card;
+}
 function renderRequestActions(){
   const state=store.state,route=state.navigation.route,step=nextDemoStep(state),root=$('request-actions');root.replaceChildren();
   if(!step){
     $('step-note').textContent='싱가포르 요청의 처리와 사후 확인을 마쳤습니다. 세계지도와 시설을 자유롭게 살펴보세요.';
     $('objective').textContent='싱가포르 요청 시연 완료';$('objective-detail').textContent='동일 요청·고객·랙의 처리 결과가 모든 공간에 유지됩니다.';
-    const result=document.createElement('div');result.className='result-box';result.id='demo-result';result.textContent=`${state.request.id} · 100% 완료 / ${state.request.rackId} / 업링크 사후 확인 완료`;root.append(result);
-    root.append(button('세계지도에서 결과 보기',()=>navigate('world'),true,'result-world'));return;
+    const card=resultCard(state.request);root.append(card);
+    if(route!=='world')root.append(button('세계지도에서 결과 보기',()=>navigate('world'),true,'result-world'));
+    // Bring the result into view once per space; later re-renders keep the viewer's own scroll position.
+    if(resultScrolledFor!==route){resultScrolledFor=route;requestAnimationFrame(()=>card.scrollIntoView({block:'nearest'}));}
+    return;
   }
   $('step-note').textContent=step.note;$('objective').textContent=step.objective;$('objective-detail').textContent=step.note;
   if(route!==step.route){
