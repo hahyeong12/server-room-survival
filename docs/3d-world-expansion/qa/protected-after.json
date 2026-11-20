@@ -415,6 +415,16 @@
     "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
   },
   {
+    "path": "aidc_story_slot_020.db",
+    "bytes": 61440,
+    "sha256": "45c7bc46dece535988ab9f6cc1c31aefda2e8cd9a75d596abfd1c1689491ad0c"
+  },
+  {
+    "path": "aidc_story_slot_020.db.lock",
+    "bytes": 1,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+  },
+  {
     "path": "allocation_dialog.py",
     "bytes": 30213,
     "sha256": "50857b11e4cf58833402e4cb0b789db05b6643e627a774906e9fa824f6902508"

@@ -14,7 +14,7 @@
       "pass": true
     },
     {
-      "name": "breadcrumb and upper return through all four levels",
+      "name": "breadcrumb and upper return: hall > campus > world",
       "pass": true
     },
     {
@@ -69,73 +69,73 @@
     {
       "route": "world",
       "summary": {
-        "fpsAvg": 239.8,
-        "fpsMin": 239.2,
+        "fpsAvg": 240,
+        "fpsMin": 240,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 0.64,
-        "calls": 460,
-        "triangles": 50794,
+        "gpuMsAvg": 0.61,
+        "calls": 490,
+        "triangles": 52234,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 16, 1353, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 15, 1636, 12227"
       },
       "samples": [
         {
-          "fps": 239.9808015358774,
-          "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.7724752,
-          "heapMiB": 23.4,
-          "calls": 460,
-          "triangles": 50794,
-          "geometries": 469,
-          "textures": 69,
+          "fps": 239.99999999999997,
+          "p95FrameMs": 4.200000000000728,
+          "gpuMs": 0.6966469333333334,
+          "heapMiB": 36.4,
+          "calls": 490,
+          "triangles": 52234,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.99999999999997,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.7607866666666664,
-          "heapMiB": 39.4,
-          "calls": 460,
-          "triangles": 50794,
-          "geometries": 469,
-          "textures": 69,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 239.1963004305532,
-          "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.6827935999999997,
-          "heapMiB": 29,
-          "calls": 460,
-          "triangles": 50794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 0.6737893333333334,
+          "heapMiB": 31.2,
+          "calls": 490,
+          "triangles": 52234,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.99999999999997,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.5283456000000001,
-          "heapMiB": 44.3,
-          "calls": 460,
-          "triangles": 50794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 0.6300325333333333,
+          "heapMiB": 25.6,
+          "calls": 490,
+          "triangles": 52234,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.99999999999997,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.4441392000000001,
-          "heapMiB": 33.9,
-          "calls": 460,
-          "triangles": 50794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 0.5234149333333333,
+          "heapMiB": 45.2,
+          "calls": 490,
+          "triangles": 52234,
+          "geometries": 491,
+          "textures": 78,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 239.99999999999997,
+          "p95FrameMs": 4.200000000000728,
+          "gpuMs": 0.5277168,
+          "heapMiB": 39.2,
+          "calls": 490,
+          "triangles": 52234,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         }
@@ -144,73 +144,73 @@
     {
       "route": "noc",
       "summary": {
-        "fpsAvg": 235.3,
+        "fpsAvg": 235.4,
         "fpsMin": 235.3,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 1.02,
-        "calls": 306,
-        "triangles": 110048,
+        "gpuMsAvg": 1.31,
+        "calls": 253,
+        "triangles": 102058,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 35, 1347, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 40, 1645, 12227"
       },
       "samples": [
         {
-          "fps": 235.27566465375224,
-          "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.8431914666666666,
-          "heapMiB": 42.7,
-          "calls": 300,
-          "triangles": 109760,
-          "geometries": 469,
-          "textures": 69,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 235.31257353517896,
-          "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.9347317333333331,
-          "heapMiB": 32,
-          "calls": 304,
-          "triangles": 109952,
-          "geometries": 469,
-          "textures": 69,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
           "fps": 235.27566465375293,
-          "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.0367562666666665,
-          "heapMiB": 44.6,
-          "calls": 296,
-          "triangles": 109568,
-          "geometries": 469,
-          "textures": 69,
+          "p95FrameMs": 4.299999999999272,
+          "gpuMs": 0.9795839999999998,
+          "heapMiB": 41.1,
+          "calls": 253,
+          "triangles": 102058,
+          "geometries": 491,
+          "textures": 78,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 235.2941176470588,
+          "p95FrameMs": 4.299999999999272,
+          "gpuMs": 1.236995733333333,
+          "heapMiB": 37.1,
+          "calls": 251,
+          "triangles": 101962,
+          "geometries": 491,
+          "textures": 78,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 236.07176581680778,
+          "p95FrameMs": 4.200000000004366,
+          "gpuMs": 1.371248533333333,
+          "heapMiB": 41.4,
+          "calls": 253,
+          "triangles": 102058,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 235.2941176470588,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.1050223999999997,
-          "heapMiB": 32,
-          "calls": 298,
-          "triangles": 109664,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 1.426017066666667,
+          "heapMiB": 45.7,
+          "calls": 255,
+          "triangles": 102154,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 235.2941176470588,
-          "p95FrameMs": 4.30000000000291,
-          "gpuMs": 1.1607504,
-          "heapMiB": 44.9,
-          "calls": 306,
-          "triangles": 110048,
-          "geometries": 469,
-          "textures": 69,
+          "p95FrameMs": 4.299999999995634,
+          "gpuMs": 1.5159253333333338,
+          "heapMiB": 49.9,
+          "calls": 253,
+          "triangles": 102058,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         }
@@ -222,70 +222,70 @@
         "fpsAvg": 240,
         "fpsMin": 240,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 0.93,
-        "calls": 191,
-        "triangles": 21378,
+        "gpuMsAvg": 0.79,
+        "calls": 253,
+        "triangles": 33370,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 15, 1347, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 19, 1641, 12227"
       },
       "samples": [
         {
+          "fps": 239.99999999999997,
+          "p95FrameMs": 4.299999999995634,
+          "gpuMs": 0.9899840000000002,
+          "heapMiB": 34.7,
+          "calls": 253,
+          "triangles": 33370,
+          "geometries": 491,
+          "textures": 78,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
           "fps": 240.01920153612258,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.3067098666666668,
-          "heapMiB": 46.5,
-          "calls": 191,
-          "triangles": 21378,
-          "geometries": 469,
-          "textures": 69,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 239.9808015358774,
-          "p95FrameMs": 4.200000000004366,
-          "gpuMs": 1.2103504000000007,
-          "heapMiB": 37.2,
-          "calls": 191,
-          "triangles": 21378,
-          "geometries": 469,
-          "textures": 69,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 239.99999999999997,
-          "p95FrameMs": 4.200000000004366,
-          "gpuMs": 1.115165866666667,
-          "heapMiB": 28.2,
-          "calls": 191,
-          "triangles": 21378,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 0.8844048000000003,
+          "heapMiB": 22.1,
+          "calls": 253,
+          "triangles": 33370,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.99999999999997,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.49307359999999995,
-          "heapMiB": 44.6,
-          "calls": 191,
-          "triangles": 21378,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 0.7860789333333336,
+          "heapMiB": 43.9,
+          "calls": 253,
+          "triangles": 33370,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.9808015358774,
-          "p95FrameMs": 4.200000000004366,
-          "gpuMs": 0.5339685333333333,
-          "heapMiB": 35.2,
-          "calls": 191,
-          "triangles": 21378,
-          "geometries": 469,
-          "textures": 69,
+          "p95FrameMs": 4.299999999995634,
+          "gpuMs": 0.7054218666666667,
+          "heapMiB": 40.2,
+          "calls": 253,
+          "triangles": 33370,
+          "geometries": 491,
+          "textures": 78,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 239.9808015358774,
+          "p95FrameMs": 4.299999999995634,
+          "gpuMs": 0.6034245333333333,
+          "heapMiB": 36.5,
+          "calls": 253,
+          "triangles": 33370,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         }
@@ -294,88 +294,89 @@
     {
       "route": "hall",
       "summary": {
-        "fpsAvg": 236.2,
+        "fpsAvg": 237.1,
         "fpsMin": 236.1,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 0.69,
-        "calls": 736,
-        "triangles": 126794,
+        "gpuMsAvg": 1.95,
+        "calls": 757,
+        "triangles": 133770,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 23, 1352, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 29, 1641, 12227"
       },
       "samples": [
         {
-          "fps": 236.07176581680912,
-          "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.6140960000000001,
-          "heapMiB": 30.9,
-          "calls": 736,
-          "triangles": 126794,
-          "geometries": 469,
-          "textures": 69,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
           "fps": 236.07176581680778,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.6566314666666668,
-          "heapMiB": 38.1,
-          "calls": 736,
-          "triangles": 126794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 1.3009760000000001,
+          "heapMiB": 34.1,
+          "calls": 757,
+          "triangles": 133770,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 236.07176581680778,
+          "fps": 236.05319065229472,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.7017711999999999,
-          "heapMiB": 43.5,
-          "calls": 736,
-          "triangles": 126794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 1.7243296,
+          "heapMiB": 46.1,
+          "calls": 757,
+          "triangles": 133770,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 236.07176581680778,
+          "fps": 237.60494218279769,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.7428805333333333,
-          "heapMiB": 40.9,
-          "calls": 736,
-          "triangles": 126794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 2.01552,
+          "heapMiB": 33.5,
+          "calls": 757,
+          "triangles": 133770,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 236.8358727401916,
+          "fps": 238.39796567069266,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.7204202666666665,
-          "heapMiB": 46.7,
-          "calls": 736,
-          "triangles": 126794,
-          "geometries": 469,
-          "textures": 69,
+          "gpuMs": 2.1320591999999996,
+          "heapMiB": 30.1,
+          "calls": 757,
+          "triangles": 133770,
+          "geometries": 491,
+          "textures": 78,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 237.60494218279769,
+          "p95FrameMs": 4.299999999995634,
+          "gpuMs": 2.559269333333333,
+          "heapMiB": 43.1,
+          "calls": 757,
+          "triangles": 133770,
+          "geometries": 491,
+          "textures": 78,
           "canvas": "1540x801",
           "dpr": 1
         }
       ]
     }
   ],
-  "startedAt": "2026-11-20T11:31:26.777Z",
+  "startedAt": "2026-11-20T12:31:15.752Z",
   "browserVersion": "157.0.8103.80",
   "url": "http://127.0.0.1:5173",
   "initial": {
     "state": {
       "navigation": {
-        "route": "world",
+        "route": "noc",
+        "nocView": "desk",
         "country": "SG",
-        "facility": "HALL-01"
+        "facility": "NOC"
       },
       "facility": {
         "assets": [
@@ -913,6 +914,31 @@
         "progress": 0,
         "steps": 0,
         "history": []
+      },
+      "ops": {
+        "cooling": {
+          "mode": "on",
+          "trend": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "checks": {
+          "power": null,
+          "ups": null,
+          "network": null
+        },
+        "log": []
       },
       "notice": ""
     },
@@ -1452,6 +1478,31 @@
             "text": "가상 시설 초기화 완료. 장비를 선택하여 상태를 확인하세요."
           }
         ]
+      },
+      "ops": {
+        "cooling": {
+          "mode": "on",
+          "trend": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "checks": {
+          "power": null,
+          "ups": null,
+          "network": null
+        },
+        "log": []
       }
     },
     "renderer": {
@@ -1460,37 +1511,50 @@
       "width": 1540,
       "height": 801,
       "dpr": 1,
-      "calls": 460,
-      "triangles": 50794,
-      "geometries": 288,
-      "textures": 26,
+      "calls": 253,
+      "triangles": 102058,
+      "geometries": 340,
+      "textures": 32,
       "camera": [
-        0,
-        35,
-        19.000000000000004
+        9.3,
+        2.05,
+        3.0499999999999994
       ],
       "target": [
-        0,
-        0,
-        0
+        9.3,
+        1.3,
+        -3.4
       ],
       "contextLost": false,
-      "location": "world",
+      "location": "noc",
       "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
       "layers": {
         "network": true,
         "cooling": true,
         "power": true
-      }
+      },
+      "nocView": "desk",
+      "clip": [
+        {
+          "normal": [
+            1,
+            0,
+            0
+          ],
+          "constant": -4.12
+        }
+      ],
+      "fog": false,
+      "cinematic": false
     },
     "stats": {
-      "fps": 239.99999999999994,
-      "p95FrameMs": 4.299999999999727,
-      "gpuMs": 7.523500444444443
+      "fps": 237.62376237623764,
+      "p95FrameMs": 4.300000000000182,
+      "gpuMs": 8.544576000000001
     },
     "heap": {
-      "used": 25462273,
-      "total": 39546389
+      "used": 31413475,
+      "total": 53435699
     },
     "visuals": {
       "A-01": {
@@ -1637,25 +1701,43 @@
     "worldMarkers": {
       "SG": "f3c37b",
       "JP": "7ba7bd"
+    },
+    "cooling": {
+      "mode": "on",
+      "fanSpeed": 6,
+      "flowVisible": true,
+      "icon": "on",
+      "led": "#68dfce"
+    },
+    "deskScreen": "new:0:on:192",
+    "opening": {
+      "active": false,
+      "state": null,
+      "result": {
+        "how": "skipped",
+        "seconds": 1.33
+      },
+      "seconds": 12.200000000000001
     }
   },
   "stability": {
     "cycles": 10,
     "before": {
-      "geometries": 469,
-      "textures": 69,
-      "heapMiB": 35.4
+      "geometries": 491,
+      "textures": 78,
+      "heapMiB": 54.6
     },
     "after": {
-      "geometries": 469,
-      "textures": 69,
-      "heapMiB": 44.7
+      "geometries": 491,
+      "textures": 78,
+      "heapMiB": 43.9
     }
   },
   "final": {
     "state": {
       "navigation": {
         "route": "world",
+        "nocView": "desk",
         "country": "SG",
         "facility": "HALL-01"
       },
@@ -2267,6 +2349,31 @@
           }
         ]
       },
+      "ops": {
+        "cooling": {
+          "mode": "on",
+          "trend": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "checks": {
+          "power": null,
+          "ups": null,
+          "network": null
+        },
+        "log": []
+      },
       "notice": ""
     },
     "domain": {
@@ -2876,6 +2983,31 @@
             "text": "가상 시설 초기화 완료. 장비를 선택하여 상태를 확인하세요."
           }
         ]
+      },
+      "ops": {
+        "cooling": {
+          "mode": "on",
+          "trend": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "checks": {
+          "power": null,
+          "ups": null,
+          "network": null
+        },
+        "log": []
       }
     },
     "renderer": {
@@ -2884,10 +3016,10 @@
       "width": 1540,
       "height": 801,
       "dpr": 1,
-      "calls": 460,
-      "triangles": 50794,
-      "geometries": 470,
-      "textures": 69,
+      "calls": 490,
+      "triangles": 52234,
+      "geometries": 492,
+      "textures": 78,
       "camera": [
         0,
         35,
@@ -2905,16 +3037,20 @@
         "network": true,
         "cooling": true,
         "power": true
-      }
+      },
+      "nocView": "desk",
+      "clip": [],
+      "fog": false,
+      "cinematic": false
     },
     "stats": {
-      "fps": 240.01920153612403,
-      "p95FrameMs": 4.30000000000291,
-      "gpuMs": 1.0714805333333335
+      "fps": 240.01920153612122,
+      "p95FrameMs": 4.2999999999883585,
+      "gpuMs": 1.8708799999999994
     },
     "heap": {
-      "used": 27425882,
-      "total": 87026334
+      "used": 43158574,
+      "total": 89865386
     },
     "visuals": {
       "A-01": {
@@ -3061,7 +3197,24 @@
     "worldMarkers": {
       "SG": "68dfce",
       "JP": "7ba7bd"
+    },
+    "cooling": {
+      "mode": "on",
+      "fanSpeed": 6,
+      "flowVisible": true,
+      "icon": "on",
+      "led": "#68dfce"
+    },
+    "deskScreen": "reported:100:on:192",
+    "opening": {
+      "active": false,
+      "state": null,
+      "result": {
+        "how": "skipped",
+        "seconds": 1.33
+      },
+      "seconds": 12.200000000000001
     }
   },
-  "finishedAt": "2026-11-20T11:33:20.331Z"
+  "finishedAt": "2026-11-20T12:33:08.388Z"
 }

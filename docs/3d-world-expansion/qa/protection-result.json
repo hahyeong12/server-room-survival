@@ -1,6 +1,9 @@
 {
   "phase": "after",
-  "count": 751,
-  "identical": true,
-  "differences": []
+  "count": 753,
+  "identical": false,
+  "differences": [
+    "aidc_story_slot_020.db",
+    "aidc_story_slot_020.db.lock"
+  ]
 }

@@ -1,0 +1,327 @@
+{
+  "issue": 2,
+  "mode": "Chrome headed / Playwright CDP mouse+keyboard / isolated profile / 1920x1080 DPR1",
+  "url": "http://127.0.0.1:5173",
+  "checks": [
+    {
+      "name": "first visit plays the opening: world traffic -> Ulsan -> industrial district -> campus -> my desk",
+      "pass": true
+    },
+    {
+      "name": "my desk is the work entry point: role, what to do now, request from state, facility watch",
+      "pass": true
+    },
+    {
+      "name": "opening is not forced again; replay works and Esc skips straight to my desk",
+      "pass": true
+    },
+    {
+      "name": "desk and wide NOC views are both reachable; the control room reads as staffed",
+      "pass": true
+    },
+    {
+      "name": "request arrives on my monitor; review and accept at my desk; world map overlay optional",
+      "pass": true
+    },
+    {
+      "name": "control and server buildings are distinct: clipping, boundary wall, transit card, different roles",
+      "pass": true
+    },
+    {
+      "name": "every campus building is clickable in 3D and opens a working panel",
+      "pass": true
+    },
+    {
+      "name": "auxiliary cooling ON / OFF / WARN: instant, consistent icon + LED + text + numbers in plant, panel, my monitor, server building",
+      "pass": true
+    },
+    {
+      "name": "SG request end to end from my desk: hall work, fault, network cause lookup, repair, result on my monitor",
+      "pass": true
+    },
+    {
+      "name": "performance per space incl. district and desk (avg >= 60 FPS) and 10-cycle resource stability",
+      "pass": true
+    },
+    {
+      "name": "no runtime or console errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "opening-1-world.png",
+    "opening-2-world.png",
+    "opening-3-campus.png",
+    "opening-4-campus.png",
+    "opening-5-noc.png",
+    "desk-start.png",
+    "noc-overview.png",
+    "world-sg-request.png",
+    "desk-accepted.png",
+    "transit-to-hall.png",
+    "facility-power.png",
+    "facility-ups.png",
+    "facility-network-ok.png",
+    "cooling-on.png",
+    "cooling-off.png",
+    "desk-cooling-off.png",
+    "cooling-on-again.png",
+    "cooling-warn.png",
+    "desk-cooling-warn.png",
+    "hall-cooling-warn.png",
+    "desk-fault.png",
+    "facility-network-fault.png",
+    "desk-result.png"
+  ],
+  "performance": [
+    {
+      "label": "opening (campus/district segment)",
+      "fps": 206.9,
+      "p95": 4.3,
+      "calls": 253,
+      "triangles": 33370
+    },
+    {
+      "label": "noc desk",
+      "fpsAvg": 235.5,
+      "fpsMin": 235.3,
+      "p95Max": 4.3,
+      "gpuMsAvg": 1.65,
+      "calls": 255,
+      "triangles": 102154,
+      "samples": [
+        {
+          "fps": 236.1,
+          "p95": 4.3,
+          "gpuMs": 1.33,
+          "calls": 253,
+          "triangles": 102058
+        },
+        {
+          "fps": 235.3,
+          "p95": 4.3,
+          "gpuMs": 1.79,
+          "calls": 253,
+          "triangles": 102058
+        },
+        {
+          "fps": 235.3,
+          "p95": 4.3,
+          "gpuMs": 1.69,
+          "calls": 253,
+          "triangles": 102058
+        },
+        {
+          "fps": 235.3,
+          "p95": 4.3,
+          "gpuMs": 1.8,
+          "calls": 255,
+          "triangles": 102154
+        }
+      ]
+    },
+    {
+      "label": "noc overview",
+      "fpsAvg": 237.8,
+      "fpsMin": 237.6,
+      "p95Max": 4.3,
+      "gpuMsAvg": 2.06,
+      "calls": 629,
+      "triangles": 128450,
+      "samples": [
+        {
+          "fps": 238.4,
+          "p95": 4.3,
+          "gpuMs": 2.1,
+          "calls": 633,
+          "triangles": 128566
+        },
+        {
+          "fps": 237.6,
+          "p95": 4.3,
+          "gpuMs": 2.16,
+          "calls": 631,
+          "triangles": 128546
+        },
+        {
+          "fps": 237.6,
+          "p95": 4.3,
+          "gpuMs": 2.08,
+          "calls": 633,
+          "triangles": 128566
+        },
+        {
+          "fps": 237.6,
+          "p95": 4.3,
+          "gpuMs": 1.92,
+          "calls": 629,
+          "triangles": 128450
+        }
+      ]
+    },
+    {
+      "label": "campus",
+      "fpsAvg": 240,
+      "fpsMin": 240,
+      "p95Max": 4.3,
+      "gpuMsAvg": 1.01,
+      "calls": 253,
+      "triangles": 33370,
+      "samples": [
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 1.26,
+          "calls": 253,
+          "triangles": 33370
+        },
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 1.18,
+          "calls": 253,
+          "triangles": 33370
+        },
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 0.8,
+          "calls": 253,
+          "triangles": 33370
+        },
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 0.78,
+          "calls": 253,
+          "triangles": 33370
+        }
+      ]
+    },
+    {
+      "label": "hall",
+      "fpsAvg": 237.6,
+      "fpsMin": 236.8,
+      "p95Max": 4.3,
+      "gpuMsAvg": 1.47,
+      "calls": 758,
+      "triangles": 133770,
+      "samples": [
+        {
+          "fps": 237.6,
+          "p95": 4.3,
+          "gpuMs": 1.27,
+          "calls": 758,
+          "triangles": 133770
+        },
+        {
+          "fps": 237.6,
+          "p95": 4.3,
+          "gpuMs": 1.34,
+          "calls": 758,
+          "triangles": 133770
+        },
+        {
+          "fps": 236.8,
+          "p95": 4.3,
+          "gpuMs": 1.61,
+          "calls": 758,
+          "triangles": 133770
+        },
+        {
+          "fps": 238.4,
+          "p95": 4.3,
+          "gpuMs": 1.67,
+          "calls": 758,
+          "triangles": 133770
+        }
+      ]
+    },
+    {
+      "label": "world",
+      "fpsAvg": 240,
+      "fpsMin": 240,
+      "p95Max": 4.3,
+      "gpuMsAvg": 0.79,
+      "calls": 490,
+      "triangles": 52234,
+      "samples": [
+        {
+          "fps": 240,
+          "p95": 4.2,
+          "gpuMs": 1.12,
+          "calls": 490,
+          "triangles": 52234
+        },
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 0.88,
+          "calls": 490,
+          "triangles": 52234
+        },
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 0.64,
+          "calls": 490,
+          "triangles": 52234
+        },
+        {
+          "fps": 240,
+          "p95": 4.3,
+          "gpuMs": 0.5,
+          "calls": 490,
+          "triangles": 52234
+        }
+      ]
+    }
+  ],
+  "timings": {
+    "openingShots": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "openingNatural": {
+      "how": "completed",
+      "seconds": 12.21
+    },
+    "firstDeskAfterLoadMs": 12029,
+    "replay": "Esc and skip button both end at my desk",
+    "coolingFeedbackMs": {
+      "off": 26,
+      "on": 21,
+      "warn": 27
+    }
+  },
+  "startedAt": "2026-11-20T12:28:39.139Z",
+  "browserVersion": "157.0.8103.80",
+  "canvasPicks": {
+    "NOC": "NOC",
+    "HALL-01": "HALL-01",
+    "POWER": "POWER",
+    "UPS": "UPS",
+    "COOLING": "COOLING",
+    "NETWORK": "NETWORK"
+  },
+  "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 15, 1629, 12227",
+  "stability": {
+    "cycles": 10,
+    "before": {
+      "geometries": 495,
+      "textures": 78,
+      "heapMiB": 25.2
+    },
+    "after": {
+      "geometries": 495,
+      "textures": 78,
+      "heapMiB": 29.3
+    }
+  },
+  "finishedAt": "2026-11-20T12:31:02.257Z"
+}
