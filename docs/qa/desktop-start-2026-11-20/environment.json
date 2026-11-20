@@ -1,0 +1,17 @@
+{
+  "python": "C:\\Users\\hahye\\anaconda3\\python.exe",
+  "version": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:29:05) [MSC v.1942 64 bit (AMD64)]",
+  "tcl_patchlevel": "8.6.15",
+  "tk_version": 8.6,
+  "sqlite": "3.53.2",
+  "discovered_tests": 1092,
+  "headless_selected": 781,
+  "gui_excluded": 311,
+  "system_dpi_diagnostic_process": 96,
+  "initial_dpi": 96,
+  "display_pixels": [
+    1920,
+    1080
+  ],
+  "foreground_window": 0
+}
