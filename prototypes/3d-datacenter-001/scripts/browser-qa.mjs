@@ -5,7 +5,8 @@ import { promisify } from 'node:util';
 import { resolve } from 'node:path';
 import assert from 'node:assert/strict';
 
-const exec = promisify(execFile), out = resolve('qa'); await mkdir(out, { recursive: true });
+const outputArg = process.argv.find(arg => arg.startsWith('--output='));
+const exec = promisify(execFile), out = resolve(outputArg ? outputArg.slice('--output='.length) : 'qa'); await mkdir(out, { recursive: true });
 const smoke = process.argv.includes('--smoke'), headless = process.argv.includes('--headless');
 const urlArg = process.argv.find(arg => arg.startsWith('--url='));
 const url = urlArg ? urlArg.slice('--url='.length) : 'http://127.0.0.1:5173';

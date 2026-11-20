@@ -301,10 +301,17 @@ export function createScene(container, facility, onSelect, options = {}) {
 
   let location = 'hall';
   const originalRoom = new THREE.Group();
+  let requestMarker = null;
   let worldGeometry = null;
   if (options.worldMode) {
     for (const child of [...scene.children]) if (!child.isDirectionalLight && !child.isHemisphereLight) originalRoom.add(child);
     scene.add(originalRoom);
+    const targetId = options.getState?.().request.rackId;
+    const asset = facility.assets.find(a => a.id === targetId);
+    if(asset) {
+      requestMarker = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.5,3.35,1.68)),new THREE.LineBasicMaterial({color:0xf1c382,transparent:true,opacity:.8}));
+      requestMarker.position.set(asset.x,1.75,asset.z); originalRoom.add(requestMarker);
+    }
     worldGeometry = createWorldGeometry();
     scene.add(worldGeometry.world, worldGeometry.campus);
     worldGeometry.world.visible = false; worldGeometry.campus.visible = false;
@@ -349,7 +356,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   renderer.domElement.addEventListener('pointerup', e => { if (e.button !== 0 || !pointerStart) return; if (Math.hypot(e.clientX - pointerStart.x, e.clientY - pointerStart.y) < 5) { const id = hit(e); if (id) { if (id.includes(':')) options.onPick?.(id); else onSelect(id); } } pointerStart = null; });
   renderer.domElement.addEventListener('pointermove', e => {
     hovered = hit(e); renderer.domElement.style.cursor = hovered ? 'pointer' : 'grab'; hoverLabel.hidden = !hovered || !!e.buttons;
-    if (hovered) { const rect = container.getBoundingClientRect(); hoverLabel.textContent = `${hovered} · 장비 선택`; hoverLabel.style.left = `${Math.min(e.clientX - rect.left + 14, rect.width - 185)}px`; hoverLabel.style.top = `${e.clientY - rect.top - 38}px`; }
+    if (hovered) { const rect = container.getBoundingClientRect(); hoverLabel.textContent = hovered.includes(':') ? `${worldGeometry?.pickLabel(hovered)} · 선택` : `${hovered} · 장비 선택`; hoverLabel.style.left = `${Math.min(e.clientX - rect.left + 14, rect.width - 185)}px`; hoverLabel.style.top = `${e.clientY - rect.top - 38}px`; }
   });
   renderer.domElement.addEventListener('pointerleave', () => { hovered = null; hoverLabel.hidden = true; });
   renderer.domElement.addEventListener('keydown', e => { if (['KeyW','KeyA','KeyS','KeyD','KeyQ','KeyE','KeyF'].includes(e.code)) { e.preventDefault(); keys.add(e.code); if (e.code === 'KeyF') focus(); } });
@@ -406,6 +413,7 @@ export function createScene(container, facility, onSelect, options = {}) {
     if (contextLost) return;
     visualElapsed = options.worldMode ? visualElapsed + dt : facility.elapsed;
     worldGeometry?.update(visualElapsed, options.getState());
+    if(requestMarker) requestMarker.visible = location === 'hall' && !['new','reviewed'].includes(options.getState().request.phase);
     if (transition) {
       transition.progress = Math.min(1, transition.progress + dt / 1.15);
       const k = transition.progress * transition.progress * (3 - 2 * transition.progress);

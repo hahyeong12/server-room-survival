@@ -2,6 +2,7 @@ import './world.css';
 import {createScene} from './scene.js';
 import {createWorldStore,LOCATIONS,COUNTRIES,FACILITIES,FIXTURE,PHASES,breadcrumbs} from './world-store.js';
 import {readings,totals,STATES} from './model.js';
+import {nextDemoStep,demoBlocker} from './demo-actions.js';
 
 document.querySelector('#app').innerHTML=`
 <header class="topbar"><a class="brand" href="#world"><span class="brand-icon">▤</span><span>SERVER ROOM<span class="brand-sub">SURVIVAL / CONNECTED WORLD</span></span></a><div class="mode-badge">시연 모드 · 가상 요청 데이터</div><div class="top-right"><span>ULSAN · AIDC</span><button id="help-open">플레이 안내</button></div></header>
@@ -18,7 +19,7 @@ document.querySelector('#app').innerHTML=`
 <section class="request-card"><div class="request-card-top"><span>SG / SINGAPORE</span><span id="phase-chip" class="chip"></span></div><h2>싱가포르 고객 요청</h2><div class="identity"><strong data-request-id></strong><span data-customer-id></span></div><p class="workload">AI 추론 배치 처리</p><div class="original-label">원래 요청 조건 · 시연 전용</div><div class="terms"><div><strong>8</strong><span>가상 GPU</span></div><div><strong>20<small>kW</small></strong><span>가상 전력</span></div><div><strong>40<small>Gbps</small></strong><span>필요 대역폭</span></div></div><p class="terms-note">고성능 모드 · 시연 완료 시점에 결과 확인</p><div class="assigned"><span>처리 위치</span><strong>ULSAN-AIDC-01 / HALL-01 / D-06</strong></div>
 <div class="progress-label"><span id="progress-text">접수 전</span><strong id="progress-value">0%</strong></div><div class="progress-track"><i id="progress-bar"></i></div>
 <div class="step-note" id="step-note"></div><div id="request-actions"></div><div id="action-feedback" role="status" aria-live="polite"></div></section>
-<section id="asset-panel" hidden></section><section class="mini-status"><div><span>링크 상태</span><strong id="link-status">정상</strong></div><div><span>가상 GPU 온라인</span><strong id="gpu-online">192 / 192</strong></div><div><span>도메인 변경</span><strong id="step-count">0회</strong></div></section><p class="panel-note">Python 게임·SQLite와 연결되지 않은 시연입니다. 이동·대기·카메라 조작으로 작업이 진행되지 않습니다.</p></aside>
+<section id="asset-panel" hidden></section><section class="mini-status"><div><span>링크 상태</span><strong id="link-status">정상</strong></div><div><span>가상 GPU 온라인</span><strong id="gpu-online">192 / 192</strong></div><div><span>시연 진행</span><strong id="step-count">0회</strong></div></section><p class="panel-note">가상 요청을 사용하는 독립 시연입니다. 이동·대기·카메라 조작으로 작업이 진행되지 않습니다.</p></aside>
 <section class="mission-strip"><div class="mission-title"><span class="eyebrow">ONE REQUEST / FOUR SPACES</span><strong id="objective">싱가포르의 새 요청을 확인하세요</strong><p id="objective-detail">세계지도에서 고객과 울산 AIDC의 관계를 살펴보세요.</p></div><div class="flow"><span data-step="world">세계지도</span><i></i><span data-step="noc">관제실</span><i></i><span data-step="campus">시설 지도</span><i></i><span data-step="hall">서버실</span></div><div class="mission-id"><strong data-request-id></strong><span>가상 고객 요청 1건</span></div></section>
 </main><footer><span><b>WORLD SKELETON / PHASE 0–2</b> · 기존 엔진 미연결</span><span id="performance">성능 측정 중…</span><button id="perf-toggle" aria-expanded="false">성능 상세</button><a href="./lab.html">기존 3D 실험실</a></footer><div id="perf-panel" hidden></div>
 <dialog id="help"><button id="help-close" aria-label="안내 닫기">닫기</button><span class="eyebrow">시연 플레이 안내</span><h2>한 고객의 요청을 따라가 보세요.</h2><ol><li>세계지도에서 싱가포르를 선택하고 요청을 확인합니다.</li><li>울산 관제실에서 원래 조건을 읽고 접수합니다.</li><li>시설 지도에서 서버동 01을 선택해 들어갑니다.</li><li>랙 D-06을 선택하고 시연 작업을 시작합니다.</li><li>다음 단계 버튼으로 장애·복구·사후 확인을 살펴봅니다.</li><li>관제실과 세계지도로 돌아가 같은 요청 상태를 확인합니다.</li></ol><p>모든 진행은 명시적 클릭으로만 일어납니다. 아무리 기다려도 자동으로 완료되지 않습니다. 새로고침하면 이 시연만 초기화됩니다.</p><p>3D 화면에 포커스를 둔 뒤 W/A/S/D로 이동, Q/E로 높이 조절, F로 초점을 맞출 수 있습니다. 카메라 충돌 판정은 없습니다.</p></dialog>`;
@@ -77,15 +78,30 @@ function render(){
   $('progress-value').textContent=`${r.progress}%`;$('progress-bar').style.width=`${r.progress}%`;$('progress-text').textContent=PHASES[r.phase];$('step-count').textContent=`${r.steps}회`;
   $('link-status').textContent=['fault','repairing'].includes(r.phase)?'업링크 단절':r.phase==='awaiting'?'복구 / 확인 대기':'정상';$('link-status').dataset.bad=['fault','repairing'].includes(r.phase);
   $('gpu-online').textContent=`${totals(state.facility).gpu} / 192`;
-  contextPanel();renderRequestActions();
+  contextPanel();renderRequestActions();$('action-feedback').textContent=state.notice;
   const a=state.facility.assets.find(a=>a.id===state.facility.selectedId),v=readings(a);$('asset-panel').hidden=route!=='hall';
   $('asset-panel').innerHTML=`<div class="panel-label">ASSET INSPECTOR</div><h3>${a.name}</h3><div class="asset-chip" data-state="${a.state}">${STATES[a.state]}</div><p>${a.id===r.rackId?`관련 요청 ${r.id} / ${PHASES[r.phase]}`:'이 장비에는 이번 시연 요청이 배정되지 않았습니다.'}</p><div class="asset-readings"><div><span>GPU 부하</span><strong>${v.gpu}%</strong></div><div><span>소비 전력</span><strong>${v.power.toFixed(1)} kW</strong></div><div><span>유입 온도</span><strong>${v.temp.toFixed(1)} °C</strong></div><div><span>네트워크</span><strong>${v.network} Gbps</strong></div></div>`;
 }
 function renderRequestActions(){
-  $('step-note').textContent='공간을 자유롭게 이동하며 한 요청을 추적할 수 있습니다.';
-  $('request-actions').replaceChildren(button(store.state.navigation.route==='hall'?'관제실로 돌아가기':'요청 랙으로 이동',()=>navigate(store.state.navigation.route==='hall'?'noc':'hall'),true,'demo-navigation'));
+  const state=store.state,route=state.navigation.route,step=nextDemoStep(state),root=$('request-actions');root.replaceChildren();
+  if(!step){
+    $('step-note').textContent='싱가포르 요청의 처리와 사후 확인을 마쳤습니다. 세계지도와 시설을 자유롭게 살펴보세요.';
+    $('objective').textContent='싱가포르 요청 시연 완료';$('objective-detail').textContent='동일 요청·고객·랙의 처리 결과가 모든 공간에 유지됩니다.';
+    const result=document.createElement('div');result.className='result-box';result.id='demo-result';result.textContent=`${state.request.id} · 100% 완료 / ${state.request.rackId} / 업링크 사후 확인 완료`;root.append(result);
+    root.append(button('세계지도에서 결과 보기',()=>navigate('world'),true,'result-world'));return;
+  }
+  $('step-note').textContent=step.note;$('objective').textContent=step.objective;$('objective-detail').textContent=step.note;
+  if(route!==step.route){
+    const next=step.route==='hall'&&route!=='campus'?'campus':step.route;
+    const label=next==='world'?'세계지도에서 싱가포르 확인':next==='noc'?'관제실에서 계속':next==='campus'?'시설 지도로 요청 추적':'서버동 01 진입';
+    root.append(button(label,()=>navigate(next),true,'continue-demo'));
+  }else{
+    if(route==='world'&&state.navigation.country!=='SG')root.append(button('싱가포르 고객 선택',()=>store.selectCountry('SG'),true,'select-sg'));
+    if(route==='hall'&&state.facility.selectedId!==state.request.rackId)root.append(button('요청 랙 D-06 선택',()=>{store.selectRack(FIXTURE.rackId);scene.focus();},true,'select-request-rack'));
+    const b=button(step.label,()=>store.act(step.id),true,'demo-action');b.dataset.action=step.id;b.disabled=!!demoBlocker(state,step.id);root.append(b);
+  }
+  if(['running','fault','repairing','awaiting','recovered'].includes(state.request.phase)&&route==='hall')root.append(button('관제실에서 같은 상태 확인',()=>navigate('noc'),false,'inspect-noc'));
 }
-// Phase 2 binds the explicit demo action API here, keeping routing independent.
 store.subscribe(render);
 try{
   scene=createScene($('viewport'),store.state.facility,id=>store.selectRack(id),{worldMode:true,getState:()=>store.state,onPick:id=>{const [type,key]=id.split(':');if(type==='country')store.selectCountry(key);if(type==='facility')store.selectFacility(key);}});

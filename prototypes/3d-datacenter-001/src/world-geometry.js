@@ -70,7 +70,7 @@ export function createWorldGeometry() {
   for(const [id,f] of Object.entries(FACILITIES)){
     const w=id==='HALL-01'?8.3:id==='NOC'?6:id==='COOLING'?5.5:4.6,d=id==='HALL-01'?12:id==='NOC'?3.1:3.2,h=id==='HALL-01'?2.8:id==='NOC'?2.1:1.9;
     box(campus,materials.dark,f.x,.15,f.z,w+.4,.25,d+.4);
-    const body=box(campus,id==='NOC'?materials.roof:materials.metal,f.x,h/2+.22,f.z,w,h,d,false);body.userData.pickId=`facility:${id}`;pickables.campus.push(body);
+    const body=box(campus,(id==='NOC'?materials.roof:materials.metal).clone(),f.x,h/2+.22,f.z,w,h,d,false);body.userData.pickId=`facility:${id}`;pickables.campus.push(body);
     box(campus,materials.roof,f.x,h+.26,f.z,w+.1,.12,d+.1);
     for(let z=f.z-d/2+.3;z<f.z+d/2;z+=.65)box(campus,materials.dark,f.x,h+.34,z,w-.3,.035,.025);
     const rimMaterial=new THREE.LineBasicMaterial({color:0x6fe7d2});
@@ -81,7 +81,7 @@ export function createWorldGeometry() {
     }
     box(campus,materials.dark,f.x,.8,f.z+d/2+.04,.7,1.3,.05);
     const name=label(campus,f.code,id==='HALL-01'?'SG-2026-001 / D-06':id==='NOC'?'OPERATIONS CENTER':f.name==='냉각 플랜트'?'THERMAL PLANT':id,f.x,h+1,f.z+d/2,5,id==='HALL-01'?'#8af0d4':'#b1c9d6');
-    buildings[id]={body,point:V(f.x,h/2,f.z),rim,name};
+    buildings[id]={body,baseColor:body.material.color.clone(),point:V(f.x,h/2,f.z),rim,name};
     if(id==='HALL-01')for(let row=0;row<2;row++)for(let k=0;k<6;k++){
       const x=f.x-2+row*4,z=f.z-4.8+k*1.8;
       box(campus,materials.dark,x,h+.59,z,1.5,.55,1.2);
@@ -125,9 +125,11 @@ export function createWorldGeometry() {
     for(const [id,m]of Object.entries(markers)){m.ring.scale.setScalar(1+(id==='SG'?.15*Math.sin(time*2):0));if(id==='SG')m.node.material.color.setHex(color);}
     for(const {id,rim}of outlines){rim.visible=state.navigation.facility===id;rim.material.color.setHex(id==='HALL-01'?color:COLORS.normal);}
     campusLinkMat.color.setHex(color);
+    buildings['HALL-01'].body.material.color.copy(buildings['HALL-01'].baseColor);
+    if(bad||repair||awaiting)buildings['HALL-01'].body.material.color.lerp(new THREE.Color(color),.3);
   }
   function project(kind,id,camera,rect){
     const p=kind==='world'?markers[id]?.point:buildings[id]?.point;if(!p)return null;const v=p.clone().project(camera);return {x:rect.left+(v.x+1)/2*rect.width,y:rect.top+(1-v.y)/2*rect.height,visible:v.z>-1&&v.z<1};
   }
-  return {world,campus,pickables,update,project,focusPoint:(kind,id)=>(kind==='world'?markers[id]?.point:buildings[id]?.point)?.clone()};
+  return {world,campus,pickables,update,project,focusPoint:(kind,id)=>(kind==='world'?markers[id]?.point:buildings[id]?.point)?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?COUNTRIES[key]?.name:FACILITIES[key]?.name;}};
 }

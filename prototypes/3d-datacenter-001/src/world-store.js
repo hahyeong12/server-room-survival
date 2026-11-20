@@ -1,4 +1,5 @@
 import { createFacility, selectAsset } from './model.js';
+import { applyDemoAction } from './demo-actions.js';
 
 function freeze(value) { Object.values(value).forEach(v => { if (v && typeof v === 'object') freeze(v); }); return Object.freeze(value); }
 export const LOCATIONS = freeze({ world: { title:'세계 운영 지도', parent:null, subtitle:'GLOBAL OPERATIONS' }, noc:{ title:'울산 관제실', parent:'world', subtitle:'NETWORK OPERATIONS CENTER' }, campus:{ title:'데이터센터 시설', parent:'noc', subtitle:'ULSAN AIDC / CAMPUS' }, hall:{ title:'서버실 01', parent:'campus', subtitle:'COMPUTE HALL / 24 RACKS' } });
@@ -24,6 +25,7 @@ export function createWorldStore() {
     selectCountry(id){if(!Object.hasOwn(COUNTRIES,id))return false;state.navigation.country=id;notify();return true;},
     selectFacility(id){if(!Object.hasOwn(FACILITIES,id))return false;state.navigation.facility=id;notify();return true;},
     selectRack(id){if(!selectAsset(state.facility,id))return false;notify();return true;},
+    act(action){const result=applyDemoAction(state,action);state.notice=result.reason;notify();return result;},
     subscribe(listener){listeners.add(listener);return()=>listeners.delete(listener);},
     snapshot(){return structuredClone(state);},
     domainSnapshot(){const {selectedId,...facility}=state.facility;return structuredClone({request:state.request,facility});},
