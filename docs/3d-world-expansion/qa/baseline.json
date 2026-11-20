@@ -1,0 +1,704 @@
+{
+  "browser": "157.0.8103.80",
+  "snapshot": {
+    "facility": {
+      "assets": [
+        {
+          "id": "A-01",
+          "kind": "rack",
+          "name": "RACK A-01",
+          "location": "서버홀 · A열 · 1번",
+          "x": -10.7,
+          "z": -5.8,
+          "base": {
+            "gpu": 58,
+            "power": 16.4,
+            "temp": 21.4,
+            "network": 68
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-02",
+          "kind": "rack",
+          "name": "RACK A-02",
+          "location": "서버홀 · A열 · 2번",
+          "x": -8.979999999999999,
+          "z": -5.8,
+          "base": {
+            "gpu": 61,
+            "power": 17.5,
+            "temp": 22,
+            "network": 75
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-03",
+          "kind": "rack",
+          "name": "RACK A-03",
+          "location": "서버홀 · A열 · 3번",
+          "x": -7.26,
+          "z": -5.8,
+          "base": {
+            "gpu": 64,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 82
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-04",
+          "kind": "rack",
+          "name": "RACK A-04",
+          "location": "서버홀 · A열 · 4번",
+          "x": -5.539999999999999,
+          "z": -5.8,
+          "base": {
+            "gpu": 67,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 89
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-05",
+          "kind": "rack",
+          "name": "RACK A-05",
+          "location": "서버홀 · A열 · 5번",
+          "x": -3.8199999999999994,
+          "z": -5.8,
+          "base": {
+            "gpu": 70,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "A-06",
+          "kind": "rack",
+          "name": "RACK A-06",
+          "location": "서버홀 · A열 · 6번",
+          "x": -2.0999999999999996,
+          "z": -5.8,
+          "base": {
+            "gpu": 73,
+            "power": 16.4,
+            "temp": 22,
+            "network": 73
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-01",
+          "kind": "rack",
+          "name": "RACK B-01",
+          "location": "서버홀 · B열 · 1번",
+          "x": -10.7,
+          "z": -2.55,
+          "base": {
+            "gpu": 65,
+            "power": 17.5,
+            "temp": 22,
+            "network": 71
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-02",
+          "kind": "rack",
+          "name": "RACK B-02",
+          "location": "서버홀 · B열 · 2번",
+          "x": -8.979999999999999,
+          "z": -2.55,
+          "base": {
+            "gpu": 68,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 78
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-03",
+          "kind": "rack",
+          "name": "RACK B-03",
+          "location": "서버홀 · B열 · 3번",
+          "x": -7.26,
+          "z": -2.55,
+          "base": {
+            "gpu": 71,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 85
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-04",
+          "kind": "rack",
+          "name": "RACK B-04",
+          "location": "서버홀 · B열 · 4번",
+          "x": -5.539999999999999,
+          "z": -2.55,
+          "base": {
+            "gpu": 74,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 92
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-05",
+          "kind": "rack",
+          "name": "RACK B-05",
+          "location": "서버홀 · B열 · 5번",
+          "x": -3.8199999999999994,
+          "z": -2.55,
+          "base": {
+            "gpu": 77,
+            "power": 16.4,
+            "temp": 22,
+            "network": 69
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "B-06",
+          "kind": "rack",
+          "name": "RACK B-06",
+          "location": "서버홀 · B열 · 6번",
+          "x": -2.0999999999999996,
+          "z": -2.55,
+          "base": {
+            "gpu": 80,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 76
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-01",
+          "kind": "rack",
+          "name": "RACK C-01",
+          "location": "서버홀 · C열 · 1번",
+          "x": -10.7,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 72,
+            "power": 18.599999999999998,
+            "temp": 22.599999999999998,
+            "network": 74
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-02",
+          "kind": "rack",
+          "name": "RACK C-02",
+          "location": "서버홀 · C열 · 2번",
+          "x": -8.979999999999999,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 75,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 81
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-03",
+          "kind": "rack",
+          "name": "RACK C-03",
+          "location": "서버홀 · C열 · 3번",
+          "x": -7.26,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 78,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 88
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-04",
+          "kind": "rack",
+          "name": "RACK C-04",
+          "location": "서버홀 · C열 · 4번",
+          "x": -5.539999999999999,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 81,
+            "power": 16.4,
+            "temp": 22,
+            "network": 95
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-05",
+          "kind": "rack",
+          "name": "RACK C-05",
+          "location": "서버홀 · C열 · 5번",
+          "x": -3.8199999999999994,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 84,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 72
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "C-06",
+          "kind": "rack",
+          "name": "RACK C-06",
+          "location": "서버홀 · C열 · 6번",
+          "x": -2.0999999999999996,
+          "z": 0.7000000000000002,
+          "base": {
+            "gpu": 87,
+            "power": 18.599999999999998,
+            "temp": 23.2,
+            "network": 79
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-01",
+          "kind": "rack",
+          "name": "RACK D-01",
+          "location": "서버홀 · D열 · 1번",
+          "x": -10.7,
+          "z": 3.95,
+          "base": {
+            "gpu": 79,
+            "power": 19.7,
+            "temp": 23.2,
+            "network": 77
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-02",
+          "kind": "rack",
+          "name": "RACK D-02",
+          "location": "서버홀 · D열 · 2번",
+          "x": -8.979999999999999,
+          "z": 3.95,
+          "base": {
+            "gpu": 82,
+            "power": 20.799999999999997,
+            "temp": 21.4,
+            "network": 84
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-03",
+          "kind": "rack",
+          "name": "RACK D-03",
+          "location": "서버홀 · D열 · 3번",
+          "x": -7.26,
+          "z": 3.95,
+          "base": {
+            "gpu": 85,
+            "power": 16.4,
+            "temp": 22,
+            "network": 91
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-04",
+          "kind": "rack",
+          "name": "RACK D-04",
+          "location": "서버홀 · D열 · 4번",
+          "x": -5.539999999999999,
+          "z": 3.95,
+          "base": {
+            "gpu": 58,
+            "power": 17.5,
+            "temp": 22.599999999999998,
+            "network": 68
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-05",
+          "kind": "rack",
+          "name": "RACK D-05",
+          "location": "서버홀 · D열 · 5번",
+          "x": -3.8199999999999994,
+          "z": 3.95,
+          "base": {
+            "gpu": 61,
+            "power": 18.599999999999998,
+            "temp": 23.2,
+            "network": 75
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "D-06",
+          "kind": "rack",
+          "name": "RACK D-06",
+          "location": "서버홀 · D열 · 6번",
+          "x": -2.0999999999999996,
+          "z": 3.95,
+          "base": {
+            "gpu": 64,
+            "power": 19.7,
+            "temp": 21.4,
+            "network": 82
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "UPS-01",
+          "name": "UPS / PDU 01",
+          "kind": "power",
+          "x": -13.7,
+          "z": -5.3,
+          "location": "전력 설비 · A/B 이중 급전 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "CRAC-01",
+          "name": "COOLING 01",
+          "kind": "cooling",
+          "x": -13.7,
+          "z": -0.6,
+          "location": "냉각 설비 · 저온 공기 공급 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "CRAC-02",
+          "name": "COOLING 02",
+          "kind": "cooling",
+          "x": -13.7,
+          "z": 4.4,
+          "location": "냉각 설비 · 저온 공기 공급 (모식)",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        },
+        {
+          "id": "NET-01",
+          "name": "NETWORK CORE",
+          "kind": "network",
+          "x": 1.6,
+          "z": -6.6,
+          "location": "네트워크 설비 · 가상 코어 스위치",
+          "base": {
+            "gpu": 0,
+            "power": 8.2,
+            "temp": 22.1,
+            "network": 96
+          },
+          "state": "normal",
+          "fault": null,
+          "repairElapsed": 0,
+          "verifiedAt": null
+        }
+      ],
+      "selectedId": "D-06",
+      "elapsed": 5.341700000000019,
+      "events": [
+        {
+          "time": 0,
+          "text": "가상 시설 초기화 완료. 장비를 선택하여 상태를 확인하세요."
+        }
+      ]
+    },
+    "renderer": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "width": 1560,
+      "height": 839,
+      "dpr": 1,
+      "calls": 698,
+      "triangles": 124926,
+      "geometries": 157,
+      "textures": 56,
+      "camera": [
+        20,
+        12,
+        16.999999999999996
+      ],
+      "target": [
+        9.4,
+        1.3,
+        -2
+      ],
+      "contextLost": false,
+      "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+      "layers": {
+        "network": true,
+        "cooling": true,
+        "power": true
+      }
+    },
+    "stats": {
+      "fps": 236.8358727401911,
+      "p95FrameMs": 4.300000000000182,
+      "averageFrameMs": 4.222333333333332,
+      "gpuMs": 28.373617230769224,
+      "frameCount": 1180
+    },
+    "heap": {
+      "used": 23717727,
+      "total": 33227307,
+      "limit": 4395630592
+    },
+    "visuals": {
+      "A-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "A-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "B-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "C-06": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-03": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-04": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-05": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "D-06": {
+        "color": "63e4c1",
+        "selected": true,
+        "networkFlow": true
+      },
+      "UPS-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "CRAC-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "CRAC-02": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      },
+      "NET-01": {
+        "color": "63e4c1",
+        "selected": false,
+        "networkFlow": true
+      }
+    }
+  },
+  "errors": []
+}
