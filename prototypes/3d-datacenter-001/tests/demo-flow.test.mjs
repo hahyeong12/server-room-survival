@@ -18,8 +18,9 @@ test('complete deterministic SG flow, immutable identity/conditions and isolated
 test('wrong stage, wrong location, wrong country or wrong rack cannot advance domain',()=>{
   const s=createWorldStore();
   for(const action of ['accept','start','advance','repair','repair-complete','verify','finish','report','__proto__','constructor',undefined]){const before=s.domainSnapshot();assert.equal(s.act(action).ok,false);assert.deepEqual(s.domainSnapshot(),before);}
-  s.selectCountry('JP');let before=s.domainSnapshot();assert.equal(s.act('review').ok,false);assert.deepEqual(s.domainSnapshot(),before);
-  s.selectCountry('SG');s.act('review');before=s.domainSnapshot();assert.equal(s.act('accept').ok,false);assert.deepEqual(s.domainSnapshot(),before);
+  s.navigate('world');s.selectCountry('JP');let before=s.domainSnapshot();assert.equal(s.act('review').ok,false);assert.deepEqual(s.domainSnapshot(),before);
+  s.navigate('campus');assert.equal(s.act('review').ok,false);assert.deepEqual(s.domainSnapshot(),before);
+  s.navigate('world');s.selectCountry('SG');assert.equal(s.act('review').ok,true);before=s.domainSnapshot();assert.equal(s.act('accept').ok,false);assert.deepEqual(s.domainSnapshot(),before);
   s.navigate('noc');s.act('accept');s.navigate('hall');before=s.domainSnapshot();assert.equal(s.act('start').ok,false);assert.deepEqual(s.domainSnapshot(),before);
 });
 test('repair state stays pending under repeated navigation; duplicate action refused',()=>{
@@ -28,6 +29,7 @@ test('repair state stays pending under repeated navigation; duplicate action ref
   assert.deepEqual(s.domainSnapshot(),before);assert.equal(s.state.facility.elapsed,0);assert.equal(s.state.request.phase,'repairing');
   assert.equal(s.act('repair').ok,false);assert.deepEqual(s.domainSnapshot(),before);
 });
+test('review works from my desk without visiting the world map',()=>{const s=createWorldStore();assert.equal(s.state.navigation.route,'noc');assert.equal(s.act('review').ok,true);assert.equal(s.act('accept').ok,true);assert.equal(s.state.request.phase,'accepted');});
 test('two fresh sessions produce identical results',()=>{
   function play(){const s=prepare();for(const action of ['start','advance','repair','repair-complete','verify','finish'])s.act(action);s.navigate('noc');s.act('report');return s.domainSnapshot();}
   assert.deepEqual(play(),play());
