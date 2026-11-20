@@ -6,5 +6,5 @@ export default defineConfig({
   base: './',
   server: { host: '127.0.0.1', port: 5173, strictPort: true, fs: { strict: true, allow: [root] } },
   preview: { host: '127.0.0.1', port: 5173, strictPort: true },
-  build: { rollupOptions: { output: { manualChunks: { three: ['three'] } } } },
+  build: { rollupOptions: { input: { main: root + 'index.html', lab: root + 'lab.html' }, output: { manualChunks: { three: ['three'] } } } },
 });

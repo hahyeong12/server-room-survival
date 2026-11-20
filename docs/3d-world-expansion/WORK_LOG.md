@@ -31,3 +31,14 @@
 - `python docs/3d-world-expansion/protect.py before`: 751개 해시 기준선 생성. DB 연결 없음.
 - NOC, Google 단지 항공·냉각 배관 사진을 실제 이미지로 열어 배치·조명·정비 통로 분석. Google의 축소 URL 두 건은 404여서 갤러리 원래 URL로 다시 확인 성공. 사진은 OS 임시 폴더에만 저장하며 Git/제품에는 없음.
 - 다음: 세계지도·공통 상태/라우팅 → 관제실·단지 → 서버실 연결 → SG 세로 시연 → 회귀·성능·독립 리뷰 가용성·최종 보고.
+
+### 세계 뼈대와 내비게이션
+
+- 설계 기준선 커밋: `faec783`.
+- 원본 HTML을 `lab.html`로 보존. 기존 `scene.js`에 선택적 world mode를 추가하고 같은 renderer/composer/기존 geometry를 재사용. 기존 `model.js`, `main.js`는 변경하지 않음.
+- Natural Earth 육지 윤곽·가상 연결·국가 거점, 자체 시설 단지, 기존 NOC/서버실을 공통 경로·breadcrumb·상위 복귀로 연결. 모든 화면에 시연 표시와 동일 ID·원래 조건 제공.
+- `node --test tests/model.test.mjs tests/world-store.test.mjs`: 9 PASS.
+- `node scripts/world-qa.mjs --phase1`: 실제 Chrome headed 6 PASS. 네 공간 이동·대기 후 domain 동일, breadcrumb/복귀·세계 거점 Canvas 클릭·시설 선택·D-06 Canvas 클릭·오류 없음. 신규 장면 캡처 4장 보관.
+- `npm.cmd run build`: 성공(Three.js 크기 안내만). lab도 빌드 입력에 포함.
+- QA 최초 시도는 실행 전 로컬 서버 종료를 발견: 지도 파일 다운로드 순간 Vite watcher EBUSY로 중단. 다운로드 완료 후 같은 서버 재시작해 통과. 게임 회귀가 아닌 개발 서버 파일 감시 오류로 분리.
+- 다음: NOC 시점과 시설 초점 조작 다듬기 → SG 단계별 버튼·검증.

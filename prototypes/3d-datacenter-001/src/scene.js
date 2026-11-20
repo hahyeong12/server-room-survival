@@ -9,6 +9,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { readings, totals } from './model.js';
+import { createWorldGeometry } from './world-geometry.js';
 
 const C = { normal: 0x63e4c1, fault: 0xff455c, repairing: 0xffbd59, awaiting: 0x76b7ff, verified: 0x83f5d2 };
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -30,7 +31,7 @@ function labelTexture(text, subtitle = '', color = '#b4d1da', width = 1024, heig
   });
 }
 
-export function createScene(container, facility, onSelect) {
+export function createScene(container, facility, onSelect, options = {}) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance', alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -298,6 +299,16 @@ export function createScene(container, facility, onSelect) {
     batch.castShadow = ![mat.light, mat.cyan, mat.amber].includes(material); batch.receiveShadow = true; scene.add(batch);
   }
 
+  let location = 'hall';
+  const originalRoom = new THREE.Group();
+  let worldGeometry = null;
+  if (options.worldMode) {
+    for (const child of [...scene.children]) if (!child.isDirectionalLight && !child.isHemisphereLight) originalRoom.add(child);
+    scene.add(originalRoom);
+    worldGeometry = createWorldGeometry();
+    scene.add(worldGeometry.world, worldGeometry.campus);
+    worldGeometry.world.visible = false; worldGeometry.campus.visible = false;
+  }
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   const ao = new SSAOPass(scene, camera, 1, 1); ao.kernelRadius = 8; ao.minDistance = .001; ao.maxDistance = .06; composer.addPass(ao);
@@ -305,7 +316,7 @@ export function createScene(container, facility, onSelect) {
   composer.addPass(new OutputPass());
   const fxaa = new ShaderPass(FXAAShader); composer.addPass(fxaa);
 
-  let transition = null, hovered = null, pointerStart = null, lastWallUpdate = -1, lastLedState = '', contextLost = false;
+  let transition = null, hovered = null, pointerStart = null, lastWallUpdate = '', lastLedState = '', contextLost = false, visualElapsed = 0;
   const keys = new Set(), raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
   const hoverLabel = document.querySelector('#hover-label');
   const viewPositions = {
@@ -323,15 +334,19 @@ export function createScene(container, facility, onSelect) {
     else moveTo(v.eye, v.target);
   }
   function focus() {
+    if (options.worldMode && location !== 'hall' && location !== 'noc') { setLocation(location); return; }
     const a = facility.assets.find(a => a.id === facility.selectedId);
     if (a) moveTo([a.x + 3.8, 4.4, a.z + 6], [a.x, 1.5, a.z]);
   }
   function hit(event) {
     const r = renderer.domElement.getBoundingClientRect(); pointer.set((event.clientX - r.left) / r.width * 2 - 1, -(event.clientY - r.top) / r.height * 2 + 1);
-    raycaster.setFromCamera(pointer, camera); return raycaster.intersectObjects(selectable, false)[0]?.object.userData.assetId;
+    raycaster.setFromCamera(pointer, camera);
+    const objects = worldGeometry && ['world','campus'].includes(location) ? worldGeometry.pickables[location] : selectable;
+    const data = raycaster.intersectObjects(objects, false)[0]?.object.userData;
+    return data?.pickId || data?.assetId;
   }
   renderer.domElement.addEventListener('pointerdown', e => { pointerStart = { x: e.clientX, y: e.clientY }; renderer.domElement.focus({ preventScroll: true }); transition = null; });
-  renderer.domElement.addEventListener('pointerup', e => { if (e.button !== 0 || !pointerStart) return; if (Math.hypot(e.clientX - pointerStart.x, e.clientY - pointerStart.y) < 5) { const id = hit(e); if (id) onSelect(id); } pointerStart = null; });
+  renderer.domElement.addEventListener('pointerup', e => { if (e.button !== 0 || !pointerStart) return; if (Math.hypot(e.clientX - pointerStart.x, e.clientY - pointerStart.y) < 5) { const id = hit(e); if (id) { if (id.includes(':')) options.onPick?.(id); else onSelect(id); } } pointerStart = null; });
   renderer.domElement.addEventListener('pointermove', e => {
     hovered = hit(e); renderer.domElement.style.cursor = hovered ? 'pointer' : 'grab'; hoverLabel.hidden = !hovered || !!e.buttons;
     if (hovered) { const rect = container.getBoundingClientRect(); hoverLabel.textContent = `${hovered} · 장비 선택`; hoverLabel.style.left = `${Math.min(e.clientX - rect.left + 14, rect.width - 185)}px`; hoverLabel.style.top = `${e.clientY - rect.top - 38}px`; }
@@ -378,11 +393,19 @@ export function createScene(container, facility, onSelect) {
       } ctx.stroke();
     }
     ctx.fillStyle = '#8faabd'; ctx.font = '20px Consolas'; ctx.fillText('POWER FEED A/B    |    COLD AISLE    |    CORE UPLINK', 50, 735);
+    if (options.getState) {
+      const request = options.getState().request;
+      ctx.fillStyle = '#071a29'; ctx.fillRect(40, 295, 950, 58);
+      ctx.fillStyle = '#a0e4d4'; ctx.font = '25px Consolas';
+      ctx.fillText(`${request.id} / ${request.rackId} / ${request.phase.toUpperCase()} / ${request.progress}%`, 55, 333);
+    }
     const event = facility.events[0]; ctx.fillText(`${Math.floor(event.time)}s / ${event.text.replace(/[^\x00-\x7F]/g, '').slice(0, 75)}`, 1050, 735);
     wallTexture.needsUpdate = true;
   }
   function animate(dt) {
     if (contextLost) return;
+    visualElapsed = options.worldMode ? visualElapsed + dt : facility.elapsed;
+    worldGeometry?.update(visualElapsed, options.getState());
     if (transition) {
       transition.progress = Math.min(1, transition.progress + dt / 1.15);
       const k = transition.progress * transition.progress * (3 - 2 * transition.progress);
@@ -402,8 +425,8 @@ export function createScene(container, facility, onSelect) {
     for (const a of facility.assets) {
       const v = visuals.get(a.id), color = C[a.state], bad = a.state === 'fault', fixing = a.state === 'repairing';
       v.strip.material.color.setHex(color); v.ring.visible = a.id === facility.selectedId;
-      v.halo.color.setHex(color); v.halo.intensity = bad ? 4 + Math.sin(facility.elapsed * 6) * 2 : fixing ? 2.5 + Math.sin(facility.elapsed * 4) : .7;
-      v.strip.material.color.multiplyScalar(bad ? .7 + Math.sin(facility.elapsed * 6) * .25 : 1);
+      v.halo.color.setHex(color); v.halo.intensity = bad ? 4 + Math.sin(visualElapsed * 6) * 2 : fixing ? 2.5 + Math.sin(visualElapsed * 4) : .7;
+      v.strip.material.color.multiplyScalar(bad ? .7 + Math.sin(visualElapsed * 6) * .25 : 1);
       v.netMat.color.setHex((bad || fixing) && a.fault === 'network' ? C[a.state] : 0x497caa);
       v.pwrMat.color.setHex((bad || fixing) && a.fault === 'power' ? C[a.state] : 0xc29d5c);
     }
@@ -414,15 +437,16 @@ export function createScene(container, facility, onSelect) {
     }
     for (const p of particles) {
       p.mesh.visible = readings(p.asset).network > 0;
-      if (p.mesh.visible) p.mesh.position.copy(p.curve.getPointAt((facility.elapsed * .15 + p.offset) % 1));
+      if (p.mesh.visible) p.mesh.position.copy(p.curve.getPointAt((visualElapsed * .15 + p.offset) % 1));
     }
     for (const f of flows) {
       const coolingFault = f.asset.fault === 'cooling' && ['fault','repairing'].includes(f.asset.state);
-      f.mesh.position.y = .15 + ((facility.elapsed * .43 + f.offset) % 1) * 1.8;
+      f.mesh.position.y = .15 + ((visualElapsed * .43 + f.offset) % 1) * 1.8;
       f.mesh.material.color.setHex(coolingFault ? 0xffb578 : 0x79dce5);
       f.mesh.material.opacity = coolingFault ? .25 : .48;
     }
-    if (Math.floor(facility.elapsed) !== lastWallUpdate) { drawWall(); lastWallUpdate = Math.floor(facility.elapsed); }
+    const wallKey = `${Math.floor(visualElapsed)}:${options.getState?.().request.phase || ''}`;
+    if (wallKey !== lastWallUpdate) { drawWall(); lastWallUpdate = wallKey; }
     renderer.info.reset(); composer.render();
   }
   function snapshot() {
@@ -430,7 +454,7 @@ export function createScene(container, facility, onSelect) {
     return { renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER),
       webgl: gl.getParameter(gl.VERSION), width: renderer.domElement.width, height: renderer.domElement.height, dpr: renderer.getPixelRatio(),
       calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures,
-      camera: camera.position.toArray(), target: controls.target.toArray(), contextLost,
+      camera: camera.position.toArray(), target: controls.target.toArray(), contextLost, location,
       quality: 'Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2',
       layers: { network: netLayer.visible, cooling: coolLayer.visible, power: powerLayer.visible } };
   }
@@ -454,7 +478,19 @@ export function createScene(container, facility, onSelect) {
     const v = V(a.x, 1.7, a.z + .7).project(camera), r = renderer.domElement.getBoundingClientRect();
     return { x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height, visible: v.z > -1 && v.z < 1 };
   }
-  return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset,
+  function setLocation(next, immediate = false) {
+    if (!worldGeometry || !['world','noc','campus','hall'].includes(next)) return false;
+    location = next; keys.clear(); hoverLabel.hidden = true; pointerStart = null;
+    originalRoom.visible = next === 'noc' || next === 'hall';
+    worldGeometry.world.visible = next === 'world'; worldGeometry.campus.visible = next === 'campus';
+    const positions = { world: {eye:[0,35,19], target:[0,0,0]}, campus:{eye:[29,28,31],target:[0,0,0]}, noc:{eye:[12.5,4.8,7.8],target:[9.4,1.85,-5.3]}, hall:viewPositions.overview };
+    const p = positions[next];
+    if(immediate) {camera.position.set(...p.eye);controls.target.set(...p.target);transition=null;controls.update();}
+    else moveTo(p.eye,p.target);
+    return true;
+  }
+  return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset, setLocation,
+    projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
     setLayer(name, visible) { ({ network: netLayer, cooling: coolLayer, power: powerLayer })[name].visible = visible; },
     visuals: () => Object.fromEntries(facility.assets.map(a => [a.id, { color: visuals.get(a.id).strip.material.color.getHexString(), selected: visuals.get(a.id).ring.visible, networkFlow: readings(a).network > 0 }])) };
 }
