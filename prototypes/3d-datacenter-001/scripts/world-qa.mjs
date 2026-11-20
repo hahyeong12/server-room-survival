@@ -17,7 +17,9 @@ async function go(route){await page.locator(`[data-route="${route}"]`).click();a
 try{
   browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:false,args:['--window-size=1920,1080']});report.browserVersion=browser.version();
   page=await browser.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});page.on('pageerror',e=>report.errors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});
-  await page.goto(url,{waitUntil:'networkidle'});await page.waitForFunction(()=>!!window.worldQA);await page.waitForTimeout(3000);report.url=url;
+  await page.goto(url,{waitUntil:'networkidle'});await page.waitForFunction(()=>!!window.worldQA);await page.waitForTimeout(1000);report.url=url;
+  // Phase 3.1: a fresh profile plays the opening once; this regression suite skips it (ux-qa.mjs tests it).
+  if(await page.locator('#opening-skip').isVisible())await page.locator('#opening-skip').click();await page.waitForTimeout(2000);
   report.initial=await snap();
   await check('hardware WebGL on RTX 5070',async()=>assert.match(report.initial.renderer.renderer,/RTX 5070/));
   await check('readable title, request card rendered from state, gold incoming SG marker',async()=>{
@@ -31,9 +33,9 @@ try{
     const before=(await snap()).domain;
     for(const route of ['world','noc','campus','hall']){await go(route);const s=await snap();assert.equal(s.renderer.location,route);assert.equal(s.state.navigation.route,route);assert.deepEqual(s.domain,before);await shot(`phase1-${route}.png`);}
   });
-  await check('breadcrumb and upper return through all four levels',async()=>{
-    assert.equal(await page.locator('[data-crumb]').count(),4);
-    for(const route of ['campus','noc','world']){await page.locator('#back').click();await page.waitForTimeout(1300);assert.equal((await snap()).state.navigation.route,route);}
+  await check('breadcrumb and upper return: hall > campus > world',async()=>{
+    assert.equal(await page.locator('[data-crumb]').count(),3);
+    for(const route of ['campus','world']){await page.locator('#back').click();await page.waitForTimeout(1300);assert.equal((await snap()).state.navigation.route,route);}
     assert.equal(await page.locator('#back').isDisabled(),true);
   });
   await check('map node selection uses real canvas click',async()=>{
