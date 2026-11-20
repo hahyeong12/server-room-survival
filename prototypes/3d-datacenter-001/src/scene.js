@@ -9,6 +9,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { readings, totals } from './model.js';
+import { DESK_POSE, NOC_OVERVIEW_POSE } from './opening.js';
 import { createWorldGeometry } from './world-geometry.js';
 
 const C = { normal: 0x63e4c1, fault: 0xff455c, repairing: 0xffbd59, awaiting: 0x76b7ff, verified: 0x83f5d2 };
@@ -303,6 +304,9 @@ export function createScene(container, facility, onSelect, options = {}) {
   const originalRoom = new THREE.Group();
   let requestMarker = null;
   let worldGeometry = null;
+  const separation = {}, deskScreens = []; let deskKey = '', nocView = 'desk', cinematic = null;
+  const CLIP = { hall: [new THREE.Plane(V(-1, 0, 0), 4.2)], noc: [new THREE.Plane(V(1, 0, 0), -4.12)] };
+  const campusFog = new THREE.Fog(0x0b111b, 85, 230);
   if (options.worldMode) {
     for (const child of [...scene.children]) if (!child.isDirectionalLight && !child.isHemisphereLight) originalRoom.add(child);
     scene.add(originalRoom);
@@ -315,6 +319,37 @@ export function createScene(container, facility, onSelect, options = {}) {
     worldGeometry = createWorldGeometry();
     scene.add(worldGeometry.world, worldGeometry.campus);
     worldGeometry.world.visible = false; worldGeometry.campus.visible = false;
+    camera.far = 320; camera.updateProjectionMatrix();
+    // The original room holds both spaces behind a glass partition at x = 4.15. In the world they are
+    // separate buildings: each view clips away the other side and shows a solid boundary wall instead.
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0x3b4f62, metalness: .25, roughness: .62 });
+    const makeWall = (x, signX, rot, text, sub) => {
+      const g = new THREE.Group(), w = new THREE.Mesh(boxGeo, wallMat); w.scale.set(.1, 4.3, 21); w.position.set(x, 2.15, 0); w.receiveShadow = true; g.add(w);
+      const s = new THREE.Mesh(new THREE.PlaneGeometry(3.6, .9), new THREE.MeshBasicMaterial({ map: labelTexture(text, sub, '#8af0d4'), toneMapped: false }));
+      s.position.set(signX, 2.9, 4.2); s.rotation.y = rot; g.add(s);
+      const door = new THREE.Mesh(boxGeo, new THREE.MeshBasicMaterial({ color: 0x2f6f66, toneMapped: false })); door.scale.set(.02, 2.3, 1.6); door.position.set(signX, 1.15, 6.4); g.add(door);
+      originalRoom.add(g); return g;
+    };
+    separation.hall = makeWall(4.07, 4.0, -Math.PI / 2, 'LINK → NOC', '연결 통로 · 관제동 (별도 건물)');
+    separation.noc = makeWall(4.3, 4.37, Math.PI / 2, 'LINK → HALL 01', '연결 통로 · 서버동 01 (별도 건물)');
+    // My desk: back-row centre console. Highlight rim, name plate and two monitors bound to the demo state.
+    const desk = { x: 9.3, z: .2 };
+    const rim = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2.85, .16, 1.38)), new THREE.LineBasicMaterial({ color: 0x8af0d4 }));
+    rim.position.set(desk.x, 1.05, desk.z); originalRoom.add(rim);
+    const plate = new THREE.Mesh(new THREE.PlaneGeometry(1.5, .36), new THREE.MeshBasicMaterial({ map: labelTexture('MY DESK / 03', '운영 엔지니어 · 내 자리', '#8af0d4'), toneMapped: false }));
+    plate.position.set(desk.x, .78, desk.z + .61); originalRoom.add(plate);
+    for (const dx of [-.58, .58]) {
+      const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 292;
+      const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
+      const screen = new THREE.Mesh(new THREE.PlaneGeometry(.98, .56), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
+      screen.position.set(desk.x + dx, 1.67, desk.z - .245); originalRoom.add(screen); deskScreens.push({ canvas, texture, side: dx < 0 ? 'left' : 'right' });
+    }
+    // Colleagues at four other consoles: abstract silhouettes, so the room reads as staffed.
+    const seats = [[6.2, -3.8], [9.3, -3.8], [12.4, -3.8], [6.2, .2]];
+    const personMat = new THREE.MeshStandardMaterial({ color: 0x1e2c3b, roughness: .85, metalness: .1 });
+    const bodies = new THREE.InstancedMesh(new THREE.CapsuleGeometry(.22, .45, 4, 10), personMat, seats.length), heads = new THREE.InstancedMesh(new THREE.SphereGeometry(.14, 14, 10), personMat, seats.length);
+    seats.forEach(([x, z], i) => { bodies.setMatrixAt(i, new THREE.Matrix4().makeTranslation(x, 1.08, z + 1.08)); heads.setMatrixAt(i, new THREE.Matrix4().makeTranslation(x, 1.6, z + 1.0)); });
+    bodies.castShadow = heads.castShadow = true; originalRoom.add(bodies, heads);
   }
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -332,6 +367,7 @@ export function createScene(container, facility, onSelect, options = {}) {
     control: { eye: [20, 12, 17], target: [9.4, 1.3, -2] },
     aisle: { eye: [.9, 2.15, 2.25], target: [-10.5, 1.8, 2.25] },
   };
+  if (options.worldMode) viewPositions.overview = { eye: [13, 20, 23], target: [-6.4, 0, -.4] };
   function moveTo(eye, target) {
     transition = { from: camera.position.clone(), to: V(...eye), targetFrom: controls.target.clone(), targetTo: V(...target), progress: 0 };
   }
@@ -348,7 +384,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   function hit(event) {
     const r = renderer.domElement.getBoundingClientRect(); pointer.set((event.clientX - r.left) / r.width * 2 - 1, -(event.clientY - r.top) / r.height * 2 + 1);
     raycaster.setFromCamera(pointer, camera);
-    const objects = worldGeometry && ['world','campus'].includes(location) ? worldGeometry.pickables[location] : selectable;
+    const objects = worldGeometry && ['world','campus'].includes(location) ? worldGeometry.pickables[location] : worldGeometry && location === 'noc' ? [] : selectable;
     const data = raycaster.intersectObjects(objects, false)[0]?.object.userData;
     return data?.pickId || data?.assetId;
   }
@@ -404,16 +440,44 @@ export function createScene(container, facility, onSelect, options = {}) {
       const request = options.getState().request;
       ctx.fillStyle = '#071a29'; ctx.fillRect(40, 295, 950, 58);
       ctx.fillStyle = '#a0e4d4'; ctx.font = '25px Consolas';
-      ctx.fillText(`${request.id} / ${request.rackId} / ${request.phase.toUpperCase()} / ${request.progress}%`, 55, 333);
+      ctx.fillText(`${request.id} / ${request.rackId} / ${request.phase.toUpperCase()} / ${request.progress}%   AUX COOLING ${({on:'ON',off:'OFF',warn:'WARN'})[options.getState().ops?.cooling.mode] || '-'}`, 55, 333);
     }
     const event = facility.events[0]; ctx.fillText(`${Math.floor(event.time)}s / ${event.text.replace(/[^\x00-\x7F]/g, '').slice(0, 75)}`, 1050, 735);
     wallTexture.needsUpdate = true;
+  }
+  // My two desk monitors redraw only when the shared state they show changes.
+  function drawDeskScreens() {
+    const s = options.getState(), r = s.request, cool = s.ops.cooling.mode, t = totals(facility);
+    const key = `${r.phase}:${r.progress}:${cool}:${t.gpu}`; if (key === deskKey || !deskScreens.length) return; deskKey = key;
+    for (const { canvas, texture, side } of deskScreens) {
+      const c = canvas.getContext('2d'); c.fillStyle = '#061626'; c.fillRect(0, 0, 512, 292); c.fillStyle = '#8af0d4'; c.fillRect(0, 0, 512, 6);
+      c.font = '22px Consolas, monospace'; c.fillStyle = '#7fa3bb';
+      if (side === 'left') {
+        c.fillText('MY INBOX / 1 REQUEST', 22, 44);
+        c.fillStyle = r.phase === 'new' ? '#f3c37b' : ['fault','repairing'].includes(r.phase) ? '#ff8a9a' : '#b9f0e0'; c.font = '40px Consolas, monospace'; c.fillText(r.id, 22, 110);
+        c.font = '26px Consolas, monospace'; c.fillStyle = '#c8dbe7'; c.fillText(`${r.customerId} / ${r.rackId}`, 22, 156); c.fillText(`${r.phase.toUpperCase()} · ${r.progress}%`, 22, 200);
+        c.fillStyle = '#1f3a4a'; c.fillRect(22, 232, 468, 16); c.fillStyle = '#6fe7d2'; c.fillRect(22, 232, 468 * r.progress / 100, 16);
+      } else {
+        c.fillText('FACILITY WATCH', 22, 44); c.font = '27px Consolas, monospace';
+        const rows = [['GPU ONLINE', `${t.gpu}/192`, '#b9f0e0'], ['UPLINK', ['fault','repairing'].includes(r.phase) ? 'DOWN' : 'OK', ['fault','repairing'].includes(r.phase) ? '#ff8a9a' : '#b9f0e0'], ['AUX COOLING', cool === 'on' ? 'ON' : cool === 'warn' ? 'WARN' : 'OFF', cool === 'on' ? '#6fe7d2' : cool === 'warn' ? '#ffad5c' : '#8796a3'], ['UPS', 'STANDBY', '#b9f0e0']];
+        rows.forEach(([k, v, col], i) => { c.fillStyle = '#9fb6c6'; c.fillText(k, 22, 100 + i * 48); c.fillStyle = col; c.fillText(v, 300, 100 + i * 48); });
+      }
+      texture.needsUpdate = true;
+    }
   }
   function animate(dt) {
     if (contextLost) return;
     visualElapsed = options.worldMode ? visualElapsed + dt : facility.elapsed;
     worldGeometry?.update(visualElapsed, options.getState());
     if(requestMarker) requestMarker.visible = location === 'hall' && !['new','reviewed'].includes(options.getState().request.phase);
+    if (cinematic) {
+      const k = cinematic.keys[cinematic.index]; cinematic.t = (performance.now() - cinematic.segmentStart) / 1000; cinematic.frames++;
+      const p = Math.min(1, cinematic.t / k.duration), e = p * p * (3 - 2 * p);
+      camera.position.lerpVectors(V(...k.from.eye), V(...k.to.eye), e); controls.target.lerpVectors(V(...k.from.target), V(...k.to.target), e);
+      camera.lookAt(controls.target);
+      if (p >= 1) nextSegment();
+    }
+    if (options.worldMode) drawDeskScreens();
     if (transition) {
       transition.progress = Math.min(1, transition.progress + dt / 1.15);
       const k = transition.progress * transition.progress * (3 - 2 * transition.progress);
@@ -453,7 +517,7 @@ export function createScene(container, facility, onSelect, options = {}) {
       f.mesh.material.color.setHex(coolingFault ? 0xffb578 : 0x79dce5);
       f.mesh.material.opacity = coolingFault ? .25 : .48;
     }
-    const wallKey = `${Math.floor(visualElapsed)}:${options.getState?.().request.phase || ''}`;
+    const wallKey = `${Math.floor(visualElapsed)}:${options.getState?.().request.phase || ''}:${options.getState?.().ops?.cooling.mode || ''}`;
     if (wallKey !== lastWallUpdate) { drawWall(); lastWallUpdate = wallKey; }
     renderer.info.reset(); composer.render();
   }
@@ -464,7 +528,8 @@ export function createScene(container, facility, onSelect, options = {}) {
       calls: renderer.info.render.calls, triangles: renderer.info.render.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures,
       camera: camera.position.toArray(), target: controls.target.toArray(), contextLost, location,
       quality: 'Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2',
-      layers: { network: netLayer.visible, cooling: coolLayer.visible, power: powerLayer.visible } };
+      layers: { network: netLayer.visible, cooling: coolLayer.visible, power: powerLayer.visible },
+      nocView, clip: renderer.clippingPlanes.map(p => ({ normal: p.normal.toArray(), constant: p.constant })), fog: !!scene.fog, cinematic: !!cinematic };
   }
   // GPU timing is asynchronous, with the disjoint extension; no forced GPU synchronization.
   const gl = renderer.getContext(), timerExt = gl.getExtension('EXT_disjoint_timer_query_webgl2');
@@ -486,18 +551,43 @@ export function createScene(container, facility, onSelect, options = {}) {
     const v = V(a.x, 1.7, a.z + .7).project(camera), r = renderer.domElement.getBoundingClientRect();
     return { x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height, visible: v.z > -1 && v.z < 1 };
   }
-  function setLocation(next, immediate = false) {
-    if (!worldGeometry || !['world','noc','campus','hall'].includes(next)) return false;
+  // Visibility, clipping and fog for one space; no camera change.
+  function showLocation(next) {
     location = next; keys.clear(); hoverLabel.hidden = true; pointerStart = null;
     originalRoom.visible = next === 'noc' || next === 'hall';
     worldGeometry.world.visible = next === 'world'; worldGeometry.campus.visible = next === 'campus';
-    const positions = { world: {eye:[0,35,19], target:[0,0,0]}, campus:{eye:[29,28,31],target:[0,0,0]}, noc:{eye:[11,3.2,7.2],target:[9.4,1.85,-5.3]}, hall:viewPositions.overview };
+    renderer.clippingPlanes = CLIP[next] || [];
+    separation.hall.visible = next === 'hall'; separation.noc.visible = next === 'noc';
+    scene.fog = next === 'campus' ? campusFog : null;
+  }
+  function setLocation(next, immediate = false, view = nocView) {
+    if (!worldGeometry || !['world','noc','campus','hall'].includes(next) || cinematic) return false;
+    if (view === 'desk' || view === 'overview') nocView = view;
+    showLocation(next);
+    const positions = { world: {eye:[0,35,19], target:[0,0,0]}, campus:{eye:[29,28,31],target:[0,0,0]}, noc: nocView === 'desk' ? DESK_POSE : NOC_OVERVIEW_POSE, hall:viewPositions.overview };
     const p = positions[next];
     if(immediate) {camera.position.set(...p.eye);controls.target.set(...p.target);transition=null;controls.update();}
     else moveTo(p.eye,p.target);
     return true;
   }
-  return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset, setLocation,
+  // Cinematic camera path. Each key may switch space; camera input is disabled until it ends or is skipped.
+  function playCinematic(keysList, { onSegment, onDone } = {}) {
+    if (!worldGeometry || !keysList.length) return false;
+    cinematic = { keys: keysList, index: -1, t: 0, onSegment, onDone, frames: 0, started: performance.now(), segmentStart: performance.now() };
+    transition = null; controls.enabled = false; nextSegment(); return true;
+  }
+  function nextSegment() {
+    const c = cinematic; c.index++; c.t = 0; c.segmentStart = performance.now();
+    if (c.index >= c.keys.length) { const done = c.onDone; stopCinematic(); done?.(false); return; }
+    const k = c.keys[c.index]; if (k.location !== location) showLocation(k.location);
+    camera.position.set(...k.from.eye); controls.target.set(...k.from.target); camera.lookAt(controls.target);
+    c.onSegment?.(c.index, k);
+  }
+  function stopCinematic() { if (!cinematic) return false; cinematic = null; controls.enabled = true; return true; }
+  return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset, setLocation, playCinematic, stopCinematic,
+    cinematicState: () => cinematic && { index: cinematic.index, t: cinematic.t, location },
+    coolingVisual: () => worldGeometry?.coolingVisual() ?? null,
+    deskScreenKey: () => deskKey,
     focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
     worldMarker: id => worldGeometry?.markerColor(id) ?? null,
