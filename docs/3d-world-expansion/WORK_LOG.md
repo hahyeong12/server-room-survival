@@ -50,3 +50,42 @@
 - 세계 거점 및 관제/서버/전력/UPS/냉각/네트워크 시설에 선택 초점 이동 추가. 시설 선택은 원래 요청 조건·시간·진행을 변경하지 않음.
 - `node --test tests/world-store.test.mjs`: 3 PASS. `npm.cmd run build`: 성공.
 - 실제 Chrome: NOC 시점 캡처, 냉각 시설 선택·초점 이동·domain 불변 PASS. `qa/facility-focus.json`, `noc-operator.png`, `campus-cooling.png` 보관.
+
+## Claude Code 인계·독립 리뷰·Phase 2 마무리 (2026-11-20 KST)
+
+- 실행 에이전트: **Claude Code (VS Code 확장) / 모델 Claude Opus 5.5 (`claude-opus-5-5`)**. 추론(effort/thinking) 수준은 세션 설정을 따르며 에이전트 내부에서 정확한 값을 조회할 수단이 없어 '확인 불가'로 기록합니다. 위 시작 기록의 "Claude Code 미발견·리뷰 미실행"은 Codex 시점의 사실이며, 이 절부터 Claude Code가 실제로 리뷰·구현했습니다.
+
+### 인계 시점 상태 (Codex가 사용량 한계로 중단)
+
+- 브랜치 `experiment/3d-world-skeleton-001`, HEAD `db8d272`. worktree 1개, stash 없음. 다른 작업 트리 없음.
+- 미커밋: SG 시연 흐름 전체(`src/demo-actions.js`, store `act()`, 패널 단계 버튼, 서버실 요청 랙 표시, 시설 라벨, 테스트 `tests/demo-flow.test.mjs`, QA 스크립트 확장, `package.json` 스크립트)와 QA 결과물.
+- Codex 마지막 QA: 세계 QA `finish` 단계 locator 시간 초과, 실험실 회귀 레이어 토글 실패. **재실행 시 둘 다 재현되지 않아(세계 7/7, 실험실 15/15)** Codex가 QA 실행 중 소스를 수정하여 Vite가 페이지를 다시 읽은 일시적 실패로 판단합니다. 실패 증거는 `qa/world-qa-attempt1.json`, `qa/lab-regression-attempt1.json`으로 보존합니다.
+- Codex의 dev 서버(20:09 시작, 같은 폴더)를 종료하지 않고 그대로 사용. 미커밋 파일 34개는 수정 전 세션 임시 폴더에 백업한 뒤 작업했습니다.
+
+### 독립 리뷰 결과와 조치
+
+| 발견 | 판단 | 조치 / 커밋 |
+| --- | --- | --- |
+| Codex 미커밋 SG 흐름 | 단일 store·클릭 전용·잘못된 단계/장소/국가/랙 거부 구조가 설계 계약과 일치. 재작성 불필요 | 원형 보존 커밋 `7422eba` |
+| `index.html` 제목·설명이 실제 `?` 바이트로 저장(커밋 `085020e`) | 브라우저 탭 제목 손상 | 복구 `49b5759` |
+| 세계지도 SG 거점·경로가 매 프레임 청록으로 덮여 범례의 금색 "요청" 알림이 보이지 않음 | 요청 발생 알림 누락 | new/reviewed 금색·맥동, 이후 단계색 `49b5759` |
+| 요청 카드 조건·처리 위치가 HTML에 하드코딩 | 단일 상태 원칙 위반(중복 진실) | `state.request`에서 렌더 `49b5759` |
+| 관제실 결과 확인이 한 줄 텍스트 | Phase 2 "관제실 결과 확인" 부족 | 기록된 history 기반 결과 카드·요청함 단계 표시 `21cde91` |
+| 세계 QA `performance: []` | FPS 미측정 상태 | 장면별 FPS/p95/GPU/draw call·10회 반복 이동 자원 검사 `45d4854` |
+
+리뷰에서 문제없음으로 판단한 항목: 렌더러·composer 하나를 공유하고 Group 가시성만 전환(반복 이동 후 geometry 469·texture 69 불변), 시각 시간과 도메인 시간 분리, 기존 `model.js`/`main.js` 미변경, 실험실 원본 보존, Natural Earth(Public Domain)만 외부 데이터로 사용.
+
+### 검증 (모두 이 세션에서 실제 실행)
+
+- `node --test tests/*.test.mjs`: **13 PASS / 0 FAIL** (모델 6, 세계 store 3, SG 흐름 4).
+- `node scripts/world-qa.mjs` (실제 Chrome 157 headed, 1920×1080 DPR1, CDP 마우스·키보드): **10 PASS / 0 FAIL** — `qa/world-qa.json`.
+- `node scripts/browser-qa.mjs --url=…/lab.html` (기존 실험실 회귀): **15 PASS / 0 FAIL** — `qa/lab-regression/browser-qa.json`.
+- `npm.cmd run build`: 성공 (three 청크 500 kB 초과 안내만).
+- `python docs/3d-world-expansion/protect.py after`: **751개 해시 동일**, differences 없음 — `qa/protection-result.json`. Python/SQLite/스토리 슬롯 파일 변경 없음.
+- 성능 상세는 [QA_REPORT.md](QA_REPORT.md).
+
+### 미실행·한계
+
+- GitHub Issue #1 댓글: 이 환경에 `gh` CLI가 없고 인증 수단을 임의로 설치·로그인하지 않아 **미게시**. 게시용 요약은 최종 보고에 포함.
+- 물리 마우스·실제 Windows 배율 변경·사람의 플레이 평가는 자동 QA와 별개이며 Phase 3 사용자 평가 대상.
+- 원격 Push·main 병합 미실행(승인 전 보류).
