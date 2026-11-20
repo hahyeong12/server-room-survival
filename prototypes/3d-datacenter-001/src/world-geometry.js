@@ -129,5 +129,5 @@ export function createWorldGeometry() {
   function project(kind,id,camera,rect){
     const p=kind==='world'?markers[id]?.point:buildings[id]?.point;if(!p)return null;const v=p.clone().project(camera);return {x:rect.left+(v.x+1)/2*rect.width,y:rect.top+(1-v.y)/2*rect.height,visible:v.z>-1&&v.z<1};
   }
-  return {world,campus,pickables,update,project};
+  return {world,campus,pickables,update,project,focusPoint:(kind,id)=>(kind==='world'?markers[id]?.point:buildings[id]?.point)?.clone()};
 }

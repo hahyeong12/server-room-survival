@@ -47,6 +47,7 @@ function contextPanel(){
     for(const [id,c]of Object.entries(COUNTRIES)){const b=button(id,()=>store.selectCountry(id),id===state.navigation.country);b.dataset.country=id;b.setAttribute('aria-label',`${c.name} 선택`);countries.append(b);}root.append(countries);
     const p=document.createElement('p');p.textContent=state.navigation.country==='SG'?'새 고객 요청 1건이 울산 AIDC에 도착했습니다.':state.navigation.country==='KR'?'고객 작업을 처리하는 울산 운영 거점입니다.':'이 국가에는 활성 요청이 없습니다. 이번 시연은 싱가포르 한 건만 제공합니다.';root.append(p);
     root.append(button('울산 관제실 진입',()=>navigate('noc'),false,'enter-noc'));
+    root.append(button('선택 거점 가까이 보기',()=>scene.focusWorld(state.navigation.country),false,'focus-country'));
   }else if(route==='noc'){
     root.innerHTML='<h2>울산 AIDC 관제실</h2><p>한 요청의 접수부터 결과까지 확인하는 운영 거점입니다.</p><div class="inbox-row"><span>요청함</span><strong>SG · 1건</strong></div>';
     root.append(button('연결 시설 살펴보기',()=>navigate('campus'),false,'enter-campus'));
@@ -54,6 +55,7 @@ function contextPanel(){
     const list=document.createElement('div');list.className='facility-list';
     for(const [id,f]of Object.entries(FACILITIES)){const b=button(f.name,()=>store.selectFacility(id),id===state.navigation.facility);b.dataset.facility=id;list.append(b);}root.append(list);
     const f=FACILITIES[state.navigation.facility],heading=document.createElement('h2');heading.textContent=f.name;root.append(heading);const p=document.createElement('p');p.textContent=f.description;root.append(p);
+    root.append(button('선택 시설 가까이 보기',()=>scene.focusWorld(state.navigation.facility),false,'focus-facility'));
     if(f.target)root.append(button(f.target==='hall'?'서버동 01 진입':'관제실로 이동',()=>navigate(f.target),false,'enter-building'));
   }else{
     root.innerHTML='<h2>서버실 01</h2><p>싱가포르 요청의 목적지는 랙 D-06입니다. 실제 3D 장비를 클릭하거나 아래 목록에서 선택하세요.</p>';

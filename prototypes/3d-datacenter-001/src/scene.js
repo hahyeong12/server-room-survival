@@ -483,13 +483,14 @@ export function createScene(container, facility, onSelect, options = {}) {
     location = next; keys.clear(); hoverLabel.hidden = true; pointerStart = null;
     originalRoom.visible = next === 'noc' || next === 'hall';
     worldGeometry.world.visible = next === 'world'; worldGeometry.campus.visible = next === 'campus';
-    const positions = { world: {eye:[0,35,19], target:[0,0,0]}, campus:{eye:[29,28,31],target:[0,0,0]}, noc:{eye:[12.5,4.8,7.8],target:[9.4,1.85,-5.3]}, hall:viewPositions.overview };
+    const positions = { world: {eye:[0,35,19], target:[0,0,0]}, campus:{eye:[29,28,31],target:[0,0,0]}, noc:{eye:[11,3.2,7.2],target:[9.4,1.85,-5.3]}, hall:viewPositions.overview };
     const p = positions[next];
     if(immediate) {camera.position.set(...p.eye);controls.target.set(...p.target);transition=null;controls.update();}
     else moveTo(p.eye,p.target);
     return true;
   }
   return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset, setLocation,
+    focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
     setLayer(name, visible) { ({ network: netLayer, cooling: coolLayer, power: powerLayer })[name].visible = visible; },
     visuals: () => Object.fromEntries(facility.assets.map(a => [a.id, { color: visuals.get(a.id).strip.material.color.getHexString(), selected: visuals.get(a.id).ring.visible, networkFlow: readings(a).network > 0 }])) };

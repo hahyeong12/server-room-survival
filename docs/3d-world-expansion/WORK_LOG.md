@@ -42,3 +42,11 @@
 - `npm.cmd run build`: 성공(Three.js 크기 안내만). lab도 빌드 입력에 포함.
 - QA 최초 시도는 실행 전 로컬 서버 종료를 발견: 지도 파일 다운로드 순간 Vite watcher EBUSY로 중단. 다운로드 완료 후 같은 서버 재시작해 통과. 게임 회귀가 아닌 개발 서버 파일 감시 오류로 분리.
 - 다음: NOC 시점과 시설 초점 조작 다듬기 → SG 단계별 버튼·검증.
+
+### 관제실·시설 탐색 다듬기
+
+- 세계 뼈대 커밋 `085020e`.
+- NOC 카메라를 운영자 눈높이에 가깝게 낮춰 천장 조명이 화면 벽을 가리던 구도를 개선. 기존 관제실 geometry·모니터 월·운영석 재사용.
+- 세계 거점 및 관제/서버/전력/UPS/냉각/네트워크 시설에 선택 초점 이동 추가. 시설 선택은 원래 요청 조건·시간·진행을 변경하지 않음.
+- `node --test tests/world-store.test.mjs`: 3 PASS. `npm.cmd run build`: 성공.
+- 실제 Chrome: NOC 시점 캡처, 냉각 시설 선택·초점 이동·domain 불변 PASS. `qa/facility-focus.json`, `noc-operator.png`, `campus-cooling.png` 보관.
