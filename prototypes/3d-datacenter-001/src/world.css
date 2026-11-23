@@ -139,3 +139,12 @@ button.link{background:none;border:0;padding:4px 2px;font-size:12.5px;color:#8fd
 }
 @media (max-width:1400px){#stepper li{padding:6px 7px;font-size:11px}.mission-title strong{font-size:15px}}
 @media (max-width:1300px){#stepper li:not(.now){max-width:34px;overflow:hidden;text-overflow:clip}.top-right button{padding:7px 9px;font-size:12px}}
+/* tutorial coach: one sentence next to the single highlighted button */
+#coach{position:fixed;z-index:30;width:300px;background:#f3c37b;color:#1b1406;border-radius:8px;padding:12px 14px 10px;box-shadow:0 14px 40px #000c}
+#coach::after{content:"";position:absolute;right:-9px;top:50%;margin-top:-9px;border:9px solid transparent;border-right:0;border-left-color:#f3c37b}
+#coach-step{font:600 11.5px Consolas,"Malgun Gothic",monospace;letter-spacing:.04em;opacity:.8}
+#coach-text{margin:5px 0 8px;font-size:14.5px;line-height:1.5;font-weight:500}
+.coach-row{display:flex;justify-content:flex-end}#coach-skip{background:none;border:0;color:#5a3d0a;font-size:12px;text-decoration:underline;padding:2px}
+button.coach-target{box-shadow:0 0 0 3px #f3c37b,0 0 22px #f3c37b88;animation:coachpulse 1.6s ease-in-out infinite}
+@keyframes coachpulse{50%{box-shadow:0 0 0 5px #f3c37b,0 0 30px #f3c37baa}}
+@media (prefers-reduced-motion:reduce){button.coach-target{animation:none}#toast.pop{animation:none}}

@@ -239,7 +239,21 @@ function resultCard(r,id='demo-result'){
   card.append(el('p','result-note','점수·게임 시계·자원 원장과 연결되지 않은 가상 결과입니다.'));
   return card;
 }
-function renderCoach(){}
+// ---------- Tutorial coach: one goal, one sentence, one highlighted target ----------
+function tutorialDone(){try{return localStorage.getItem(TUTORIAL_KEY)==='1';}catch{return false;}}
+function endTutorial(reason){tutorial.active=false;tutorial.ended=reason;try{localStorage.setItem(TUTORIAL_KEY,'1');}catch{/* replay stays available */}renderCoach();}
+function startTutorialIfNew(){if(!tutorialDone()&&!tutorial.ended){tutorial.active=true;tutorial.startedAt=performance.now();renderCoach();}}
+function renderCoach(){
+  const c=$('coach'),b=$('primary-action'),show=tutorial.active&&!openingActive;
+  b.classList.toggle('coach-target',show);c.hidden=!show;if(!show)return;
+  const g=goalOf(store.state.request.phase),a=nextAction(store.state);
+  if(g.done){c.hidden=true;b.classList.remove('coach-target');tutorial.completedMs=Math.round(performance.now()-tutorial.startedAt);endTutorial('completed');toast('튜토리얼 완료! 이제 캠퍼스와 시설을 자유롭게 둘러보세요.');return;}
+  $('coach-step').textContent=`튜토리얼 ${g.index}/${g.total} · ${g.title}`;$('coach-text').textContent=`${a.hint} → [${a.label}]`;
+  requestAnimationFrame(()=>{const r=b.getBoundingClientRect(),w=c.offsetWidth,h=c.offsetHeight;c.style.left=`${Math.max(12,r.left-w-22)}px`;c.style.top=`${Math.min(innerHeight-h-8,Math.max(8,r.top+r.height/2-h/2))}px`;});
+}
+$('coach-skip').addEventListener('click',()=>{endTutorial('skipped');toast('튜토리얼을 건너뛰었습니다. 위쪽 [튜토리얼 다시 하기]로 언제든 다시 할 수 있어요.','hint');});
+$('tutorial-replay').addEventListener('click',()=>{try{localStorage.removeItem(TUTORIAL_KEY);}catch{}location.hash='#noc';location.reload();});
+addEventListener('resize',()=>renderCoach());
 
 // ---------- Opening (skippable, once per browser unless replayed) ----------
 function openingSeen(){try{return localStorage.getItem(OPENING_STORAGE_KEY)==='1';}catch{return false;}}
@@ -254,7 +268,7 @@ function startOpening(){
 function finishOpening(how){
   if(!openingActive)return;scene.stopCinematic();openingActive=false;openingResult={how,seconds:+((performance.now()-openingStart)/1000).toFixed(2)};
   try{localStorage.setItem(OPENING_STORAGE_KEY,'1');}catch{/* private mode: replay simply stays available */}
-  document.body.classList.remove('cinematic');$('opening').hidden=true;store.setNocView('desk');lastViewKey=null;navigate('noc');render();
+  document.body.classList.remove('cinematic');$('opening').hidden=true;store.setNocView('desk');lastViewKey=null;navigate('noc');startTutorialIfNew();render();
 }
 function openingProgress(){const c=scene.cinematicState();if(!c)return 0;return (OPENING.slice(0,c.index).reduce((s,k)=>s+k.duration,0)+c.t)/OPENING_SECONDS;}
 
@@ -264,7 +278,7 @@ try{
     onPick:id=>{const [type,key]=id.split(':');if(type==='country'){store.selectCountry(key);hint(misclickHint(store.state,'country',key));}if(type==='facility')store.selectFacility(key);},
     onEnter:id=>{const [type,key]=id.split(':');if(type==='facility')enterFacility(key);}});
   const hash=location.hash.slice(1);if(hash&&!store.navigate(hash))history.replaceState(null,'','#noc');render();$('loading').hidden=true;
-  if(!openingSeen())startOpening();
+  if(!openingSeen())startOpening();else startTutorialIfNew();
   window.worldQA=Object.freeze({snapshot:()=>({state:store.snapshot(),domain:store.domainSnapshot(),renderer:scene.snapshot(),stats:{...stats},heap:performance.memory?{used:performance.memory.usedJSHeapSize,total:performance.memory.totalJSHeapSize}:null,visuals:scene.visuals(),worldMarkers:{SG:scene.worldMarker('SG'),JP:scene.worldMarker('JP')},cooling:scene.coolingVisual(),deskScreen:scene.deskScreenKey(),network:scene.networkVisual?.()??null,interior:scene.interiorVisual?.()??null,opening:{active:openingActive,state:scene.cinematicState(),result:openingResult,seconds:OPENING_SECONDS},guide:{action:nextAction(store.state),goal:goalOf(store.state.request.phase)},tutorial:{...tutorial,hints:[...tutorial.hints]}}),projectAsset:id=>scene.projectAsset(id),projectWorld:id=>scene.projectWorld(id),projectPoint:p=>scene.projectPoint?.(p)??null});
   function animate(now){const dt=Math.min((now-lastTime)/1000,.1),raw=now-lastTime;lastTime=now;
     if(!document.hidden){scene.pollGpuTimer();const timed=frame%30===0;if(timed)scene.beginGpuTimer();scene.animate(dt);if(timed)scene.endGpuTimer();const gpu=scene.pollGpuTimer();if(timed&&gpu!==null){gpuTimes.push(gpu);if(gpuTimes.length>60)gpuTimes.shift();}frameTimes.push(raw);if(frameTimes.length>300)frameTimes.shift();frame++;
