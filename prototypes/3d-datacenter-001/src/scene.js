@@ -11,6 +11,7 @@ import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { readings, totals } from './model.js';
 import { DESK_POSE, NOC_OVERVIEW_POSE, WORLD_POSE } from './opening.js';
 import { createWorldGeometry } from './world-geometry.js';
+import { createInteriors } from './interiors.js';
 
 const C = { normal: 0x63e4c1, fault: 0xff455c, repairing: 0xffbd59, awaiting: 0x76b7ff, verified: 0x83f5d2 };
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -305,7 +306,11 @@ export function createScene(container, facility, onSelect, options = {}) {
   let requestMarker = null;
   let worldGeometry = null;
   const separation = {}, deskScreens = []; let deskKey = '', nocView = 'desk', cinematic = null;
-  const CLIP = { hall: [new THREE.Plane(V(-1, 0, 0), 4.2)], noc: [new THREE.Plane(V(1, 0, 0), -4.12)] };
+  // Hall: clip the NOC side away and, by default, cut the ceiling services (lights, trays, ducts) above the
+  // racks so they never hide the rack highlight (Issue #3). 'Show ceiling' restores them.
+  const HALL_WALL = new THREE.Plane(V(-1, 0, 0), 4.2), CEILING = new THREE.Plane(V(0, -1, 0), 3.93);
+  const CLIP = { hall: [HALL_WALL, CEILING], noc: [new THREE.Plane(V(1, 0, 0), -4.12)] };
+  let interiors = null, targetHighlight = null, selectHighlight = null, targetPin = null;
   const campusFog = new THREE.Fog(0x0b111b, 85, 230);
   if (options.worldMode) {
     for (const child of [...scene.children]) if (!child.isDirectionalLight && !child.isHemisphereLight) originalRoom.add(child);
@@ -344,6 +349,20 @@ export function createScene(container, facility, onSelect, options = {}) {
       const screen = new THREE.Mesh(new THREE.PlaneGeometry(.98, .56), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
       screen.position.set(desk.x + dx, 1.67, desk.z - .245); originalRoom.add(screen); deskScreens.push({ canvas, texture, side: dx < 0 ? 'left' : 'right' });
     }
+    interiors = createInteriors(); interiors.root.visible = false; scene.add(interiors.root);
+    // Rack visibility: x-ray outlines drawn on top (depthTest off) for the request rack and the selection,
+    // a floating pin above the request rack, and larger invisible pick volumes for every rack.
+    const xray = color => { const m = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.42, 3.2, 1.55)), new THREE.LineBasicMaterial({ color, depthTest: false, transparent: true, opacity: .95 })); m.renderOrder = 20; originalRoom.add(m); return m; };
+    targetHighlight = xray(0xf3c37b); selectHighlight = xray(0x83ffe4);
+    const pinCanvas = document.createElement('canvas'); pinCanvas.width = 512; pinCanvas.height = 160; const pc = pinCanvas.getContext('2d');
+    pc.fillStyle = '#2b2012ee'; pc.fillRect(0, 0, 512, 118); pc.strokeStyle = '#f3c37b'; pc.lineWidth = 6; pc.strokeRect(3, 3, 506, 112);
+    pc.fillStyle = '#f3c37b'; pc.font = '600 54px Consolas, "Malgun Gothic", monospace'; pc.fillText(`${options.getState().request.rackId} · 요청 랙`, 24, 76);
+    pc.beginPath(); pc.moveTo(226, 118); pc.lineTo(286, 118); pc.lineTo(256, 158); pc.closePath(); pc.fill();
+    const pinTex = new THREE.CanvasTexture(pinCanvas); pinTex.colorSpace = THREE.SRGBColorSpace;
+    targetPin = new THREE.Sprite(new THREE.SpriteMaterial({ map: pinTex, depthTest: false, toneMapped: false })); targetPin.scale.set(2.7, .84, 1); targetPin.renderOrder = 21; originalRoom.add(targetPin);
+    const proxyMat = new THREE.MeshBasicMaterial({ visible: false }), proxies = [];
+    for (const a of facility.assets) { const pr = new THREE.Mesh(boxGeo, proxyMat); pr.scale.set(a.kind === 'rack' ? 1.55 : 1.8, 3.4, 1.9); pr.position.set(a.x, 1.7, a.z); pr.userData.assetId = a.id; originalRoom.add(pr); proxies.push(pr); }
+    selectable.length = 0; selectable.push(...proxies);
     // Colleagues at four other consoles: abstract silhouettes, so the room reads as staffed.
     const seats = [[6.2, -3.8], [9.3, -3.8], [12.4, -3.8], [6.2, .2]];
     const personMat = new THREE.MeshStandardMaterial({ color: 0x1e2c3b, roughness: .85, metalness: .1 });
@@ -384,7 +403,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   function hit(event) {
     const r = renderer.domElement.getBoundingClientRect(); pointer.set((event.clientX - r.left) / r.width * 2 - 1, -(event.clientY - r.top) / r.height * 2 + 1);
     raycaster.setFromCamera(pointer, camera);
-    const objects = worldGeometry && ['world','campus'].includes(location) ? worldGeometry.pickables[location] : worldGeometry && location === 'noc' ? [] : selectable;
+    const objects = worldGeometry && ['world','campus'].includes(location) ? worldGeometry.pickables[location] : worldGeometry && ['noc','room'].includes(location) ? [] : selectable;
     const data = raycaster.intersectObjects(objects, false)[0]?.object.userData;
     return data?.pickId || data?.assetId;
   }
@@ -392,8 +411,9 @@ export function createScene(container, facility, onSelect, options = {}) {
   renderer.domElement.addEventListener('pointerup', e => { if (e.button !== 0 || !pointerStart) return; if (Math.hypot(e.clientX - pointerStart.x, e.clientY - pointerStart.y) < 5) { const id = hit(e); if (id) { if (id.includes(':')) options.onPick?.(id); else onSelect(id); } } pointerStart = null; });
   renderer.domElement.addEventListener('pointermove', e => {
     hovered = hit(e); renderer.domElement.style.cursor = hovered ? 'pointer' : 'grab'; hoverLabel.hidden = !hovered || !!e.buttons;
-    if (hovered) { const rect = container.getBoundingClientRect(); hoverLabel.textContent = hovered.includes(':') ? `${worldGeometry?.pickLabel(hovered)} · 선택` : `${hovered} · 장비 선택`; hoverLabel.style.left = `${Math.min(e.clientX - rect.left + 14, rect.width - 185)}px`; hoverLabel.style.top = `${e.clientY - rect.top - 38}px`; }
+    if (hovered) { const rect = container.getBoundingClientRect(); hoverLabel.textContent = hovered.startsWith('facility:') ? `${worldGeometry?.pickLabel(hovered)} · 클릭: 정보 / 두 번 클릭: 내부` : hovered.includes(':') ? `${worldGeometry?.pickLabel(hovered)} · 선택` : `${hovered} · 장비 선택`; hoverLabel.style.left = `${Math.min(e.clientX - rect.left + 14, rect.width - 185)}px`; hoverLabel.style.top = `${e.clientY - rect.top - 38}px`; }
   });
+  renderer.domElement.addEventListener('dblclick', e => { if (location !== 'campus' || cinematic) return; const id = hit(e); if (id?.startsWith('facility:')) options.onEnter?.(id); });
   renderer.domElement.addEventListener('pointerleave', () => { hovered = null; hoverLabel.hidden = true; });
   renderer.domElement.addEventListener('keydown', e => { if (['KeyW','KeyA','KeyS','KeyD','KeyQ','KeyE','KeyF'].includes(e.code)) { e.preventDefault(); keys.add(e.code); if (e.code === 'KeyF') focus(); } });
   renderer.domElement.addEventListener('keyup', e => keys.delete(e.code));
@@ -469,7 +489,7 @@ export function createScene(container, facility, onSelect, options = {}) {
     if (contextLost) return;
     visualElapsed = options.worldMode ? visualElapsed + dt : facility.elapsed;
     worldGeometry?.update(visualElapsed, options.getState(), { reducedMotion: !!options.reducedMotion?.() });
-    if(requestMarker) requestMarker.visible = location === 'hall' && !['new','reviewed'].includes(options.getState().request.phase);
+    if(requestMarker) requestMarker.visible = false; // superseded by the always-on-top request outline + pin (Issue #3)
     if (cinematic) {
       const k = cinematic.keys[cinematic.index]; cinematic.t = (performance.now() - cinematic.segmentStart) / 1000; cinematic.frames++;
       const p = Math.min(1, cinematic.t / k.duration), e = p * p * (3 - 2 * p);
@@ -477,7 +497,13 @@ export function createScene(container, facility, onSelect, options = {}) {
       camera.lookAt(controls.target);
       if (p >= 1) nextSegment();
     }
-    if (options.worldMode) drawDeskScreens();
+    if (options.worldMode) {
+      drawDeskScreens();
+      const st = options.getState(), tgt = facility.assets.find(a => a.id === st.request.rackId), sel = facility.assets.find(a => a.id === facility.selectedId), inHall = location === 'hall', active = !['new','reviewed','completed','reported'].includes(st.request.phase) || st.request.phase === 'accepted';
+      targetHighlight.visible = targetPin.visible = inHall && active && !!tgt; if (tgt) { targetHighlight.position.set(tgt.x, 1.75, tgt.z); targetPin.position.set(tgt.x, 3.55 + Math.sin(visualElapsed * 2.4) * (options.reducedMotion?.() ? 0 : .06), tgt.z); }
+      selectHighlight.visible = inHall && !!sel && sel.id !== tgt?.id; if (sel) selectHighlight.position.set(sel.x, 1.75, sel.z);
+      if (location === 'room') interiors.update(visualElapsed, st, dt);
+    }
     if (transition) {
       transition.progress = Math.min(1, transition.progress + dt / 1.15);
       const k = transition.progress * transition.progress * (3 - 2 * transition.progress);
@@ -557,14 +583,17 @@ export function createScene(container, facility, onSelect, options = {}) {
     originalRoom.visible = next === 'noc' || next === 'hall';
     worldGeometry.world.visible = next === 'world'; worldGeometry.campus.visible = next === 'campus';
     renderer.clippingPlanes = CLIP[next] || [];
+    interiors.root.visible = next === 'room'; if (next === 'room') interiors.show(currentRoom);
     separation.hall.visible = next === 'hall'; separation.noc.visible = next === 'noc';
     scene.fog = next === 'campus' ? campusFog : null;
   }
-  function setLocation(next, immediate = false, view = nocView) {
-    if (!worldGeometry || !['world','noc','campus','hall'].includes(next) || cinematic) return false;
+  let currentRoom = 'COOLING', ceilingShown = false;
+  function setLocation(next, immediate = false, view = nocView, room = currentRoom) {
+    if (!worldGeometry || !['world','noc','campus','hall','room'].includes(next) || cinematic) return false;
+    if (interiors.pose(room)) currentRoom = room;
     if (view === 'desk' || view === 'overview') nocView = view;
     showLocation(next);
-    const positions = { world: WORLD_POSE, campus:{eye:[29,28,31],target:[0,0,0]}, noc: nocView === 'desk' ? DESK_POSE : NOC_OVERVIEW_POSE, hall:viewPositions.overview };
+    const positions = { world: WORLD_POSE, campus:{eye:[29,28,31],target:[0,0,0]}, noc: nocView === 'desk' ? DESK_POSE : NOC_OVERVIEW_POSE, hall:viewPositions.overview, room: interiors.pose(currentRoom) };
     const p = positions[next];
     if(immediate) {camera.position.set(...p.eye);controls.target.set(...p.target);transition=null;controls.update();}
     else moveTo(p.eye,p.target);
@@ -588,6 +617,9 @@ export function createScene(container, facility, onSelect, options = {}) {
     cinematicState: () => cinematic && { index: cinematic.index, t: cinematic.t, location },
     coolingVisual: () => worldGeometry?.coolingVisual() ?? null,
     networkVisual: () => worldGeometry?.networkVisual() ?? null,
+    interiorVisual: () => (location === 'room' ? interiors?.visual() : null) ?? null,
+    rackVisual: () => ({ ceilingShown, targetOutline: !!targetHighlight?.visible, targetOutlineOnTop: targetHighlight ? targetHighlight.material.depthTest === false : false, pin: !!targetPin?.visible, selectOutline: !!selectHighlight?.visible, pickVolumes: selectable.length }),
+    setCeiling(show) { ceilingShown = !!show; CLIP.hall = ceilingShown ? [HALL_WALL] : [HALL_WALL, CEILING]; if (location === 'hall') renderer.clippingPlanes = CLIP.hall; return ceilingShown; },
     deskScreenKey: () => deskKey,
     focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
