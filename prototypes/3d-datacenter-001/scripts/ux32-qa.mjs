@@ -23,7 +23,9 @@ async function open({width=1920,height=1080,dpr=1,fresh=false,hash=''}={}){
 // Primary button must be fully on screen and topmost; the panel body must not need scrolling.
 async function layoutState(page){
   return page.evaluate(()=>{const b=document.querySelector('#primary-action'),r=b.getBoundingClientRect(),top=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2),body=document.querySelector('#panel-body'),title=document.querySelector('#goal-title');
-    return {inView:r.top>=0&&r.left>=0&&r.bottom<=innerHeight&&r.right<=innerWidth,topmost:top===b||b.contains(top),bodyNeedsScroll:body.scrollHeight>body.clientHeight+2,pageScroll:scrollY!==0||document.documentElement.scrollHeight>innerHeight+2,titleClipped:title.scrollWidth>title.clientWidth+1,rect:[Math.round(r.top),Math.round(r.bottom),innerHeight],label:b.textContent};});
+    const sel=['.scene-heading h1','.scene-heading p','#places','#hall-tools','#noc-tools','#map-legend','#route-chain','.camera-help','.scene-caption','#workstation'],boxes=sel.map(q=>[q,document.querySelector(q)]).filter(([,e])=>e&&e.offsetParent!==null&&getComputedStyle(e).display!=='none').map(([q,e])=>[q,e.getBoundingClientRect()]).filter(([,b])=>b.width&&b.height);
+    const overlaps=[];for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++){const [qa,A]=boxes[i],[qb,B]=boxes[j];if(A.left<B.right-1&&B.left<A.right-1&&A.top<B.bottom-1&&B.top<A.bottom-1)overlaps.push(`${qa} x ${qb}`);}
+    return {overlaps,inView:r.top>=0&&r.left>=0&&r.bottom<=innerHeight&&r.right<=innerWidth,topmost:top===b||b.contains(top),bodyNeedsScroll:body.scrollHeight>body.clientHeight+2,pageScroll:scrollY!==0||document.documentElement.scrollHeight>innerHeight+2,titleClipped:title.scrollWidth>title.clientWidth+1,rect:[Math.round(r.top),Math.round(r.bottom),innerHeight],label:b.textContent};});
 }
 try{
   browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:false,args:['--window-size=1920,1080']});report.browserVersion=browser.version();
@@ -61,7 +63,7 @@ try{
       const {ctx,page,snap,shot}=await open(vp);const rows=[];const tag=vp.label.replace(/[^0-9a-z]+/gi,'-');
       for(let i=0;i<20;i++){
         const s=await snap(),lay=await layoutState(page);rows.push({goal:s.guide.goal.index,label:lay.label,...lay});
-        assert.ok(lay.inView&&lay.topmost,`${vp.label} step ${i}: ${JSON.stringify(lay)}`);assert.equal(lay.bodyNeedsScroll,false,`${vp.label} panel scroll at step ${i}`);assert.equal(lay.pageScroll,false);assert.equal(lay.titleClipped,false);
+        assert.ok(lay.inView&&lay.topmost,`${vp.label} step ${i}: ${JSON.stringify(lay)}`);assert.equal(lay.bodyNeedsScroll,false,`${vp.label} panel scroll at step ${i}`);assert.equal(lay.pageScroll,false);assert.equal(lay.titleClipped,false);assert.deepEqual(lay.overlaps,[],`${vp.label} step ${i}: overlay text overlaps ${lay.overlaps}`);
         if([0,4,8].includes(i))await shot(`vp-${tag}-step${i}.png`);
         if(s.guide.goal.done)break;await page.locator('#primary-action').click();await page.waitForTimeout(900);
         if(await page.locator('#result-dialog').isVisible()){await shot(`vp-${tag}-result.png`);const r=await page.locator('#result-close').boundingBox();assert.ok(r&&r.y+r.height<=vp.height,'result dialog button reachable');await page.locator('#result-close').click();}

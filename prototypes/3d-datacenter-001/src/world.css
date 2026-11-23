@@ -148,3 +148,13 @@ button.link{background:none;border:0;padding:4px 2px;font-size:12.5px;color:#8fd
 button.coach-target{box-shadow:0 0 0 3px #f3c37b,0 0 22px #f3c37b88;animation:coachpulse 1.6s ease-in-out infinite}
 @keyframes coachpulse{50%{box-shadow:0 0 0 5px #f3c37b,0 0 30px #f3c37baa}}
 @media (prefers-reduced-motion:reduce){button.coach-target{animation:none}#toast.pop{animation:none}}
+/* short screens: keep the scene overlays from colliding (heading / place tabs / tool columns / help) */
+@media (max-height:860px){
+  .scene-heading p,.camera-help{display:none}
+  #places{top:92px!important;left:32px!important;right:auto!important}
+  #hall-tools,#noc-tools,#map-legend{top:150px!important}
+  #workstation{max-height:calc(100% - 218px)!important}
+  #hall-tools{display:grid;grid-template-columns:repeat(2,auto);gap:5px}#hall-tools .layer-tools{grid-column:1/-1;display:flex;gap:5px}
+  #map-legend{gap:6px}#map-legend .legend-note{display:none}
+}
+@media (max-width:1300px){#workstation .ws-me{display:none}#workstation .ws-body{grid-template-columns:1.1fr 1fr}}
