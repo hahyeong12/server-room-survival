@@ -4,8 +4,10 @@ import { createOps, applyOpsAction } from './facility-ops.js';
 
 function freeze(value) { Object.values(value).forEach(v => { if (v && typeof v === 'object') freeze(v); }); return Object.freeze(value); }
 // The control building and the server building are separate buildings on the same campus (Issue #2).
-export const LOCATIONS = freeze({ world: { title:'세계 운영 지도', parent:null, subtitle:'GLOBAL OPERATIONS' }, campus:{ title:'울산 AIDC 캠퍼스', parent:'world', subtitle:'ULSAN AIDC / CAMPUS' }, noc:{ title:'관제동 · 내 자리', parent:'campus', subtitle:'CONTROL BUILDING / NOC' }, hall:{ title:'서버동 01', parent:'campus', subtitle:'COMPUTE BUILDING 01 / 24 RACKS' } });
-export const ROUTE_ORDER = Object.freeze(['world','campus','noc','hall']);
+export const LOCATIONS = freeze({ world: { title:'세계 운영 지도', parent:null, subtitle:'GLOBAL OPERATIONS' }, campus:{ title:'울산 AIDC 캠퍼스', parent:'world', subtitle:'ULSAN AIDC / CAMPUS' }, noc:{ title:'관제동 · 내 자리', parent:'campus', subtitle:'CONTROL BUILDING / NOC' }, hall:{ title:'서버동 01', parent:'campus', subtitle:'COMPUTE BUILDING 01 / 24 RACKS' }, room:{ title:'시설 내부', parent:'campus', subtitle:'FACILITY INTERIOR' } });
+// Facilities with their own small functional interior (double-click on the campus map).
+export const ROOMS = Object.freeze(['COOLING','POWER','UPS','NETWORK']);
+export const ROUTE_ORDER = Object.freeze(['world','campus','noc','hall','room']);
 export const NOC_VIEWS = Object.freeze(['desk','overview']);
 // Ulsan pin: Nam-gu Hwangseong-dong / Yongyeon area (not Dong-gu shipyards). Map precision is illustrative only.
 export const COUNTRIES = freeze({ KR:{ name:'대한민국 · 울산', short:'ULSAN AIDC', lon:129.36, lat:35.49 }, SG:{ name:'싱가포르', short:'SINGAPORE', lon:103.82, lat:1.35 }, JP:{ name:'일본', short:'JAPAN', lon:139.69, lat:35.68 }, US:{ name:'미국', short:'UNITED STATES', lon:-122.42, lat:37.77 } });
@@ -21,13 +23,15 @@ export function breadcrumbs(route) {
 }
 export function createWorldStore() {
   // A work day starts at my desk in the control building.
-  const state={ navigation:{route:'noc',nocView:'desk',country:'SG',facility:'NOC'}, facility:createFacility(), request:{...FIXTURE,terms:FIXTURE.terms,phase:'new',progress:0,steps:0,history:[]}, ops:createOps(), notice:'' };
+  const state={ navigation:{route:'noc',nocView:'desk',country:'SG',facility:'NOC',room:'COOLING'}, facility:createFacility(), request:{...FIXTURE,terms:FIXTURE.terms,phase:'new',progress:0,steps:0,history:[]}, ops:createOps(), notice:'' };
   const listeners=new Set();
   function notify() { for(const listener of listeners) listener(); }
   function navigate(route) { if(!Object.hasOwn(LOCATIONS,route)) return false; state.navigation.route=route; notify(); return true; }
   return {
     state, navigate,
     back(){const parent=LOCATIONS[state.navigation.route].parent;return parent?navigate(parent):false;},
+    // Enter a building's own space: control building -> my desk, server building -> racks, others -> interior.
+    enterFacility(id){if(!Object.hasOwn(FACILITIES,id))return false;state.navigation.facility=id;if(id==='NOC'){state.navigation.nocView='desk';return navigate('noc');}if(id==='HALL-01')return navigate('hall');state.navigation.room=id;return navigate('room');},
     setNocView(view){if(!NOC_VIEWS.includes(view))return false;state.navigation.nocView=view;notify();return true;},
     selectCountry(id){if(!Object.hasOwn(COUNTRIES,id))return false;state.navigation.country=id;notify();return true;},
     selectFacility(id){if(!Object.hasOwn(FACILITIES,id))return false;state.navigation.facility=id;notify();return true;},
