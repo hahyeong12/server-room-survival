@@ -1,0 +1,396 @@
+{
+  "issue": 3,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts",
+  "url": "http://127.0.0.1:5173",
+  "checks": [
+    {
+      "name": "first-time player: following only the single highlighted target finishes the first job (1920x1080)",
+      "pass": true
+    },
+    {
+      "name": "no scrolling for required actions, primary button visible and on top: 1920x1080 @100%",
+      "pass": true
+    },
+    {
+      "name": "no scrolling for required actions, primary button visible and on top: 1366x768 @100%",
+      "pass": true
+    },
+    {
+      "name": "no scrolling for required actions, primary button visible and on top: 1920x1080 @125% (emulated)",
+      "pass": true
+    },
+    {
+      "name": "no scrolling for required actions, primary button visible and on top: 1920x1080 @150% (emulated)",
+      "pass": true
+    },
+    {
+      "name": "Korea-centred map: dim background network, only the request path lit, fault only on the AIDC hop, reduced motion",
+      "pass": true
+    },
+    {
+      "name": "rack target: ceiling cut away, on-top outline + pin, canvas hits from several angles, keyboard and button alternatives, light not pickable",
+      "pass": true
+    },
+    {
+      "name": "buildings: single click informs without moving the camera; double click / Enter enters each own space; back returns",
+      "pass": true
+    },
+    {
+      "name": "performance per space incl. four interiors (avg >= 60 FPS), no long freeze on building switch, 10-cycle stability",
+      "pass": true
+    },
+    {
+      "name": "no runtime or console errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "fp-step-01.png",
+    "fp-step-02.png",
+    "fp-step-03.png",
+    "fp-step-04.png",
+    "fp-step-05.png",
+    "fp-misclick-hint.png",
+    "fp-step-06.png",
+    "fp-step-07.png",
+    "fp-step-08.png",
+    "fp-step-09.png",
+    "fp-step-10.png",
+    "fp-step-11.png",
+    "fp-step-12.png",
+    "fp-step-13.png",
+    "fp-step-14.png",
+    "fp-result.png",
+    "vp-1920x1080-100--step0.png",
+    "vp-1920x1080-100--step4.png",
+    "vp-1920x1080-100--step8.png",
+    "vp-1920x1080-100--result.png",
+    "vp-1366x768-100--step0.png",
+    "vp-1366x768-100--step4.png",
+    "vp-1366x768-100--step8.png",
+    "vp-1366x768-100--result.png",
+    "vp-1920x1080-125-emulated--step0.png",
+    "vp-1920x1080-125-emulated--step4.png",
+    "vp-1920x1080-125-emulated--step8.png",
+    "vp-1920x1080-125-emulated--result.png",
+    "vp-1920x1080-150-emulated--step0.png",
+    "vp-1920x1080-150-emulated--step4.png",
+    "vp-1920x1080-150-emulated--step8.png",
+    "vp-1920x1080-150-emulated--result.png",
+    "world-request-incoming.png",
+    "world-fault-aidc-hop.png",
+    "rack-before-ceiling-shown.png",
+    "rack-after-ceiling-cut.png",
+    "rack-hit-overview.png",
+    "rack-hit-hall.png",
+    "rack-focus-after-button.png",
+    "building-click-NOC.png",
+    "building-inside-NOC.png",
+    "building-click-HALL-01.png",
+    "building-inside-HALL-01.png",
+    "building-click-COOLING.png",
+    "building-inside-COOLING.png",
+    "inside-cooling-off.png",
+    "building-click-POWER.png",
+    "building-inside-POWER.png",
+    "building-click-UPS.png",
+    "building-inside-UPS.png",
+    "building-click-NETWORK.png",
+    "building-inside-NETWORK.png"
+  ],
+  "firstPlayer": {
+    "clicks": 14,
+    "intentionalMisclicks": 1,
+    "steps": [
+      {
+        "goal": 1,
+        "action": "navigate",
+        "label": "요청 국가 보기",
+        "discoveryMs": 2,
+        "route": "noc"
+      },
+      {
+        "goal": 1,
+        "action": "act",
+        "label": "싱가포르 요청 확인",
+        "discoveryMs": 3,
+        "route": "world"
+      },
+      {
+        "goal": 2,
+        "action": "navigate",
+        "label": "내 자리로 이동",
+        "discoveryMs": 5,
+        "route": "world"
+      },
+      {
+        "goal": 2,
+        "action": "act",
+        "label": "요청 접수 · 배정 확정",
+        "discoveryMs": 3,
+        "route": "noc"
+      },
+      {
+        "goal": 3,
+        "action": "navigate",
+        "label": "서버동 01로 이동",
+        "discoveryMs": 1,
+        "route": "noc"
+      },
+      {
+        "goal": 3,
+        "action": "select-rack",
+        "label": "랙 D-06 찾기",
+        "discoveryMs": 5,
+        "route": "hall"
+      },
+      {
+        "goal": 3,
+        "action": "act",
+        "label": "시연 작업 시작",
+        "discoveryMs": 4,
+        "route": "hall"
+      },
+      {
+        "goal": 4,
+        "action": "act",
+        "label": "다음 작업 단계",
+        "discoveryMs": 3,
+        "route": "hall"
+      },
+      {
+        "goal": 4,
+        "action": "act",
+        "label": "업링크 복구 시작",
+        "discoveryMs": 4,
+        "route": "hall"
+      },
+      {
+        "goal": 5,
+        "action": "act",
+        "label": "복구 처리 완료",
+        "discoveryMs": 2,
+        "route": "hall"
+      },
+      {
+        "goal": 5,
+        "action": "act",
+        "label": "사후 상태 확인",
+        "discoveryMs": 4,
+        "route": "hall"
+      },
+      {
+        "goal": 5,
+        "action": "act",
+        "label": "시연 작업 완료",
+        "discoveryMs": 3,
+        "route": "hall"
+      },
+      {
+        "goal": 5,
+        "action": "navigate",
+        "label": "내 자리로 이동",
+        "discoveryMs": 3,
+        "route": "hall"
+      },
+      {
+        "goal": 5,
+        "action": "act",
+        "label": "고객 결과 확인",
+        "discoveryMs": 3,
+        "route": "noc"
+      }
+    ],
+    "scrollRequired": false,
+    "totalSeconds": 24.5,
+    "maxDiscoveryMs": 5
+  },
+  "viewports": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1,
+      "label": "1920x1080 @100%",
+      "steps": 15,
+      "maxButtonBottom": 1021
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "dpr": 1,
+      "label": "1366x768 @100%",
+      "steps": 15,
+      "maxButtonBottom": 713
+    },
+    {
+      "width": 1536,
+      "height": 864,
+      "dpr": 1.25,
+      "label": "1920x1080 @125% (emulated)",
+      "steps": 15,
+      "maxButtonBottom": 805
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "dpr": 1.5,
+      "label": "1920x1080 @150% (emulated)",
+      "steps": 15,
+      "maxButtonBottom": 665
+    }
+  ],
+  "performance": [
+    {
+      "label": "noc",
+      "fpsAvg": 237.6,
+      "p95Max": 4.3,
+      "maxFrameMs": 16.8,
+      "gpuMs": 4.23,
+      "calls": 255,
+      "triangles": 102154
+    },
+    {
+      "label": "world",
+      "fpsAvg": 240,
+      "p95Max": 4.3,
+      "maxFrameMs": 4.3,
+      "gpuMs": 2.46,
+      "calls": 518,
+      "triangles": 59630
+    },
+    {
+      "label": "campus",
+      "fpsAvg": 240,
+      "p95Max": 4.3,
+      "maxFrameMs": 4.3,
+      "gpuMs": 1.3,
+      "calls": 253,
+      "triangles": 33370
+    },
+    {
+      "label": "hall",
+      "fpsAvg": 237.6,
+      "p95Max": 4.3,
+      "maxFrameMs": 16.7,
+      "gpuMs": 1.46,
+      "calls": 758,
+      "triangles": 133770
+    },
+    {
+      "label": "room COOLING",
+      "fpsAvg": 240,
+      "p95Max": 4.3,
+      "maxFrameMs": 4.3,
+      "gpuMs": 0.9,
+      "calls": 204,
+      "triangles": 12162
+    },
+    {
+      "label": "room POWER",
+      "fpsAvg": 240,
+      "p95Max": 4.3,
+      "maxFrameMs": 4.3,
+      "gpuMs": 0.55,
+      "calls": 232,
+      "triangles": 7578
+    },
+    {
+      "label": "room UPS",
+      "fpsAvg": 240,
+      "p95Max": 4.2,
+      "maxFrameMs": 4.3,
+      "gpuMs": 2.35,
+      "calls": 230,
+      "triangles": 2502
+    },
+    {
+      "label": "room NETWORK",
+      "fpsAvg": 240,
+      "p95Max": 4.3,
+      "maxFrameMs": 4.3,
+      "gpuMs": 2.12,
+      "calls": 376,
+      "triangles": 9306
+    }
+  ],
+  "startedAt": "2026-11-23T09:49:12.962Z",
+  "browserVersion": "157.0.8103.80",
+  "rackVisual": {
+    "ceilingShown": false,
+    "targetOutline": true,
+    "targetOutlineOnTop": true,
+    "pin": true,
+    "selectOutline": true,
+    "pickVolumes": 29
+  },
+  "lightClickSelected": "D-02",
+  "rackHits": {
+    "overview": "D-06",
+    "hall": "D-06"
+  },
+  "buildings": {
+    "NOC": {
+      "route": "noc",
+      "interior": null
+    },
+    "HALL-01": {
+      "route": "hall",
+      "interior": null
+    },
+    "COOLING": {
+      "route": "room",
+      "interior": {
+        "room": "COOLING",
+        "mode": "on",
+        "pumpsSpinning": true,
+        "flowVisible": true,
+        "display": "on"
+      }
+    },
+    "POWER": {
+      "route": "room",
+      "interior": {
+        "room": "POWER",
+        "checked": false,
+        "display": "495:false"
+      }
+    },
+    "UPS": {
+      "route": "room",
+      "interior": {
+        "room": "UPS",
+        "checked": false,
+        "display": "false"
+      }
+    },
+    "NETWORK": {
+      "route": "room",
+      "interior": {
+        "room": "NETWORK",
+        "uplinkDown": false,
+        "faultPortsBlinking": false,
+        "display": "정상:0"
+      }
+    }
+  },
+  "switchNocToHall": {
+    "clickReturnMs": 20,
+    "transitVisibleAfter400ms": true
+  },
+  "stability": {
+    "cycles": 10,
+    "before": {
+      "geometries": 549,
+      "textures": 94,
+      "heapMiB": 50.3
+    },
+    "after": {
+      "geometries": 549,
+      "textures": 94,
+      "heapMiB": 48.1
+    }
+  },
+  "finishedAt": "2026-11-23T09:57:48.957Z"
+}

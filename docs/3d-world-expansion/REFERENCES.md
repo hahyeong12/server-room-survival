@@ -36,3 +36,21 @@ Issue #2가 지정한 공식 공개 자료를 Claude Code가 웹으로 읽고 �
 - 세계지도의 회선과 패킷은 실제 해저케이블 경로가 아닌 교육용 가상 회선입니다(오프닝 자막에 명시).
 - 조감도 캡션에는 출처 표기가 없고, 각 사이트에는 "All rights reserved"가 표시되어 있습니다. 링크와 텍스트 사실만 기록합니다.
 - 조사 방법: Issue #2에 명시된 5개 URL을 직접 열람해 텍스트만 확인했습니다. 별도 이미지 검색은 하지 않았으며, Issue #1 Phase 0의 데이터센터·NOC·단지 사진 분석(위 표)을 시각 기준으로 계속 사용합니다.
+
+## Issue #3 — 국제망·해저케이블 시각화 참고와 가상화 규칙 (조사일 2026-11-23 KST)
+
+Issue #3이 지정한 4개 페이지를 직접 열람해 텍스트 사실만 확인했습니다. 지도 이미지·좌표·데이터는 내려받거나 복제하지 않았습니다.
+
+| 출처 | 확인한 사실 | 적용 |
+| --- | --- | --- |
+| [TeleGeography 2026 Submarine Cable Map 발표](https://resources.telegeography.com/2026-submarine-cable-map) (2026-03-02) | 인쇄 지도에 694개 시스템, 1,893개 landing station 표기 | "많은 해상 경로가 해안 육양국에서 만난다"는 밀도·구조 개념만 참고 |
+| [submarinecablemap.com](https://www.submarinecablemap.com/) | JavaScript 지도라 본문 텍스트 확인 불가 | 참고하지 않음(열람만) |
+| [TeleGeography FAQ](https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions) | "The cable routes on our map are stylized and do not reflect the precise geolocation of systems." / 지도 화면 인용은 CC BY-SA 4.0 + 출처 표기 / "The raw, geocoded data … is available via an annual license." | 경로를 양식화된 가상 경로로 직접 그림. 원자료·스크린샷 미사용이므로 CC BY-SA 조건이 걸리는 자료를 포함하지 않음 |
+| [SK브로드밴드 SJC2 개통](https://www.skbroadband.com/newsroom/4941) (2025-07-18) | "한국의 부산 등 아시아 7개국 10개 지역의 주요 디지털 허브를 잇는 국제 해저 케이블", 10,500 km, 9 Tbps | 해저 구간이 부산 권역 해안에 상륙한다는 구조를 반영. 게임 경로 이름은 가상(실제 케이블 이름을 쓰지 않음) |
+
+가상화 규칙 (코드: `src/network-data.js`, `src/world-map.js`):
+
+1. 모든 회선은 손으로 그린 독창적 가상 경로이며 실제 케이블·소유자·좌표가 아닙니다. 화면 범례와 지도 각주에 "현실 기반 가상 경로"를 표시합니다.
+2. 해저 구간은 해안 육양국(부산 권역, 가상)에서 끝나고, 국내 지상망을 거쳐 울산 AIDC로 이어집니다. 케이블이 데이터센터 건물에 직접 닿게 그리지 않습니다.
+3. 배경 회선 14개는 얇고 어두운 정적 선입니다. 고객 요청이 있는 경로 하나만 밝게 빛나고 패킷이 움직입니다. 장애 시에는 문제 구간(시연에서는 AIDC 내부 마지막 구간)만 빨강과 경고 배지로 표시합니다.
+4. 지도 투영은 울산 경도를 중심으로 한 정거원통도이며, 이음매는 대서양(약 50.6°W)에 둡니다. 육지 윤곽은 Natural Earth(Public Domain)만 사용합니다.

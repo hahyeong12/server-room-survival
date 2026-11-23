@@ -6,7 +6,7 @@
       "pass": true
     },
     {
-      "name": "readable title, request card rendered from state, gold incoming SG marker",
+      "name": "readable title, request summary rendered from state, gold incoming SG marker",
       "pass": true
     },
     {
@@ -72,70 +72,75 @@
         "fpsAvg": 240,
         "fpsMin": 240,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 0.61,
-        "calls": 490,
-        "triangles": 52234,
+        "gpuMsAvg": 0.81,
+        "calls": 518,
+        "triangles": 59630,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 15, 1636, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 15, 1835, 12227"
       },
       "samples": [
         {
-          "fps": 239.99999999999997,
+          "fps": 240.01920153612258,
           "p95FrameMs": 4.200000000000728,
-          "gpuMs": 0.6966469333333334,
-          "heapMiB": 36.4,
-          "calls": 490,
-          "triangles": 52234,
-          "geometries": 491,
-          "textures": 78,
+          "maxFrameMs": 4.299999999999272,
+          "gpuMs": 1.0429221333333336,
+          "heapMiB": 36.6,
+          "calls": 518,
+          "triangles": 59630,
+          "geometries": 500,
+          "textures": 77,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 239.98080153587674,
+          "p95FrameMs": 4.299999999999272,
+          "maxFrameMs": 4.299999999999272,
+          "gpuMs": 1.0085525333333332,
+          "heapMiB": 32.3,
+          "calls": 518,
+          "triangles": 59630,
+          "geometries": 500,
+          "textures": 77,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 239.9808015358774,
+          "p95FrameMs": 4.299999999999272,
+          "maxFrameMs": 4.299999999999272,
+          "gpuMs": 0.949232,
+          "heapMiB": 27.8,
+          "calls": 518,
+          "triangles": 59630,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.99999999999997,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.6737893333333334,
-          "heapMiB": 31.2,
-          "calls": 490,
-          "triangles": 52234,
-          "geometries": 491,
-          "textures": 78,
+          "maxFrameMs": 4.299999999999272,
+          "gpuMs": 0.6209968000000001,
+          "heapMiB": 35.6,
+          "calls": 518,
+          "triangles": 59630,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 239.99999999999997,
+          "fps": 240.01920153612332,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.6300325333333333,
-          "heapMiB": 25.6,
-          "calls": 490,
-          "triangles": 52234,
-          "geometries": 491,
-          "textures": 78,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 239.99999999999997,
-          "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.5234149333333333,
-          "heapMiB": 45.2,
-          "calls": 490,
-          "triangles": 52234,
-          "geometries": 491,
-          "textures": 78,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 239.99999999999997,
-          "p95FrameMs": 4.200000000000728,
-          "gpuMs": 0.5277168,
-          "heapMiB": 39.2,
-          "calls": 490,
-          "triangles": 52234,
-          "geometries": 491,
-          "textures": 78,
+          "maxFrameMs": 4.30000000000291,
+          "gpuMs": 0.4040330666666666,
+          "heapMiB": 30.3,
+          "calls": 518,
+          "triangles": 59630,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         }
@@ -147,70 +152,75 @@
         "fpsAvg": 235.4,
         "fpsMin": 235.3,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 1.31,
+        "gpuMsAvg": 1.41,
         "calls": 253,
         "triangles": 102058,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 40, 1645, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 41, 1837, 12227"
       },
       "samples": [
         {
-          "fps": 235.27566465375293,
+          "fps": 235.27566465375224,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 0.9795839999999998,
-          "heapMiB": 41.1,
+          "maxFrameMs": 16.700000000000728,
+          "gpuMs": 0.964984533333333,
+          "heapMiB": 30.1,
           "calls": 253,
           "triangles": 102058,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 235.2941176470588,
           "p95FrameMs": 4.299999999999272,
-          "gpuMs": 1.236995733333333,
-          "heapMiB": 37.1,
+          "maxFrameMs": 16.700000000000728,
+          "gpuMs": 1.1388565333333331,
+          "heapMiB": 33.8,
+          "calls": 253,
+          "triangles": 102058,
+          "geometries": 500,
+          "textures": 77,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 235.31257353517964,
+          "p95FrameMs": 4.299999999999272,
+          "maxFrameMs": 16.700000000000728,
+          "gpuMs": 1.400328533333333,
+          "heapMiB": 37.6,
           "calls": 251,
           "triangles": 101962,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 236.07176581680778,
-          "p95FrameMs": 4.200000000004366,
-          "gpuMs": 1.371248533333333,
-          "heapMiB": 41.4,
+          "fps": 236.07176581680912,
+          "p95FrameMs": 4.299999999995634,
+          "maxFrameMs": 16.69999999999709,
+          "gpuMs": 1.5766032,
+          "heapMiB": 27.5,
           "calls": 253,
           "triangles": 102058,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 235.2941176470588,
-          "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.426017066666667,
-          "heapMiB": 45.7,
-          "calls": 255,
-          "triangles": 102154,
-          "geometries": 491,
-          "textures": 78,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 235.2941176470588,
-          "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.5159253333333338,
-          "heapMiB": 49.9,
+          "p95FrameMs": 4.30000000000291,
+          "maxFrameMs": 16.69999999999709,
+          "gpuMs": 1.9530421333333334,
+          "heapMiB": 31.1,
           "calls": 253,
           "triangles": 102058,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         }
@@ -222,70 +232,75 @@
         "fpsAvg": 240,
         "fpsMin": 240,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 0.79,
+        "gpuMsAvg": 1.16,
         "calls": 253,
         "triangles": 33370,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 19, 1641, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 22, 1876, 12227"
       },
       "samples": [
         {
-          "fps": 239.99999999999997,
+          "fps": 239.9808015358774,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.9899840000000002,
-          "heapMiB": 34.7,
+          "maxFrameMs": 4.30000000000291,
+          "gpuMs": 1.6353450666666665,
+          "heapMiB": 28.3,
           "calls": 253,
           "triangles": 33370,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
+          "canvas": "1540x801",
+          "dpr": 1
+        },
+        {
+          "fps": 239.99999999999997,
+          "p95FrameMs": 4.299999999995634,
+          "maxFrameMs": 4.30000000000291,
+          "gpuMs": 1.3589034666666662,
+          "heapMiB": 25.1,
+          "calls": 253,
+          "triangles": 33370,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 240.01920153612258,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.8844048000000003,
-          "heapMiB": 22.1,
+          "maxFrameMs": 4.30000000000291,
+          "gpuMs": 1.2611391999999995,
+          "heapMiB": 34.6,
           "calls": 253,
           "triangles": 33370,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 239.99999999999997,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.7860789333333336,
-          "heapMiB": 43.9,
+          "maxFrameMs": 4.30000000000291,
+          "gpuMs": 0.9014453333333333,
+          "heapMiB": 31.1,
           "calls": 253,
           "triangles": 33370,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 239.9808015358774,
+          "fps": 240.01920153612258,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.7054218666666667,
-          "heapMiB": 40.2,
+          "maxFrameMs": 4.30000000000291,
+          "gpuMs": 0.6623439999999997,
+          "heapMiB": 28.3,
           "calls": 253,
           "triangles": 33370,
-          "geometries": 491,
-          "textures": 78,
-          "canvas": "1540x801",
-          "dpr": 1
-        },
-        {
-          "fps": 239.9808015358774,
-          "p95FrameMs": 4.299999999995634,
-          "gpuMs": 0.6034245333333333,
-          "heapMiB": 36.5,
-          "calls": 253,
-          "triangles": 33370,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         }
@@ -294,80 +309,85 @@
     {
       "route": "hall",
       "summary": {
-        "fpsAvg": 237.1,
-        "fpsMin": 236.1,
+        "fpsAvg": 238.3,
+        "fpsMin": 237.6,
         "p95FrameMsMax": 4.3,
-        "gpuMsAvg": 1.95,
+        "gpuMsAvg": 1.42,
         "calls": 757,
         "triangles": 133770,
         "canvas": "1540x801",
-        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 29, 1641, 12227"
+        "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 25, 1863, 12227"
       },
       "samples": [
         {
-          "fps": 236.07176581680778,
+          "fps": 238.4169117062698,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.3009760000000001,
+          "maxFrameMs": 12.5,
+          "gpuMs": 1.2926837333333336,
           "heapMiB": 34.1,
           "calls": 757,
           "triangles": 133770,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 236.05319065229472,
+          "fps": 238.39796567069405,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 1.7243296,
-          "heapMiB": 46.1,
+          "maxFrameMs": 12.400000000001455,
+          "gpuMs": 1.3408602666666667,
+          "heapMiB": 23.8,
           "calls": 757,
           "triangles": 133770,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 237.60494218279769,
-          "p95FrameMs": 4.299999999995634,
-          "gpuMs": 2.01552,
-          "heapMiB": 33.5,
+          "fps": 237.62376237623764,
+          "p95FrameMs": 4.200000000004366,
+          "maxFrameMs": 16.69999999999709,
+          "gpuMs": 1.4068346666666671,
+          "heapMiB": 33.8,
           "calls": 757,
           "triangles": 133770,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
           "fps": 238.39796567069266,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 2.1320591999999996,
-          "heapMiB": 30.1,
+          "maxFrameMs": 12.400000000001455,
+          "gpuMs": 1.5194255999999997,
+          "heapMiB": 29.5,
           "calls": 757,
           "triangles": 133770,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         },
         {
-          "fps": 237.60494218279769,
+          "fps": 238.4169117062712,
           "p95FrameMs": 4.299999999995634,
-          "gpuMs": 2.559269333333333,
-          "heapMiB": 43.1,
+          "maxFrameMs": 12.400000000001455,
+          "gpuMs": 1.547537599999999,
+          "heapMiB": 38.1,
           "calls": 757,
           "triangles": 133770,
-          "geometries": 491,
-          "textures": 78,
+          "geometries": 500,
+          "textures": 77,
           "canvas": "1540x801",
           "dpr": 1
         }
       ]
     }
   ],
-  "startedAt": "2026-11-20T12:31:15.752Z",
+  "startedAt": "2026-11-23T09:57:49.212Z",
   "browserVersion": "157.0.8103.80",
   "url": "http://127.0.0.1:5173",
   "initial": {
@@ -376,7 +396,8 @@
         "route": "noc",
         "nocView": "desk",
         "country": "SG",
-        "facility": "NOC"
+        "facility": "NOC",
+        "room": "COOLING"
       },
       "facility": {
         "assets": [
@@ -1513,8 +1534,8 @@
       "dpr": 1,
       "calls": 253,
       "triangles": 102058,
-      "geometries": 340,
-      "textures": 32,
+      "geometries": 347,
+      "textures": 31,
       "camera": [
         9.3,
         2.05,
@@ -1544,17 +1565,19 @@
           "constant": -4.12
         }
       ],
+      "clipSlots": 2,
       "fog": false,
       "cinematic": false
     },
     "stats": {
-      "fps": 237.62376237623764,
+      "fps": 237.60494218279734,
       "p95FrameMs": 4.300000000000182,
-      "gpuMs": 8.544576000000001
+      "maxFrameMs": 16.599999999999454,
+      "gpuMs": 6.048503652173913
     },
     "heap": {
-      "used": 31413475,
-      "total": 53435699
+      "used": 33192109,
+      "total": 56811817
     },
     "visuals": {
       "A-01": {
@@ -1700,7 +1723,8 @@
     },
     "worldMarkers": {
       "SG": "f3c37b",
-      "JP": "7ba7bd"
+      "JP": "6d8ea3",
+      "KR": "81f1da"
     },
     "cooling": {
       "mode": "on",
@@ -1710,27 +1734,76 @@
       "led": "#68dfce"
     },
     "deskScreen": "new:0:on:192",
+    "network": {
+      "tone": "incoming",
+      "sea": "#f3c37b",
+      "hop": "#f3c37b",
+      "aidcMarker": "#81f1da",
+      "packetsVisible": true,
+      "packetsMoving": true,
+      "faultBadge": false,
+      "background": {
+        "links": 14,
+        "color": "#46708a",
+        "opacity": 0.55
+      }
+    },
+    "interior": null,
+    "rack": {
+      "ceilingShown": false,
+      "targetOutline": false,
+      "targetOutlineOnTop": true,
+      "pin": false,
+      "selectOutline": false,
+      "pickVolumes": 29
+    },
     "opening": {
       "active": false,
       "state": null,
       "result": {
         "how": "skipped",
-        "seconds": 1.33
+        "seconds": 1.44
       },
       "seconds": 12.200000000000001
+    },
+    "guide": {
+      "action": {
+        "kind": "navigate",
+        "target": "world",
+        "label": "요청 국가 보기",
+        "hint": "새 고객 요청이 왔어요. 어느 나라인지 세계지도에서 확인하세요.",
+        "alt": {
+          "kind": "act",
+          "id": "review",
+          "label": "지도 없이 바로 확인"
+        }
+      },
+      "goal": {
+        "index": 1,
+        "total": 5,
+        "title": "요청 국가 확인",
+        "done": false
+      }
+    },
+    "tutorial": {
+      "active": false,
+      "misclicks": 0,
+      "hints": [],
+      "startedAt": 1859.199999999255,
+      "ended": "skipped"
     }
   },
   "stability": {
     "cycles": 10,
     "before": {
-      "geometries": 491,
-      "textures": 78,
-      "heapMiB": 54.6
+      "geometries": 500,
+      "textures": 77,
+      "heapMiB": 39.9
     },
     "after": {
-      "geometries": 491,
-      "textures": 78,
-      "heapMiB": 43.9
+      "geometries": 500,
+      "textures": 77,
+      "heapMiB": 32.1
     }
   },
   "final": {
@@ -1739,7 +1812,8 @@
         "route": "world",
         "nocView": "desk",
         "country": "SG",
-        "facility": "HALL-01"
+        "facility": "HALL-01",
+        "room": "COOLING"
       },
       "facility": {
         "assets": [
@@ -3016,19 +3090,19 @@
       "width": 1540,
       "height": 801,
       "dpr": 1,
-      "calls": 490,
-      "triangles": 52234,
-      "geometries": 492,
-      "textures": 78,
+      "calls": 500,
+      "triangles": 58190,
+      "geometries": 501,
+      "textures": 79,
       "camera": [
         0,
-        35,
-        19.000000000000004
+        27,
+        11.499999999999998
       ],
       "target": [
         0,
         0,
-        0
+        -2.6
       ],
       "contextLost": false,
       "location": "world",
@@ -3040,17 +3114,19 @@
       },
       "nocView": "desk",
       "clip": [],
+      "clipSlots": 2,
       "fog": false,
       "cinematic": false
     },
     "stats": {
-      "fps": 240.01920153612122,
+      "fps": 239.99999999999997,
       "p95FrameMs": 4.2999999999883585,
-      "gpuMs": 1.8708799999999994
+      "maxFrameMs": 4.30000000000291,
+      "gpuMs": 1.4747109333333333
     },
     "heap": {
-      "used": 43158574,
-      "total": 89865386
+      "used": 40230921,
+      "total": 63356977
     },
     "visuals": {
       "A-01": {
@@ -3195,8 +3271,9 @@
       }
     },
     "worldMarkers": {
-      "SG": "68dfce",
-      "JP": "7ba7bd"
+      "SG": "7fd9c9",
+      "JP": "6d8ea3",
+      "KR": "81f1da"
     },
     "cooling": {
       "mode": "on",
@@ -3206,15 +3283,59 @@
       "led": "#68dfce"
     },
     "deskScreen": "reported:100:on:192",
+    "network": {
+      "tone": "done",
+      "sea": "#5fb9a9",
+      "hop": "#5fb9a9",
+      "aidcMarker": "#81f1da",
+      "packetsVisible": false,
+      "packetsMoving": false,
+      "faultBadge": false,
+      "background": {
+        "links": 14,
+        "color": "#46708a",
+        "opacity": 0.55
+      }
+    },
+    "interior": null,
+    "rack": {
+      "ceilingShown": false,
+      "targetOutline": false,
+      "targetOutlineOnTop": true,
+      "pin": false,
+      "selectOutline": false,
+      "pickVolumes": 29
+    },
     "opening": {
       "active": false,
       "state": null,
       "result": {
         "how": "skipped",
-        "seconds": 1.33
+        "seconds": 1.44
       },
       "seconds": 12.200000000000001
+    },
+    "guide": {
+      "action": {
+        "kind": "done",
+        "label": "결과 다시 보기",
+        "target": "noc",
+        "hint": "첫 업무를 끝냈습니다. 시설을 자유롭게 둘러보세요."
+      },
+      "goal": {
+        "index": 5,
+        "total": 5,
+        "title": "첫 업무 완료",
+        "done": true
+      }
+    },
+    "tutorial": {
+      "active": false,
+      "misclicks": 0,
+      "hints": [],
+      "startedAt": 1859.199999999255,
+      "ended": "skipped"
     }
   },
-  "finishedAt": "2026-11-20T12:33:08.388Z"
+  "finishedAt": "2026-11-23T09:59:42.188Z"
 }

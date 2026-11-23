@@ -78,7 +78,7 @@
   "performance": [
     {
       "label": "opening (campus/district segment)",
-      "fps": 206.9,
+      "fps": 205.7,
       "p95": 4.3,
       "calls": 253,
       "triangles": 33370
@@ -88,35 +88,35 @@
       "fpsAvg": 235.5,
       "fpsMin": 235.3,
       "p95Max": 4.3,
-      "gpuMsAvg": 1.65,
+      "gpuMsAvg": 1.74,
       "calls": 255,
       "triangles": 102154,
       "samples": [
         {
           "fps": 236.1,
           "p95": 4.3,
-          "gpuMs": 1.33,
+          "gpuMs": 1.36,
+          "calls": 255,
+          "triangles": 102154
+        },
+        {
+          "fps": 235.3,
+          "p95": 4.3,
+          "gpuMs": 1.78,
           "calls": 253,
           "triangles": 102058
         },
         {
           "fps": 235.3,
           "p95": 4.3,
-          "gpuMs": 1.79,
+          "gpuMs": 1.89,
           "calls": 253,
           "triangles": 102058
         },
         {
           "fps": 235.3,
           "p95": 4.3,
-          "gpuMs": 1.69,
-          "calls": 253,
-          "triangles": 102058
-        },
-        {
-          "fps": 235.3,
-          "p95": 4.3,
-          "gpuMs": 1.8,
+          "gpuMs": 1.92,
           "calls": 255,
           "triangles": 102154
         }
@@ -124,38 +124,38 @@
     },
     {
       "label": "noc overview",
-      "fpsAvg": 237.8,
-      "fpsMin": 237.6,
+      "fpsAvg": 236.7,
+      "fpsMin": 236.1,
       "p95Max": 4.3,
-      "gpuMsAvg": 2.06,
+      "gpuMsAvg": 1.59,
       "calls": 629,
       "triangles": 128450,
       "samples": [
         {
-          "fps": 238.4,
+          "fps": 236.8,
           "p95": 4.3,
-          "gpuMs": 2.1,
+          "gpuMs": 1.72,
           "calls": 633,
           "triangles": 128566
         },
         {
-          "fps": 237.6,
+          "fps": 236.9,
           "p95": 4.3,
-          "gpuMs": 2.16,
+          "gpuMs": 1.71,
           "calls": 631,
           "triangles": 128546
         },
         {
-          "fps": 237.6,
+          "fps": 236.8,
           "p95": 4.3,
-          "gpuMs": 2.08,
+          "gpuMs": 1.56,
           "calls": 633,
           "triangles": 128566
         },
         {
-          "fps": 237.6,
-          "p95": 4.3,
-          "gpuMs": 1.92,
+          "fps": 236.1,
+          "p95": 4.2,
+          "gpuMs": 1.36,
           "calls": 629,
           "triangles": 128450
         }
@@ -166,35 +166,35 @@
       "fpsAvg": 240,
       "fpsMin": 240,
       "p95Max": 4.3,
-      "gpuMsAvg": 1.01,
+      "gpuMsAvg": 0.95,
       "calls": 253,
       "triangles": 33370,
       "samples": [
         {
           "fps": 240,
           "p95": 4.3,
-          "gpuMs": 1.26,
+          "gpuMs": 1.04,
           "calls": 253,
           "triangles": 33370
         },
         {
           "fps": 240,
           "p95": 4.3,
-          "gpuMs": 1.18,
+          "gpuMs": 0.97,
           "calls": 253,
           "triangles": 33370
         },
         {
           "fps": 240,
           "p95": 4.3,
-          "gpuMs": 0.8,
+          "gpuMs": 0.95,
           "calls": 253,
           "triangles": 33370
         },
         {
           "fps": 240,
           "p95": 4.3,
-          "gpuMs": 0.78,
+          "gpuMs": 0.83,
           "calls": 253,
           "triangles": 33370
         }
@@ -202,39 +202,39 @@
     },
     {
       "label": "hall",
-      "fpsAvg": 237.6,
-      "fpsMin": 236.8,
+      "fpsAvg": 238.4,
+      "fpsMin": 238.4,
       "p95Max": 4.3,
-      "gpuMsAvg": 1.47,
-      "calls": 758,
+      "gpuMsAvg": 0.84,
+      "calls": 757,
       "triangles": 133770,
       "samples": [
         {
-          "fps": 237.6,
+          "fps": 238.4,
           "p95": 4.3,
-          "gpuMs": 1.27,
-          "calls": 758,
-          "triangles": 133770
-        },
-        {
-          "fps": 237.6,
-          "p95": 4.3,
-          "gpuMs": 1.34,
-          "calls": 758,
-          "triangles": 133770
-        },
-        {
-          "fps": 236.8,
-          "p95": 4.3,
-          "gpuMs": 1.61,
-          "calls": 758,
+          "gpuMs": 0.81,
+          "calls": 757,
           "triangles": 133770
         },
         {
           "fps": 238.4,
           "p95": 4.3,
-          "gpuMs": 1.67,
-          "calls": 758,
+          "gpuMs": 0.84,
+          "calls": 757,
+          "triangles": 133770
+        },
+        {
+          "fps": 238.4,
+          "p95": 4.3,
+          "gpuMs": 0.87,
+          "calls": 757,
+          "triangles": 133770
+        },
+        {
+          "fps": 238.4,
+          "p95": 4.3,
+          "gpuMs": 0.84,
+          "calls": 757,
           "triangles": 133770
         }
       ]
@@ -244,37 +244,37 @@
       "fpsAvg": 240,
       "fpsMin": 240,
       "p95Max": 4.3,
-      "gpuMsAvg": 0.79,
-      "calls": 490,
-      "triangles": 52234,
+      "gpuMsAvg": 0.59,
+      "calls": 500,
+      "triangles": 58190,
       "samples": [
         {
           "fps": 240,
           "p95": 4.2,
-          "gpuMs": 1.12,
-          "calls": 490,
-          "triangles": 52234
+          "gpuMs": 0.69,
+          "calls": 500,
+          "triangles": 58190
         },
         {
           "fps": 240,
           "p95": 4.3,
-          "gpuMs": 0.88,
-          "calls": 490,
-          "triangles": 52234
+          "gpuMs": 0.62,
+          "calls": 500,
+          "triangles": 58190
+        },
+        {
+          "fps": 240,
+          "p95": 4.2,
+          "gpuMs": 0.55,
+          "calls": 500,
+          "triangles": 58190
         },
         {
           "fps": 240,
           "p95": 4.3,
-          "gpuMs": 0.64,
-          "calls": 490,
-          "triangles": 52234
-        },
-        {
-          "fps": 240,
-          "p95": 4.3,
-          "gpuMs": 0.5,
-          "calls": 490,
-          "triangles": 52234
+          "gpuMs": 0.49,
+          "calls": 500,
+          "triangles": 58190
         }
       ]
     }
@@ -291,15 +291,15 @@
       "how": "completed",
       "seconds": 12.21
     },
-    "firstDeskAfterLoadMs": 12029,
+    "firstDeskAfterLoadMs": 11892,
     "replay": "Esc and skip button both end at my desk",
     "coolingFeedbackMs": {
-      "off": 26,
-      "on": 21,
-      "warn": 27
+      "off": 27,
+      "on": 29,
+      "warn": 29
     }
   },
-  "startedAt": "2026-11-20T12:28:39.139Z",
+  "startedAt": "2026-11-23T09:59:42.431Z",
   "browserVersion": "157.0.8103.80",
   "canvasPicks": {
     "NOC": "NOC",
@@ -309,19 +309,19 @@
     "COOLING": "COOLING",
     "NETWORK": "NETWORK"
   },
-  "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 15, 1629, 12227",
+  "nvidiaSmiWholeGpu": "NVIDIA GeForce RTX 5070, 14, 1900, 12227",
   "stability": {
     "cycles": 10,
     "before": {
-      "geometries": 495,
+      "geometries": 504,
       "textures": 78,
-      "heapMiB": 25.2
+      "heapMiB": 35.4
     },
     "after": {
-      "geometries": 495,
+      "geometries": 504,
       "textures": 78,
-      "heapMiB": 29.3
+      "heapMiB": 51.5
     }
   },
-  "finishedAt": "2026-11-20T12:31:02.257Z"
+  "finishedAt": "2026-11-23T10:02:05.746Z"
 }
