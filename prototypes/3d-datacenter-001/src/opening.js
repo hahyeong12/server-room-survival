@@ -1,16 +1,19 @@
 // Skippable opening: world traffic -> Korea/Ulsan -> industrial district -> campus -> my desk.
 // Pure camera data. Playing it never touches the request, facility or ops state.
 import { COUNTRIES } from './world-store.js';
+import { toMap } from './geo.js';
 
-const U = COUNTRIES.KR, ulsan = [U.lon * .11, .3, -U.lat * .11];
+const U = COUNTRIES.KR, ulsan = toMap(U.lon, U.lat, .3);
+// Korea-centred world view (Issue #3): Ulsan sits in the middle of the visible map area.
+export const WORLD_POSE = Object.freeze({ eye: [0, 27, 11.5], target: [0, 0, -2.6] });
 export const DESK_POSE = Object.freeze({ eye: [9.3, 2.05, 3.05], target: [9.3, 1.3, -3.4] });
 export const NOC_OVERVIEW_POSE = Object.freeze({ eye: [17.5, 8.2, 10.5], target: [9.2, 1.2, -2.2] });
 export const OPENING_STORAGE_KEY = 'srs3d.opening.seen.v1';
 
 export const OPENING = Object.freeze([
-  { location: 'world', duration: 2.6, from: { eye: [-4, 40, 26], target: [2, 0, 0] }, to: { eye: [7, 29, 15], target: [9, 0, -2] },
+  { location: 'world', duration: 2.6, from: { eye: [0, 40, 22], target: [0, 0, -1] }, to: { eye: [0, 24, 9], target: [0, 0, -3] },
     title: '세계 고객 트래픽', sub: '싱가포르·일본·미국의 요청이 가상 회선을 따라 울산으로 모입니다 · 실제 해저케이블 경로 아님' },
-  { location: 'world', duration: 2.3, from: { eye: [7, 29, 15], target: [9, 0, -2] }, to: { eye: [ulsan[0] + .5, 4.2, ulsan[2] + 2.9], target: ulsan },
+  { location: 'world', duration: 2.3, from: { eye: [0, 24, 9], target: [0, 0, -3] }, to: { eye: [ulsan[0] - .4, 4.4, ulsan[2] + 3.4], target: ulsan },
     title: '대한민국 · 울산', sub: '남구 황성동·용연 권역 · 지도 정밀도는 설명용' },
   { location: 'campus', duration: 2.7, from: { eye: [95, 58, 70], target: [15, 0, 0] }, to: { eye: [46, 28, 42], target: [4, 0, 0] },
     title: '울산미포국가산단 인근', sub: '에너지·화학 설비 사이의 미래 가상 AIDC · 실제 부지·배치·조감도가 아닌 자체 재구성' },

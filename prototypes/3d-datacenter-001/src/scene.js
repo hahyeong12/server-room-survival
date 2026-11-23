@@ -9,7 +9,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { readings, totals } from './model.js';
-import { DESK_POSE, NOC_OVERVIEW_POSE } from './opening.js';
+import { DESK_POSE, NOC_OVERVIEW_POSE, WORLD_POSE } from './opening.js';
 import { createWorldGeometry } from './world-geometry.js';
 
 const C = { normal: 0x63e4c1, fault: 0xff455c, repairing: 0xffbd59, awaiting: 0x76b7ff, verified: 0x83f5d2 };
@@ -38,7 +38,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.22;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.info.autoReset = false;
+  renderer.info.autoReset = false; renderer.localClippingEnabled = true;
   renderer.setClearColor(0x0b111b, 0);
   container.prepend(renderer.domElement);
   renderer.domElement.tabIndex = 0; renderer.domElement.setAttribute('aria-label', '3D 시설 탐색');
@@ -468,7 +468,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   function animate(dt) {
     if (contextLost) return;
     visualElapsed = options.worldMode ? visualElapsed + dt : facility.elapsed;
-    worldGeometry?.update(visualElapsed, options.getState());
+    worldGeometry?.update(visualElapsed, options.getState(), { reducedMotion: !!options.reducedMotion?.() });
     if(requestMarker) requestMarker.visible = location === 'hall' && !['new','reviewed'].includes(options.getState().request.phase);
     if (cinematic) {
       const k = cinematic.keys[cinematic.index]; cinematic.t = (performance.now() - cinematic.segmentStart) / 1000; cinematic.frames++;
@@ -564,7 +564,7 @@ export function createScene(container, facility, onSelect, options = {}) {
     if (!worldGeometry || !['world','noc','campus','hall'].includes(next) || cinematic) return false;
     if (view === 'desk' || view === 'overview') nocView = view;
     showLocation(next);
-    const positions = { world: {eye:[0,35,19], target:[0,0,0]}, campus:{eye:[29,28,31],target:[0,0,0]}, noc: nocView === 'desk' ? DESK_POSE : NOC_OVERVIEW_POSE, hall:viewPositions.overview };
+    const positions = { world: WORLD_POSE, campus:{eye:[29,28,31],target:[0,0,0]}, noc: nocView === 'desk' ? DESK_POSE : NOC_OVERVIEW_POSE, hall:viewPositions.overview };
     const p = positions[next];
     if(immediate) {camera.position.set(...p.eye);controls.target.set(...p.target);transition=null;controls.update();}
     else moveTo(p.eye,p.target);
@@ -587,6 +587,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   return { renderer, animate, view, focus, snapshot, beginGpuTimer, endGpuTimer, pollGpuTimer, projectAsset, setLocation, playCinematic, stopCinematic,
     cinematicState: () => cinematic && { index: cinematic.index, t: cinematic.t, location },
     coolingVisual: () => worldGeometry?.coolingVisual() ?? null,
+    networkVisual: () => worldGeometry?.networkVisual() ?? null,
     deskScreenKey: () => deskKey,
     focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),

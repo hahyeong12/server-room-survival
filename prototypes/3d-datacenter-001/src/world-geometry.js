@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import landSource from './assets/land.geojson?raw';
+import { createWorldMap } from './world-map.js';
 import { COUNTRIES, FACILITIES } from './world-store.js';
 
 const V=(x,y,z)=>new THREE.Vector3(x,y,z);
@@ -20,43 +20,8 @@ export function createWorldGeometry() {
   }
   function pipe(root,points,mat,radius=.06){const curve=new THREE.CurvePath();for(let i=1;i<points.length;i++)curve.add(new THREE.LineCurve3(V(...points[i-1]),V(...points[i])));root.add(new THREE.Mesh(new THREE.TubeGeometry(curve,40,radius,6,false),mat));return curve;}
 
-  // Natural Earth public-domain land; geography only. All links below are fictional.
-  box(world,new THREE.MeshStandardMaterial({color:0x101e30,roughness:.8,metalness:.35}),0,-.3,0,43,.5,23,false);
-  const landMaterial=new THREE.MeshStandardMaterial({color:0x29495a,metalness:.34,roughness:.64});
-  const land=JSON.parse(landSource);
-  for(const feature of land.features){
-    const polygons=feature.geometry.type==='MultiPolygon'?feature.geometry.coordinates:[feature.geometry.coordinates];
-    for(const polygon of polygons){
-      const shape=new THREE.Shape(polygon[0].map(([lon,lat])=>new THREE.Vector2(lon*.11,lat*.11)));
-      for(const hole of polygon.slice(1))shape.holes.push(new THREE.Path(hole.map(([lon,lat])=>new THREE.Vector2(lon*.11,lat*.11))));
-      const mesh=new THREE.Mesh(new THREE.ExtrudeGeometry(shape,{depth:.16,bevelEnabled:false}),landMaterial);mesh.rotation.x=-Math.PI/2;mesh.position.y=.04;world.add(mesh);
-      const contour=polygon[0].map(([lon,lat])=>V(lon*.11,.21,-lat*.11));line(world,contour,0x527f8a,.7);
-    }
-  }
-  for(let x=-19.8;x<=20;x+=3.3)line(world,[V(x,.015,-10),V(x,.015,10)],0x294251,.5);
-  for(let z=-9.9;z<=10;z+=3.3)line(world,[V(-20,.015,z),V(20,.015,z)],0x294251,.5);
-  line(world,[V(-21.5,.05,-11.5),V(21.5,.05,-11.5),V(21.5,.05,11.5),V(-21.5,.05,11.5),V(-21.5,.05,-11.5)],0x456d81);
-  label(world,'GLOBAL / OPERATIONS','VIRTUAL NETWORK · NATURAL EARTH LAND',-14,.8,10,7);
-  label(world,'ASIA PACIFIC','ULSAN / SINGAPORE / JAPAN',12,.8,9.4,6);
-  const sphereGeo=new THREE.SphereGeometry(.17,16,12),ringGeo=new THREE.TorusGeometry(.44,.025,6,40);
-  for(const [id,c] of Object.entries(COUNTRIES)){
-    const point=V(c.lon*.11,.42,-c.lat*.11),mat=new THREE.MeshBasicMaterial({color:id==='KR'?0x81f1da:id==='SG'?0xf3c37b:0x7ba7bd,toneMapped:false});
-    const node=new THREE.Mesh(sphereGeo,mat);node.position.copy(point);world.add(node);
-    const ring=new THREE.Mesh(ringGeo,mat);ring.rotation.x=Math.PI/2;ring.position.copy(point);world.add(ring);
-    const proxy=new THREE.Mesh(new THREE.SphereGeometry(.72,10,8),new THREE.MeshBasicMaterial({visible:false}));proxy.position.copy(point);proxy.userData.pickId=`country:${id}`;world.add(proxy);pickables.world.push(proxy);
-    const offset=id==='KR'?[1.25,1.6,-1.1]:id==='JP'?[2.3,1.1,1.15]:id==='SG'?[1.7,1.5,1.25]:[1.5,1.5,-1.5];
-    label(world,c.short,id==='KR'?'NAM-GU · HWANGSEONG / YONGYEON':id==='SG'?'SG-2026-001 / REQUEST':'NO ACTIVE REQUEST',point.x+offset[0],offset[1],point.z+offset[2],id==='SG'?5:4,id==='SG'?'#f4ca8d':'#b6dbe5');
-    markers[id]={node,ring,point};
-  }
-  for(const id of ['SG','JP','US']){
-    const from=markers[id].point,to=markers.KR.point,mid=from.clone().lerp(to,.5);mid.y=id==='US'?5:2.3;
-    const curve=new THREE.QuadraticBezierCurve3(from,mid,to),material=new THREE.MeshBasicMaterial({color:id==='SG'?0x70e8d1:0x3d718d,transparent:true,opacity:id==='SG'?.85:.35,toneMapped:false});
-    const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,80,id==='SG'?.035:.018,5,false),material);world.add(mesh);
-    const dot=new THREE.Mesh(new THREE.SphereGeometry(.085,8,6),new THREE.MeshBasicMaterial({color:0xe0fff5,toneMapped:false}));world.add(dot);routes.push({id,curve,material,dot});
-  }
-  // Virtual customer traffic packets on every fictional link (opening + map). Not real cable routes.
-  const traffic=[],packetGeo=new THREE.SphereGeometry(.06,6,5),packetMat=new THREE.MeshBasicMaterial({color:0x9ff5e4,toneMapped:false});
-  for(const route of routes)for(let k=0;k<5;k++){const dot=new THREE.Mesh(packetGeo,packetMat);world.add(dot);traffic.push({route,dot,offset:k/5+.07});}
+  // Korea-centred world map with a dim virtual network and one lit request path (world-map.js).
+  const worldMap=createWorldMap();world.add(worldMap.group);pickables.world.push(...worldMap.pickables);
 
   // An original campus model: long compute building, separate power/UPS yard,
   // cooling plant, operations hub, network building and generous maintenance roads.
@@ -177,13 +142,10 @@ export function createWorldGeometry() {
     const instance=new THREE.InstancedMesh(geo,b.mat,b.items.length),matrix=new THREE.Matrix4(),q=new THREE.Quaternion();
     b.items.forEach(([x,y,z,w,h,d],i)=>{matrix.compose(V(x,y,z),q,V(w,h,d));instance.setMatrixAt(i,matrix);});instance.castShadow=true;instance.receiveShadow=true;b.root.add(instance);
   }
-  function update(time,state){
+  function update(time,state,opts={}){
+    worldMap.update(time,state,opts);
     const phase=state.request.phase,bad=phase==='fault',repair=phase==='repairing',awaiting=phase==='awaiting',incoming=['new','reviewed'].includes(phase);
     const color=bad?COLORS.fault:repair?COLORS.repairing:awaiting?COLORS.awaiting:COLORS.normal;
-    // The SG marker keeps the legend's gold "incoming request" colour until the request is accepted.
-    const sgColor=incoming?COLORS.request:color,pulse=incoming||bad?.3:.12;
-    for(const r of routes){r.material.color.setHex(r.id==='SG'?sgColor:0x3d718d);r.dot.visible=r.id==='SG'&&!bad&&!repair;r.dot.position.copy(r.curve.getPoint((time*.1)%1));}
-    for(const [id,m]of Object.entries(markers)){m.ring.scale.setScalar(1+(id==='SG'?pulse*(.5+.5*Math.sin(time*3)):0));if(id==='SG')m.node.material.color.setHex(sgColor);}
     for(const {id,rim}of outlines){rim.visible=state.navigation.facility===id;rim.material.color.setHex(id==='HALL-01'?color:COLORS.normal);}
     campusLinkMat.color.setHex(color);
     buildings['HALL-01'].body.material.color.copy(buildings['HALL-01'].baseColor);
@@ -195,12 +157,11 @@ export function createWorldGeometry() {
     for(const {dot,offset}of flowDots){dot.visible=mode!=='off';dot.position.copy(supply[0].getPointAt((flowPhase+offset)%1));}
     if(mode==='warn')coolingLed.color.setHex(Math.sin(time*6)>0?0xffad5c:0x6a3a1a);
     for(const b of beacons)b.visible=Math.sin(time*3)>-.2;
-    for(const t of traffic){t.dot.visible=state.request.phase!=='fault'&&state.request.phase!=='repairing'||t.route.id!=='SG';t.dot.position.copy(t.route.curve.getPoint((time*.09+t.offset)%1));}
     coolingVisual={mode,fanSpeed,flowVisible:mode!=='off',icon:mode==='warn'?'warn':mode==='on'?'on':'off',led:'#'+coolingLed.color.getHexString()};
   }
   let coolingVisual=null;
   function project(kind,id,camera,rect){
-    const p=kind==='world'?markers[id]?.point:buildings[id]?.point;if(!p)return null;const v=p.clone().project(camera);return {x:rect.left+(v.x+1)/2*rect.width,y:rect.top+(1-v.y)/2*rect.height,visible:v.z>-1&&v.z<1};
+    const p=kind==='world'?worldMap.point(id):buildings[id]?.point;if(!p)return null;const v=p.clone().project(camera);return {x:rect.left+(v.x+1)/2*rect.width,y:rect.top+(1-v.y)/2*rect.height,visible:v.z>-1&&v.z<1};
   }
-  return {world,campus,pickables,update,project,coolingVisual:()=>coolingVisual&&{...coolingVisual},markerColor:id=>markers[id]?.node.material.color.getHexString(),focusPoint:(kind,id)=>(kind==='world'?markers[id]?.point:buildings[id]?.point)?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?COUNTRIES[key]?.name:FACILITIES[key]?.name;}};
+  return {world,campus,pickables,update,project,coolingVisual:()=>coolingVisual&&{...coolingVisual},markerColor:id=>worldMap.markers[id]?.mat.color.getHexString(),networkVisual:()=>worldMap.visual(),focusPoint:(kind,id)=>kind==='world'?worldMap.point(id):buildings[id]?.point?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?COUNTRIES[key]?.name:FACILITIES[key]?.name;}};
 }
