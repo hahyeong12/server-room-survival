@@ -363,9 +363,10 @@ export function createScene(container, facility, onSelect, options = {}) {
     pc.beginPath(); pc.moveTo(226, 118); pc.lineTo(286, 118); pc.lineTo(256, 158); pc.closePath(); pc.fill();
     const pinTex = new THREE.CanvasTexture(pinCanvas); pinTex.colorSpace = THREE.SRGBColorSpace;
     targetPin = new THREE.Sprite(new THREE.SpriteMaterial({ map: pinTex, depthTest: false, toneMapped: false })); targetPin.scale.set(2.7, .84, 1); targetPin.renderOrder = 21; originalRoom.add(targetPin);
-    const proxyMat = new THREE.MeshBasicMaterial({ visible: false }), proxies = [];
-    for (const a of facility.assets) { const pr = new THREE.Mesh(boxGeo, proxyMat); pr.scale.set(a.kind === 'rack' ? 1.55 : 1.8, 3.4, 1.9); pr.position.set(a.x, 1.7, a.z); pr.userData.assetId = a.id; originalRoom.add(pr); proxies.push(pr); }
-    selectable.length = 0; selectable.push(...proxies);
+    // Racks keep exact body picking (a wide volume on every rack stole clicks from the row behind);
+    // only the request target gets a slightly larger hit volume.
+    const tgtAsset = facility.assets.find(x => x.id === options.getState().request.rackId);
+    if (tgtAsset) { const pr = new THREE.Mesh(boxGeo, new THREE.MeshBasicMaterial({ visible: false })); pr.scale.set(1.5, 3.25, 1.6); pr.position.set(tgtAsset.x, 1.66, tgtAsset.z); pr.userData.assetId = tgtAsset.id; originalRoom.add(pr); selectable.push(pr); }
     // Colleagues at four other consoles: abstract silhouettes, so the room reads as staffed.
     const seats = [[6.2, -3.8], [9.3, -3.8], [12.4, -3.8], [6.2, .2]];
     const personMat = new THREE.MeshStandardMaterial({ color: 0x1e2c3b, roughness: .85, metalness: .1 });
@@ -632,6 +633,8 @@ export function createScene(container, facility, onSelect, options = {}) {
     focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
     worldMarker: id => worldGeometry?.markerColor(id) ?? null,
+    projectPoint: ([x, y, z]) => { const v = V(x, y, z).project(camera), r = renderer.domElement.getBoundingClientRect(); return { x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height, visible: v.z > -1 && v.z < 1 }; },
+    cameraState: () => ({ eye: camera.position.toArray().map(n => +n.toFixed(3)), target: controls.target.toArray().map(n => +n.toFixed(3)) }),
     setLayer(name, visible) { ({ network: netLayer, cooling: coolLayer, power: powerLayer })[name].visible = visible; },
     visuals: () => Object.fromEntries(facility.assets.map(a => [a.id, { color: visuals.get(a.id).strip.material.color.getHexString(), selected: visuals.get(a.id).ring.visible, networkFlow: readings(a).network > 0 }])) };
 }
