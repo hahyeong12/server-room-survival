@@ -19,14 +19,15 @@ try{
   page=await browser.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:1});page.on('pageerror',e=>report.errors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});
   await page.goto(url,{waitUntil:'networkidle'});await page.waitForFunction(()=>!!window.worldQA);await page.waitForTimeout(1000);report.url=url;
   // Phase 3.1: a fresh profile plays the opening once; this regression suite skips it (ux-qa.mjs tests it).
-  if(await page.locator('#opening-skip').isVisible())await page.locator('#opening-skip').click();await page.waitForTimeout(2000);
+  if(await page.locator('#opening-skip').isVisible())await page.locator('#opening-skip').click();await page.waitForTimeout(800);
+  if(await page.locator('#coach-skip').isVisible())await page.locator('#coach-skip').click();await page.waitForTimeout(1200);
   report.initial=await snap();
   await check('hardware WebGL on RTX 5070',async()=>assert.match(report.initial.renderer.renderer,/RTX 5070/));
-  await check('readable title, request card rendered from state, gold incoming SG marker',async()=>{
+  await check('readable title, request summary rendered from state, gold incoming SG marker',async()=>{
     assert.equal(await page.title(),'서버실 생존기 · 3D World');
     const r=report.initial.state.request;
-    for(const key of ['gpu','powerKW','networkGbps']){const term=page.locator(`[data-term="${key}"]`);assert.equal(await term.innerText(),String(r.terms[key]));assert.equal(await term.evaluate(e=>getComputedStyle(e).fontSize),'25px');}
-    assert.equal(await page.locator('#request-location').innerText(),`${r.facilityId} / ${r.buildingId} / ${r.rackId}`);
+    assert.equal(await page.locator('#req-terms').innerText(),`${r.customerName} · GPU ${r.terms.gpu} · ${r.terms.powerKW} kW · ${r.terms.networkGbps} Gbps · ${r.terms.mode}`);
+    await page.locator('#detail summary').click();assert.match(await page.locator('#detail-body').innerText(),new RegExp(`${r.facilityId} / ${r.buildingId} / ${r.rackId}`));await page.locator('#detail summary').click();
     assert.equal(report.initial.state.request.phase,'new');assert.equal((await snap()).worldMarkers.SG,'f3c37b');
   });
   await check('four scenes and unchanged domain after navigation and idle',async()=>{
@@ -77,16 +78,16 @@ try{
         if(['fault','repairing','awaiting'].includes(phase)){
           const before=(await snap()).domain;
           await page.waitForTimeout(1200);assert.deepEqual((await snap()).domain,before);
-          for(const place of ['world','noc','campus','hall']){await go(place);assert.deepEqual((await snap()).domain,before);assert.equal(await page.locator('#phase-chip').innerText(),({fault:'업링크 장애',repairing:'복구 중',awaiting:'사후 확인 대기'})[phase]);if(phase==='fault')await shot(`sync-fault-${place}.png`);}
-          const s=await snap();if(phase==='fault'){assert.equal(s.visuals['D-06'].networkFlow,false);assert.equal(s.state.facility.assets.find(a=>a.id==='D-06').state,'fault');assert.equal(s.worldMarkers.SG,'ff657d');}
+          for(const place of ['world','noc','campus','hall']){await go(place);assert.deepEqual((await snap()).domain,before);assert.ok((await page.locator('#phase-chip').innerText()).startsWith(({fault:'업링크 장애',repairing:'복구 중',awaiting:'사후 확인 대기'})[phase]));if(phase==='fault')await shot(`sync-fault-${place}.png`);}
+          const s=await snap();if(phase==='fault'){assert.equal(s.visuals['D-06'].networkFlow,false);assert.equal(s.state.facility.assets.find(a=>a.id==='D-06').state,'fault');assert.equal(s.worldMarkers.KR,'ff657d','fault shown at the Ulsan AIDC end of the path');assert.equal(s.network.aidc??s.network.hop,'#ff657d');}
         }
       }
       assert.equal((await snap()).state.request.steps,9);assert.equal(await page.locator('#demo-result').count(),1);
-      assert.equal((await snap()).worldMarkers.SG,'68dfce');
-      assert.equal(await page.locator('#demo-result li').count(),9);assert.match(await page.locator('#demo-result').innerText(),/GPU 8 · 20 kW · 40 Gbps/);
-      assert.match(await page.locator('.inbox-row').innerText(),/결과 확인 완료/);await page.waitForTimeout(300);
+      assert.equal((await snap()).worldMarkers.SG,'7fd9c9');
+      assert.equal(await page.locator('#demo-result li').count(),13);assert.match(await page.locator('#demo-result').innerText(),/GPU 8 · 20 kW · 40 Gbps/);
+      assert.equal(await page.locator('#goal-step').innerText(),'첫 업무 완료');await page.waitForTimeout(300);
       const box=await page.locator('#demo-result').boundingBox();assert.ok(box.y>=0&&box.y+box.height<=1080,`result card in view: ${JSON.stringify(box)}`);await shot('demo-result-noc.png');
-      await page.locator('#result-world').click();await page.waitForTimeout(1500);assert.equal((await snap()).state.navigation.route,'world');assert.equal(await page.locator('#demo-result').isVisible(),true);assert.equal(await page.locator('#result-world').count(),0);await shot('demo-result-world.png');
+      await page.locator('#result-close').click();await go('world');assert.equal((await snap()).state.navigation.route,'world');assert.equal((await snap()).network.tone,'done');assert.equal(await page.locator('#route-chain').isVisible(),true);await shot('demo-result-world.png');
     });
   }
   await check('no runtime or console errors',async()=>{assert.deepEqual(report.errors,[]);assert.deepEqual(report.consoleErrors,[]);});

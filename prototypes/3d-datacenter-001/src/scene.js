@@ -309,7 +309,10 @@ export function createScene(container, facility, onSelect, options = {}) {
   // Hall: clip the NOC side away and, by default, cut the ceiling services (lights, trays, ducts) above the
   // racks so they never hide the rack highlight (Issue #3). 'Show ceiling' restores them.
   const HALL_WALL = new THREE.Plane(V(-1, 0, 0), 4.2), CEILING = new THREE.Plane(V(0, -1, 0), 3.93);
-  const CLIP = { hall: [HALL_WALL, CEILING], noc: [new THREE.Plane(V(1, 0, 0), -4.12)] };
+  // Every space uses exactly two global planes (unused slots hold planes that clip nothing). A changing plane
+  // count makes three.js recompile every shader program, which froze the hall entry for ~1.5 s.
+  const NO_CLIP = new THREE.Plane(V(0, 1, 0), 1e6), NO_CLIP_2 = new THREE.Plane(V(0, 1, 0), 1e6);
+  const CLIP = { hall: [HALL_WALL, CEILING], noc: [new THREE.Plane(V(1, 0, 0), -4.12), NO_CLIP], none: [NO_CLIP, NO_CLIP_2] };
   let interiors = null, targetHighlight = null, selectHighlight = null, targetPin = null;
   const campusFog = new THREE.Fog(0x0b111b, 85, 230);
   if (options.worldMode) {
@@ -369,6 +372,11 @@ export function createScene(container, facility, onSelect, options = {}) {
     const bodies = new THREE.InstancedMesh(new THREE.CapsuleGeometry(.22, .45, 4, 10), personMat, seats.length), heads = new THREE.InstancedMesh(new THREE.SphereGeometry(.14, 14, 10), personMat, seats.length);
     seats.forEach(([x, z], i) => { bodies.setMatrixAt(i, new THREE.Matrix4().makeTranslation(x, 1.08, z + 1.08)); heads.setMatrixAt(i, new THREE.Matrix4().makeTranslation(x, 1.6, z + 1.0)); });
     bodies.castShadow = heads.castShadow = true; originalRoom.add(bodies, heads);
+  }
+  if (options.worldMode) {
+    const groups = [originalRoom, worldGeometry.world, worldGeometry.campus, interiors.root, ...interiors.root.children], was = groups.map(g => g.visible);
+    groups.forEach(g => { g.visible = true; }); renderer.clippingPlanes = CLIP.none; renderer.compile(scene, camera);
+    groups.forEach((g, i) => { g.visible = was[i]; });
   }
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -555,7 +563,7 @@ export function createScene(container, facility, onSelect, options = {}) {
       camera: camera.position.toArray(), target: controls.target.toArray(), contextLost, location,
       quality: 'Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2',
       layers: { network: netLayer.visible, cooling: coolLayer.visible, power: powerLayer.visible },
-      nocView, clip: renderer.clippingPlanes.map(p => ({ normal: p.normal.toArray(), constant: p.constant })), fog: !!scene.fog, cinematic: !!cinematic };
+      nocView, clip: renderer.clippingPlanes.filter(p => p.constant < 1e5).map(p => ({ normal: p.normal.toArray(), constant: p.constant })), clipSlots: renderer.clippingPlanes.length, fog: !!scene.fog, cinematic: !!cinematic };
   }
   // GPU timing is asynchronous, with the disjoint extension; no forced GPU synchronization.
   const gl = renderer.getContext(), timerExt = gl.getExtension('EXT_disjoint_timer_query_webgl2');
@@ -582,7 +590,7 @@ export function createScene(container, facility, onSelect, options = {}) {
     location = next; keys.clear(); hoverLabel.hidden = true; pointerStart = null;
     originalRoom.visible = next === 'noc' || next === 'hall';
     worldGeometry.world.visible = next === 'world'; worldGeometry.campus.visible = next === 'campus';
-    renderer.clippingPlanes = CLIP[next] || [];
+    renderer.clippingPlanes = CLIP[next] || CLIP.none;
     interiors.root.visible = next === 'room'; if (next === 'room') interiors.show(currentRoom);
     separation.hall.visible = next === 'hall'; separation.noc.visible = next === 'noc';
     scene.fog = next === 'campus' ? campusFog : null;
@@ -619,7 +627,7 @@ export function createScene(container, facility, onSelect, options = {}) {
     networkVisual: () => worldGeometry?.networkVisual() ?? null,
     interiorVisual: () => (location === 'room' ? interiors?.visual() : null) ?? null,
     rackVisual: () => ({ ceilingShown, targetOutline: !!targetHighlight?.visible, targetOutlineOnTop: targetHighlight ? targetHighlight.material.depthTest === false : false, pin: !!targetPin?.visible, selectOutline: !!selectHighlight?.visible, pickVolumes: selectable.length }),
-    setCeiling(show) { ceilingShown = !!show; CLIP.hall = ceilingShown ? [HALL_WALL] : [HALL_WALL, CEILING]; if (location === 'hall') renderer.clippingPlanes = CLIP.hall; return ceilingShown; },
+    setCeiling(show) { ceilingShown = !!show; CLIP.hall = ceilingShown ? [HALL_WALL, NO_CLIP] : [HALL_WALL, CEILING]; if (location === 'hall') renderer.clippingPlanes = CLIP.hall; return ceilingShown; },
     deskScreenKey: () => deskKey,
     focusWorld(id) { const p = worldGeometry?.focusPoint(location,id); if(!p)return false; const offset=location==='world'?[0,16,10]:[12,12,14];moveTo([p.x+offset[0],p.y+offset[1],p.z+offset[2]],[p.x,p.y,p.z]);return true; },
     projectWorld: id => worldGeometry?.project(location, id, camera, renderer.domElement.getBoundingClientRect()),
