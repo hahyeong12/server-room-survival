@@ -158,3 +158,34 @@
 
 - 사람의 첫 플레이 평가(2~3분 안에 첫 업무 완료 여부, 발견 시간, 오클릭), 실제 Windows 배율·물리 마우스.
 - Push·main 병합 보류. Issue #3 댓글은 `gh` CLI 부재로 미게시.
+
+## Phase 4 — Issue #5 실제 행동 튜토리얼 · 본편 첫 업무 · 중립 오프닝 (2026-11-24 KST, Claude Code / Claude Opus 5.5)
+
+- 공식 지시: https://github.com/hahyeong12/server-room-survival/issues/5 (상위 #4, 공개 API로 본문 확인). 시작 시 `experiment/3d-ux-phase3-2` = origin = `1547c2f`, 작업 트리 깨끗. 새 브랜치 `experiment/3d-playable-phase4`.
+- 기준선: 보호 해시 753개(`qa/phase4/protected-before.json`), Python 비GUI 781 통과, JS 29 통과.
+- 이번 세션에서 Codex 구현분은 없었고 구현·QA를 Claude Code가 직접 했습니다. 독립 리뷰는 별도 실행한 `/code-review high`로 대신했고 발견 10건을 모두 수정했습니다.
+
+### 커밋
+
+| SHA | 내용 |
+| --- | --- |
+| `ccf8126` | headless 엔진 어댑터(`engine/`)와 loopback JSON API, 여정(journey), Vite `/api` 프록시, `npm run play`, 보호 기준선, 아키텍처 문서 |
+| `305489e` | 중립 오프닝, 고객 거점 중립 마커, 실제 도착 요청 경로만 점등 + 회귀 테스트 |
+| `77686a8` | 3D에서 엔진 플레이: 내 모니터 4탭, 서버 랙 카드, 시계·시간 버튼, 모드 메뉴, 선배 브리핑, 큰 버튼 시연 폐기 |
+| `be64099` | 튜토리얼 코치(실제 컨트롤 강조, 대신 실행 없음) |
+| `2d3c4af` | 튜토리얼 완료 → 새 스토리, 업무·장 클리어·실패·건너뛰기 화면 |
+| `0f4b8a5` | 격리 스택 브라우저 QA, 시연 전용 QA 폐기 |
+| `9e65a9a` | 독립 리뷰 발견 수정 + 회귀 테스트 |
+| (이 커밋) | QA 결과·보고서·작업 기록·README |
+
+### 설계 판단 (근거는 PHASE4_ARCHITECTURE.md)
+
+- 규칙 엔진을 JS로 복제하지 않고 기존 `GameSession`을 headless로 쓰는 Python 표준 라이브러리 HTTP 어댑터를 택했습니다. Python 파일은 무수정(해시 동일)이고 어댑터는 `prototypes/` 아래에 있습니다.
+- 튜토리얼은 기존 `mode='tutorial'`(싱가포르 1건)을 쓰고, 장애·진단·복구 교육을 위해 첫 시간 진행 때 기존 교육용 `inject_server_fault`를 한 번 호출합니다(화면에 '교육용 훈련 장애'). 싱가포르 GPU 7은 정상 서버 GPU 6으로 옮길 수 없다는 엔진 사실이 판단 근거가 됩니다.
+- 3D 전용 사실(이동·클릭·조회)은 `<slot>.3d.json`에만 저장하고, 단계는 자기 차례에 실제 사실이 참일 때만 완료됩니다.
+
+### 검증 · 미실행 · 다음 단계
+
+- 결과는 [QA_REPORT_PHASE4.md](QA_REPORT_PHASE4.md): 엔진 22/22, JS 29/29, 브라우저 13/13, 실험실 15/15, Python 비GUI 781/781, 빌드 성공, 보호 해시 753 동일.
+- 미실행: Python Tk GUI 테스트(요청 없이 실행하지 않음), 실제 Windows 배율·물리 마우스, 사람 플레이 평가(최종 통합본에서).
+- GitHub Issue 댓글: `gh` CLI가 없어 미게시. main 병합·PR 없음.

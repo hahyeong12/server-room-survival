@@ -1,27 +1,33 @@
-# 3D 데이터센터 시제품 001
+# 3D 데이터센터 — 서버실 생존기 3D (Phase 4)
 
-서버실 생존기의 **독립 공간·그래픽 시제품**입니다. 기존 Python/Tkinter 게임, SQLite, 스토리 진행, 자원 원장과 연결하지 않습니다. 운영 값은 메모리 안의 가상 데이터이며 새로고침하면 초기화됩니다.
+서버실 생존기의 3D 화면입니다. **Phase 4(Issue #5)부터 기존 Python 게임 엔진(`session.GameSession`)과 연결**되어, 가상 시간·GPU/전력 원장·서버 배정·고객 조건/동의·기한·점수·서버 장애/복구를 모두 Python 엔진이 계산합니다. 3D 화면은 규칙을 복제하지 않고 엔진 결과를 보여 주며, 플레이어의 실제 조작을 엔진 행동으로 보냅니다. 구조는 [Phase 4 아키텍처](../../docs/3d-world-expansion/PHASE4_ARCHITECTURE.md)를 보세요.
 
-![실제 Chrome 실행 화면](qa/12-final-overview.png)
+![실제 Chrome 실행 화면](../../docs/3d-world-expansion/qa/phase4/tutorial-respond.png)
 
-## 실행
+## 실행 (엔진 + 3D)
 
-Node.js와 npm이 설치된 Windows PowerShell에서:
+Node.js·npm과 Python 3.10 이상(표준 라이브러리만 사용)이 필요합니다. Windows PowerShell에서:
 
 ```powershell
 Set-Location C:\Users\hahye\Desktop\server-room-survival\prototypes\3d-datacenter-001
 npm.cmd ci
-npm.cmd run dev
+$env:SRS_PYTHON = 'C:\Users\hahye\anaconda3\python.exe'   # PATH의 python을 쓰면 생략
+npm.cmd run play
 ```
 
-브라우저에서 **http://127.0.0.1:5173/** 를 여세요.
+`npm run play`가 Python 엔진(127.0.0.1:8765)과 Vite(127.0.0.1:5173)를 함께 띄웁니다. 브라우저에서 **http://127.0.0.1:5173/** 를 여세요. 종료는 같은 터미널에서 `Ctrl+C`입니다(둘 다 종료). 5173 포트를 이미 다른 Vite가 쓰고 있으면 그 터미널을 먼저 종료하세요.
 
-- `http://127.0.0.1:5173/` — **3D 세계 시연(Issue #1 Phase 0~2)**: 세계 운영 지도 → 울산 관제실 → 데이터센터 시설 지도 → 서버실을 오가며 싱가포르 가상 요청 `SG-2026-001` 한 건을 끝까지 처리합니다. 모든 화면에 `시연 모드 · 가상 요청 데이터`가 표시되며, 진행은 오른쪽 패널의 버튼 클릭으로만 일어납니다(이동·대기·카메라 조작은 진행시키지 않음). 상세 설계와 QA는 [docs/3d-world-expansion](../../docs/3d-world-expansion/) 참고.
-- Phase 3.1(Issue #2): 처음 열면 12초 오프닝(세계 회선 → 울산 남구 황성동·용연 → 산업단지·캠퍼스 → 관제동 내 자리)이 한 번 재생됩니다(Esc/건너뛰기, 상단 [오프닝 다시 보기]). 이후 **관제동 내 자리의 내 모니터**에서 업무를 시작하고, 연결 통로로 이어진 **서버동 01**에서 랙 작업을 합니다. 캠퍼스의 각 건물(냉각·전력·UPS·네트워크)을 눌러 상태 확인과 교육용 조작(보조 냉각 켜짐/꺼짐/경고 등)을 할 수 있습니다.
-- Phase 3.2(Issue #3): 오른쪽 위 **목표 n/5**와 오른쪽 아래 **큰 버튼 하나**만 따라가면 첫 업무가 끝납니다. 처음 실행 시 짧은 튜토리얼이 그 버튼 하나만 강조합니다(건너뛰기·[튜토리얼 다시 하기]). 세계지도는 한국 중심이며 요청 경로만 빛납니다(가상 경로). 캠퍼스 건물은 한 번 클릭하면 정보와 작업, 두 번 클릭(또는 Enter)하면 내부로 들어갑니다.
-- `http://127.0.0.1:5173/lab.html` — 아래에 설명한 **기존 독립 서버실 실험실**(장애 주입·6초 자동 복구 포함)을 그대로 보존한 화면입니다.
+- 처음에는 **중립 세계 통신망 오프닝**(도착한 요청 없음 → 울산 → 캠퍼스 → 내 자리)이 한 번 재생되고, 끝나면 **모드 메뉴**가 열립니다: 튜토리얼 / 스토리 도전(제1장 — 첫 근무) / 자유·연습. 각각 [새로 시작]과 [이어하기]가 있습니다.
+- **튜토리얼:** 선배가 지금 할 일·이유·위치를 알려 주고 **실제 컨트롤**(화면 요소의 금색 테두리 또는 3D 링)을 가리킵니다. 대신 눌러 주는 버튼은 없습니다. 캠퍼스 둘러보기 → 요청 확인 → 배정 결정 → 현장 시작 → 장애 대응 → 검증·보고(6목표·18단계). 끝나면 [스토리 도전 시작]으로 새 본편 저장이 시작됩니다.
+- **스토리 도전:** 엔진의 제1장(싱가포르 → 일본 → 미국) 세 업무를 정상 완료하면 장 클리어. 제2장 이후 3D 이식은 Phase 5입니다.
+- **자유·연습:** 엔진의 자유 운영 규칙(시간 기반 접수, 확률적 네트워크 장애) 그대로.
+- 조작: 요청은 **관제동 · 내 자리의 내 모니터**(요청함 / 배정 계획 / 장비 진단 / 결과)에서, 작업 시작과 사후 확인은 **서버동 01의 엔진 서버 랙 A-01~D-01**(Server A~D)에서, 시간은 위쪽 시계 옆 [⏩ +10분 / +30분 / +60분]으로 합니다. 나머지 20개 랙은 장식입니다.
+- 저장은 `prototypes/3d-datacenter-001/saves/`(Git 제외, `SRS3D_SAVE_DIR`로 변경 가능)에만 새 파일로 만듭니다. 기존 Python 게임 저장(`aidc_game.db`, `aidc_story_slot_*.db`)은 열지 않습니다.
+- `http://127.0.0.1:5173/lab.html` — **기존 독립 서버실 실험실**(엔진 미연결, 아래 설명)을 그대로 보존한 화면입니다.
 
-종료는 서버를 실행한 터미널에서 `Ctrl+C`입니다. PowerShell의 `npm.ps1` 실행 정책을 바꾸지 않도록 `npm.cmd`를 사용합니다. 로컬 접속만 허용하며, 개발 서버의 파일 접근 허용 범위도 이 시제품 폴더로 제한했습니다.
+엔진만 실행: `python -m engine.server [--port 8765] [--save-dir 경로]`. 엔진이 꺼져 있으면 3D 공간은 볼 수 있지만 게임은 시작되지 않고, 메뉴에 실행 방법이 표시됩니다.
+
+이전 Phase 0~3.2의 '오른쪽 아래 큰 버튼 하나로 진행하는 시연'과 그 전용 규칙(`demo-actions.js`, `guide.js`)은 Phase 4에서 폐기했습니다.
 
 빌드 결과 실행:
 
@@ -32,7 +38,7 @@ npm.cmd run preview
 
 개발 서버와 preview는 같은 포트를 사용하므로 하나씩 실행합니다. `dist/`와 `node_modules/`는 Git에서 제외합니다.
 
-## 구현 범위와 조작
+## 기존 실험실(lab.html)의 구현 범위와 조작
 
 - 랙 24대, 가상 GPU 192개, UPS/PDU·냉각기 2대·네트워크 코어. 랙 모듈·상부 케이블 트레이·냉각 배관·이중 급전 모식 경로·바닥 환기구를 배치했습니다.
 - 유리 파티션으로 구분한 관제실, 대형 운영 모니터 월, 듀얼 모니터 운영 콘솔 6석. 모니터 월과 상세 패널은 같은 가상 시설 상태를 사용합니다.
@@ -43,7 +49,7 @@ npm.cmd run preview
 - **정상 → 장애 → 복구 중 → 사후 확인 대기 → 확인 완료**. 장애 주입과 복구는 선택 장비에만 적용합니다. 복구 6초 동안 영향 지표가 유지되고, 완료 후 별도 [사후 상태 확인]을 눌러야 확인 완료로 바뀝니다. 배경 탭에서는 가상 시계를 멈춥니다.
 - 업링크 단절: 네트워크 흐름 중지·연산 유휴. 전력 중단: GPU·네트워크·전력 0 및 LED 소등. 냉각 저하: 온도 상승·연산 제한 및 해당 랙 인근 공기 흐름 경고. 실제 설비의 장애 전파나 물리 계산을 재현한 모델은 아닙니다.
 
-충돌 판정·실제 케이블/IP 토폴로지·CFD·전기 설계·터미널·학습 평가·저장·기존 게임 통합은 구현 범위가 아닙니다. 카메라는 벽과 장비를 통과할 수 있습니다. 세부 모델은 외부 모델 파일 없이 직접 만든 절차적 지오메트리·Canvas 텍스처입니다.
+(실험실 기준) 충돌 판정·실제 케이블/IP 토폴로지·CFD·전기 설계·터미널·학습 평가·저장·기존 게임 통합은 구현 범위가 아닙니다. 카메라는 벽과 장비를 통과할 수 있습니다. 세부 모델은 외부 모델 파일 없이 직접 만든 절차적 지오메트리·Canvas 텍스처입니다.
 
 ## 렌더링과 성능
 
@@ -56,26 +62,26 @@ RTX 5070 데스크톱을 목표로 고정한 Desktop High 설정: PBR 금속 재
 ## 검증
 
 ```powershell
-npm.cmd test
+npm.cmd test              # JS 단위 (실제 엔진 스냅샷 fixture: python -m engine.tests.make_fixtures)
+npm.cmd run test:engine   # 엔진 어댑터 (임시 저장 폴더만 사용)
 npm.cmd run build
-# dev 또는 preview 서버 실행 중, 설치된 Chrome을 별도 임시 프로필로 실행
-npm.cmd run qa       # 3D 세계 시연 QA → docs/3d-world-expansion/qa/world-qa.json
-npm.cmd run qa:ux    # Issue #2 오프닝·내 자리·시설·냉각 QA → docs/3d-world-expansion/qa/phase3-1/
-npm.cmd run qa:ux32  # Issue #3 첫 사용자·해상도·지도·랙·건물 QA → docs/3d-world-expansion/qa/phase3-2/
-npm.cmd run qa:lab   # 기존 실험실(lab.html) 회귀 → docs/3d-world-expansion/qa/lab-regression/
+npm.cmd run qa:phase4     # 브라우저 QA: 엔진+Vite를 임시 저장·별도 포트로 직접 띄움 → docs/3d-world-expansion/qa/phase4/
+npm.cmd run qa:lab        # 기존 실험실(lab.html) 회귀 (dev 서버 실행 중)
 # 기존 게임·사용자 DB·과거 QA 파일의 해시 비교 (SQLite 연결 없음)
-& 'C:\Users\hahye\anaconda3\python.exe' scripts/protect.py after
+& 'C:\Users\hahye\anaconda3\python.exe' ..\..\docs\3d-world-expansion\protect.py after phase4
 ```
+
+Phase 4 결과: [QA_REPORT_PHASE4.md](../../docs/3d-world-expansion/QA_REPORT_PHASE4.md). 이전 Phase의 `qa`/`qa:ux`/`qa:ux32` 스크립트는 폐기한 큰 버튼 시연을 조작하던 것이라 삭제했고, 유효한 검사는 `qa:phase4`로 옮겼습니다.
 
 브라우저 QA는 Playwright Core와 기존 Chrome을 사용하며 브라우저를 다운로드하지 않습니다. 기본은 실제 창을 여는 headed 실행이고, 브라우저 프로필은 자동으로 격리·정리합니다. 상태 변경은 실제 UI 이벤트로만 수행하며 `window.prototypeQA`는 상태 복사본과 투영 좌표를 읽는 QA용 인터페이스입니다.
 
 기준 환경: Node.js 26.13.1 / npm 11.20.0, Three.js 0.180.0, Vite 7.3.8. `package-lock.json`으로 설치 버전을 고정합니다.
 
-## 보존과 통합 전 QA
+## 보존과 QA 기록 (Phase 0~3.2 시제품 단계)
 
 - 실험 브랜치: `experiment/3d-datacenter-prototype-001`. 시작 기준 커밋 `4de7bb2`와 `docs/qa/desktop-start-2026-11-20/` 기록을 유지합니다.
 - 기존 게임 코드·테스트·SQLite·저장 파일·DPI 설정을 수정하지 않습니다. 보호 기준선은 기존 파일의 크기와 SHA-256만 읽습니다.
 - **기존 GUI Preflight 전경 확보 문제는 미해결 별도 QA 항목입니다.** 이번 브라우저 성공이 Tkinter 전체 회귀 성공을 뜻하지 않습니다. 기존 게임과 통합하기 전에 실제 대화형 데스크톱에서 해결·재검증해야 합니다. 코드나 테스트 기대값을 우회 수정하지 않았습니다.
-- 기존 게임 통합·추가 개발 단계·main 병합·원격 배포는 이번 작업에 포함하지 않습니다.
+- Phase 3.2까지는 기존 게임 통합을 하지 않았습니다. Phase 4부터 엔진 어댑터로 연결합니다(위 실행 절). main 병합·원격 배포는 하지 않습니다.
 
 기술 참고: [Three.js 공식 문서](https://threejs.org/docs/), [OrbitControls](https://threejs.org/docs/pages/OrbitControls.html). 데이터센터 장비 구성의 참고: [NVIDIA DGX SuperPOD 개요](https://www.nvidia.com/en-us/data-center/dgx-superpod/). 특정 실물 시설의 도면이나 실제 규격을 복제한 설계는 아닙니다.

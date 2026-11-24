@@ -73,3 +73,17 @@ npm.cmd run play      # 엔진(8765) + Vite(5173) 동시 실행, Ctrl+C로 함�
 - 127.0.0.1에만 바인딩, `Host`가 loopback이 아니거나 `Origin`이 loopback이 아니면 403, 본문 64 KB·JSON만. 게임 ID는 정규식으로 검사(경로 조작 불가).
 - 실제 OS 명령·외부 API·실제 설비 제어 없음. 의존성 추가 없음(Python 표준 라이브러리, 기존 npm 패키지).
 - `database.py`의 SQLite 연결은 만든 스레드에서만 쓸 수 있으므로 서버는 엔진 호출 전부를 전용 스레드 하나에서 실행합니다.
+
+## 화면 구성 (구현됨)
+
+- 오른쪽 패널: 목표(무엇 / 왜 / 어디서) → 선배 카드(최근 실제 행동의 결과, 이유·위치 접기, 건너뛰기) → 요청 요약 → 공간별 카드 → 자세히. 떠 있는 말풍선은 없고, 강조된 컨트롤 옆에는 클릭이 통과하는 작은 표식만 둡니다.
+- 3D 대상(국가·건물·랙)은 링으로, DOM 컨트롤은 금색 테두리로 강조합니다. 플레이어가 다른 공간에 있으면 먼저 그 공간으로 가는 탭을 가리킵니다.
+- 서버동: 랙 투영점은 랙 윗면(앞 열에 가려지지 않음). 엔진 서버 랙 4개만 약간 넓은 클릭 영역.
+
+## 다음 Phase(5) 인계
+
+- **확장 지점:** 새 장·고객은 엔진 쪽(`session.GameSession`의 기존 장 시작 메서드 `start_chapter2/3/3b`, `start_training`)을 어댑터 행동으로 노출하면 됩니다. 스냅샷 `story`는 지금 제1장/튜토리얼만 채웁니다(`_story`). 제2장 이후 결과(`chapter2_result` 등)와 진단(`view_network_diagnosis`, `view_hardware_diagnosis`)·Lab(`training_*`)은 아직 어댑터에 없습니다.
+- **체크포인트:** 새 스토리 시작 때 `capture()`를 호출합니다. 장 재도전(`restore`)·다음 장 시작 시 체크포인트는 미구현입니다.
+- **여정:** 튜토리얼만 단계를 가집니다(`engine/journey.py`의 `TUTORIAL`). 스토리 안내는 엔진의 `onboarding.card`를 3D 문구로 바꿔 보여 줍니다(`game-view.js`의 `storyGoal`).
+- **세계지도 경로:** SG/JP/US 세 경로만 정의되어 있습니다(`network-data.js`의 `REQUEST_PATHS`). 새 국가는 경로 데이터와 `COUNTRY_CODES`(adapter)·`COUNTRIES`(store) 세 곳을 함께 늘려야 합니다. 네트워크 장애 구간은 엔진이 모델링하지 않으므로 특정 구간에 그리지 않습니다.
+- **알려진 한계:** QA_REPORT_PHASE4.md '남은 위험·한계' 참고.
