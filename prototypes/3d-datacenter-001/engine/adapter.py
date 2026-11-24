@@ -37,6 +37,7 @@ COUNTRY_CODES = {'싱가포르': 'SG', '일본': 'JP', '미국': 'US'}
 # Engine servers A~D live in column 1 of the 3D hall. The other 20 racks are decoration only.
 SERVER_RACKS = {'A': 'A-01', 'B': 'B-01', 'C': 'C-01', 'D': 'D-01'}
 RACK_SERVERS = {rack: key for key, rack in SERVER_RACKS.items()}
+FACILITY_ASSETS = {'UPS-01': 'UPS / PDU 01', 'CRAC-01': '냉각 01', 'CRAC-02': '냉각 02', 'NET-01': '네트워크 코어'}
 DECOR_RACKS = tuple(f'{row}-{col:02d}' for row in 'ABCD' for col in range(1, 7) if col != 1)
 MODE_LABELS = {'tutorial': '튜토리얼', 'story': '스토리 도전', 'free': '자유 운영'}
 FREE_PATTERN = re.compile(r'aidc_3d_free_([0-9]+)\.db')
@@ -238,7 +239,7 @@ class Game:
             'canAdvance': any(run.state.allocated for run in s.runs.values()) or s.mode == 'free',
             'story': story,
             'free': ({'pending': s.pending_request_count, 'nextArrival': s.next_arrival_label} if s.mode == 'free' else None),
-            'journey': self.journey.view(),
+            'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
             'world': self._world(),
             'racks': {'engine': SERVER_RACKS, 'decor': list(DECOR_RACKS)},
             'responses': {k: v['label'] for k, v in RESPONSES.items()},
@@ -263,8 +264,7 @@ class Game:
         """Tutorial learning order (like Chapter 3b's rule): look at the evidence before acting."""
         if self.journey.kind != 'tutorial' or not self.journey.data['fault']:
             return
-        rid = run.request['id']
-        if not any(e['type'] == 'diagnose' and e.get('rid') == rid for e in self.journey.data['events']):
+        if not self.journey.data['fault'].get('diagnosed'):
             raise ActionError('먼저 [장비 진단]을 열어 원인과 가능한 조치를 확인하세요.',
                               '증거를 보기 전에 조치하지 않습니다. 내 모니터 → [장비 진단] 탭')
 
@@ -278,8 +278,6 @@ class Game:
         self._backup = self.journey.transaction()
         try:
             result = handler(action) or {}
-            self.journey.evaluate(self.facts())
-            self.journey.save()
         except Exception as exc:
             # Journey facts of a refused action are undone (the engine already rolled itself back); only the
             # attempt itself is kept, so a wrong click never completes a step.
@@ -289,6 +287,10 @@ class Game:
                 self.journey.misclick()
                 self.journey.save()
             raise
+        # The engine part succeeded and is committed. Journey facts stay in memory even if saving the sidecar
+        # fails; the error is reported and the next successful save writes them (never rolled back here).
+        self.journey.evaluate(self.facts())
+        self.journey.save()
         return result
 
     # observations: no engine state changes -------------------------------------------------------------
@@ -334,6 +336,9 @@ class Game:
 
     def do_inspect_rack(self, a):
         rack = a.get('rack')
+        if rack in FACILITY_ASSETS:
+            self.journey.record('inspect_rack', self._minute(), rack=rack, server=None)
+            return {'info': f'{FACILITY_ASSETS[rack]} · 시설 설비 모식 (게임 규칙 미연결)'}
         if not isinstance(rack, str) or not re.fullmatch(r'[A-D]-0[1-6]', rack):
             raise ActionError('알 수 없는 랙입니다.')
         server = RACK_SERVERS.get(rack)
@@ -376,6 +381,10 @@ class Game:
         if not 0 <= index < len(options['options']):
             raise ActionError('배정안을 다시 조회해 주세요.')
         parts = options['options'][index]
+        shown = a.get('slices')
+        if shown is not None and shown != _slices_payload(parts):
+            raise ActionError('조회 이후 배정안이 바뀌었습니다. [다시 조회]로 최신 배정안을 확인해 주세요.',
+                              '시간·다른 작업·서버 상태가 바뀌면 엔진의 배정안도 바뀝니다.')
         self.journey.set_selection(rid, {'mode': mode, 'index': index, 'slices': _slices_payload(parts),
                                          'label': run.state.plans[mode]['label'], 'minute': s.minute})
         s.inspect_story_preview(rid)   # engine: marks the plan review (onboarding 'reviewed') when the request was read
@@ -385,6 +394,9 @@ class Game:
         rid, run = self._run(a.get('rid'))
         s = self.session
         self.journey.record('diagnose', self._minute(), rid=rid)
+        fault = self.journey.data['fault']
+        if fault and fault.get('rid') == rid:
+            fault['diagnosed'] = True
         preview = s.migration_preview(run)
         return {'diagnosis': {
             'hardware': s.hardware_status(run) or '이 작업의 서버는 모두 정상입니다.',
@@ -401,6 +413,16 @@ class Game:
             'free': {'gpu': s.servers.available()[0], 'power': s.servers.available()[1]},
         }}
 
+    def verify_racks(self):
+        """Racks whose re-check counts for the tutorial: the fault server, or after a migration the new servers."""
+        fault = self.journey.data['fault']
+        if not fault:
+            return []
+        run = self.session.runs.get(fault['rid'])
+        if run and len(run.server_allocations) > 1:
+            return [SERVER_RACKS[p.server_id] for p in run.server_allocations[-1].slices]
+        return [fault['rack']]
+
     def do_verify(self, a):
         rid, run = self._run(a.get('rid'))
         s = self.session
@@ -408,14 +430,15 @@ class Game:
         rack = a.get('rack')
         server = RACK_SERVERS.get(rack) if isinstance(rack, str) else None
         fault = self.journey.data['fault']
-        target = server or (fault['server'] if fault else None)
+        allowed = self.verify_racks()
+        target = server or (RACK_SERVERS[allowed[0]] if allowed else None)
         state = s.servers.hardware[target].state if target else None
         issues = s.hardware_status(run)
         ok = bool(target) and state == 'HEALTHY' and not issues and run.state.phase in ('running', 'finished')
-        if fault and target != fault['server']:
-            ok = False
+        if fault and SERVER_RACKS.get(target) not in allowed:
             self.journey.record('verify', self._minute(), rid=rid, server=target, state=state, ok=False)
-            return {'hint': f'장애가 났던 서버는 Server {fault["server"]}(랙 {fault["rack"]})입니다. 그 랙을 다시 확인하세요.'}
+            where = '·'.join(allowed)
+            return {'hint': f'다시 확인할 서버는 {where} 입니다 ({"이전한 새 서버" if len(self.session.runs[fault["rid"]].server_allocations) > 1 else "장애가 났던 서버"}).'}
         self.journey.record('verify', self._minute(), rid=rid, server=target, state=state, ok=ok)
         detail = (f'Server {target} {state} · 작업 {run.state.phase} · 진행률 {round(run.state.progress)}%'
                   + (f' · {issues}' if issues else ''))
@@ -507,7 +530,7 @@ class Game:
         """Tutorial scenario: the first time the player lets time run, a training server fault starts on the
         busiest server of the job. It uses the engine's existing educational fault injection; nothing else
         (time, progress, score) is touched here."""
-        if self.journey.kind != 'tutorial' or self.journey.data['fault']:
+        if self.journey.kind != 'tutorial' or self.journey.data['fault'] or self.journey.data['skipped']:
             return None
         run = self._tutorial_run()
         s = self.session

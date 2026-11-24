@@ -451,7 +451,8 @@
    "misclicks": 0,
    "doneSteps": 0,
    "totalSteps": 19,
-   "learned": []
+   "learned": [],
+   "verifyRacks": []
   },
   "world": {
    "paths": [
@@ -982,7 +983,8 @@
    "misclicks": 0,
    "doneSteps": 1,
    "totalSteps": 19,
-   "learned": []
+   "learned": [],
+   "verifyRacks": []
   },
   "world": {
    "paths": [
@@ -1524,7 +1526,8 @@
    "misclicks": 0,
    "doneSteps": 1,
    "totalSteps": 19,
-   "learned": []
+   "learned": [],
+   "verifyRacks": []
   },
   "world": {
    "paths": [
@@ -1904,7 +1907,8 @@
     "server": "A",
     "rack": "A-01",
     "minute": 540,
-    "rid": 1
+    "rid": 1,
+    "diagnosed": true
    },
    "goals": [
     {
@@ -2081,7 +2085,10 @@
    "misclicks": 0,
    "doneSteps": 1,
    "totalSteps": 19,
-   "learned": []
+   "learned": [],
+   "verifyRacks": [
+    "A-01"
+   ]
   },
   "world": {
    "paths": [
@@ -2463,7 +2470,8 @@
     "server": "A",
     "rack": "A-01",
     "minute": 540,
-    "rid": 1
+    "rid": 1,
+    "diagnosed": true
    },
    "goals": [
     {
@@ -2640,7 +2648,10 @@
    "misclicks": 0,
    "doneSteps": 1,
    "totalSteps": 19,
-   "learned": []
+   "learned": [],
+   "verifyRacks": [
+    "A-01"
+   ]
   },
   "world": {
    "paths": [
@@ -3041,7 +3052,8 @@
     "server": "A",
     "rack": "A-01",
     "minute": 540,
-    "rid": 1
+    "rid": 1,
+    "diagnosed": true
    },
    "goals": [
     {
@@ -3218,7 +3230,10 @@
    "misclicks": 0,
    "doneSteps": 1,
    "totalSteps": 19,
-   "learned": []
+   "learned": [],
+   "verifyRacks": [
+    "A-01"
+   ]
   },
   "world": {
    "paths": []

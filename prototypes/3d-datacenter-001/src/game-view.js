@@ -3,9 +3,10 @@
 
 export const STAGE_LABEL = Object.freeze({ incoming: '새 요청', running: '작업 진행 중', hw_fault: '서버 장애 · 작업 중단', hw_repair: '서버 복구 중 · 작업 중단',
   migration: '작업 이전 준비 중', net_fault: '네트워크 장애', recovering: '복구 준비 중', done: '처리 완료', failed: '처리 실패', rejected: '요청 종료' });
-// The 3D scene (desk screens, wall, campus tint, rack pin) still speaks the older phase words.
+// The 3D scene (desk screens, wall, campus tint, rack pin) still speaks the older phase words. Only server
+// (hardware) stages map to 'fault'/'repairing', which tint the server building; network stages never do.
 const SCENE_PHASE = Object.freeze({ incoming: 'new', running: 'running', hw_fault: 'fault', hw_repair: 'repairing', migration: 'repairing',
-  net_fault: 'fault', recovering: 'repairing', done: 'completed', failed: 'completed', rejected: 'completed' });
+  net_fault: 'degraded', recovering: 'recovering', done: 'completed', failed: 'completed', rejected: 'completed' });
 export const MODE_NAMES = Object.freeze({ performance: '고성능 모드', economy: '절약형 모드' });
 export const COUNTRY_NAMES = Object.freeze({ SG: '싱가포르', JP: '일본', US: '미국', KR: '대한민국 · 울산' });
 export const ENGINE_RACKS = Object.freeze({ A: 'A-01', B: 'B-01', C: 'C-01', D: 'D-01' });

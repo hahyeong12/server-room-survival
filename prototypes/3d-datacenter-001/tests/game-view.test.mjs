@@ -48,3 +48,8 @@ test('store keeps a private copy of the snapshot; view selection never changes g
   const before=JSON.stringify(store.state.game);store.selectCountry('JP');store.selectRack('B-04');store.navigate('world');store.setNocView('overview');
   assert.equal(JSON.stringify(store.state.game),before);
 });
+test('a network incident never tints the server building as a hardware fault (review finding)',()=>{
+  const g=stage=>({focus:1,requests:[{id:1,stage,progress:30,company:'x',allocation:[],selection:null}]});
+  assert.equal(sceneRequest(g('net_fault')).phase,'degraded');assert.equal(sceneRequest(g('recovering')).phase,'recovering');
+  assert.equal(sceneRequest(g('hw_fault')).phase,'fault');assert.equal(sceneRequest(g('hw_repair')).phase,'repairing');assert.equal(sceneRequest(g('migration')).phase,'repairing');
+});

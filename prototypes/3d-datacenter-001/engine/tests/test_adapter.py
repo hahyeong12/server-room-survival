@@ -314,6 +314,14 @@ class HttpTests(Base):
         self.assertEqual(got['game']['journey']['current']['id'], 'campus-info')
         self.assertEqual(self.call('/api/games/../../etc')[0], 404)
 
+    def test_negative_content_length_is_refused(self):
+        req = urllib.request.Request(self.base + '/api/games', data=b'', method='POST',
+                                     headers={'Content-Type': 'application/json', 'Content-Length': '-1'})
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            urllib.request.urlopen(req, timeout=5)
+        self.assertEqual(caught.exception.code, 400)
+        caught.exception.close()
+
     def test_cross_origin_requests_are_refused(self):
         status, _ = self.call('/api/games', {'mode': 'tutorial'}, {'Origin': 'http://evil.example'})
         self.assertEqual(status, 403)

@@ -243,7 +243,10 @@ function rackCard(){
         if(inSel){root.append(el('p','card-line ok',`배정안 포함 · 요청 #${r.id} · GPU ${inSel.gpu} / 전력 ${inSel.power} 예정`));root.append(button('이 배정으로 작업 시작',()=>send({type:'start_job',rid:r.id,rack:a.id}),'primary big',{'data-start-job':a.id}));}
         else root.append(el('p','card-line',`요청 #${r.id}의 배정안에는 이 서버가 없습니다. 배정안: ${r.selection.slices.map(p=>`${p.server}(${p.rack})`).join(' · ')}`));
       }else if(isOpen(r)&&r.stage==='incoming')root.append(el('p','card-line','아직 고른 배정안이 없습니다. 내 모니터 [배정 계획]에서 먼저 고르세요.'));
-      if(inAlloc){root.append(el('p','card-line',`요청 #${r.id} 실행 위치 · GPU 슬롯 ${inAlloc.gpuSlots.join(',')} · 전력 ${inAlloc.power}`));root.append(button('상태 재확인',()=>send({type:'verify',rid:r.id,rack:a.id}),'',{'data-verify':a.id}));}
+      const check=g.journey?.verifyRacks?.includes(a.id)?g.journey.fault.rid:inAlloc?r.id:null;
+      if(inAlloc)root.append(el('p','card-line',`요청 #${r.id} 실행 위치 · GPU 슬롯 ${inAlloc.gpuSlots.join(',')} · 전력 ${inAlloc.power}`));
+      // Re-check stays available after the job ends, so the tutorial's post-recovery check can never be locked out.
+      if(check!==null)root.append(button('상태 재확인',()=>send({type:'verify',rid:check,rack:a.id}),'',{'data-verify':a.id}));
     }
   }
   const label=el('label','select-line','랙 선택 (키보드)'),select=el('select');select.id='equipment-select';select.setAttribute('aria-label','랙 선택');
@@ -317,7 +320,7 @@ function modeRow(r,row,res){
     if(!options.length)box.append(el('p','ws-warn',res.reason));
     const list=el('div','plan-options');
     options.forEach((parts,i)=>{const sel=r.selection&&r.selection.mode===row.key&&r.selection.index===i;
-      const b=button('',()=>send({type:'select_plan',rid:r.id,mode:row.key,index:i}),`plan-option${sel?' selected':''}`,{'data-plan-option':`${row.key}:${i}`,'aria-pressed':String(!!sel)});
+      const b=button('',()=>send({type:'select_plan',rid:r.id,mode:row.key,index:i,slices:parts}),`plan-option${sel?' selected':''}`,{'data-plan-option':`${row.key}:${i}`,'aria-pressed':String(!!sel)});
       b.append(el('strong','',`배정안 ${i+1}${sel?' · 선택됨':''}`));for(const p of parts)b.append(el('span','',`Server ${p.server} (${p.rack}) · GPU ${p.gpu} / 전력 ${p.power}`));list.append(b);});
     box.append(list);
   }else if(!row.agreed&&res){box.append(el('small','ws-note',`엔진 판정: ${res.reason}`));}

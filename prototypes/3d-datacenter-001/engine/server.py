@@ -31,6 +31,18 @@ from engine.adapter import GameHost, ActionError, API_VERSION  # noqa: E402
 MAX_BODY = 64 * 1024
 ALLOWED_HOSTS = re.compile(r'(127\.0\.0\.1|localhost)(:\d+)?')
 ALLOWED_ORIGINS = re.compile(r'http://(127\.0\.0\.1|localhost)(:\d+)?')
+class NotFound(Exception):
+    pass
+
+
+def lookup(host, gid):
+    """Only a missing save becomes 404; any other KeyError is an internal error (500)."""
+    try:
+        return host.get(gid)
+    except KeyError:
+        raise NotFound(gid) from None
+
+
 GAME_PATH = re.compile(r'/api/games/([A-Za-z0-9_]+)(/actions|/close)?')
 
 
@@ -64,7 +76,7 @@ def make_handler(host: GameHost, log=None):
 
         def _body(self):
             length = int(self.headers.get('Content-Length') or 0)
-            if length > MAX_BODY:
+            if length < 0 or length > MAX_BODY:
                 raise ValueError('body too large')
             if length and 'application/json' not in (self.headers.get('Content-Type') or ''):
                 raise ValueError('JSON body required')
@@ -86,9 +98,9 @@ def make_handler(host: GameHost, log=None):
                     return self._send(200, {'ok': True, 'saves': host.run(host.saves)})
                 m = GAME_PATH.fullmatch(path)
                 if m and not m[2]:
-                    return self._send(200, {'ok': True, 'game': host.run(lambda: host.get(m[1]).snapshot())})
+                    return self._send(200, {'ok': True, 'game': host.run(lambda: lookup(host, m[1]).snapshot())})
                 return self._send(404, {'ok': False, 'message': 'not found'})
-            except KeyError:
+            except NotFound:
                 return self._send(404, {'ok': False, 'message': '저장된 게임을 찾을 수 없습니다.'})
             except ValueError as exc:
                 return self._send(409, {'ok': False, 'message': str(exc), 'hint': getattr(exc, 'hint', '')})
@@ -110,7 +122,7 @@ def make_handler(host: GameHost, log=None):
                 m = GAME_PATH.fullmatch(path)
                 if m and m[2] == '/actions':
                     def act():
-                        game = host.get(m[1])
+                        game = lookup(host, m[1])
                         try:
                             result = game.act(data)
                         except ValueError as exc:   # engine rule or adapter rejection: nothing changed
@@ -122,7 +134,7 @@ def make_handler(host: GameHost, log=None):
                     host.close(m[1])
                     return self._send(200, {'ok': True})
                 return self._send(404, {'ok': False, 'message': 'not found'})
-            except KeyError:
+            except NotFound:
                 return self._send(404, {'ok': False, 'message': '저장된 게임을 찾을 수 없습니다.'})
             except ActionError as exc:
                 return self._send(400, {'ok': False, 'message': str(exc), 'hint': exc.hint})

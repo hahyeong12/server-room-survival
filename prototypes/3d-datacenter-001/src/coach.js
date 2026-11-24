@@ -37,10 +37,11 @@ export function createCoach({ $, el, button, store, game, getScene, isBlocked, s
       case 'world-request': { const p = focusPath(store.state); return go('world') || (p ? { kind: 'world', id: p.code, label: '요청이 온 곳' } : null); }
       case 'racks-of-plan': return go('hall') || rack(primaryRack(r), '배정안의 서버 랙');
       case 'fault-rack': {
-        const f = j.fault; if (!f) return null;
+        const f = j.fault, target = j.verifyRacks?.[0] ?? f?.rack; if (!target) return null;
         if (route !== 'hall') return go('hall');
-        if (store.state.facility.selectedId !== f.rack) return rack(f.rack, '장애가 났던 랙');
-        return dom(`[data-verify="${f.rack}"]`, '상태 재확인');
+        const label = target === f.rack ? '장애가 났던 랙' : '작업을 옮긴 새 서버 랙';
+        if (!(j.verifyRacks ?? [target]).includes(store.state.facility.selectedId)) return rack(target, label);
+        return dom(`[data-verify="${store.state.facility.selectedId}"]`, '상태 재확인');
       }
       default: return null;
     }
