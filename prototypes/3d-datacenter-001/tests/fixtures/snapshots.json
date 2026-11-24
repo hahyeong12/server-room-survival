@@ -1,6 +1,9 @@
 {
  "tutorial_new": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_001",
   "mode": "tutorial",
@@ -102,6 +105,7 @@
     "network": {
      "needed": 0,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -265,6 +269,7 @@
    "jobsTotal": 1,
    "chapter": {
     "key": "tutorial",
+    "number": 0,
     "label": "튜토리얼",
     "title": "관제실 첫걸음",
     "heading": "튜토리얼 — 관제실 첫걸음",
@@ -273,7 +278,48 @@
     "stateLabel": "진행 중",
     "text": ""
    },
-   "result": null
+   "result": null,
+   "chapterKey": 1,
+   "uiStep": "arrival",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_tutorial_1_arrival",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "첫 출근을 환영해요!\n오늘은 고객 요청 하나를 처음부터 끝까지 처리해 볼 거예요."
+     ],
+     [
+      "player",
+      "나 · 신입 엔지니어",
+      "네, 잘 부탁드립니다!\n처음이라 조금 긴장되네요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "순서는 네 단계예요.\n\n① 요청 확인\n② 배정 검토\n③ 작업 시작\n④ 위쪽 ⏩ 시간 버튼"
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "화면 위쪽 목표 카드가 지금 할 일 하나만 알려 줘요.\n\n천천히 따라오세요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "tutorial",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -461,6 +507,8 @@
      "code": "SG",
      "tone": "incoming",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -507,7 +555,10 @@
   }
  },
  "tutorial_selected": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_001",
   "mode": "tutorial",
@@ -609,6 +660,7 @@
     "network": {
      "needed": 0,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -793,6 +845,7 @@
    "jobsTotal": 1,
    "chapter": {
     "key": "tutorial",
+    "number": 0,
     "label": "튜토리얼",
     "title": "관제실 첫걸음",
     "heading": "튜토리얼 — 관제실 첫걸음",
@@ -801,7 +854,33 @@
     "stateLabel": "진행 중",
     "text": ""
    },
-   "result": null
+   "result": null,
+   "chapterKey": 1,
+   "uiStep": "allocation",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_tutorial_1_allocation",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "짧은 입문 — 선택한 배정으로 작업을 시작하세요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "tutorial",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -993,6 +1072,8 @@
      "code": "SG",
      "tone": "incoming",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -1039,7 +1120,10 @@
   }
  },
  "tutorial_running": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_001",
   "mode": "tutorial",
@@ -1142,6 +1226,7 @@
     "network": {
      "needed": 5,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -1336,6 +1421,7 @@
    "jobsTotal": 1,
    "chapter": {
     "key": "tutorial",
+    "number": 0,
     "label": "튜토리얼",
     "title": "관제실 첫걸음",
     "heading": "튜토리얼 — 관제실 첫걸음",
@@ -1344,7 +1430,33 @@
     "stateLabel": "진행 중",
     "text": ""
    },
-   "result": null
+   "result": null,
+   "chapterKey": 1,
+   "uiStep": "time",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_tutorial_1_time",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "짧은 입문 — 시간을 빠르게 진행해 다음 상황을 확인해 보세요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "tutorial",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -1536,6 +1648,8 @@
      "code": "SG",
      "tone": "active",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -1582,7 +1696,10 @@
   }
  },
  "tutorial_hw_fault": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_001",
   "mode": "tutorial",
@@ -1693,6 +1810,7 @@
     "network": {
      "needed": 5,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -1889,6 +2007,7 @@
    "jobsTotal": 1,
    "chapter": {
     "key": "tutorial",
+    "number": 0,
     "label": "튜토리얼",
     "title": "관제실 첫걸음",
     "heading": "튜토리얼 — 관제실 첫걸음",
@@ -1897,7 +2016,33 @@
     "stateLabel": "진행 중",
     "text": ""
    },
-   "result": null
+   "result": null,
+   "chapterKey": 1,
+   "uiStep": "time",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_tutorial_1_time",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "짧은 입문 — 시간을 빠르게 진행해 다음 상황을 확인해 보세요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "tutorial",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -2097,6 +2242,8 @@
      "code": "SG",
      "tone": "active",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -2143,7 +2290,10 @@
   }
  },
  "tutorial_hw_repair": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_001",
   "mode": "tutorial",
@@ -2254,6 +2404,7 @@
     "network": {
      "needed": 5,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -2452,6 +2603,7 @@
    "jobsTotal": 1,
    "chapter": {
     "key": "tutorial",
+    "number": 0,
     "label": "튜토리얼",
     "title": "관제실 첫걸음",
     "heading": "튜토리얼 — 관제실 첫걸음",
@@ -2460,7 +2612,33 @@
     "stateLabel": "진행 중",
     "text": ""
    },
-   "result": null
+   "result": null,
+   "chapterKey": 1,
+   "uiStep": "time",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_tutorial_1_time",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "짧은 입문 — 시간을 빠르게 진행해 다음 상황을 확인해 보세요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "tutorial",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -2660,6 +2838,8 @@
      "code": "SG",
      "tone": "active",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -2706,7 +2886,10 @@
   }
  },
  "tutorial_done": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_001",
   "mode": "tutorial",
@@ -2777,6 +2960,7 @@
     "network": {
      "needed": 5,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -2983,6 +3167,7 @@
    "jobsTotal": 1,
    "chapter": {
     "key": "tutorial",
+    "number": 0,
     "label": "튜토리얼",
     "title": "관제실 첫걸음",
     "heading": "튜토리얼 — 관제실 첫걸음",
@@ -3042,7 +3227,33 @@
       "정상 완료 · 100점"
      ]
     ]
-   }
+   },
+   "chapterKey": 1,
+   "uiStep": "complete",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_tutorial_1_complete",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "수고하셨습니다.\n\n이제 스토리 도전에서 첫 근무를 시작해 보세요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "tutorial",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -3275,7 +3486,10 @@
   }
  },
  "story_new": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_story_slot_002",
   "mode": "story",
@@ -3377,6 +3591,7 @@
     "network": {
      "needed": 0,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -3543,6 +3758,7 @@
    "jobsTotal": 3,
    "chapter": {
     "key": 1,
+    "number": 1,
     "label": "제1장",
     "title": "첫 근무",
     "heading": "제1장 — 첫 근무",
@@ -3551,7 +3767,104 @@
     "stateLabel": "진행 중",
     "text": "첫 근무 · 업무 1/3 — 근무 안내를 확인하고 시작하세요."
    },
-   "result": null
+   "result": null,
+   "chapterKey": 1,
+   "uiStep": "arrival",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_shift_1_arrival",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "기본 조작은 익혔죠?\n오늘은 고객 세 곳의 업무를 한 건씩 맡아요."
+     ],
+     [
+      "player",
+      "나 · 신입 엔지니어",
+      "세 곳이요?\n순서대로 하나씩 해 볼게요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "순서는 이렇습니다.\n\n① 싱가포르\n② 일본\n③ 미국\n\n앞 업무가 끝나고 자원이 돌아와야 다음 요청이 와요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "세 건을 정상 완료하면 다음 장으로 가요.\n\n위쪽 목표 카드를 따라가 보세요."
+     ]
+    ]
+   },
+   "campaign": [
+    {
+     "key": 1,
+     "number": 1,
+     "label": "제1장",
+     "title": "첫 근무",
+     "heading": "제1장 — 첫 근무",
+     "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+     "state": "in_progress",
+     "stateLabel": "진행 중",
+     "text": "첫 근무 · 업무 1/3 — 근무 안내를 확인하고 시작하세요."
+    },
+    {
+     "key": 2,
+     "number": 2,
+     "label": "제2장",
+     "title": "한정된 자원",
+     "heading": "제2장 — 한정된 자원",
+     "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제1장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": 3,
+     "number": 3,
+     "label": "제3장",
+     "title": "끊어진 연결",
+     "heading": "제3장 — 끊어진 연결",
+     "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제2장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "3b",
+     "number": 4,
+     "label": "제4장",
+     "title": "서버실의 경보",
+     "heading": "제4장 — 서버실의 경보",
+     "intro": "이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제3장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "lab",
+     "number": 5,
+     "label": "제5장",
+     "title": "홀로 선 엔지니어",
+     "heading": "제5장 — 홀로 선 엔지니어",
+     "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제4장을(를) 클리어하면 열립니다."
+    }
+   ],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "checkpoint",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
   },
   "free": null,
   "journey": {
@@ -3566,6 +3879,8 @@
      "code": "SG",
      "tone": "incoming",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -3612,7 +3927,10 @@
   }
  },
  "free_new": {
-  "api": 1,
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
   "engine": "python:session.GameSession",
   "id": "aidc_3d_free_001",
   "mode": "free",
@@ -3714,6 +4032,7 @@
     "network": {
      "needed": 0,
      "available": 8,
+     "hidden": false,
      "attempts": 0,
      "downtime": 0,
      "incident": false
@@ -3834,6 +4153,8 @@
      "code": "SG",
      "tone": "incoming",
      "focus": true,
+     "link": "ok",
+     "linkNote": "",
      "segments": {
       "sea": "ok",
       "landing": "ok",
@@ -3842,6 +4163,6501 @@
      }
     }
    ]
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch1_clear": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_003",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "story",
+  "clock": {
+   "minute": 630,
+   "label": "D1 10:30"
+  },
+  "focus": 3,
+  "requests": [
+   {
+    "id": 1,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 7,
+    "power": 7,
+    "terms": {
+     "priority": "첫 근무 · 모델 학습",
+     "received": "D1 09:00",
+     "startDue": "D1 10:00",
+     "due": "D1 12:00",
+     "dueMinute": 720,
+     "expires": "D1 14:00",
+     "completed": "D1 09:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 7,
+       "power": 7,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 09:00] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 7개 / 전력: 7단위 / 네트워크: 5단위\n절약형: GPU 4개 / 전력 4단위 · 고객 동의 필요\n완료 기한: D1 12:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:00",
+     "[D1 09:00] [고객 요청 #1] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 09:00] 고성능 모드: GPU 7 / 전력 7 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2, C GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 7 / 전력 7 반환.",
+     "[D1 09:30] Merlion AI: 요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "gpu": 4,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0,
+        1
+       ],
+       "gpu": 2,
+       "power": 2
+      },
+      {
+       "server": "C",
+       "rack": "C-01",
+       "gpuSlots": [
+        0
+       ],
+       "gpu": 1,
+       "power": 1
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 540
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Merlion AI",
+     "country": "싱가포르",
+     "task": "생성형 AI 모델 학습 요청",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 7,
+     "power": 7,
+     "deadline": "준수",
+     "due": "D1 12:00",
+     "completed": "D1 09:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 3,
+    "power": 4,
+    "terms": {
+     "priority": "첫 근무 · 로봇 추론",
+     "received": "D1 09:30",
+     "startDue": "D1 10:30",
+     "due": "D1 12:30",
+     "dueMinute": 750,
+     "expires": "D1 14:30",
+     "completed": "D1 10:00",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 3,
+       "power": 4,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 2,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 3개 / 전력: 4단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 12:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:30",
+     "[D1 09:30] [고객 요청 #2] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:30] 고성능 모드: GPU 3 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4",
+     "[D1 09:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:00] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 3 / 전력 4 반환.",
+     "[D1 10:00] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2
+       ],
+       "gpu": 3,
+       "power": 4
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 570
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 3,
+     "power": 4,
+     "deadline": "준수",
+     "due": "D1 12:30",
+     "completed": "D1 10:00",
+     "score": 100
+    }
+   },
+   {
+    "id": 3,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "첫 근무 · 데이터 분석",
+     "received": "D1 10:00",
+     "startDue": "D1 11:00",
+     "due": "D1 13:00",
+     "dueMinute": 780,
+     "expires": "D1 15:00",
+     "completed": "D1 10:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 13:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 15:00",
+     "[D1 10:00] [고객 요청 #3] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:00] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 10:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:00] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 6 / 전력 6 반환.",
+     "[D1 10:30] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "gpu": 4,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0,
+        1
+       ],
+       "gpu": 2,
+       "power": 2
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 600
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 3,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "준수",
+     "due": "D1 13:00",
+     "completed": "D1 10:30",
+     "score": 100
+    }
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 0,
+   "powerTotal": 10,
+   "powerUsed": 0,
+   "healthyFreeGpu": 10,
+   "healthyFreePower": 10
+  },
+  "canAdvance": false,
+  "story": {
+   "kind": "shift",
+   "step": "complete",
+   "card": {
+    "kind": "shift",
+    "step_no": 5,
+    "total": 5,
+    "done": true,
+    "closed": false,
+    "title": "시간 빨리감기",
+    "action": "",
+    "mentor": "",
+    "pips": [
+     [
+      "안내 확인",
+      "done"
+     ],
+     [
+      "요청 확인",
+      "done"
+     ],
+     [
+      "배정 검토",
+      "done"
+     ],
+     [
+      "작업 시작",
+      "done"
+     ],
+     [
+      "시간 빨리감기",
+      "done"
+     ]
+    ],
+    "job": [
+     3,
+     3
+    ]
+   },
+   "objective": "첫 근무 · 업무 3/3 — 업무 완료 · 결과를 확인하세요.",
+   "pages": [],
+   "done": true,
+   "jobsDone": 3,
+   "jobsTotal": 3,
+   "chapter": {
+    "key": 1,
+    "number": 1,
+    "label": "제1장",
+    "title": "첫 근무",
+    "heading": "제1장 — 첫 근무",
+    "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+    "state": "cleared",
+    "stateLabel": "클리어",
+    "text": "고객 업무 3건 정상 완료"
+   },
+   "result": {
+    "company": "Merlion AI / Sakura Robotics / Northstar AI",
+    "task": "첫 근무 완료",
+    "score": 100.0,
+    "on_time": true,
+    "gpu": 16,
+    "power": 17,
+    "servers": {
+     "A": "HEALTHY",
+     "B": "HEALTHY",
+     "C": "HEALTHY",
+     "D": "HEALTHY"
+    },
+    "feedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "request_id": 3,
+    "playthrough_id": 3,
+    "jobs": [
+     {
+      "request_id": 1,
+      "company": "Merlion AI",
+      "country": "싱가포르",
+      "task": "생성형 AI 모델 학습 요청",
+      "key": "on_time",
+      "label": "정상 완료 · 기한 준수",
+      "mode": "고성능 모드",
+      "gpu": 7,
+      "power": 7,
+      "deadline": "준수",
+      "due": "D1 12:00",
+      "completed": "D1 09:30",
+      "score": 100
+     },
+     {
+      "request_id": 2,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "task": "로봇 AI 모델 추론 작업",
+      "key": "on_time",
+      "label": "정상 완료 · 기한 준수",
+      "mode": "고성능 모드",
+      "gpu": 3,
+      "power": 4,
+      "deadline": "준수",
+      "due": "D1 12:30",
+      "completed": "D1 10:00",
+      "score": 100
+     },
+     {
+      "request_id": 3,
+      "company": "Northstar AI",
+      "country": "미국",
+      "task": "대규모 데이터 분석 작업",
+      "key": "on_time",
+      "label": "정상 완료 · 기한 준수",
+      "mode": "고성능 모드",
+      "gpu": 6,
+      "power": 6,
+      "deadline": "준수",
+      "due": "D1 13:00",
+      "completed": "D1 10:30",
+      "score": 100
+     }
+    ],
+    "summary": [
+     [
+      "완료 업무",
+      "3/3건"
+     ],
+     [
+      "평균 운영 점수",
+      "100.0점"
+     ],
+     [
+      "자원 반환",
+      "GPU 누적 16개 · 전력 누적 17단위"
+     ],
+     [
+      "Merlion AI",
+      "정상 완료 · 100점"
+     ],
+     [
+      "Sakura Robotics",
+      "정상 완료 · 100점"
+     ],
+     [
+      "Northstar AI",
+      "정상 완료 · 100점"
+     ]
+    ]
+   },
+   "chapterKey": 1,
+   "uiStep": "complete",
+   "practice": false,
+   "dialogue": {
+    "event": "intro_shift_3_complete",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "세 업무를 마쳤습니다.\n\n다음 근무에는 고객 요청이 겹칩니다.\n제2장에서 한정된 자원을 나누는 판단을 시작합니다."
+     ]
+    ]
+   },
+   "campaign": [
+    {
+     "key": 1,
+     "number": 1,
+     "label": "제1장",
+     "title": "첫 근무",
+     "heading": "제1장 — 첫 근무",
+     "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "고객 업무 3건 정상 완료"
+    },
+    {
+     "key": 2,
+     "number": 2,
+     "label": "제2장",
+     "title": "한정된 자원",
+     "heading": "제2장 — 한정된 자원",
+     "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+     "state": "available",
+     "stateLabel": "시작 가능",
+     "text": "이 저장에서 바로 시작할 수 있습니다."
+    },
+    {
+     "key": 3,
+     "number": 3,
+     "label": "제3장",
+     "title": "끊어진 연결",
+     "heading": "제3장 — 끊어진 연결",
+     "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제2장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "3b",
+     "number": 4,
+     "label": "제4장",
+     "title": "서버실의 경보",
+     "heading": "제4장 — 서버실의 경보",
+     "intro": "이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제3장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "lab",
+     "number": 5,
+     "label": "제5장",
+     "title": "홀로 선 엔지니어",
+     "heading": "제5장 — 홀로 선 엔지니어",
+     "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제4장을(를) 클리어하면 열립니다."
+    }
+   ],
+   "next": {
+    "key": 2,
+    "number": 2,
+    "label": "제2장",
+    "title": "한정된 자원",
+    "heading": "제2장 — 한정된 자원",
+    "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+    "available": true,
+    "reason": ""
+   },
+   "retry": {
+    "available": true,
+    "kind": "checkpoint",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": []
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch2_briefing": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_003",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "story",
+  "clock": {
+   "minute": 630,
+   "label": "D1 10:30"
+  },
+  "focus": 4,
+  "requests": [
+   {
+    "id": 1,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 7,
+    "power": 7,
+    "terms": {
+     "priority": "첫 근무 · 모델 학습",
+     "received": "D1 09:00",
+     "startDue": "D1 10:00",
+     "due": "D1 12:00",
+     "dueMinute": 720,
+     "expires": "D1 14:00",
+     "completed": "D1 09:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 7,
+       "power": 7,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 09:00] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 7개 / 전력: 7단위 / 네트워크: 5단위\n절약형: GPU 4개 / 전력 4단위 · 고객 동의 필요\n완료 기한: D1 12:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:00",
+     "[D1 09:00] [고객 요청 #1] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 09:00] 고성능 모드: GPU 7 / 전력 7 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2, C GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 7 / 전력 7 반환.",
+     "[D1 09:30] Merlion AI: 요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Merlion AI",
+     "country": "싱가포르",
+     "task": "생성형 AI 모델 학습 요청",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 7,
+     "power": 7,
+     "deadline": "준수",
+     "due": "D1 12:00",
+     "completed": "D1 09:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 3,
+    "power": 4,
+    "terms": {
+     "priority": "첫 근무 · 로봇 추론",
+     "received": "D1 09:30",
+     "startDue": "D1 10:30",
+     "due": "D1 12:30",
+     "dueMinute": 750,
+     "expires": "D1 14:30",
+     "completed": "D1 10:00",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 3,
+       "power": 4,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 2,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 3개 / 전력: 4단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 12:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:30",
+     "[D1 09:30] [고객 요청 #2] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:30] 고성능 모드: GPU 3 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4",
+     "[D1 09:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:00] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 3 / 전력 4 반환.",
+     "[D1 10:00] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 3,
+     "power": 4,
+     "deadline": "준수",
+     "due": "D1 12:30",
+     "completed": "D1 10:00",
+     "score": 100
+    }
+   },
+   {
+    "id": 3,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "첫 근무 · 데이터 분석",
+     "received": "D1 10:00",
+     "startDue": "D1 11:00",
+     "due": "D1 13:00",
+     "dueMinute": 780,
+     "expires": "D1 15:00",
+     "completed": "D1 10:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 13:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 15:00",
+     "[D1 10:00] [고객 요청 #3] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:00] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 10:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:00] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 6 / 전력 6 반환.",
+     "[D1 10:30] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 3,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "준수",
+     "due": "D1 13:00",
+     "completed": "D1 10:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 4,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "new",
+    "statusLabel": "신규 요청",
+    "unread": true,
+    "stage": "incoming",
+    "phase": "ready",
+    "progress": 0.0,
+    "workDone": 0,
+    "workTotal": 40,
+    "plan": null,
+    "planLabel": null,
+    "gpu": 0,
+    "power": 0,
+    "terms": {
+     "priority": "긴급 · 로봇 추론",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 11:20",
+     "dueMinute": 680,
+     "expires": "D1 11:50",
+     "completed": null,
+     "lateMinutes": null
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 5,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 3,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [
+     {
+      "key": "performance",
+      "label": "고성능 모드",
+      "gpu": 4,
+      "power": 5,
+      "minutes": 40,
+      "finish": 670,
+      "finish_label": "D1 11:10",
+      "due_label": "D1 11:20",
+      "on_time": true,
+      "late_minutes": 0,
+      "agreed": true,
+      "status": "고객 원래 요청",
+      "reason": ""
+     },
+     {
+      "key": "economy",
+      "label": "절약형 모드",
+      "gpu": 2,
+      "power": 3,
+      "minutes": 60,
+      "finish": 690,
+      "finish_label": "D1 11:30",
+      "due_label": "D1 11:20",
+      "on_time": false,
+      "late_minutes": 10,
+      "agreed": false,
+      "status": "고객 동의 필요",
+      "reason": "고객이 허용하지 않은 모드입니다. 고객 협의(대안 제시)와 동의가 필요합니다."
+     }
+    ],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 0,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": null,
+    "succeeded": null,
+    "resultText": "",
+    "deadline": "긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 50분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "[신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 11:20 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 11:50",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 10:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 11:20 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 11:50"
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": null
+   },
+   {
+    "id": 5,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "new",
+    "statusLabel": "신규 요청",
+    "unread": true,
+    "stage": "incoming",
+    "phase": "ready",
+    "progress": 0.0,
+    "workDone": 0,
+    "workTotal": 70,
+    "plan": null,
+    "planLabel": null,
+    "gpu": 0,
+    "power": 0,
+    "terms": {
+     "priority": "우선 · 데이터 분석",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 12:10",
+     "dueMinute": 730,
+     "expires": "D1 12:30",
+     "completed": null,
+     "lateMinutes": null
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [
+     {
+      "key": "performance",
+      "label": "고성능 모드",
+      "gpu": 6,
+      "power": 6,
+      "minutes": 70,
+      "finish": 700,
+      "finish_label": "D1 11:40",
+      "due_label": "D1 12:10",
+      "on_time": true,
+      "late_minutes": 0,
+      "agreed": true,
+      "status": "고객 원래 요청",
+      "reason": ""
+     },
+     {
+      "key": "economy",
+      "label": "절약형 모드",
+      "gpu": 4,
+      "power": 3,
+      "minutes": 100,
+      "finish": 730,
+      "finish_label": "D1 12:10",
+      "due_label": "D1 12:10",
+      "on_time": true,
+      "late_minutes": 0,
+      "agreed": true,
+      "status": "고객 허용 모드",
+      "reason": ""
+     }
+    ],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 0,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": null,
+    "succeeded": null,
+    "resultText": "",
+    "deadline": "우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 100분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "[신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 12:10 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 12:30",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:30] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 12:10 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 12:30"
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": null
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 0,
+   "powerTotal": 10,
+   "powerUsed": 0,
+   "healthyFreeGpu": 10,
+   "healthyFreePower": 10
+  },
+  "canAdvance": true,
+  "story": {
+   "kind": "shift",
+   "step": "c2_briefing",
+   "card": null,
+   "objective": "선배의 제2장 브리핑을 읽고 확인하세요.",
+   "pages": [],
+   "done": false,
+   "jobsDone": 0,
+   "jobsTotal": 2,
+   "chapter": {
+    "key": 2,
+    "number": 2,
+    "label": "제2장",
+    "title": "한정된 자원",
+    "heading": "제2장 — 한정된 자원",
+    "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+    "state": "in_progress",
+    "stateLabel": "진행 중",
+    "text": "선배의 제2장 브리핑을 읽고 확인하세요."
+   },
+   "result": null,
+   "chapterKey": 2,
+   "uiStep": "c2_briefing",
+   "practice": false,
+   "dialogue": {
+    "event": "c2_briefing",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "오늘은 고객 요청이 한꺼번에 들어왔습니다. 일본 고객은 로봇 추론 작업의 완료 기한이 촉박하고, 미국 고객은 데이터 분석을 위해 많은 GPU를 요구하고 있어요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "이번에는 고객이 두 곳입니다. 작업을 시작하기 전에 두 고객의 요청을 나란히 비교해 보세요. 확인할 것은 고객별 GPU 요구량, 전력 요구량, 운영 모드별 예상 처리 시간, 완료 기한, 고객이 허용하는 운영 모드, 그리고 지금 서버별로 남은 자원입니다. 마지막 장의 비교표는 현재 운영 시스템의 실제 값입니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "두 작업을 모두 원래 조건대로 동시에 실행하기는 어려울 수 있습니다. 서버 자원은 한정되어 있고, 먼저 배정한 작업이 남는 자원을 줄이니까요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "어떤 작업을 먼저 처리할지, 서버 자원을 어떻게 남겨둘지 판단해 보세요. 정답은 알려 드리지 않을게요. 고객 동의 없이 원래 조건을 바꿀 수는 없습니다. 준비가 되면 브리핑을 확인하고 내 모니터 요청함에서 두 요청을 열어 보세요."
+     ]
+    ]
+   },
+   "campaign": [
+    {
+     "key": 1,
+     "number": 1,
+     "label": "제1장",
+     "title": "첫 근무",
+     "heading": "제1장 — 첫 근무",
+     "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "다음 장으로 진급한 기록"
+    },
+    {
+     "key": 2,
+     "number": 2,
+     "label": "제2장",
+     "title": "한정된 자원",
+     "heading": "제2장 — 한정된 자원",
+     "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+     "state": "in_progress",
+     "stateLabel": "진행 중",
+     "text": "선배의 제2장 브리핑을 읽고 확인하세요."
+    },
+    {
+     "key": 3,
+     "number": 3,
+     "label": "제3장",
+     "title": "끊어진 연결",
+     "heading": "제3장 — 끊어진 연결",
+     "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제2장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "3b",
+     "number": 4,
+     "label": "제4장",
+     "title": "서버실의 경보",
+     "heading": "제4장 — 서버실의 경보",
+     "intro": "이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제3장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "lab",
+     "number": 5,
+     "label": "제5장",
+     "title": "홀로 선 엔지니어",
+     "heading": "제5장 — 홀로 선 엔지니어",
+     "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제4장을(를) 클리어하면 열립니다."
+    }
+   ],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "checkpoint",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": {
+    "requestIds": [
+     4,
+     5
+    ],
+    "step": "briefing",
+    "completed": false,
+    "comparison": [
+     "두 고객 요청 비교 · 현재 D1 10:30 기준",
+     "■ 일본 Sakura Robotics · 긴급 · 로봇 추론",
+     "  고성능 모드: GPU 4/전력 5 · 처리 40분 · 고객 원래 요청",
+     "  절약형 모드: GPU 2/전력 3 · 처리 60분 · 고객 동의 필요",
+     "  완료 기한 D1 11:20 (남은 50분) · 최종 배정 기한 D1 11:50",
+     "■ 미국 Northstar AI · 우선 · 데이터 분석",
+     "  고성능 모드: GPU 6/전력 6 · 처리 70분 · 고객 원래 요청",
+     "  절약형 모드: GPU 4/전력 3 · 처리 100분 · 고객 허용 모드",
+     "  완료 기한 D1 12:10 (남은 100분) · 최종 배정 기한 D1 12:30",
+     "서버별 남은 GPU/전력: A 4/4 · B 3/2 · C 2/3 · D 1/1"
+    ],
+    "briefing": {
+     "4": [
+      "고성능 모드 GPU 4/전력 5: 처리 40분 → 지금 시작하면 D1 11:10 완료 · 기한 내",
+      "두 고객의 원래 요청 동시 실행: 필요 GPU 10/전력 11 · 현재 가용 GPU 10/전력 10 → 불가"
+     ],
+     "5": [
+      "고성능 모드 GPU 6/전력 6: 처리 70분 → 지금 시작하면 D1 11:40 완료 · 기한 내",
+      "절약형 모드 GPU 4/전력 3: 처리 100분 → 지금 시작하면 D1 12:10 완료 · 기한 내",
+      "두 고객의 원래 요청 동시 실행: 필요 GPU 10/전력 11 · 현재 가용 GPU 10/전력 10 → 불가"
+     ]
+    },
+    "jobs": {
+     "4": [
+      "pending",
+      null
+     ],
+     "5": [
+      "pending",
+      null
+     ]
+    },
+    "evaluation": [
+     "일본 Sakura Robotics: 진행 중 · 점수 확정 전",
+     "미국 Northstar AI: 진행 중 · 점수 확정 전",
+     "Chapter 2 종합 평가: 미확정(두 작업이 끝나면 확정)"
+    ],
+    "failure": null,
+    "failurePending": false,
+    "failurePages": [],
+    "retryAvailable": false
+   },
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": [
+    {
+     "rid": 4,
+     "code": "JP",
+     "tone": "incoming",
+     "focus": true,
+     "link": "ok",
+     "linkNote": "",
+     "segments": {
+      "sea": "ok",
+      "landing": "ok",
+      "backbone": "ok",
+      "aidc": "ok"
+     }
+    },
+    {
+     "rid": 5,
+     "code": "US",
+     "tone": "incoming",
+     "focus": false,
+     "link": "ok",
+     "linkNote": "",
+     "segments": {
+      "sea": "ok",
+      "landing": "ok",
+      "backbone": "ok",
+      "aidc": "ok"
+     }
+    }
+   ]
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch2_clear": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_003",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "story",
+  "clock": {
+   "minute": 750,
+   "label": "D1 12:30"
+  },
+  "focus": 5,
+  "requests": [
+   {
+    "id": 1,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 7,
+    "power": 7,
+    "terms": {
+     "priority": "첫 근무 · 모델 학습",
+     "received": "D1 09:00",
+     "startDue": "D1 10:00",
+     "due": "D1 12:00",
+     "dueMinute": 720,
+     "expires": "D1 14:00",
+     "completed": "D1 09:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 7,
+       "power": 7,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 09:00] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 7개 / 전력: 7단위 / 네트워크: 5단위\n절약형: GPU 4개 / 전력 4단위 · 고객 동의 필요\n완료 기한: D1 12:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:00",
+     "[D1 09:00] [고객 요청 #1] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 09:00] 고성능 모드: GPU 7 / 전력 7 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2, C GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 7 / 전력 7 반환.",
+     "[D1 09:30] Merlion AI: 요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Merlion AI",
+     "country": "싱가포르",
+     "task": "생성형 AI 모델 학습 요청",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 7,
+     "power": 7,
+     "deadline": "준수",
+     "due": "D1 12:00",
+     "completed": "D1 09:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 3,
+    "power": 4,
+    "terms": {
+     "priority": "첫 근무 · 로봇 추론",
+     "received": "D1 09:30",
+     "startDue": "D1 10:30",
+     "due": "D1 12:30",
+     "dueMinute": 750,
+     "expires": "D1 14:30",
+     "completed": "D1 10:00",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 3,
+       "power": 4,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 2,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 3개 / 전력: 4단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 12:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:30",
+     "[D1 09:30] [고객 요청 #2] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:30] 고성능 모드: GPU 3 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4",
+     "[D1 09:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:00] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 3 / 전력 4 반환.",
+     "[D1 10:00] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 3,
+     "power": 4,
+     "deadline": "준수",
+     "due": "D1 12:30",
+     "completed": "D1 10:00",
+     "score": 100
+    }
+   },
+   {
+    "id": 3,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "첫 근무 · 데이터 분석",
+     "received": "D1 10:00",
+     "startDue": "D1 11:00",
+     "due": "D1 13:00",
+     "dueMinute": 780,
+     "expires": "D1 15:00",
+     "completed": "D1 10:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 13:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 15:00",
+     "[D1 10:00] [고객 요청 #3] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:00] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 10:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:00] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 6 / 전력 6 반환.",
+     "[D1 10:30] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 3,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "준수",
+     "due": "D1 13:00",
+     "completed": "D1 10:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 4,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 40,
+    "workTotal": 40,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 5,
+    "terms": {
+     "priority": "긴급 · 로봇 추론",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 11:20",
+     "dueMinute": 680,
+     "expires": "D1 11:50",
+     "completed": "D1 11:10",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 5,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 3,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 10:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 11:20 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 11:50",
+     "[D1 10:30] [고객 요청 #4] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 10:30] 고성능 모드: GPU 4 / 전력 5 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4, B GPU 1/전력 1",
+     "[D1 10:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:50] Sakura Robotics: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 11:10] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 5 반환.",
+     "[D1 11:10] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2
+       ],
+       "gpu": 3,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0
+       ],
+       "gpu": 1,
+       "power": 1
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 630
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 4,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 4,
+     "power": 5,
+     "deadline": "준수",
+     "due": "D1 11:20",
+     "completed": "D1 11:10",
+     "score": 100
+    }
+   },
+   {
+    "id": 5,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 70,
+    "workTotal": 70,
+    "plan": "economy",
+    "planLabel": "절약형 모드",
+    "gpu": 4,
+    "power": 3,
+    "terms": {
+     "priority": "우선 · 데이터 분석",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 12:10",
+     "dueMinute": 730,
+     "expires": "D1 12:30",
+     "completed": "D1 12:10",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 95,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 95점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 0분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:30] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 12:10 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 12:30",
+     "[D1 10:30] [고객 요청 #5] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:30] 절약형 모드: GPU 4 / 전력 3 배정. 정상 실행을 시작합니다.\n서버 배정: B GPU 2/전력 1, C GPU 2/전력 2",
+     "[D1 10:30] 최종 운영 계획: 절약형 모드 · 고객 허용 모드 적용",
+     "[D1 10:30] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 11:40] Northstar AI: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 12:10] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 95점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 3 반환.",
+     "[D1 12:10] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": {
+     "mode": "economy",
+     "index": 0,
+     "slices": [
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        1,
+        2
+       ],
+       "gpu": 2,
+       "power": 1
+      },
+      {
+       "server": "C",
+       "rack": "C-01",
+       "gpuSlots": [
+        0,
+        1
+       ],
+       "gpu": 2,
+       "power": 2
+      }
+     ],
+     "label": "절약형 모드",
+     "minute": 630
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 5,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "절약형 모드",
+     "gpu": 4,
+     "power": 3,
+     "deadline": "준수",
+     "due": "D1 12:10",
+     "completed": "D1 12:10",
+     "score": 95
+    }
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 0,
+   "powerTotal": 10,
+   "powerUsed": 0,
+   "healthyFreeGpu": 10,
+   "healthyFreePower": 10
+  },
+  "canAdvance": false,
+  "story": {
+   "kind": "shift",
+   "step": "c2_done",
+   "card": null,
+   "objective": "제2장 종료 · 결과 화면에서 미션 평가를 확인하세요.",
+   "pages": [],
+   "done": true,
+   "jobsDone": 2,
+   "jobsTotal": 2,
+   "chapter": {
+    "key": 2,
+    "number": 2,
+    "label": "제2장",
+    "title": "한정된 자원",
+    "heading": "제2장 — 한정된 자원",
+    "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+    "state": "cleared",
+    "stateLabel": "클리어",
+    "text": "이 장의 미션을 성공했습니다."
+   },
+   "result": {
+    "jobs": [
+     {
+      "request_id": 4,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "task": "로봇 AI 모델 추론 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 100,
+      "on_time": true,
+      "mode": "고성능 모드",
+      "gpu": 4,
+      "power": 5,
+      "placement": "A GPU 3/전력 4, B GPU 1/전력 1",
+      "started": 630,
+      "completed": 670,
+      "waited": 0,
+      "late_minutes": 0,
+      "penalty": 0,
+      "expired": false,
+      "expiry": 710,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 100,
+      "state": "success",
+      "reason": null,
+      "deadline": "준수"
+     },
+     {
+      "request_id": 5,
+      "company": "Northstar AI",
+      "country": "미국",
+      "task": "대규모 데이터 분석 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 95,
+      "on_time": true,
+      "mode": "절약형 모드",
+      "gpu": 4,
+      "power": 3,
+      "placement": "B GPU 2/전력 1, C GPU 2/전력 2",
+      "started": 630,
+      "completed": 730,
+      "waited": 0,
+      "late_minutes": 0,
+      "penalty": 0,
+      "expired": false,
+      "expiry": 750,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 95,
+      "state": "success",
+      "reason": null,
+      "deadline": "준수"
+     }
+    ],
+    "concurrent": true,
+    "servers": {
+     "A": "IDLE",
+     "B": "IDLE",
+     "C": "IDLE",
+     "D": "IDLE"
+    },
+    "decisions": [
+     "두 작업을 같은 시각(D1 10:30)에 시작했습니다.",
+     "일본: 고성능 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료",
+     "미국: 절약형 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료"
+    ],
+    "practice": false,
+    "mission": "success",
+    "overall": 97.5,
+    "failure": null,
+    "highlights": [
+     "일본 Sakura Robotics: 고객이 원래 요청한 고성능 모드(GPU 4/전력 5 · 배정 A GPU 3/전력 4, B GPU 1/전력 1)로 D1 10:30에 시작해 D1 11:10에 완료했습니다. 완료 기한 D1 11:20보다 10분 먼저 끝냈습니다.",
+     "미국 Northstar AI: 고객이 허용한 절약형 모드(GPU 4/전력 3 · 배정 B GPU 2/전력 1, C GPU 2/전력 2)로 D1 10:30에 시작해 D1 12:10에 완료했습니다. 완료 기한 D1 12:10에 맞춰 끝냈습니다.",
+     "두 작업을 동시에 실행하며 GPU 8개와 전력 8단위를 나누어 썼습니다(데이터센터 총 GPU 10/전력 10)."
+    ],
+    "summary": {
+     "mission": "success",
+     "overall": 97.5,
+     "ok": 2,
+     "total": 2,
+     "strategy": "일본 고성능 + 미국 절약형",
+     "arrangement": "두 작업 동시 실행",
+     "resources": "GPU 8개 / 전력 8단위 사용 후 반환",
+     "verdict": "두 고객 모두 기한 내 완료"
+    }
+   },
+   "chapterKey": 2,
+   "uiStep": "c2_done",
+   "practice": false,
+   "dialogue": {
+    "event": "c2_done",
+    "seen": false,
+    "pages": [
+     [
+      "system",
+      "시스템 · AIDC 운영 알림",
+      "두 고객의 요청이 모두 끝났습니다. 결과 화면에서 미션 성공 여부와 고객별 점수, 종합 평가, 배정 위치, 반환된 자원을 확인할 수 있습니다."
+     ]
+    ]
+   },
+   "campaign": [
+    {
+     "key": 1,
+     "number": 1,
+     "label": "제1장",
+     "title": "첫 근무",
+     "heading": "제1장 — 첫 근무",
+     "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "다음 장으로 진급한 기록"
+    },
+    {
+     "key": 2,
+     "number": 2,
+     "label": "제2장",
+     "title": "한정된 자원",
+     "heading": "제2장 — 한정된 자원",
+     "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "이 장의 미션을 성공했습니다."
+    },
+    {
+     "key": 3,
+     "number": 3,
+     "label": "제3장",
+     "title": "끊어진 연결",
+     "heading": "제3장 — 끊어진 연결",
+     "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+     "state": "available",
+     "stateLabel": "시작 가능",
+     "text": "이 저장에서 바로 시작할 수 있습니다."
+    },
+    {
+     "key": "3b",
+     "number": 4,
+     "label": "제4장",
+     "title": "서버실의 경보",
+     "heading": "제4장 — 서버실의 경보",
+     "intro": "이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제3장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "lab",
+     "number": 5,
+     "label": "제5장",
+     "title": "홀로 선 엔지니어",
+     "heading": "제5장 — 홀로 선 엔지니어",
+     "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제4장을(를) 클리어하면 열립니다."
+    }
+   ],
+   "next": {
+    "key": 3,
+    "number": 3,
+    "label": "제3장",
+    "title": "끊어진 연결",
+    "heading": "제3장 — 끊어진 연결",
+    "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+    "available": true,
+    "reason": ""
+   },
+   "retry": {
+    "available": true,
+    "kind": "checkpoint",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": {
+    "requestIds": [
+     4,
+     5
+    ],
+    "step": "finish",
+    "completed": true,
+    "comparison": [],
+    "briefing": {
+     "4": [],
+     "5": []
+    },
+    "jobs": {
+     "4": [
+      "success",
+      null
+     ],
+     "5": [
+      "success",
+      null
+     ]
+    },
+    "evaluation": [
+     "일본 Sakura Robotics: 100점 (정상 완료 · 기한 내)",
+     "미국 Northstar AI: 95점 (정상 완료 · 기한 내)",
+     "Chapter 2 종합 평가: 97.5/100"
+    ],
+    "failure": null,
+    "failurePending": false,
+    "failurePages": [],
+    "retryAvailable": false
+   },
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": []
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch3_symptom": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_003",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "story",
+  "clock": {
+   "minute": 780,
+   "label": "D1 13:00"
+  },
+  "focus": 6,
+  "requests": [
+   {
+    "id": 1,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 7,
+    "power": 7,
+    "terms": {
+     "priority": "첫 근무 · 모델 학습",
+     "received": "D1 09:00",
+     "startDue": "D1 10:00",
+     "due": "D1 12:00",
+     "dueMinute": 720,
+     "expires": "D1 14:00",
+     "completed": "D1 09:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 7,
+       "power": 7,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 09:00] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 7개 / 전력: 7단위 / 네트워크: 5단위\n절약형: GPU 4개 / 전력 4단위 · 고객 동의 필요\n완료 기한: D1 12:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:00",
+     "[D1 09:00] [고객 요청 #1] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 09:00] 고성능 모드: GPU 7 / 전력 7 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2, C GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 7 / 전력 7 반환.",
+     "[D1 09:30] Merlion AI: 요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Merlion AI",
+     "country": "싱가포르",
+     "task": "생성형 AI 모델 학습 요청",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 7,
+     "power": 7,
+     "deadline": "준수",
+     "due": "D1 12:00",
+     "completed": "D1 09:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 3,
+    "power": 4,
+    "terms": {
+     "priority": "첫 근무 · 로봇 추론",
+     "received": "D1 09:30",
+     "startDue": "D1 10:30",
+     "due": "D1 12:30",
+     "dueMinute": 750,
+     "expires": "D1 14:30",
+     "completed": "D1 10:00",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 3,
+       "power": 4,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 2,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 3개 / 전력: 4단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 12:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:30",
+     "[D1 09:30] [고객 요청 #2] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:30] 고성능 모드: GPU 3 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4",
+     "[D1 09:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:00] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 3 / 전력 4 반환.",
+     "[D1 10:00] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 3,
+     "power": 4,
+     "deadline": "준수",
+     "due": "D1 12:30",
+     "completed": "D1 10:00",
+     "score": 100
+    }
+   },
+   {
+    "id": 3,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "첫 근무 · 데이터 분석",
+     "received": "D1 10:00",
+     "startDue": "D1 11:00",
+     "due": "D1 13:00",
+     "dueMinute": 780,
+     "expires": "D1 15:00",
+     "completed": "D1 10:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 13:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 15:00",
+     "[D1 10:00] [고객 요청 #3] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:00] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 10:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:00] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 6 / 전력 6 반환.",
+     "[D1 10:30] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 3,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "준수",
+     "due": "D1 13:00",
+     "completed": "D1 10:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 4,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 40,
+    "workTotal": 40,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 5,
+    "terms": {
+     "priority": "긴급 · 로봇 추론",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 11:20",
+     "dueMinute": 680,
+     "expires": "D1 11:50",
+     "completed": "D1 11:10",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 5,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 3,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 10:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 11:20 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 11:50",
+     "[D1 10:30] [고객 요청 #4] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 10:30] 고성능 모드: GPU 4 / 전력 5 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4, B GPU 1/전력 1",
+     "[D1 10:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:50] Sakura Robotics: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 11:10] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 5 반환.",
+     "[D1 11:10] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 4,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 4,
+     "power": 5,
+     "deadline": "준수",
+     "due": "D1 11:20",
+     "completed": "D1 11:10",
+     "score": 100
+    }
+   },
+   {
+    "id": 5,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 70,
+    "workTotal": 70,
+    "plan": "economy",
+    "planLabel": "절약형 모드",
+    "gpu": 4,
+    "power": 3,
+    "terms": {
+     "priority": "우선 · 데이터 분석",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 12:10",
+     "dueMinute": 730,
+     "expires": "D1 12:30",
+     "completed": "D1 12:10",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 95,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 95점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 0분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:30] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 12:10 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 12:30",
+     "[D1 10:30] [고객 요청 #5] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:30] 절약형 모드: GPU 4 / 전력 3 배정. 정상 실행을 시작합니다.\n서버 배정: B GPU 2/전력 1, C GPU 2/전력 2",
+     "[D1 10:30] 최종 운영 계획: 절약형 모드 · 고객 허용 모드 적용",
+     "[D1 10:30] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 11:40] Northstar AI: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 12:10] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 95점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 3 반환.",
+     "[D1 12:10] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 5,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "절약형 모드",
+     "gpu": 4,
+     "power": 3,
+     "deadline": "준수",
+     "due": "D1 12:10",
+     "completed": "D1 12:10",
+     "score": 95
+    }
+   },
+   {
+    "id": 6,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "operating",
+    "statusLabel": "수락",
+    "unread": true,
+    "stage": "net_fault",
+    "phase": "incident",
+    "progress": 50.0,
+    "workDone": 30,
+    "workTotal": 60,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 4,
+    "terms": {
+     "priority": "일반 · 모델 학습",
+     "received": "D1 12:30",
+     "startDue": "D1 12:40",
+     "due": "D1 15:00",
+     "dueMinute": 900,
+     "expires": "D1 16:30",
+     "completed": null,
+     "lateMinutes": null
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 3,
+       "power": 2,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [
+     {
+      "server": "A",
+      "rack": "A-01",
+      "gpuSlots": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "gpu": 4,
+      "power": 4
+     }
+    ],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 0,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": true
+    },
+    "recoveryLeft": 0,
+    "score": null,
+    "succeeded": null,
+    "resultText": "",
+    "deadline": "일반 · 모델 학습 · 접수 D1 12:30 · 대기 0분\n배정 권장 D1 12:40 · 완료 기한 D1 15:00 · 남은 120분",
+    "deadlineLevel": "",
+    "canNotifyDelay": true,
+    "canRetry": false,
+    "lastFeedback": "작업이 지연되고 있습니다. 현재 복구 상황을 알려주세요.",
+    "log": [
+     "[D1 12:30] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 12:30] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 4단위 / 네트워크: 5단위\n절약형: GPU 3개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 15:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 60분 / 절약형 모드 90분\n\n일반 · 모델 학습 · 접수 D1 12:30 · 대기 0분\n배정 권장 D1 12:40 · 완료 기한 D1 15:00 · 남은 150분\n미배정 요청의 최종 접수 종료: D1 16:30",
+     "[D1 12:30] [고객 요청 #6] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 12:30] 고성능 모드: GPU 4 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4",
+     "[D1 12:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 12:30] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 13:00] 긴급 경고! 싱가포르 네트워크 장애 감지. 작업 진행이 멈췄습니다. [네트워크 진단]에서 원인을 확인하세요.",
+     "[D1 13:00] Merlion AI: 작업이 지연되고 있습니다. 현재 복구 상황을 알려주세요."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "gpu": 4,
+       "power": 4
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 750
+    },
+    "reported": false,
+    "summary": null
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 4,
+    "usedPower": 4,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     6,
+     6,
+     6,
+     6
+    ],
+    "jobs": [
+     6
+    ]
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 4,
+   "powerTotal": 10,
+   "powerUsed": 4,
+   "healthyFreeGpu": 6,
+   "healthyFreePower": 6
+  },
+  "canAdvance": true,
+  "story": {
+   "kind": "shift",
+   "step": "c3_a_diagnose",
+   "card": null,
+   "objective": "[진단] 탭을 열어 장애 원인을 확인하세요.",
+   "pages": [],
+   "done": false,
+   "jobsDone": 0,
+   "jobsTotal": 2,
+   "chapter": {
+    "key": 3,
+    "number": 3,
+    "label": "제3장",
+    "title": "끊어진 연결",
+    "heading": "제3장 — 끊어진 연결",
+    "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+    "state": "in_progress",
+    "stateLabel": "진행 중",
+    "text": "[진단] 탭을 열어 장애 원인을 확인하세요."
+   },
+   "result": null,
+   "chapterKey": 3,
+   "uiStep": "c3_a_diagnose",
+   "practice": false,
+   "dialogue": {
+    "event": "c3_a_diagnose",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "작업이 중단됐습니다. 먼저 【장애 원인】을 확인하세요.\n\n[진단] 탭에서 살펴볼 항목\n\n① 【주 통신 경로】 — 연결되어 있는가?\n② 【필요 대역폭】 — 작업에 얼마나 필요한가?\n③ 【백업 경로】 — 이용 가능한 대체 경로가 있는가?\n④ 【GPU·서버 상태】 — 네트워크 외 장비에는 문제가 없는가?\n\n확인한 정보를 바탕으로 대응 방법을 선택해 보세요."
+     ]
+    ]
+   },
+   "campaign": [
+    {
+     "key": 1,
+     "number": 1,
+     "label": "제1장",
+     "title": "첫 근무",
+     "heading": "제1장 — 첫 근무",
+     "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "다음 장으로 진급한 기록"
+    },
+    {
+     "key": 2,
+     "number": 2,
+     "label": "제2장",
+     "title": "한정된 자원",
+     "heading": "제2장 — 한정된 자원",
+     "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "다음 장으로 진급한 기록"
+    },
+    {
+     "key": 3,
+     "number": 3,
+     "label": "제3장",
+     "title": "끊어진 연결",
+     "heading": "제3장 — 끊어진 연결",
+     "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+     "state": "in_progress",
+     "stateLabel": "진행 중",
+     "text": "[진단] 탭을 열어 장애 원인을 확인하세요."
+    },
+    {
+     "key": "3b",
+     "number": 4,
+     "label": "제4장",
+     "title": "서버실의 경보",
+     "heading": "제4장 — 서버실의 경보",
+     "intro": "이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제3장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "lab",
+     "number": 5,
+     "label": "제5장",
+     "title": "홀로 선 엔지니어",
+     "heading": "제5장 — 홀로 선 엔지니어",
+     "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제4장을(를) 클리어하면 열립니다."
+    }
+   ],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "checkpoint",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": {
+    "requestIds": [
+     6
+    ],
+    "step": "a_diagnose",
+    "completed": false,
+    "diagnosed": [],
+    "records": {
+     "6": {
+      "kind": "path_down",
+      "responses": [],
+      "attempts": 0,
+      "recovered_by": null,
+      "downtime": 0,
+      "primary_up": false,
+      "rerouted": false,
+      "needed": 5,
+      "available": 0,
+      "backup": 6,
+      "diagnosed": false,
+      "initial_needed": 5,
+      "final": null
+     }
+    },
+    "cards": {
+     "6": null
+    },
+    "pending": null,
+    "retryAvailable": false
+   },
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": [
+    {
+     "rid": 6,
+     "code": "SG",
+     "tone": "active",
+     "focus": true,
+     "link": "symptom",
+     "linkNote": "전송 중단 · 원인 미확인 — 진단으로 확인하세요",
+     "segments": {
+      "sea": "degraded",
+      "landing": "degraded",
+      "backbone": "degraded",
+      "aidc": "ok"
+     }
+    }
+   ]
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch3_diagnosed": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_003",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "story",
+  "clock": {
+   "minute": 780,
+   "label": "D1 13:00"
+  },
+  "focus": 6,
+  "requests": [
+   {
+    "id": 1,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 7,
+    "power": 7,
+    "terms": {
+     "priority": "첫 근무 · 모델 학습",
+     "received": "D1 09:00",
+     "startDue": "D1 10:00",
+     "due": "D1 12:00",
+     "dueMinute": 720,
+     "expires": "D1 14:00",
+     "completed": "D1 09:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 7,
+       "power": 7,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 09:00] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 7개 / 전력: 7단위 / 네트워크: 5단위\n절약형: GPU 4개 / 전력 4단위 · 고객 동의 필요\n완료 기한: D1 12:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 10:00 · 완료 기한 D1 12:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:00",
+     "[D1 09:00] [고객 요청 #1] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 09:00] 고성능 모드: GPU 7 / 전력 7 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2, C GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 7 / 전력 7 반환.",
+     "[D1 09:30] Merlion AI: 요청드린 작업이 예정대로 완료됐네요. 안정적으로 처리해 주셔서 감사합니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Merlion AI",
+     "country": "싱가포르",
+     "task": "생성형 AI 모델 학습 요청",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 7,
+     "power": 7,
+     "deadline": "준수",
+     "due": "D1 12:00",
+     "completed": "D1 09:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 3,
+    "power": 4,
+    "terms": {
+     "priority": "첫 근무 · 로봇 추론",
+     "received": "D1 09:30",
+     "startDue": "D1 10:30",
+     "due": "D1 12:30",
+     "dueMinute": 750,
+     "expires": "D1 14:30",
+     "completed": "D1 10:00",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 3,
+       "power": 4,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 2,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 3개 / 전력: 4단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 12:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 로봇 추론 · 접수 D1 09:30 · 대기 0분\n배정 권장 D1 10:30 · 완료 기한 D1 12:30 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 14:30",
+     "[D1 09:30] [고객 요청 #2] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:30] 고성능 모드: GPU 3 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4",
+     "[D1 09:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:00] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 3 / 전력 4 반환.",
+     "[D1 10:00] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 3,
+     "power": 4,
+     "deadline": "준수",
+     "due": "D1 12:30",
+     "completed": "D1 10:00",
+     "score": 100
+    }
+   },
+   {
+    "id": 3,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 30,
+    "workTotal": 30,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "첫 근무 · 데이터 분석",
+     "received": "D1 10:00",
+     "startDue": "D1 11:00",
+     "due": "D1 13:00",
+     "dueMinute": 780,
+     "expires": "D1 15:00",
+     "completed": "D1 10:30",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 13:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 30분 / 절약형 모드 50분\n\n첫 근무 · 데이터 분석 · 접수 D1 10:00 · 대기 0분\n배정 권장 D1 11:00 · 완료 기한 D1 13:00 · 남은 180분\n미배정 요청의 최종 접수 종료: D1 15:00",
+     "[D1 10:00] [고객 요청 #3] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:00] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 10:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:00] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:30] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 6 / 전력 6 반환.",
+     "[D1 10:30] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 3,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "준수",
+     "due": "D1 13:00",
+     "completed": "D1 10:30",
+     "score": 100
+    }
+   },
+   {
+    "id": 4,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 40,
+    "workTotal": 40,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 5,
+    "terms": {
+     "priority": "긴급 · 로봇 추론",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 11:20",
+     "dueMinute": 680,
+     "expires": "D1 11:50",
+     "completed": "D1 11:10",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 5,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 3,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 10:30] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 11:20 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 11:20 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 11:50",
+     "[D1 10:30] [고객 요청 #4] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 10:30] 고성능 모드: GPU 4 / 전력 5 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4, B GPU 1/전력 1",
+     "[D1 10:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 10:30] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:50] Sakura Robotics: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 11:10] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 5 반환.",
+     "[D1 11:10] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 4,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 4,
+     "power": 5,
+     "deadline": "준수",
+     "due": "D1 11:20",
+     "completed": "D1 11:10",
+     "score": 100
+    }
+   },
+   {
+    "id": 5,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 70,
+    "workTotal": 70,
+    "plan": "economy",
+    "planLabel": "절약형 모드",
+    "gpu": 4,
+    "power": 3,
+    "terms": {
+     "priority": "우선 · 데이터 분석",
+     "received": "D1 10:30",
+     "startDue": "D1 10:40",
+     "due": "D1 12:10",
+     "dueMinute": 730,
+     "expires": "D1 12:30",
+     "completed": "D1 12:10",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 95,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 95점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 0분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다.",
+    "log": [
+     "[D1 10:30] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 10:30] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 12:10 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 10:30 · 대기 0분\n배정 권장 D1 10:40 · 완료 기한 D1 12:10 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 12:30",
+     "[D1 10:30] [고객 요청 #5] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 10:30] 절약형 모드: GPU 4 / 전력 3 배정. 정상 실행을 시작합니다.\n서버 배정: B GPU 2/전력 1, C GPU 2/전력 2",
+     "[D1 10:30] 최종 운영 계획: 절약형 모드 · 고객 허용 모드 적용",
+     "[D1 10:30] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 11:40] Northstar AI: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 12:10] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 95점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 3 반환.",
+     "[D1 12:10] Northstar AI: 작업이 일정에 맞춰 끝났네요. 안정적으로 처리해 주셔서 고맙습니다."
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": {
+     "request_id": 5,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "절약형 모드",
+     "gpu": 4,
+     "power": 3,
+     "deadline": "준수",
+     "due": "D1 12:10",
+     "completed": "D1 12:10",
+     "score": 95
+    }
+   },
+   {
+    "id": 6,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "operating",
+    "statusLabel": "수락",
+    "unread": true,
+    "stage": "net_fault",
+    "phase": "incident",
+    "progress": 50.0,
+    "workDone": 30,
+    "workTotal": 60,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 4,
+    "terms": {
+     "priority": "일반 · 모델 학습",
+     "received": "D1 12:30",
+     "startDue": "D1 12:40",
+     "due": "D1 15:00",
+     "dueMinute": 900,
+     "expires": "D1 16:30",
+     "completed": null,
+     "lateMinutes": null
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 3,
+       "power": 2,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [
+     {
+      "server": "A",
+      "rack": "A-01",
+      "gpuSlots": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "gpu": 4,
+      "power": 4
+     }
+    ],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 5,
+     "available": 0,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": true
+    },
+    "recoveryLeft": 0,
+    "score": null,
+    "succeeded": null,
+    "resultText": "",
+    "deadline": "일반 · 모델 학습 · 접수 D1 12:30 · 대기 0분\n배정 권장 D1 12:40 · 완료 기한 D1 15:00 · 남은 120분",
+    "deadlineLevel": "",
+    "canNotifyDelay": true,
+    "canRetry": false,
+    "lastFeedback": "작업이 지연되고 있습니다. 현재 복구 상황을 알려주세요.",
+    "log": [
+     "[D1 12:30] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 12:30] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 4단위 / 네트워크: 5단위\n절약형: GPU 3개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 15:00 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 60분 / 절약형 모드 90분\n\n일반 · 모델 학습 · 접수 D1 12:30 · 대기 0분\n배정 권장 D1 12:40 · 완료 기한 D1 15:00 · 남은 150분\n미배정 요청의 최종 접수 종료: D1 16:30",
+     "[D1 12:30] [고객 요청 #6] Merlion AI · 생성형 AI 모델 학습 요청",
+     "[D1 12:30] 고성능 모드: GPU 4 / 전력 4 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4",
+     "[D1 12:30] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 12:30] Merlion AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 13:00] 긴급 경고! 싱가포르 네트워크 장애 감지. 작업 진행이 멈췄습니다. [네트워크 진단]에서 원인을 확인하세요.",
+     "[D1 13:00] Merlion AI: 작업이 지연되고 있습니다. 현재 복구 상황을 알려주세요.",
+     "[D1 13:00] 네트워크 진단 확인: 주 경로 DOWN · 필요 5 / 가용 0 · 백업 경로: UP · 용량 6 · 장비 GPU·서버 장비 정상 (네트워크만 문제)"
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "gpu": 4,
+       "power": 4
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 750
+    },
+    "reported": false,
+    "summary": null
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 4,
+    "usedPower": 4,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     6,
+     6,
+     6,
+     6
+    ],
+    "jobs": [
+     6
+    ]
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 4,
+   "powerTotal": 10,
+   "powerUsed": 4,
+   "healthyFreeGpu": 6,
+   "healthyFreePower": 6
+  },
+  "canAdvance": true,
+  "story": {
+   "kind": "shift",
+   "step": "c3_a_respond",
+   "card": null,
+   "objective": "진단 정보를 근거로 직접 판단해 대응을 선택하세요.",
+   "pages": [],
+   "done": false,
+   "jobsDone": 0,
+   "jobsTotal": 2,
+   "chapter": {
+    "key": 3,
+    "number": 3,
+    "label": "제3장",
+    "title": "끊어진 연결",
+    "heading": "제3장 — 끊어진 연결",
+    "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+    "state": "in_progress",
+    "stateLabel": "진행 중",
+    "text": "진단 정보를 근거로 직접 판단해 대응을 선택하세요."
+   },
+   "result": null,
+   "chapterKey": 3,
+   "uiStep": "c3_a_respond",
+   "practice": false,
+   "dialogue": {
+    "event": "c3_a_respond",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "진단 정보를 확인했네요. 이제 수치를 근거로 어떤 대응이 맞을지 스스로 판단해 보세요. 대응은 3회까지이고 시도마다 비용이 들며, 중단 시간은 계속 쌓입니다. 결과가 기대와 다르면 진단 정보를 다시 열어 비교하면 됩니다."
+     ]
+    ]
+   },
+   "campaign": [
+    {
+     "key": 1,
+     "number": 1,
+     "label": "제1장",
+     "title": "첫 근무",
+     "heading": "제1장 — 첫 근무",
+     "intro": "기본 조작을 익힌 신입의 첫 근무입니다. 세 고객의 업무를 한 건씩 맡으며 운영의 흐름에 적응해 보세요.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "다음 장으로 진급한 기록"
+    },
+    {
+     "key": 2,
+     "number": 2,
+     "label": "제2장",
+     "title": "한정된 자원",
+     "heading": "제2장 — 한정된 자원",
+     "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+     "state": "cleared",
+     "stateLabel": "클리어",
+     "text": "다음 장으로 진급한 기록"
+    },
+    {
+     "key": 3,
+     "number": 3,
+     "label": "제3장",
+     "title": "끊어진 연결",
+     "heading": "제3장 — 끊어진 연결",
+     "intro": "작업 도중 통신이 흔들립니다. 보이는 증상과 확인한 사실을 연결해 원인을 찾아보세요.",
+     "state": "in_progress",
+     "stateLabel": "진행 중",
+     "text": "진단 정보를 근거로 직접 판단해 대응을 선택하세요."
+    },
+    {
+     "key": "3b",
+     "number": 4,
+     "label": "제4장",
+     "title": "서버실의 경보",
+     "heading": "제4장 — 서버실의 경보",
+     "intro": "이번 경보는 서버실에서 울립니다. 장비 상태와 진행 중인 업무를 함께 살펴야 합니다.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제3장을(를) 클리어하면 열립니다."
+    },
+    {
+     "key": "lab",
+     "number": 5,
+     "label": "제5장",
+     "title": "홀로 선 엔지니어",
+     "heading": "제5장 — 홀로 선 엔지니어",
+     "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+     "state": "locked",
+     "stateLabel": "잠김",
+     "text": "제4장을(를) 클리어하면 열립니다."
+    }
+   ],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "checkpoint",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": {
+    "requestIds": [
+     6
+    ],
+    "step": "a_respond",
+    "completed": false,
+    "diagnosed": [
+     6
+    ],
+    "records": {
+     "6": {
+      "kind": "path_down",
+      "responses": [],
+      "attempts": 0,
+      "recovered_by": null,
+      "downtime": 0,
+      "primary_up": false,
+      "rerouted": false,
+      "needed": 5,
+      "available": 0,
+      "backup": 6,
+      "diagnosed": true,
+      "initial_needed": 5,
+      "final": null
+     }
+    },
+    "cards": {
+     "6": null
+    },
+    "pending": null,
+    "retryAvailable": false
+   },
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": [
+    {
+     "rid": 6,
+     "code": "SG",
+     "tone": "active",
+     "focus": true,
+     "link": "primary_down",
+     "linkNote": "진단: 주 통신 경로 링크 신호 없음 · 백업 경로 대기 (정확한 끊긴 지점은 이 진단으로 알 수 없음)",
+     "segments": {
+      "sea": "degraded",
+      "landing": "degraded",
+      "backbone": "degraded",
+      "aidc": "ok"
+     }
+    }
+   ]
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "lab_practice": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_004",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "practice",
+  "clock": {
+   "minute": 540,
+   "label": "D1 09:00"
+  },
+  "focus": 1,
+  "requests": [
+   {
+    "id": 1,
+    "country": "싱가포르",
+    "code": "SG",
+    "company": "Merlion AI",
+    "title": "생성형 AI 모델 학습 요청",
+    "status": "new",
+    "statusLabel": "신규 요청",
+    "unread": true,
+    "stage": "incoming",
+    "phase": "ready",
+    "progress": 0.0,
+    "workDone": 0,
+    "workTotal": 60,
+    "plan": null,
+    "planLabel": null,
+    "gpu": 0,
+    "power": 0,
+    "terms": {
+     "priority": "일반 · 모델 학습",
+     "received": "D1 09:00",
+     "startDue": "D1 09:10",
+     "due": "D1 11:30",
+     "dueMinute": 690,
+     "expires": "D1 13:00",
+     "completed": null,
+     "lateMinutes": null
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 4,
+       "network": 5
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 3,
+       "power": 2,
+       "network": 3
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [
+     {
+      "key": "performance",
+      "label": "고성능 모드",
+      "gpu": 4,
+      "power": 4,
+      "minutes": 60,
+      "finish": 600,
+      "finish_label": "D1 10:00",
+      "due_label": "D1 11:30",
+      "on_time": true,
+      "late_minutes": 0,
+      "agreed": true,
+      "status": "고객 원래 요청",
+      "reason": ""
+     },
+     {
+      "key": "economy",
+      "label": "절약형 모드",
+      "gpu": 3,
+      "power": 2,
+      "minutes": 90,
+      "finish": 630,
+      "finish_label": "D1 10:30",
+      "due_label": "D1 11:30",
+      "on_time": true,
+      "late_minutes": 0,
+      "agreed": false,
+      "status": "고객 동의 필요",
+      "reason": "고객이 허용하지 않은 모드입니다. 고객 협의(대안 제시)와 동의가 필요합니다."
+     }
+    ],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 0,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": null,
+    "succeeded": null,
+    "resultText": "",
+    "deadline": "일반 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 11:30 · 남은 150분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "[신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 4단위 / 네트워크: 5단위\n절약형: GPU 3개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 11:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 60분 / 절약형 모드 90분\n\n일반 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 11:30 · 남은 150분\n미배정 요청의 최종 접수 종료: D1 13:00",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Merlion AI · 싱가포르",
+     "[D1 09:00] Merlion AI: [신규 작업 요청]\n발신: Merlion AI\n국가: 싱가포르\n\n안녕하세요.\n생성형 AI 모델 학습을 위해 GPU 서버와 안정적인 통신 회선이 필요합니다.\n요청 작업: 생성형 AI 모델 학습 요청\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 4단위 / 네트워크: 5단위\n절약형: GPU 3개 / 전력 2단위 · 고객 동의 필요\n완료 기한: D1 11:30 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 60분 / 절약형 모드 90분\n\n일반 · 모델 학습 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 11:30 · 남은 150분\n미배정 요청의 최종 접수 종료: D1 13:00"
+    ],
+    "selection": null,
+    "reported": false,
+    "summary": null
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 0,
+   "powerTotal": 10,
+   "powerUsed": 0,
+   "healthyFreeGpu": 10,
+   "healthyFreePower": 10
+  },
+  "canAdvance": true,
+  "story": {
+   "kind": null,
+   "step": "t_structure",
+   "card": null,
+   "objective": "Stage 1/5 · 시스템 구조를 관찰하다 · 실습 준비 필요 · 연수용 고객 요청을 확인하고 배정해 작업을 시작하세요.",
+   "pages": [],
+   "done": false,
+   "jobsDone": 0,
+   "jobsTotal": 5,
+   "chapter": {
+    "key": "lab",
+    "number": 5,
+    "label": "제5장",
+    "title": "홀로 선 엔지니어",
+    "heading": "제5장 — 홀로 선 엔지니어 · 연습",
+    "intro": "선배의 안내가 조금씩 줄어듭니다. 구조를 관찰하고 명령으로 조사하며 판단의 근거를 쌓아보세요.",
+    "state": "in_progress",
+    "stateLabel": "진행 중",
+    "text": "Stage 1/5 · 시스템 구조를 관찰하다 · 실습 준비 필요 · 연수용 고객 요청을 확인하고 배정해 작업을 시작하세요."
+   },
+   "result": null,
+   "chapterKey": "lab",
+   "uiStep": "t_structure",
+   "practice": true,
+   "dialogue": {
+    "event": "t_structure",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "기초 교육을 마쳤네요. 관제실 운영에는 이제 익숙해졌을 거예요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "오늘부터는 심화 연수예요. 버튼 너머 시스템 내부를 다섯 단계로 깊이 들여다볼 거예요."
+     ],
+     [
+      "system",
+      "시스템 · AIDC 운영 알림",
+      "연수용 고객 요청이 접수됩니다. 배정하고 시간을 진행해 장애가 발생하면 [연수 · Lab] 탭에서 Stage 1을 시작하세요."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "지금까지는 내 모니터 [진단] 탭에서 장애를 처리했죠. 이제 장비가 실제로 어떻게 연결되어 있는지 살펴볼 차례예요."
+     ],
+     [
+      "player",
+      "나 · 신입 엔지니어",
+      "고객 단말, 라우터, 게이트웨이, 서버… 선으로 이어진 길을 따라가 보면 되겠네요."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "practice",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": null,
+   "chapter3": null,
+   "chapter3b": null,
+   "training": {
+    "status": {
+     "practice": true,
+     "current": "structure",
+     "info": {
+      "no": 1,
+      "title": "시스템 구조를 관찰하다",
+      "short": "시스템 구조 관찰",
+      "tab": "네트워크 구조",
+      "cta": "끊어진 네트워크 구간을 찾으세요.",
+      "needs": "fault",
+      "goal": "네트워크 구조도에서 끊어진 구간을 직접 클릭하고, 그 구간이 고객 통신에 주는 영향을 고르세요.",
+      "intro": [
+       [
+        "mentor",
+        "지금까지는 내 모니터 [진단] 탭에서 장애를 처리했죠. 이제 장비가 실제로 어떻게 연결되어 있는지 살펴볼 차례예요."
+       ],
+       [
+        "player",
+        "고객 단말, 라우터, 게이트웨이, 서버… 선으로 이어진 길을 따라가 보면 되겠네요."
+       ]
+      ],
+      "done": "구조를 읽을 줄 알게 됐네요. 끊어진 구간 하나가 고객 작업 전체를 멈출 수 있다는 걸 확인했어요."
+     },
+     "passed": false,
+     "can_advance": false,
+     "next": "tool",
+     "done": false,
+     "count": 0,
+     "stages": [
+      {
+       "key": "structure",
+       "no": 1,
+       "title": "시스템 구조를 관찰하다",
+       "short": "시스템 구조 관찰",
+       "tab": "네트워크 구조",
+       "cta": "끊어진 네트워크 구간을 찾으세요.",
+       "needs": "fault",
+       "goal": "네트워크 구조도에서 끊어진 구간을 직접 클릭하고, 그 구간이 고객 통신에 주는 영향을 고르세요.",
+       "intro": [
+        [
+         "mentor",
+         "지금까지는 내 모니터 [진단] 탭에서 장애를 처리했죠. 이제 장비가 실제로 어떻게 연결되어 있는지 살펴볼 차례예요."
+        ],
+        [
+         "player",
+         "고객 단말, 라우터, 게이트웨이, 서버… 선으로 이어진 길을 따라가 보면 되겠네요."
+        ]
+       ],
+       "done": "구조를 읽을 줄 알게 됐네요. 끊어진 구간 하나가 고객 작업 전체를 멈출 수 있다는 걸 확인했어요.",
+       "state": "current",
+       "passed": false,
+       "badge": "setup",
+       "badge_text": "⚠ 준비 필요",
+       "hint": ""
+      },
+      {
+       "key": "tool",
+       "no": 2,
+       "title": "진단 도구를 선택하다",
+       "short": "진단 도구 선택",
+       "tab": "명령어 학습",
+       "cta": "통신 확인에 맞는 진단 도구를 고르세요.",
+       "needs": null,
+       "goal": "\"서버까지 통신할 수 있는지\" 확인할 도구를 고르고, 그 결과만으로 확정할 수 있는 것을 답하세요.",
+       "intro": [
+        [
+         "mentor",
+         "문제가 어디서 생겼는지 짐작할 수 있게 됐어요. 이번에는 그 판단을 확인할 도구를 배워 봅시다."
+        ]
+       ],
+       "done": "도구마다 답할 수 있는 질문이 다르다는 걸 알았네요. ping은 응답 여부를 알려 주지만 원인까지 말해 주지는 않아요.",
+       "state": "open",
+       "passed": false,
+       "badge": "open",
+       "badge_text": "○ 선택 가능",
+       "hint": ""
+      },
+      {
+       "key": "assemble",
+       "no": 3,
+       "title": "명령어를 조립하다",
+       "short": "명령어 조립",
+       "tab": "명령어 학습",
+       "cta": "ping 명령을 옵션 · 대상과 함께 조립해 실행하세요.",
+       "needs": null,
+       "goal": "ping에 보낼 횟수 옵션(-c)과 서버 주소를 붙여 실제 명령 한 줄을 조립·실행하고, 결과의 응답 수를 확인하세요.",
+       "intro": [
+        [
+         "mentor",
+         "이제 명령어 이름을 알았어요. 실제로 쓰려면 옵션과 대상도 알아야 해요."
+        ]
+       ],
+       "done": "명령 · 옵션 · 대상의 순서가 실제 문법이에요. 출력에서 숫자를 읽어 낸 것도 잘했어요.",
+       "state": "open",
+       "passed": false,
+       "badge": "open",
+       "badge_text": "○ 선택 가능",
+       "hint": ""
+      },
+      {
+       "key": "terminal",
+       "no": 4,
+       "title": "직접 명령어를 입력하다",
+       "short": "터미널 직접 입력",
+       "tab": "가상 터미널",
+       "cta": "터미널에 직접 입력해 증거를 모으세요.",
+       "needs": null,
+       "goal": "가상 터미널에 직접 입력해 가까운 네트워크 장비, 원격 서버, 라우팅 정보를 관측하고, 알 수 있는 사실과 아직 확정할 수 없는 사실을 구별하세요.",
+       "intro": [
+        [
+         "mentor",
+         "이제 제가 명령어를 골라 주지 않아요. 무엇을 확인할지 스스로 생각하고 직접 입력해 보세요."
+        ],
+        [
+         "player",
+         "틀려도 다시 입력하면 되는 거죠? 출력부터 차분히 읽어 볼게요."
+        ]
+       ],
+       "done": "증거를 모으는 것과 결론을 내리는 것은 달라요. 확인된 사실과 추측을 나눈 게 오늘의 핵심이에요.",
+       "state": "open",
+       "passed": false,
+       "badge": "open",
+       "badge_text": "○ 선택 가능",
+       "hint": ""
+      },
+      {
+       "key": "independent",
+       "no": 5,
+       "title": "독립 진단 시연",
+       "short": "독립 진단",
+       "tab": "가상 터미널",
+       "cta": "지금까지 배운 방법을 이용해 직접 장애를 해결해 보세요.",
+       "needs": "fault",
+       "goal": "장애 증상만 주어집니다. 직접 관측해 원인을 판단하고, 내 모니터 [진단] 탭에서 조치한 뒤, 같은 관측으로 정상화를 재확인하세요.",
+       "intro": [
+        [
+         "mentor",
+         "이제 장애 상황만 알려 드릴게요. 필요한 정보는 직접 확인하고, 대응한 다음 정상화 여부까지 검증해 보세요."
+        ],
+        [
+         "system",
+         "이 Stage는 이미 경험한 경로 단절 사건을 재사용한 독립 진단 흐름의 시연입니다. 처음 보는 장애에 대한 숙련도 인증이 아닙니다."
+        ]
+       ],
+       "done": "관찰 → 판단 → 조치 → 검증을 혼자 끝까지 해냈어요. 다음에는 원인을 미리 모르는 새 장애로 연습하게 될 거예요.",
+       "state": "open",
+       "passed": false,
+       "badge": "open",
+       "badge_text": "○ 선택 가능",
+       "hint": ""
+      }
+     ],
+     "readiness": {
+      "key": "setup",
+      "ready": false,
+      "chip": "실습 준비 필요",
+      "title": "실습 준비 필요 · 고객 작업을 먼저 시작하세요.",
+      "detail": "관제실 내 모니터 요청함에서 연수 요청 #1를 확인하고 배정하세요. Lab에서 보는 것만으로는 배정·시간 진행이 일어나지 않습니다.",
+      "action": "control"
+     },
+     "structure_ready": false,
+     "headline": {
+      "tone": "warn",
+      "chip": "실습 준비 필요",
+      "title": "실습 준비 필요 · 고객 작업을 먼저 시작하세요.",
+      "detail": "관제실 내 모니터 요청함에서 연수 요청 #1를 확인하고 배정하세요. Lab에서 보는 것만으로는 배정·시간 진행이 일어나지 않습니다.",
+      "action": "control"
+     },
+     "next_open": "tool",
+     "incident": "waiting",
+     "can_restart": false,
+     "rid": 1,
+     "locked_response": "",
+     "segment": null,
+     "impact": null,
+     "choice": null,
+     "limit": null,
+     "assembly": null,
+     "received_options": [],
+     "received": null,
+     "evidence": {
+      "near": false,
+      "remote": false,
+      "route": false
+     },
+     "statements": [],
+     "facts": null,
+     "stage5": {
+      "evidence_ok": false,
+      "evidence_count": 0,
+      "cause": null,
+      "recovered": false,
+      "verified": false
+     }
+    },
+    "objective": "Stage 1/5 · 시스템 구조를 관찰하다 · 실습 준비 필요 · 연수용 고객 요청을 확인하고 배정해 작업을 시작하세요.",
+    "jobStatus": {
+     "rid": 1,
+     "finished": false,
+     "job_key": "in_progress",
+     "job_label": "배정 전",
+     "job_detail": "내 모니터 [진단] 탭에서 배정해야 작업이 시작됩니다",
+     "job_tone": "idle",
+     "network": "장애 대응 기록 없음",
+     "returned": true,
+     "remaining": "내 모니터 [진단] 탭에서 시간을 진행해 고객 작업의 최종 완료와 자원 반환을 확인하세요."
+    },
+    "stages": [
+     {
+      "key": "structure",
+      "no": 1,
+      "title": "시스템 구조를 관찰하다",
+      "short": "시스템 구조 관찰",
+      "goal": "네트워크 구조도에서 끊어진 구간을 직접 클릭하고, 그 구간이 고객 통신에 주는 영향을 고르세요.",
+      "cta": "끊어진 네트워크 구간을 찾으세요.",
+      "tab": "네트워크 구조"
+     },
+     {
+      "key": "tool",
+      "no": 2,
+      "title": "진단 도구를 선택하다",
+      "short": "진단 도구 선택",
+      "goal": "\"서버까지 통신할 수 있는지\" 확인할 도구를 고르고, 그 결과만으로 확정할 수 있는 것을 답하세요.",
+      "cta": "통신 확인에 맞는 진단 도구를 고르세요.",
+      "tab": "명령어 학습"
+     },
+     {
+      "key": "assemble",
+      "no": 3,
+      "title": "명령어를 조립하다",
+      "short": "명령어 조립",
+      "goal": "ping에 보낼 횟수 옵션(-c)과 서버 주소를 붙여 실제 명령 한 줄을 조립·실행하고, 결과의 응답 수를 확인하세요.",
+      "cta": "ping 명령을 옵션 · 대상과 함께 조립해 실행하세요.",
+      "tab": "명령어 학습"
+     },
+     {
+      "key": "terminal",
+      "no": 4,
+      "title": "직접 명령어를 입력하다",
+      "short": "터미널 직접 입력",
+      "goal": "가상 터미널에 직접 입력해 가까운 네트워크 장비, 원격 서버, 라우팅 정보를 관측하고, 알 수 있는 사실과 아직 확정할 수 없는 사실을 구별하세요.",
+      "cta": "터미널에 직접 입력해 증거를 모으세요.",
+      "tab": "가상 터미널"
+     },
+     {
+      "key": "independent",
+      "no": 5,
+      "title": "독립 진단 시연",
+      "short": "독립 진단",
+      "goal": "장애 증상만 주어집니다. 직접 관측해 원인을 판단하고, 관제실에서 조치한 뒤, 같은 관측으로 정상화를 재확인하세요.",
+      "cta": "지금까지 배운 방법을 이용해 직접 장애를 해결해 보세요.",
+      "tab": "가상 터미널"
+     }
+    ],
+    "questions": {
+     "structure:impact": {
+      "prompt": "선택한 구간이 끊기면 고객 통신에는 어떤 일이 생길까요?",
+      "options": [
+       [
+        "blocked",
+        "고객 단말이 보낸 작업 데이터가 AIDC 서버에 도달하지 못해 작업이 멈춘다"
+       ],
+       [
+        "gpu",
+        "서버의 GPU가 고장 나 연산이 멈춘다"
+       ],
+       [
+        "local",
+        "고객 단말의 네트워크 인터페이스가 꺼진다"
+       ]
+      ]
+     },
+     "tool:limit": {
+      "prompt": "ping 결과만으로 확정할 수 있는 것은 무엇일까요?",
+      "options": [
+       [
+        "icmp",
+        "대상까지 ICMP 응답이 오가는지 여부"
+       ],
+       [
+        "cause",
+        "응답이 없을 때 그 정확한 원인(회선 단절인지 장비 정지인지)"
+       ],
+       [
+        "app",
+        "고객 작업(애플리케이션)이 정상인지"
+       ]
+      ]
+     },
+     "independent:cause": {
+      "prompt": "관측한 증거로 볼 때 가장 타당한 원인은 무엇인가요?",
+      "options": [
+       [
+        "path_down",
+        "주 통신 경로 단절 (가까운 라우터 너머 구간)"
+       ],
+       [
+        "bandwidth",
+        "가용 대역폭 부족 (경로는 연결됨)"
+       ],
+       [
+        "server",
+        "서버 장비 장애"
+       ],
+       [
+        "local",
+        "고객 단말의 인터페이스 장애"
+       ]
+      ]
+     }
+    },
+    "choiceQuestion": "현재 서버까지 통신할 수 있는지 확인하려면 어떤 도구를 사용할까요?",
+    "choices": [
+     "ping",
+     "ip route",
+     "ip addr"
+    ],
+    "choiceFit": {
+     "ping": [
+      "best",
+      "이 질문에 직접 답하는 도구입니다. 대상에 응답을 요청해 실제로 패킷이 오가는지 봅니다."
+     ],
+     "ip route": [
+      "partial",
+      "경로 설정을 보는 도구입니다. 경로가 설정돼 있어도 실제 통신 가능 여부는 알 수 없습니다. 다른 도구와 함께 쓰면 좋습니다."
+     ],
+     "ip addr": [
+      "partial",
+      "내 단말의 주소를 보는 도구입니다. 서버까지의 통신 가능 여부는 알려 주지 않습니다."
+     ]
+    },
+    "specs": {
+     "ping": {
+      "title": "ping",
+      "summary": "대상과의 ICMP 응답 확인",
+      "purpose": "대상 주소로 ICMP Echo 요청을 보내 응답(Echo Reply)이 돌아오는지 확인합니다.",
+      "can": [
+       "대상까지 ICMP 패킷이 오가는지(도달 가능성)",
+       "응답 시간(RTT)과 손실률",
+       "응답한 장비까지의 대략적 TTL"
+      ],
+      "cannot": [
+       "응답이 없는 정확한 원인(경로 단절·장비 정지·ICMP 차단 등을 구분하지 못함)",
+       "애플리케이션·서비스 포트의 정상 여부",
+       "패킷이 지나간 경로 자체"
+      ]
+     },
+     "ip route": {
+      "title": "ip route",
+      "summary": "라우팅 테이블 확인",
+      "purpose": "이 단말이 목적지 네트워크로 패킷을 어느 게이트웨이·인터페이스로 보내도록 설정했는지 보여줍니다.",
+      "can": [
+       "목적지별 다음 홉(게이트웨이)과 출력 인터페이스",
+       "현재 사용하도록 설정된 경로(주/백업)"
+      ],
+      "cannot": [
+       "그 경로로 실제 통신이 성공하는지(설정된 경로가 있어도 먼 구간이 끊길 수 있음)",
+       "먼 구간 링크의 상태"
+      ]
+     },
+     "ip addr": {
+      "title": "ip addr",
+      "summary": "인터페이스 주소 확인",
+      "purpose": "이 단말의 네트워크 인터페이스와 할당된 IP 주소, 인터페이스 상태(UP/DOWN)를 보여줍니다.",
+      "can": [
+       "이 단말의 인터페이스 이름·IP 주소·서브넷",
+       "이 단말 인터페이스의 링크 상태"
+      ],
+      "cannot": [
+       "다른 장비(라우터·서버)의 상태",
+       "먼 구간의 단절 여부",
+       "대상까지 통신 가능 여부"
+      ]
+     }
+    },
+    "blocks": {
+     "command": {
+      "ping": "대상에게 응답을 요청하는 연결 시험 명령",
+      "ip addr": "ip 명령 + addr 객체: 내 인터페이스 주소 조회",
+      "ip route": "ip 명령 + route 객체: 라우팅 테이블 조회"
+     },
+     "option": {
+      "-c 3": "-c(count): 3번만 보내고 멈춤",
+      "-c 1": "-c(count): 1번만 보내고 멈춤"
+     }
+    },
+    "supported": [
+     "help",
+     "ping",
+     "ip addr",
+     "ip route",
+     "clear"
+    ],
+    "targets": {
+     "routers": {
+      "primary": "192.168.10.1",
+      "backup": "192.168.20.1"
+     },
+     "gateway": "10.0.0.1",
+     "servers": {
+      "A": "10.0.0.20",
+      "B": "10.0.0.21",
+      "C": "10.0.0.22",
+      "D": "10.0.0.23"
+     }
+    },
+    "prompt": "engineer@sg-edge:~$",
+    "hostLabel": "고객 연동 단말",
+    "notice": "교육용 가상 네트워크 설정입니다. 실제 AIDC·고객사 장비의 주소나 구성이 아닙니다.",
+    "network": {
+     "segments": {
+      "edge-primary": null,
+      "primary-wan": null,
+      "edge-backup": null,
+      "backup-wan": null,
+      "gateway-servers": null
+     },
+     "revealed": false,
+     "symptom": "고객 작업이 아직 배정되지 않았습니다. 관제실에서 배정하면 작업 데이터가 오가기 시작합니다.",
+     "phaseLabel": "미배정",
+     "tone": "idle",
+     "progress": 0.0
+    },
+    "unsupported": [
+     "traceroute",
+     "ss",
+     "systemctl",
+     "nvidia-smi",
+     "journalctl",
+     "tcpdump"
+    ]
+   }
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": [
+    {
+     "rid": 1,
+     "code": "SG",
+     "tone": "incoming",
+     "focus": true,
+     "link": "ok",
+     "linkNote": "",
+     "segments": {
+      "sea": "ok",
+      "landing": "ok",
+      "backbone": "ok",
+      "aidc": "ok"
+     }
+    }
+   ]
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch2_failure": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_005",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "practice",
+  "clock": {
+   "minute": 650,
+   "label": "D1 10:50"
+  },
+  "focus": 2,
+  "requests": [
+   {
+    "id": 1,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 40,
+    "workTotal": 40,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 5,
+    "terms": {
+     "priority": "긴급 · 로봇 추론",
+     "received": "D1 09:00",
+     "startDue": "D1 09:10",
+     "due": "D1 09:50",
+     "dueMinute": 590,
+     "expires": "D1 10:20",
+     "completed": "D1 09:40",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 5,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 3,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "긴급 · 로봇 추론 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 09:50 · 남은 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:00] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 09:50 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 09:50 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 10:20",
+     "[D1 09:00] [고객 요청 #1] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:00] 고성능 모드: GPU 4 / 전력 5 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4, B GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:20] Sakura Robotics: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 09:40] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 5 반환.",
+     "[D1 09:40] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2
+       ],
+       "gpu": 3,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0
+       ],
+       "gpu": 1,
+       "power": 1
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 540
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 4,
+     "power": 5,
+     "deadline": "준수",
+     "due": "D1 09:50",
+     "completed": "D1 09:40",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 70,
+    "workTotal": 70,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "우선 · 데이터 분석",
+     "received": "D1 09:00",
+     "startDue": "D1 09:10",
+     "due": "D1 10:40",
+     "dueMinute": 640,
+     "expires": "D1 11:00",
+     "completed": "D1 10:50",
+     "lateMinutes": 10
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 89,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 89점. 배정 지연 30분 / 완료 기한 초과 10분 · 기한 감점 11점.",
+    "deadline": "우선 · 데이터 분석 · 접수 D1 09:00 · 대기 40분\n배정 권장 D1 09:10 · 완료 기한 D1 10:40 · 기한 초과 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업 완료는 확인했습니다. 다만 약속한 기한보다 일정이 지연되어 아쉽습니다. 다음에는 일정에 맞춰 주세요.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 09:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 10:40 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 10:40 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 11:00",
+     "[D1 09:10] Northstar AI: 요청한 자원의 배정 일정이 지연되고 있습니다. 처리 가능 시간을 알려주세요.",
+     "[D1 09:40] [고객 요청 #2] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 09:40] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 09:40] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:40] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:10] Northstar AI: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 10:50] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 89점. 배정 지연 30분 / 완료 기한 초과 10분 · 기한 감점 11점. GPU 6 / 전력 6 반환.",
+     "[D1 10:50] Northstar AI: 작업 완료는 확인했습니다. 다만 약속한 기한보다 일정이 지연되어 아쉽습니다. 다음에는 일정에 맞춰 주세요."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "gpu": 4,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0,
+        1
+       ],
+       "gpu": 2,
+       "power": 2
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 580
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "late",
+     "label": "정상 완료 · 기한 초과",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "초과 10분",
+     "due": "D1 10:40",
+     "completed": "D1 10:50",
+     "score": 89
+    }
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 0,
+   "powerTotal": 10,
+   "powerUsed": 0,
+   "healthyFreeGpu": 10,
+   "healthyFreePower": 10
+  },
+  "canAdvance": false,
+  "story": {
+   "kind": null,
+   "step": "c2_done",
+   "card": null,
+   "objective": "제2장 종료 · 미션 실패 · 결과 화면에서 원인과 평가를 확인하세요.",
+   "pages": [],
+   "done": true,
+   "jobsDone": 2,
+   "jobsTotal": 2,
+   "chapter": {
+    "key": 2,
+    "number": 2,
+    "label": "제2장",
+    "title": "한정된 자원",
+    "heading": "제2장 — 한정된 자원 · 연습",
+    "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+    "state": "failed",
+    "stateLabel": "실패",
+    "text": "고객 요청의 거절·만료·기한 초과 또는 처리 실패가 확정되었습니다."
+   },
+   "result": {
+    "jobs": [
+     {
+      "request_id": 1,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "task": "로봇 AI 모델 추론 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 100,
+      "on_time": true,
+      "mode": "고성능 모드",
+      "gpu": 4,
+      "power": 5,
+      "placement": "A GPU 3/전력 4, B GPU 1/전력 1",
+      "started": 540,
+      "completed": 580,
+      "waited": 0,
+      "late_minutes": 0,
+      "penalty": 0,
+      "expired": false,
+      "expiry": 620,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 100,
+      "state": "success",
+      "reason": null,
+      "deadline": "준수"
+     },
+     {
+      "request_id": 2,
+      "company": "Northstar AI",
+      "country": "미국",
+      "task": "대규모 데이터 분석 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 89,
+      "on_time": false,
+      "mode": "고성능 모드",
+      "gpu": 6,
+      "power": 6,
+      "placement": "A GPU 4/전력 4, B GPU 2/전력 2",
+      "started": 580,
+      "completed": 650,
+      "waited": 40,
+      "late_minutes": 10,
+      "penalty": 11,
+      "expired": false,
+      "expiry": 660,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 89,
+      "state": "failed",
+      "reason": "late",
+      "deadline": "초과 10분"
+     }
+    ],
+    "concurrent": false,
+    "servers": {
+     "A": "IDLE",
+     "B": "IDLE",
+     "C": "IDLE",
+     "D": "IDLE"
+    },
+    "decisions": [
+     "먼저 배정한 고객: 일본 Sakura Robotics (D1 09:00)",
+     "일본: 고성능 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료",
+     "미국: 고성능 모드 · 접수 후 40분 뒤 시작 · 기한 10분 초과 · 기한 감점 11점 · 정상 완료"
+    ],
+    "practice": true,
+    "mission": "failed",
+    "overall": 94.5,
+    "failure": {
+     "request_id": 2,
+     "reason": "late",
+     "minute": 650,
+     "time": "D1 10:50",
+     "company": "Northstar AI",
+     "country": "미국",
+     "due": "D1 10:40",
+     "expiry": "D1 11:00",
+     "late_minutes": 10,
+     "waited": 40,
+     "mode": "고성능 모드",
+     "minutes": 70,
+     "blocker": null,
+     "earliest_finish": null,
+     "tried": {
+      "proposal": null,
+      "wait_choices": 0
+     },
+     "after": {
+      "country": "일본",
+      "company": "Sakura Robotics",
+      "mode": "고성능 모드",
+      "completed": "D1 09:40"
+     },
+     "other": {
+      "country": "일본",
+      "state": "success"
+     }
+    },
+    "highlights": [],
+    "summary": {
+     "mission": "failed",
+     "overall": 94.5,
+     "ok": 1,
+     "total": 2,
+     "strategy": "일본 고성능 → 미국 고성능",
+     "arrangement": "순차 실행 · 먼저 끝난 자원 반환 후 시작",
+     "resources": "GPU 10개 / 전력 11단위 사용 후 반환",
+     "verdict": "2명 중 1명만 기한 내 정상 완료"
+    }
+   },
+   "chapterKey": 2,
+   "uiStep": "c2_done",
+   "practice": true,
+   "dialogue": {
+    "event": "c2_done",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "두 요청은 모두 끝났지만, 이번 미션의 목표인 두 고객의 기한 내 정상 처리는 달성하지 못했습니다."
+     ],
+     [
+      "system",
+      "시스템 · AIDC 운영 알림",
+      "결과 화면에서 고객별 점수와 종합 평가, 실패 원인을 확인하고 [제2장 다시 도전]으로 새로 시작할 수 있습니다."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "practice",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": {
+    "requestIds": [
+     1,
+     2
+    ],
+    "step": "finish",
+    "completed": true,
+    "comparison": [],
+    "briefing": {
+     "1": [],
+     "2": []
+    },
+    "jobs": {
+     "1": [
+      "success",
+      null
+     ],
+     "2": [
+      "failed",
+      "late"
+     ]
+    },
+    "evaluation": [
+     "일본 Sakura Robotics: 100점 (정상 완료 · 기한 내)",
+     "미국 Northstar AI: 89점 (기한 초과 완료)",
+     "Chapter 2 종합 평가: 94.5/100"
+    ],
+    "failure": {
+     "request_id": 2,
+     "reason": "late",
+     "minute": 650,
+     "time": "D1 10:50",
+     "company": "Northstar AI",
+     "country": "미국",
+     "due": "D1 10:40",
+     "expiry": "D1 11:00",
+     "late_minutes": 10,
+     "waited": 40,
+     "mode": "고성능 모드",
+     "minutes": 70,
+     "blocker": null,
+     "earliest_finish": null,
+     "tried": {
+      "proposal": null,
+      "wait_choices": 0
+     },
+     "after": {
+      "country": "일본",
+      "company": "Sakura Robotics",
+      "mode": "고성능 모드",
+      "completed": "D1 09:40"
+     },
+     "other": {
+      "country": "일본",
+      "state": "success"
+     }
+    },
+    "failurePending": true,
+    "failurePages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "미국 고객의 작업이 완료 기한(D1 10:40)을 10분 넘겨 끝났습니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "일본 고객을 먼저 처리했지만(D1 09:40 완료) 미국 고객도 고성능 모드로 실행하면서 완료 기한을 넘겼습니다. 접수 후 40분 뒤에 시작했고 처리에 70분이 걸렸습니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "일본 고객의 작업은 기한 내에 정상 완료했지만, 이번 미션의 목표는 두 고객의 요청을 모두 기한 내에 처리하는 것이었습니다. 이미 확정된 실패 판정은 바뀌지 않습니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "다시 도전하면서 두 고객의 요구 조건과 완료 기한을 비교해 보세요. [제2장 다시 도전]으로 바로 새로 시작할 수 있고, 지금 진행 중인 작업은 [기존 진행 계속 보기]로 이어서 확인할 수 있습니다."
+     ]
+    ],
+    "retryAvailable": false
+   },
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": []
+  },
+  "racks": {
+   "engine": {
+    "A": "A-01",
+    "B": "B-01",
+    "C": "C-01",
+    "D": "D-01"
+   },
+   "decor": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "B-02",
+    "B-03",
+    "B-04",
+    "B-05",
+    "B-06",
+    "C-02",
+    "C-03",
+    "C-04",
+    "C-05",
+    "C-06",
+    "D-02",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06"
+   ]
+  },
+  "responses": {
+   "reroute": "백업 경로로 우회",
+   "compress": "전송 데이터 압축",
+   "ignore": "기존 설정 유지"
+  }
+ },
+ "ch2_failed_done": {
+  "api": 2,
+  "apiCompat": [
+   1
+  ],
+  "engine": "python:session.GameSession",
+  "id": "aidc_story_slot_005",
+  "mode": "story",
+  "modeLabel": "스토리 도전",
+  "kind": "practice",
+  "clock": {
+   "minute": 650,
+   "label": "D1 10:50"
+  },
+  "focus": 2,
+  "requests": [
+   {
+    "id": 1,
+    "country": "일본",
+    "code": "JP",
+    "company": "Sakura Robotics",
+    "title": "로봇 AI 모델 추론 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 40,
+    "workTotal": 40,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 4,
+    "power": 5,
+    "terms": {
+     "priority": "긴급 · 로봇 추론",
+     "received": "D1 09:00",
+     "startDue": "D1 09:10",
+     "due": "D1 09:50",
+     "dueMinute": 590,
+     "expires": "D1 10:20",
+     "completed": "D1 09:40",
+     "lateMinutes": 0
+    },
+    "conditions": {
+     "type": "fixed",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 4,
+       "power": 5,
+       "network": 3
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 2,
+       "power": 3,
+       "network": 2
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 3,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 100,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점.",
+    "deadline": "긴급 · 로봇 추론 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 09:50 · 남은 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Sakura Robotics · 일본",
+     "[D1 09:00] Sakura Robotics: [신규 작업 요청]\n발신: Sakura Robotics\n국가: 일본\n\n안녕하세요.\n로봇이 주변 환경을 인식하고 판단하는 AI 모델을 실행하기 위해 GPU 서버 자원이 필요합니다.\n요청 작업: 로봇 AI 모델 추론 작업\n\n원래 요청 모드: 고성능 모드\n고성능 운영을 요청드립니다. 절약형으로 변경하려면 대안 제시 후 저희의 명시적인 동의가 필요합니다.\n요청 GPU: 4개 / 전력: 5단위 / 네트워크: 3단위\n절약형: GPU 2개 / 전력 3단위 · 고객 동의 필요\n완료 기한: D1 09:50 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 40분 / 절약형 모드 60분\n\n긴급 · 로봇 추론 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 09:50 · 남은 50분\n미배정 요청의 최종 접수 종료: D1 10:20",
+     "[D1 09:00] [고객 요청 #1] Sakura Robotics · 로봇 AI 모델 추론 작업",
+     "[D1 09:00] 고성능 모드: GPU 4 / 전력 5 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 3/전력 4, B GPU 1/전력 1",
+     "[D1 09:00] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:00] Sakura Robotics: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 09:20] Sakura Robotics: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 09:40] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 100점. 배정 지연 0분 / 완료 기한 초과 0분 · 기한 감점 0점. GPU 4 / 전력 5 반환.",
+     "[D1 09:40] Sakura Robotics: 요청드린 작업이 예정대로 완료되었음을 확인했습니다. 성실히 처리해 주셔서 감사드립니다."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2
+       ],
+       "gpu": 3,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0
+       ],
+       "gpu": 1,
+       "power": 1
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 540
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 1,
+     "company": "Sakura Robotics",
+     "country": "일본",
+     "task": "로봇 AI 모델 추론 작업",
+     "key": "on_time",
+     "label": "정상 완료 · 기한 준수",
+     "mode": "고성능 모드",
+     "gpu": 4,
+     "power": 5,
+     "deadline": "준수",
+     "due": "D1 09:50",
+     "completed": "D1 09:40",
+     "score": 100
+    }
+   },
+   {
+    "id": 2,
+    "country": "미국",
+    "code": "US",
+    "company": "Northstar AI",
+    "title": "대규모 데이터 분석 작업",
+    "status": "completed",
+    "statusLabel": "처리 완료",
+    "unread": true,
+    "stage": "done",
+    "phase": "finished",
+    "progress": 100,
+    "workDone": 70,
+    "workTotal": 70,
+    "plan": "performance",
+    "planLabel": "고성능 모드",
+    "gpu": 6,
+    "power": 6,
+    "terms": {
+     "priority": "우선 · 데이터 분석",
+     "received": "D1 09:00",
+     "startDue": "D1 09:10",
+     "due": "D1 10:40",
+     "dueMinute": 640,
+     "expires": "D1 11:00",
+     "completed": "D1 10:50",
+     "lateMinutes": 10
+    },
+    "conditions": {
+     "type": "flexible",
+     "requestedMode": "performance",
+     "allowedModes": [
+      "performance",
+      "economy"
+     ],
+     "plans": {
+      "performance": {
+       "label": "고성능 모드",
+       "gpu": 6,
+       "power": 6,
+       "network": 6
+      },
+      "economy": {
+       "label": "절약형 모드",
+       "gpu": 4,
+       "power": 3,
+       "network": 5
+      }
+     }
+    },
+    "proposal": null,
+    "modes": [],
+    "allocation": [],
+    "jobStatus": null,
+    "hardware": "",
+    "migrationLeft": 0,
+    "hardwareDowntime": 0,
+    "network": {
+     "needed": 6,
+     "available": 8,
+     "hidden": false,
+     "attempts": 0,
+     "downtime": 0,
+     "incident": false
+    },
+    "recoveryLeft": 0,
+    "score": 89,
+    "succeeded": true,
+    "resultText": "고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 89점. 배정 지연 30분 / 완료 기한 초과 10분 · 기한 감점 11점.",
+    "deadline": "우선 · 데이터 분석 · 접수 D1 09:00 · 대기 40분\n배정 권장 D1 09:10 · 완료 기한 D1 10:40 · 기한 초과 10분",
+    "deadlineLevel": "",
+    "canNotifyDelay": false,
+    "canRetry": false,
+    "lastFeedback": "작업 완료는 확인했습니다. 다만 약속한 기한보다 일정이 지연되어 아쉽습니다. 다음에는 일정에 맞춰 주세요.",
+    "log": [
+     "[D1 09:00] 새 업무 메시지: Northstar AI · 미국",
+     "[D1 09:00] Northstar AI: [신규 작업 요청]\n발신: Northstar AI\n국가: 미국\n\n안녕하세요.\n대량의 데이터를 분석하고 AI 기반 예측 모델을 실행하기 위해 데이터센터 자원이 필요합니다.\n요청 작업: 대규모 데이터 분석 작업\n\n원래 요청 모드: 고성능 모드\n고성능·절약형 모두 허용합니다. 운영자가 자원과 처리 시간을 고려하여 직접 선택해 주세요.\n요청 GPU: 6개 / 전력: 6단위 / 네트워크: 6단위\n절약형: GPU 4개 / 전력 3단위 · 고객 허용 모드\n완료 기한: D1 10:40 · 기한까지 처리해 주세요.\n\n가능한 자원과 운영 일정을 확인해 회신 부탁드립니다. 감사합니다.\n\n예상 처리 시간(시작 후, 장애·대기 제외): 고성능 모드 70분 / 절약형 모드 100분\n\n우선 · 데이터 분석 · 접수 D1 09:00 · 대기 0분\n배정 권장 D1 09:10 · 완료 기한 D1 10:40 · 남은 100분\n미배정 요청의 최종 접수 종료: D1 11:00",
+     "[D1 09:10] Northstar AI: 요청한 자원의 배정 일정이 지연되고 있습니다. 처리 가능 시간을 알려주세요.",
+     "[D1 09:40] [고객 요청 #2] Northstar AI · 대규모 데이터 분석 작업",
+     "[D1 09:40] 고성능 모드: GPU 6 / 전력 6 배정. 정상 실행을 시작합니다.\n서버 배정: A GPU 4/전력 4, B GPU 2/전력 2",
+     "[D1 09:40] 최종 운영 계획: 고성능 모드 · 원래 요청 조건 적용",
+     "[D1 09:40] Northstar AI: 현재 작업이 진행 중인 것으로 확인했습니다. 완료 결과를 기다리겠습니다.",
+     "[D1 10:10] Northstar AI: 완료 기한이 얼마 남지 않았습니다. 현재 일정으로 완료 가능한지 확인 부탁드립니다.",
+     "[D1 10:50] 고객의 AI 작업이 정상 완료되었습니다. 운영 점수: 89점. 배정 지연 30분 / 완료 기한 초과 10분 · 기한 감점 11점. GPU 6 / 전력 6 반환.",
+     "[D1 10:50] Northstar AI: 작업 완료는 확인했습니다. 다만 약속한 기한보다 일정이 지연되어 아쉽습니다. 다음에는 일정에 맞춰 주세요."
+    ],
+    "selection": {
+     "mode": "performance",
+     "index": 0,
+     "slices": [
+      {
+       "server": "A",
+       "rack": "A-01",
+       "gpuSlots": [
+        0,
+        1,
+        2,
+        3
+       ],
+       "gpu": 4,
+       "power": 4
+      },
+      {
+       "server": "B",
+       "rack": "B-01",
+       "gpuSlots": [
+        0,
+        1
+       ],
+       "gpu": 2,
+       "power": 2
+      }
+     ],
+     "label": "고성능 모드",
+     "minute": 580
+    },
+    "reported": false,
+    "summary": {
+     "request_id": 2,
+     "company": "Northstar AI",
+     "country": "미국",
+     "task": "대규모 데이터 분석 작업",
+     "key": "late",
+     "label": "정상 완료 · 기한 초과",
+     "mode": "고성능 모드",
+     "gpu": 6,
+     "power": 6,
+     "deadline": "초과 10분",
+     "due": "D1 10:40",
+     "completed": "D1 10:50",
+     "score": 89
+    }
+   }
+  ],
+  "servers": [
+   {
+    "key": "A",
+    "name": "Server A",
+    "rack": "A-01",
+    "gpu": 4,
+    "power": 4,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "B",
+    "name": "Server B",
+    "rack": "B-01",
+    "gpu": 3,
+    "power": 2,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "C",
+    "name": "Server C",
+    "rack": "C-01",
+    "gpu": 2,
+    "power": 3,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null,
+     null
+    ],
+    "jobs": []
+   },
+   {
+    "key": "D",
+    "name": "Server D",
+    "rack": "D-01",
+    "gpu": 1,
+    "power": 1,
+    "usedGpu": 0,
+    "usedPower": 0,
+    "state": "HEALTHY",
+    "repairLeft": 0,
+    "reason": "",
+    "slots": [
+     null
+    ],
+    "jobs": []
+   }
+  ],
+  "datacenter": {
+   "gpuTotal": 10,
+   "gpuUsed": 0,
+   "powerTotal": 10,
+   "powerUsed": 0,
+   "healthyFreeGpu": 10,
+   "healthyFreePower": 10
+  },
+  "canAdvance": false,
+  "story": {
+   "kind": null,
+   "step": "c2_done",
+   "card": null,
+   "objective": "제2장 종료 · 미션 실패 · 결과 화면에서 원인과 평가를 확인하세요.",
+   "pages": [],
+   "done": true,
+   "jobsDone": 2,
+   "jobsTotal": 2,
+   "chapter": {
+    "key": 2,
+    "number": 2,
+    "label": "제2장",
+    "title": "한정된 자원",
+    "heading": "제2장 — 한정된 자원 · 연습",
+    "intro": "두 고객의 요청이 겹쳤습니다. 한정된 서버와 서로 다른 약속 사이에서 운영 계획을 세워야 합니다.",
+    "state": "failed",
+    "stateLabel": "실패",
+    "text": "고객 요청의 거절·만료·기한 초과 또는 처리 실패가 확정되었습니다."
+   },
+   "result": {
+    "jobs": [
+     {
+      "request_id": 1,
+      "company": "Sakura Robotics",
+      "country": "일본",
+      "task": "로봇 AI 모델 추론 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 100,
+      "on_time": true,
+      "mode": "고성능 모드",
+      "gpu": 4,
+      "power": 5,
+      "placement": "A GPU 3/전력 4, B GPU 1/전력 1",
+      "started": 540,
+      "completed": 580,
+      "waited": 0,
+      "late_minutes": 0,
+      "penalty": 0,
+      "expired": false,
+      "expiry": 620,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 100,
+      "state": "success",
+      "reason": null,
+      "deadline": "준수"
+     },
+     {
+      "request_id": 2,
+      "company": "Northstar AI",
+      "country": "미국",
+      "task": "대규모 데이터 분석 작업",
+      "outcome": "정상 완료",
+      "succeeded": true,
+      "score": 89,
+      "on_time": false,
+      "mode": "고성능 모드",
+      "gpu": 6,
+      "power": 6,
+      "placement": "A GPU 4/전력 4, B GPU 2/전력 2",
+      "started": 580,
+      "completed": 650,
+      "waited": 40,
+      "late_minutes": 10,
+      "penalty": 11,
+      "expired": false,
+      "expiry": 660,
+      "wait_choices": 0,
+      "proposals": [],
+      "eval_score": 89,
+      "state": "failed",
+      "reason": "late",
+      "deadline": "초과 10분"
+     }
+    ],
+    "concurrent": false,
+    "servers": {
+     "A": "IDLE",
+     "B": "IDLE",
+     "C": "IDLE",
+     "D": "IDLE"
+    },
+    "decisions": [
+     "먼저 배정한 고객: 일본 Sakura Robotics (D1 09:00)",
+     "일본: 고성능 모드 · 접수 후 0분 뒤 시작 · 기한 내 완료 · 정상 완료",
+     "미국: 고성능 모드 · 접수 후 40분 뒤 시작 · 기한 10분 초과 · 기한 감점 11점 · 정상 완료"
+    ],
+    "practice": true,
+    "mission": "failed",
+    "overall": 94.5,
+    "failure": {
+     "request_id": 2,
+     "reason": "late",
+     "minute": 650,
+     "time": "D1 10:50",
+     "company": "Northstar AI",
+     "country": "미국",
+     "due": "D1 10:40",
+     "expiry": "D1 11:00",
+     "late_minutes": 10,
+     "waited": 40,
+     "mode": "고성능 모드",
+     "minutes": 70,
+     "blocker": null,
+     "earliest_finish": null,
+     "tried": {
+      "proposal": null,
+      "wait_choices": 0
+     },
+     "after": {
+      "country": "일본",
+      "company": "Sakura Robotics",
+      "mode": "고성능 모드",
+      "completed": "D1 09:40"
+     },
+     "other": {
+      "country": "일본",
+      "state": "success"
+     }
+    },
+    "highlights": [],
+    "summary": {
+     "mission": "failed",
+     "overall": 94.5,
+     "ok": 1,
+     "total": 2,
+     "strategy": "일본 고성능 → 미국 고성능",
+     "arrangement": "순차 실행 · 먼저 끝난 자원 반환 후 시작",
+     "resources": "GPU 10개 / 전력 11단위 사용 후 반환",
+     "verdict": "2명 중 1명만 기한 내 정상 완료"
+    }
+   },
+   "chapterKey": 2,
+   "uiStep": "c2_done",
+   "practice": true,
+   "dialogue": {
+    "event": "c2_done",
+    "seen": false,
+    "pages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "두 요청은 모두 끝났지만, 이번 미션의 목표인 두 고객의 기한 내 정상 처리는 달성하지 못했습니다."
+     ],
+     [
+      "system",
+      "시스템 · AIDC 운영 알림",
+      "결과 화면에서 고객별 점수와 종합 평가, 실패 원인을 확인하고 [제2장 다시 도전]으로 새로 시작할 수 있습니다."
+     ]
+    ]
+   },
+   "campaign": [],
+   "next": null,
+   "retry": {
+    "available": true,
+    "kind": "practice",
+    "reason": ""
+   },
+   "graduation": null,
+   "chapter2": {
+    "requestIds": [
+     1,
+     2
+    ],
+    "step": "finish",
+    "completed": true,
+    "comparison": [],
+    "briefing": {
+     "1": [],
+     "2": []
+    },
+    "jobs": {
+     "1": [
+      "success",
+      null
+     ],
+     "2": [
+      "failed",
+      "late"
+     ]
+    },
+    "evaluation": [
+     "일본 Sakura Robotics: 100점 (정상 완료 · 기한 내)",
+     "미국 Northstar AI: 89점 (기한 초과 완료)",
+     "Chapter 2 종합 평가: 94.5/100"
+    ],
+    "failure": {
+     "request_id": 2,
+     "reason": "late",
+     "minute": 650,
+     "time": "D1 10:50",
+     "company": "Northstar AI",
+     "country": "미국",
+     "due": "D1 10:40",
+     "expiry": "D1 11:00",
+     "late_minutes": 10,
+     "waited": 40,
+     "mode": "고성능 모드",
+     "minutes": 70,
+     "blocker": null,
+     "earliest_finish": null,
+     "tried": {
+      "proposal": null,
+      "wait_choices": 0
+     },
+     "after": {
+      "country": "일본",
+      "company": "Sakura Robotics",
+      "mode": "고성능 모드",
+      "completed": "D1 09:40"
+     },
+     "other": {
+      "country": "일본",
+      "state": "success"
+     }
+    },
+    "failurePending": false,
+    "failurePages": [
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "미국 고객의 작업이 완료 기한(D1 10:40)을 10분 넘겨 끝났습니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "일본 고객을 먼저 처리했지만(D1 09:40 완료) 미국 고객도 고성능 모드로 실행하면서 완료 기한을 넘겼습니다. 접수 후 40분 뒤에 시작했고 처리에 70분이 걸렸습니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "일본 고객의 작업은 기한 내에 정상 완료했지만, 이번 미션의 목표는 두 고객의 요청을 모두 기한 내에 처리하는 것이었습니다. 이미 확정된 실패 판정은 바뀌지 않습니다."
+     ],
+     [
+      "mentor",
+      "교육 담당자 · 선배 엔지니어",
+      "다시 도전하면서 두 고객의 요구 조건과 완료 기한을 비교해 보세요. [제2장 다시 도전]으로 바로 새로 시작할 수 있고, 지금 진행 중인 작업은 [기존 진행 계속 보기]로 이어서 확인할 수 있습니다."
+     ]
+    ],
+    "retryAvailable": false
+   },
+   "chapter3": null,
+   "chapter3b": null,
+   "training": null
+  },
+  "free": null,
+  "journey": {
+   "kind": "story",
+   "misclicks": 0,
+   "route": "noc"
+  },
+  "world": {
+   "paths": []
   },
   "racks": {
    "engine": {

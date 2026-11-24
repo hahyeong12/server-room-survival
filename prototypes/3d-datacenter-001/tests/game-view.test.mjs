@@ -9,8 +9,8 @@ import {createWorldStore} from '../src/world-store.js';
 // Real snapshots produced by the unmodified Python engine (python -m engine.tests.make_fixtures).
 const S=JSON.parse(readFileSync(new URL('./fixtures/snapshots.json',import.meta.url),'utf8'));
 
-test('fixtures come from the Python engine contract (api v1, GameSession)',()=>{
-  for(const [k,s]of Object.entries(S)){assert.equal(s.api,1,k);assert.equal(s.engine,'python:session.GameSession');assert.ok(Array.isArray(s.requests)&&Array.isArray(s.servers),k);}
+test('fixtures come from the Python engine contract (api v2 keeps v1 fields, GameSession)',()=>{
+  for(const [k,s]of Object.entries(S)){assert.equal(s.api,2,k);assert.deepEqual(s.apiCompat,[1],k);assert.equal(s.engine,'python:session.GameSession');assert.ok(Array.isArray(s.requests)&&Array.isArray(s.servers),k);}
   assert.deepEqual(S.tutorial_new.servers.map(s=>[s.key,s.rack,s.gpu,s.power]),[['A','A-01',4,4],['B','B-01',3,2],['C','C-01',2,3],['D','D-01',1,1]]);
 });
 test('scene request follows the engine stage; the pin rack comes from the chosen or running allocation',()=>{
