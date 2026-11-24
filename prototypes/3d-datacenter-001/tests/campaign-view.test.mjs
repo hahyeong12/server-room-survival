@@ -46,3 +46,8 @@ test('chapter 5 Lab view never ships an answer key or hidden fault position',()=
   assert.equal(t.status.practice,true);assert.equal(t.prompt,'engineer@sg-edge:~$');
   for(const s of Object.values(S))for(const r of s.requests)assert.equal(r.incidentKind,undefined,'no incident cause in any request snapshot');
 });
+test('review fix: a briefing stays offered until the engine confirmed it, even if its pages were marked read',()=>{
+  const g=structuredClone(S.ch2_briefing);g.story.dialogue.seen=true;
+  const t=talkFor(g);assert.equal(t?.briefing,true,'the confirm button is still reachable');
+  const later=structuredClone(S.ch2_clear);later.story.dialogue.seen=true;assert.equal(talkFor(later),null,'other read pages stay closed');
+});

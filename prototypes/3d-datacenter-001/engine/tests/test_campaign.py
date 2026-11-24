@@ -104,7 +104,8 @@ class Driver:
         r = self.no(type='respond', rid=rid, key=right)
         self.t.assertIn('네트워크 진단', r['message'])
         d = self.ok(type='diagnose', rid=rid)['diagnosis']
-        self.t.assertIn('network', d)
+        self.t.assertEqual(d['networkDiagnosis']['kind'], self.game.session.runs[rid].state.incident_kind)
+        self.t.assertNotIn('incident_kind', json.dumps(req(self.game, rid)), 'the cause is not in the request snapshot')
         self.t.assertIn(self.snap()['world']['paths'][0]['link'], ('primary_down', 'congested'))
         self.ok(type='respond', rid=rid, key=wrong)
         self.t.assertEqual(req(self.game, rid)['phase'], 'paused')
@@ -170,6 +171,7 @@ class Driver:
         self.start(rid, req(self.game, rid)['conditions']['requestedMode'])
         self.advance_until(lambda: req(self.game, rid)['stage'] == 'net_fault')
         self.t.assertIn('Stage 5', self.no(type='respond', rid=rid, key='reroute')['message'])
+        self.t.assertTrue(req(self.game, rid)['network']['hidden'] and req(self.game, rid)['network']['available'] is None)
         self.t.assertTrue(all(v is None for v in self.story()['training']['network']['segments'].values()),
                           'the structure map hides the fault before Stage 1')
         wrong = self.ok(type='lab_segment', segment='edge-primary')['lab']
@@ -197,7 +199,10 @@ class Driver:
             self.ok(type='lab_command', source='terminal', stage='independent', payload=line)
         wrong = self.ok(type='lab_answer', stage='independent', question='cause', answer='server')['lab']
         self.t.assertFalse(wrong['correct'])
-        self.t.assertIn('Stage 5', self.no(type='respond', rid=rid, key='reroute')['message'])
+        locked = self.no(type='respond', rid=rid, key='reroute')['message']
+        self.t.assertIn('Stage 5', locked)
+        self.t.assertNotIn('Engineering Lab', locked, 'engine refusals are shown with the 3D place names')
+        self.t.assertIn('[연수 · Lab] 탭', locked)
         self.ok(type='lab_answer', stage='independent', question='cause', answer='path_down')
         self.ok(type='respond', rid=rid, key='reroute')
         self.t.assertFalse(self.story()['done'], 'acting is not verifying')

@@ -9,7 +9,8 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {startStack,settle,snap,CHROME} from './qa-lib.mjs';
 
-const out=resolve('../../docs/3d-world-expansion/qa/phase4');await mkdir(out,{recursive:true});
+// --out=<dir> keeps the Phase 4 evidence untouched when the suite is re-run as a regression (Phase 5+).
+const out=resolve(process.argv.find(x=>x.startsWith('--out='))?.slice(6)||'../../docs/3d-world-expansion/qa/phase4');await mkdir(out,{recursive:true});
 const only=process.argv.find(x=>x.startsWith('--only='))?.slice(7);
 const report={issue:5,mode:'Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves',checks:[],errors:[],consoleErrors:[],screenshots:[],steps:[],viewports:[],performance:[],startedAt:new Date().toISOString()};
 let browser,stack;

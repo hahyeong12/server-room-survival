@@ -21,9 +21,9 @@ const STEP_WHERE = Object.freeze({
   c2_review: '내 모니터 → 배정 계획 · 두 요청 각각 배정안 선택(미점유)', c2_allocate: '배정 계획에서 고른 뒤 서버동 01의 그 랙에서 시작 · 요청함의 대기/거절도 선택지',
   c2_progress: '위쪽 ⏩ 시간 · 서버동 랙의 고객 색', c2_finish: '위쪽 ⏩ 시간',
   c3_briefing: '화면 아래 선배 대화', c3_a_start: '요청함 → 배정 계획 → 서버동 01', c3_b_start: '요청함 → 배정 계획 → 서버동 01',
-  c3_a_incident: '⏩ 시간', c3_b_incident: '⏩ 시간', c3_a_diagnose: '내 모니터 → 진단', c3_b_diagnose: '내 모니터 → 진단',
-  c3_a_respond: '진단 탭', c3_b_respond: '진단 탭', c3_a_finish: '⏩ 시간', c3_b_finish: '⏩ 시간',
-  c3b_briefing: '화면 아래 선배 대화', c3b_a_diagnose: '진단 탭', c3b_b_diagnose: '진단 탭',
+  c3_a_incident: '⏩ 시간', c3_b_incident: '⏩ 시간', c3_a_diagnose: '내 모니터 → 네트워크 진단', c3_b_diagnose: '내 모니터 → 네트워크 진단',
+  c3_a_respond: '네트워크 진단 탭', c3_b_respond: '네트워크 진단 탭', c3_a_finish: '⏩ 시간', c3_b_finish: '⏩ 시간',
+  c3b_briefing: '화면 아래 선배 대화', c3b_a_diagnose: '장비 진단 탭', c3b_b_diagnose: '장비 진단 탭',
   t_structure: '내 모니터 → 연수', t_tool: '내 모니터 → 연수', t_assemble: '내 모니터 → 연수', t_terminal: '내 모니터 → 연수',
 });
 export const BRIEFING_EVENTS = Object.freeze(['c2_briefing', 'c3_briefing', 'c3b_briefing']);
@@ -45,8 +45,10 @@ export function chapterGoal(game) {
 export function talkFor(game) {
   if (!isLaterChapter(game)) return null;
   const d = game.story.dialogue;
-  if (!d || d.seen || !d.pages?.length) return null;
+  if (!d || !d.pages?.length) return null;
+  // A briefing stays on screen until the engine has confirmed it, even if its pages were marked read before.
   const briefing = BRIEFING_EVENTS.includes(d.event) && game.story.uiStep === d.event;
+  if (d.seen && !briefing) return null;
   return { key: `${game.id}:${d.event}`, event: d.event, briefing, pages: d.pages.map(([role, speaker, text]) => [role, text, speaker]) };
 }
 

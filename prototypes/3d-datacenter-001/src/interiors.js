@@ -132,10 +132,10 @@ export function createInteriors() {
         draw(anim.ups.display, [['🔋 배터리 ' + uv.battery + '%', 60, '#6fe7d2'], [uv.mode, 38], [`예비 시간 ${uv.runtime}`, 36], [done ? '✓ 자가진단 정상' : '자가진단 대기', 42, done ? '#7ff5a6' : '#a9bccb']], '#6fe7d2'); }
       visual = { room: current, checked: done, display: keys.UPS };
     } else if (current === 'NETWORK') {
-      for (const { led, uplink } of anim.network.ports) led.material.color.setHex(uplink && nv.down ? (Math.sin(time * 5) > 0 ? 0xff657d : 0x4a1b24) : uplink && nv.uplink !== '정상' ? 0x89baff : 0x6fe7d2);
+      for (const { led, uplink } of anim.network.ports) led.material.color.setHex(uplink && nv.uplink !== '정상' ? 0x89baff : 0x6fe7d2);   // AIDC internal state only
       const c = checks.network, key = `${nv.uplink}:${nv.links.map(l => l.status).join(',')}:${c?.seq ?? 0}`; if (keys.NETWORK !== key) { keys.NETWORK = key;
-        draw(anim.network.display, [[`AIDC 업링크 ${nv.uplink}`, 60, '#6fe7d2'], ...nv.links.map(l => [`${l.name}  ${l.latencyMs} ms  ${l.status}`, 34, l.cause && !['ok', 'rerouted', 'recovering'].includes(l.cause) ? '#ff8a9a' : l.active ? '#f4ca8d' : '#cfe3ee']), [c ? c.title : '원인 조회 대기', 36, c ? '#ffd2a6' : '#a9bccb']], nv.down ? '#ff657d' : '#6fe7d2'); }
-      visual = { room: current, uplinkDown: nv.down, faultPortsBlinking: nv.down, display: keys.NETWORK };
+        draw(anim.network.display, [[`AIDC 업링크 ${nv.uplink}`, 60, '#6fe7d2'], ...nv.links.map(l => [`${l.name}  ${l.latencyMs} ms  ${l.status}`, 34, l.cause && !['ok', 'rerouted', 'recovering'].includes(l.cause) ? '#ff8a9a' : l.active ? '#f4ca8d' : '#cfe3ee']), [c ? c.title : '원인 조회 대기', 36, c ? '#ffd2a6' : '#a9bccb']], nv.down ? '#f8be68' : '#6fe7d2'); }
+      visual = { room: current, uplinkDown: false, transitDown: nv.down, faultPortsBlinking: false, display: keys.NETWORK };
     }
   }
   function show(id) { current = Object.hasOwn(rooms, id) ? id : null; for (const [k, g] of Object.entries(rooms)) g.visible = k === current; keys[current] = null; }

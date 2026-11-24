@@ -275,8 +275,10 @@ function detailBody(){
 }
 
 // ---------- my monitor ----------
-const TABS=[['inbox','요청함'],['plan','배정 계획'],['diagnosis','진단'],['result','결과']];
-const tabsFor=g=>g?.story?.training?[...TABS.slice(0,3),['lab','연수 · Lab'],TABS[3]]:TABS;
+// The diagnosis tab carries the name the engine's sentences use in that chapter: 장비 진단 (tutorial, 제1장, 제4장,
+// free), 네트워크 진단 (제3장), 진단 (제5장 — independent diagnosis, evidence comes from the Lab).
+const diagLabel=g=>g?.story?.chapterKey===3?'네트워크 진단':g?.story?.training?'진단':'장비 진단';
+const tabsFor=g=>{const base=[['inbox','요청함'],['plan','배정 계획'],['diagnosis',diagLabel(g)]];return g?.story?.training?[...base,['lab','연수 · Lab'],['result','결과']]:[...base,['result','결과']];};
 function openTab(tab){
   ui.tab=tab;const r=focusRequest(game());
   if(tab==='plan'&&r&&r.stage==='incoming')send({type:'view_plans',rid:r.id},{quiet:true}).then(res=>{if(res?.ok){ui.plans[r.id]={...res.result.plans,briefing:res.result.briefing,clock:res.game.clock.label};render();}});
@@ -358,7 +360,7 @@ function panePlan(body,g,r){
 function paneDiagnosis(body,g,r){
   if(!r||!r.allocation.length){body.append(el('p','ws-note','실행 중인 작업이 없습니다. 작업을 시작한 뒤 진단할 수 있습니다.'));return;}
   const d=ui.diagnosis[r.id];
-  body.append(el('div','ws-label',`요청 #${r.id} 장비 진단${d?` · 조회 ${d.clock}`:''} · 증상: ${STAGE_LABEL[r.stage]} · 진행률 ${Math.round(r.progress)}%`));
+  body.append(el('div','ws-label',`요청 #${r.id} ${diagLabel(g)}${d?` · 조회 ${d.clock}`:''} · 증상: ${STAGE_LABEL[r.stage]} · 진행률 ${Math.round(r.progress)}%`));
   if(!d){body.append(el('p','ws-note','엔진에 진단을 요청하는 중…'));return;}
   if(d.clock!==g.clock.label||d.stage!==r.stage)body.append(el('p','ws-warn',`진단 후 상태가 바뀌었습니다 (진단 ${d.clock} · 지금 ${g.clock.label} ${STAGE_LABEL[r.stage]}). 아래 [다시 진단]으로 최신 증거를 보세요.`));
   if(d.networkDiagnosis)body.append(panes.networkEvidence(d.networkDiagnosis));
@@ -441,7 +443,7 @@ function renderTalk(){
   else if(t.event){
     // Chapters 2-5: [다음] only turns pages. The last page of a briefing is the engine's briefing confirmation;
     // any other last page only records that the pages were read (engine dialogue_seen).
-    row.append(button(t.briefing?'브리핑 확인 · 업무 시작':'확인',async()=>{const res=await send({type:'mark_dialogue',event:t.event},{quiet:true});if(res?.ok&&t.briefing)await send({type:'confirm_briefing'});},'primary',{id:'talk-done','data-talk-done':t.event}));
+    row.append(button(t.briefing?'브리핑 확인 · 업무 시작':'확인',()=>t.briefing?send({type:'confirm_briefing'}):send({type:'mark_dialogue',event:t.event},{quiet:true}),'primary',{id:'talk-done','data-talk-done':t.event}));
   }
   else row.append(button('근무 시작',()=>send({type:'confirm_briefing'}),'primary',{id:'coach-start'}));
   box.append(who,p,row);

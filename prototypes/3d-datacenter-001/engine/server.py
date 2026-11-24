@@ -26,7 +26,7 @@ HERE = Path(__file__).resolve().parent
 if str(HERE.parent) not in sys.path:
     sys.path.insert(0, str(HERE.parent))
 
-from engine.adapter import GameHost, ActionError, API_VERSION  # noqa: E402
+from engine.adapter import GameHost, ActionError, API_VERSION, MissingSave  # noqa: E402
 
 MAX_BODY = 64 * 1024
 ALLOWED_HOSTS = re.compile(r'(127\.0\.0\.1|localhost)(:\d+)?')
@@ -39,7 +39,7 @@ def lookup(host, gid):
     """Only a missing save becomes 404; any other KeyError is an internal error (500)."""
     try:
         return host.get(gid)
-    except KeyError:
+    except MissingSave:
         raise NotFound(gid) from None
 
 
@@ -47,7 +47,7 @@ def guarded(fn, gid, *args):
     """Run a host call for a save id; a missing save is 404 like lookup()."""
     try:
         return fn(gid, *args)
-    except KeyError:
+    except MissingSave:
         raise NotFound(gid) from None
 
 

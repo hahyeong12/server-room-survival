@@ -60,6 +60,18 @@ class ActionError(ValueError):
         self.hint = hint
 
 
+def _chapter_key(value):
+    """'2' / 2 / '3b' / 'lab' -> the engine chapter key; anything else (lists, objects, unknown) -> None."""
+    if isinstance(value, bool) or not isinstance(value, (str, int)):
+        return None
+    text = str(value)
+    return {'1': 1, '2': 2, '3': 3, '3b': '3b', 'lab': 'lab'}.get(text)
+
+
+class MissingSave(KeyError):
+    """Only this means 'no such save' (HTTP 404); any other KeyError is an internal error."""
+
+
 def _slices_payload(parts):
     return [{'server': p.server_id, 'rack': SERVER_RACKS[p.server_id], 'gpuSlots': list(p.gpu_slots),
              'gpu': p.gpu, 'power': p.power} for p in parts]
@@ -153,6 +165,7 @@ class Game:
         proposal = run.proposals[-1] if run.proposals else None
         status = job_status(s, run)
         terms = run.terms or {}
+        hide = bool(self._training_run(run) and st.incident_kind and st.phase in ('incident', 'paused'))
         view = {
             'id': rid, 'country': country, 'code': COUNTRY_CODES.get(country, '??'),
             'company': run.mission['company_name'], 'title': run.mission['title'],
@@ -178,7 +191,9 @@ class Game:
             'jobStatus': status,
             'hardware': s.hardware_status(run), 'migrationLeft': run.migration_left,
             'hardwareDowntime': run.hardware_downtime,
-            'network': {'needed': st.network_needed, 'available': st.network_available, 'attempts': st.response_attempts,
+            # Chapter 5 (as the Python main screen): an active training incident shows no cause numbers.
+            'network': {'needed': None if hide else st.network_needed, 'available': None if hide else st.network_available,
+                        'hidden': hide, 'attempts': st.response_attempts,
                         'downtime': st.downtime, 'incident': st.phase in ('incident', 'paused')},
             'recoveryLeft': st.recovery_left,
             'score': st.score, 'succeeded': st.succeeded, 'resultText': st.result_text,
@@ -244,6 +259,9 @@ class Game:
             return 'recovering', '조치 성공 · 복구 준비 중'
         if stage != 'net_fault':
             return 'ok', ''
+        if not st.incident_kind and not self._training_run(run):
+            # Free mode / older saves: the existing random incident only lowers the available bandwidth.
+            return 'congested', f'필요 {st.network_needed} / 가용 {st.network_available} (자유 운영 장애 모델: 대역폭 부족)'
         chapter3 = story.chapter3 if story else None
         diagnosed = bool(chapter3 and run.request['id'] in chapter3.diagnosed)
         if diagnosed and st.incident_kind == 'path_down':
@@ -327,6 +345,9 @@ class Game:
                 self.journey.record('rejected', self._minute(), action=kind, message=str(exc)[:200])
                 self.journey.misclick()
                 self.journey.save()
+                worded = campaign._player_words(str(exc))
+                if worded != str(exc):
+                    raise ActionError(worded, getattr(exc, 'hint', '')) from exc
             raise
         # The engine part succeeded and is committed. Journey facts stay in memory even if saving the sidecar
         # fails; the error is reported and the next successful save writes them (never rolled back here).
@@ -450,7 +471,7 @@ class Game:
         # Opening the monitor's diagnosis pane is the engine's "open the diagnosis window" action for chapters 3/4.
         if (story and story.chapter3 is not None and rid in story.chapter3.request_ids
                 and run.state.allocated and run.state.incident_kind):
-            extra['network'] = campaign.jsonable(s.view_network_diagnosis(rid))
+            extra['networkDiagnosis'] = campaign.jsonable(s.view_network_diagnosis(rid))
         if story and story.chapter3b is not None and rid in story.chapter3b.request_ids and s.hardware_servers(run):
             extra['hardwareDiagnosis'] = campaign.jsonable(s.view_hardware_diagnosis(rid))
         if self._training_run(run):
@@ -892,7 +913,7 @@ class GameHost:
         if mode not in ('tutorial', 'story', 'free', 'practice'):
             raise ActionError('지원하지 않는 모드입니다.')
         if mode == 'practice':
-            chapter = {'2': 2, '3': 3}.get(str(chapter), chapter)
+            chapter = _chapter_key(chapter)
             if chapter not in PRACTICE_CHAPTERS:
                 raise ActionError('연습할 장을 고르세요 (제2~5장).')
         with self.lock:
@@ -908,6 +929,8 @@ class GameHost:
             s = game.session
             if game.kind == 'tutorial':
                 return self.new_game('tutorial')
+            if game.kind not in ('story', 'practice') or not s.story:
+                raise ActionError('재도전은 스토리 저장에서만 할 수 있습니다.')
             key = current_chapter(s.story).key
             if game.kind == 'practice':
                 return self.new_game('practice', key)
@@ -928,8 +951,10 @@ class GameHost:
             journey.save()
             game = self._open(target, 'story', fresh=False)
         except Exception:
-            # Only the sidecar this call created is removed; the source save and its checkpoint are never touched.
-            sidecar.unlink(missing_ok=True)
+            # Only files this call created are removed (the new slot copy, its sidecar and lock); the source save
+            # and its checkpoint are never touched.
+            for created in (target, sidecar, target.with_name(target.name + '.lock')):
+                created.unlink(missing_ok=True)
             raise
         # Like the Python menu (checkpoint_start=True): the new slot keeps its own chapter-start copy, so it can be
         # retried again later. A failure here leaves the playable new slot and only reports the missing copy.
@@ -944,8 +969,8 @@ class GameHost:
         """Chapter select in the menu: start a saved chapter-start point as a new slot (source unchanged)."""
         with self.lock:
             if not isinstance(gid, str) or not GAME_ID.fullmatch(gid) or not (self.dir / f'{gid}.db').is_file():
-                raise KeyError(gid)
-            key = {'1': 1, '2': 2, '3': 3}.get(str(chapter), chapter)
+                raise MissingSave(gid)
+            key = _chapter_key(chapter)
             source = self.dir / f'{gid}.db'
             if key not in CHAPTERS or not checkpoint_path(source, key).is_file():
                 raise ActionError('이 저장에는 그 장의 시작 기록이 없습니다.')
@@ -957,12 +982,12 @@ class GameHost:
     def get(self, gid):
         with self.lock:
             if not isinstance(gid, str) or not GAME_ID.fullmatch(gid):
-                raise KeyError(gid)
+                raise MissingSave(gid)
             if gid in self.games:
                 return self.games[gid]
             path = self.dir / f'{gid}.db'
             if not path.is_file():
-                raise KeyError(gid)
+                raise MissingSave(gid)
             kind = 'free' if FREE_PATTERN.fullmatch(path.name) else self.slots.category(path)
             if kind not in ('tutorial', 'story', 'free', 'practice'):
                 raise ActionError('이 저장은 3D 시연에서 열 수 없는 종류입니다.')

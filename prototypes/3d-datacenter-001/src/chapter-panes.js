@@ -45,7 +45,7 @@ export function createChapterPanes({ el, button, chip, readingsGrid, send, ui, r
     card.append(readingsGrid([['영향 작업', `${d.company} · ${d.mode} · 이 서버 조각 GPU ${d.slice_gpu}/전력 ${d.slice_power}`],
       ['필요 자원(작업 전체)', `GPU ${d.need_gpu} / 전력 ${d.need_power}`], ['정상 서버 여유', `${normal} (합계 GPU ${d.normal_gpu} / 전력 ${d.normal_power})`],
       ['장비 복구', `${d.repair_minutes}분 → 예상 완료 ${d.repair_finish_label} · ${d.repair_on_time === null ? '기한 없음' : d.repair_on_time ? '기한 내' : '기한 초과'}`],
-      ['작업 이전', d.migrate_possible ? `준비 ${d.migrate_minutes}분 → 예상 완료 ${d.migrate_finish_label} · ${d.migrate_on_time ? '기한 내' : '기한 초과'}` : `불가 · ${d.reason}`],
+      ['작업 이전', d.migrate_possible ? `준비 ${d.migrate_minutes}분 → 예상 완료 ${d.migrate_finish_label} · ${d.migrate_on_time === null ? '기한 없음' : d.migrate_on_time ? '기한 내' : '기한 초과'}` : `불가 · ${d.reason}`],
       ['완료 기한', d.due_label || '—'], ['누적 중단', `${d.downtime}분`]]));
     if (d.advice) card.append(el('p', 'ws-note', d.advice));
     return card;
