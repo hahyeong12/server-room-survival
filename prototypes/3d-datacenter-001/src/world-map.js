@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import landSource from './assets/land.geojson?raw';
 import { COUNTRIES } from './world-store.js';
 import { SCALE, HALF_WIDTH, toMap, unwrap, copyOffsets } from './geo.js';
-import { LANDING, BACKGROUND_LINKS, REQUEST_PATHS, activePaths, pathStatus, focusPath } from './network-data.js';
+import { LANDING, BACKGROUND_LINKS, REQUEST_PATHS, activePaths, pathStatus, focusPath, CAUSE_TEXT } from './network-data.js';
 
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const TONE = { incoming: 0xf3c37b, active: 0x6fe7d2, done: 0x5fb9a9, fault: 0xff657d, repairing: 0xf8be68, check: 0x89baff, ok: 0x6fe7d2, degraded: 0xff9a5c, idle: 0x2c4a5c };
@@ -92,19 +92,19 @@ export function createWorldMap() {
     const c = p.canvas.getContext('2d'), col = s.aidc !== 'ok' ? '#ff8a9a' : s.link !== 'ok' ? '#ffb27a' : s.tone === 'incoming' ? '#f4ca8d' : '#8af0d4';
     c.clearRect(0, 0, 640, 150); c.fillStyle = '#10161fee'; c.fillRect(0, 0, 640, 150); c.fillStyle = col; c.fillRect(0, 0, 8, 150);
     c.font = '600 46px Consolas, "Malgun Gothic", monospace'; c.fillText(`요청 #${s.rid} · ${s.tone === 'incoming' ? '새 요청 도착' : '작업 중'}`, 28, 64);
-    c.font = '28px "Malgun Gothic", sans-serif'; c.fillStyle = '#c8d6e0'; c.fillText(s.aidc !== 'ok' ? 'AIDC 서버 문제 · 회선 정상' : s.link !== 'ok' ? '네트워크 장애' : '가상 경로 · 출처/조건 확인', 30, 116); p.tex.needsUpdate = true;
+    c.font = '28px "Malgun Gothic", sans-serif'; c.fillStyle = '#c8d6e0'; c.fillText(s.aidc !== 'ok' ? 'AIDC 서버 문제 · 회선 정상' : s.cause !== 'ok' ? CAUSE_TEXT[s.cause] : '가상 경로 · 출처/조건 확인', 30, 116); p.tex.needsUpdate = true;
   }
   // Fault badge for the AIDC end of the focused path (shown only when that segment has a problem).
   const badgeCanvas = document.createElement('canvas'); badgeCanvas.width = 640; badgeCanvas.height = 160;
   const badgeTex = new THREE.CanvasTexture(badgeCanvas); badgeTex.colorSpace = THREE.SRGBColorSpace;
   const badge = new THREE.Sprite(new THREE.SpriteMaterial({ map: badgeTex, depthTest: false, toneMapped: false })); badge.scale.set(4.2, 1.05, 1); badge.position.set(kr.x + 2.6, 2.2, kr.z + .4); badge.renderOrder = 6; badge.visible = false; group.add(badge);
   let badgeKey = '', visual = null;
-  function drawBadge(kind) {
+  function drawBadge(kind, cause = 'symptom') {
     const c = badgeCanvas.getContext('2d'), col = kind === 'fault' ? '#ff8a9a' : kind === 'repairing' ? '#ffc777' : '#ffb27a';
     c.clearRect(0, 0, 640, 160); c.fillStyle = '#140c12ee'; c.fillRect(0, 0, 640, 160); c.strokeStyle = col; c.lineWidth = 5; c.strokeRect(3, 3, 634, 154);
     c.fillStyle = col; c.font = 'bold 64px "Segoe UI Symbol", sans-serif'; c.fillText(kind === 'repairing' ? '🛠' : '⚠', 22, 104);
-    c.font = '600 38px "Malgun Gothic", sans-serif'; c.fillText(kind === 'fault' ? 'AIDC 서버 장애' : kind === 'repairing' ? 'AIDC 서버 복구 중' : '네트워크 장애', 110, 72);
-    c.font = '26px "Malgun Gothic", sans-serif'; c.fillStyle = '#c8d6e0'; c.fillText(kind === 'degraded' ? '구간 위치는 엔진이 특정하지 않음' : '국제 구간·육양국·국내망은 정상', 112, 122); badgeTex.needsUpdate = true;
+    c.font = '600 38px "Malgun Gothic", sans-serif'; c.fillText(kind === 'fault' ? 'AIDC 서버 장애' : kind === 'repairing' ? 'AIDC 서버 복구 중' : cause === 'symptom' ? '전송 이상 · 원인 미확인' : '고객 전송 경로 이상', 110, 72);
+    c.font = '26px "Malgun Gothic", sans-serif'; c.fillStyle = '#c8d6e0'; c.fillText(kind === 'degraded' ? (cause === 'symptom' ? '내 모니터 [진단]에서 근거 확인 · AIDC 내부 정상' : CAUSE_TEXT[cause]) : '국제 구간·육양국·국내망은 정상', 112, 122); badgeTex.needsUpdate = true;
   }
 
   function update(time, state, { reducedMotion = false } = {}) {
@@ -115,10 +115,10 @@ export function createWorldMap() {
       const s = lit[code], m = markers[code];
       p.badge.visible = !!s;
       if (!s) { p.mat.color.setHex(TONE.idle); p.mat.opacity = .5; m.mat.color.setHex(NEUTRAL); m.ring.scale.setScalar(1); p.packets.forEach(x => { x.m.visible = false; }); continue; }
-      const tone = s.link !== 'ok' ? TONE.degraded : TONE[s.tone];
+      const tone = s.link !== 'ok' ? TONE.degraded : s.cause === 'rerouted' ? TONE.check : TONE[s.tone];
       p.mat.color.setHex(tone); p.mat.opacity = s.focus ? .95 : .7; m.mat.color.setHex(tone);
       m.ring.scale.setScalar(1 + (reducedMotion ? 0 : (s.tone === 'incoming' ? .3 : .1) * (.5 + .5 * Math.sin(time * 3))));
-      const key = `${s.rid}:${s.tone}:${s.aidc}:${s.link}`; if (key !== p.key) { p.key = key; drawRequestBadge(p, s); }
+      const key = `${s.rid}:${s.tone}:${s.aidc}:${s.link}:${s.cause}`; if (key !== p.key) { p.key = key; drawRequestBadge(p, s); }
       p.packets.forEach(({ m: dot, offset }) => {
         const u = reducedMotion ? offset : (time * .07 + offset) % 1, onHop = u > .88;
         dot.visible = !(onHop && s.aidc !== 'ok') && s.link === 'ok';
@@ -130,11 +130,11 @@ export function createWorldMap() {
     markers.KR.mat.color.setHex(!any || focus.aidc === 'ok' ? 0x81f1da : TONE[focus.aidc]);
     markers.KR.ring.scale.setScalar(1 + (any && focus.aidc === 'fault' && !reducedMotion ? .3 * (.5 + .5 * Math.sin(time * 4)) : 0));
     const kind = !any ? '' : focus.aidc !== 'ok' ? focus.aidc : focus.link !== 'ok' ? 'degraded' : '';
-    badge.visible = !!kind; if (kind && badgeKey !== kind) { badgeKey = kind; drawBadge(kind); }
+    const bkey = `${kind}:${focus?.cause}`; badge.visible = !!kind; if (kind && badgeKey !== bkey) { badgeKey = bkey; drawBadge(kind, focus.cause); }
     visual = { lit: Object.keys(lit), focus: focus?.code ?? null, tone: focus?.tone ?? 'idle', hop: '#' + hopMat.color.getHexString(), aidcMarker: '#' + markers.KR.mat.color.getHexString(),
       markers: Object.fromEntries(Object.keys(REQUEST_PATHS).map(c => [c, '#' + markers[c].mat.color.getHexString()])),
       sea: Object.fromEntries(Object.entries(paths).map(([c, p]) => [c, '#' + p.mat.color.getHexString()])),
-      packetsVisible: Object.values(paths).some(p => p.packets.some(x => x.m.visible)), packetsMoving: !reducedMotion, faultBadge: badge.visible, faultKind: kind || null,
+      packetsVisible: Object.values(paths).some(p => p.packets.some(x => x.m.visible)), packetsMoving: !reducedMotion, faultBadge: badge.visible, faultKind: kind || null, cause: focus?.cause ?? null,
       requestBadges: Object.entries(paths).filter(([, p]) => p.badge.visible).map(([c]) => c),
       background: { links: BACKGROUND_LINKS.length, color: '#' + bgMat.color.getHexString(), opacity: +bgMat.opacity.toFixed(3) } };
   }

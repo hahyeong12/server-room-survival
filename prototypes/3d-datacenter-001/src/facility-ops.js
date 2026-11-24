@@ -2,6 +2,7 @@
 // Every value here is a fixed educational demo number, not a physical, electrical or thermal model.
 import { totals } from './model.js';
 import { focusRequest, isOpen, COUNTRY_NAMES } from './game-view.js';
+import { activePaths, pathStatus, CAUSE_TEXT } from './network-data.js';
 
 function freeze(v) { Object.values(v).forEach(x => { if (x && typeof x === 'object') freeze(x); }); return Object.freeze(v); }
 
@@ -75,16 +76,25 @@ export function upsView() {
 // Network status and cause lookup read the engine snapshot (focused request). Display only.
 function networkCause(state) {
   const r = focusRequest(state.game);
-  if (r?.stage === 'net_fault') return { title: `원인: 요청 #${r.id} 네트워크 대역폭 부족`, detail: `필요 ${r.network.needed} / 가용 ${r.network.available} · 중단 ${r.network.downtime}분 · 대응 ${r.network.attempts}/3. 내 모니터 [장비 진단]에서 대응을 고르세요.`, target: 'noc' };
+  if (r?.stage === 'net_fault') {
+    // Only what the engine evidence already established is named; before a diagnosis this stays a symptom.
+    const p = activePaths(state).map(pathStatus).find(x => x.rid === r.id), cause = p?.cause ?? 'symptom';
+    return { title: cause === 'symptom' ? `요청 #${r.id} 고객 전송 경로 이상 · 원인 미확인` : `요청 #${r.id} ${CAUSE_TEXT[cause]}`,
+      detail: `작업 중단 ${r.network.downtime}분 · 대응 ${r.network.attempts}/3. 서버동 업링크(AIDC 내부)는 정상입니다. 원인 확인은 내 모니터 [진단]에서 엔진 진단으로 합니다.`, target: 'noc' };
+  }
   if (['hw_fault', 'hw_repair', 'migration'].includes(r?.stage)) return { title: '네트워크 정상 · 원인은 서버 장비', detail: `요청 #${r.id}의 국제 회선과 서버동 업링크는 정상입니다. ${r.hardware || '서버 상태를 확인하세요.'}`, target: 'hall' };
   return { title: '활성 네트워크 장애 없음', detail: '국제 가상 회선과 서버동 업링크가 정상입니다.', target: null };
 }
 
+// Customer transit paths (world map) and the AIDC internal network are reported separately: a customer path
+// incident never turns the server building's own uplink red (Issue #6).
 export function networkView(state) {
-  const r = focusRequest(state.game), down = r?.stage === 'net_fault', open = (state.game?.requests ?? []).filter(isOpen);
-  return { uplink: down ? '대역폭 부족' : ['hw_fault', 'hw_repair', 'migration'].includes(r?.stage) ? '정상 (서버 장애는 별도)' : '정상', down,
-    links: VIRTUAL_LINKS.map(l => { const req = open.find(x => x.code === l.id); return { ...l, name: COUNTRY_NAMES[l.id] === '미국' ? '미국 서부' : l.name, active: !!req,
-      status: req?.stage === 'net_fault' ? '대역폭 부족' : req ? `요청 #${req.id}` : '요청 없음' }; }) };
+  const r = focusRequest(state.game), paths = activePaths(state).map(pathStatus), focus = paths.find(p => p.focus) || paths[0];
+  const open = (state.game?.requests ?? []).filter(isOpen), down = !!focus && focus.cause !== 'ok' && focus.cause !== 'rerouted' && focus.cause !== 'recovering';
+  return { uplink: ['hw_fault', 'hw_repair', 'migration'].includes(r?.stage) ? '정상 (서버 장애는 별도)' : '정상', down,
+    transit: focus ? (focus.cause === 'ok' ? '정상' : CAUSE_TEXT[focus.cause]) : '요청 없음',
+    links: VIRTUAL_LINKS.map(l => { const req = open.find(x => x.code === l.id), p = paths.find(x => x.code === l.id); return { ...l, name: COUNTRY_NAMES[l.id] === '미국' ? '미국 서부' : l.name, active: !!req,
+      cause: p?.cause ?? 'ok', status: p && p.cause !== 'ok' ? CAUSE_TEXT[p.cause] : req ? `요청 #${req.id}` : '요청 없음' }; }) };
 }
 
 export function hallView(state) {

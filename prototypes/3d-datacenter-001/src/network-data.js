@@ -52,14 +52,22 @@ export function activePaths(state) {
 const MESSAGE = {
   fault: '국제 구간·육양국·국내망 정상 · 울산 AIDC 서버 장애 (네트워크 문제 아님)',
   repairing: '국제 구간 정상 · AIDC 서버 복구/작업 이전 준비 중',
-  degraded: '네트워크 장애 · 필요 대역폭보다 가용 대역폭이 작음 (엔진은 회선 구간 위치를 모델링하지 않음)',
 };
+// What the transit is known to be, from the engine evidence the player has opened (Issue #6). Before a network
+// diagnosis it is only a symptom; no single international hop is blamed by the display.
+export const CAUSE_TEXT = Object.freeze({
+  symptom: '전송 이상 · 원인 미확인 (진단 전)', primary_down: '주 통신 경로 신호 없음 · 백업 경로 대기',
+  congested: '경로 연결됨 · 대역폭 한계', rerouted: '백업 경로로 우회 전송 중', recovering: '조치 성공 · 복구 준비 중', ok: '',
+});
 // One path's display status. Every space reads the same derived value.
 export function pathStatus(path) {
   const seg = path.segments || {}, aidc = seg.aidc || 'ok', link = seg.sea === 'degraded' ? 'degraded' : 'ok';
+  const cause = path.link || (link === 'degraded' ? 'symptom' : 'ok'), note = path.linkNote || CAUSE_TEXT[cause] || '';
   const name = REQUEST_PATHS[path.code]?.name || path.code;
-  return { code: path.code, rid: path.rid, focus: !!path.focus, tone: path.tone, aidc, link, segments: { sea: seg.sea || 'ok', landing: seg.landing || 'ok', backbone: seg.backbone || 'ok', aidc },
-    packets: true, message: MESSAGE[aidc !== 'ok' ? aidc : link !== 'ok' ? link : ''] || (path.tone === 'incoming' ? `${name} 새 요청 도착 · 경로 확인` : `${name} 경로 정상 · 작업 트래픽 전송 중`) };
+  return { code: path.code, rid: path.rid, focus: !!path.focus, tone: path.tone, aidc, link, cause, note,
+    segments: { sea: seg.sea || 'ok', landing: seg.landing || 'ok', backbone: seg.backbone || 'ok', aidc },
+    packets: true, message: aidc !== 'ok' ? MESSAGE[aidc] : cause !== 'ok' ? `${name} 경로 · ${note}`
+      : (path.tone === 'incoming' ? `${name} 새 요청 도착 · 경로 확인` : `${name} 경로 정상 · 작업 트래픽 전송 중`) };
 }
 // The path the panels describe: the focused request if it is lit, else the first lit path.
 export function focusPath(state) {

@@ -38,5 +38,14 @@ test('a server fault changes only the AIDC segment; a network incident is not pl
   assert.deepEqual(hw.segments,{sea:'ok',landing:'ok',backbone:'ok',aidc:'fault'});assert.match(hw.message,/네트워크 문제 아님/);
   assert.equal(pathStatus({rid:1,code:'SG',tone:'active',segments:{sea:'ok',landing:'ok',backbone:'ok',aidc:'repairing'}}).aidc,'repairing');
   const net=pathStatus({rid:3,code:'US',tone:'active',segments:{sea:'degraded',landing:'degraded',backbone:'degraded',aidc:'ok'}});
-  assert.equal(net.link,'degraded');assert.equal(net.aidc,'ok');assert.match(net.message,/구간 위치를 모델링하지 않음/);
+  // Phase 5 (Issue #6): before a diagnosis the transit is only a symptom; no hop and no cause is named.
+  assert.equal(net.link,'degraded');assert.equal(net.aidc,'ok');assert.equal(net.cause,'symptom');assert.match(net.message,/원인 미확인/);
+  assert.doesNotMatch(net.message,/대역폭|단절|케이블/);
+});
+test('after the engine diagnosis the transit names only what the evidence says; rerouting is not a fault',()=>{
+  const at=(link,linkNote='')=>pathStatus({rid:4,code:'SG',tone:'active',link,linkNote,segments:{sea:link==='rerouted'||link==='recovering'?'ok':'degraded',landing:'ok',backbone:'ok',aidc:'ok'}});
+  assert.equal(at('primary_down').cause,'primary_down');assert.match(at('primary_down').message,/주 통신 경로 신호 없음/);assert.doesNotMatch(at('primary_down').message,/케이블|해저/);
+  assert.match(at('congested','진단: 필요 6 / 가용 4').message,/필요 6 \/ 가용 4/);
+  assert.equal(at('rerouted').link,'ok');assert.match(at('rerouted').message,/백업 경로로 우회/);
+  for(const c of ['primary_down','congested','rerouted'])assert.equal(at(c).aidc,'ok','AIDC internal stays normal');
 });
