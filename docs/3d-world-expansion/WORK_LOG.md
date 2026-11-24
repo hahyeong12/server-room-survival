@@ -189,3 +189,14 @@
 - 결과는 [QA_REPORT_PHASE4.md](QA_REPORT_PHASE4.md): 엔진 22/22, JS 29/29, 브라우저 13/13, 실험실 15/15, Python 비GUI 781/781, 빌드 성공, 보호 해시 753 동일.
 - 미실행: Python Tk GUI 테스트(요청 없이 실행하지 않음), 실제 Windows 배율·물리 마우스, 사람 플레이 평가(최종 통합본에서).
 - GitHub Issue 댓글: `gh` CLI가 없어 미게시. main 병합·PR 없음.
+
+## Phase 5 — Issue #6 스토리 1~5장 3D 캠페인 (2026-11-24 KST, Claude Code / Claude Opus 5.5)
+
+- 기준: `origin/experiment/3d-playable-phase4` `9209431` → 새 브랜치 `experiment/3d-campaign-phase5`. 작업 전 보호 해시 753개(`qa/phase5/protected-before.json`), Python 비GUI 781 통과 기준선 기록.
+- 먼저 엔진만으로 제1~5장을 headless로 끝까지 실행해 필요한 조작 순서를 확인했습니다(제2장 일본 고성능+미국 절약형 동시 성공, 제3장 우회/압축, 제4장 이전/복구, 제5장 Stage 1~5). 엔진 수정 없이 모두 가능했습니다.
+- 어댑터 API v2(`engine/campaign.py` 신규): 장별 조회 전용 스냅샷, 다음 장 시작(+장 시작 체크포인트), 재도전(체크포인트 → 새 슬롯), 장 연습, 장 선택, 브리핑/대화/결과 카드 확인, 제3·4장 진단창, Lab 행동. 진단 전 네트워크는 "원인 미확인", 제5장 연수 사건은 원인 수치 비공개.
+- 3D 화면: 내 모니터(비교 카드·대기/거절·배정 영향·네트워크/장비 진단표·연수 Lab 탭·가상 터미널), 장별 목표·위치 안내(장마다 감소), 선배 대화, 장 클리어/실패/재도전/수료 화면, 메뉴 장 선택·장 연습.
+- 브라우저 QA(`scripts/phase5-qa.mjs`, `phase5-ui.mjs`)로 장마다 엔진 재시작·이어하기를 포함한 1→5장 완주, 장별 실패·재도전, 연습, 3개 해상도, 자원 순환을 실제 UI로 검증. QA가 찾은 결함 7건과 독립 코드 리뷰 9건(중요 3)을 수정하고 회귀 테스트를 추가했습니다.
+- `npm run play`는 포트가 이미 쓰이면 다른 프로세스를 종료하지 않고 안내합니다.
+- Phase 4 QA를 회귀로 다시 돌릴 때 Phase 4 증거 파일이 덮어써진 것을 발견해 원래 커밋 상태로 되돌리고, 재실행 결과는 `qa/phase5/phase4-regression/`에 두었습니다(`--out` 옵션 추가).
+- 최종 결과: Phase 5 QA 9/9, Phase 4 QA 13/13, lab.html 15/15, 엔진 38/38, JS 38/38, Python 비GUI 781/781, 빌드 성공, 보호 해시 753개 동일. Tk GUI 311개는 미실행. 상세: [QA_REPORT_PHASE5.md](QA_REPORT_PHASE5.md), 구조: [PHASE5_ARCHITECTURE.md](PHASE5_ARCHITECTURE.md).

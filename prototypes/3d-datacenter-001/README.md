@@ -1,8 +1,8 @@
-# 3D 데이터센터 — 서버실 생존기 3D (Phase 4)
+# 3D 데이터센터 — 서버실 생존기 3D (Phase 5)
 
-서버실 생존기의 3D 화면입니다. **Phase 4(Issue #5)부터 기존 Python 게임 엔진(`session.GameSession`)과 연결**되어, 가상 시간·GPU/전력 원장·서버 배정·고객 조건/동의·기한·점수·서버 장애/복구를 모두 Python 엔진이 계산합니다. 3D 화면은 규칙을 복제하지 않고 엔진 결과를 보여 주며, 플레이어의 실제 조작을 엔진 행동으로 보냅니다. 구조는 [Phase 4 아키텍처](../../docs/3d-world-expansion/PHASE4_ARCHITECTURE.md)를 보세요.
+서버실 생존기의 3D 화면입니다. **Phase 4(Issue #5)부터 기존 Python 게임 엔진(`session.GameSession`)과 연결**되어, 가상 시간·GPU/전력 원장·서버 배정·고객 조건/동의·기한·점수·서버 장애/복구를 모두 Python 엔진이 계산합니다. 3D 화면은 규칙을 복제하지 않고 엔진 결과를 보여 주며, 플레이어의 실제 조작을 엔진 행동으로 보냅니다. 구조는 [Phase 4 아키텍처](../../docs/3d-world-expansion/PHASE4_ARCHITECTURE.md)와 **[Phase 5 아키텍처 — 스토리 1~5장](../../docs/3d-world-expansion/PHASE5_ARCHITECTURE.md)**를 보세요.
 
-![실제 Chrome 실행 화면](../../docs/3d-world-expansion/qa/phase4/tutorial-respond.png)
+![실제 Chrome 실행 화면 — 제1~5장 완주 후 수료](../../docs/3d-world-expansion/qa/phase5/graduation.png)
 
 ## 실행 (엔진 + 3D)
 
@@ -19,9 +19,9 @@ npm.cmd run play
 
 - 처음에는 **중립 세계 통신망 오프닝**(도착한 요청 없음 → 울산 → 캠퍼스 → 내 자리)이 한 번 재생되고, 끝나면 **모드 메뉴**가 열립니다: 튜토리얼 / 스토리 도전(제1장 — 첫 근무) / 자유·연습. 각각 [새로 시작]과 [이어하기]가 있습니다.
 - **튜토리얼:** 선배가 지금 할 일·이유·위치를 알려 주고 **실제 컨트롤**(화면 요소의 금색 테두리 또는 3D 링)을 가리킵니다. 대신 눌러 주는 버튼은 없습니다. 캠퍼스 둘러보기 → 요청 확인 → 배정 결정 → 현장 시작 → 장애 대응 → 검증·보고(6목표·18단계). 끝나면 [스토리 도전 시작]으로 새 본편 저장이 시작됩니다.
-- **스토리 도전:** 엔진의 제1장(싱가포르 → 일본 → 미국) 세 업무를 정상 완료하면 장 클리어. 제2장 이후 3D 이식은 Phase 5입니다.
-- **자유·연습:** 엔진의 자유 운영 규칙(시간 기반 접수, 확률적 네트워크 장애) 그대로.
-- 조작: 요청은 **관제동 · 내 자리의 내 모니터**(요청함 / 배정 계획 / 장비 진단 / 결과)에서, 작업 시작과 사후 확인은 **서버동 01의 엔진 서버 랙 A-01~D-01**(Server A~D)에서, 시간은 위쪽 시계 옆 [⏩ +10분 / +30분 / +60분]으로 합니다. 나머지 20개 랙은 장식입니다.
+- **스토리 도전 (Phase 5):** 한 저장에서 제1장 첫 근무 → 제2장 한정된 자원(일본·미국 동시 요청) → 제3장 끊어진 연결(경로 단절·대역폭 부족 진단과 조치) → 제4장 서버실의 경보(장비 복구 vs 작업 이전) → 제5장 홀로 선 엔지니어(Engineering Lab Stage 1~5, 가상 터미널)로 이어집니다. 장 클리어·실패는 엔진이 판정하고, 결과 화면에서 [다음 장 시작] / [현재 장 재도전 (새 슬롯)] / 메뉴를 고릅니다. 5장을 모두 클리어하면 **운영 엔지니어 수료**(교육용 가상 등급) 화면이 나옵니다. 메뉴의 "장 선택"은 기록의 장 시작 지점을 새 슬롯으로 시작합니다.
+- **자유·연습:** 엔진의 자유 운영 규칙(시간 기반 접수, 확률적 네트워크 장애) 그대로. **장 연습**(제2~5장)은 진급 기록이 남지 않는 별도 연습 저장입니다.
+- 조작: 요청은 **관제동 · 내 자리의 내 모니터**(요청함 / 배정 계획 / 진단 / 결과, 제5장은 연수 · Lab 탭 추가)에서, 작업 시작과 사후 확인은 **서버동 01의 엔진 서버 랙 A-01~D-01**(Server A~D)에서, 시간은 위쪽 시계 옆 [⏩ +10분 / +30분 / +60분]으로 합니다. 나머지 20개 랙은 장식입니다.
 - 저장은 `prototypes/3d-datacenter-001/saves/`(Git 제외, `SRS3D_SAVE_DIR`로 변경 가능)에만 새 파일로 만듭니다. 기존 Python 게임 저장(`aidc_game.db`, `aidc_story_slot_*.db`)은 열지 않습니다.
 - `http://127.0.0.1:5173/lab.html` — **기존 독립 서버실 실험실**(엔진 미연결, 아래 설명)을 그대로 보존한 화면입니다.
 
@@ -65,13 +65,14 @@ RTX 5070 데스크톱을 목표로 고정한 Desktop High 설정: PBR 금속 재
 npm.cmd test              # JS 단위 (실제 엔진 스냅샷 fixture: python -m engine.tests.make_fixtures)
 npm.cmd run test:engine   # 엔진 어댑터 (임시 저장 폴더만 사용)
 npm.cmd run build
-npm.cmd run qa:phase4     # 브라우저 QA: 엔진+Vite를 임시 저장·별도 포트로 직접 띄움 → docs/3d-world-expansion/qa/phase4/
+npm.cmd run qa:phase5     # 브라우저 QA: 제1~5장 실제 UI 완주·장마다 엔진 재시작/이어하기·실패/재도전·연습·레이아웃 → qa/phase5/
+npm.cmd run qa:phase4 -- --out=../../docs/3d-world-expansion/qa/phase5/phase4-regression   # Phase 4 회귀 (기록 보존)
 npm.cmd run qa:lab        # 기존 실험실(lab.html) 회귀 (dev 서버 실행 중)
 # 기존 게임·사용자 DB·과거 QA 파일의 해시 비교 (SQLite 연결 없음)
-& 'C:\Users\hahye\anaconda3\python.exe' ..\..\docs\3d-world-expansion\protect.py after phase4
+& 'C:\Users\hahye\anaconda3\python.exe' ..\..\docs\3d-world-expansion\protect.py after phase5
 ```
 
-Phase 4 결과: [QA_REPORT_PHASE4.md](../../docs/3d-world-expansion/QA_REPORT_PHASE4.md). 이전 Phase의 `qa`/`qa:ux`/`qa:ux32` 스크립트는 폐기한 큰 버튼 시연을 조작하던 것이라 삭제했고, 유효한 검사는 `qa:phase4`로 옮겼습니다.
+Phase 5 결과: [QA_REPORT_PHASE5.md](../../docs/3d-world-expansion/QA_REPORT_PHASE5.md). Phase 4 결과: [QA_REPORT_PHASE4.md](../../docs/3d-world-expansion/QA_REPORT_PHASE4.md). 이전 Phase의 `qa`/`qa:ux`/`qa:ux32` 스크립트는 폐기한 큰 버튼 시연을 조작하던 것이라 삭제했고, 유효한 검사는 `qa:phase4`로 옮겼습니다.
 
 브라우저 QA는 Playwright Core와 기존 Chrome을 사용하며 브라우저를 다운로드하지 않습니다. 기본은 실제 창을 여는 headed 실행이고, 브라우저 프로필은 자동으로 격리·정리합니다. 상태 변경은 실제 UI 이벤트로만 수행하며 `window.prototypeQA`는 상태 복사본과 투영 좌표를 읽는 QA용 인터페이스입니다.
 

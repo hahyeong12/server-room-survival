@@ -210,7 +210,8 @@ function requestSummary(){
   if(!g){root.append(el('p','card-line','게임을 시작하면 Python 엔진의 실제 요청·자원·시각이 여기에 표시됩니다.'));return;}
   if(!r){root.append(el('p','card-line','아직 도착한 요청이 없습니다.'));return;}
   const row=el('div','req-row');row.append(el('span','flag',r.code),el('strong','',`요청 #${r.id} · ${r.company}`),chip(STAGE_LABEL[r.stage],STAGE_TONE[r.stage]));root.append(row);
-  root.append(el('div','req-terms',termsLine(r)));
+  root.append(el('div','req-terms',`원래 요청 · ${termsLine(r)}`));
+  if(r.planLabel&&r.allocation.length)root.append(el('div','req-terms',`실행 중 · ${r.planLabel} · GPU ${r.gpu} / 전력 ${r.power}${r.plan!==r.conditions?.requestedMode?' (원래 요청과 다른 모드: 고객 허용·동의 범위)':''}`));
   const track=el('div','progress-track'),bar=el('i');bar.style.width=`${r.progress}%`;track.append(bar);root.append(track);
   const t=engineTotals(g),fault=(g.servers||[]).find(s=>s.state!=='HEALTHY');
   const chips=el('div','status-chips');
