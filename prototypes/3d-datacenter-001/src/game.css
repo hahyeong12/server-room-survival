@@ -132,3 +132,36 @@ body.coach-folded #goal-why,body.coach-folded #goal-where{display:none}
   .talk-text{font-size:15px;margin:6px 0 8px}
   .menu-card{padding:16px 18px}.mode-card-big{padding:10px}
 }
+
+/* ---- Phase 5 (Issue #6): chapters 2-5 on my monitor, chapter screens ---- */
+.compare-card .eng-lines p{margin:0;font-size:12px;color:#c9d9e6;line-height:1.45;white-space:pre-wrap}
+.eng-lines{display:flex;flex-direction:column;gap:2px}.ws-note.brief{color:#d8e8f2}
+.decision-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px dashed #2c4659;padding-top:6px}
+.decision-row input{flex:1;min-width:140px;background:#0a1622;border:1px solid #2c4659;color:#d4e6f2;border-radius:4px;padding:5px 8px;font:inherit;font-size:12px}
+button.danger{border-color:#7a3a46;color:#ffc0ca}
+.impact{display:block;font-size:11px;color:#f0d6a8;margin-top:2px}
+.net-evidence,.hw-evidence{border-color:#45607a}.net-evidence>strong,.hw-evidence>strong{color:#ffe1b0}
+.lab-map{display:flex;flex-wrap:wrap;gap:4px}
+.lab-badge{font-size:11px;padding:3px 7px;border-radius:10px;background:#1a2a3a;color:#9fb3c4;border:1px solid #2c4659}
+.lab-badge.passed{background:#20443b;color:#b4f3dc}.lab-badge.active,.lab-badge.next{background:#3b3a20;color:#ffe7a6;border-color:#8a7a3a}
+.lab-badge.setup{background:#4a3424;color:#ffc79a}.lab-badge.locked{opacity:.65}
+.lab-head{gap:4px}.lab-head.tone-warn{border-color:#8a5a3a}
+.seg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.seg-grid button.seg{text-align:left;font-size:12px}.seg-grid button.seg.picked{outline:2px solid #89baff}.seg-grid button.seg.down{border-color:#b54a5c;color:#ffb3c0}
+.lab-q{display:flex;flex-direction:column;gap:5px;border-top:1px dashed #2c4659;padding-top:6px}
+.lab-q>strong{font-size:13px;color:#d4e6f2}
+button.lab-opt{text-align:left;font-size:12px}button.lab-opt.picked{outline:2px solid #89baff}
+button.lab-opt.ok{border-color:#3d8a6f;color:#b4f3dc}button.lab-opt.warn{border-color:#8a5a3a;color:#ffc79a}
+.block-row{display:flex;flex-wrap:wrap;gap:6px}.block-row select{background:#0a1622;color:#d4e6f2;border:1px solid #2c4659;border-radius:4px;padding:5px 6px;font:inherit;font-size:12px}
+.lab-term{display:flex;flex-direction:column;gap:6px}
+.term-log{background:#050b11;border:1px solid #213547;border-radius:4px;padding:6px 8px;max-height:210px;overflow:auto;font-family:Consolas,"Malgun Gothic",monospace;font-size:12px}
+.term-line{font-family:Consolas,"Malgun Gothic",monospace;font-size:12px;color:#8fe3c8}
+pre.lab-out{margin:0 0 6px;white-space:pre-wrap;font-family:Consolas,"Malgun Gothic",monospace;font-size:12px;color:#d4e6f2}
+.term-form{display:flex;gap:6px;align-items:center}.term-prompt{font-family:Consolas,monospace;font-size:12px;color:#8fe3c8;white-space:nowrap}
+.term-form input{flex:1;min-width:120px;background:#050b11;border:1px solid #2c6a5a;color:#e6fff6;border-radius:4px;padding:6px 8px;font-family:Consolas,monospace;font-size:13px}
+.evidence{display:flex;flex-wrap:wrap;gap:4px}.fact-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:#c9d9e6}
+.fact-row>span{flex:1 1 220px}.lab-feedback{margin:0;font-size:12px;color:#ffe7a6}
+.chapter-picks{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:2px 0 4px 10px}.chapter-picks small{color:#9fb3c4}
+.screen-notes{margin:6px 0;padding-left:18px;font-size:13px;color:#c9d9e6;line-height:1.5}
+.screen.graduation h2{color:#ffe1a0}
+#stepper li[data-chapter]{cursor:default}

@@ -1,12 +1,15 @@
 // Result and transition screens (Issue #5). They only read the engine snapshot and offer real next steps:
 // a new story / free / tutorial game is a NEW engine save; nothing here forges completion, score or resources.
 import {isOpen,STAGE_LABEL,COUNTRY_NAMES} from './game-view.js';
+import {resultRows,resultNotes,missionOf,cardRows} from './campaign-view.js';
 
-export function createScreens({ $, el, button, store, game, send, newGame, openGame, showMenu, toast, ui, render }) {
+export function createScreens({ $, el, button, store, game, send, newGame, openGame, retryChapter, showMenu, toast, ui, render }) {
   const dlg = $('screen-dialog'), slot = $('screen-slot');
-  let seen = { tutorial: false, skipped: false, chapter: false, failed: false, jobs: new Set() }, open = null, history = [];
+  let seen = { tutorial: false, skipped: false, chapters: new Set(), failed: false, jobs: new Set() }, open = null, history = [], onClose = null;
+  // Closing a senior's card (button or Esc) records that it was shown, so the engine shows each card once.
+  dlg.addEventListener('close', () => { const f = onClose; onClose = null; open = null; f?.(); });
 
-  function close() { if (dlg.open) dlg.close(); open = null; }
+  function close() { if (dlg.open) dlg.close(); else { const f = onClose; onClose = null; f?.(); } open = null; }
   function nextButtons(kinds) {
     const row = el('div', 'screen-actions');
     const defs = {
@@ -16,14 +19,19 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       menu: ['메뉴', () => { close(); showMenu(); }, ''],
       stay: ['이 화면 닫기', () => close(), 'link'],
       result: ['결과 탭 보기', () => { close(); store.setNocView('desk'); if (store.state.navigation.route !== 'noc') { store.navigate('noc'); send({ type: 'navigate', route: 'noc', via: 'button' }, { quiet: true }); } ui.tab = 'result'; render(); }, ''],
+      // Phase 5: the next chapter starts in THIS save through the engine (start_chapter*); a retry is a NEW slot.
+      'next-chapter': [`${game()?.story?.next?.heading ?? '다음 장'} 시작`, async () => { const nx = game()?.story?.next; close(); if (nx) await send({ type: 'start_next_chapter', chapter: String(nx.key) }); }, 'primary'],
+      retry: [`${game()?.story?.chapter?.label ?? '현재 장'} 재도전 (새 슬롯)`, async () => { close(); await retryChapter(); }, ''],
+      practice: ['같은 장 다시 연습 (새 연습 저장)', async () => { close(); await retryChapter(); }, ''],
     };
     for (const k of kinds) { const [label, fn, cls] = defs[k]; row.append(button(label, fn, cls, { 'data-next': k })); }
     return row;
   }
-  function show(kind, nodes) {
-    open = kind; history.push({ kind, clock: game()?.clock?.label ?? null });
+  function show(kind, nodes, closeHook = null) {
+    open = kind; onClose = closeHook; history.push({ kind, clock: game()?.clock?.label ?? null });
     slot.replaceChildren(...nodes); slot.firstChild?.classList?.add('screen'); slot.dataset.screen = kind;
     if (!dlg.open) dlg.showModal();
+    render();   // the senior's talk box waits under a result screen
     dlg.querySelector('[data-next]')?.focus();
   }
   const rows = pairs => { const d = el('dl', 'ops-readings'); for (const [k, v] of pairs) d.append(el('dt', '', k), el('dd', '', String(v))); return d; };
@@ -44,21 +52,74 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       nextButtons(['stay', 'story', 'free', 'tutorial', 'menu']));
     show('tutorial-skipped', [box]);
   }
+  // Which buttons a finished chapter offers. They mean exactly what they do in the engine: [다음 장] only when the
+  // engine unlock allows it, [재도전] only when a chapter-start checkpoint exists (or a practice / tutorial copy).
+  function chapterActions(st, cleared) {
+    const kinds = [];
+    if (cleared && st.next?.available) kinds.push('next-chapter');
+    if (st.retry?.available) kinds.push(st.retry.kind === 'practice' ? 'practice' : 'retry');
+    kinds.push('menu', 'free', 'stay');
+    return nextButtons(kinds);
+  }
+  function resultBlock(box, st) {
+    const list = resultRows(st); if (list.length) box.append(rows(list));
+    const notes = resultNotes(st); if (notes.length) { const ul = el('ul', 'screen-notes'); for (const t of notes) ul.append(el('li', '', t)); box.append(ul); }
+  }
   function chapterClear(g) {
-    const st = g.story, res = st.result, box = el('section', 'screen');
+    const st = g.story, box = el('section', 'screen');
     box.append(el('span', 'eyebrow', `STORY · ${st.chapter.heading}`), el('h2', '', `${st.chapter.label} 클리어 · ${st.chapter.title}`),
-      el('p', 'screen-sub', `고객 업무 ${st.jobsDone}/${st.jobsTotal}건을 정상 완료했습니다 (엔진 판정: ${st.chapter.stateLabel}).`));
-    if (res) box.append(rows(res.summary ?? []));
-    box.append(el('p', 'screen-sub', '다음 장: 제2장 — 한정된 자원. 3D 이식은 다음 단계(Phase 5)에서 제공될 예정이며, 지금 3D 저장에서는 시작할 수 없습니다. 이 장의 기록은 이 저장에 그대로 남습니다.'),
-      nextButtons(['menu', 'free', 'tutorial', 'stay']));
+      el('p', 'screen-sub', st.chapterKey === 1 ? `고객 업무 ${st.jobsDone}/${st.jobsTotal}건을 정상 완료했습니다 (엔진 판정: ${st.chapter.stateLabel}).`
+        : `엔진 판정: ${st.chapter.stateLabel} · ${st.chapter.text}`));
+    resultBlock(box, st);
+    if (st.practice) box.append(el('p', 'screen-sub', '연습 저장입니다. 진급 기록에는 남지 않습니다.'));
+    else if (st.next) box.append(el('p', 'screen-sub', st.next.available ? `다음 장: ${st.next.heading} — ${st.next.intro}` : `다음 장은 아직 열리지 않습니다: ${st.next.reason}`));
+    box.append(chapterActions(st, true));
     show('chapter-clear', [box]);
   }
   function chapterFailed(g) {
     const st = g.story, box = el('section', 'screen');
-    box.append(el('span', 'eyebrow', `STORY · ${st.chapter.heading}`), el('h2', '', '요청이 정상 완료되지 않았습니다'),
-      el('p', 'screen-sub', st.chapter.text || '엔진이 이 장의 실패를 확정했습니다.'), el('p', 'screen-sub', '재도전은 새 스토리 저장으로 시작합니다. 기존 저장은 지우지 않습니다.'),
-      nextButtons(['story', 'menu', 'stay']));
+    box.append(el('span', 'eyebrow', `STORY · ${st.chapter.heading}`), el('h2', '', st.chapterKey === 1 ? '요청이 정상 완료되지 않았습니다' : `${st.chapter.label} 미션 실패`),
+      el('p', 'screen-sub', st.chapter.text || '엔진이 이 장의 실패를 확정했습니다.'));
+    resultBlock(box, st);
+    box.append(el('p', 'screen-sub', '재도전은 이 장의 시작 지점을 새 슬롯으로 복사해 시작합니다. 지금 저장과 이전 장 기록은 그대로 남습니다.'),
+      chapterActions(st, false));
     show('chapter-failed', [box]);
+  }
+  function graduation(g) {
+    const st = g.story, gr = st.graduation, box = el('section', 'screen graduation');
+    box.append(el('span', 'eyebrow', 'CAMPAIGN · 제1~5장 클리어'), el('h2', '', gr.title), el('p', 'screen-sub', `${gr.from} → ${gr.title} (${gr.note})`));
+    box.append(rows(gr.rows.map(r => [r.heading, r.line])));
+    const ul = el('ul', 'screen-notes'); for (const t of gr.learned) ul.append(el('li', '', t)); box.append(el('strong', '', '스스로 해낸 것'), ul);
+    resultBlock(box, st);
+    box.append(nextButtons(['free', 'menu', 'tutorial', 'stay']));
+    show('graduation', [box]);
+  }
+  // Mid-chapter senior feedback the engine wants shown once: chapter 2 confirmed failure, chapter 3/4 result cards.
+  function chapter2Failure(g) {
+    const c2 = g.story.chapter2, box = el('section', 'screen');
+    box.append(el('span', 'eyebrow', `${g.story.chapter.heading} · 미션 실패 확정`), el('h2', '', '선배의 피드백'));
+    for (const [, speaker, text] of c2.failurePages) box.append(el('strong', '', speaker), el('p', 'screen-sub', text));
+    const ack = () => send({ type: 'ack_feedback', kind: 'chapter2' }, { quiet: true });
+    const row = el('div', 'screen-actions');
+    row.append(button('현재 슬롯에서 계속 진행', () => close(), 'primary', { 'data-next': 'continue' }));
+    if (g.story.retry?.available) row.append(button(`${g.story.chapter.label} 재도전 (새 슬롯)`, async () => { close(); await retryChapter(); }, '', { 'data-next': 'retry' }));
+    box.append(row);
+    show('chapter2-failure', [box], ack);
+  }
+  function incidentCard(g, kind) {
+    const view = g.story[kind], pending = view.pending, card = view.cards[String(pending.rid)], box = el('section', 'screen');
+    if (!card) { send({ type: 'ack_feedback', kind, key: pending.key }, { quiet: true }); return; }
+    box.append(el('span', 'eyebrow', `${g.story.chapter.heading} · 요청 #${pending.rid}`), el('h2', '', card.title));
+    box.dataset.tone = card.tone || '';
+    box.append(rows(cardRows(card)));
+    if (card.mentor) box.append(el('p', 'screen-sub', `선배: ${card.mentor}`));
+    for (const [, speaker, text] of pending.pages || []) box.append(el('p', 'screen-sub', `${speaker}: ${text}`));
+    const ack = () => send({ type: 'ack_feedback', kind, key: pending.key }, { quiet: true });
+    const row = el('div', 'screen-actions');
+    row.append(button('업무로 돌아가기', () => close(), 'primary', { 'data-next': 'continue' }));
+    if (card.can_retry && g.story.retry?.available) row.append(button(`${g.story.chapter.label} 재도전 (새 슬롯)`, async () => { close(); await retryChapter(); }, '', { 'data-next': 'retry' }));
+    box.append(row);
+    show(`${kind}-card`, [box], ack);
   }
   function jobDone(g, r) {
     const s = r.summary || {}, box = el('section', 'screen'), next = g.requests.find(x => isOpen(x) && x.id !== r.id);
@@ -79,8 +140,12 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       if (j.skipped && !j.completed && !seen.skipped) { seen.skipped = true; tutorialSkipped(g); return; }
     }
     if (g.mode === 'story' && g.story) {
-      if (g.story.done && !seen.chapter) { seen.chapter = true; chapterClear(g); return; }
-      if (g.story.step === 'closed' && !seen.failed) { seen.failed = true; chapterFailed(g); return; }
+      const st = g.story, key = String(st.chapterKey);
+      if (st.chapter2?.failurePending && open !== 'chapter2-failure') { chapter2Failure(g); return; }
+      for (const kind of ['chapter3', 'chapter3b']) if (st[kind]?.pending && open !== `${kind}-card`) { incidentCard(g, kind); return; }
+      if (st.done && !seen.chapters.has(key)) { seen.chapters.add(key); const m = missionOf(st);
+        if (st.graduation) graduation(g); else if (m === 'success') chapterClear(g); else chapterFailed(g); return; }
+      if (st.step === 'closed' && !seen.failed) { seen.failed = true; chapterFailed(g); return; }
     }
     if (j?.kind !== 'tutorial') for (const r of g.requests) {
       const before = prev?.requests?.find(x => x.id === r.id);
@@ -92,14 +157,14 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       const before = prev?.requests?.find(x => x.id === r.id);
       if (!before || before.stage === r.stage) continue;
       if (r.stage === 'hw_fault') toast(`경보 · 요청 #${r.id} ${r.hardware}${g.journey?.kind === 'tutorial' ? ' (교육용 훈련 장애)' : ''} · 진행률 정지`, 'hint');
-      if (r.stage === 'net_fault') toast(`경보 · 요청 #${r.id} 네트워크 장애 · 필요 ${r.network.needed} / 가용 ${r.network.available}`, 'hint');
+      if (r.stage === 'net_fault') toast(`경보 · 요청 #${r.id} 작업 중단 · 고객 전송 경로 이상 (원인 미확인 · 서버 장비 ${r.hardware ? '확인 필요' : '정상'})`, 'hint');
     }
     const arrived = (g?.requests ?? []).filter(r => !prev?.requests?.some(x => x.id === r.id));
     if (prev && arrived.length) toast(`새 고객 요청 도착 · ${arrived.map(r => `${COUNTRY_NAMES[r.code] || r.country} #${r.id}`).join(', ')} · 세계지도에 경로 점등`);
   }
   return {
     // A loaded save that is already finished goes straight to its screen, so a finished tutorial is never a dead end.
-    reset(g) { close(); seen = { tutorial: false, skipped: false, chapter: false, failed: false, jobs: new Set((g?.requests ?? []).filter(r => !isOpen(r)).map(r => r.id)) }; setTimeout(() => check(null, game()), 0); },
+    reset(g) { onClose = null; if (dlg.open) dlg.close(); open = null; seen = { tutorial: false, skipped: false, chapters: new Set(), failed: false, jobs: new Set((g?.requests ?? []).filter(r => !isOpen(r)).map(r => r.id)) }; setTimeout(() => check(null, game()), 0); },
     afterAction(prev, g) { alarms(prev, g); check(prev, g); },
     state: () => ({ open, history: history.map(h => ({ ...h })) }),
   };

@@ -20,7 +20,10 @@ export function createEngineClient(base = '/api', fetchImpl = (...a) => fetch(..
   return {
     health: () => call('/health'),
     saves: () => call('/saves'),
-    create: mode => queued('/games', { mode }),
+    create: (mode, chapter) => queued('/games', chapter === undefined ? { mode } : { mode, chapter }),
+    // Phase 5: a retry / chapter start is always a NEW save made from a chapter-start checkpoint (source unchanged).
+    retry: id => queued(`/games/${encodeURIComponent(id)}/retry`, {}),
+    checkpoint: (id, chapter) => queued(`/games/${encodeURIComponent(id)}/checkpoint`, { chapter }),
     load: id => queued(`/games/${encodeURIComponent(id)}`),
     act: (id, action) => queued(`/games/${encodeURIComponent(id)}/actions`, action),
     close: id => queued(`/games/${encodeURIComponent(id)}/close`, {}),

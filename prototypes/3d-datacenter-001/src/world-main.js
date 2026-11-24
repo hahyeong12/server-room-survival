@@ -10,6 +10,8 @@ import {focusRequest,requestById,isOpen,STAGE_LABEL,MODE_NAMES,COUNTRY_NAMES,ser
 import {focusPath,activePaths} from './network-data.js';
 import {createCoach} from './coach.js';
 import {createScreens} from './screens.js';
+import {chapterGoal,talkFor,isLaterChapter} from './campaign-view.js';
+import {createChapterPanes} from './chapter-panes.js';
 
 document.querySelector('#app').innerHTML=`
 <header class="topbar"><a class="brand" href="#noc"><span class="brand-icon">▤</span><span>SERVER ROOM<span class="brand-sub">SURVIVAL / ULSAN AIDC</span></span></a>
@@ -91,7 +93,10 @@ async function openGame(snapshotOrId){
   const route=res.game.journey?.route||'noc';store.state.navigation.nocView='desk';store.navigate(route);history.replaceState(null,'',`#${route}`);
   menu.hide();return true;
 }
-async function newGame(mode){const res=await api.create(mode);if(!res.ok){toast(res.message||'새 게임을 시작할 수 없습니다.','hint');if(res.offline)setEngine(false,res.message);return false;}return openGame(res.game);}
+async function newGame(mode,chapter){const res=await api.create(mode,chapter);if(!res.ok){toast(res.message||'새 게임을 시작할 수 없습니다.','hint');if(res.offline)setEngine(false,res.message);return false;}return openGame(res.game);}
+// [현재 장 재도전] / chapter select: the engine copies the chapter-start checkpoint into a NEW slot; the current save stays.
+async function retryChapter(){if(!gameId)return false;const res=await api.retry(gameId);logAction({type:'retry'},res);if(!res.ok){toast((res.message||'재도전을 준비할 수 없습니다.')+(res.hint?` · ${res.hint}`:''),'hint');return false;}toast(`새 슬롯에서 재도전 · ${res.game.story?.chapter?.heading??''} (이전 저장은 그대로)`);return openGame(res.game);}
+async function startCheckpoint(id,chapter){const res=await api.checkpoint(id,chapter);logAction({type:'checkpoint',id,chapter},res);if(!res.ok){toast(res.message||'장 시작 기록을 열 수 없습니다.','hint');return false;}return openGame(res.game);}
 
 // ---------- navigation (view-only locally, reported to the journey) ----------
 function navigate(route,via='tab',building){
@@ -174,8 +179,8 @@ function facilityCard(id,state,full=false){
     const u=upsView(state);root.append(readingsGrid([['배터리',`${u.battery}%`],['상태',u.mode],...(full?[['예비 시간',u.runtime]]:[])]));
     actions.append(opsButton('ups-test','UPS 자가진단'));root.append(actions);const r=checkResult(state.ops.checks.ups);if(r)root.append(r);
   }else if(id==='NETWORK'){
-    const n=networkView(state);root.append(readingsGrid([['서버동 01 업링크',n.uplink],['도착한 요청 경로',`${activePaths(state).length}개`]]));
-    if(full){const table=el('div','link-table');for(const l of n.links){const row=el('div',`link-row${l.status==='대역폭 부족'?' bad':''}`);row.dataset.link=l.id;row.append(el('span','',`${l.name}${l.active?' · 요청 중':''}`),el('span','',`${l.latencyMs} ms (가상)`),el('span','',l.status));table.append(row);}root.append(table);}
+    const n=networkView(state);root.append(readingsGrid([['서버동 01 업링크 (AIDC 내부)',n.uplink],['고객 전송 경로',n.transit],['도착한 요청 경로',`${activePaths(state).length}개`]]));
+    if(full){const table=el('div','link-table');for(const l of n.links){const row=el('div',`link-row${l.cause&&!['ok','rerouted','recovering'].includes(l.cause)?' bad':''}`);row.dataset.link=l.id;row.append(el('span','',`${l.name}${l.active?' · 요청 중':''}`),el('span','',`${l.latencyMs} ms (가상)`),el('span','',l.status));table.append(row);}root.append(table);}
     actions.append(opsButton('network-lookup','경로 상태 조회'));root.append(actions);
     const c=state.ops.checks.network,r=checkResult(c);if(r){root.append(r);if(c.target){const go=button(c.target==='hall'?'서버동 01로 이동':'내 자리로 이동',()=>{if(c.target==='noc')store.setNocView('desk');navigate(c.target,'button');},'',{id:'network-go'});root.append(go);}}
   }else if(id==='HALL-01'){
@@ -192,6 +197,7 @@ function goalHead(){
   if(!g){step='게임 선택 전';title=engine.online===false?'Python 엔진이 꺼져 있습니다':'모드를 고르세요';hint=engine.online===false?'npm run play 로 엔진을 실행한 뒤 새로고침하세요. 3D 공간은 둘러볼 수 있습니다.':'위쪽 [메뉴 · 모드]에서 튜토리얼 / 스토리 도전 / 자유·연습을 시작합니다.';}
   else if(j?.kind==='tutorial'&&!j.skipped&&!j.completed&&cur){step=`튜토리얼 · 목표 ${cur.goalIndex}/${j.total}`;title=`${cur.goalTitle} — ${cur.title}`;hint=cur.what;why=`왜: ${cur.why}`;where=`어디서: ${cur.where}`;pips=j.goals.map(x=>x.done?'done':x.current?'now':'');}
   else if(j?.kind==='tutorial'){step=j.completed?'튜토리얼 · 실습 완료':'튜토리얼 · 안내 끔';title=j.completed?'실습을 모두 마쳤습니다':'안내 없이 자유롭게 진행 중';hint=j.completed?'[메뉴 · 모드]에서 스토리 도전을 시작하세요.':'엔진 상태는 그대로입니다. 완료하려면 실제 업무를 끝내세요.';}
+  else if(isLaterChapter(g)){const cg=chapterGoal(g);step=cg.label;title=cg.title;hint=cg.what;where=cg.where?`어디서: ${cg.where}`:'';}
   else{const sg=storyGoal(g)||freeGoal(g);if(sg){step=sg.label;title=sg.title;hint=sg.what;why=sg.mentor?`선배: ${sg.mentor}`:'';}}
   $('goal-step').textContent=step;$('goal-title').textContent=title;$('goal-hint').textContent=hint;$('goal-why').textContent=why;$('goal-where').textContent=where;
   $('goal-why').hidden=!why;$('goal-where').hidden=!where;
@@ -267,10 +273,11 @@ function detailBody(){
 }
 
 // ---------- my monitor ----------
-const TABS=[['inbox','요청함'],['plan','배정 계획'],['diagnosis','장비 진단'],['result','결과']];
+const TABS=[['inbox','요청함'],['plan','배정 계획'],['diagnosis','진단'],['result','결과']];
+const tabsFor=g=>g?.story?.training?[...TABS.slice(0,3),['lab','연수 · Lab'],TABS[3]]:TABS;
 function openTab(tab){
   ui.tab=tab;const r=focusRequest(game());
-  if(tab==='plan'&&r&&r.stage==='incoming')send({type:'view_plans',rid:r.id},{quiet:true}).then(res=>{if(res?.ok){ui.plans[r.id]={...res.result.plans,clock:res.game.clock.label};render();}});
+  if(tab==='plan'&&r&&r.stage==='incoming')send({type:'view_plans',rid:r.id},{quiet:true}).then(res=>{if(res?.ok){ui.plans[r.id]={...res.result.plans,briefing:res.result.briefing,clock:res.game.clock.label};render();}});
   else if(tab==='diagnosis'&&r&&r.allocation.length)send({type:'diagnose',rid:r.id},{quiet:true}).then(res=>{if(res?.ok){ui.diagnosis[r.id]={...res.result.diagnosis,clock:res.game.clock.label,stage:requestById(res.game,r.id)?.stage};render();}});
   render();
 }
@@ -281,16 +288,21 @@ function renderWorkstation(){
   const bar=el('div','ws-titlebar');bar.append(el('span','','SRS-OPS · 운영석 03 · 내 모니터'),el('span','ws-shift',`${g.modeLabel} · ${g.clock.label}`));
   const tabs=el('div','ws-tabs');tabs.setAttribute('role','tablist');
   const r=focusRequest(g);
-  for(const [id,label]of TABS){
-    const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&r&&!isOpen(r)&&!r.reported?'●':'';
+  if(ui.tab==='lab'&&!g.story?.training)ui.tab='inbox';
+  for(const [id,label]of tabsFor(g)){
+    const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&r&&!isOpen(r)&&!r.reported?'●':id==='lab'&&g.story.training.status.headline?.tone==='warn'?'!':'';
     const b=button(badge?`${label} ${badge}`:label,()=>openTab(id),ui.tab===id?'active':'',{'data-ws-tab':id,role:'tab','aria-selected':String(ui.tab===id)});b.dataset.focusKey=`tab-${id}`;tabs.append(b);
   }
   const body=el('div','ws-pane');body.dataset.pane=ui.tab;
-  ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult})[ui.tab](body,g,r);
+  ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult,lab:(b,gg)=>panes.paneLab(b,gg)})[ui.tab](body,g,r);
   ws.append(bar,tabs,body);
   if(focusKey){const again=ws.querySelector(`[data-focus-key="${focusKey}"]`);again?.focus({preventScroll:true});}
+  // Lab: bring the question the player must answer now into view once (inside the monitor pane, no page scroll).
+  const target=ws.querySelector('[data-lab-target]'),tkey=target?`${ui.tab}:${target.dataset.labQuestion||''}`:'';
+  if(target&&ui.labShown!==tkey){ui.labShown=tkey;target.scrollIntoView({block:'nearest'});}
 }
 function paneInbox(body,g,r){
+  const compare=panes.compareCard(g);if(compare)body.append(compare);
   const list=el('div','ws-list');
   for(const x of [...g.requests].reverse()){const row=button('',()=>{if(x.id!==g.focus)send({type:'select_request',rid:x.id},{quiet:true});},x.id===r?.id?'ws-row active':'ws-row',{'data-request-row':String(x.id)});row.append(el('span','flag',x.code),el('strong','',`#${x.id} ${x.company}`),el('span','',x.title),chip(STAGE_LABEL[x.stage],STAGE_TONE[x.stage]));if(x.unread)row.append(el('i','dot'));list.append(row);}
   body.append(list);
@@ -304,7 +316,8 @@ function paneInbox(body,g,r){
   if(conv){const box=el('div','ws-message');for(const [who,text]of conv)box.append(el('strong','',who),el('p','',text.replace(/^\[[^\]]+\]\s*/,'')));card.append(box);}
   const read=button(conv?'요청서 다시 읽기':'요청서 열기 · 고객 메시지 읽기',async()=>{const res=await send({type:'read_request',rid:r.id},{quiet:true});if(res?.ok){ui.conversation[r.id]=res.result.conversation;render();}},'primary',{'data-read-request':String(r.id)});read.dataset.focusKey='read';
   card.append(read);
-  if(r.stage==='incoming')card.append(el('p','ws-tip','다음: [배정 계획] 탭에서 모드와 배정안을 비교하세요. 조회는 자원을 쓰지 않습니다.'));
+  const decide=panes.decisionRow(g,r);if(decide)card.append(decide);
+  if(r.stage==='incoming'&&!isLaterChapter(g))card.append(el('p','ws-tip','다음: [배정 계획] 탭에서 모드와 배정안을 비교하세요. 조회는 자원을 쓰지 않습니다.'));
   body.append(card);
 }
 function modeRow(r,row,res){
@@ -321,7 +334,7 @@ function modeRow(r,row,res){
     const list=el('div','plan-options');
     options.forEach((parts,i)=>{const sel=r.selection&&r.selection.mode===row.key&&r.selection.index===i;
       const b=button('',()=>send({type:'select_plan',rid:r.id,mode:row.key,index:i,slices:parts}),`plan-option${sel?' selected':''}`,{'data-plan-option':`${row.key}:${i}`,'aria-pressed':String(!!sel)});
-      b.append(el('strong','',`배정안 ${i+1}${sel?' · 선택됨':''}`));for(const p of parts)b.append(el('span','',`Server ${p.server} (${p.rack}) · GPU ${p.gpu} / 전력 ${p.power}`));list.append(b);});
+      b.append(el('strong','',`배정안 ${i+1}${sel?' · 선택됨':''}`));for(const p of parts)b.append(el('span','',`Server ${p.server} (${p.rack}) · GPU ${p.gpu} / 전력 ${p.power}`));b.append(...panes.impactLines(ui.plans[r.id],row.key,i));list.append(b);});
     box.append(list);
   }else if(!row.agreed&&res){box.append(el('small','ws-note',`엔진 판정: ${res.reason}`));}
   return box;
@@ -332,6 +345,7 @@ function panePlan(body,g,r){
   const res=ui.plans[r.id];
   const head=el('div','ws-label',`요청 #${r.id} 배정 계획 · ${allowedLine(r)}${res?` · 조회 ${res.clock}`:''}`);body.append(head);
   if(!res){body.append(el('p','ws-note','엔진에 배정안을 조회하는 중…'));return;}
+  const brief=panes.planBriefing(res);if(brief)body.append(brief);
   const list=el('div','mode-list');list.dataset.planList='';
   for(const row of r.modes)list.append(modeRow(r,row,res[row.key]));
   body.append(list);
@@ -345,9 +359,12 @@ function paneDiagnosis(body,g,r){
   body.append(el('div','ws-label',`요청 #${r.id} 장비 진단${d?` · 조회 ${d.clock}`:''} · 증상: ${STAGE_LABEL[r.stage]} · 진행률 ${Math.round(r.progress)}%`));
   if(!d){body.append(el('p','ws-note','엔진에 진단을 요청하는 중…'));return;}
   if(d.clock!==g.clock.label||d.stage!==r.stage)body.append(el('p','ws-warn',`진단 후 상태가 바뀌었습니다 (진단 ${d.clock} · 지금 ${g.clock.label} ${STAGE_LABEL[r.stage]}). 아래 [다시 진단]으로 최신 증거를 보세요.`));
+  if(d.networkDiagnosis)body.append(panes.networkEvidence(d.networkDiagnosis));
+  if(d.hardwareDiagnosis)body.append(panes.hardwareEvidence(d.hardwareDiagnosis));
+  if(d.training)body.append(panes.trainingSymptom(d));
   const grid=el('div','diag-grid');
-  const ev=el('div','ws-card');ev.append(el('strong','','증거'));
-  ev.append(readingsGrid([['서버',d.hardware],['네트워크',d.network],['작업 이전',d.migration.allowed?'가능':`불가 · ${d.migration.reason}`],['정상 서버 여유',`GPU ${d.free.gpu} · 전력 ${d.free.power}`]]));
+  const ev=el('div','ws-card');ev.append(el('strong','',d.training?'관제 정보':'증거'));
+  ev.append(readingsGrid([['서버',d.hardware],['네트워크',d.networkDiagnosis?`${d.networkDiagnosis.summary} (위 진단)`:d.network],['작업 이전',d.migration.allowed?'가능':`불가 · ${d.migration.reason}`],['정상 서버 여유',`GPU ${d.free.gpu} · 전력 ${d.free.power}`]]));
   const servers=el('div','diag-servers');for(const s of d.servers)servers.append(chip(`${s.key}(${s.rack}) ${s.state}${s.repairLeft?` ${s.repairLeft}분`:''}`,s.state==='HEALTHY'?'ok':s.state==='FAULT'?'fault':'recover'));ev.append(servers);
   const acts=el('div','ws-card responses');acts.dataset.responses='';acts.append(el('strong','','대응 (엔진이 조건을 검사합니다)'));
   for(const s of d.servers)acts.append(button(`Server ${s.key} 장비 복구 시작 (20분)`,()=>send({type:'begin_repair',rid:r.id,server:s.key}),'',{'data-repair':s.key}));
@@ -381,6 +398,8 @@ function renderStrip(){
   const g=game(),j=g?.journey;
   if(j?.kind==='tutorial'&&j.goals){$('strip-eyebrow').textContent='TUTORIAL · 실습';$('objective').textContent=j.completed?'실습 완료':j.current?`${j.current.goalIndex}/${j.total} ${j.current.goalTitle}`:'안내 끔';
     $('stepper').replaceChildren(...j.goals.map(x=>el('li',x.done?'done':x.current?'now':'',x.title)));}
+  else if(isLaterChapter(g)){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} ${st.chapter.stateLabel}`:chapterGoal(g).title;
+    $('stepper').replaceChildren(...(st.campaign.length?st.campaign.map(c=>{const li=el('li',c.state==='cleared'?'done':c.key===st.chapterKey?'now':'',c.label);li.dataset.chapter=String(c.key);li.title=`${c.heading} · ${c.stateLabel}`;return li;}):[el('li','now',`${st.chapter.label} 연습`)]));}
   else if(g?.story){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} 클리어`:storyGoal(g)?.what??'';
     $('stepper').replaceChildren(...Array.from({length:st.jobsTotal},(_,i)=>el('li',i<st.jobsDone?'done':i===st.jobsDone&&!st.done?'now':'',`업무 ${i+1}`)));}
   else if(g){$('strip-eyebrow').textContent='FREE · 자유 운영';$('objective').textContent=freeGoal(g)?.what??'';$('stepper').replaceChildren();}
@@ -397,23 +416,31 @@ function renderRouteChain(state){
 
 // ---------- senior dialogue (briefing). [다음] only turns the page; [근무 시작] is the real action. ----------
 const TUTORIAL_BRIEFING=[['mentor','첫 출근을 환영해요!\n저는 오늘 교육을 맡은 선배 엔지니어예요.'],['player','잘 부탁드립니다.\n어디서부터 보면 될까요?'],['mentor','오늘은 실제 화면을 직접 눌러 보며 고객 요청 하나를 끝까지 처리해요.\n저는 어디를 보면 되는지만 알려 줄게요.'],['mentor','오른쪽 위 목표가 지금 할 일 하나예요.\n준비되면 [근무 시작]을 눌러요.']];
-const SPEAKER={mentor:'교육 담당자 · 선배 엔지니어',player:'나 · 신입 엔지니어'};
+const SPEAKER={mentor:'교육 담당자 · 선배 엔지니어',player:'나 · 신입 엔지니어',customer:'고객',system:'시스템 · AIDC 운영 알림'};
+const PORTRAIT={mentor:'선배',player:'나',customer:'고객',system:'알림'};
 function talkPages(){
   const g=game();if(!g)return null;
   if(g.journey?.kind==='tutorial'&&!g.journey.skipped&&g.journey.current?.id==='briefing')return {key:`${g.id}:tutorial`,pages:TUTORIAL_BRIEFING};
   if(g.mode==='story'&&g.story?.step==='arrival'&&g.story.pages.length)return {key:`${g.id}:story`,pages:g.story.pages};
+  const t=talkFor(g);if(t)return {key:t.key,pages:t.pages,event:t.event,briefing:t.briefing,speakers:true};
   return null;
 }
 function renderTalk(){
-  const box=$('talk'),t=talkPages();box.hidden=!t||openingActive||!menu.hidden();if(box.hidden)return;
+  // A result screen (modal) is on top: the senior waits until it is closed, then speaks.
+  const box=$('talk'),t=talkPages();box.hidden=!t||openingActive||!menu.hidden()||$('screen-dialog').open;if(box.hidden)return;
   if(ui.talkKey!==t.key){ui.talkKey=t.key;ui.talkPage=0;}
-  const i=Math.min(ui.talkPage,t.pages.length-1),[role,text]=t.pages[i],last=i===t.pages.length-1;
-  box.replaceChildren();box.dataset.role=role;
-  const who=el('div','talk-who');who.append(el('span',`portrait ${role}`,role==='mentor'?'선배':'나'),el('strong','',SPEAKER[role]||role));
+  const i=Math.min(ui.talkPage,t.pages.length-1),[role,text,speaker]=t.pages[i],last=i===t.pages.length-1;
+  box.replaceChildren();box.dataset.role=role;box.dataset.event=t.event||'';
+  const who=el('div','talk-who');who.append(el('span',`portrait ${role}`,PORTRAIT[role]||role),el('strong','',speaker||SPEAKER[role]||role));
   const p=el('p','talk-text');p.textContent=text;
   const row=el('div','talk-row');row.append(el('span','talk-count',`${i+1} / ${t.pages.length}`));
   if(i>0)row.append(button('이전',()=>{ui.talkPage=i-1;renderTalk();},'link'));
   if(!last)row.append(button('다음',()=>{ui.talkPage=i+1;renderTalk();},'primary',{id:'talk-next'}));
+  else if(t.event){
+    // Chapters 2-5: [다음] only turns pages. The last page of a briefing is the engine's briefing confirmation;
+    // any other last page only records that the pages were read (engine dialogue_seen).
+    row.append(button(t.briefing?'브리핑 확인 · 업무 시작':'확인',async()=>{const res=await send({type:'mark_dialogue',event:t.event},{quiet:true});if(res?.ok&&t.briefing)await send({type:'confirm_briefing'});},'primary',{id:'talk-done','data-talk-done':t.event}));
+  }
   else row.append(button('근무 시작',()=>send({type:'confirm_briefing'}),'primary',{id:'coach-start'}));
   box.append(who,p,row);
 }
@@ -442,11 +469,14 @@ const menu=(()=>{
     const card=el('div','menu-card');card.append(el('span','eyebrow','SERVER ROOM SURVIVAL · 3D'),el('h2','','모드를 고르세요'),el('p','menu-sub','튜토리얼은 선배와 함께하는 실습, 스토리 도전은 장 단위 본편, 자유·연습은 끝없는 근무입니다. 모든 규칙은 Python 게임 엔진이 계산합니다.'));
     if(!health.ok)card.append(el('p','menu-warn','Python 엔진에 연결할 수 없습니다. 터미널에서 npm run play (또는 python -m engine.server)를 실행한 뒤 이 창을 다시 여세요.'));
     const grid=el('div','mode-grid');
-    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 — 첫 근무. 세 고객의 업무를 정상 완료하면 장 클리어. 안내는 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 끝이 없는 운영 연습입니다.','🛠']]){
+    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠']]){
       const c=el('section','mode-card-big');c.dataset.modeCard=mode;c.append(el('span','mode-icon',icon),el('h3','',title),el('p','',desc));
       c.append(button('새로 시작',async()=>{if(await newGame(mode))hide();},'primary',{'data-new':mode,...(health.ok?{}:{disabled:''})}));
-      const mine=saves.filter(s=>s.kind===mode).slice(-3).reverse();
-      for(const s of mine)c.append(button(`이어하기 · ${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
+      const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')).slice(-3).reverse();
+      for(const s of mine){c.append(button(`이어하기 · ${s.kind==='practice'?'장 연습 · ':''}${s.chapter?.heading&&s.kind!=='tutorial'?`${s.chapter.heading} · `:''}${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
+        // Chapter select: start a saved chapter-start point as a new slot (the save itself is never changed).
+        if(mode==='story'&&s.checkpoints?.length){const row=el('div','chapter-picks');row.append(el('small','','장 시작 지점부터 (새 슬롯):'));for(const k of s.checkpoints)row.append(button(`제${{1:1,2:2,3:3,'3b':4,lab:5}[k]}장`,async()=>{if(await startCheckpoint(s.id,k))hide();},'link',{'data-checkpoint':`${s.id}:${k}`}));c.append(row);}}
+      if(mode==='free'){const row=el('div','chapter-picks');row.append(el('small','','장 연습 (진급 기록 없음):'));for(const [k,label]of [['2','제2장'],['3','제3장'],['3b','제4장'],['lab','제5장 Lab']])row.append(button(label,async()=>{if(await newGame('practice',k))hide();},'link',{'data-practice':k,...(health.ok?{}:{disabled:''})}));c.append(row);}
       grid.append(c);
     }
     card.append(grid);
@@ -477,8 +507,10 @@ function finishOpening(how){
 function openingProgress(){const c=scene.cinematicState();if(!c)return 0;return (OPENING.slice(0,c.index).reduce((s,k)=>s+k.duration,0)+c.t)/OPENING_SECONDS;}
 
 const coach=createCoach({$,el,button,store,game,getScene:()=>scene,isBlocked:()=>openingActive||!menu.hidden(),send,toast});
-const screens=createScreens({$,el,button,store,game,send,newGame,openGame,showMenu:()=>menu.show(),toast,ui,render});
+const screens=createScreens({$,el,button,store,game,send,newGame,openGame,retryChapter,showMenu:()=>menu.show(),toast,ui,render});
+const panes=createChapterPanes({el,button,chip,readingsGrid,send,ui,render});
 store.subscribe(render);
+$('screen-dialog').addEventListener('close',()=>render());
 try{
   scene=createScene($('viewport'),store.state.facility,id=>selectRack(id),{worldMode:true,getState:()=>store.state,reducedMotion:()=>reducedMotion,
     onPick:id=>{const [type,key]=id.split(':');if(type==='country')selectCountry(key);if(type==='facility')selectFacility(key,'pick');},
