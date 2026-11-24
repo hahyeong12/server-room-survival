@@ -25,21 +25,27 @@ from session import GameSession, REQUEST_LABELS  # noqa: E402
 from game import game_time, RESPONSES  # noqa: E402
 from aidc.core.server_resources import SERVERS, ServerSlice  # noqa: E402
 from aidc.storage.story_slots import StorySlots  # noqa: E402
-from aidc.storage.checkpoints import capture  # noqa: E402
-from aidc.story.chapters import CHAPTERS, chapter_state, STATE_LABELS  # noqa: E402
+from aidc.storage.checkpoints import capture, restore, checkpoint_path  # noqa: E402
+from aidc.story.chapters import CHAPTERS, current_chapter, chapter_from_payload  # noqa: E402
 from aidc.ui.job_status import job_status  # noqa: E402  (pure, no Tk)
+from aidc.learning.lab_terminal import block_feedback  # noqa: E402  (pure)
 from result_summary import job_summary  # noqa: E402
 
 from .journey import Journey, ROUTES, BUILDINGS  # noqa: E402
+from . import campaign  # noqa: E402
 
-API_VERSION = 1
+# v2 (Phase 5): story.* covers chapters 1-5 (chapterKey, dialogue, campaign, next, retry, chapter2/3/3b/training,
+# graduation) and world paths carry an evidence-based `link`. Every v1 field is kept with the same meaning.
+API_VERSION = 2
+API_COMPAT = (1,)
+PRACTICE_CHAPTERS = (2, 3, '3b', 'lab')
 COUNTRY_CODES = {'싱가포르': 'SG', '일본': 'JP', '미국': 'US'}
 # Engine servers A~D live in column 1 of the 3D hall. The other 20 racks are decoration only.
 SERVER_RACKS = {'A': 'A-01', 'B': 'B-01', 'C': 'C-01', 'D': 'D-01'}
 RACK_SERVERS = {rack: key for key, rack in SERVER_RACKS.items()}
 FACILITY_ASSETS = {'UPS-01': 'UPS / PDU 01', 'CRAC-01': '냉각 01', 'CRAC-02': '냉각 02', 'NET-01': '네트워크 코어'}
 DECOR_RACKS = tuple(f'{row}-{col:02d}' for row in 'ABCD' for col in range(1, 7) if col != 1)
-MODE_LABELS = {'tutorial': '튜토리얼', 'story': '스토리 도전', 'free': '자유 운영'}
+MODE_LABELS = {'tutorial': '튜토리얼', 'story': '스토리 도전', 'free': '자유 운영', 'practice': '장 연습'}
 FREE_PATTERN = re.compile(r'aidc_3d_free_([0-9]+)\.db')
 GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free)_[0-9]{3,}')
 ADVANCE_MINUTES = (10, 30, 60)
@@ -69,6 +75,26 @@ class Game:
     def __init__(self, gid, path, kind, db, session, journey):
         self.id, self.path, self.kind = gid, Path(path), kind
         self.db, self.session, self.journey = db, session, journey
+
+    def reconcile(self):
+        """Keep the 3D sidecar consistent with the engine DB (which is authoritative). A sidecar written by a crashed
+        or older run (or a checkpoint copy) can hold a plan choice for a request the engine does not have; such
+        choices are dropped (never applied). A choice for a started request is history and stays (start_job always
+        re-validates in the engine). The engine chapter/minute are stamped so a mismatch is visible."""
+        s, data = self.session, self.journey.data
+        dropped = [rid for rid in list(data['selection']) if not rid.isdigit() or int(rid) not in s.runs]
+        for rid in dropped:
+            data['selection'].pop(rid, None)
+        stamp = self._stamp()
+        old = data.get('engine')
+        if dropped or (old and old.get('chapter') != stamp['chapter']):
+            self.journey.record('reconciled', s.minute, dropped=dropped, sidecar=old, engine=stamp)
+        data['engine'] = stamp
+
+    def _stamp(self):
+        s = self.session
+        key = current_chapter(s.story).key if s.story and s.mode == 'story' else s.mode
+        return {'chapter': str(key), 'minute': s.minute, 'requests': len(s.runs)}
 
     # ------------------------------------------------------------------ facts & snapshot (read-only)
     def _tutorial_run(self):
@@ -186,27 +212,9 @@ class Game:
         return out
 
     def _story(self):
-        s = self.session
-        if not s.story:
+        if not self.session.story:
             return None
-        intro = s.story.onboarding
-        state, text = chapter_state(s) if s.mode == 'story' else (('cleared' if intro and intro.done else 'in_progress'), '')
-        chapter = CHAPTERS[1]
-        view = {'kind': intro.kind if intro else None, 'step': intro.step if intro else None,
-                'card': intro.card if intro else None, 'objective': intro.objective if intro else '',
-                'pages': [list(p) for p in intro.pages] if intro and intro.step == 'arrival' else [],
-                'done': bool(intro and intro.done), 'jobsDone': len(intro.completed) if intro else 0,
-                'jobsTotal': intro.total if intro else 0,
-                'chapter': ({'key': 1, 'label': chapter.label, 'title': chapter.title, 'heading': chapter.heading,
-                             'intro': chapter.intro, 'state': state, 'stateLabel': STATE_LABELS.get(state, state), 'text': text}
-                            if s.mode == 'story' else
-                            # Tutorial: separate save, never promotes to the story (existing rule); heading as in the Python menu.
-                            {'key': 'tutorial', 'label': '튜토리얼', 'title': '관제실 첫걸음', 'heading': '튜토리얼 — 관제실 첫걸음',
-                             'intro': '', 'state': state, 'stateLabel': STATE_LABELS.get(state, state), 'text': text}),
-                'result': None}
-        if intro and intro.done:
-            view['result'] = s.chapter_result()
-        return view
+        return campaign.story_view(self.session, self.path)
 
     def _world(self):
         s, paths = self.session, []
@@ -215,11 +223,44 @@ class Game:
             if stage in ('done', 'failed', 'rejected'):
                 continue
             aidc = {'hw_fault': 'fault', 'hw_repair': 'repairing', 'migration': 'repairing'}.get(stage, 'ok')
-            link = 'degraded' if stage == 'net_fault' else 'ok'
+            link, note = self._link(run, stage)
+            # A network symptom is shown on the customer->AIDC transit as a whole; the server building (aidc) keeps
+            # its own (hardware) state. No single international hop is blamed unless the engine evidence says so.
+            transit = {'ok': 'ok', 'symptom': 'degraded', 'primary_down': 'degraded', 'congested': 'degraded',
+                       'rerouted': 'ok', 'recovering': 'ok'}[link]
             paths.append({'rid': rid, 'code': COUNTRY_CODES.get(run.mission['country'], '??'),
                           'tone': 'incoming' if stage == 'incoming' else 'active', 'focus': rid == s.selected_id,
-                          'segments': {'sea': link, 'landing': link, 'backbone': link, 'aidc': aidc}})
+                          'link': link, 'linkNote': note,
+                          'segments': {'sea': transit, 'landing': transit, 'backbone': transit, 'aidc': aidc}})
         return {'paths': paths}
+
+    def _link(self, run, stage):
+        """Transit state from what the player has actually established. Before a diagnosis a network incident is
+        only a symptom (transfer stopped / slow); the cause appears after the engine's network diagnosis was opened."""
+        st, story = run.state, self.session.story
+        if st.allocated and st.rerouted and st.phase in ('running', 'recovering'):
+            return 'rerouted', '주 경로 대신 백업 경로로 전송 중'
+        if stage == 'recovering':
+            return 'recovering', '조치 성공 · 복구 준비 중'
+        if stage != 'net_fault':
+            return 'ok', ''
+        chapter3 = story.chapter3 if story else None
+        diagnosed = bool(chapter3 and run.request['id'] in chapter3.diagnosed)
+        if diagnosed and st.incident_kind == 'path_down':
+            return 'primary_down', '진단: 주 통신 경로 링크 신호 없음 · 백업 경로 대기 (정확한 끊긴 지점은 이 진단으로 알 수 없음)'
+        if diagnosed and st.incident_kind == 'bandwidth':
+            return 'congested', f'진단: 경로는 연결됨 · 필요 {st.network_needed} / 가용 {st.network_available} (대역폭 한계)'
+        return 'symptom', '전송 중단 · 원인 미확인 — 진단으로 확인하세요'
+
+    def can_advance(self):
+        """Time runs when a job runs, in free mode, and from chapter 2 on also while a request waits (waiting is a
+        real choice there: the customer's deadline keeps coming). Chapter 1 / the tutorial keep the Phase 4 rule."""
+        s = self.session
+        if s.mode == 'free' or any(run.state.allocated for run in s.runs.values()):
+            return True
+        if s.mode == 'story' and s.story and current_chapter(s.story).key != 1:
+            return any(run.request['status'] in OPEN_STATUSES for run in s.runs.values())
+        return False
 
     def snapshot(self):
         """Read-only view of the engine state and the saved journey."""
@@ -228,7 +269,7 @@ class Game:
         center = s.center
         healthy_gpu, healthy_power = s.servers.available()
         return {
-            'api': API_VERSION, 'engine': 'python:session.GameSession', 'id': self.id, 'mode': s.mode,
+            'api': API_VERSION, 'apiCompat': list(API_COMPAT), 'engine': 'python:session.GameSession', 'id': self.id, 'mode': s.mode,
             'modeLabel': MODE_LABELS[s.mode], 'kind': self.kind,
             'clock': {'minute': s.minute, 'label': s.time_label},
             'focus': s.selected_id,
@@ -236,7 +277,7 @@ class Game:
             'servers': self._servers(),
             'datacenter': {'gpuTotal': center.gpu_total, 'gpuUsed': center.gpu_used, 'powerTotal': center.power_total,
                            'powerUsed': center.power_used, 'healthyFreeGpu': healthy_gpu, 'healthyFreePower': healthy_power},
-            'canAdvance': any(run.state.allocated for run in s.runs.values()) or s.mode == 'free',
+            'canAdvance': self.can_advance(),
             'story': story,
             'free': ({'pending': s.pending_request_count, 'nextArrival': s.next_arrival_label} if s.mode == 'free' else None),
             'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
@@ -290,6 +331,7 @@ class Game:
         # The engine part succeeded and is committed. Journey facts stay in memory even if saving the sidecar
         # fails; the error is reported and the next successful save writes them (never rolled back here).
         self.journey.evaluate(self.facts())
+        self.journey.data['engine'] = self._stamp()
         self.journey.save()
         return result
 
@@ -362,8 +404,10 @@ class Game:
         for key in run.state.plans:
             o = s.allocation_options(run, key)
             modes[key] = {'allowed': o['allowed'], 'reason': o['reason'],
-                          'options': [_slices_payload(opt) for opt in o['options']]}
-        return {'plans': modes}
+                          'options': [_slices_payload(opt) for opt in o['options']],
+                          # Chapter 2: what each option would leave for the other customer (engine, read-only copy).
+                          'impacts': [s.allocation_impacts(run, opt) for opt in o['options']]}
+        return {'plans': modes, 'briefing': s.chapter2_briefing_lines(run)}
 
     def do_select_plan(self, a):
         rid, run = self._run(a.get('rid'))
@@ -390,6 +434,10 @@ class Game:
         s.inspect_story_preview(rid)   # engine: marks the plan review (onboarding 'reviewed') when the request was read
         return {'info': f'{run.state.plans[mode]["label"]} · 배정안 {index+1} 선택 (자원 미점유). 서버동에서 시작하세요.'}
 
+    def _training_run(self, run):
+        t = self.session.training
+        return t is not None and run.request['id'] in t.request_ids
+
     def do_diagnose(self, a):
         rid, run = self._run(a.get('rid'))
         s = self.session
@@ -397,8 +445,25 @@ class Game:
         fault = self.journey.data['fault']
         if fault and fault.get('rid') == rid:
             fault['diagnosed'] = True
+        story = s.story
+        extra = {}
+        # Opening the monitor's diagnosis pane is the engine's "open the diagnosis window" action for chapters 3/4.
+        if (story and story.chapter3 is not None and rid in story.chapter3.request_ids
+                and run.state.allocated and run.state.incident_kind):
+            extra['network'] = campaign.jsonable(s.view_network_diagnosis(rid))
+        if story and story.chapter3b is not None and rid in story.chapter3b.request_ids and s.hardware_servers(run):
+            extra['hardwareDiagnosis'] = campaign.jsonable(s.view_hardware_diagnosis(rid))
+        if self._training_run(run):
+            # Chapter 5 is an independent diagnosis: the monitor shows only the symptom; evidence comes from the Lab.
+            return {'diagnosis': {'training': True, 'progress': round(run.state.progress, 1),
+                                  'symptom': campaign.job_symptom(campaign.observe(s, rid)),
+                                  'locked': s.training_response_locked(run),
+                                  'hardware': s.hardware_status(run) or '이 작업의 서버는 모두 정상입니다.',
+                                  'servers': [], 'network': '진단 정보 없음 · Engineering Lab에서 직접 관측하세요',
+                                  'migration': {'allowed': False, 'reason': '서버 장애가 아닙니다.', 'options': []},
+                                  'free': {'gpu': s.servers.available()[0], 'power': s.servers.available()[1]}}}
         preview = s.migration_preview(run)
-        return {'diagnosis': {
+        return {'diagnosis': {**extra,
             'hardware': s.hardware_status(run) or '이 작업의 서버는 모두 정상입니다.',
             'servers': [{'key': k, 'rack': SERVER_RACKS[k], 'state': s.servers.hardware[k].state,
                          'repairLeft': s.servers.hardware[k].repair_left}
@@ -465,9 +530,150 @@ class Game:
 
     # engine actions -----------------------------------------------------------------------------------
     def do_confirm_briefing(self, a):
-        self.journey.record('engine', self._minute(), name='confirm_briefing')
-        self.session.confirm_story_arrival()
+        s = self.session
+        key = current_chapter(s.story).key if s.story and s.mode == 'story' else 1
+        self.journey.record('engine', self._minute(), name='confirm_briefing', chapter=str(key))
+        {1: s.confirm_story_arrival, 2: s.confirm_chapter2_briefing, 3: s.confirm_chapter3_briefing,
+         '3b': s.confirm_chapter3b_briefing}.get(key, s.confirm_story_arrival)()
         return {}
+
+    def do_mark_dialogue(self, a):
+        """The player read the senior's pages for the current event. A display fact only (engine dialogue_seen)."""
+        s = self.session
+        if not s.story:
+            raise ActionError('스토리 대화가 없습니다.')
+        event = a.get('event')
+        self.journey.record('dialogue', self._minute(), event=str(event)[:40])
+        s.mark_story_dialogue(event)
+        return {}
+
+    def do_start_next_chapter(self, a):
+        """Start the next chapter in this regular story save with the engine's own start method, then keep the
+        chapter-start checkpoint (as the Python game does). The expected chapter guards against a stale double click."""
+        s = self.session
+        if s.mode != 'story' or not s.story:
+            raise ActionError('스토리 도전 저장에서만 다음 장을 시작할 수 있습니다.')
+        key = current_chapter(s.story).key
+        nxt = campaign.next_key(key)
+        if nxt is None:
+            raise ActionError('마지막 장입니다. 결과 화면에서 다음 행동을 고르세요.')
+        if str(a.get('chapter')) != str(nxt):
+            raise ActionError('화면의 장 정보가 최신이 아닙니다. 다시 확인해 주세요.', f'지금 이어지는 장: {CHAPTERS[nxt].heading}')
+        self.journey.record('engine', self._minute(), name='start_next_chapter', chapter=str(nxt))
+        start = {2: s.start_chapter2, 3: s.start_chapter3, '3b': s.start_chapter3b, 'lab': s.start_training}[nxt]
+        try:
+            start()   # engine checks unlock (previous chapter success), practice/tutorial rules and receives the requests
+        except ValueError as exc:
+            raise ActionError(campaign._player_words(str(exc))) from None
+        self.journey.data['selection'] = {}
+        result = {'info': f'{CHAPTERS[nxt].heading} 시작 · 새 고객 요청이 도착했습니다.', 'chapter': str(nxt)}
+        try:
+            result['checkpoint'] = capture(s).name
+        except Exception as exc:   # the chapter already started and is saved; only the retry copy is missing
+            result['hint'] = f'장은 시작됐지만 재도전용 시작 기록을 만들지 못했습니다: {exc}'
+        return result
+
+    def do_wait_request(self, a):
+        rid, _ = self._run(a.get('rid'))
+        self.journey.record('engine', self._minute(), name='wait_request', rid=rid)
+        self._focus(rid)
+        self.session.wait_request()
+        return {'info': '요청을 대기로 두었습니다. GPU·전력은 점유하지 않으며 기한은 계속 다가옵니다.'}
+
+    def do_reject_request(self, a):
+        rid, _ = self._run(a.get('rid'))
+        reason = a.get('reason')
+        if not isinstance(reason, str) or len(reason) > 200:
+            raise ActionError('거절 사유를 입력해 주세요.')
+        self.journey.record('engine', self._minute(), name='reject_request', rid=rid)
+        self._focus(rid)
+        self.session.reject_request(reason)
+        return {'info': '요청을 거절했습니다. 고객에게 사유를 전달했습니다.'}
+
+    def do_ack_feedback(self, a):
+        """The player closed a senior's result card. Display fact only; the engine shows each card once."""
+        s, kind, key = self.session, a.get('kind'), a.get('key')
+        self.journey.record('feedback', self._minute(), card=str(kind)[:12], key=str(key)[:40])
+        if kind == 'chapter2':
+            s.mark_chapter2_failure_seen()
+        elif kind == 'chapter3':
+            s.mark_chapter3_feedback_seen(key)
+        elif kind == 'chapter3b':
+            s.mark_chapter3b_feedback_seen(key)
+        else:
+            raise ActionError('알 수 없는 안내입니다.')
+        return {}
+
+    # Chapter 5 · Engineering Lab: the Python training methods (same interpreter as the Tk Lab) ----------------
+    def _lab(self):
+        if not self.session.training:
+            raise ActionError('제5장(심화 연수) 또는 Engineering Lab 연습에서만 사용할 수 있습니다.')
+        return self.session.training
+
+    @staticmethod
+    def _command_payload(result):
+        return {'line': result.line, 'ok': result.ok, 'output': result.output, 'kind': result.kind,
+                'command': result.command, 'hint': result.hint, 'time': result.time_label,
+                'facts': campaign.jsonable(result.facts)}
+
+    def do_lab_segment(self, a):
+        self._lab()
+        segment = a.get('segment')
+        if not isinstance(segment, str):
+            raise ActionError('구간을 고르세요.')
+        self.journey.record('lab', self._minute(), name='segment', segment=segment[:24])
+        correct, text = self.session.training_select_segment(segment)
+        return {'lab': {'correct': correct, 'text': text}}
+
+    def do_lab_answer(self, a):
+        self._lab()
+        stage, question, answer = a.get('stage'), a.get('question'), a.get('answer')
+        if not isinstance(stage, str) or not isinstance(question, str):
+            raise ActionError('질문 형식이 올바르지 않습니다.')
+        if not (isinstance(answer, (str, int)) and not isinstance(answer, bool)
+                or isinstance(answer, dict) and all(isinstance(v, str) for v in answer.values())):
+            raise ActionError('답 형식이 올바르지 않습니다.')
+        self.journey.record('lab', self._minute(), name='answer', stage=stage, question=question)
+        correct, text = self.session.training_answer(stage, question, answer)
+        return {'lab': {'correct': correct, 'text': text}}
+
+    def do_lab_command(self, a):
+        self._lab()
+        source, stage, payload = a.get('source'), a.get('stage'), a.get('payload')
+        if source == 'blocks':
+            if not isinstance(payload, list) or len(payload) != 3 or any(x is not None and not isinstance(x, str) for x in payload):
+                raise ActionError('명령 블록 형식이 올바르지 않습니다.')
+            payload = tuple(x or None for x in payload)
+        elif not isinstance(payload, str) or len(payload) > 200:
+            raise ActionError('명령은 200자 이하의 한 줄이어야 합니다.')
+        self.journey.record('lab', self._minute(), name='command', source=str(source)[:10], stage=str(stage)[:12])
+        result = self.session.training_command(source, payload, stage)
+        return {'lab': self._command_payload(result)}
+
+    def do_lab_blocks_preview(self, a):
+        """Read-only: how the current blocks read as one command line (same parser). Records nothing."""
+        parts = a.get('blocks')
+        if not isinstance(parts, list) or len(parts) != 3 or any(x is not None and not isinstance(x, str) for x in parts):
+            raise ActionError('명령 블록 형식이 올바르지 않습니다.')
+        line, roles, errors = block_feedback(*(x or None for x in parts))
+        return {'lab': {'line': line, 'roles': roles, 'errors': errors}}
+
+    def do_lab_next_stage(self, a):
+        self._lab()
+        self.journey.record('lab', self._minute(), name='next_stage')
+        return {'lab': {'stage': self.session.start_next_stage()}}
+
+    def do_lab_focus_stage(self, a):
+        self._lab()
+        self.journey.record('lab', self._minute(), name='focus_stage', stage=str(a.get('stage'))[:12])
+        self.session.focus_training_stage(a.get('stage'))
+        return {}
+
+    def do_lab_restart_incident(self, a):
+        self._lab()
+        self.journey.record('lab', self._minute(), name='restart_incident')
+        rid = self.session.restart_training_incident()
+        return {'info': f'같은 교육 조건의 새 연수 사건(요청 #{rid})을 접수했습니다. 통과한 Stage는 유지됩니다.'}
 
     def do_read_request(self, a):
         rid, _ = self._run(a.get('rid'))
@@ -518,7 +724,7 @@ class Game:
         if type(minutes) is not int or minutes not in ADVANCE_MINUTES:
             raise ActionError('시간은 10분, 30분 또는 60분 단위로 진행해 주세요.')
         s = self.session
-        if s.mode != 'free' and not any(run.state.allocated for run in s.runs.values()):
+        if not self.can_advance():
             raise ActionError('진행 중인 작업이 없습니다. 먼저 배정안으로 작업을 시작하세요.',
                               '요청 확인 → 배정 계획 → 서버동에서 작업 시작')
         self.journey.record('engine', self._minute(), name='advance_time', minutes=minutes)
@@ -560,6 +766,9 @@ class Game:
         self.journey.record('engine', self._minute(), name='migrate', rid=rid, index=a.get('index'))
         self._focus(rid)
         s = self.session
+        if s.chapter3b_locked(run):
+            raise ActionError('먼저 [장비 진단]을 열어 이전 가능 여부와 예상 시간을 확인한 뒤 대응을 선택해 주세요.',
+                              '내 모니터 → [진단] 탭')
         preview = s.migration_preview(run)
         if not preview['allowed']:
             raise ActionError('작업 이전 불가: ' + preview['reason'], '진단 결과의 정상 서버 여유를 다시 보세요.')
@@ -651,34 +860,99 @@ class GameHost:
             else:
                 return path
 
-    def _open(self, path, kind, fresh):
+    def _open(self, path, kind, fresh, chapter=1):
         db = Database(path)
         try:
             if fresh and (db.get_simulation() or db.get_requests()):
                 raise ValueError('새 게임에 기존 기록을 사용할 수 없습니다.')
             db.claim_game()
-            mode = 'free' if kind == 'free' else kind
+            mode = {'free': 'free', 'practice': 'story'}.get(kind, kind)
             options = {'intro_flow': True} if fresh and kind in ('tutorial', 'story') else {}
+            if fresh and kind == 'practice':
+                options = {'start_chapter': chapter}
             session = GameSession(db, mode=mode, **options)
             if fresh and kind == 'story':
                 capture(session)   # chapter-start checkpoint, as the Python menu does for a new story
-            journey = Journey(self._sidecar(path), kind)
+            journey = Journey(self._sidecar(path), 'story' if kind == 'practice' else kind)
             game = Game(Path(path).stem, path, kind, db, session, journey)
+            game.reconcile()
             journey.evaluate(game.facts())
             journey.save()
-        except Exception:
+        except Exception as exc:
             db.release_game()
             db.close()
+            if not fresh and not isinstance(exc, ValueError):
+                # A damaged or foreign save: report it plainly (never 404/500) and leave the file as it is.
+                raise ActionError(f'이 저장 파일을 열 수 없습니다(손상되었거나 다른 형식). 파일은 그대로 두었습니다: {type(exc).__name__}') from exc
             raise
         self.games[game.id] = game
         return game
 
-    def new_game(self, mode):
-        if mode not in ('tutorial', 'story', 'free'):
+    def new_game(self, mode, chapter=None):
+        if mode not in ('tutorial', 'story', 'free', 'practice'):
             raise ActionError('지원하지 않는 모드입니다.')
+        if mode == 'practice':
+            chapter = {'2': 2, '3': 3}.get(str(chapter), chapter)
+            if chapter not in PRACTICE_CHAPTERS:
+                raise ActionError('연습할 장을 고르세요 (제2~5장).')
         with self.lock:
             path = self._reserve_free() if mode == 'free' else self.slots.reserve_new()
-            return self._open(path, mode, fresh=True)
+            return self._open(path, mode, fresh=True, chapter=chapter)
+
+    def retry(self, gid):
+        """[현재 장 재도전]: save the current game, then copy its chapter-start checkpoint into a NEW exclusive slot
+        (aidc.storage.checkpoints.restore). The current slot and its records stay untouched. A practice save retries
+        as a new practice save of the same chapter; a tutorial as a new tutorial."""
+        with self.lock:
+            game = self.get(gid)
+            s = game.session
+            if game.kind == 'tutorial':
+                return self.new_game('tutorial')
+            key = current_chapter(s.story).key
+            if game.kind == 'practice':
+                return self.new_game('practice', key)
+            if game.kind != 'story':
+                raise ActionError('재도전은 스토리 저장에서만 할 수 있습니다.')
+            if not checkpoint_path(game.path, key).is_file():
+                raise ActionError('이 저장에는 현재 장의 시작 기록(체크포인트)이 없습니다. 현재 기록은 그대로 보존됩니다.',
+                                  '메뉴의 스토리 도전에서 새로 시작하거나 다른 장 기록을 고르세요.')
+            # Every adapter action is already committed by the engine, so the source slot is only read here.
+            return self._from_checkpoint(game.path, key)
+
+    def _from_checkpoint(self, source, key):
+        target = restore(self.slots, source, key)   # read-only copy of the checkpoint into a new reserved slot
+        sidecar = self._sidecar(target)
+        try:
+            journey = Journey(sidecar, 'story')
+            journey.data['origin'] = {'source': Path(source).stem, 'chapter': str(key)}
+            journey.save()
+            game = self._open(target, 'story', fresh=False)
+        except Exception:
+            # Only the sidecar this call created is removed; the source save and its checkpoint are never touched.
+            sidecar.unlink(missing_ok=True)
+            raise
+        # Like the Python menu (checkpoint_start=True): the new slot keeps its own chapter-start copy, so it can be
+        # retried again later. A failure here leaves the playable new slot and only reports the missing copy.
+        try:
+            capture(game.session)
+        except Exception as exc:
+            game.journey.record('checkpoint_error', game.session.minute, message=str(exc)[:200])
+            game.journey.save()
+        return game
+
+    def start_checkpoint(self, gid, chapter):
+        """Chapter select in the menu: start a saved chapter-start point as a new slot (source unchanged)."""
+        with self.lock:
+            if not isinstance(gid, str) or not GAME_ID.fullmatch(gid) or not (self.dir / f'{gid}.db').is_file():
+                raise KeyError(gid)
+            key = {'1': 1, '2': 2, '3': 3}.get(str(chapter), chapter)
+            source = self.dir / f'{gid}.db'
+            if key not in CHAPTERS or not checkpoint_path(source, key).is_file():
+                raise ActionError('이 저장에는 그 장의 시작 기록이 없습니다.')
+            return self._from_checkpoint(source, key)
+
+    def checkpoints(self, path):
+        return [str(key) for key in CHAPTERS if checkpoint_path(path, key).is_file()]
 
     def get(self, gid):
         with self.lock:
@@ -690,7 +964,7 @@ class GameHost:
             if not path.is_file():
                 raise KeyError(gid)
             kind = 'free' if FREE_PATTERN.fullmatch(path.name) else self.slots.category(path)
-            if kind not in ('tutorial', 'story', 'free'):
+            if kind not in ('tutorial', 'story', 'free', 'practice'):
                 raise ActionError('이 저장은 3D 시연에서 열 수 없는 종류입니다.')
             if not self._sidecar(path).is_file():
                 raise ActionError('3D 진행 기록이 없는 저장입니다.')
@@ -704,9 +978,14 @@ class GameHost:
                     continue
                 kind = 'free' if FREE_PATTERN.fullmatch(path.name) else self.slots.category(path)
                 payload = self.slots.payload(path)
+                story = payload.get('story') if isinstance(payload.get('story'), dict) else None
+                chapter = chapter_from_payload(story) if story and kind in ('story', 'practice') else None
                 out.append({'id': path.stem, 'kind': kind, 'label': MODE_LABELS.get(kind, kind),
                             'describe': self.slots.describe(path).lstrip(' ·') if kind != 'free' else '자유 운영',
                             'clock': game_time(payload['minute']) if 'minute' in payload else '',
+                            'chapter': ({'key': str(chapter.key), 'number': chapter.number, 'heading': chapter.heading}
+                                        if chapter else None),
+                            'checkpoints': self.checkpoints(path) if kind == 'story' else [],
                             'open': path.stem in self.games})
             return out
 

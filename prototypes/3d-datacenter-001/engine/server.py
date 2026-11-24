@@ -43,7 +43,15 @@ def lookup(host, gid):
         raise NotFound(gid) from None
 
 
-GAME_PATH = re.compile(r'/api/games/([A-Za-z0-9_]+)(/actions|/close)?')
+def guarded(fn, gid, *args):
+    """Run a host call for a save id; a missing save is 404 like lookup()."""
+    try:
+        return fn(gid, *args)
+    except KeyError:
+        raise NotFound(gid) from None
+
+
+GAME_PATH = re.compile(r'/api/games/([A-Za-z0-9_]+)(/actions|/close|/retry|/checkpoint)?')
 
 
 def make_handler(host: GameHost, log=None):
@@ -118,7 +126,7 @@ def make_handler(host: GameHost, log=None):
                 return self._send(400, {'ok': False, 'message': f'잘못된 요청: {exc}'})
             try:
                 if path == '/api/games':
-                    return self._send(200, {'ok': True, 'game': host.run(lambda: host.new_game(data.get('mode')).snapshot())})
+                    return self._send(200, {'ok': True, 'game': host.run(lambda: host.new_game(data.get('mode'), data.get('chapter')).snapshot())})
                 m = GAME_PATH.fullmatch(path)
                 if m and m[2] == '/actions':
                     def act():
@@ -130,6 +138,11 @@ def make_handler(host: GameHost, log=None):
                         return {'ok': True, 'message': result.pop('info', ''), 'hint': result.pop('hint', ''),
                                 'result': result, 'game': game.snapshot()}
                     return self._send(200, host.run(act))
+                if m and m[2] == '/retry':
+                    # New exclusive slot from the chapter-start checkpoint; the current save is kept as it is.
+                    return self._send(200, {'ok': True, 'game': host.run(lambda: guarded(host.retry, m[1]).snapshot())})
+                if m and m[2] == '/checkpoint':
+                    return self._send(200, {'ok': True, 'game': host.run(lambda: guarded(host.start_checkpoint, m[1], data.get('chapter')).snapshot())})
                 if m and m[2] == '/close':
                     host.close(m[1])
                     return self._send(200, {'ok': True})
