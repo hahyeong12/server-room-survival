@@ -15,3 +15,8 @@ test('captions mark the network and site as virtual; Ulsan pin is Nam-gu Hwangse
   for(const word of ['가상','실제 해저케이블 경로 아님','황성동','용연','실제 부지'])assert.ok(text.includes(word),word);
   const {lon,lat}=COUNTRIES.KR;assert.ok(lon>129.3&&lon<129.4&&lat>35.45&&lat<35.52,'Nam-gu industrial area, west of the Dong-gu shipyards (~129.42E)');
 });
+test('opening is neutral: no customer country is shown as sending a request before the game starts (Issue #5)',()=>{
+  const text=OPENING.map(k=>k.title+' '+k.sub).join(' ');
+  for(const name of ['싱가포르','일본','미국','SG-','요청이 가상 회선'])assert.ok(!text.includes(name),name);
+  assert.ok(text.includes('아직 도착한 요청 없음'));
+});

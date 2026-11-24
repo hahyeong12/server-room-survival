@@ -26,27 +26,44 @@ export const BACKGROUND_LINKS = freeze([
   { id: 'v-kor-jp', path: [[129.05, 35.08], [130.4, 33.6]] },
 ]);
 
-// The SG request's path: submarine segment -> coastal landing station -> domestic terrestrial
-// backbone -> Ulsan AIDC. The cable never touches the AIDC building itself.
+// Request paths: submarine segment -> coastal landing station -> domestic terrestrial backbone -> Ulsan AIDC.
+// The cable never touches the AIDC building itself. These are drawn for every customer site but stay dark:
+// a path is lit only while the engine snapshot reports a request from that country (Issue #5).
+const SEGMENTS = Object.freeze([
+  { id: 'sea', name: '해저 구간 (가상)' }, { id: 'landing', name: '부산 권역 육양국' },
+  { id: 'backbone', name: '국내 지상망' }, { id: 'aidc', name: '울산 AIDC · 서버동' },
+]);
 export const REQUEST_PATHS = freeze({
-  SG: {
-    sea: [[103.95, 1.3], [106.5, 4.5], [110.5, 9], [114.5, 15], [119.6, 20.2], [122.8, 24.6], [125.4, 30], [128.3, 33.7], [129.05, 35.08]],
-    landing: 'BUSAN',
-    segments: [
-      { id: 'sea', name: '해저 구간 (가상)' },
-      { id: 'landing', name: '부산 권역 육양국' },
-      { id: 'backbone', name: '국내 지상망' },
-      { id: 'aidc', name: '울산 AIDC · 서버동 업링크' },
-    ],
-  },
+  SG: { name: '싱가포르', landing: 'BUSAN', segments: SEGMENTS,
+    sea: [[103.95, 1.3], [106.5, 4.5], [110.5, 9], [114.5, 15], [119.6, 20.2], [122.8, 24.6], [125.4, 30], [128.3, 33.7], [129.05, 35.08]] },
+  JP: { name: '일본', landing: 'BUSAN', segments: SEGMENTS,
+    sea: [[139.8, 35.05], [138.6, 34.2], [136.4, 33.4], [133.8, 32.7], [131.6, 32.6], [130.3, 33.6], [129.6, 34.4], [129.05, 35.08]] },
+  US: { name: '미국 서부', landing: 'BUSAN', segments: SEGMENTS,
+    sea: [[-122.6, 37.7], [-140, 30], [-158, 21.3], [180, 29], [165, 33], [150, 35], [141, 34], [136, 32.8], [131.5, 32.4], [129.05, 35.08]] },
 });
 
-// Shared status of the request path, derived only from the request phase (all spaces read the same thing).
-export function requestPathStatus(state) {
-  const p = state.request.phase;
-  const tone = ['new', 'reviewed'].includes(p) ? 'incoming' : ['completed', 'reported'].includes(p) ? 'done' : 'active';
-  const aidc = p === 'fault' ? 'fault' : p === 'repairing' ? 'repairing' : p === 'awaiting' ? 'check' : 'ok';
-  return { country: state.request.country, tone, packets: tone !== 'done', aidc,
-    segments: { sea: 'ok', landing: 'ok', backbone: 'ok', aidc },
-    message: aidc === 'fault' ? '국제 구간 정상 · 울산 AIDC 서버동 01 업링크 단절' : aidc === 'repairing' ? 'AIDC 내부 업링크 복구 중' : aidc === 'check' ? '복구 처리됨 · 사후 확인 대기' : tone === 'incoming' ? '싱가포르 새 요청 도착 중' : tone === 'done' ? '처리 완료 · 경로 정상' : '경로 정상 · 작업 트래픽 전송 중' };
+// Paths lit by the engine snapshot (game.world.paths). No game, no request -> nothing is lit, whatever
+// country the player selected or the opening shows.
+export function activePaths(state) {
+  const paths = state?.game?.world?.paths;
+  return Array.isArray(paths) ? paths.filter(p => Object.hasOwn(REQUEST_PATHS, p.code)) : [];
+}
+
+const MESSAGE = {
+  fault: '국제 구간·육양국·국내망 정상 · 울산 AIDC 서버 장애 (네트워크 문제 아님)',
+  repairing: '국제 구간 정상 · AIDC 서버 복구/작업 이전 준비 중',
+  degraded: '네트워크 장애 · 필요 대역폭보다 가용 대역폭이 작음 (엔진은 회선 구간 위치를 모델링하지 않음)',
+};
+// One path's display status. Every space reads the same derived value.
+export function pathStatus(path) {
+  const seg = path.segments || {}, aidc = seg.aidc || 'ok', link = seg.sea === 'degraded' ? 'degraded' : 'ok';
+  const name = REQUEST_PATHS[path.code]?.name || path.code;
+  return { code: path.code, rid: path.rid, focus: !!path.focus, tone: path.tone, aidc, link, segments: { sea: seg.sea || 'ok', landing: seg.landing || 'ok', backbone: seg.backbone || 'ok', aidc },
+    packets: true, message: MESSAGE[aidc !== 'ok' ? aidc : link !== 'ok' ? link : ''] || (path.tone === 'incoming' ? `${name} 새 요청 도착 · 경로 확인` : `${name} 경로 정상 · 작업 트래픽 전송 중`) };
+}
+// The path the panels describe: the focused request if it is lit, else the first lit path.
+export function focusPath(state) {
+  const all = activePaths(state);
+  const p = all.find(x => x.focus) || all[0];
+  return p ? pathStatus(p) : null;
 }

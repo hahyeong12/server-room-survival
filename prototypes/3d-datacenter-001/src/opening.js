@@ -12,7 +12,7 @@ export const OPENING_STORAGE_KEY = 'srs3d.opening.seen.v1';
 
 export const OPENING = Object.freeze([
   { location: 'world', duration: 2.6, from: { eye: [0, 40, 22], target: [0, 0, -1] }, to: { eye: [0, 24, 9], target: [0, 0, -3] },
-    title: '세계 고객 트래픽', sub: '싱가포르·일본·미국의 요청이 가상 회선을 따라 울산으로 모입니다 · 실제 해저케이블 경로 아님' },
+    title: '세계를 잇는 통신망', sub: '해저 회선과 국내 백본이 울산 AIDC로 모입니다 · 아직 도착한 요청 없음 · 가상 경로, 실제 해저케이블 경로 아님' },
   { location: 'world', duration: 2.3, from: { eye: [0, 24, 9], target: [0, 0, -3] }, to: { eye: [ulsan[0] - .4, 4.4, ulsan[2] + 3.4], target: ulsan },
     title: '대한민국 · 울산', sub: '남구 황성동·용연 권역 · 지도 정밀도는 설명용' },
   { location: 'campus', duration: 2.7, from: { eye: [95, 58, 70], target: [15, 0, 0] }, to: { eye: [46, 28, 42], target: [4, 0, 0] },
@@ -20,6 +20,6 @@ export const OPENING = Object.freeze([
   { location: 'campus', duration: 2.2, from: { eye: [46, 28, 42], target: [4, 0, 0] }, to: { eye: [-1, 7.5, 17], target: [-8, 1, 4.5] },
     title: '울산 AIDC 캠퍼스 · 관제동', sub: '서버동 01과 연결 통로로 이어진 운영 건물' },
   { location: 'noc', duration: 2.4, from: { eye: [9.3, 3.6, 8.5], target: [9.3, 1.6, -4] }, to: DESK_POSE,
-    title: '관제동 운영석 03 · 내 자리', sub: '오늘의 업무가 내 모니터에 도착했습니다' },
+    title: '관제동 운영석 03 · 내 자리', sub: '근무를 시작하면 고객 요청이 내 모니터로 들어옵니다' },
 ]);
 export const OPENING_SECONDS = OPENING.reduce((s, k) => s + k.duration, 0);
