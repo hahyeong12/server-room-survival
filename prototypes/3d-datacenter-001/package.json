@@ -11,7 +11,10 @@
     "qa": "node scripts/world-qa.mjs",
     "qa:lab": "node scripts/browser-qa.mjs --url=http://127.0.0.1:5173/lab.html --output=../../docs/3d-world-expansion/qa/lab-regression",
     "qa:ux": "node scripts/ux-qa.mjs",
-    "qa:ux32": "node scripts/ux32-qa.mjs"
+    "qa:ux32": "node scripts/ux32-qa.mjs",
+    "engine": "python -m engine.server",
+    "play": "node scripts/play.mjs",
+    "test:engine": "python -m unittest discover -s engine/tests -t ."
   },
   "dependencies": {
     "three": "0.180.0"

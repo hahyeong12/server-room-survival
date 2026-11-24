@@ -3,9 +3,10 @@ from pathlib import Path
 import hashlib, json, subprocess, sys
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = Path(__file__).resolve().parent / 'qa'
 PROTO = ROOT / 'prototypes/3d-datacenter-001'
-OUT.mkdir(exist_ok=True)
+# Optional 2nd argument: a phase sub-folder (e.g. `phase4`) so a new baseline never replaces an earlier one.
+OUT = Path(__file__).resolve().parent / 'qa' / (sys.argv[2] if len(sys.argv) > 2 else '')
+OUT.mkdir(parents=True, exist_ok=True)
 def snapshot():
     names = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
     paths = {ROOT / n for n in names if n and not n.startswith(('prototypes/3d-datacenter-001/', 'docs/3d-world-expansion/'))}
