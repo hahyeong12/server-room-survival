@@ -47,7 +47,7 @@ def chapter_meta(chapter, practice=False):
 
 
 def pages(dialogue):
-    return [[d.role, SPEAKERS.get(d.role, d.role), d.text] for d in dialogue]
+    return [[d.role, SPEAKERS.get(d.role, d.role), _player_words(d.text)] for d in dialogue]
 
 
 def _field(story, key):
@@ -71,12 +71,41 @@ def unlock_reason(session, key):
     return _player_words(reason)
 
 
+# The engine text names Tkinter screens and internal chapter ids. The 3D client shows the same sentence with the
+# 3D place names and player-facing chapter numbers (wording only: no meaning, number or verdict changes).
+WORDS = (
+    ('Chapter 3b', '제4장'), ('Chapter 3a(네트워크 장애)', '제3장'), ('Chapter 3a', '제3장'), ('Chapter 3', '제3장'),
+    ('Chapter 2', '제2장'), ('Chapter 1', '제1장'),
+    ('AIDC LINK의 [요청 확인]', '내 모니터 요청함의 [요청서 열기]'), ('AIDC LINK에서', '내 모니터 요청함에서'),
+    ('AIDC LINK', '내 모니터 요청함'),
+    ('[배정 계획 비교·선택]', '[배정 계획] 탭'), ('[배정 설정·선택]', '[배정 계획] 탭 → 서버동 랙의 [작업 시작]'),
+    ('[네트워크 진단]', '[진단] 탭'), ('[장비 진단]', '[진단] 탭'),
+    ('[Engineering Lab 연습]', '메뉴의 [장 연습 · 제5장 Lab]'), ('[Engineering Lab]', '[연수 · Lab] 탭'),
+    ('Engineering Lab에서', '[연수 · Lab] 탭에서'), ('(Engineering Lab)', '([연수 · Lab] 탭)'),
+    ('[네트워크 구조] 탭', '[연수 · Lab] 탭의 구조도'), ('[명령어 학습] 탭', '[연수 · Lab] 탭'),
+    ('[가상 터미널] 탭', '[연수 · Lab] 탭의 터미널'), ('[가상 터미널]', '[연수 · Lab] 탭의 터미널'),
+    ('관제실에서', '내 모니터 [진단] 탭에서'), ('관제실의 기존 대응 버튼', '[진단] 탭의 대응 버튼'),
+    ('시간 빨리감기(+10/+30/+60분)', '위쪽 ⏩ 시간 버튼(+10/+30/+60분)'), ('시간 빨리감기', '위쪽 ⏩ 시간 버튼'),
+)
+
+
 def _player_words(text):
-    """Engine messages use internal chapter ids (Chapter 3a/3b, 심화 연수). Show the player-facing numbers."""
-    for old, new in (('Chapter 3b', '제4장'), ('Chapter 3a(네트워크 장애)', '제3장'), ('Chapter 3a', '제3장'),
-                     ('Chapter 3', '제3장'), ('Chapter 2', '제2장'), ('Chapter 1', '제1장'), ('심화 연수', '제5장 심화 연수')):
+    if not isinstance(text, str):
+        return text
+    for old, new in WORDS:
         text = text.replace(old, new)
     return text
+
+
+def words_deep(value):
+    """Apply the 3D wording to every string inside an engine result (lists / dicts)."""
+    if isinstance(value, str):
+        return _player_words(value)
+    if isinstance(value, list):
+        return [words_deep(v) for v in value]
+    if isinstance(value, dict):
+        return {k: words_deep(v) for k, v in value.items()}
+    return value
 
 
 def next_key(key):
@@ -134,7 +163,7 @@ def jobs_progress(session):
 def chapter_result(session, key):
     fn = {1: session.chapter_result, 2: session.chapter2_result, 3: session.chapter3_result,
           '3b': session.chapter3b_result, 'lab': session.training_result}[key]
-    return jsonable(fn())
+    return words_deep(jsonable(fn()))
 
 
 def chapter2_view(session):
@@ -157,7 +186,7 @@ def chapter3_view(session):
     feedback = session.chapter3_feedback()
     return {'requestIds': list(c3.request_ids), 'step': c3.step, 'completed': c3.completed,
             'diagnosed': list(c3.diagnosed), 'records': jsonable(c3.records),
-            'cards': {str(rid): jsonable(session.chapter3_card(rid)) for rid in c3.request_ids},
+            'cards': {str(rid): words_deep(jsonable(session.chapter3_card(rid))) for rid in c3.request_ids},
             'pending': ({'key': pending[0], 'kind': pending[1], 'rid': int(pending[0].split(':')[0]),
                          'pages': pages(feedback[1]) if feedback else []} if pending else None),
             'retryAvailable': session.chapter3_retry_available}
@@ -168,7 +197,7 @@ def chapter3b_view(session):
     pending = session.chapter3b_pending_feedback()
     return {'requestIds': list(c.request_ids), 'step': c.step, 'completed': c.completed,
             'diagnosed': list(c.diagnosed), 'records': jsonable(c.records),
-            'cards': {str(rid): jsonable(session.chapter3b_card(rid)) for rid in c.request_ids},
+            'cards': {str(rid): words_deep(jsonable(session.chapter3b_card(rid))) for rid in c.request_ids},
             'pending': {'key': pending, 'rid': int(pending.split(':')[0])} if pending else None,
             'retryAvailable': session.chapter3b_retry_available}
 
@@ -189,10 +218,12 @@ def training_view(session):
     questions = {f'{stage}:{question}': {'prompt': q['prompt'], 'options': [list(o) for o in q['options']]}
                  for (stage, question), q in QUESTIONS.items()}   # the 'correct' key is never sent
     return {
-        'status': jsonable(status), 'objective': objective(session), 'jobStatus': jsonable(session.training_job_status()),
+        'status': words_deep(jsonable(status)), 'objective': objective(session),
+        'jobStatus': words_deep(jsonable(session.training_job_status())),
         'stages': [{'key': k, 'no': STAGE_INFO[k]['no'], 'title': STAGE_INFO[k]['title'], 'short': STAGE_INFO[k]['short'],
                     'goal': STAGE_INFO[k]['goal'], 'cta': STAGE_INFO[k]['cta'], 'tab': STAGE_INFO[k]['tab']} for k in STAGES],
         'questions': questions, 'choiceQuestion': CHOICE_QUESTION, 'choices': list(COMMAND_SPECS),
+        'choiceFit': {k: list(v) for k, v in CHOICE_FIT.items()},
         'specs': jsonable(COMMAND_SPECS), 'blocks': jsonable(BLOCKS), 'supported': list(SUPPORTED),
         'targets': {'routers': {k: v['address'] for k, v in LAB_NETWORK['routers'].items()},
                     'gateway': LAB_NETWORK['aidc_gateway']['address'], 'servers': dict(LAB_NETWORK['servers'])},

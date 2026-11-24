@@ -70,9 +70,11 @@ function logAction(action,res){actionLog.push({t:Math.round(performance.now()),c
 async function send(action,{quiet=false}={}){
   if(!gameId)return null;
   pending++;renderBusy();
-  const before=game(),res=await api.act(gameId,action);pending--;
+  const sentTo=gameId,before=game(),res=await api.act(sentTo,action);pending--;
   logAction(action,res);
   if(res.offline){setEngine(false,res.message);renderBusy();return res;}
+  // A late reply for a save that is no longer open (e.g. after a retry opened a new slot) never repaints the screen.
+  if(sentTo!==gameId){renderBusy();return {...res,stale:true};}
   if(res.game){store.setGame(res.game);}
   if(!res.ok){toast(res.message+(res.hint?` · ${res.hint}`:''),'hint');store.setNotice(res.message);}
   else{if(res.hint)toast(res.hint,'hint');else if(res.message&&!quiet)toast(res.message);if(res.message||res.hint)store.setNotice(res.hint||res.message);}
@@ -399,7 +401,7 @@ function renderStrip(){
   if(j?.kind==='tutorial'&&j.goals){$('strip-eyebrow').textContent='TUTORIAL · 실습';$('objective').textContent=j.completed?'실습 완료':j.current?`${j.current.goalIndex}/${j.total} ${j.current.goalTitle}`:'안내 끔';
     $('stepper').replaceChildren(...j.goals.map(x=>el('li',x.done?'done':x.current?'now':'',x.title)));}
   else if(isLaterChapter(g)){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} ${st.chapter.stateLabel}`:chapterGoal(g).title;
-    $('stepper').replaceChildren(...(st.campaign.length?st.campaign.map(c=>{const li=el('li',c.state==='cleared'?'done':c.key===st.chapterKey?'now':'',c.label);li.dataset.chapter=String(c.key);li.title=`${c.heading} · ${c.stateLabel}`;return li;}):[el('li','now',`${st.chapter.label} 연습`)]));}
+    $('stepper').replaceChildren(...(st.campaign.length?st.campaign.map(c=>{const li=el('li',c.state==='cleared'?'done':c.key===st.chapterKey?'now':'',c.key===st.chapterKey?c.label:`${c.number}장`);li.dataset.chapter=String(c.key);li.title=`${c.heading} · ${c.stateLabel}`;return li;}):[el('li','now',`${st.chapter.label} 연습`)]));}
   else if(g?.story){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} 클리어`:storyGoal(g)?.what??'';
     $('stepper').replaceChildren(...Array.from({length:st.jobsTotal},(_,i)=>el('li',i<st.jobsDone?'done':i===st.jobsDone&&!st.done?'now':'',`업무 ${i+1}`)));}
   else if(g){$('strip-eyebrow').textContent='FREE · 자유 운영';$('objective').textContent=freeGoal(g)?.what??'';$('stepper').replaceChildren();}
@@ -474,8 +476,17 @@ const menu=(()=>{
       c.append(button('새로 시작',async()=>{if(await newGame(mode))hide();},'primary',{'data-new':mode,...(health.ok?{}:{disabled:''})}));
       const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')).slice(-3).reverse();
       for(const s of mine){c.append(button(`이어하기 · ${s.kind==='practice'?'장 연습 · ':''}${s.chapter?.heading&&s.kind!=='tutorial'?`${s.chapter.heading} · `:''}${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
-        // Chapter select: start a saved chapter-start point as a new slot (the save itself is never changed).
-        if(mode==='story'&&s.checkpoints?.length){const row=el('div','chapter-picks');row.append(el('small','','장 시작 지점부터 (새 슬롯):'));for(const k of s.checkpoints)row.append(button(`제${{1:1,2:2,3:3,'3b':4,lab:5}[k]}장`,async()=>{if(await startCheckpoint(s.id,k))hide();},'link',{'data-checkpoint':`${s.id}:${k}`}));c.append(row);}}
+      }
+      // Chapter select (like the Python chapter menu): pick a story record, then a chapter-start point. It always
+      // opens as a NEW slot; the chosen record is never changed.
+      const withCp=mode==='story'?saves.filter(s=>s.kind==='story'&&s.checkpoints?.length).reverse():[];
+      if(withCp.length){
+        const box=el('div','chapter-select'),sel=el('select'),row=el('div','chapter-picks');sel.dataset.chapterSave='';sel.setAttribute('aria-label','장 선택에 쓸 스토리 기록');
+        for(const s of withCp){const o=el('option','',`${s.id.replace('aidc_story_slot_','기록 ')} · ${s.chapter?.heading??''}${s.clock?` · ${s.clock}`:''}`);o.value=s.id;sel.append(o);}
+        const fill=()=>{const s=withCp.find(x=>x.id===sel.value);row.replaceChildren(el('small','','장 시작 지점부터 (새 슬롯):'));
+          for(const k of s.checkpoints)row.append(button(`제${{1:1,2:2,3:3,'3b':4,lab:5}[k]}장`,async()=>{if(await startCheckpoint(s.id,k))hide();},'link',{'data-checkpoint':`${s.id}:${k}`}));};
+        sel.addEventListener('change',fill);fill();box.append(el('small','','장 선택 · 재연습'),sel,row);c.append(box);
+      }
       if(mode==='free'){const row=el('div','chapter-picks');row.append(el('small','','장 연습 (진급 기록 없음):'));for(const [k,label]of [['2','제2장'],['3','제3장'],['3b','제4장'],['lab','제5장 Lab']])row.append(button(label,async()=>{if(await newGame('practice',k))hide();},'link',{'data-practice':k,...(health.ok?{}:{disabled:''})}));c.append(row);}
       grid.append(c);
     }

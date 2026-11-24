@@ -95,23 +95,24 @@ export function createChapterPanes({ el, button, chip, readingsGrid, send, ui, r
   function paneLab(body, g) {
     const t = g.story?.training; if (!t) { body.append(el('p', 'ws-note', '제5장(심화 연수) 또는 Engineering Lab 연습에서 열립니다.')); return; }
     const s = t.status, gid = g.id, st = labState(gid), stage = s.current;
+    // Compact header: the stage map in one row (full text on hover / for screen readers) and one goal card.
+    const SYMBOL = { passed: '✔', active: '▶', setup: '⚠', next: '▶', open: '○', locked: '🔒' };
     const map = el('div', 'lab-map'); map.dataset.labMap = '';
-    for (const x of s.stages) { const b = el('span', `lab-badge ${x.badge}`, `${x.no}. ${x.short} · ${x.badge_text}`); b.dataset.labStage = x.key; map.append(b); }
-    body.append(map);
-    const head = el('div', `ws-card lab-head tone-${s.headline.tone}`); head.dataset.labHead = s.headline.action || '';
-    head.append(chip(s.headline.chip, s.headline.tone === 'warn' ? 'warn' : 'ok'), el('strong', '', s.headline.title), el('p', 'ws-note', s.headline.detail));
-    body.append(head);
+    for (const x of s.stages) { const b = el('span', `lab-badge ${x.badge}`, `${SYMBOL[x.badge] || ''} ${x.no}${x.key === stage ? ` ${x.short}` : ''}`);
+      b.dataset.labStage = x.key; b.title = `Stage ${x.no} · ${x.short} · ${x.badge_text}`; b.setAttribute('aria-label', b.title); map.append(b); }
     const info = t.stages.find(x => x.key === stage);
-    if (!s.done) body.append(el('p', 'ws-label', `Stage ${info.no} · ${info.title} — ${info.goal}`));
+    const head = el('div', `ws-card lab-head tone-${s.headline.tone}`); head.dataset.labHead = s.headline.action || '';
+    const top = el('div', 'lab-head-top'); top.append(chip(s.headline.chip, s.headline.tone === 'warn' ? 'warn' : 'ok'), el('strong', '', s.headline.title)); head.append(map, top);
+    head.append(el('p', 'ws-note', s.done ? s.headline.detail : `${s.headline.detail} · 과제: ${info.goal}`));
+    body.append(head);
     const card = el('div', 'ws-card lab-stage'); card.dataset.labStageBody = stage;
     if (stage === 'structure') {
-      card.append(el('small', 'ws-note', `${t.notice} · 증상: ${t.network.symptom}`));
-      const grid = el('div', 'seg-grid');
+      const grid = el('div', 'seg-grid'); if (!s.segment?.correct) grid.dataset.labTarget = '';
       for (const [id, label] of SEGMENTS) { const state = t.network.segments[id], picked = s.segment?.answer === id;
         grid.append(button(`${label}${state ? ` · ${SEG_STATE[state]}` : ''}`, () => labSend(gid, { type: 'lab_segment', segment: id }, (lab, x) => { x.feedback = `${lab.correct ? '✓' : '↺'} ${lab.text}`; }),
           `seg${picked ? ' picked' : ''}${state === 'down' ? ' down' : ''}`, { 'data-segment': id })); }
-      card.append(grid);
-      if (s.segment?.correct) card.append(question(gid, t, 'structure', 'impact', s.impact));
+      card.append(grid, el('small', 'ws-note', `${t.notice} · 증상: ${t.network.symptom}`));
+      if (s.segment?.correct) { const q = question(gid, t, 'structure', 'impact', s.impact); if (!s.impact?.correct) q.dataset.labTarget = ''; card.append(q); }
     } else if (stage === 'tool') {
       const q = el('div', 'lab-q'); q.append(el('strong', '', t.choiceQuestion));
       for (const name of t.choices) q.append(button(`${name} — ${t.specs[name].summary}`, () => labSend(gid, { type: 'lab_command', source: 'choice', stage: 'tool', payload: name }, (lab, x) => { x.log.push({ line: lab.line, output: lab.output, hint: lab.hint }); x.feedback = ''; }),

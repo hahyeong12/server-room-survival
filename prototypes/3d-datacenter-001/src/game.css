@@ -165,3 +165,8 @@ pre.lab-out{margin:0 0 6px;white-space:pre-wrap;font-family:Consolas,"Malgun Got
 .screen-notes{margin:6px 0;padding-left:18px;font-size:13px;color:#c9d9e6;line-height:1.5}
 .screen.graduation h2{color:#ffe1a0}
 #stepper li[data-chapter]{cursor:default}
+.chapter-select{display:flex;flex-direction:column;gap:4px;margin-top:6px;border-top:1px dashed #2c4659;padding-top:6px}
+.chapter-select select{background:#0a1622;color:#d4e6f2;border:1px solid #2c4659;border-radius:4px;padding:4px 6px;font:inherit;font-size:12px}
+.lab-head-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.lab-head-top strong{font-size:14px;color:#d4e6f2}
+.lab-head .lab-map{margin-bottom:2px}
+@media (max-width:1300px){#stepper li[data-chapter]:not(.now){max-width:none}}

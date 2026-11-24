@@ -94,6 +94,13 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     box.append(nextButtons(['free', 'menu', 'tutorial', 'stay']));
     show('graduation', [box]);
   }
+  // Retry from a senior card: record the card in THIS save first, then open the new slot. The finished-chapter
+  // screen of the old save is not shown in between.
+  async function retryAfter(ack) {
+    const key = String(game()?.story?.chapterKey); seen.chapters.add(key);
+    onClose = null; if (dlg.open) dlg.close(); open = null;
+    await ack(); await retryChapter();
+  }
   // Mid-chapter senior feedback the engine wants shown once: chapter 2 confirmed failure, chapter 3/4 result cards.
   function chapter2Failure(g) {
     const c2 = g.story.chapter2, box = el('section', 'screen');
@@ -102,7 +109,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     const ack = () => send({ type: 'ack_feedback', kind: 'chapter2' }, { quiet: true });
     const row = el('div', 'screen-actions');
     row.append(button('현재 슬롯에서 계속 진행', () => close(), 'primary', { 'data-next': 'continue' }));
-    if (g.story.retry?.available) row.append(button(`${g.story.chapter.label} 재도전 (새 슬롯)`, async () => { close(); await retryChapter(); }, '', { 'data-next': 'retry' }));
+    if (g.story.retry?.available) row.append(button(`${g.story.chapter.label} 재도전 (새 슬롯)`, () => retryAfter(ack), '', { 'data-next': 'retry' }));
     box.append(row);
     show('chapter2-failure', [box], ack);
   }
@@ -117,7 +124,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     const ack = () => send({ type: 'ack_feedback', kind, key: pending.key }, { quiet: true });
     const row = el('div', 'screen-actions');
     row.append(button('업무로 돌아가기', () => close(), 'primary', { 'data-next': 'continue' }));
-    if (card.can_retry && g.story.retry?.available) row.append(button(`${g.story.chapter.label} 재도전 (새 슬롯)`, async () => { close(); await retryChapter(); }, '', { 'data-next': 'retry' }));
+    if (card.can_retry && g.story.retry?.available) row.append(button(`${g.story.chapter.label} 재도전 (새 슬롯)`, () => retryAfter(ack), '', { 'data-next': 'retry' }));
     box.append(row);
     show(`${kind}-card`, [box], ack);
   }
