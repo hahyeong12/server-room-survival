@@ -228,7 +228,7 @@ class Journey:
     def view(self):
         """Client view (no predicates). Goals list with step states and the single current step."""
         if self.kind != 'tutorial':
-            return {'kind': self.kind, 'misclicks': self.data['misclicks']}
+            return {'kind': self.kind, 'misclicks': self.data['misclicks'], 'route': self.data['route']}
         current = self.current_step()
         goals = []
         for index, (gid, title, steps) in enumerate(TUTORIAL, start=1):
@@ -241,7 +241,7 @@ class Journey:
             goal = next(g for g in goals if g['current'])
             cur = {k: current[k] for k in ('id', 'title', 'what', 'why', 'where', 'target')}
             cur.update(goal=goal['id'], goalIndex=goal['index'], goalTitle=goal['title'])
-        return {'kind': 'tutorial', 'goals': goals, 'total': len(goals), 'current': cur,
+        return {'kind': 'tutorial', 'route': self.data['route'], 'fault': self.data['fault'], 'goals': goals, 'total': len(goals), 'current': cur,
                 'completed': self.completed, 'skipped': self.data['skipped'], 'misclicks': self.data['misclicks'],
                 'doneSteps': len(self.data['done']), 'totalSteps': len(STEP_IDS),
                 'learned': list(LEARNED) if self.completed else []}

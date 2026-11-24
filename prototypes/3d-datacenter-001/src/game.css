@@ -1,0 +1,134 @@
+/* Phase 4: engine-connected game UI. Loaded after world.css. */
+.topbar{gap:16px}
+#mode-badge[data-mode=tutorial]{color:#f3d9a0;border-color:#6a5a36}
+#mode-badge[data-mode=story]{color:#b6e6ff;border-color:#36586a}
+#mode-badge[data-mode=free]{color:#c6f0c8;border-color:#3d6141}
+#clock{display:flex;align-items:center;gap:10px;margin-left:auto;margin-right:8px;background:#0c1622;border:1px solid #2f4759;border-radius:6px;padding:5px 6px 5px 12px}
+.clock-label{font-size:11px;color:var(--muted);letter-spacing:1px}
+#clock-time{font:600 18px Consolas,monospace;color:#cdeee7;min-width:84px}
+.time-btns{display:flex;gap:4px}
+.time-btns button{padding:7px 10px;font-size:13px;background:#1c3a3a;border-color:#3f7a72;color:#c9f7ea}
+.time-btns button:disabled{background:#16212d;border-color:#2c3c4b;color:#8aa0b2}
+body.engine-busy,body.engine-busy button{cursor:progress}
+#engine-status[data-online=false]{color:#ffb4a0}
+#engine-status[data-online=true]{color:#9fdcc9}
+
+/* goal head */
+#goal-why,#goal-where{font-size:12px;color:#9fb6c8;margin:4px 0 0;line-height:1.5}
+#goal-where{color:#d7c08f}
+#goal-pips i{display:inline-block;width:18px;height:4px;margin-left:4px;background:#2b3d4e;border-radius:2px}
+#goal-pips i.done{background:#5fb9a9}#goal-pips i.now{background:#f3c37b}
+
+/* chips */
+.chip[data-tone=ok]{background:#21423b;color:#b2f2dc}.chip[data-tone=new]{background:#4b3d22;color:#ffdca0}
+.chip[data-tone=fault]{background:#542835;color:#ffadba}.chip[data-tone=recover]{background:#4d3f29;color:#ffd79b}
+.chip[data-tone=warn]{background:#4a3424;color:#ffc79a}.chip[data-tone=done]{background:#25483f;color:#b1f5da}.chip[data-tone=muted]{background:#2b3440;color:#a5b3c1}
+.status-chips .bad{color:#ff9eab}
+.req-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.req-row strong{font-size:14px;font-weight:500}
+.card-sub{font-size:12px;color:#c9b88f;margin:4px 0}
+.card-line.ok{color:#b5f0d9}
+#context-card button.active{border-color:#6fa08f;background:#25433f}
+
+/* panel order: in the server hall the rack card (start / re-check) comes first */
+#panel-body{display:flex;flex-direction:column}
+body[data-route=hall] #context-card{order:-1;margin-bottom:10px}
+
+/* my monitor */
+#workstation{top:150px!important;bottom:14px!important;max-height:none!important;display:flex;flex-direction:column;overflow:hidden}
+.ws-tabs{display:flex;gap:4px;padding:8px 12px 0;border-bottom:1px solid #284052;background:#0b1826}
+.ws-tabs button{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;padding:8px 14px;font-size:14px;background:#122233}
+.ws-tabs button.active{background:#1f3c44;color:#c4f6e6;border-color:#4f8a7d}
+.ws-pane{flex:1;overflow:auto;padding:10px 14px;scrollbar-width:thin;display:flex;flex-direction:column;gap:8px}
+.ws-list{display:flex;flex-direction:column;gap:4px}
+.ws-row{display:flex;align-items:center;gap:10px;text-align:left;padding:6px 10px;font-size:13px;position:relative}
+.ws-row.active{border-color:#6fa08f;background:#1d3a3b}
+.ws-row>span:nth-child(3){color:#9fb6c8;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-row .dot{position:absolute;right:6px;top:6px;width:8px;height:8px;border-radius:50%;background:#f3c37b}
+.ws-card{border:1px solid #2c4659;background:#0e1d2c;border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.ws-card>strong{font-size:14px;font-weight:600;color:#d4e6f2}
+.ws-label{font-size:12px;color:#8fd6c7;letter-spacing:.3px}
+.ws-note{font-size:12px;color:#a9bccd;margin:0;line-height:1.5}
+.ws-tip{font-size:12px;color:#d9c48f;margin:0;line-height:1.5}
+.ws-warn{font-size:12px;color:#ffc29b;margin:0;line-height:1.5}
+.ws-message{background:#08131f;border-left:3px solid #f3c37b;padding:6px 10px;max-height:120px;overflow:auto;font-size:12px}
+.ws-message strong{color:#f4d49c;font-size:12px}.ws-message p{white-space:pre-wrap;margin:2px 0 6px;line-height:1.5;color:#d0dde8}
+.ws-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.terms-table{border-collapse:collapse;font-size:12px;width:100%}
+.terms-table th,.terms-table td{border-bottom:1px solid #22384a;padding:4px 6px;text-align:left}
+.terms-table th{color:#8ea6ba;font-weight:400}.terms-table td.ok{color:#b2f2dc}.terms-table td.warn{color:#ffc29b}
+.mode-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mode-card{border:1px solid #31576a;border-radius:6px;padding:8px 10px;background:#0f2130;display:flex;flex-direction:column;gap:5px}
+.mode-card.blocked{border-style:dashed;border-color:#6a4f36;background:#1a1712}
+.mode-head{display:flex;align-items:center;justify-content:space-between;gap:6px}.mode-head strong{font-size:14px}
+.plan-options{display:flex;flex-direction:column;gap:5px}
+.plan-option{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:6px 9px;font-size:12px;background:#132a3a}
+.plan-option strong{font-size:13px;color:#d8eaf5}.plan-option span{color:#a9c2d4}
+.plan-option.selected{border-color:#f3c37b;background:#2f2a19;box-shadow:0 0 0 1px #f3c37b55}
+.diag-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:8px}
+.diag-servers{display:flex;gap:5px;flex-wrap:wrap}
+.responses button{text-align:left;font-size:12px;padding:7px 10px}
+.result-card dl{margin:0}
+button.link{background:none;border-color:transparent;color:#9fd7ff;padding:4px 6px;text-decoration:underline;font-size:12px}
+
+/* rack card */
+.rack-card{display:flex;flex-direction:column;gap:8px}
+.gpu-slots{display:flex;gap:4px;flex-wrap:wrap}
+.gpu-slots span{min-width:34px;text-align:center;font:11px Consolas,monospace;padding:4px 3px;border:1px solid #31495c;border-radius:3px;color:#7f97aa}
+.gpu-slots span.used{border-color:#5f9d8e;color:#c6f5e6;background:#1b3a37}
+.rack-card button.big{font-size:15px;padding:12px}
+
+/* senior dialogue */
+#talk{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:min(620px,calc(100% - 40px));z-index:8;background:#0c1826f5;border:1px solid #5d7f93;border-radius:10px;padding:14px 16px;box-shadow:0 20px 60px #000c}
+#talk[data-role=player]{border-color:#7a6aa8}
+.talk-who{display:flex;align-items:center;gap:10px}.talk-who strong{font-size:13px;color:#cfe2ee;font-weight:500}
+.portrait{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;font-size:13px;font-weight:700}
+.portrait.mentor{background:#1f4a44;color:#b6f5e2;border:2px solid #5fb9a9}.portrait.player{background:#3a2f55;color:#ddd0ff;border:2px solid #8f7ccc}
+.talk-text{white-space:pre-wrap;font-size:16px;line-height:1.6;margin:8px 0 10px;color:#eef5fa}
+.talk-row{display:flex;align-items:center;gap:8px;justify-content:flex-end}.talk-count{margin-right:auto;font-size:12px;color:#8ea6ba}
+
+/* mode menu */
+#menu{position:fixed;inset:0;z-index:40;background:#050c17d9;display:grid;place-items:center;padding:16px;overflow:auto}
+.menu-card{width:min(1060px,100%);background:#101d2c;border:1px solid #47657d;border-radius:10px;padding:22px 24px;box-shadow:0 30px 90px #000d}
+.menu-card h2{font-size:26px;font-weight:400;margin:6px 0}
+.menu-sub{font-size:13px;color:#a9bccd;margin:0 0 12px}
+.menu-warn{background:#3a2228;border:1px solid #a35b68;padding:10px 12px;border-radius:6px;font-size:13px}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mode-card-big{border:1px solid #33546a;border-radius:8px;padding:14px;background:#0d1b29;display:flex;flex-direction:column;gap:8px}
+.mode-card-big h3{margin:0;font-size:19px;font-weight:500}.mode-card-big p{font-size:13px;color:#a9bccd;margin:0;line-height:1.55;flex:1}
+.mode-icon{font-size:26px}
+.mode-card-big button.link{text-align:left}
+.menu-foot{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}.menu-foot small{color:#8ea6ba;font-size:11px}
+
+/* coach: docked in the panel; only a click-through tag floats */
+#coach{position:static;width:auto;box-shadow:none;border-radius:0;border-top:0;border-right:0;border-bottom:0;margin:0 0 4px;padding:10px 18px;border-left:3px solid #d8b56d;background:#1d2a20;color:#f3ecd8}
+.coach-head{display:flex;align-items:center;gap:8px}.coach-head .portrait{width:30px;height:30px;font-size:11px}
+#coach .coach-step{font-size:12px;color:#f3c37b}
+#coach .coach-say{font-size:13px;line-height:1.5;margin:6px 0 2px}
+#coach .coach-row{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+body.coach-folded #goal-why,body.coach-folded #goal-where{display:none}
+#coach-tag{position:fixed;z-index:30;pointer-events:none;background:#2b2012f2;border:1px solid #f3c37b;color:#f8e2b4;font-size:12px;padding:3px 8px;border-radius:4px;white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
+.coach-spot{outline:3px solid #f3c37b!important;outline-offset:3px;box-shadow:0 0 0 6px #f3c37b33!important;animation:coachspot 1.6s ease-in-out infinite}
+@keyframes coachspot{50%{outline-color:#fff1c9}}
+#coach-ring{position:absolute;z-index:4;width:64px;height:64px;margin:-32px 0 0 -32px;border:3px solid #f3c37b;border-radius:50%;pointer-events:none;box-shadow:0 0 0 6px #f3c37b33;animation:coachring 1.4s ease-in-out infinite}
+#coach-ring::after{content:attr(data-label);position:absolute;left:50%;top:70px;transform:translateX(-50%);white-space:nowrap;background:#2b2012ee;border:1px solid #f3c37b;color:#f8e2b4;font-size:12px;padding:3px 8px;border-radius:4px}
+@keyframes coachring{50%{transform:scale(1.15)}}
+
+/* result / completion screens */
+#screen-dialog{width:min(720px,92vw)}
+.screen h2{margin:4px 0 8px;font-weight:400}
+.screen .screen-sub{font-size:13px;color:#a9bccd}
+.screen ul{margin:8px 0;padding-left:20px}.screen li{font-size:13px;line-height:1.6;margin:3px 0}
+.screen-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.screen-actions button{font-size:14px;padding:11px 14px}
+.screen .ops-readings{margin:8px 0}
+
+@media (prefers-reduced-motion:reduce){.coach-spot,#coach-ring{animation:none}}
+@media (max-width:1400px){#clock-time{font-size:16px;min-width:76px}.time-btns button{padding:6px 8px;font-size:12px}.clock-label{display:none}.top-right button{padding:7px 8px}}
+@media (max-width:1300px){.mode-list,.diag-grid{grid-template-columns:1fr}.brand-sub{display:none}}
+@media (max-height:860px){
+  #workstation{top:126px!important;bottom:8px!important}
+  .ws-pane{padding:8px 12px;gap:6px}.ws-tabs button{padding:6px 11px;font-size:13px}
+  #goal-why,#goal-where{font-size:11px}
+  .talk-text{font-size:15px;margin:6px 0 8px}
+  .menu-card{padding:16px 18px}.mode-card-big{padding:10px}
+}

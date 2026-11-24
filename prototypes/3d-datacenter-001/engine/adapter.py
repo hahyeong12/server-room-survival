@@ -196,8 +196,12 @@ class Game:
                 'pages': [list(p) for p in intro.pages] if intro and intro.step == 'arrival' else [],
                 'done': bool(intro and intro.done), 'jobsDone': len(intro.completed) if intro else 0,
                 'jobsTotal': intro.total if intro else 0,
-                'chapter': {'key': 1, 'label': chapter.label, 'title': chapter.title, 'heading': chapter.heading,
-                            'intro': chapter.intro, 'state': state, 'stateLabel': STATE_LABELS.get(state, state), 'text': text},
+                'chapter': ({'key': 1, 'label': chapter.label, 'title': chapter.title, 'heading': chapter.heading,
+                             'intro': chapter.intro, 'state': state, 'stateLabel': STATE_LABELS.get(state, state), 'text': text}
+                            if s.mode == 'story' else
+                            # Tutorial: separate save, never promotes to the story (existing rule); heading as in the Python menu.
+                            {'key': 'tutorial', 'label': '튜토리얼', 'title': '관제실 첫걸음', 'heading': '튜토리얼 — 관제실 첫걸음',
+                             'intro': '', 'state': state, 'stateLabel': STATE_LABELS.get(state, state), 'text': text}),
                 'result': None}
         if intro and intro.done:
             view['result'] = s.chapter_result()

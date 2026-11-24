@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import {createWorldStore,breadcrumbs,FIXTURE} from '../src/world-store.js';
+import {createWorldStore,breadcrumbs} from '../src/world-store.js';
 
 test('campus hierarchy: control and server buildings are siblings; upper navigation without domain changes',()=>{
   const store=createWorldStore(), before=store.domainSnapshot();
@@ -17,10 +17,10 @@ test('invalid route/country/facility/rack IDs including object prototypes are re
     assert.equal(store.navigate(id),false); assert.equal(store.selectCountry(id),false);assert.equal(store.selectFacility(id),false);assert.equal(store.selectRack(id),false);
   } assert.deepEqual(store.snapshot(),before); assert.deepEqual(breadcrumbs('unknown'),[]);
 });
-test('selection is view-only and fixture conditions are deeply immutable',()=>{
+test('selection is view-only; there is no client-side request fixture any more (rules live in the engine)',async()=>{
   const store=createWorldStore(),before=store.domainSnapshot();
   store.selectCountry('JP');store.selectFacility('COOLING');store.selectRack('A-02');
   assert.deepEqual(store.domainSnapshot(),before);assert.equal(store.state.facility.selectedId,'A-02');
-  assert.throws(()=>{FIXTURE.terms.gpu=900;},TypeError);
-  const copy=store.snapshot();copy.request.terms.gpu=900;assert.equal(store.state.request.terms.gpu,8);
+  assert.equal(store.state.game,null);assert.equal(store.state.request.phase,'idle');
+  const mod=await import('../src/world-store.js');assert.equal(mod.FIXTURE,undefined);assert.equal(mod.PHASES,undefined);
 });

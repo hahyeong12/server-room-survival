@@ -1,6 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {createWorldStore} from '../src/world-store.js';
+const S=JSON.parse(readFileSync(new URL('./fixtures/snapshots.json',import.meta.url),'utf8'));
 import {COOLING,OPS_ACTIONS,coolingView,powerView,networkView,hallView,hallInlet} from '../src/facility-ops.js';
 
 const requestOnly=s=>structuredClone({request:s.state.request,facility:s.state.facility});
@@ -21,13 +23,13 @@ test('invalid or out-of-state facility actions are refused without changing stat
   s.ops('cooling-off');for(const a of ['cooling-off','cooling-warn','cooling-reset']){const before=s.domainSnapshot();assert.equal(s.ops(a).ok,false);assert.deepEqual(s.domainSnapshot(),before);}
   assert.ok(OPS_ACTIONS.length===7&&Object.isFrozen(OPS_ACTIONS)&&Object.isFrozen(COOLING.on));
 });
-test('network cause lookup follows the shared request state; checks record the phase they saw',()=>{
+test('network lookup reads the engine snapshot: a server fault is reported as network OK + server cause',()=>{
   const s=createWorldStore();s.ops('network-lookup');assert.equal(s.state.ops.checks.network.title,'활성 네트워크 장애 없음');assert.equal(networkView(s.state).uplink,'정상');
-  s.act('review');s.act('accept');s.navigate('hall');s.selectRack('D-06');s.act('start');s.act('advance');
-  assert.equal(networkView(s.state).down,true);assert.equal(networkView(s.state).links.find(l=>l.id==='SG').status,'처리량 0');
-  s.ops('network-lookup');const c=s.state.ops.checks.network;assert.match(c.title,/D-06 ToR 업링크 단절/);assert.equal(c.phase,'fault');assert.equal(c.target,'hall');
+  s.setGame(S.tutorial_new);assert.equal(networkView(s.state).links.find(l=>l.id==='SG').status,'요청 #1');assert.equal(networkView(s.state).links.find(l=>l.id==='JP').status,'요청 없음');
+  s.setGame(S.tutorial_hw_fault);assert.equal(networkView(s.state).down,false);assert.match(networkView(s.state).uplink,/서버 장애는 별도/);
+  s.ops('network-lookup');const c=s.state.ops.checks.network;assert.match(c.title,/원인은 서버 장비/);assert.equal(c.phase,'hw_fault');assert.equal(c.target,'hall');
   s.ops('ups-test');s.ops('power-check');assert.equal(s.state.ops.checks.ups.title,'UPS 자가진단 정상');assert.match(s.state.ops.checks.power.detail,/IT 부하/);
-  assert.equal(s.state.request.phase,'fault');assert.equal(s.state.request.steps,4);
+  assert.equal(hallView(s.state).faults,1);assert.equal(hallView(s.state).gpuTotal,10);
 });
 test('facility actions and navigation never advance the request or demo time',()=>{
   const s=createWorldStore(),r=structuredClone(s.state.request),elapsed=s.state.facility.elapsed;

@@ -1,6 +1,6 @@
 // Independent, memory-only demonstration. No game imports, storage or host controls.
 export const STATES = Object.freeze({ normal: '정상 운영', fault: '장애 발생', repairing: '복구 중', awaiting: '사후 확인 대기', verified: '사후 확인 완료' });
-export const FAULTS = Object.freeze({ network: '업링크 단절', power: '전력 공급 중단', cooling: '냉각 유량 저하' });
+export const FAULTS = Object.freeze({ network: '업링크 단절', power: '전력 공급 중단', cooling: '냉각 유량 저하', hardware: '서버 장애 (엔진)' });
 export const REPAIR_SECONDS = 6;
 
 export function createFacility() {
@@ -61,6 +61,8 @@ export function readings(a) {
     if (a.fault === 'network') { result.network = 0; result.gpu = 8; result.power = 7.2; }
     if (a.fault === 'power') { result.power = 0; result.gpu = 0; result.network = 0; result.online = 0; }
     if (a.fault === 'cooling') { result.temp = 38.6; result.gpu = 24; result.power = 11.2; }
+    // Engine server fault mirrored on its rack (world demo only): the server is unusable, GPUs offline.
+    if (a.fault === 'hardware') { result.gpu = 0; result.online = 0; result.network = 0; result.power = 3.1; }
   }
   return result;
 }

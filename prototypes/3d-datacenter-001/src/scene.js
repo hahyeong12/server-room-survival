@@ -313,7 +313,7 @@ export function createScene(container, facility, onSelect, options = {}) {
   // count makes three.js recompile every shader program, which froze the hall entry for ~1.5 s.
   const NO_CLIP = new THREE.Plane(V(0, 1, 0), 1e6), NO_CLIP_2 = new THREE.Plane(V(0, 1, 0), 1e6);
   const CLIP = { hall: [HALL_WALL, CEILING], noc: [new THREE.Plane(V(1, 0, 0), -4.12), NO_CLIP], none: [NO_CLIP, NO_CLIP_2] };
-  let interiors = null, targetHighlight = null, selectHighlight = null, targetPin = null;
+  let interiors = null, targetHighlight = null, selectHighlight = null, targetPin = null, drawPin = null, pinKey = '';
   const campusFog = new THREE.Fog(0x0b111b, 85, 230);
   if (options.worldMode) {
     for (const child of [...scene.children]) if (!child.isDirectionalLight && !child.isHemisphereLight) originalRoom.add(child);
@@ -357,16 +357,15 @@ export function createScene(container, facility, onSelect, options = {}) {
     // a floating pin above the request rack, and larger invisible pick volumes for every rack.
     const xray = color => { const m = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.42, 3.2, 1.55)), new THREE.LineBasicMaterial({ color, depthTest: false, transparent: true, opacity: .95 })); m.renderOrder = 20; originalRoom.add(m); return m; };
     targetHighlight = xray(0xf3c37b); selectHighlight = xray(0x83ffe4);
-    const pinCanvas = document.createElement('canvas'); pinCanvas.width = 512; pinCanvas.height = 160; const pc = pinCanvas.getContext('2d');
-    pc.fillStyle = '#2b2012ee'; pc.fillRect(0, 0, 512, 118); pc.strokeStyle = '#f3c37b'; pc.lineWidth = 6; pc.strokeRect(3, 3, 506, 112);
-    pc.fillStyle = '#f3c37b'; pc.font = '600 54px Consolas, "Malgun Gothic", monospace'; pc.fillText(`${options.getState().request.rackId} · 요청 랙`, 24, 76);
-    pc.beginPath(); pc.moveTo(226, 118); pc.lineTo(286, 118); pc.lineTo(256, 158); pc.closePath(); pc.fill();
+    const pinCanvas = document.createElement('canvas'); pinCanvas.width = 512; pinCanvas.height = 160;
     const pinTex = new THREE.CanvasTexture(pinCanvas); pinTex.colorSpace = THREE.SRGBColorSpace;
+    // The pin shows where the engine plans or runs the focused job (redrawn only when that changes).
+    drawPin = (text, color) => { const pc = pinCanvas.getContext('2d'); pc.clearRect(0, 0, 512, 160); pc.fillStyle = '#2b2012ee'; pc.fillRect(0, 0, 512, 118); pc.strokeStyle = color; pc.lineWidth = 6; pc.strokeRect(3, 3, 506, 112);
+      pc.fillStyle = color; pc.font = '600 48px Consolas, "Malgun Gothic", monospace'; pc.fillText(text, 24, 74); pc.beginPath(); pc.moveTo(226, 118); pc.lineTo(286, 118); pc.lineTo(256, 158); pc.closePath(); pc.fill(); pinTex.needsUpdate = true; };
     targetPin = new THREE.Sprite(new THREE.SpriteMaterial({ map: pinTex, depthTest: false, toneMapped: false })); targetPin.scale.set(2.7, .84, 1); targetPin.renderOrder = 21; originalRoom.add(targetPin);
     // Racks keep exact body picking (a wide volume on every rack stole clicks from the row behind);
-    // only the request target gets a slightly larger hit volume.
-    const tgtAsset = facility.assets.find(x => x.id === options.getState().request.rackId);
-    if (tgtAsset) { const pr = new THREE.Mesh(boxGeo, new THREE.MeshBasicMaterial({ visible: false })); pr.scale.set(1.5, 3.25, 1.6); pr.position.set(tgtAsset.x, 1.66, tgtAsset.z); pr.userData.assetId = tgtAsset.id; originalRoom.add(pr); selectable.push(pr); }
+    // only the four engine server racks (column 1) get a slightly larger hit volume.
+    for (const id of ['A-01', 'B-01', 'C-01', 'D-01']) { const a = facility.assets.find(x => x.id === id); if (!a) continue; const pr = new THREE.Mesh(boxGeo, new THREE.MeshBasicMaterial({ visible: false })); pr.scale.set(1.5, 3.25, 1.6); pr.position.set(a.x, 1.66, a.z); pr.userData.assetId = a.id; originalRoom.add(pr); selectable.push(pr); }
     // Colleagues at four other consoles: abstract silhouettes, so the room reads as staffed.
     const seats = [[6.2, -3.8], [9.3, -3.8], [12.4, -3.8], [6.2, .2]];
     const personMat = new THREE.MeshStandardMaterial({ color: 0x1e2c3b, roughness: .85, metalness: .1 });
@@ -476,19 +475,20 @@ export function createScene(container, facility, onSelect, options = {}) {
   }
   // My two desk monitors redraw only when the shared state they show changes.
   function drawDeskScreens() {
-    const s = options.getState(), r = s.request, cool = s.ops.cooling.mode, t = totals(facility);
-    const key = `${r.phase}:${r.progress}:${cool}:${t.gpu}`; if (key === deskKey || !deskScreens.length) return; deskKey = key;
+    const s = options.getState(), r = s.request, cool = s.ops.cooling.mode, eng = s.game?.datacenter, open = (s.game?.requests ?? []).filter(x => !['done', 'failed', 'rejected'].includes(x.stage)).length;
+    const gpuText = eng ? `${eng.gpuUsed}/${eng.gpuTotal}` : '—', key = `${r.id}:${r.phase}:${r.progress}:${cool}:${gpuText}:${open}`; if (key === deskKey || !deskScreens.length) return; deskKey = key;
     for (const { canvas, texture, side } of deskScreens) {
       const c = canvas.getContext('2d'); c.fillStyle = '#061626'; c.fillRect(0, 0, 512, 292); c.fillStyle = '#8af0d4'; c.fillRect(0, 0, 512, 6);
       c.font = '22px Consolas, monospace'; c.fillStyle = '#7fa3bb';
       if (side === 'left') {
-        c.fillText('MY INBOX / 1 REQUEST', 22, 44);
+        c.fillText(`MY INBOX / ${open} OPEN`, 22, 44);
         c.fillStyle = r.phase === 'new' ? '#f3c37b' : ['fault','repairing'].includes(r.phase) ? '#ff8a9a' : '#b9f0e0'; c.font = '40px Consolas, monospace'; c.fillText(r.id, 22, 110);
         c.font = '26px Consolas, monospace'; c.fillStyle = '#c8dbe7'; c.fillText(`${r.customerId} / ${r.rackId}`, 22, 156); c.fillText(`${r.phase.toUpperCase()} · ${r.progress}%`, 22, 200);
         c.fillStyle = '#1f3a4a'; c.fillRect(22, 232, 468, 16); c.fillStyle = '#6fe7d2'; c.fillRect(22, 232, 468 * r.progress / 100, 16);
       } else {
         c.fillText('FACILITY WATCH', 22, 44); c.font = '27px Consolas, monospace';
-        const rows = [['GPU ONLINE', `${t.gpu}/192`, '#b9f0e0'], ['UPLINK', ['fault','repairing'].includes(r.phase) ? 'DOWN' : 'OK', ['fault','repairing'].includes(r.phase) ? '#ff8a9a' : '#b9f0e0'], ['AUX COOLING', cool === 'on' ? 'ON' : cool === 'warn' ? 'WARN' : 'OFF', cool === 'on' ? '#6fe7d2' : cool === 'warn' ? '#ffad5c' : '#8796a3'], ['UPS', 'STANDBY', '#b9f0e0']];
+        const hw = ['hw_fault', 'hw_repair', 'migration'].includes(r.stage), net = r.stage === 'net_fault';
+        const rows = [['ENGINE GPU', gpuText, '#b9f0e0'], ['SERVER', hw ? (r.stage === 'hw_fault' ? 'FAULT' : 'REPAIR') : 'OK', hw ? '#ff8a9a' : '#b9f0e0'], ['NETWORK', net ? 'DEGRADED' : 'OK', net ? '#ff8a9a' : '#b9f0e0'], ['AUX COOLING', cool === 'on' ? 'ON' : cool === 'warn' ? 'WARN' : 'OFF', cool === 'on' ? '#6fe7d2' : cool === 'warn' ? '#ffad5c' : '#8796a3']];
         rows.forEach(([k, v, col], i) => { c.fillStyle = '#9fb6c6'; c.fillText(k, 22, 100 + i * 48); c.fillStyle = col; c.fillText(v, 300, 100 + i * 48); });
       }
       texture.needsUpdate = true;
@@ -508,8 +508,9 @@ export function createScene(container, facility, onSelect, options = {}) {
     }
     if (options.worldMode) {
       drawDeskScreens();
-      const st = options.getState(), tgt = facility.assets.find(a => a.id === st.request.rackId), sel = facility.assets.find(a => a.id === facility.selectedId), inHall = location === 'hall', active = !['new','reviewed','completed','reported'].includes(st.request.phase) || st.request.phase === 'accepted';
-      targetHighlight.visible = targetPin.visible = inHall && active && !!tgt; if (tgt) { targetHighlight.position.set(tgt.x, 1.75, tgt.z); targetPin.position.set(tgt.x, 3.55 + Math.sin(visualElapsed * 2.4) * (options.reducedMotion?.() ? 0 : .06), tgt.z); }
+      const st = options.getState(), tgt = facility.assets.find(a => a.id === st.request.rackId), sel = facility.assets.find(a => a.id === facility.selectedId), inHall = location === 'hall', active = !!tgt && !['done', 'failed', 'rejected', 'idle'].includes(st.request.stage);
+      if (active) { const planned = st.request.stage === 'incoming', key = `${tgt.id}:${planned}`; if (key !== pinKey) { pinKey = key; drawPin(`${tgt.id} · ${planned ? '배정 예정' : '실행 위치'}`, planned ? '#f3c37b' : '#8af0d4'); targetHighlight.material.color.setHex(planned ? 0xf3c37b : 0x8af0d4); } }
+      targetHighlight.visible = targetPin.visible = inHall && active; if (tgt) { targetHighlight.position.set(tgt.x, 1.75, tgt.z); targetPin.position.set(tgt.x, 3.55 + Math.sin(visualElapsed * 2.4) * (options.reducedMotion?.() ? 0 : .06), tgt.z); }
       selectHighlight.visible = inHall && !!sel && sel.id !== tgt?.id; if (sel) selectHighlight.position.set(sel.x, 1.75, sel.z);
       if (location === 'room') interiors.update(visualElapsed, st, dt);
     }
@@ -583,7 +584,8 @@ export function createScene(container, facility, onSelect, options = {}) {
   }
   function projectAsset(id) {
     const a = facility.assets.find(a => a.id === id); if (!a) return null;
-    const v = V(a.x, 1.7, a.z + .7).project(camera), r = renderer.domElement.getBoundingClientRect();
+    // Top of the rack body: visible from the elevated hall views even when the row in front hides the face.
+    const v = V(a.x, 3.0, a.z).project(camera), r = renderer.domElement.getBoundingClientRect();
     return { x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height, visible: v.z > -1 && v.z < 1 };
   }
   // Visibility, clipping and fog for one space; no camera change.

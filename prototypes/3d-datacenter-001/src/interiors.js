@@ -133,8 +133,8 @@ export function createInteriors() {
       visual = { room: current, checked: done, display: keys.UPS };
     } else if (current === 'NETWORK') {
       for (const { led, uplink } of anim.network.ports) led.material.color.setHex(uplink && nv.down ? (Math.sin(time * 5) > 0 ? 0xff657d : 0x4a1b24) : uplink && nv.uplink !== '정상' ? 0x89baff : 0x6fe7d2);
-      const c = checks.network, key = `${nv.uplink}:${c?.seq ?? 0}`; if (keys.NETWORK !== key) { keys.NETWORK = key;
-        draw(anim.network.display, [[`업링크 ${nv.uplink}`, 60, nv.down ? '#ff8a9a' : '#6fe7d2'], ...nv.links.map(l => [`${l.name}  ${l.latencyMs} ms  ${l.status}`, 34, l.status === '정상' ? '#cfe3ee' : '#ff8a9a']), [c ? c.title : '원인 조회 대기', 36, c ? '#ffd2a6' : '#a9bccb']], nv.down ? '#ff657d' : '#6fe7d2'); }
+      const c = checks.network, key = `${nv.uplink}:${nv.links.map(l => l.status).join(',')}:${c?.seq ?? 0}`; if (keys.NETWORK !== key) { keys.NETWORK = key;
+        draw(anim.network.display, [[`업링크 ${nv.uplink}`, 60, nv.down ? '#ff8a9a' : '#6fe7d2'], ...nv.links.map(l => [`${l.name}  ${l.latencyMs} ms  ${l.status}`, 34, l.status === '대역폭 부족' ? '#ff8a9a' : l.active ? '#f4ca8d' : '#cfe3ee']), [c ? c.title : '원인 조회 대기', 36, c ? '#ffd2a6' : '#a9bccb']], nv.down ? '#ff657d' : '#6fe7d2'); }
       visual = { room: current, uplinkDown: nv.down, faultPortsBlinking: nv.down, display: keys.NETWORK };
     }
   }

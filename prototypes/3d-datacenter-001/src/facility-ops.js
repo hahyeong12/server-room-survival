@@ -1,6 +1,7 @@
 // Facility operations for the world demo. Pure state + derived views: no DOM, Three.js, storage or game engine.
 // Every value here is a fixed educational demo number, not a physical, electrical or thermal model.
 import { totals } from './model.js';
+import { focusRequest, isOpen, COUNTRY_NAMES } from './game-view.js';
 
 function freeze(v) { Object.values(v).forEach(x => { if (x && typeof x === 'object') freeze(x); }); return Object.freeze(v); }
 
@@ -47,7 +48,7 @@ export function applyOpsAction(state, action) {
     return { ok: true, reason: '' };
   }
   const key = CHECK_ACTIONS[action], result = key === 'network' ? networkCause(state) : key === 'ups' ? upsView(state).selfTest : powerView(state).check;
-  ops.checks[key] = { seq, phase: state.request.phase, ...result };
+  ops.checks[key] = { seq, phase: state.request.stage || 'idle', ...result };
   ops.log.push({ seq, action, text: result.title });
   return { ok: true, reason: '' };
 }
@@ -71,20 +72,23 @@ export function upsView() {
     selfTest: { title: 'UPS 자가진단 정상', detail: '배터리 100% · 인버터 정상 · 전환 시험은 시연에서 생략' } };
 }
 
+// Network status and cause lookup read the engine snapshot (focused request). Display only.
 function networkCause(state) {
-  const r = state.request;
-  if (['fault', 'repairing'].includes(r.phase)) return { title: `원인: ${r.rackId} ToR 업링크 단절`, detail: `${r.buildingId} · 랙 ${r.rackId} 상단 스위치의 업링크가 끊겨 싱가포르 회선 처리량이 0입니다. 서버동 01에서 복구를 진행하세요.`, target: 'hall' };
-  if (r.phase === 'awaiting') return { title: '업링크 복구 처리됨 · 사후 확인 대기', detail: `랙 ${r.rackId}의 사후 상태 확인이 남아 있습니다.`, target: 'hall' };
+  const r = focusRequest(state.game);
+  if (r?.stage === 'net_fault') return { title: `원인: 요청 #${r.id} 네트워크 대역폭 부족`, detail: `필요 ${r.network.needed} / 가용 ${r.network.available} · 중단 ${r.network.downtime}분 · 대응 ${r.network.attempts}/3. 내 모니터 [장비 진단]에서 대응을 고르세요.`, target: 'noc' };
+  if (['hw_fault', 'hw_repair', 'migration'].includes(r?.stage)) return { title: '네트워크 정상 · 원인은 서버 장비', detail: `요청 #${r.id}의 국제 회선과 서버동 업링크는 정상입니다. ${r.hardware || '서버 상태를 확인하세요.'}`, target: 'hall' };
   return { title: '활성 네트워크 장애 없음', detail: '국제 가상 회선과 서버동 업링크가 정상입니다.', target: null };
 }
 
 export function networkView(state) {
-  const p = state.request.phase, down = ['fault', 'repairing'].includes(p);
-  return { uplink: down ? '단절' : p === 'awaiting' ? '복구 · 확인 대기' : '정상', down,
-    links: VIRTUAL_LINKS.map(l => ({ ...l, status: l.id === 'SG' && down ? '처리량 0' : '정상', active: l.id === 'SG' })) };
+  const r = focusRequest(state.game), down = r?.stage === 'net_fault', open = (state.game?.requests ?? []).filter(isOpen);
+  return { uplink: down ? '대역폭 부족' : ['hw_fault', 'hw_repair', 'migration'].includes(r?.stage) ? '정상 (서버 장애는 별도)' : '정상', down,
+    links: VIRTUAL_LINKS.map(l => { const req = open.find(x => x.code === l.id); return { ...l, name: COUNTRY_NAMES[l.id] === '미국' ? '미국 서부' : l.name, active: !!req,
+      status: req?.stage === 'net_fault' ? '대역폭 부족' : req ? `요청 #${req.id}` : '요청 없음' }; }) };
 }
 
 export function hallView(state) {
-  const t = totals(state.facility), rack = state.facility.assets.find(a => a.id === state.request.rackId);
-  return { racks: 24, gpuOnline: t.gpu, faults: t.faults, requestRack: rack.id, requestRackState: rack.state, inlet: hallInlet(state) };
+  const servers = state.game?.servers ?? [], r = focusRequest(state.game);
+  return { racks: 24, engineServers: servers.length, gpuTotal: servers.reduce((s, x) => s + x.gpu, 0), gpuUsed: servers.reduce((s, x) => s + x.usedGpu, 0),
+    faults: servers.filter(s => s.state !== 'HEALTHY').length, requestRack: state.request.rackId, stage: r?.stage ?? 'idle', inlet: hallInlet(state) };
 }
