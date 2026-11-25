@@ -264,6 +264,10 @@ class IncidentSession(GlobalSession):
         with self._masked():
             return super().allocation_options(run, key)
 
+    def migration_preview(self, run):
+        with self._masked():
+            return super().migration_preview(run)
+
     def _start(self, run, key, retry=False, server_plan=None):
         held = self._held_servers()
         if held and key in run.state.plans:
@@ -278,20 +282,18 @@ class IncidentSession(GlobalSession):
         return super()._start(run, key, retry, server_plan)
 
     # ------------------------------------------------------------------ engine effects (time)
+    def _factor(self, rec, rid):
+        """이 사건이 이 작업에 주는 이번 구간 처리 배율(None=영향 없음)."""
+        t = self._tdef(rec)
+        if rec.type == 'gpu_health' and rec.isolated:
+            return None   # 격리 뒤에는 기존 하드웨어 FAULT/REPAIRING 경로가 작업을 멈춥니다.
+        if rid in rec.paused or t['effect'] == 'blocked':
+            return 0.0
+        return t['factor'] if t['effect'] == 'slow' else None
+
     def _job_hold(self, run):
-        factor = None
-        for rec in self.incidents_for(run.request['id']):
-            t = self._tdef(rec)
-            if rec.type == 'gpu_health' and rec.isolated:
-                continue   # 격리 뒤에는 기존 하드웨어 FAULT/REPAIRING 경로가 작업을 멈춥니다.
-            if run.request['id'] in rec.paused or t['effect'] == 'blocked':
-                f = 0.0
-            elif t['effect'] == 'slow':
-                f = t['factor']
-            else:
-                continue
-            factor = f if factor is None else min(factor, f)
-        return factor
+        factors = [f for rec in self.incidents_for(run.request['id']) if (f := self._factor(rec, run.request['id'])) is not None]
+        return min(factors) if factors else None
 
     def _hold_tick(self, run, factor):
         s = run.state
@@ -299,9 +301,10 @@ class IncidentSession(GlobalSession):
         if factor > 0:
             s.work_done = min(s.work_total, s.work_done + 10 * MODE_SPEEDS[s.plan] * factor)
         for rec in self.incidents_for(run.request['id']):
-            if factor == 0:
+            own = self._factor(rec, run.request['id'])
+            if own == 0:
                 rec.downtime += 10
-            else:
+            elif own is not None:
                 rec.slow_minutes += 10
         if s.work_done >= s.work_total:
             s.finish(True, '고객의 AI 작업이 정상 완료되었습니다.')
@@ -382,7 +385,7 @@ class IncidentSession(GlobalSession):
             if rec.state == 'armed' and key != 'in_progress':
                 rec.state, rec.outcome, rec.reason = 'void', 'void', '사건이 일어나기 전에 요청이 끝났습니다.'
                 rec.timeline.append([self.minute, 'void', rec.reason])
-            elif key in ('failed', 'expired', 'rejected') and rec.state != 'armed':
+            elif key in ('failed', 'expired', 'rejected') and rec.state != 'armed' and rec.recovered is None:
                 rec.state, rec.outcome = 'failed', 'failed'
                 rec.reason = run.state.result_text or '대상 작업이 실패했습니다.'
                 rec.cause_active = False
@@ -438,10 +441,10 @@ class IncidentSession(GlobalSession):
                                       'ups': '배터리 잔량 (%, 가상)'}[probe], 'values': list(NORMAL_TREND[probe])}
         for mine, other, o in others:
             octx = self._context(other)
-            line = f'다른 사건 {other.id}(요청 #{other.rid})의 지표: ' + o['summary'].format_map(octx)
+            line = '같은 계기의 다른 이상: ' + o['summary'].format_map(octx)
             if mine:
                 out['status'] = 'warn' if out['status'] == 'ok' else out['status']
-                out['lines'].append(line + ' · 이 작업도 그 영향 범위에 있음(별도 사건으로 추적)')
+                out['lines'].append(line + ' · 이 작업도 그 범위에 있음(다른 진행 중 사건으로 추적)')
             else:
                 out['lines'].append(line + ' · 이 작업의 서버/경로와는 무관')
         return out
@@ -510,6 +513,9 @@ class IncidentSession(GlobalSession):
         if rec.cause is not None:
             raise ValueError(f'원인은 이미 확정했습니다: {self.content.causes[rec.cause]["label"]}. 조치를 선택하세요.')
         c = self.content.causes[cause]
+        last = rec.hypotheses[-1] if rec.hypotheses else None
+        if last and last['cause'] == cause and last['minute'] == self.minute and len(rec.evidence) == last.get('evidenceCount', -1):
+            return dict(last)   # 같은 근거로 같은 가설을 다시 누른 것(이중 클릭)은 새 기록을 만들지 않습니다.
         missing = [p for p in c['probes'] if not self._seen(rec, p, rec.detected)]
         with self._atomic():
             rec.seq += 1
@@ -523,11 +529,10 @@ class IncidentSession(GlobalSession):
                 rec.cause, rec.diagnosed, rec.state = cause, self.minute, 'diagnosed'
             else:
                 verdict = 'refuted'
-                others = [o for o in self.incident.records if o is not rec and o.type == cause and rec.rid in self._affected(o)]
                 reason = ('관측과 모순: ' + ' / '.join(self._latest(rec, p)['summary'] for p in c['probes'])
-                          + (f' — 이 이상은 다른 사건 {others[0].id}에서 따로 추적 중입니다.' if others else ' — 이 가설로는 증상이 설명되지 않습니다.'))
+                          + ' — 이 가설로는 이 사건의 증상이 설명되지 않습니다.')
             entry = {'seq': rec.seq, 'cause': cause, 'label': c['label'], 'minute': self.minute, 'time': game_time(self.minute),
-                     'verdict': verdict, 'reason': reason}
+                     'verdict': verdict, 'reason': reason, 'evidenceCount': len(rec.evidence)}
             rec.hypotheses.append(entry)
             self._log(rec, 'hypothesis', f'가설 · {c["label"]}: {({"confirmed": "확정", "refuted": "반박", "insufficient": "근거 부족"})[verdict]} — {reason}')
         return dict(entry)
@@ -574,6 +579,9 @@ class IncidentSession(GlobalSession):
         return dict(entry)
 
     def _refuse(self, rec, action, text):
+        last = rec.actions[-1] if rec.actions else None
+        if last and last['action'] == action and last['result'] == 'refused' and last['minute'] == self.minute:
+            return dict(last)   # 같은 시각에 같은 거부 조치를 다시 누른 것은 한 번만 기록합니다.
         return self._entry(rec, action, 'refused', text)
 
     def _none(self, rec, action, text):
@@ -665,7 +673,7 @@ class IncidentSession(GlobalSession):
                 if other is not run and server in self.hardware_servers(other):
                     self._emit(other, 'hardware_fault', f'Server {server} 격리(사건 {rec.id}) · 이 작업도 중단됩니다.')
             if result == 'isolate_move':
-                parts = options[0]
+                parts = options[min(max(index, 0), len(options) - 1)]
                 self._relocate(run, parts, f'Server {server} 격리 · 정상 서버로 작업 이전')
                 return self._entry(rec, action, 'isolate_move', plan['text'], servers=[p.server_id for p in parts])
             self._emit(run, 'hardware_repair', f'Server {server} 격리 · 장비 수리 20분(가상).')
@@ -813,6 +821,7 @@ class IncidentSession(GlobalSession):
             'verified': game_time(rec.verified) if rec.verified is not None else None,
             'reported': game_time(rec.reported) if rec.reported is not None else None,
             'verifyBlocker': self.verify_blocker(rec) if rec.state in OPEN else '',
+            'verifyProbes': list(t['verify']) if known else [],
             'notified': [game_time(m) for m in rec.notified], 'outcome': rec.outcome, 'reason': rec.reason,
             'downtime': rec.downtime, 'slowMinutes': rec.slow_minutes,
             'wrongHypotheses': sum(h['verdict'] == 'refuted' for h in rec.hypotheses),
@@ -824,8 +833,14 @@ class IncidentSession(GlobalSession):
         }
         return view
 
-    def facilities_view(self):
-        """3D 시설·랙이 그릴 현재 물리 상태(조회 전용). 건물 안에 들어가야 보이는 계기 값입니다."""
+    def facilities_view(self, location=None):
+        """3D 시설·랙이 그릴 현재 물리 상태(조회 전용). 플레이어가 서 있는 건물의 계기만 돌려줍니다(진단 전 원인 노출 방지).
+        냉각 플랜트=냉각 구역, UPS 구역·전력동=UPS 계통, 네트워크동=ToR 포트·엣지 링크·리졸버, 서버동=랙의 ToR 포트 LED·스토리지 패널."""
+        full = self._facilities_all()
+        keep = {'COOLING': ('cooling',), 'UPS': ('ups',), 'POWER': ('ups',), 'NETWORK': ('tor', 'edge', 'dns'), 'hall': ('tor', 'storage')}.get(location, ())
+        return {'location': location, **{k: full[k] for k in keep}}
+
+    def _facilities_all(self):
         topo = self.content.topology
         active = [r for r in self.incident.records if r.cause_active and r.state not in FINAL and r.state != 'armed']
         recovering = {r.type: r for r in self.incident.records if r.state in ('monitoring', 'verified') and r.recovered is not None}
@@ -836,15 +851,15 @@ class IncidentSession(GlobalSession):
                 steps = min(3, (self.minute - rec.detected) // 10 + 1)
                 standby = rec.recovery_by == 'standby_pump'
                 cooling[zone] = {'state': 'recovering' if standby else 'warn', 'pumps': {'P-1': 'ON', 'P-2': 'WARN', 'P-3': 'ON' if standby else 'OFF'},
-                                 'flow': 40 if standby else 18, 'inlet': [24.5, 27.0, 29.5, 31.5][steps], 'servers': members, 'incident': rec.id}
+                                 'flow': 40 if standby else 18, 'inlet': [24.5, 27.0, 29.5, 31.5][steps], 'servers': members}
             else:
-                cooling[zone] = {'state': 'ok', 'pumps': {'P-1': 'ON', 'P-2': 'ON', 'P-3': 'OFF'}, 'flow': 42, 'inlet': 24.5, 'servers': members, 'incident': None}
+                cooling[zone] = {'state': 'ok', 'pumps': {'P-1': 'ON', 'P-2': 'ON', 'P-3': 'OFF'}, 'flow': 42, 'inlet': 24.5, 'servers': members}
         ups = {}
         for name, members in topo['upsFeeds'].items():
             rec = next((r for r in active if r.type == 'ups' and r.ups == name), None)
             left = max(0, rec.detected + self._tdef(rec)['limit'] - self.minute) if rec else None
             ups[name] = {'mode': 'battery' if rec else 'utility', 'runtime': left, 'battery': (max(5, round(100 - (20 - left) * 2.1)) if rec else 100),
-                         'servers': members, 'incident': rec.id if rec else None, 'restoring': bool(rec and rec.state == 'recovering')}
+                         'servers': members, 'restoring': bool(rec and rec.state == 'recovering')}
         tor = {}
         for key in RACKS:
             dual = key in topo['dualHomed']
@@ -852,28 +867,18 @@ class IncidentSession(GlobalSession):
             ports = {'P1': 'DOWN' if rec else 'UP'}
             if dual:
                 ports['P2'] = 'UP'
-            tor[key] = {'rack': RACKS[key], 'ports': ports, 'dual': dual, 'incident': rec.id if rec else None,
-                        'rerouted': bool(rec and rec.recovery_by == 'reroute_uplink')}
+            tor[key] = {'rack': RACKS[key], 'ports': ports, 'dual': dual, 'rerouted': bool(rec and rec.recovery_by == 'reroute_uplink')}
         cong = next((r for r in active if r.type == 'congestion'), None)
         dns = next((r for r in active if r.type == 'dns'), None)
         storage = []
         for rec in active:
             if rec.type in ('storage_full', 'storage_latency'):
-                storage.append({'rid': rec.rid, 'volume': f'vol-{rec.rid}', 'kind': rec.type, 'used': 100 if rec.type == 'storage_full' else 61,
-                                'latency': 4 if rec.type == 'storage_full' else 85, 'incident': rec.id})
-        services = [{'rid': r.rid, 'restarts': 9 if r.type == 'crashloop' else 4, 'incident': r.id}
-                    for r in active if r.type in ('crashloop', 'gpu_oom')]
-        dcgm = {}
-        for key in RACKS:
-            rec = next((r for r in active if r.type == 'gpu_health' and r.primary == key), None)
-            therm = next((r for r in active if r.type == 'cooling' and key in r.servers), None)
-            dcgm[key] = 'FAIL' if rec or (self.servers.hardware[key].state != 'HEALTHY' and any(r.isolated == key for r in self.incident.records)) \
-                else 'THROTTLE' if therm else 'PASS'
-        return {'cooling': cooling, 'ups': ups, 'tor': tor, 'dcgm': dcgm, 'storage': storage, 'services': services,
+                storage.append({'rid': rec.rid, 'volume': f'vol-{rec.rid}', 'used': 100 if rec.type == 'storage_full' else 61,
+                                'latency': 4 if rec.type == 'storage_full' else 85})
+        return {'cooling': cooling, 'ups': ups, 'tor': tor, 'storage': storage,
                 'edge': {'E1': 98 if cong else 42, 'E2': 91 if cong else 35, 'state': 'congested' if cong else 'ok',
                          'qos': bool(cong and cong.recovery_by == 'qos_adjust')},
-                'dns': {'state': 'fail' if dns else 'ok', 'failover': bool(dns and dns.recovery_by == 'dns_failover')},
-                'recovered': sorted(recovering)}
+                'dns': {'state': 'fail' if dns else 'ok', 'failover': bool(dns and dns.recovery_by == 'dns_failover')}}
 
     def incident_rows(self):
         out = []

@@ -484,6 +484,66 @@ class Shifts(unittest.TestCase):
         self.assertEqual(s.record(rec.id).state, 'diagnosed')
 
 
+class ReviewFixes(unittest.TestCase):
+    """Independent review (Phase 7): no cause leak before diagnosis, idempotent double clicks, stable resolutions."""
+
+    def setUp(self):
+        self.t = Temp()
+
+    def tearDown(self):
+        self.t.cleanup()
+
+    def test_facilities_show_only_the_instruments_of_the_current_place_without_incident_ids(self):
+        s = new_session(self.t, shift=3)
+        s.confirm_shift_briefing()
+        for _ in range(6):
+            start_open(s)
+            s.advance_time(10)
+            if all(r.state != 'armed' for r in s.shift_records()[:2]):
+                break
+        self.assertEqual(s.facilities_view(), {'location': None})
+        self.assertEqual(s.facilities_view('noc'), {'location': 'noc'})
+        facilities = json.dumps([s.facilities_view(x) for x in ('hall', 'NETWORK', 'COOLING', 'UPS')], ensure_ascii=False)
+        views = json.dumps([s.incident_view(r) for r in s.shift_records()], ensure_ascii=False)
+        for word in ('storage_latency', 'congestion', 'INC-', '"kind"', 'services', 'dcgm'):
+            self.assertNotIn(word, facilities)
+        for word in ('storage_latency', 'congestion', C.causes['congestion']['label'], C.causes['storage_latency']['label']):
+            self.assertNotIn(word, views)
+        self.assertEqual(set(s.facilities_view('hall')), {'location', 'tor', 'storage'})
+
+    def test_double_clicks_on_wrong_hypothesis_and_refused_action_record_once(self):
+        s, rec = started(self.t, 'storage_full')
+        s.incident_ack(rec.id)
+        observe(s, rec.id, ['storage_space', 'storage_latency'])
+        a = s.incident_hypothesis(rec.id, 'storage_latency')
+        b = s.incident_hypothesis(rec.id, 'storage_latency')
+        self.assertEqual((a['verdict'], a['seq']), ('refuted', b['seq']))
+        s.incident_hypothesis(rec.id, 'storage_full')
+        x = s.incident_act(rec.id, 'delete_data')
+        y = s.incident_act(rec.id, 'delete_data')
+        self.assertEqual(x['seq'], y['seq'])
+        v = s.incident_view(s.record(rec.id))
+        self.assertEqual((v['wrongHypotheses'], v['wrongActions']), (1, 1))
+
+    def test_a_recovered_incident_keeps_its_resolution_if_the_job_fails_later(self):
+        s, rec = started(self.t, 'dns')
+        diagnose(s, rec)
+        fix(s, rec)
+        s.advance_time(10)
+        self.assertEqual(s.record(rec.id).state, 'monitoring')
+        run = s.runs[rec.rid]
+        with s._atomic():
+            run.state.finish(False, 'test: another failure later')
+            s._finish_if_needed(run)
+        self.assertEqual(s.record(rec.id).state, 'monitoring', 'not relabelled as failed')
+
+    def test_fingerprint_covers_shared_rules(self):
+        data = deepcopy(C.data)
+        before = type_fingerprint(data, 'tor_uplink')
+        data['topology']['dualHomed'] = ['A']
+        self.assertNotEqual(type_fingerprint(data, 'tor_uplink'), before)
+
+
 class BriefingLock(unittest.TestCase):
     """Phase 6 알려진 위험: 교대 브리핑 전에는 게임을 바꾸는 행동을 막고, 조회는 허용합니다."""
 

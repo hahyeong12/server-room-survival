@@ -40,15 +40,10 @@ export function syncFacility(facility, game) {
     const a = facility.assets.find(x => x.id === s.rack); if (!a) continue;
     const state = s.state === 'FAULT' ? 'fault' : s.state === 'REPAIRING' ? 'repairing' : 'normal';
     a.state = state; a.fault = state === 'normal' ? null : 'hardware';
-    // Phase 7: what is physically visible at the rack during an engine incident (server ledger state keeps precedence):
-    // a dead ToR uplink (red network), a cooling zone in warning (amber, warm coolant), a UPS feed on battery (amber power).
-    const f = game?.incident?.facilities;
-    if (f && state === 'normal') {
-      const tor = f.tor?.[s.key], zone = Object.values(f.cooling ?? {}).find(z => z.servers.includes(s.key)), ups = Object.values(f.ups ?? {}).find(u => u.servers.includes(s.key));
-      if (tor && Object.values(tor.ports).includes('DOWN') && !tor.rerouted) { a.state = 'fault'; a.fault = 'network'; }
-      else if (zone && zone.state !== 'ok') { a.state = 'repairing'; a.fault = 'cooling'; }
-      else if (ups && ups.mode === 'battery') { a.state = 'repairing'; a.fault = 'power'; }
-    }
+    // Phase 7: what is physically visible at the rack itself during an engine incident (server ledger state keeps
+    // precedence): a dead ToR uplink port LED. Cooling and UPS states are only seen inside their own buildings.
+    const tor = game?.incident?.facilities?.tor?.[s.key];
+    if (tor && state === 'normal' && Object.values(tor.ports).includes('DOWN') && !tor.rerouted) { a.state = 'fault'; a.fault = 'network'; }
   }
   return facility;
 }

@@ -36,10 +36,12 @@ test('facility rows come from the engine facilities view only', () => {
   const f = { cooling: { Z1: { state: 'warn', servers: ['A', 'B'], pumps: { 'P-1': 'ON', 'P-2': 'WARN', 'P-3': 'OFF' }, flow: 18, inlet: 29.5 } },
     ups: { 'UPS-02': { mode: 'battery', runtime: 12, battery: 70, servers: ['C', 'D'] } },
     tor: { C: { rack: 'C-01', ports: { P1: 'DOWN' }, dual: false } }, edge: { E1: 98, E2: 91, state: 'congested' }, dns: { state: 'ok' },
-    dcgm: { A: 'PASS' }, storage: [], services: [] };
+    storage: [] };
   const g = { ...game([]), incident: { ...game([]).incident, facilities: f } };
   assert.match(facilityRows(g, 'COOLING')[0][1], /P-2 WARN/);
   assert.match(facilityRows(g, 'UPS')[0][1], /배터리 운전 · 남은 보호 시간 약 12분/);
   assert.match(facilityRows(g, 'NETWORK')[0][1], /DOWN/);
   assert.equal(facilityRows({ mode: 'free' }, 'COOLING'), null, 'outside an incident save the demo values stay');
+  const away = { ...g, incident: { ...g.incident, facilities: { location: 'noc' } } };
+  assert.match(facilityRows(away, 'UPS')[0][1], /건물 안에 들어가면/, 'instruments only on site');
 });

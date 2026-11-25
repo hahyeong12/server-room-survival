@@ -174,7 +174,7 @@ pre.lab-out{margin:0 0 6px;white-space:pre-wrap;font-family:Consolas,"Malgun Got
 .inbox-tools{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 0 6px}
 .inbox-tools button{padding:3px 8px;font-size:12px}.inbox-tools button.active{border-color:#6fa08f;background:#1d3a3b;color:#d9fff2}
 .inbox-tools select{font-size:12px;padding:2px 4px;background:#0f1d2b;color:#cfe3ef;border:1px solid #2c4a5c;border-radius:4px}
-body[data-mode=global] .ws-list{max-height:min(34vh,260px);overflow:auto}
+:is(body[data-mode=global],body[data-mode=incident]) .ws-list{max-height:min(34vh,260px);overflow:auto}
 .job-line{margin:2px 0 6px}.mentor-hint{border-left:3px solid #f3c37b;padding-left:8px}
 .site-list{display:flex;flex-direction:column;gap:6px}.site-head{font-size:12px;color:#9fb6c8}
 .site-live{display:flex;flex-wrap:wrap;gap:4px}
@@ -184,46 +184,46 @@ body[data-mode=global] .ws-list{max-height:min(34vh,260px);overflow:auto}
 .site-cluster b{color:#8ea6ba;font-weight:500;min-width:7em}.site-cluster .link.on{color:#f4ca8d}
 .shift-table{margin:8px 0}.shift-table td{font-size:12px}
 .screen.shift-result{max-width:min(980px,94vw)}
-/* Phase 6: compact layout for 1366×768 at 150% (≈911×512 CSS px, or less inside a browser window), global mode only
+/* Phase 6 (+ Phase 7 incident saves): compact layout for 1366×768 at 150% (≈911×512 CSS px, or less inside a browser window), global mode only
    (existing modes keep their Phase 5 layout). Essential work stays on screen: time buttons, places, the monitor
    (actions first) and the side panel. The world caption that says the network is virtual stays visible. */
-@media (max-width:1000px){body[data-mode=global] #panel{width:290px}body[data-mode=global] #viewport,body[data-mode=global] .mission-strip{right:290px}body[data-mode=global] #workstation{width:calc(100% - 12px)!important}}
+@media (max-width:1000px){:is(body[data-mode=global],body[data-mode=incident]) #panel{width:290px}:is(body[data-mode=global],body[data-mode=incident]) #viewport,:is(body[data-mode=global],body[data-mode=incident]) .mission-strip{right:290px}:is(body[data-mode=global],body[data-mode=incident]) #workstation{width:calc(100% - 12px)!important}}
 @media (max-height:600px){
-  body[data-mode=global] .topbar{height:46px;padding:0 10px;gap:8px}
-  body[data-mode=global] .brand>span:last-child{display:none}
-  body[data-mode=global] .brand-icon{font-size:24px}
-  body[data-mode=global] #opening-replay{display:none}
-  body[data-mode=global] .mode-badge{font-size:11px;padding:4px 8px;max-width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  body[data-mode=global] .time-btns button,body[data-mode=global] .top-right button{white-space:nowrap;padding:5px 7px;font-size:12px}
-  body[data-mode=global] .top-right{gap:6px}
-  body[data-mode=global] #clock-time{font-size:14px;min-width:64px}
-  body[data-mode=global] .routebar{height:30px;padding:0 10px}
-  body[data-mode=global] .route-note{display:none}
-  body[data-mode=global] #breadcrumbs button{padding:2px 6px;font-size:12px}
-  body[data-mode=global] .routebar>button{padding:2px 8px}
-  body[data-mode=global] footer{display:none}
-  body[data-mode=global] main{height:calc(100dvh - 76px)}
-  body[data-mode=global] .mission-strip{display:none}
-  body[data-mode=global] #viewport{bottom:0}
-  body[data-mode=global] .scene-heading,body[data-mode=global]:not([data-route=world]) .scene-caption,body[data-mode=global] .camera-help,body[data-mode=global] #noc-tools,body[data-mode=global] #map-legend{display:none}
-  body[data-mode=global] #places{top:4px!important;right:6px;left:auto!important;padding:2px}
-  body[data-mode=global] #places button{padding:4px 7px;font-size:12px}
-  body[data-mode=global] #workstation{top:40px!important;bottom:3px!important;max-height:none!important}
-  body[data-mode=global] .ws-titlebar{display:none}
-  body[data-mode=global] .ws-tabs{padding:4px 8px 0}
-  body[data-mode=global] .ws-tabs button{padding:4px 9px;font-size:12px}
-  body[data-mode=global] .ws-pane{padding:6px 8px;gap:5px}
-  body[data-mode=global] .ws-list{max-height:76px}
-  body[data-mode=global] .ws-row{padding:3px 8px}
-  body[data-mode=global] #workstation .ws-card [data-read-request],body[data-mode=global] #workstation .ws-card .decision-row{order:-1}
-  body[data-mode=global] #workstation .ws-card .ws-label{order:-2}
-  body[data-mode=global] #workstation .ws-card [data-read-request]{padding:6px}
-  body[data-mode=global] #panel .goal-head{padding:10px 14px}
-  body[data-mode=global] #goal-title{font-size:16px;margin:4px 0}
-  body[data-mode=global] #goal-why{display:none}
-  body[data-mode=global] #route-chain{top:40px;bottom:auto}
-  body[data-mode=global][data-route=world] #req-summary{display:none}
-  body[data-mode=global] #panel .site-list>.card-line{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) .topbar{height:46px;padding:0 10px;gap:8px}
+  :is(body[data-mode=global],body[data-mode=incident]) .brand>span:last-child{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) .brand-icon{font-size:24px}
+  :is(body[data-mode=global],body[data-mode=incident]) #opening-replay{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) .mode-badge{font-size:11px;padding:4px 8px;max-width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  :is(body[data-mode=global],body[data-mode=incident]) .time-btns button,:is(body[data-mode=global],body[data-mode=incident]) .top-right button{white-space:nowrap;padding:5px 7px;font-size:12px}
+  :is(body[data-mode=global],body[data-mode=incident]) .top-right{gap:6px}
+  :is(body[data-mode=global],body[data-mode=incident]) #clock-time{font-size:14px;min-width:64px}
+  :is(body[data-mode=global],body[data-mode=incident]) .routebar{height:30px;padding:0 10px}
+  :is(body[data-mode=global],body[data-mode=incident]) .route-note{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) #breadcrumbs button{padding:2px 6px;font-size:12px}
+  :is(body[data-mode=global],body[data-mode=incident]) .routebar>button{padding:2px 8px}
+  :is(body[data-mode=global],body[data-mode=incident]) footer{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) main{height:calc(100dvh - 76px)}
+  :is(body[data-mode=global],body[data-mode=incident]) .mission-strip{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) #viewport{bottom:0}
+  :is(body[data-mode=global],body[data-mode=incident]) .scene-heading,:is(body[data-mode=global],body[data-mode=incident]):not([data-route=world]) .scene-caption,:is(body[data-mode=global],body[data-mode=incident]) .camera-help,:is(body[data-mode=global],body[data-mode=incident]) #noc-tools,:is(body[data-mode=global],body[data-mode=incident]) #map-legend{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) #places{top:4px!important;right:6px;left:auto!important;padding:2px}
+  :is(body[data-mode=global],body[data-mode=incident]) #places button{padding:4px 7px;font-size:12px}
+  :is(body[data-mode=global],body[data-mode=incident]) #workstation{top:40px!important;bottom:3px!important;max-height:none!important}
+  :is(body[data-mode=global],body[data-mode=incident]) .ws-titlebar{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) .ws-tabs{padding:4px 8px 0}
+  :is(body[data-mode=global],body[data-mode=incident]) .ws-tabs button{padding:4px 9px;font-size:12px}
+  :is(body[data-mode=global],body[data-mode=incident]) .ws-pane{padding:6px 8px;gap:5px}
+  :is(body[data-mode=global],body[data-mode=incident]) .ws-list{max-height:76px}
+  :is(body[data-mode=global],body[data-mode=incident]) .ws-row{padding:3px 8px}
+  :is(body[data-mode=global],body[data-mode=incident]) #workstation .ws-card [data-read-request],:is(body[data-mode=global],body[data-mode=incident]) #workstation .ws-card .decision-row{order:-1}
+  :is(body[data-mode=global],body[data-mode=incident]) #workstation .ws-card .ws-label{order:-2}
+  :is(body[data-mode=global],body[data-mode=incident]) #workstation .ws-card [data-read-request]{padding:6px}
+  :is(body[data-mode=global],body[data-mode=incident]) #panel .goal-head{padding:10px 14px}
+  :is(body[data-mode=global],body[data-mode=incident]) #goal-title{font-size:16px;margin:4px 0}
+  :is(body[data-mode=global],body[data-mode=incident]) #goal-why{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) #route-chain{top:40px;bottom:auto}
+  :is(body[data-mode=global],body[data-mode=incident])[data-route=world] #req-summary{display:none}
+  :is(body[data-mode=global],body[data-mode=incident]) #panel .site-list>.card-line{display:none}
 }
 /* Phase 7 (Issue #8): incident-management card, on-site evidence and the incident result screen */
 .inc-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.inc-tabs button{font-size:12px;padding:4px 8px}.inc-tabs button.active{border-color:#8af0d4;color:#e7fff8}

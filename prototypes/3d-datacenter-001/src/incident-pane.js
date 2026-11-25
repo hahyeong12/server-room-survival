@@ -102,6 +102,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     if (rec.scope) box.append(el('p', 'ws-note inc-scope', `영향 범위: ${rec.scope.text}`));
     const lines = statusLines(rec); if (lines.length) box.append(readingsGrid(lines.map((l, i) => [i ? '' : '진행', l]), 'ops-readings inc-status'));
     if (rec.verifyBlocker && rec.state === 'monitoring') box.append(el('p', 'ws-warn', rec.verifyBlocker));
+    if (rec.verifyProbes?.length && ['recovering', 'monitoring'].includes(rec.state)) box.append(el('p', 'ws-note', '복구 뒤 다시 볼 지표: ' + rec.verifyProbes.map(id => { const p = g.incident.menu.probes.find(x => x.id === id); return p ? `${p.label}(${p.where})` : id; }).join(', ')));
     if (open && rec.acknowledged && ['investigating', 'monitoring'].includes(rec.state)) {
       const p = el('div', 'inc-block'); p.dataset.labTarget = ''; p.dataset.labQuestion = `${rec.id}:${rec.state}`; p.append(el('strong', '', rec.state === 'monitoring' ? '복구 뒤 다시 관측 (지금 있는 곳에서 가능한 것)' : `근거 수집 · 지금 위치: ${where(g, here())}`));
       p.append(probeButtons(g, rec, g.incident.menu.probes)); p.append(el('small', 'ops-note', '명령어 예시는 버튼 설명(마우스 올림)에만 있고 이번 단계에서 직접 입력하지 않습니다. 실제 OS·장비 명령은 실행되지 않습니다.')); box.append(p);
@@ -150,11 +151,13 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
 // Physical instrument rows for a facility card (engine facilities view). Visible to anyone standing in the building.
 export function facilityRows(g, id) {
   const f = g?.incident?.facilities; if (!f) return null;
+  const need = { COOLING: 'cooling', UPS: 'ups', POWER: 'ups', NETWORK: 'tor', 'HALL-01': 'tor' }[id];
+  if (need && !f[need]) return [['계기', '건물 안에 들어가면 이 건물의 계기를 볼 수 있습니다(현장 정보).']];
   if (id === 'COOLING') return Object.entries(f.cooling).map(([z, c]) => [`냉각 구역 ${z} (${c.servers.join('·')})`, `${c.state === 'ok' ? '정상' : c.state === 'warn' ? '⚠ 경고' : '↻ 복구 중'} · P-1 ${c.pumps['P-1']} / P-2 ${c.pumps['P-2']} / 예비 P-3 ${c.pumps['P-3']} · 유량 ${c.flow} L/min · 흡입 ${c.inlet} °C`]);
   if (id === 'UPS' || id === 'POWER') return Object.entries(f.ups).map(([n, u]) => [`${n} (서버 ${u.servers.join('·')})`, u.mode === 'battery' ? `⚠ 배터리 운전 · 남은 보호 시간 약 ${u.runtime}분(가상) · 잔량 ${u.battery}%${u.restoring ? ' · 전원팀 복구 중' : ''}` : '상용 전원 정상 · 배터리 대기']);
   if (id === 'NETWORK') return [...Object.values(f.tor).map(t => [`ToR-${t.rack}${t.dual ? ' (이중 업링크)' : ' (단일 업링크)'}`, Object.entries(t.ports).map(([p, s]) => `${p} ${s === 'DOWN' ? '✕ DOWN' : 'UP'}`).join(' · ') + (t.rerouted ? ' · P2로 우회 중' : '')]),
     ['엣지 링크', `E1 ${f.edge.E1}% · E2 ${f.edge.E2}%${f.edge.state === 'congested' ? ' · ⚠ 혼잡' : ''}${f.edge.qos ? ' · QoS 조정 중' : ''}`], ['DNS 리졸버', f.dns.state === 'fail' ? `⚠ 주 리졸버 응답 없음${f.dns.failover ? ' · 보조 전환 중' : ''}` : '정상']];
-  if (id === 'HALL-01') return [['GPU 건강(DCGM 요약)', Object.entries(f.dcgm).map(([k, s]) => `${k} ${s}`).join(' · ')], ['스토리지 볼륨', f.storage.length ? f.storage.map(v => `${v.volume} 사용 ${v.used}% · 지연 ${v.latency} ms`).join(' / ') : '이상 볼륨 없음']];
+  if (id === 'HALL-01') return [['랙 ToR 포트 LED', Object.values(f.tor).map(t => `${t.rack} ${Object.values(t.ports).includes('DOWN') && !t.rerouted ? '✕' : '●'}`).join(' · ')], ['스토리지 패널', f.storage.length ? f.storage.map(v => `${v.volume} 사용 ${v.used}% · 지연 ${v.latency} ms`).join(' / ') : '이상 볼륨 없음']];
   return null;
 }
 export { isOpen };

@@ -333,7 +333,7 @@ class Game:
                      {'pending': s.pending_request_count, 'nextArrival': game_time(s.global_.free_next)}
                      if s.mode == 'global' and s.global_.kind == 'free' else None),
             'global': global_view.view(s),
-            'incident': incident_view.view(s),
+            'incident': incident_view.view(s, self._location() if s.mode == 'incident' else None),
             'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
             'world': self._world(),
             'racks': {'engine': SERVER_RACKS, 'decor': list(DECOR_RACKS)},

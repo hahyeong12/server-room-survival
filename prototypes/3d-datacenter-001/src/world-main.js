@@ -551,7 +551,9 @@ const menu=(()=>{
     for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐'],['incident','장애 대응','글로벌 교대 3 클리어 후: 네트워크·GPU·스토리지·냉각·전원·플랫폼 사건 10건을 근무 A(선배와 함께)→B(팀 조정)→C(독립·겹친 증상)로 직접 진단·대응합니다.','🚨']]){
       const c=el('section','mode-card-big');c.dataset.modeCard=mode;c.append(el('span','mode-icon',icon),el('h3','',title),el('p','',desc));
       c.append(button('새로 시작',async()=>{if(await newGame(mode))hide();},'primary',{'data-new':mode,...(health.ok?{}:{disabled:''})}));
-      const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')||(mode==='global'&&s.kind==='global_free')||(mode==='incident'&&s.kind==='incident_practice')).slice(-3).reverse();
+      // Phase 7: the incident card lists its shift saves and its practice saves separately (practice never hides a shift save).
+      const mine=mode==='incident'?[...saves.filter(s=>s.kind==='incident').slice(-2),...saves.filter(s=>s.kind==='incident_practice').slice(-2)].reverse()
+        :saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')||(mode==='global'&&s.kind==='global_free')).slice(-3).reverse();
       for(const s of mine){c.append(button(`이어하기 · ${s.kind==='practice'?'장 연습 · ':''}${s.chapter?.heading&&s.kind!=='tutorial'?`${s.chapter.heading} · `:''}${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
       }
       // Chapter select (like the Python chapter menu): pick a story record, then a chapter-start point. It always

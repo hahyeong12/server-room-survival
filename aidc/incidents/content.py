@@ -99,6 +99,8 @@ def type_fingerprint(data, tid):
     t = data['types'][tid]
     rule = {k: t.get(k) for k in ('effect', 'factor', 'hold', 'gpu', 'limit', 'readings', 'actions', 'verify')}
     rule['probes'] = data['causes'][tid]['probes']
+    rule['shared'] = {'topology': {k: v for k, v in data['topology'].items() if k != 'note'},
+                      'approval': {k: t['approval'] for k, t in data['teams'].items()}, 'refused': data['common']['refused']}
     return hashlib.sha256(json.dumps(rule, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
 
 

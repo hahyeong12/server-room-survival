@@ -23,7 +23,7 @@ def menu():
             'stages': [label for _, label in CONTENT.data['stages']], 'locations': LOCATION_LABELS}
 
 
-def view(session):
+def view(session, location=None):
     if getattr(session, 'SAVE_MODE', None) != 'incident':
         return None
     g = session.global_
@@ -33,7 +33,7 @@ def view(session):
             'shift': g.shift, 'code': d['code'], 'title': d['title'], 'coaching': d['coaching'],
             'records': records, 'open': sum(r['state'] not in ('closed', 'failed', 'void', 'armed') for r in records),
             'alerts': [r['id'] for r in records if r['state'] == 'alert'],
-            'facilities': session.facilities_view(), 'menu': menu(), 'topology': CONTENT.topology['note'],
+            'facilities': session.facilities_view(location), 'menu': menu(), 'topology': CONTENT.topology['note'],
             'sources': CONTENT.data['sources'], 'shiftCount': len(CONTENT.shifts),
             'shifts': [{'number': int(k), 'code': v['code'], 'title': v['title'], 'incidents': sum(1 for x in v['arrivals'] if x[2])}
                        for k, v in sorted(CONTENT.shifts.items())]}

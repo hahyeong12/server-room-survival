@@ -111,4 +111,44 @@ verified ─[고객 보고]→ closed
 
 ## 4. 구현 결과
 
-(구현 단계마다 갱신)
+### 4.1 구조
+
+```text
+aidc/incidents/incidents_v1.json  ← 사건 콘텐츠 단일 원본(버전 1): 관측 11·원인 11(사건 10 + 오진 후보 '국제 전송 경로 단절')
+   │                                  ·조치 24·팀 3·가상 배치(이중 업링크 A·B, 냉각 구역 Z1/Z2, UPS-01/02)·교대 A~C·연습·출처
+aidc/incidents/content.py         ← 검증(10종·5영역·해결 경로 2개 이상·판단 관측·사후 확인 관측·교대가 10종 모두 사용)·유형별 지문
+aidc/incidents/session.py         ← IncidentSession(GlobalSession): 상태 기계·판독·가설 판정·조치 효과·영향·제한 시간·결과
+   ▼
+engine/adapter.py · engine/incident_view.py (3D 어댑터: 저장 종류·해금·재도전·스냅샷·행동 연결)
+   ▼
+src/incident-pane.js (사건 탭·현장 관측) · interiors.js(시설 계기) · game-view.syncFacility(랙) · screens.js(결과)
+```
+
+### 4.2 엔진에서 사건이 실제로 바꾸는 것
+
+| 효과 | 엔진 경로 | 확인 테스트 |
+| --- | --- | --- |
+| 작업 정지·지연 | `_job_hold` 훅 → `_hold_tick`(10분 구간의 진행량 0 또는 배율) → 기존 완료·기한·점수 | `EveryCause`, `Shifts` |
+| 영향 서버 신규 배정 보류 | `_masked()`(조회용 복사 원장) · `_start` 재검사 | `test_held_servers_are_not_offered_for_new_work` |
+| GPU 격리·이전·수리 | 기존 `ServerHealth` FAULT/REPAIRING, 이전 원장(`migration_left` 10분) | `test_gpu_isolation_uses_the_existing_fault_and_repair_ledger` |
+| 영향 범위 밖 이전(ToR·냉각·UPS) | 현재 수행만 뺀 복사 원장에서 영향 서버를 제외한 배정안 → 위치만 교체 | `test_tor_single_homed...`, `test_ups_economy_on_second_feed...` |
+| 제한 시간 초과(UPS 20분·냉각 40분) | 노출된 작업 `finish(False)` → 기존 반환·점수·고객 반응 | `test_ups_unmitigated...`, `test_cooling_limit...` |
+| 개선 없음 | 10분 조치 잠금(가상 시간을 진행해야 다음 조치) | `test_wrong_action_costs_time...` |
+| 승인·동의·정책 거부 | 기록되는 '허용 안 됨'(상태 불변) | 같은 테스트, `test_oom_consent...` |
+
+### 4.3 원본 변경 목록(최소 하위 호환)
+
+| 파일 | 변경 |
+| --- | --- |
+| `session.py` | `advance_time`의 `elif run.state.phase == 'running' and self._job_hold(run) is not None` 한 분기 + 기본 훅 두 개(`_job_hold`→None) |
+| `aidc/global_ops/session.py` | `SAVE_MODE`(저장 모드 이름), 브리핑 전 변이 잠금(`_require_briefed`: 수락·배정·대기·거절·협의·지연 안내·실패 보고·네트워크 대응·장비 복구·이전) |
+| `tests/test_global_shifts.py` | 브리핑 전 배정을 하던 준비 단계에 `confirm_shift_briefing()` 한 줄(검증 내용은 그대로) |
+| `engine/tests/test_global_adapter.py` | 원래 6회 중 1회 실패하던 난수 의존(빈 도시를 GB-LON으로 고정) → 요청이 없는 도시를 골라 확인(검증 내용은 그대로) |
+
+`database.py`·`game.py`·`story.py`·각 장 모듈·`aidc/core`·`aidc/storage`·카탈로그 v1과 그 지문은 수정하지 않았습니다.
+
+### 4.4 사실(실무)과 게임 가상 모델의 구분
+
+- **사실로 가져온 것**: 사고 대응의 역할 분리·영향 범위 확인·완화 우선·고객 안내·사후 분석(SRE), DCGM 건강 검사·Xid로 장치 오류 분류, OOM은 장치 고장과 다르다는 점, DNS는 IP 도달성과 별개로 실패할 수 있다는 점, 재시작 반복(CrashLoop)은 이벤트·로그·직전 변경으로 원인을 본다는 점, 디스크 공간 소진 시 `No space left on device`, 흡입 온도 모니터링, UPS 배터리 운전 경보와 설비 조작은 담당 팀의 일이라는 점.
+- **게임용 가상 모델**: 모든 수치(RTT·이용률·지연 ms·유량·온도·배터리 %·보호 시간 20분·열 한계 40분·승인 10분·복구 10~30분), 서버동 배치(이중 업링크·냉각 구역·UPS 계통), 장비 ID·로그 문장, 고객 동의 판정식(기한 안이면 동의). 실제 장비의 열/유체/전기 동작이나 특정 제품의 경보 순서를 재현하지 않으며, 화면의 명령어는 예시일 뿐 실행되지 않습니다(입력 가능한 가상 명령은 Phase 8 범위).
+- **화면에서 보이는 것의 기준**: 세계지도·캠퍼스·관제 화면은 진단 전 증상만 보여 줍니다(위치 추정 안 함, 해저 구간을 빨갛게 하지 않음). 시설 내부 계기(펌프·UPS·포트 LED)와 서버동 랙의 물리 표시(ToR 포트 DOWN·냉각 구역 경고·UPS 배터리)는 그 건물에 들어갔을 때 보이는 현장 정보로 엔진 상태를 그대로 그립니다. 다만 원인 확정은 관측을 **기록**하고 가설을 판정받아야만 됩니다.
