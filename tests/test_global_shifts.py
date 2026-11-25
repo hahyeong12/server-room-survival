@@ -238,6 +238,27 @@ class Shifts(unittest.TestCase):
             s.restart()
         db.close()
 
+    def test_seen_flag_only_for_the_finished_current_shift(self):
+        db, s = self.open(kind='shift', shift=1, seed=7)
+        for key in ('shift1', 'shift2', 'x' * 41):
+            with self.assertRaises(ValueError):
+                s.mark_shift_seen(key)                  # shift 1 is still running
+        play(self, s, PLANS[1])
+        with self.assertRaises(ValueError):
+            s.mark_shift_seen('shift2')
+        s.mark_shift_seen('shift1')
+        s.mark_shift_seen('shift1')                     # idempotent
+        self.assertEqual(s.global_.seen, ['shift1'])
+        db.close()
+
+    def test_catalog_requires_a_first_arrival_at_shift_start(self):
+        import json
+        from aidc.global_ops.catalog import Catalog, CatalogError, CATALOG_FILE
+        data = json.loads(CATALOG_FILE.read_text(encoding='utf-8'))
+        data['shifts']['1']['arrivals'] = [[10, t] for _, t in data['shifts']['1']['arrivals']]
+        with self.assertRaises(CatalogError):
+            Catalog(data)
+
     def test_progress_payload_roundtrip_and_bad_payload(self):
         p = GlobalProgress(1, 'shift', {'a': 1}, shift=2)
         self.assertEqual(GlobalProgress.from_payload(p.payload()), p)

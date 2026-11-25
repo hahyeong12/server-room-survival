@@ -190,6 +190,7 @@ class Game:
                       'due': game_time(terms['due']) if terms else None, 'dueMinute': terms.get('due'),
                       'expires': game_time(terms['expires']) if terms else None,
                       'completed': game_time(terms['completed']) if 'completed' in terms else None,
+                      'receivedMinute': terms.get('received'), 'expiresMinute': terms.get('expires'),
                       'lateMinutes': terms.get('late_minutes')},
             'conditions': ({'type': run.conditions['type'], 'requestedMode': run.conditions['requested_mode'],
                             'allowedModes': list(run.conditions['allowed_modes']),
@@ -967,6 +968,8 @@ class GameHost:
                 session = GameSession(db, mode=mode, **options)
             if fresh and kind == 'story':
                 capture(session)   # chapter-start checkpoint, as the Python menu does for a new story
+            if kind in ('global', 'global_free'):
+                kind = 'global' if session.global_.kind == 'shift' else 'global_free'   # the save decides, not a file peek
             journey = Journey(self._sidecar(path), {'practice': 'story', 'global': 'free', 'global_free': 'free'}.get(kind, kind))
             game = Game(Path(path).stem, path, kind, db, session, journey)
             game.reconcile()
@@ -1056,6 +1059,9 @@ class GameHost:
                 return self.new_game('tutorial')
             if game.kind == 'global':
                 # Phase 6: a shift retry is a NEW global save that starts at the same shift; this save stays as it is.
+                # Only a shift save qualifies (it proves the player reached that shift after graduating).
+                if s.mode != 'global' or s.global_.kind != 'shift' or not s.global_.shift:
+                    raise ActionError('교대 근무 저장에서만 교대를 재도전할 수 있습니다.')
                 shift = s.global_.shift
                 return self._new_global('global', shift, origin={'source': game.id, 'shift': shift})
             if game.kind == 'global_free':

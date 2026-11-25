@@ -66,6 +66,7 @@ def validate(data):
         _require(t['startDue'] < t['due'], f'템플릿 {tid}: 배정 권장 시각은 완료 기한보다 앞서야 합니다.')
         _require(isinstance(t.get('flexible'), bool) and t.get('title') and t.get('description'), f'템플릿 {tid}의 계약/설명이 없습니다.')
     for key, shift in data.get('shifts', {}).items():
+        _require(shift.get('arrivals') and shift['arrivals'][0][0] == 0, f'교대 {key}는 시작(0분)에 도착하는 요청이 있어야 합니다.')
         seen = set()
         for at, tid in shift['arrivals']:
             _require(tid in templates and type(at) is int and at >= 0 and at % 10 == 0, f'교대 {key}의 도착 일정이 올바르지 않습니다.')

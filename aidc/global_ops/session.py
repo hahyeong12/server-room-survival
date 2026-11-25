@@ -162,7 +162,7 @@ class GlobalSession(GameSession):
                 self._deliver_shift()
             else:
                 g.free_next = self.minute + FREE_INTERVAL
-                for tid in self._free_pick(self.minute, 2, exact=True):
+                for tid in self._free_pick(self.minute, 2, exact=True, salt='first'):
                     self._receive(self.global_.missions[tid], f'gfree:{self.minute}:{tid}')
         return next(iter(self.runs), None)
 
@@ -179,7 +179,7 @@ class GlobalSession(GameSession):
             g.free_next += FREE_INTERVAL
             g.free_slot += 1
 
-    def _free_pick(self, due, room, exact=False):
+    def _free_pick(self, due, room, exact=False, salt=''):
         """글로벌 자유 운영의 재현 가능한 접수 추첨. 같은 고객은 열린 요청이 있거나 쿨다운 중이면 제외합니다."""
         if room <= 0:
             return []
@@ -188,7 +188,7 @@ class GlobalSession(GameSession):
         last = self.global_.free_last
         eligible = [tid for tid, t in self.catalog.templates.items() if t['client'] not in busy
                     and due - last.get(t['client'], due - FREE_COOLDOWN) >= FREE_COOLDOWN]
-        rng = random.Random(f'{self.seed}:global:{self.global_.free_slot}')
+        rng = random.Random(f'{self.seed}:global:{salt or self.global_.free_slot}')
         rng.shuffle(eligible)
         counts = {}
         for r in self.runs.values():
@@ -241,9 +241,11 @@ class GlobalSession(GameSession):
                 self.global_.briefed = True
 
     def mark_shift_seen(self, key):
-        if not isinstance(key, str) or len(key) > 40:
-            raise ValueError('표시 기록 형식이 올바르지 않습니다.')
-        if key not in self.global_.seen:
+        """표시 사실만: 끝난 현재 교대의 결과 화면을 본 기록. 다른 교대·진행 중 교대의 키는 받지 않습니다."""
+        g = self.global_
+        if g.kind != 'shift' or g.result is None or key != f'shift{g.shift}':
+            raise ValueError('끝난 현재 교대의 결과 화면만 기록할 수 있습니다.')
+        if key not in g.seen:
             with self._atomic():
                 self.global_.seen.append(key)
 

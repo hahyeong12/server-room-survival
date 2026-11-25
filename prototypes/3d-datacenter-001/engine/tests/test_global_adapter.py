@@ -155,6 +155,18 @@ class GlobalAdapterTests(GlobalBase):
         strip = lambda w: [{k: v for k, v in p.items() if k != 'focus'} for p in w['paths']]
         self.assertEqual(strip(again['world']), strip(before['world']))
 
+    def test_kind_comes_from_the_save_and_free_ops_retry_is_not_a_shift(self):
+        game = self.host.new_game('global_free')
+        gid = game.id
+        self.host.close(gid)
+        self.host._kind = lambda path: 'global'          # a failed payload peek must not turn free ops into a shift save
+        again = self.host.get(gid)
+        self.assertEqual(again.kind, 'global_free')
+        self.assertEqual(again.snapshot()['modeLabel'], '글로벌 자유 운영')
+        retry = self.host.retry(gid)
+        self.assertEqual(retry.kind, 'global_free', 'retrying free ops never opens a shift save without the gate')
+        self.assertFalse(self.act(again, type='mark_shift_seen', key='shift1')['ok'])
+
     def test_damaged_and_foreign_saves_are_refused_without_change(self):
         game = self.host.new_game('global_free')
         path = Path(game.path)
