@@ -32,10 +32,13 @@ from aidc.learning.lab_terminal import block_feedback  # noqa: E402  (pure)
 from result_summary import job_summary  # noqa: E402
 from aidc.global_ops.session import GlobalSession  # noqa: E402  (Phase 6: GameSession subclass, same rules)
 from aidc.learning.training import TrainingProgress  # noqa: E402
+from aidc.incidents.session import IncidentSession  # noqa: E402  (Phase 7: GlobalSession subclass, same rules)
+from aidc.incidents.content import load as load_incidents  # noqa: E402
 
 from .journey import Journey, ROUTES, BUILDINGS  # noqa: E402
 from . import campaign  # noqa: E402
 from . import global_view  # noqa: E402
+from . import incident_view  # noqa: E402
 
 # v2 (Phase 5): story.* covers chapters 1-5 (chapterKey, dialogue, campaign, next, retry, chapter2/3/3b/training,
 # graduation) and world paths carry an evidence-based `link`. Every v1 field is kept with the same meaning.
@@ -45,17 +48,22 @@ PRACTICE_CHAPTERS = (2, 3, '3b', 'lab')
 # Phase 6: derived from the single catalog (legacy aliases SG/JP/US), no longer kept by hand in three files.
 COUNTRY_CODES = global_view.COUNTRY_CODES
 SITE_IDS = frozenset(global_view.CATALOG.sites)
-FEATURES = ('global',)
+FEATURES = ('global', 'incidents')
 # Engine servers A~D live in column 1 of the 3D hall. The other 20 racks are decoration only.
 SERVER_RACKS = {'A': 'A-01', 'B': 'B-01', 'C': 'C-01', 'D': 'D-01'}
 RACK_SERVERS = {rack: key for key, rack in SERVER_RACKS.items()}
 FACILITY_ASSETS = {'UPS-01': 'UPS / PDU 01', 'CRAC-01': '냉각 01', 'CRAC-02': '냉각 02', 'NET-01': '네트워크 코어'}
 DECOR_RACKS = tuple(f'{row}-{col:02d}' for row in 'ABCD' for col in range(1, 7) if col != 1)
 MODE_LABELS = {'tutorial': '튜토리얼', 'story': '스토리 도전', 'free': '자유 운영', 'practice': '장 연습',
-               'global': '글로벌 교대 근무', 'global_free': '글로벌 자유 운영'}
+               'global': '글로벌 교대 근무', 'global_free': '글로벌 자유 운영',
+               'incident': '장애 대응 근무', 'incident_practice': '사건 연습'}
 FREE_PATTERN = re.compile(r'aidc_3d_free_([0-9]+)\.db')
 GLOBAL_PATTERN = re.compile(r'aidc_3d_global_([0-9]+)\.db')
-GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global)_[0-9]{3,}')
+INCIDENT_PATTERN = re.compile(r'aidc_3d_incident_([0-9]+)\.db')
+GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global|aidc_3d_incident)_[0-9]{3,}')
+KINDS = ('tutorial', 'story', 'free', 'practice', 'global', 'global_free', 'incident', 'incident_practice')
+INCIDENT_LOCK = '장애 대응 근무는 글로벌 교대 근무 교대 3을 클리어한 뒤 열립니다.'
+INCIDENT_TYPES = tuple(load_incidents().types)
 GLOBAL_LOCK = '글로벌 교대 근무는 스토리 도전 제5장까지 클리어(운영 엔지니어 수료)한 뒤 열립니다.'
 ADVANCE_MINUTES = (10, 30, 60)
 OPEN_STATUSES = ('new', 'review', 'waiting')
@@ -117,6 +125,8 @@ class Game:
         key = current_chapter(s.story).key if s.story and s.mode == 'story' else s.mode
         if s.mode == 'global' and s.global_.kind == 'shift':
             key = f'shift{s.global_.shift}'
+        if s.mode == 'incident':
+            key = f'practice:{s.incident.practice}' if s.incident.practice else f'incident{s.global_.shift}'
         return {'chapter': str(key), 'minute': s.minute, 'requests': len(s.runs)}
 
     # ------------------------------------------------------------------ facts & snapshot (read-only)
@@ -162,6 +172,8 @@ class Game:
             return 'hw_fault' if any(s.servers.hardware[k].state == 'FAULT' for k in servers) else 'hw_repair'
         if st.allocated and run.migration_left:
             return 'migration'
+        if s.mode == 'incident' and st.allocated and s.incidents_for(run.request['id']):
+            return 'incident'   # Phase 7: an engine incident affects this job (cause shown only after diagnosis)
         if st.phase in ('incident', 'paused'):
             return 'net_fault'
         if st.phase == 'recovering':
@@ -217,6 +229,7 @@ class Game:
             'reported': rid in self.journey.data['reported'],
             'summary': job_summary(run) if st.phase == 'finished' or run.request['status'] == 'rejected' else None,
             **global_view.request_extra(s, run),
+            **incident_view.request_incidents(s, rid),
         }
         return view
 
@@ -252,10 +265,13 @@ class Game:
                 continue
             aidc = {'hw_fault': 'fault', 'hw_repair': 'repairing', 'migration': 'repairing'}.get(stage, 'ok')
             link, note = self._link(run, stage)
+            wl = incident_view.world_link(s, run) if s.mode == 'incident' and stage == 'incident' else None
+            if wl:
+                link, note, aidc = wl
             # A network symptom is shown on the customer->AIDC transit as a whole; the server building (aidc) keeps
             # its own (hardware) state. No single international hop is blamed unless the engine evidence says so.
             transit = {'ok': 'ok', 'symptom': 'degraded', 'primary_down': 'degraded', 'congested': 'degraded',
-                       'rerouted': 'ok', 'recovering': 'ok'}[link]
+                       'rerouted': 'ok', 'recovering': 'ok', 'incident': 'ok', 'internal': 'ok'}[link]
             paths.append({'rid': rid, 'code': global_view.site_code(run),
                           'tone': 'incoming' if stage == 'incoming' else 'active', 'focus': rid == s.selected_id,
                           'link': link, 'linkNote': note, 'domestic': bool((run.conditions or {}).get('catalog', {}).get('domestic')),
@@ -287,7 +303,7 @@ class Game:
         """Time runs when a job runs, in free mode, and from chapter 2 on also while a request waits (waiting is a
         real choice there: the customer's deadline keeps coming). Chapter 1 / the tutorial keep the Phase 4 rule."""
         s = self.session
-        if s.mode == 'global':
+        if s.mode in ('global', 'incident'):
             # Phase 6: a shift runs after its briefing; waiting is a real choice there (deadlines keep coming).
             return s.global_.kind == 'free' or s.global_.briefed
         if s.mode == 'free' or any(run.state.allocated for run in s.runs.values()):
@@ -304,7 +320,7 @@ class Game:
         healthy_gpu, healthy_power = s.servers.available()
         return {
             'api': API_VERSION, 'apiCompat': list(API_COMPAT), 'features': list(FEATURES), 'engine': 'python:session.GameSession', 'id': self.id, 'mode': s.mode,
-            'modeLabel': MODE_LABELS[self.kind if s.mode == 'global' else s.mode], 'kind': self.kind,
+            'modeLabel': MODE_LABELS[self.kind if s.mode in ('global', 'incident') else s.mode], 'kind': self.kind,
             'clock': {'minute': s.minute, 'label': s.time_label},
             'focus': s.selected_id,
             'requests': [self._request(rid, run) for rid, run in s.runs.items()],
@@ -317,6 +333,7 @@ class Game:
                      {'pending': s.pending_request_count, 'nextArrival': game_time(s.global_.free_next)}
                      if s.mode == 'global' and s.global_.kind == 'free' else None),
             'global': global_view.view(s),
+            'incident': incident_view.view(s),
             'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
             'world': self._world(),
             'racks': {'engine': SERVER_RACKS, 'decor': list(DECOR_RACKS)},
@@ -388,6 +405,8 @@ class Game:
             raise ActionError('알 수 없는 건물입니다.')
         self.journey.record('navigate', self._minute(), route=route, via=str(via)[:16], building=building,
                             origin=self.journey.route)
+        if route == 'room' and building:
+            self.journey.data['room'] = building   # Phase 7: which facility interior the player stands in (on-site evidence)
         return {}
 
     def do_select_facility(self, a):
@@ -595,6 +614,10 @@ class Game:
     # engine actions -----------------------------------------------------------------------------------
     def do_confirm_briefing(self, a):
         s = self.session
+        if s.mode == 'incident':
+            self.journey.record('engine', self._minute(), name='confirm_shift_briefing')
+            s.confirm_shift_briefing()
+            return {'info': f'{s.shift_def()["title"]} 시작 · 요청함의 업무를 배정하고, 경보가 오면 [사건] 탭에서 대응하세요.'}
         if s.mode == 'global':
             self.journey.record('engine', self._minute(), name='confirm_shift_briefing')
             s.confirm_shift_briefing()
@@ -644,7 +667,7 @@ class Game:
     def do_start_next_shift(self, a):
         """Phase 6: the next global shift starts in THIS save (engine start_next_shift). A stale screen is refused."""
         s = self.session
-        if s.mode != 'global' or s.global_.kind != 'shift':
+        if s.mode not in ('global', 'incident') or s.global_.kind != 'shift':
             raise ActionError('글로벌 교대 근무 저장에서만 다음 교대를 시작할 수 있습니다.')
         nxt = s.next_shift()
         if nxt is None or str(a.get('shift')) != str(nxt):
@@ -656,12 +679,82 @@ class Game:
 
     def do_mark_shift_seen(self, a):
         """The player closed a shift result screen (display fact only)."""
-        if self.session.mode != 'global':
+        if self.session.mode not in ('global', 'incident'):
             raise ActionError('글로벌 근무에서만 사용합니다.')
         key = a.get('key')
         self.journey.record('feedback', self._minute(), card='shift', key=str(key)[:40])
         self.session.mark_shift_seen(key)
         return {}
+
+    # Phase 7 · incident response: every judgement is the engine's (IncidentSession) ----------------------------
+    def _incidents(self):
+        if self.session.mode != 'incident':
+            raise ActionError('장애 대응 근무 또는 사건 연습에서만 사용할 수 있습니다.')
+        return self.session
+
+    def _location(self):
+        route = self.journey.route
+        return self.journey.data.get('room') if route == 'room' else route
+
+    @staticmethod
+    def _iid(a):
+        iid = a.get('incident')
+        if not isinstance(iid, str) or len(iid) > 16:
+            raise ActionError('사건을 고르세요.')
+        return iid
+
+    def do_incident_ack(self, a):
+        s, iid = self._incidents(), self._iid(a)
+        self.journey.record('incident', self._minute(), name='ack', incident=iid)
+        scope = s.incident_ack(iid)
+        return {'incident': {'scope': campaign.jsonable(scope)}, 'info': '범위 확인: ' + scope['text']}
+
+    def do_incident_observe(self, a):
+        s, iid, probe = self._incidents(), self._iid(a), a.get('probe')
+        if not isinstance(probe, str):
+            raise ActionError('관측을 고르세요.')
+        where = self._location()
+        self.journey.record('incident', self._minute(), name='observe', incident=iid, probe=probe[:20], at=str(where))
+        entry = s.incident_observe(iid, probe, where)
+        return {'incident': {'evidence': campaign.jsonable(entry)}, 'info': f'관측 기록 · {entry["summary"]}'}
+
+    def do_incident_hypothesis(self, a):
+        s, iid, cause = self._incidents(), self._iid(a), a.get('cause')
+        if not isinstance(cause, str):
+            raise ActionError('원인 가설을 고르세요.')
+        self.journey.record('incident', self._minute(), name='hypothesis', incident=iid, cause=cause[:20])
+        entry = s.incident_hypothesis(iid, cause)
+        word = {'confirmed': '원인 확정', 'refuted': '가설 반박', 'insufficient': '근거 부족'}[entry['verdict']]
+        out = {'incident': {'hypothesis': campaign.jsonable(entry)}}
+        out['info' if entry['verdict'] == 'confirmed' else 'hint'] = f'{word} · {entry["reason"]}'
+        return out
+
+    def do_incident_act(self, a):
+        s, iid, action = self._incidents(), self._iid(a), a.get('action')
+        if not isinstance(action, str):
+            raise ActionError('조치를 고르세요.')
+        rid, index = a.get('rid'), a.get('index', 0)
+        if rid is not None and type(rid) is not int:
+            raise ActionError('요청 번호가 올바르지 않습니다.')
+        if type(index) is not int:
+            raise ActionError('배정안 번호가 올바르지 않습니다.')
+        self.journey.record('incident', self._minute(), name='act', incident=iid, action=action[:24], rid=rid)
+        entry = s.incident_act(iid, action, rid=rid, index=index)
+        out = {'incident': {'action': campaign.jsonable(entry)}}
+        out['hint' if entry['result'] in ('none', 'refused') else 'info'] = f'{entry["label"]} · {entry["text"]}'
+        return out
+
+    def do_incident_verify(self, a):
+        s, iid = self._incidents(), self._iid(a)
+        self.journey.record('incident', self._minute(), name='verify', incident=iid)
+        out = s.incident_verify(iid)
+        return {'incident': out, 'info': f'사후 확인 완료 · {out["verified"]}'}
+
+    def do_incident_report(self, a):
+        s, iid = self._incidents(), self._iid(a)
+        self.journey.record('incident', self._minute(), name='report', incident=iid)
+        out = s.incident_report(iid)
+        return {'incident': out, 'info': out['report']}
 
     def do_wait_request(self, a):
         rid, _ = self._run(a.get('rid'))
@@ -956,7 +1049,11 @@ class GameHost:
             if fresh and (db.get_simulation() or db.get_requests()):
                 raise ValueError('새 게임에 기존 기록을 사용할 수 없습니다.')
             db.claim_game()
-            if kind in ('global', 'global_free'):
+            if kind in ('incident', 'incident_practice'):
+                # Phase 7: IncidentSession (GlobalSession rules + incident state machine); the save says shift/practice.
+                session = ((IncidentSession(db, shift=chapter or 1) if kind == 'incident' else IncidentSession(db, practice=chapter))
+                           if fresh else IncidentSession(db))
+            elif kind in ('global', 'global_free'):
                 # Phase 6: the same GameSession rules through its subclass; a saved file says its own kind/shift.
                 session = (GlobalSession(db, kind='shift' if kind == 'global' else 'free', shift=chapter or 1)
                            if fresh else GlobalSession(db))
@@ -970,7 +1067,10 @@ class GameHost:
                 capture(session)   # chapter-start checkpoint, as the Python menu does for a new story
             if kind in ('global', 'global_free'):
                 kind = 'global' if session.global_.kind == 'shift' else 'global_free'   # the save decides, not a file peek
-            journey = Journey(self._sidecar(path), {'practice': 'story', 'global': 'free', 'global_free': 'free'}.get(kind, kind))
+            if kind in ('incident', 'incident_practice'):
+                kind = 'incident_practice' if session.incident.practice else 'incident'
+            journey = Journey(self._sidecar(path), {'practice': 'story', 'global': 'free', 'global_free': 'free',
+                                                    'incident': 'free', 'incident_practice': 'free'}.get(kind, kind))
             game = Game(Path(path).stem, path, kind, db, session, journey)
             game.reconcile()
             journey.evaluate(game.facts())
@@ -986,8 +1086,10 @@ class GameHost:
         return game
 
     def new_game(self, mode, chapter=None):
-        if mode not in ('tutorial', 'story', 'free', 'practice', 'global', 'global_free'):
+        if mode not in KINDS:
             raise ActionError('지원하지 않는 모드입니다.')
+        if mode == 'incident_practice' and chapter not in INCIDENT_TYPES:
+            raise ActionError('연습할 사건 유형을 고르세요.')
         if mode == 'practice':
             chapter = _chapter_key(chapter)
             if chapter not in PRACTICE_CHAPTERS:
@@ -999,6 +1101,12 @@ class GameHost:
                 return self._new_global('global', 1)
             if mode == 'global_free':
                 return self._new_global('global_free', None)
+            if mode == 'incident':
+                if not self.incident_unlocked():
+                    raise ActionError(INCIDENT_LOCK, '글로벌 운영 카드의 교대 근무에서 교대 3까지 클리어하면 장애 대응 근무가 열립니다.')
+                return self._new_incident('incident', 1)
+            if mode == 'incident_practice':
+                return self._new_incident('incident_practice', chapter)
             path = self._reserve_free() if mode == 'free' else self.slots.reserve_new()
             return self._open(path, mode, fresh=True, chapter=chapter)
 
@@ -1013,6 +1121,45 @@ class GameHost:
                 number += 1
             else:
                 return path
+
+    def _reserve_incident(self):
+        number = max((int(m[1]) for p in self.dir.glob('aidc_3d_incident_*.db') if (m := INCIDENT_PATTERN.fullmatch(p.name))), default=0) + 1
+        while True:
+            path = self.dir / f'aidc_3d_incident_{number:03d}.db'
+            try:
+                with path.open('xb'):
+                    pass
+            except FileExistsError:
+                number += 1
+            else:
+                return path
+
+    def _new_incident(self, kind, which, origin=None):
+        path = self._reserve_incident()
+        try:
+            game = self._open(path, kind, fresh=True, chapter=which)
+        except Exception:
+            for created in (path, self._sidecar(path), path.with_name(path.name + '.lock')):
+                created.unlink(missing_ok=True)
+            raise
+        if origin:
+            game.journey.data['origin'] = origin
+            game.journey.save()
+        return game
+
+    def incident_unlocked(self):
+        """Global shift saves in this 3D folder whose shift 3 is cleared (read-only payload check)."""
+        out = []
+        for path in sorted(self.dir.glob('aidc_3d_global_*.db')):
+            if not GLOBAL_PATTERN.fullmatch(path.name):
+                continue
+            g = self.slots.payload(path).get('global')
+            if not isinstance(g, dict) or g.get('kind') != 'shift':
+                continue
+            done = [x for x in (g.get('history') or []) + [g.get('result')] if isinstance(x, dict)]
+            if any(x.get('shift') == 3 and x.get('cleared') is True for x in done):
+                out.append(path.stem)
+        return out
 
     def _new_global(self, kind, shift, origin=None):
         path = self._reserve_global()
@@ -1044,9 +1191,11 @@ class GameHost:
         return out
 
     def unlocks(self):
-        grads = self.graduated()
+        grads, shifts = self.graduated(), self.incident_unlocked()
         return {'global': {'available': bool(grads), 'reason': '' if grads else GLOBAL_LOCK, 'proof': grads[:1]},
-                'globalFree': {'available': True, 'reason': ''}}
+                'globalFree': {'available': True, 'reason': ''},
+                'incident': {'available': bool(shifts), 'reason': '' if shifts else INCIDENT_LOCK, 'proof': shifts[:1]},
+                'incidentPractice': {'available': True, 'reason': '', 'types': list(INCIDENT_TYPES)}}
 
     def retry(self, gid):
         """[현재 장 재도전]: save the current game, then copy its chapter-start checkpoint into a NEW exclusive slot
@@ -1066,6 +1215,12 @@ class GameHost:
                 return self._new_global('global', shift, origin={'source': game.id, 'shift': shift})
             if game.kind == 'global_free':
                 return self.new_game('global_free')
+            if game.kind == 'incident':
+                # Phase 7: a NEW incident save starting at the same response shift; this save stays as it is.
+                shift = s.global_.shift
+                return self._new_incident('incident', shift, origin={'source': game.id, 'shift': shift})
+            if game.kind == 'incident_practice':
+                return self._new_incident('incident_practice', s.incident.practice, origin={'source': game.id})
             if game.kind not in ('story', 'practice') or not s.story:
                 raise ActionError('재도전은 스토리 저장에서만 할 수 있습니다.')
             key = current_chapter(s.story).key
@@ -1126,7 +1281,7 @@ class GameHost:
             if not path.is_file():
                 raise MissingSave(gid)
             kind = self._kind(path)
-            if kind not in ('tutorial', 'story', 'free', 'practice', 'global', 'global_free'):
+            if kind not in KINDS:
                 raise ActionError('이 저장은 3D 시연에서 열 수 없는 종류입니다.')
             if not self._sidecar(path).is_file():
                 raise ActionError('3D 진행 기록이 없는 저장입니다.')
@@ -1143,7 +1298,8 @@ class GameHost:
                 story = payload.get('story') if isinstance(payload.get('story'), dict) else None
                 chapter = chapter_from_payload(story) if story and kind in ('story', 'practice') else None
                 out.append({'id': path.stem, 'kind': kind, 'label': MODE_LABELS.get(kind, kind),
-                            'describe': (self._describe_global(payload) if kind in ('global', 'global_free') else
+                            'describe': (self._describe_incident(payload) if kind in ('incident', 'incident_practice') else
+                                         self._describe_global(payload) if kind in ('global', 'global_free') else
                                          self.slots.describe(path).lstrip(' ·') if kind != 'free' else '자유 운영'),
                             'clock': game_time(payload['minute']) if 'minute' in payload else '',
                             'chapter': ({'key': str(chapter.key), 'number': chapter.number, 'heading': chapter.heading}
@@ -1156,10 +1312,24 @@ class GameHost:
         path = Path(path)
         if FREE_PATTERN.fullmatch(path.name):
             return 'free'
+        if INCIDENT_PATTERN.fullmatch(path.name):
+            inc = self.slots.payload(path).get('incident')
+            return 'incident_practice' if isinstance(inc, dict) and inc.get('practice') else 'incident'
         if GLOBAL_PATTERN.fullmatch(path.name):
             g = self.slots.payload(path).get('global')
             return 'global_free' if isinstance(g, dict) and g.get('kind') == 'free' else 'global'
         return self.slots.category(path)
+
+    @staticmethod
+    def _describe_incident(payload):
+        inc = payload.get('incident') if isinstance(payload.get('incident'), dict) else {}
+        g = payload.get('global') if isinstance(payload.get('global'), dict) else {}
+        content = load_incidents()
+        if inc.get('practice') in content.types:
+            return f'사건 연습 · {content.types[inc["practice"]]["symptom"]}'
+        shift = content.shifts.get(str(g.get('shift')), {})
+        state = ('클리어' if g['result'].get('cleared') else '목표 미달성') if isinstance(g.get('result'), dict) else '진행 중'
+        return f'{shift.get("title", "장애 대응 근무")} · {state}'
 
     @staticmethod
     def _describe_global(payload):
