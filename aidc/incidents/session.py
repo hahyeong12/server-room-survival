@@ -135,7 +135,7 @@ class IncidentSession(GlobalSession):
         else:
             if practice is not None and practice not in self.content.types:
                 raise ValueError('존재하지 않는 사건 연습입니다.')
-            if practice is None and str(shift) not in self.content.shifts:
+            if practice is None and not self._has_shift(shift):
                 raise ValueError('존재하지 않는 장애 대응 근무입니다.')
             self.incident = IncidentBook(self.content.version, practice)
         super().__init__(db, kind='shift', shift=1 if practice else shift, seed=seed)
@@ -143,6 +143,9 @@ class IncidentSession(GlobalSession):
             self._validate_incidents()
 
     # ------------------------------------------------------------------ engine hooks
+    def _has_shift(self, number):
+        return str(number) in self.content.shifts
+
     def _extra_payload(self):
         return {**super()._extra_payload(), 'incident': self.incident.payload()}
 

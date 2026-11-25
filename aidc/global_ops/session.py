@@ -95,7 +95,7 @@ class GlobalSession(GameSession):
                 raise ValueError('기존 요청이 있는 저장에서는 글로벌 근무를 시작할 수 없습니다.')
             if kind not in KINDS:
                 raise ValueError('글로벌 근무 종류(교대 근무 / 글로벌 자유 운영)를 골라 주세요.')
-            if kind == 'shift' and str(shift) not in self.catalog.shifts:
+            if kind == 'shift' and not self._has_shift(shift):
                 raise ValueError('존재하지 않는 교대 근무입니다.')
             self.global_ = GlobalProgress(self.catalog.version, kind, ensure_missions(db, self.catalog),
                                           shift=int(shift) if kind == 'shift' else None)
@@ -105,6 +105,9 @@ class GlobalSession(GameSession):
             self._validate_global()
 
     # ------------------------------------------------------------------ engine hooks
+    def _has_shift(self, number):
+        return str(number) in self.catalog.shifts
+
     def _extra_payload(self):
         return {'mode': self.SAVE_MODE, 'global': self.global_.payload()}
 

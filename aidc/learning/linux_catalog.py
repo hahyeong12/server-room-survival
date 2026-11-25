@@ -84,7 +84,7 @@ ROWS = (
     ('top','top -b -n 1','worker','storage_latency','단일 자원 스냅샷','CPU·I/O wait의 단일 표본이다','CPU가 낮으면 저장장치 대기도 없다','top'),
     ('nvidia_smi','nvidia-smi','worker','dcgm','GPU 사용·메모리','GPU 메모리·온도·활용률의 현재 표본이다','VRAM 부족은 반드시 GPU 물리 결함이다','smi'),
     ('nvidia_query','nvidia-smi -q','worker','dcgm','GPU 상세·오류','장치 상태와 ECC·온도를 함께 확인했다','Xid 없이 CUDA OOM만으로 장치 교체한다','smi'),
-    ('dcgm','dcgmi health --fetch','worker','dcgm','수동 건강 결과 조회','사전 구성된 passive health watch 결과다','passive 조회는 부하를 거는 활성 진단이다','dcgm'),
+    ('dcgm','dcgmi health --check','worker','dcgm','수동 건강 결과 조회','사전 구성된 passive health watch의 보관 표본 평가다','passive 조회는 부하를 거는 활성 진단이다','dcgm'),
     ('df','df -h','worker','storage_space','볼륨 용량','블록 공간 사용률이다','공간이 남으면 I/O 지연도 정상이다','df'),
     ('df_inode','df -i','worker',None,'inode 사용량','inode 수 사용률이며 byte 용량과 다르다','inode 여유는 데이터 공간 여유를 입증한다','df'),
     ('du','du -sh $path','worker','storage_space','허용 경로 합계','허용된 작업 경로의 가상 사용량이다','du와 df는 항상 같은 범위를 잰다','du'),

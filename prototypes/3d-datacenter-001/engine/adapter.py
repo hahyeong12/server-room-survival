@@ -34,6 +34,8 @@ from aidc.global_ops.session import GlobalSession  # noqa: E402  (Phase 6: GameS
 from aidc.learning.training import TrainingProgress  # noqa: E402
 from aidc.incidents.session import IncidentSession  # noqa: E402  (Phase 7: GlobalSession subclass, same rules)
 from aidc.incidents.content import load as load_incidents  # noqa: E402
+from aidc.learning.linux_session import LinuxSession  # noqa: E402
+from aidc.learning import linux_curriculum  # noqa: E402
 
 from .journey import Journey, ROUTES, BUILDINGS  # noqa: E402
 from . import campaign  # noqa: E402
@@ -61,7 +63,10 @@ FREE_PATTERN = re.compile(r'aidc_3d_free_([0-9]+)\.db')
 GLOBAL_PATTERN = re.compile(r'aidc_3d_global_([0-9]+)\.db')
 INCIDENT_PATTERN = re.compile(r'aidc_3d_incident_([0-9]+)\.db')
 GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global|aidc_3d_incident)_[0-9]{3,}')
-KINDS = ('tutorial', 'story', 'free', 'practice', 'global', 'global_free', 'incident', 'incident_practice')
+KINDS = ('tutorial', 'story', 'free', 'practice', 'global', 'global_free', 'incident', 'incident_practice', 'linux', 'linux_practice')
+MODE_LABELS.update(linux='Linux 실무 연수', linux_practice='Linux 사건 연습')
+LINUX_PATTERN = re.compile(r'aidc_3d_linux_([0-9]+)\.db')
+GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global|aidc_3d_incident|aidc_3d_linux)_[0-9]{3,}')
 INCIDENT_LOCK = '장애 대응 근무는 글로벌 교대 근무 교대 3을 클리어한 뒤 열립니다.'
 INCIDENT_TYPES = tuple(load_incidents().types)
 GLOBAL_LOCK = '글로벌 교대 근무는 스토리 도전 제5장까지 클리어(운영 엔지니어 수료)한 뒤 열립니다.'
@@ -125,7 +130,7 @@ class Game:
         key = current_chapter(s.story).key if s.story and s.mode == 'story' else s.mode
         if s.mode == 'global' and s.global_.kind == 'shift':
             key = f'shift{s.global_.shift}'
-        if s.mode == 'incident':
+        if s.mode in ('incident', 'linux'):
             key = f'practice:{s.incident.practice}' if s.incident.practice else f'incident{s.global_.shift}'
         return {'chapter': str(key), 'minute': s.minute, 'requests': len(s.runs)}
 
@@ -172,7 +177,7 @@ class Game:
             return 'hw_fault' if any(s.servers.hardware[k].state == 'FAULT' for k in servers) else 'hw_repair'
         if st.allocated and run.migration_left:
             return 'migration'
-        if s.mode == 'incident' and st.allocated and s.incidents_for(run.request['id']):
+        if s.mode in ('incident', 'linux') and st.allocated and s.incidents_for(run.request['id']):
             return 'incident'   # Phase 7: an engine incident affects this job (cause shown only after diagnosis)
         if st.phase in ('incident', 'paused'):
             return 'net_fault'
@@ -265,7 +270,7 @@ class Game:
                 continue
             aidc = {'hw_fault': 'fault', 'hw_repair': 'repairing', 'migration': 'repairing'}.get(stage, 'ok')
             link, note = self._link(run, stage)
-            wl = incident_view.world_link(s, run) if s.mode == 'incident' and stage == 'incident' else None
+            wl = incident_view.world_link(s, run) if s.mode in ('incident', 'linux') and stage == 'incident' else None
             if wl:
                 link, note, aidc = wl
             # A network symptom is shown on the customer->AIDC transit as a whole; the server building (aidc) keeps
@@ -303,7 +308,7 @@ class Game:
         """Time runs when a job runs, in free mode, and from chapter 2 on also while a request waits (waiting is a
         real choice there: the customer's deadline keeps coming). Chapter 1 / the tutorial keep the Phase 4 rule."""
         s = self.session
-        if s.mode in ('global', 'incident'):
+        if s.mode in ('global', 'incident', 'linux'):
             # Phase 6: a shift runs after its briefing; waiting is a real choice there (deadlines keep coming).
             return s.global_.kind == 'free' or s.global_.briefed
         if s.mode == 'free' or any(run.state.allocated for run in s.runs.values()):
@@ -320,7 +325,7 @@ class Game:
         healthy_gpu, healthy_power = s.servers.available()
         return {
             'api': API_VERSION, 'apiCompat': list(API_COMPAT), 'features': list(FEATURES), 'engine': 'python:session.GameSession', 'id': self.id, 'mode': s.mode,
-            'modeLabel': MODE_LABELS[self.kind if s.mode in ('global', 'incident') else s.mode], 'kind': self.kind,
+            'modeLabel': MODE_LABELS[self.kind if s.mode in ('global', 'incident', 'linux') else s.mode], 'kind': self.kind,
             'clock': {'minute': s.minute, 'label': s.time_label},
             'focus': s.selected_id,
             'requests': [self._request(rid, run) for rid, run in s.runs.items()],
@@ -333,7 +338,8 @@ class Game:
                      {'pending': s.pending_request_count, 'nextArrival': game_time(s.global_.free_next)}
                      if s.mode == 'global' and s.global_.kind == 'free' else None),
             'global': global_view.view(s),
-            'incident': incident_view.view(s, self._location() if s.mode == 'incident' else None),
+            'linux': s.learning_view() if isinstance(s, LinuxSession) else None,
+            'incident': incident_view.view(s, self._location() if s.mode in ('incident', 'linux') else None),
             'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
             'world': self._world(),
             'racks': {'engine': SERVER_RACKS, 'decor': list(DECOR_RACKS)},
@@ -614,7 +620,7 @@ class Game:
     # engine actions -----------------------------------------------------------------------------------
     def do_confirm_briefing(self, a):
         s = self.session
-        if s.mode == 'incident':
+        if s.mode in ('incident', 'linux'):
             self.journey.record('engine', self._minute(), name='confirm_shift_briefing')
             s.confirm_shift_briefing()
             return {'info': f'{s.shift_def()["title"]} 시작 · 요청함의 업무를 배정하고, 경보가 오면 [사건] 탭에서 대응하세요.'}
@@ -667,7 +673,7 @@ class Game:
     def do_start_next_shift(self, a):
         """Phase 6: the next global shift starts in THIS save (engine start_next_shift). A stale screen is refused."""
         s = self.session
-        if s.mode not in ('global', 'incident') or s.global_.kind != 'shift':
+        if s.mode not in ('global', 'incident', 'linux') or s.global_.kind != 'shift':
             raise ActionError('글로벌 교대 근무 저장에서만 다음 교대를 시작할 수 있습니다.')
         nxt = s.next_shift()
         if nxt is None or str(a.get('shift')) != str(nxt):
@@ -679,7 +685,7 @@ class Game:
 
     def do_mark_shift_seen(self, a):
         """The player closed a shift result screen (display fact only)."""
-        if self.session.mode not in ('global', 'incident'):
+        if self.session.mode not in ('global', 'incident', 'linux'):
             raise ActionError('글로벌 근무에서만 사용합니다.')
         key = a.get('key')
         self.journey.record('feedback', self._minute(), card='shift', key=str(key)[:40])
@@ -688,9 +694,30 @@ class Game:
 
     # Phase 7 · incident response: every judgement is the engine's (IncidentSession) ----------------------------
     def _incidents(self):
-        if self.session.mode != 'incident':
+        if self.session.mode not in ('incident', 'linux'):
             raise ActionError('장애 대응 근무 또는 사건 연습에서만 사용할 수 있습니다.')
         return self.session
+
+    def _linux(self):
+        if not isinstance(self.session, LinuxSession):
+            raise ActionError('Linux 실무 연수에서만 사용할 수 있습니다.')
+        if self._location() != 'noc':
+            raise ActionError('내 자리 모니터의 가상 터미널에서 실행하세요. 랙 현장 콘솔과 구분됩니다.')
+        return self.session
+
+    def do_linux_command(self, a):
+        s = self._linux()
+        out = s.cli(self._iid(a), a.get('line'), a.get('node'), a.get('token'))
+        return {'linux': out}
+
+    def do_linux_interpret(self, a):
+        s = self._linux()
+        if type(a.get('seq')) is not int:
+            raise ActionError('실행한 관측 번호를 선택하세요.')
+        return {'linux': s.interpret(self._iid(a), a['seq'], a.get('answer'))}
+
+    def do_linux_help(self, a):
+        return {'info': self._linux().help_for(self._iid(a))}
 
     def _location(self):
         route = self.journey.route
@@ -733,6 +760,12 @@ class Game:
         s, iid, action = self._incidents(), self._iid(a), a.get('action')
         if not isinstance(action, str):
             raise ActionError('조치를 고르세요.')
+        if isinstance(s, LinuxSession):
+            rec = s._open(iid)
+            if rec.cause:
+                location = s.action_location(rec, action)
+                if location and self._location() != location:
+                    raise ActionError(f'이 대응은 {incident_view.LOCATION_LABELS.get(location, location)}의 승인된 현장 화면에서 요청하세요.')
         rid, index = a.get('rid'), a.get('index', 0)
         if rid is not None and type(rid) is not int:
             raise ActionError('요청 번호가 올바르지 않습니다.')
@@ -1049,7 +1082,11 @@ class GameHost:
             if fresh and (db.get_simulation() or db.get_requests()):
                 raise ValueError('새 게임에 기존 기록을 사용할 수 없습니다.')
             db.claim_game()
-            if kind in ('incident', 'incident_practice'):
+            if kind in ('linux', 'linux_practice'):
+                session = (LinuxSession(db, practice=chapter if kind == 'linux_practice' else None,
+                                        shift=1 if kind == 'linux_practice' else chapter or 1)
+                           if fresh else LinuxSession(db))
+            elif kind in ('incident', 'incident_practice'):
                 # Phase 7: IncidentSession (GlobalSession rules + incident state machine); the save says shift/practice.
                 session = ((IncidentSession(db, shift=chapter or 1) if kind == 'incident' else IncidentSession(db, practice=chapter))
                            if fresh else IncidentSession(db))
@@ -1070,7 +1107,8 @@ class GameHost:
             if kind in ('incident', 'incident_practice'):
                 kind = 'incident_practice' if session.incident.practice else 'incident'
             journey = Journey(self._sidecar(path), {'practice': 'story', 'global': 'free', 'global_free': 'free',
-                                                    'incident': 'free', 'incident_practice': 'free'}.get(kind, kind))
+                                                    'incident': 'free', 'incident_practice': 'free',
+                                                    'linux': 'free', 'linux_practice': 'free'}.get(kind, kind))
             game = Game(Path(path).stem, path, kind, db, session, journey)
             game.reconcile()
             journey.evaluate(game.facts())
@@ -1090,11 +1128,17 @@ class GameHost:
             raise ActionError('지원하지 않는 모드입니다.')
         if mode == 'incident_practice' and chapter not in INCIDENT_TYPES:
             raise ActionError('연습할 사건 유형을 고르세요.')
+        if mode == 'linux_practice' and chapter not in INCIDENT_TYPES:
+            raise ActionError('연습할 Linux 사건 유형을 고르세요.')
         if mode == 'practice':
             chapter = _chapter_key(chapter)
             if chapter not in PRACTICE_CHAPTERS:
                 raise ActionError('연습할 장을 고르세요 (제2~5장).')
         with self.lock:
+            if mode in ('linux', 'linux_practice'):
+                if mode == 'linux' and not self.graduated():
+                    raise ActionError('제5장 수료 후 Linux 실무 연수가 열립니다. 기존 수료 저장을 이어하거나 Linux 사건 연습을 이용하세요.')
+                return self._new_linux(mode, chapter if mode == 'linux_practice' else 1)
             if mode == 'global':
                 if not self.graduated():
                     raise ActionError(GLOBAL_LOCK, '스토리 도전에서 제1~5장을 클리어하면 메뉴의 글로벌 운영 카드가 열립니다.')
@@ -1109,6 +1153,24 @@ class GameHost:
                 return self._new_incident('incident_practice', chapter)
             path = self._reserve_free() if mode == 'free' else self.slots.reserve_new()
             return self._open(path, mode, fresh=True, chapter=chapter)
+
+    def _new_linux(self, kind, which, origin=None):
+        number = max((int(m[1]) for p in self.dir.glob('aidc_3d_linux_*.db')
+                      if (m := LINUX_PATTERN.fullmatch(p.name))), default=0) + 1
+        while True:
+            path = self.dir / f'aidc_3d_linux_{number:03d}.db'
+            try:
+                with path.open('xb'):
+                    pass
+            except FileExistsError:
+                number += 1
+            else:
+                break
+        game = self._open(path, kind, fresh=True, chapter=which)
+        if origin:
+            game.journey.data['origin'] = origin
+            game.journey.save()
+        return game
 
     def _reserve_global(self):
         number = max((int(m[1]) for p in self.dir.glob('aidc_3d_global_*.db') if (m := GLOBAL_PATTERN.fullmatch(p.name))), default=0) + 1
@@ -1195,7 +1257,9 @@ class GameHost:
         return {'global': {'available': bool(grads), 'reason': '' if grads else GLOBAL_LOCK, 'proof': grads[:1]},
                 'globalFree': {'available': True, 'reason': ''},
                 'incident': {'available': bool(shifts), 'reason': '' if shifts else INCIDENT_LOCK, 'proof': shifts[:1]},
-                'incidentPractice': {'available': True, 'reason': '', 'types': list(INCIDENT_TYPES)}}
+                'incidentPractice': {'available': True, 'reason': '', 'types': list(INCIDENT_TYPES)},
+                'linux': {'available': bool(grads), 'reason': '' if grads else '제5장 수료 후 시작 · 기존 수료 슬롯 이어하기 또는 사건 연습 가능', 'proof': grads[:1]},
+                'linuxPractice': {'available': True, 'types': list(INCIDENT_TYPES)}}
 
     def retry(self, gid):
         """[현재 장 재도전]: save the current game, then copy its chapter-start checkpoint into a NEW exclusive slot
@@ -1204,6 +1268,9 @@ class GameHost:
         with self.lock:
             game = self.get(gid)
             s = game.session
+            if game.kind in ('linux', 'linux_practice'):
+                return self._new_linux(game.kind, s.linux['practice'] if game.kind == 'linux_practice' else s.global_.shift,
+                                       origin={'source': game.id, 'shift': s.global_.shift})
             if game.kind == 'tutorial':
                 return self.new_game('tutorial')
             if game.kind == 'global':
@@ -1298,7 +1365,8 @@ class GameHost:
                 story = payload.get('story') if isinstance(payload.get('story'), dict) else None
                 chapter = chapter_from_payload(story) if story and kind in ('story', 'practice') else None
                 out.append({'id': path.stem, 'kind': kind, 'label': MODE_LABELS.get(kind, kind),
-                            'describe': (self._describe_incident(payload) if kind in ('incident', 'incident_practice') else
+                            'describe': (f'Linux 근무 {payload.get("global", {}).get("shift", 1)}' + (' · 연습' if kind == 'linux_practice' else '') if kind in ('linux', 'linux_practice') else
+                                         self._describe_incident(payload) if kind in ('incident', 'incident_practice') else
                                          self._describe_global(payload) if kind in ('global', 'global_free') else
                                          self.slots.describe(path).lstrip(' ·') if kind != 'free' else '자유 운영'),
                             'clock': game_time(payload['minute']) if 'minute' in payload else '',
@@ -1310,6 +1378,9 @@ class GameHost:
 
     def _kind(self, path):
         path = Path(path)
+        if LINUX_PATTERN.fullmatch(path.name):
+            l = self.slots.payload(path).get('linux')
+            return 'linux_practice' if isinstance(l, dict) and l.get('practice') else 'linux'
         if FREE_PATTERN.fullmatch(path.name):
             return 'free'
         if INCIDENT_PATTERN.fullmatch(path.name):

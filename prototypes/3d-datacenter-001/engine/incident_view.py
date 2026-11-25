@@ -24,7 +24,7 @@ def menu():
 
 
 def view(session, location=None):
-    if getattr(session, 'SAVE_MODE', None) != 'incident':
+    if getattr(session, 'SAVE_MODE', None) not in ('incident', 'linux'):
         return None
     g = session.global_
     d = session.shift_def()
@@ -34,13 +34,13 @@ def view(session, location=None):
             'records': records, 'open': sum(r['state'] not in ('closed', 'failed', 'void', 'armed') for r in records),
             'alerts': [r['id'] for r in records if r['state'] == 'alert'],
             'facilities': session.facilities_view(location), 'menu': menu(), 'topology': CONTENT.topology['note'],
-            'sources': CONTENT.data['sources'], 'shiftCount': len(CONTENT.shifts),
+            'sources': CONTENT.data['sources'], 'shiftCount': 5 if session.mode == 'linux' else len(CONTENT.shifts),
             'shifts': [{'number': int(k), 'code': v['code'], 'title': v['title'], 'incidents': sum(1 for x in v['arrivals'] if x[2])}
                        for k, v in sorted(CONTENT.shifts.items())]}
 
 
 def request_incidents(session, rid):
-    if getattr(session, 'SAVE_MODE', None) != 'incident':
+    if getattr(session, 'SAVE_MODE', None) not in ('incident', 'linux'):
         return {}
     recs = [r for r in session.incident.records if r.rid == rid and r.state != 'armed']
     affecting = [r.id for r in session.incidents_for(rid)]
