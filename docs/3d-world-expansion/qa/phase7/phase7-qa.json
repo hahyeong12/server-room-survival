@@ -1,0 +1,950 @@
+{
+  "issue": 8,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)",
+  "checks": [
+    {
+      "name": "incident shifts locked before global shift 3; per-cause practice open, labelled by symptom (menu)",
+      "pass": true,
+      "ms": 3455
+    },
+    {
+      "name": "precondition: story chapters 1 -> 5 cleared through the real UI (graduation)",
+      "pass": true,
+      "ms": 152064
+    },
+    {
+      "name": "precondition: global shifts 1 -> 3 cleared through the real UI (Phase 6 decisions)",
+      "pass": true,
+      "ms": 164931
+    },
+    {
+      "name": "shift A (with the senior): DNS, GPU device, storage full — evidence before cause, wrong hypotheses/actions recorded, map never blames the subsea path",
+      "pass": true,
+      "ms": 86824
+    },
+    {
+      "name": "shift B (team coordination): ToR uplink, cooling, UPS — customer notice before recovery, approvals, facility interiors show engine state, engine restart mid-incident",
+      "pass": true,
+      "ms": 103602
+    },
+    {
+      "name": "shift C (independent, overlapping symptoms): congestion + I/O latency at once, OOM + CrashLoop — no senior hints, scope kept apart, consent before condition change",
+      "pass": true,
+      "ms": 108220
+    },
+    {
+      "name": "failure -> new slot retry: UPS battery runs out without mitigation, job fails, source save unchanged",
+      "pass": true,
+      "ms": 18134
+    },
+    {
+      "name": "practice save -> engine restart -> resume at alert, mid-recovery and after close (same evidence, timers, ledger)",
+      "pass": true,
+      "ms": 28153
+    },
+    {
+      "name": "duplicate run and port conflict are refused (the same save cannot open twice; a used port fails)",
+      "pass": true,
+      "ms": 10926
+    },
+    {
+      "name": "layout: incident card buttons and the senior/briefing box visible without page scroll at 1366x768, 1366x768@150% and 1920x1080@150%; tutorial/story too",
+      "pass": true,
+      "ms": 42985
+    },
+    {
+      "name": "performance and WebGL stability: 10 cycles over world, campus, NOC, hall and four facility interiors; reduced motion",
+      "pass": true,
+      "ms": 163760
+    },
+    {
+      "name": "no page errors / console errors / target crashes during the whole run",
+      "pass": true,
+      "ms": 0
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "crashes": [],
+  "screenshots": [
+    "p7-menu-locked.png",
+    "p7-menu-unlocked.png",
+    "p7-A-briefing.png",
+    "p7-A1-alert.png",
+    "p7-A1-world-symptom.png",
+    "p7-A1-world-internal.png",
+    "p7-A2-hall-isolated.png",
+    "p7-A-result.png",
+    "p7-B1-network-room.png",
+    "p7-B1-hall-rack.png",
+    "p7-B2-cooling-room.png",
+    "p7-B3-ups-room.png",
+    "p7-B-result.png",
+    "p7-C-overlap.png",
+    "p7-C-result.png",
+    "p7-fail-ups.png",
+    "p7-fail-result.png",
+    "p7-layout-1366x768@1.png",
+    "p7-layout-story-1366x768@1.png",
+    "p7-layout-911x512@1.5.png",
+    "p7-layout-story-911x512@1.5.png",
+    "p7-layout-1280x720@1.5.png",
+    "p7-layout-story-1280x720@1.5.png"
+  ],
+  "shifts": [
+    {
+      "kind": "global",
+      "save": "aidc_3d_global_001",
+      "shift": 1,
+      "cleared": true,
+      "success": 5,
+      "total": 5
+    },
+    {
+      "kind": "global",
+      "save": "aidc_3d_global_001",
+      "shift": 2,
+      "cleared": true,
+      "success": 6,
+      "total": 6
+    },
+    {
+      "kind": "global",
+      "save": "aidc_3d_global_001",
+      "shift": 3,
+      "cleared": true,
+      "success": 6,
+      "total": 6
+    },
+    {
+      "kind": "incident",
+      "shift": "A",
+      "save": "aidc_3d_incident_001",
+      "cleared": true,
+      "resolved": 3,
+      "success": 3,
+      "feedback": [
+        "INC-A1 DNS 이름 해석 장애 (샌프란시스코 요청 #1): 해결 · 반박된 가설 국제 전송 경로 단절 · 개선 없던 조치 서비스 재시작 · 해결 조치 보조 DNS 리졸버로 전환",
+        "INC-A2 GPU 장치 오류(Xid/ECC) (부산 요청 #2): 해결 · 반박된 가설 GPU 메모리 부족(CUDA OOM) · 허용 안 된 조치(승인·동의·정책) 의심 GPU 서버 격리 후 작업 이전 · 해결 조치 의심 GPU 서버 격리 후 장비 수리 요청",
+        "INC-A3 스토리지 공간 소진 (뭄바이 요청 #3): 해결 · 허용 안 된 조치(승인·동의·정책) 작업 데이터 파일 삭제 · 해결 조치 게임 내부 임시 파일 정리",
+        "근무 목표 달성"
+      ]
+    },
+    {
+      "kind": "incident",
+      "shift": "B",
+      "save": "aidc_3d_incident_001",
+      "cleared": true,
+      "resolved": 3,
+      "success": 3,
+      "feedback": [
+        "INC-B1 ToR/업링크 포트 단절 (오사카 요청 #4): 해결 · 반박된 가설 DNS 이름 해석 장애 · 해결 조치 이중화 업링크로 우회",
+        "INC-B2 냉각 펌프 성능 저하 (뉴욕 요청 #5): 해결 · 허용 안 된 조치(승인·동의·정책) 예비 냉각 펌프 가동 요청 · 해결 조치 예비 냉각 펌프 가동 요청",
+        "INC-B3 UPS 입력 이상·배터리 운전 (호찌민 요청 #6): 해결 · 허용 안 된 조치(승인·동의·정책) UPS 바이패스 직접 전환 · 해결 조치 시설·전원팀 호출",
+        "근무 목표 달성"
+      ]
+    },
+    {
+      "kind": "incident",
+      "shift": "C",
+      "save": "aidc_3d_incident_001",
+      "cleared": true,
+      "resolved": 4,
+      "success": 4,
+      "feedback": [
+        "INC-C1 회선 혼잡·패킷 손실 (시애틀 요청 #7): 해결 · 반박된 가설 스토리지 I/O 지연 증가 · 개선 없던 조치 백업 경로로 트래픽 우회 · 해결 조치 트래픽 우선순위(QoS)·대역 예약 조정",
+        "INC-C2 스토리지 I/O 지연 증가 (도쿄 요청 #8): 해결 · 반박된 가설 스토리지 공간 소진 · 개선 없던 조치 게임 내부 임시 파일 정리 · 해결 조치 대체 스토리지 경로로 전환",
+        "INC-C3 GPU 메모리 부족(CUDA OOM) (파리 요청 #9): 해결 · 반박된 가설 GPU 장치 오류(Xid/ECC) · 허용 안 된 조치(승인·동의·정책) 배치 크기 축소(고객 동의 조건) · 해결 조치 배치 크기 축소(고객 동의 조건)",
+        "INC-C4 서비스 반복 재시작(CrashLoop) (싱가포르 요청 #10): 해결 · 개선 없던 조치 서비스 재시작 · 해결 조치 직전 배포 롤백",
+        "근무 목표 달성"
+      ]
+    }
+  ],
+  "incidents": [
+    {
+      "rid": 1,
+      "step": "start performance",
+      "clock": "D1 09:00"
+    },
+    {
+      "id": "INC-A1",
+      "step": "observe ping",
+      "status": "ok",
+      "summary": "storage-api(10.20.0.15) IP 응답 3/3 · RTT 0.8 ms",
+      "at": "noc"
+    },
+    {
+      "id": "INC-A1",
+      "step": "observe link_stats",
+      "status": "ok",
+      "summary": "AIDC 엣지 링크 E1 UP · 이용률 42% · 드롭 0 · RTT 2 ms",
+      "at": "NETWORK"
+    },
+    {
+      "id": "INC-A1",
+      "step": "observe dns",
+      "status": "bad",
+      "summary": "storage-api.aidc.internal 이름 조회 실패(SERVFAIL) · 주 리졸버 응답 없음",
+      "at": "noc"
+    },
+    {
+      "rid": 2,
+      "step": "start economy",
+      "clock": "D1 09:50"
+    },
+    {
+      "id": "INC-A2",
+      "step": "observe job_log",
+      "status": "bad",
+      "summary": "로그: GPU 장치 접근 실패로 프로세스 종료",
+      "at": "noc"
+    },
+    {
+      "id": "INC-A2",
+      "step": "observe dcgm",
+      "status": "bad",
+      "summary": "Server C(C-01) GPU0: Xid 79(장치 응답 없음) · 건강 검사 FAIL · 다른 GPU PASS",
+      "at": "hall"
+    },
+    {
+      "rid": 3,
+      "step": "start performance",
+      "clock": "D1 10:40"
+    },
+    {
+      "id": "INC-A3",
+      "step": "observe storage_space",
+      "status": "bad",
+      "summary": "작업 볼륨 vol-3 사용률 100% · 임시 파일 영역 38% 차지",
+      "at": "hall"
+    },
+    {
+      "rid": 4,
+      "step": "start performance",
+      "clock": "D1 11:50"
+    },
+    {
+      "rid": 5,
+      "step": "start performance",
+      "clock": "D1 12:10"
+    },
+    {
+      "id": "INC-B1",
+      "step": "observe tor_port",
+      "status": "bad",
+      "summary": "ToR-A-01 업링크 P1(P2는 UP) DOWN · 같은 랙의 두 번째 업링크 P2 UP · 우회 가능",
+      "at": "NETWORK"
+    },
+    {
+      "id": "INC-B1",
+      "step": "observe ping",
+      "status": "bad",
+      "summary": "A-01 서버 IP 응답 0/3 · 다른 랙은 정상",
+      "at": "noc"
+    },
+    {
+      "id": "INC-B1",
+      "step": "observe dns",
+      "status": "ok",
+      "summary": "이름 조회 정상(리졸버 응답)",
+      "at": "noc"
+    },
+    {
+      "id": "INC-B2",
+      "step": "observe cooling",
+      "status": "bad",
+      "summary": "냉각 구역 Z1: 펌프 P-2 WARN(성능 저하) · 유량 18 L/min(평소 42) · 흡입 온도 상승 중",
+      "at": "COOLING"
+    },
+    {
+      "rid": 6,
+      "step": "start performance",
+      "clock": "D1 13:30"
+    },
+    {
+      "id": "INC-B3",
+      "step": "observe ups",
+      "status": "bad",
+      "summary": "UPS-01: 입력 이상 · 배터리 운전 중 · 남은 보호 시간 약 20분(가상) · 공급 서버 A",
+      "at": "UPS"
+    },
+    {
+      "rid": 7,
+      "step": "start performance",
+      "clock": "D1 15:00"
+    },
+    {
+      "rid": 8,
+      "step": "start performance",
+      "clock": "D1 15:00"
+    },
+    {
+      "id": "INC-C1",
+      "step": "observe storage_latency",
+      "status": "ok",
+      "summary": "작업 볼륨 지연 정상",
+      "at": "hall"
+    },
+    {
+      "id": "INC-C1",
+      "step": "observe storage_space",
+      "status": "ok",
+      "summary": "작업 볼륨 vol-7 사용률 46%",
+      "at": "hall"
+    },
+    {
+      "id": "INC-C1",
+      "step": "observe link_stats",
+      "status": "bad",
+      "summary": "AIDC 엣지 링크 E1 UP · 이용률 98% · 드롭 3.1% · RTT 상승 · 백업 E2 이용률 91%",
+      "at": "NETWORK"
+    },
+    {
+      "id": "INC-C2",
+      "step": "observe storage_latency",
+      "status": "bad",
+      "summary": "vol-8 읽기 지연 85 ms(평소 4 ms) · 처리량 120 MB/s로 감소 · 다른 볼륨 정상",
+      "at": "hall"
+    },
+    {
+      "id": "INC-C2",
+      "step": "observe storage_space",
+      "status": "ok",
+      "summary": "작업 볼륨 vol-8 사용률 61% · 공간 여유 있음",
+      "at": "hall"
+    },
+    {
+      "rid": 9,
+      "step": "start performance",
+      "clock": "D1 16:00"
+    },
+    {
+      "rid": 10,
+      "step": "start performance",
+      "clock": "D1 16:10"
+    },
+    {
+      "id": "INC-C3",
+      "step": "observe job_log",
+      "status": "bad",
+      "summary": "로그: CUDA out of memory — 이번 배치 설정이 GPU 메모리에 들어가지 않음",
+      "at": "noc"
+    },
+    {
+      "id": "INC-C3",
+      "step": "observe dcgm",
+      "status": "ok",
+      "summary": "Server A GPU 건강 검사 PASS · 장치 오류 없음",
+      "at": "hall"
+    },
+    {
+      "id": "INC-C4",
+      "step": "observe service_events",
+      "status": "bad",
+      "summary": "서비스 재시작 9회(CrashLoop) · 직전 배포 v2.3.1(설정 변경) 후 시작",
+      "at": "noc"
+    },
+    {
+      "id": "INC-C4",
+      "step": "observe job_log",
+      "status": "bad",
+      "summary": "로그: 설정 파일의 모델 경로를 찾을 수 없음 — 시작 직후 종료",
+      "at": "noc"
+    }
+  ],
+  "wrong": [
+    {
+      "id": "INC-A1",
+      "kind": "hypothesis",
+      "cause": "transit",
+      "reason": "관측과 모순: storage-api(10.20.0.15) IP 응답 3/3 · RTT 0.8 ms / AIDC 엣지 링크 E1 UP · 이용률 42% · 드롭 0 · RTT 2 ms — 이 가설로는 이 사건의 증상이 설명되지 않습니다."
+    },
+    {
+      "id": "INC-A1",
+      "kind": "action",
+      "action": "restart_service",
+      "result": "none",
+      "text": "조치를 수행했지만 관측된 증상이 바뀌지 않았습니다(개선 없음). 결과를 확인하는 동안 10분 동안 다음 조치를 할 수 없습니다."
+    },
+    {
+      "id": "INC-A2",
+      "kind": "hypothesis",
+      "cause": "gpu_oom",
+      "reason": "관측과 모순: 로그: GPU 장치 접근 실패로 프로세스 종료 / Server C(C-01) GPU0: Xid 79(장치 응답 없음) · 건강 검사 FAIL · 다른 GPU PASS — 이 가설로는 이 사건의 증상이 설명되지 않습니다."
+    },
+    {
+      "id": "INC-A2",
+      "kind": "action",
+      "action": "isolate_migrate",
+      "result": "refused",
+      "text": "Server C를 뺀 정상 서버에 GPU 2·전력 2을 옮길 여유가 없습니다(이전 불가). 격리 후 수리를 고려하세요."
+    },
+    {
+      "id": "INC-A3",
+      "kind": "action",
+      "action": "delete_data",
+      "result": "refused",
+      "text": "안전 정책상 허용되지 않습니다. 고객 작업 데이터와 DB 파일은 운영자가 임의로 지우지 않습니다."
+    },
+    {
+      "id": "INC-B1",
+      "kind": "hypothesis",
+      "cause": "dns",
+      "reason": "관측과 모순: A-01 서버 IP 응답 0/3 · 다른 랙은 정상 / 이름 조회 정상(리졸버 응답) — 이 가설로는 이 사건의 증상이 설명되지 않습니다."
+    },
+    {
+      "id": "INC-B2",
+      "kind": "action",
+      "action": "standby_pump",
+      "result": "refused",
+      "text": "승인이 필요한 조치입니다. 먼저 [시설·전원팀 호출]로 담당팀에 요청하세요."
+    },
+    {
+      "id": "INC-B3",
+      "kind": "action",
+      "action": "ups_bypass",
+      "result": "refused",
+      "text": "운영자 권한 밖입니다. UPS·차단기 조작은 전원·시설 담당만 절차에 따라 수행합니다."
+    },
+    {
+      "id": "INC-C1",
+      "kind": "hypothesis",
+      "cause": "storage_latency",
+      "reason": "관측과 모순: 작업 볼륨 지연 정상 / 작업 볼륨 vol-7 사용률 46% — 이 가설로는 이 사건의 증상이 설명되지 않습니다."
+    },
+    {
+      "id": "INC-C1",
+      "kind": "action",
+      "action": "reroute_backup",
+      "result": "none",
+      "text": "백업 경로 E2도 이용률이 높아 우회해도 처리 속도가 그대로입니다(개선 없음)."
+    },
+    {
+      "id": "INC-C2",
+      "kind": "hypothesis",
+      "cause": "storage_full",
+      "reason": "관측과 모순: 작업 볼륨 vol-8 사용률 61% · 공간 여유 있음 — 이 가설로는 이 사건의 증상이 설명되지 않습니다."
+    },
+    {
+      "id": "INC-C2",
+      "kind": "action",
+      "action": "cleanup_temp",
+      "result": "none",
+      "text": "공간은 원래 충분했습니다. 정리해도 지연이 그대로입니다(개선 없음)."
+    },
+    {
+      "id": "INC-C3",
+      "kind": "hypothesis",
+      "cause": "gpu_health",
+      "reason": "관측과 모순: Server A GPU 건강 검사 PASS · 장치 오류 없음 — 이 가설로는 이 사건의 증상이 설명되지 않습니다."
+    },
+    {
+      "id": "INC-C3",
+      "kind": "action",
+      "action": "reduce_batch",
+      "result": "refused",
+      "text": "고객 작업 조건을 바꾸는 조치입니다. 먼저 고객 동의를 받아야 합니다."
+    },
+    {
+      "id": "INC-C4",
+      "kind": "action",
+      "action": "restart_service",
+      "result": "none",
+      "text": "재시작했지만 같은 설정 오류로 다시 종료됩니다(개선 없음). 재시작 연타는 해결이 아닙니다."
+    }
+  ],
+  "resumes": [
+    {
+      "label": "shift B: cooling recovery in progress",
+      "id": "aidc_3d_incident_001",
+      "clock": "D1 12:40",
+      "incidents": [
+        [
+          "INC-B1",
+          "closed",
+          5,
+          2
+        ],
+        [
+          "INC-B2",
+          "recovering",
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "label": "retry after failure",
+      "source": "aidc_3d_incident_002",
+      "newSlot": "aidc_3d_incident_003"
+    },
+    {
+      "label": "practice: at the alert",
+      "id": "aidc_3d_incident_004",
+      "clock": "D1 09:30",
+      "incidents": [
+        [
+          "INC-P1",
+          "alert",
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "label": "practice: recovery in progress",
+      "id": "aidc_3d_incident_004",
+      "clock": "D1 09:40",
+      "incidents": [
+        [
+          "INC-P1",
+          "recovering",
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "label": "practice: incident closed",
+      "id": "aidc_3d_incident_004",
+      "clock": "D1 10:00",
+      "incidents": [
+        [
+          "INC-P1",
+          "closed",
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "label": "duplicate/port",
+      "second": "저장된 게임을 찾을 수 없습니다.",
+      "clashExit": "timeout"
+    }
+  ],
+  "engineTruth": [
+    {
+      "label": "shift A",
+      "save": "aidc_3d_incident_001",
+      "rows": [
+        {
+          "id": "INC-A1",
+          "type": "dns",
+          "outcome": "resolved",
+          "evidence": 5,
+          "hypotheses": [
+            "dns:insufficient",
+            "transit:refuted",
+            "dns:confirmed"
+          ],
+          "actions": [
+            "restart_service:none",
+            "notify_customer:notice",
+            "dns_failover:fix"
+          ],
+          "downtime": 20,
+          "slow": 0
+        },
+        {
+          "id": "INC-A2",
+          "type": "gpu_health",
+          "outcome": "resolved",
+          "evidence": 4,
+          "hypotheses": [
+            "gpu_oom:refuted",
+            "gpu_health:confirmed"
+          ],
+          "actions": [
+            "isolate_migrate:refused",
+            "gpu_repair:isolate_repair"
+          ],
+          "downtime": 0,
+          "slow": 0
+        },
+        {
+          "id": "INC-A3",
+          "type": "storage_full",
+          "outcome": "resolved",
+          "evidence": 3,
+          "hypotheses": [
+            "storage_full:confirmed"
+          ],
+          "actions": [
+            "delete_data:refused",
+            "cleanup_temp:fix"
+          ],
+          "downtime": 10,
+          "slow": 0
+        }
+      ]
+    },
+    {
+      "label": "shift B",
+      "save": "aidc_3d_incident_001",
+      "rows": [
+        {
+          "id": "INC-B1",
+          "type": "tor_uplink",
+          "outcome": "resolved",
+          "evidence": 5,
+          "hypotheses": [
+            "dns:refuted",
+            "tor_uplink:confirmed"
+          ],
+          "actions": [
+            "notify_customer:notice",
+            "reroute_uplink:fix"
+          ],
+          "downtime": 10,
+          "slow": 0
+        },
+        {
+          "id": "INC-B2",
+          "type": "cooling",
+          "outcome": "resolved",
+          "evidence": 3,
+          "hypotheses": [
+            "cooling:confirmed"
+          ],
+          "actions": [
+            "notify_customer:notice",
+            "standby_pump:refused",
+            "escalate_facility:call",
+            "standby_pump:fix"
+          ],
+          "downtime": 0,
+          "slow": 60
+        },
+        {
+          "id": "INC-B3",
+          "type": "ups",
+          "outcome": "resolved",
+          "evidence": 2,
+          "hypotheses": [
+            "ups:confirmed"
+          ],
+          "actions": [
+            "notify_customer:notice",
+            "ups_bypass:refused",
+            "escalate_facility:fix",
+            "planned_pause:pause"
+          ],
+          "downtime": 30,
+          "slow": 0
+        }
+      ]
+    },
+    {
+      "label": "shift C",
+      "save": "aidc_3d_incident_001",
+      "rows": [
+        {
+          "id": "INC-C1",
+          "type": "congestion",
+          "outcome": "resolved",
+          "evidence": 4,
+          "hypotheses": [
+            "storage_latency:refuted",
+            "congestion:confirmed"
+          ],
+          "actions": [
+            "reroute_backup:none",
+            "qos_adjust:fix"
+          ],
+          "downtime": 0,
+          "slow": 20
+        },
+        {
+          "id": "INC-C2",
+          "type": "storage_latency",
+          "outcome": "resolved",
+          "evidence": 3,
+          "hypotheses": [
+            "storage_full:refuted",
+            "storage_latency:confirmed"
+          ],
+          "actions": [
+            "cleanup_temp:none",
+            "storage_path:fix"
+          ],
+          "downtime": 0,
+          "slow": 20
+        },
+        {
+          "id": "INC-C3",
+          "type": "gpu_oom",
+          "outcome": "resolved",
+          "evidence": 4,
+          "hypotheses": [
+            "gpu_health:refuted",
+            "gpu_oom:confirmed"
+          ],
+          "actions": [
+            "reduce_batch:refused",
+            "ask_consent:consent",
+            "reduce_batch:fix"
+          ],
+          "downtime": 10,
+          "slow": 0
+        },
+        {
+          "id": "INC-C4",
+          "type": "crashloop",
+          "outcome": "resolved",
+          "evidence": 4,
+          "hypotheses": [
+            "crashloop:confirmed"
+          ],
+          "actions": [
+            "restart_service:none",
+            "escalate_platform:call",
+            "rollback_deploy:fix"
+          ],
+          "downtime": 30,
+          "slow": 0
+        }
+      ]
+    }
+  ],
+  "consistency": [
+    {
+      "at": "A1 alert",
+      "world": {
+        "lit": [
+          "US-SFO"
+        ],
+        "faultKind": null,
+        "cause": "incident",
+        "hop": "#6fe7d2"
+      }
+    },
+    {
+      "at": "A1 diagnosed",
+      "world": {
+        "lit": [
+          "US-SFO"
+        ],
+        "faultKind": "incident",
+        "cause": "internal",
+        "aidcMarker": "#f3a25c"
+      }
+    },
+    {
+      "at": "A2 isolated",
+      "server": "C",
+      "state": "REPAIRING",
+      "rack": "C-01",
+      "asset": "repairing"
+    },
+    {
+      "at": "B1 network room",
+      "interior": {
+        "room": "NETWORK",
+        "engine": true,
+        "uplinkDown": [
+          "A-P1"
+        ],
+        "edge": "ok",
+        "dns": "ok",
+        "faultPortsBlinking": true,
+        "display": "[{\"A\":{\"rack\":\"A-01\",\"ports\":{\"P1\":\"DOWN\",\"P2\":\"UP\"},\"dual\":true,\"rerouted\":false},\"B\":{\"rack\":\"B-01\",\"ports\":{\"P1\":\"UP\",\"P2\":\"UP\"},\"dual\":true,\"rerouted\":false},\"C\":{\"rack\":\"C-01\",\"ports\":{\"P1\":\"UP\"},\"dual\":false,\"rerouted\":false},\"D\":{\"rack\":\"D-01\",\"ports\":{\"P1\":\"UP\"},\"dual\":false,\"rerouted\":false}},{\"E1\":42,\"E2\":35,\"state\":\"ok\",\"qos\":false},{\"state\":\"ok\",\"failover\":false}]"
+      }
+    },
+    {
+      "at": "B2 cooling room",
+      "interior": {
+        "room": "COOLING",
+        "engine": true,
+        "zones": {
+          "Z1": "recovering",
+          "Z2": "ok"
+        },
+        "pumpP2": "WARN",
+        "standby": true,
+        "pumpsSpinning": true,
+        "flowVisible": true,
+        "display": "{\"Z1\":{\"state\":\"recovering\",\"pumps\":{\"P-1\":\"ON\",\"P-2\":\"WARN\",\"P-3\":\"ON\"},\"flow\":40,\"inlet\":29.5,\"servers\":[\"A\",\"B\"]},\"Z2\":{\"state\":\"ok\",\"pumps\":{\"P-1\":\"ON\",\"P-2\":\"ON\",\"P-3\":\"OFF\"},\"flow\":42,\"inlet\":24.5,\"servers\":[\"C\",\"D\"]}}"
+      }
+    },
+    {
+      "at": "B3 ups room",
+      "interior": {
+        "room": "UPS",
+        "engine": true,
+        "modes": {
+          "UPS-01": "battery",
+          "UPS-02": "utility"
+        },
+        "display": "{\"UPS-01\":{\"mode\":\"battery\",\"runtime\":20,\"battery\":100,\"servers\":[\"A\",\"B\"],\"restoring\":false},\"UPS-02\":{\"mode\":\"utility\",\"runtime\":null,\"battery\":100,\"servers\":[\"C\",\"D\"],\"restoring\":false}}"
+      }
+    },
+    {
+      "at": "B3 gpu free vs power",
+      "healthyFreeGpu": 6,
+      "ups": {
+        "UPS-01": {
+          "mode": "battery",
+          "runtime": 20,
+          "battery": 100,
+          "servers": [
+            "A",
+            "B"
+          ],
+          "restoring": false
+        },
+        "UPS-02": {
+          "mode": "utility",
+          "runtime": null,
+          "battery": 100,
+          "servers": [
+            "C",
+            "D"
+          ],
+          "restoring": false
+        }
+      }
+    },
+    {
+      "at": "C overlap",
+      "c1": "D1 15:20",
+      "c2": "D1 15:20",
+      "rids": [
+        7,
+        8
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "label": "incident practice · NOC",
+      "fps": 238.4,
+      "p95": 4.3,
+      "heapMiB": 40.5,
+      "geometries": 52,
+      "textures": 26,
+      "calls": 255
+    },
+    {
+      "label": "hall after 10 cycles",
+      "fps": 238.4,
+      "p95": 4.3,
+      "heapMiB": 41.5,
+      "geometries": 588,
+      "textures": 100,
+      "calls": 758
+    },
+    {
+      "label": "world after 10 cycles",
+      "fps": 240,
+      "p95": 4.3,
+      "heapMiB": 48.8,
+      "geometries": 588,
+      "textures": 100,
+      "calls": 696
+    }
+  ],
+  "resources": [
+    {
+      "cycle": 1,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 39.9
+    },
+    {
+      "cycle": 2,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 37
+    },
+    {
+      "cycle": 3,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 53.4
+    },
+    {
+      "cycle": 4,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 34.6
+    },
+    {
+      "cycle": 5,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 41.7
+    },
+    {
+      "cycle": 6,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 37.1
+    },
+    {
+      "cycle": 7,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 55
+    },
+    {
+      "cycle": 8,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 50.3
+    },
+    {
+      "cycle": 9,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 30.5
+    },
+    {
+      "cycle": 10,
+      "geometries": 588,
+      "textures": 100,
+      "heapMiB": 31.3
+    }
+  ],
+  "layout": [
+    {
+      "label": "1366x768",
+      "talk": "ok",
+      "ack": "ok",
+      "tab": "ok",
+      "time": "ok",
+      "pageScroll": false,
+      "tutorialStart": "ok",
+      "storyTalk": "ok"
+    },
+    {
+      "label": "1366x768 at 150% (emulated)",
+      "talk": "ok",
+      "ack": "ok",
+      "tab": "ok",
+      "time": "ok",
+      "pageScroll": false,
+      "tutorialStart": "ok",
+      "storyTalk": "ok"
+    },
+    {
+      "label": "1920x1080 at 150% (emulated)",
+      "talk": "ok",
+      "ack": "ok",
+      "tab": "ok",
+      "time": "ok",
+      "pageScroll": false,
+      "tutorialStart": "ok",
+      "storyTalk": "ok"
+    }
+  ],
+  "startedAt": "2026-11-25T20:22:33.099Z",
+  "url": "http://127.0.0.1:5198/",
+  "browserVersion": "158.0.8127.38",
+  "graduated": "aidc_story_slot_001",
+  "finishedAt": "2026-11-25T20:37:16.641Z",
+  "summary": {
+    "pass": 12,
+    "total": 12
+  }
+}

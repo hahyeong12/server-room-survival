@@ -1,0 +1,72 @@
+{
+  "issue": 8,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)",
+  "checks": [
+    {
+      "name": "practice save -> engine restart -> resume at alert, mid-recovery and after close (same evidence, timers, ledger)",
+      "pass": true,
+      "ms": 29756
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "crashes": [],
+  "screenshots": [],
+  "shifts": [],
+  "incidents": [],
+  "wrong": [],
+  "resumes": [
+    {
+      "label": "practice: at the alert",
+      "id": "aidc_3d_incident_001",
+      "clock": "D1 09:30",
+      "incidents": [
+        [
+          "INC-P1",
+          "alert",
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "label": "practice: recovery in progress",
+      "id": "aidc_3d_incident_001",
+      "clock": "D1 09:40",
+      "incidents": [
+        [
+          "INC-P1",
+          "recovering",
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "label": "practice: incident closed",
+      "id": "aidc_3d_incident_001",
+      "clock": "D1 10:00",
+      "incidents": [
+        [
+          "INC-P1",
+          "closed",
+          4,
+          2
+        ]
+      ]
+    }
+  ],
+  "engineTruth": [],
+  "consistency": [],
+  "performance": [],
+  "resources": [],
+  "layout": [],
+  "startedAt": "2026-11-25T21:03:31.992Z",
+  "url": "http://127.0.0.1:5198/",
+  "browserVersion": "158.0.8127.38",
+  "finishedAt": "2026-11-25T21:04:02.215Z",
+  "summary": {
+    "pass": 1,
+    "total": 1
+  }
+}

@@ -13,6 +13,7 @@ Saves go to ./saves (or SRS3D_SAVE_DIR) — never to the user's Python game save
 from __future__ import annotations
 
 import argparse
+import socket
 import json
 import os
 import re
@@ -160,10 +161,27 @@ def make_handler(host: GameHost, log=None):
     return Handler
 
 
+class ExclusiveServer(ThreadingHTTPServer):
+    """Phase 7: a port that is already in use is an error. On Windows SO_REUSEADDR (the http.server default) lets a
+    second engine bind the same port silently, so requests could reach either process; bind exclusively instead."""
+    allow_reuse_address = os.name != 'nt'
+
+    def server_bind(self):
+        if hasattr(socket, 'SO_EXCLUSIVEADDRUSE'):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
 def serve(port=8765, save_dir=None, ready=None):
     save_dir = Path(save_dir or os.environ.get('SRS3D_SAVE_DIR') or HERE.parent / 'saves')
+    try:
+        httpd = ExclusiveServer(('127.0.0.1', port), None)
+    except OSError as exc:
+        print(f'SRS 3D engine: port {port} is already in use ({exc.strerror or exc}). Stop the other engine or choose --port.',
+              file=sys.stderr, flush=True)
+        raise SystemExit(2) from None
     host = GameHost(save_dir, worker=True)
-    httpd = ThreadingHTTPServer(('127.0.0.1', port), make_handler(host))
+    httpd.RequestHandlerClass = make_handler(host)
     print(f'SRS 3D engine ready on http://127.0.0.1:{httpd.server_address[1]}  (saves: {host.dir})', flush=True)
     if ready:
         ready(httpd)

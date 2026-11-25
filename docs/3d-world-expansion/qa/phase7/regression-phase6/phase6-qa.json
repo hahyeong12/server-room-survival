@@ -1,0 +1,1275 @@
+{
+  "issue": 7,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)",
+  "checks": [
+    {
+      "name": "neutral world before any game: 21 city markers and routes exist, nothing is lit, legacy markers neutral",
+      "pass": true,
+      "ms": 4978
+    },
+    {
+      "name": "global shifts locked before graduation; global free ops open (menu)",
+      "pass": true,
+      "ms": 1841
+    },
+    {
+      "name": "precondition: regular story chapters 1 -> 5 cleared through the real UI (graduation)",
+      "pass": true,
+      "ms": 151479
+    },
+    {
+      "name": "shift 1 (intro): two US cities and a Seoul customer through the real UI, map lights only arrived cities, engine restart mid-shift",
+      "pass": true,
+      "ms": 89912
+    },
+    {
+      "name": "shift 2 (contention): engine refuses the plan that no longer fits, customer rejects one alternative and accepts another",
+      "pass": true,
+      "ms": 105530
+    },
+    {
+      "name": "shift 3 (independent): no senior hints, original condition impossible on the servers, final global summary",
+      "pass": true,
+      "ms": 100157
+    },
+    {
+      "name": "a failed shift: expiry, a late job and a justified rejection → shift failed → retry in a NEW slot (source unchanged)",
+      "pass": true,
+      "ms": 33590
+    },
+    {
+      "name": "global free operations: requests keep arriving from many cities; save → engine restart → resume",
+      "pass": true,
+      "ms": 95849
+    },
+    {
+      "name": "earlier modes still resume: graduated story save, a new tutorial / free / practice save after an engine restart",
+      "pass": true,
+      "ms": 12452
+    },
+    {
+      "name": "layout 1366x768: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll",
+      "pass": true,
+      "ms": 4957
+    },
+    {
+      "name": "layout 1366x768 at 150% (emulated, full screen): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll",
+      "pass": true,
+      "ms": 5034
+    },
+    {
+      "name": "layout 1366x768 at 150% inside a browser window (emulated): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll",
+      "pass": true,
+      "ms": 4964
+    },
+    {
+      "name": "layout 1920x1080 at 150% (emulated): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll",
+      "pass": true,
+      "ms": 4993
+    },
+    {
+      "name": "layout 1920x1080: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll",
+      "pass": true,
+      "ms": 4946
+    },
+    {
+      "name": "reduced motion: lit routes stay lit with packets frozen",
+      "pass": true,
+      "ms": 4146
+    },
+    {
+      "name": "WebGL resources and heap stay flat across 10 cycles of every space",
+      "pass": true,
+      "ms": 62757
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "p6-world-neutral.png",
+    "p6-menu-locked.png",
+    "p6-s1-briefing.png",
+    "p6-s1-world-start.png",
+    "p6-s1-inbox.png",
+    "p6-s1-world-three-cities.png",
+    "p6-s1-result.png",
+    "p6-s2-hall-two-customers.png",
+    "p6-s2-inbox-filter.png",
+    "p6-s2-result.png",
+    "p6-s3-world-many.png",
+    "p6-global-complete.png",
+    "p6-shift-failed.png",
+    "p6-free-world.png",
+    "p6-layout-1366x768@1.png",
+    "p6-layout-911x512@1.5.png",
+    "p6-layout-911x430@1.5.png",
+    "p6-layout-1280x720@1.5.png",
+    "p6-layout-1920x1080@1.png"
+  ],
+  "shifts": [
+    {
+      "save": "aidc_3d_global_001",
+      "shift": 1,
+      "title": "입문 운영 교대",
+      "cleared": true,
+      "success": 5,
+      "total": 5,
+      "average": 100,
+      "from": "D1 09:00",
+      "to": "D1 11:00",
+      "feedback": [
+        "기다렸다 시작한 요청: 시애틀(30분) — 여유 있는 요청은 기다리게 하고 급한 요청을 먼저 처리했습니다.",
+        "교대 목표 달성"
+      ]
+    },
+    {
+      "save": "aidc_3d_global_001",
+      "shift": 2,
+      "title": "혼잡·경합 교대",
+      "cleared": true,
+      "success": 6,
+      "total": 6,
+      "average": 99,
+      "from": "D1 11:00",
+      "to": "D1 13:40",
+      "feedback": [
+        "고객 동의를 받은 대안: 벵갈루루 Deccan Speech Research — 조건을 몰래 바꾸지 않고 자원을 나눴습니다.",
+        "고객이 거절한 대안: 북버지니아 애슈번 Potomac Insight Lab — 기한을 넘기는 제안은 받아들여지지 않습니다.",
+        "기다렸다 시작한 요청: 부산(100분), 런던(30분) — 여유 있는 요청은 기다리게 하고 급한 요청을 먼저 처리했습니다.",
+        "교대 목표 달성"
+      ]
+    },
+    {
+      "save": "aidc_3d_global_001",
+      "shift": 3,
+      "title": "독립 교대",
+      "cleared": true,
+      "success": 6,
+      "total": 6,
+      "average": 98,
+      "from": "D1 13:40",
+      "to": "D1 16:30",
+      "feedback": [
+        "고객 동의를 받은 대안: 시드니 Coral Coast Drone Robotics, 대전 한빛 계산과학연구소 — 조건을 몰래 바꾸지 않고 자원을 나눴습니다.",
+        "기다렸다 시작한 요청: 뭄바이(80분) — 여유 있는 요청은 기다리게 하고 급한 요청을 먼저 처리했습니다.",
+        "교대 목표 달성"
+      ]
+    },
+    {
+      "save": "aidc_3d_global_002",
+      "shift": 1,
+      "failed": true,
+      "outcomes": {
+        "KR-SEL": "rejected",
+        "US-SFO": "on_time",
+        "DE-FRA": "late",
+        "US-SEA": "on_time",
+        "JP-OSA": "expired"
+      },
+      "feedback": [
+        "기다렸다 시작한 요청: 프랑크푸르트(20분), 시애틀(30분) — 여유 있는 요청은 기다리게 하고 급한 요청을 먼저 처리했습니다.",
+        "완료 기한을 넘긴 요청: 프랑크푸르트 10분",
+        "시작하지 못해 만료된 요청: 오사카 Kansai Servo Robotics — 최종 접수 시각이 촉박한 요청을 먼저 보세요.",
+        "사유와 함께 거절한 요청: 서울 (오전 색인 갱신 시각까지 GPU를 비울 수 없어 정중히 거절합니다)",
+        "교대 목표 미달성 — 같은 교대를 새 슬롯에서 다시 도전할 수 있습니다."
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "site": "KR-SEL",
+      "rid": 1,
+      "action": "start performance",
+      "clock": "D1 09:00"
+    },
+    {
+      "site": "US-SFO",
+      "rid": 2,
+      "action": "start performance",
+      "clock": "D1 09:00"
+    },
+    {
+      "site": "DE-FRA",
+      "rid": 3,
+      "action": "start performance",
+      "clock": "D1 09:30"
+    },
+    {
+      "site": "US-SEA",
+      "rid": 4,
+      "action": "wait",
+      "optionsNow": 0
+    },
+    {
+      "site": "JP-OSA",
+      "rid": 5,
+      "action": "start performance",
+      "clock": "D1 10:00"
+    },
+    {
+      "site": "US-SEA",
+      "rid": 4,
+      "action": "start performance",
+      "clock": "D1 10:10"
+    },
+    {
+      "site": "US-IAD",
+      "rid": 7,
+      "action": "propose",
+      "reply": "rejected"
+    },
+    {
+      "site": "US-IAD",
+      "rid": 7,
+      "action": "start performance",
+      "clock": "D1 11:00"
+    },
+    {
+      "site": "IN-BLR",
+      "rid": 6,
+      "action": "contention refused",
+      "reason": "고성능 모드고객 원래 요청GPU 5 · 전력 5 · 지금 시작하면 70분 → D1 12:10 완료 (기한 D1 13:40 준수)정상 가용 GPU 또는 전력 부족"
+    },
+    {
+      "site": "IN-BLR",
+      "rid": 6,
+      "action": "propose",
+      "reply": "accepted"
+    },
+    {
+      "site": "IN-BLR",
+      "rid": 6,
+      "action": "start economy",
+      "clock": "D1 11:00"
+    },
+    {
+      "site": "KR-PUS",
+      "rid": 8,
+      "action": "wait",
+      "optionsNow": 0
+    },
+    {
+      "site": "GB-LON",
+      "rid": 9,
+      "action": "wait",
+      "optionsNow": 0
+    },
+    {
+      "site": "GB-LON",
+      "rid": 9,
+      "action": "start performance",
+      "clock": "D1 12:20"
+    },
+    {
+      "site": "NL-AMS",
+      "rid": 10,
+      "action": "start performance",
+      "clock": "D1 12:20"
+    },
+    {
+      "site": "TW-TPE",
+      "rid": 11,
+      "action": "wait",
+      "optionsNow": 0
+    },
+    {
+      "site": "TW-TPE",
+      "rid": 11,
+      "action": "start performance",
+      "clock": "D1 12:40"
+    },
+    {
+      "site": "KR-PUS",
+      "rid": 8,
+      "action": "start performance",
+      "clock": "D1 13:00"
+    },
+    {
+      "site": "KR-DJN",
+      "rid": 13,
+      "action": "original condition refused by the server rule"
+    },
+    {
+      "site": "KR-DJN",
+      "rid": 13,
+      "action": "propose",
+      "reply": "accepted"
+    },
+    {
+      "site": "AU-SYD",
+      "rid": 12,
+      "action": "propose",
+      "reply": "accepted"
+    },
+    {
+      "site": "KR-DJN",
+      "rid": 13,
+      "action": "start economy",
+      "clock": "D1 13:40"
+    },
+    {
+      "site": "AU-SYD",
+      "rid": 12,
+      "action": "start economy",
+      "clock": "D1 13:40"
+    },
+    {
+      "site": "SG-SIN",
+      "rid": 14,
+      "action": "start performance",
+      "clock": "D1 14:00"
+    },
+    {
+      "site": "IN-BOM",
+      "rid": 15,
+      "action": "wait",
+      "optionsNow": 0
+    },
+    {
+      "site": "US-NYC",
+      "rid": 16,
+      "action": "start economy",
+      "clock": "D1 14:40"
+    },
+    {
+      "site": "FR-PAR",
+      "rid": 17,
+      "action": "start performance",
+      "clock": "D1 15:10"
+    },
+    {
+      "site": "IN-BOM",
+      "rid": 15,
+      "action": "start performance",
+      "clock": "D1 15:40"
+    },
+    {
+      "site": "US-SFO",
+      "rid": 2,
+      "action": "start performance",
+      "clock": "D1 09:00"
+    },
+    {
+      "site": "US-SEA",
+      "rid": 4,
+      "action": "wait",
+      "optionsNow": 1
+    },
+    {
+      "site": "DE-FRA",
+      "rid": 3,
+      "action": "start performance",
+      "clock": "D1 09:50"
+    },
+    {
+      "site": "US-SEA",
+      "rid": 4,
+      "action": "start performance",
+      "clock": "D1 10:10"
+    }
+  ],
+  "resumes": [
+    {
+      "label": "shift 1 middle (t+40)",
+      "id": "aidc_3d_global_001",
+      "clock": "D1 09:40",
+      "shift": 1,
+      "requests": 4,
+      "open": 3
+    },
+    {
+      "label": "shift 1 end",
+      "id": "aidc_3d_global_001",
+      "clock": "D1 11:00",
+      "shift": 1,
+      "requests": 5,
+      "open": 0
+    },
+    {
+      "label": "shift 2 start",
+      "id": "aidc_3d_global_001",
+      "clock": "D1 11:00",
+      "shift": 2,
+      "requests": 7,
+      "open": 2
+    },
+    {
+      "label": "after shift 3",
+      "id": "aidc_3d_global_001",
+      "clock": "D1 16:30",
+      "shift": 3,
+      "requests": 17,
+      "open": 0
+    },
+    {
+      "label": "global free",
+      "id": "aidc_3d_global_004",
+      "clock": "D1 13:00",
+      "shift": null,
+      "requests": 12,
+      "open": 5
+    },
+    {
+      "label": "earlier mode",
+      "id": "aidc_story_slot_002",
+      "mode": "tutorial",
+      "kind": "tutorial",
+      "clock": "D1 09:00"
+    },
+    {
+      "label": "earlier mode",
+      "id": "aidc_3d_free_001",
+      "mode": "free",
+      "kind": "free",
+      "clock": "D1 09:00"
+    },
+    {
+      "label": "earlier mode",
+      "id": "aidc_story_slot_003",
+      "mode": "story",
+      "kind": "practice",
+      "clock": "D1 09:00"
+    },
+    {
+      "label": "earlier mode",
+      "id": "aidc_story_slot_001",
+      "mode": "story",
+      "kind": "story",
+      "clock": "D1 18:20"
+    }
+  ],
+  "engineTruth": [
+    {
+      "label": "shift 1",
+      "save": "aidc_3d_global_001",
+      "rows": [
+        {
+          "rid": 1,
+          "site": "KR-SEL",
+          "client": "한강커머스랩",
+          "job": "임베딩 생성",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 2,
+          "site": "US-SFO",
+          "client": "Bayfog Motion Studio",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 3,
+          "site": "DE-FRA",
+          "client": "Rheinwerk Vision QA",
+          "job": "평가·벤치마크",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 4,
+          "site": "US-SEA",
+          "client": "Cascade Ledger Analytics",
+          "job": "비동기 대량 추론",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 5,
+          "site": "JP-OSA",
+          "client": "Kansai Servo Robotics",
+          "job": "기간 한정 실시간 추론 용량 확보",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        }
+      ]
+    },
+    {
+      "label": "shift 2",
+      "save": "aidc_3d_global_001",
+      "rows": [
+        {
+          "rid": 6,
+          "site": "IN-BLR",
+          "client": "Deccan Speech Research",
+          "job": "파인튜닝",
+          "outcome": "on_time",
+          "score": 95,
+          "mode": "절약형 모드",
+          "consent": "고객 동의 대안",
+          "proposal": "accepted",
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 7,
+          "site": "US-IAD",
+          "client": "Potomac Insight Lab",
+          "job": "소규모 모델 사전학습",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": "rejected",
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 8,
+          "site": "KR-PUS",
+          "client": "하버라인 물류 AI",
+          "job": "비동기 대량 추론",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 9,
+          "site": "GB-LON",
+          "client": "Thames Ledger Risk",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "score": 98,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 10,
+          "site": "NL-AMS",
+          "client": "Polder Benchmark Works",
+          "job": "평가·벤치마크",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 11,
+          "site": "TW-TPE",
+          "client": "Formosa Fab Vision",
+          "job": "영상·이미지 분석",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        }
+      ]
+    },
+    {
+      "label": "shift 3",
+      "save": "aidc_3d_global_001",
+      "rows": [
+        {
+          "rid": 12,
+          "site": "AU-SYD",
+          "client": "Coral Coast Drone Robotics",
+          "job": "소규모 모델 사전학습",
+          "outcome": "on_time",
+          "score": 95,
+          "mode": "절약형 모드",
+          "consent": "고객 동의 대안",
+          "proposal": "accepted",
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 13,
+          "site": "KR-DJN",
+          "client": "한빛 계산과학연구소",
+          "job": "GPU 연구 배치",
+          "outcome": "on_time",
+          "score": 95,
+          "mode": "절약형 모드",
+          "consent": "고객 동의 대안",
+          "proposal": "accepted",
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 14,
+          "site": "SG-SIN",
+          "client": "Straits Generative Lab",
+          "job": "기간 한정 실시간 추론 용량 확보",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 15,
+          "site": "IN-BOM",
+          "client": "Konkan Port Logistics",
+          "job": "비동기 대량 추론",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 16,
+          "site": "US-NYC",
+          "client": "Hudson Signal Analytics",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "score": 95,
+          "mode": "절약형 모드",
+          "consent": "고객 허용 모드",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 17,
+          "site": "FR-PAR",
+          "client": "Atelier Seine Génératif",
+          "job": "파인튜닝",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        }
+      ]
+    },
+    {
+      "label": "failed shift 1",
+      "save": "aidc_3d_global_002",
+      "rows": [
+        {
+          "rid": 1,
+          "site": "KR-SEL",
+          "client": "한강커머스랩",
+          "job": "임베딩 생성",
+          "outcome": "rejected",
+          "score": null,
+          "mode": null,
+          "consent": "배정 없음",
+          "proposal": null,
+          "engineStatus": "rejected",
+          "allocations": 0
+        },
+        {
+          "rid": 2,
+          "site": "US-SFO",
+          "client": "Bayfog Motion Studio",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 3,
+          "site": "DE-FRA",
+          "client": "Rheinwerk Vision QA",
+          "job": "평가·벤치마크",
+          "outcome": "late",
+          "score": 93,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 4,
+          "site": "US-SEA",
+          "client": "Cascade Ledger Analytics",
+          "job": "비동기 대량 추론",
+          "outcome": "on_time",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "engineStatus": "completed",
+          "allocations": 1
+        },
+        {
+          "rid": 5,
+          "site": "JP-OSA",
+          "client": "Kansai Servo Robotics",
+          "job": "기간 한정 실시간 추론 용량 확보",
+          "outcome": "expired",
+          "score": 0,
+          "mode": null,
+          "consent": "배정 없음",
+          "proposal": null,
+          "engineStatus": "rejected",
+          "allocations": 0
+        }
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "label": "after 10 cycles (hall)",
+      "fps": 238.4,
+      "p95": 4.3,
+      "heapMiB": 54.1,
+      "geometries": 535,
+      "textures": 84,
+      "calls": 758
+    },
+    {
+      "label": "world with lit cities",
+      "fps": 240,
+      "p95": 4.3,
+      "heapMiB": 37.1,
+      "geometries": 535,
+      "textures": 84,
+      "calls": 716
+    }
+  ],
+  "resources": [
+    {
+      "cycle": 1,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 36.9
+    },
+    {
+      "cycle": 2,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 44.7
+    },
+    {
+      "cycle": 3,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 51.3
+    },
+    {
+      "cycle": 4,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 50.8
+    },
+    {
+      "cycle": 5,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 44.2
+    },
+    {
+      "cycle": 6,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 47.2
+    },
+    {
+      "cycle": 7,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 38.5
+    },
+    {
+      "cycle": 8,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 38.6
+    },
+    {
+      "cycle": 9,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 31.3
+    },
+    {
+      "cycle": 10,
+      "geometries": 535,
+      "textures": 84,
+      "heapMiB": 31
+    }
+  ],
+  "layout": [
+    {
+      "label": "1366x768",
+      "rows": [
+        {
+          "sel": "[data-filter=open]",
+          "found": true,
+          "ok": true,
+          "top": 307,
+          "bottom": 331
+        },
+        {
+          "sel": "[data-sort]",
+          "found": true,
+          "ok": true,
+          "top": 307,
+          "bottom": 331
+        },
+        {
+          "sel": "[data-request-row=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 344,
+          "bottom": 384
+        },
+        {
+          "sel": "[data-read-request=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 528,
+          "bottom": 569
+        },
+        {
+          "sel": "[data-wait=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 582,
+          "bottom": 623
+        },
+        {
+          "sel": "[data-ws-tab=plan]",
+          "found": true,
+          "ok": true,
+          "top": 267,
+          "bottom": 297
+        },
+        {
+          "sel": "[data-advance=\"10\"]",
+          "found": true,
+          "ok": true,
+          "top": 14,
+          "bottom": 44
+        },
+        {
+          "sel": "[data-plan-list] .mode-card .mode-head",
+          "found": true,
+          "ok": true,
+          "top": 345,
+          "bottom": 371
+        },
+        {
+          "sel": "[data-plan-option], [data-propose]",
+          "found": true,
+          "ok": true,
+          "top": 417,
+          "bottom": 466
+        },
+        {
+          "sel": "[data-site]",
+          "found": true,
+          "ok": true,
+          "top": 441,
+          "bottom": 482
+        }
+      ],
+      "scroll": {
+        "doc": false,
+        "body": false
+      }
+    },
+    {
+      "label": "1366x768 at 150% (emulated, full screen)",
+      "rows": [
+        {
+          "sel": "[data-filter=open]",
+          "found": true,
+          "ok": true,
+          "top": 154,
+          "bottom": 178
+        },
+        {
+          "sel": "[data-sort]",
+          "found": true,
+          "ok": true,
+          "top": 154,
+          "bottom": 178
+        },
+        {
+          "sel": "[data-request-row=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 190,
+          "bottom": 224
+        },
+        {
+          "sel": "[data-read-request=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 243,
+          "bottom": 276
+        },
+        {
+          "sel": "[data-wait=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 289,
+          "bottom": 330
+        },
+        {
+          "sel": "[data-ws-tab=plan]",
+          "found": true,
+          "ok": true,
+          "top": 121,
+          "bottom": 146
+        },
+        {
+          "sel": "[data-advance=\"10\"]",
+          "found": true,
+          "ok": true,
+          "top": 9,
+          "bottom": 37
+        },
+        {
+          "sel": "[data-plan-list] .mode-card .mode-head",
+          "found": true,
+          "ok": true,
+          "top": 191,
+          "bottom": 217
+        },
+        {
+          "sel": "[data-plan-option], [data-propose]",
+          "found": true,
+          "ok": true,
+          "top": 371,
+          "bottom": 412
+        },
+        {
+          "sel": "[data-site]",
+          "found": true,
+          "ok": true,
+          "top": 214,
+          "bottom": 255
+        }
+      ],
+      "scroll": {
+        "doc": false,
+        "body": false
+      }
+    },
+    {
+      "label": "1366x768 at 150% inside a browser window (emulated)",
+      "rows": [
+        {
+          "sel": "[data-filter=open]",
+          "found": true,
+          "ok": true,
+          "top": 154,
+          "bottom": 178
+        },
+        {
+          "sel": "[data-sort]",
+          "found": true,
+          "ok": true,
+          "top": 154,
+          "bottom": 178
+        },
+        {
+          "sel": "[data-request-row=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 190,
+          "bottom": 224
+        },
+        {
+          "sel": "[data-read-request=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 236,
+          "bottom": 269
+        },
+        {
+          "sel": "[data-wait=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 282,
+          "bottom": 323
+        },
+        {
+          "sel": "[data-ws-tab=plan]",
+          "found": true,
+          "ok": true,
+          "top": 121,
+          "bottom": 146
+        },
+        {
+          "sel": "[data-advance=\"10\"]",
+          "found": true,
+          "ok": true,
+          "top": 9,
+          "bottom": 37
+        },
+        {
+          "sel": "[data-plan-list] .mode-card .mode-head",
+          "found": true,
+          "ok": true,
+          "top": 191,
+          "bottom": 217
+        },
+        {
+          "sel": "[data-plan-option], [data-propose]",
+          "found": true,
+          "ok": true,
+          "top": 245,
+          "bottom": 294
+        },
+        {
+          "sel": "[data-site]",
+          "found": true,
+          "ok": true,
+          "top": 214,
+          "bottom": 255
+        }
+      ],
+      "scroll": {
+        "doc": false,
+        "body": false
+      }
+    },
+    {
+      "label": "1920x1080 at 150% (emulated)",
+      "rows": [
+        {
+          "sel": "[data-filter=open]",
+          "found": true,
+          "ok": true,
+          "top": 307,
+          "bottom": 331
+        },
+        {
+          "sel": "[data-sort]",
+          "found": true,
+          "ok": true,
+          "top": 307,
+          "bottom": 331
+        },
+        {
+          "sel": "[data-request-row=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 344,
+          "bottom": 384
+        },
+        {
+          "sel": "[data-read-request=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 528,
+          "bottom": 569
+        },
+        {
+          "sel": "[data-wait=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 582,
+          "bottom": 623
+        },
+        {
+          "sel": "[data-ws-tab=plan]",
+          "found": true,
+          "ok": true,
+          "top": 267,
+          "bottom": 297
+        },
+        {
+          "sel": "[data-advance=\"10\"]",
+          "found": true,
+          "ok": true,
+          "top": 14,
+          "bottom": 44
+        },
+        {
+          "sel": "[data-plan-list] .mode-card .mode-head",
+          "found": true,
+          "ok": true,
+          "top": 345,
+          "bottom": 371
+        },
+        {
+          "sel": "[data-plan-option], [data-propose]",
+          "found": true,
+          "ok": true,
+          "top": 399,
+          "bottom": 448
+        },
+        {
+          "sel": "[data-site]",
+          "found": true,
+          "ok": true,
+          "top": 458,
+          "bottom": 499
+        }
+      ],
+      "scroll": {
+        "doc": false,
+        "body": false
+      }
+    },
+    {
+      "label": "1920x1080",
+      "rows": [
+        {
+          "sel": "[data-filter=open]",
+          "found": true,
+          "ok": true,
+          "top": 366,
+          "bottom": 390
+        },
+        {
+          "sel": "[data-sort]",
+          "found": true,
+          "ok": true,
+          "top": 366,
+          "bottom": 390
+        },
+        {
+          "sel": "[data-request-row=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 405,
+          "bottom": 445
+        },
+        {
+          "sel": "[data-read-request=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 675,
+          "bottom": 716
+        },
+        {
+          "sel": "[data-wait=\"1\"]",
+          "found": true,
+          "ok": true,
+          "top": 729,
+          "bottom": 770
+        },
+        {
+          "sel": "[data-ws-tab=plan]",
+          "found": true,
+          "ok": true,
+          "top": 318,
+          "bottom": 354
+        },
+        {
+          "sel": "[data-advance=\"10\"]",
+          "found": true,
+          "ok": true,
+          "top": 21,
+          "bottom": 54
+        },
+        {
+          "sel": "[data-plan-list] .mode-card .mode-head",
+          "found": true,
+          "ok": true,
+          "top": 406,
+          "bottom": 432
+        },
+        {
+          "sel": "[data-plan-option], [data-propose]",
+          "found": true,
+          "ok": true,
+          "top": 460,
+          "bottom": 509
+        },
+        {
+          "sel": "[data-site]",
+          "found": true,
+          "ok": true,
+          "top": 519,
+          "bottom": 560
+        }
+      ],
+      "scroll": {
+        "doc": false,
+        "body": false
+      }
+    }
+  ],
+  "startedAt": "2026-11-25T21:04:03.577Z",
+  "url": "http://127.0.0.1:5196/",
+  "browserVersion": "158.0.8127.38",
+  "world": {
+    "sites": 21,
+    "routes": 24
+  },
+  "graduated": "aidc_story_slot_001",
+  "briefingPages": 3,
+  "mapThree": [
+    "DE-FRA",
+    "US-SEA",
+    "US-SFO"
+  ],
+  "mapMany": [
+    "AU-SYD",
+    "KR-DJN",
+    "IN-BOM",
+    "US-NYC"
+  ],
+  "totalRequests": 17,
+  "retry": {
+    "from": "aidc_3d_global_002",
+    "to": "aidc_3d_global_003"
+  },
+  "free": {
+    "id": "aidc_3d_global_004",
+    "requests": 12,
+    "sites": [
+      "IN-BOM",
+      "US-NYC",
+      "JP-TYO",
+      "TW-TPE",
+      "US-SEA",
+      "US-IAD",
+      "ID-JKT",
+      "JP-OSA",
+      "IN-BLR"
+    ]
+  },
+  "finishedAt": "2026-11-25T21:15:31.624Z",
+  "pass": 16,
+  "fail": 0
+}

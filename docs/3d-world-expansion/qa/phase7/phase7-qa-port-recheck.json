@@ -1,0 +1,40 @@
+{
+  "issue": 8,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)",
+  "checks": [
+    {
+      "name": "duplicate run and port conflict are refused (the same save cannot open twice; a used port fails with exit code 2)",
+      "pass": true,
+      "ms": 5244
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "crashes": [],
+  "screenshots": [],
+  "shifts": [],
+  "incidents": [],
+  "wrong": [],
+  "resumes": [
+    {
+      "label": "duplicate/port",
+      "save": "aidc_3d_incident_001",
+      "second": "이 저장 슬롯은 다른 게임에서 사용 중입니다. 먼저 해당 게임을 종료해 주세요.",
+      "clashExit": 2,
+      "clashMessage": "SRS 3D engine: port 8799 is already in use (각 소켓 주소(프로토콜/네트워크 주소/포트)는 하나만 사용할 수 있습니다). Stop the other engine or choose --port."
+    }
+  ],
+  "engineTruth": [],
+  "consistency": [],
+  "performance": [],
+  "resources": [],
+  "layout": [],
+  "startedAt": "2026-11-25T21:03:04.440Z",
+  "url": "http://127.0.0.1:5198/",
+  "browserVersion": "158.0.8127.38",
+  "finishedAt": "2026-11-25T21:03:10.171Z",
+  "summary": {
+    "pass": 1,
+    "total": 1
+  }
+}

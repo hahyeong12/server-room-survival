@@ -1,0 +1,2841 @@
+{
+  "issue": 5,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves",
+  "checks": [
+    {
+      "name": "neutral opening: no game, no lit path or request badge, whatever is selected; first request lights only its own path",
+      "pass": true,
+      "ms": 12686
+    },
+    {
+      "name": "tutorial: every step completed by its own real action on world / campus / desk / hall / monitor / rack / responses",
+      "pass": true,
+      "ms": 36040
+    },
+    {
+      "name": "tutorial completion → new story save → first job started, run and finished on the engine → chapter clear → other mode",
+      "pass": true,
+      "ms": 26973
+    },
+    {
+      "name": "reload and browser back/forward keep the engine state and journey; nothing advances by itself",
+      "pass": true,
+      "ms": 20744
+    },
+    {
+      "name": "skip: guide off, recorded as not completed, engine untouched; completion screen offers real modes",
+      "pass": true,
+      "ms": 12755
+    },
+    {
+      "name": "customer consent: economy needs consent; proposal and reply come from the engine customer",
+      "pass": true,
+      "ms": 19805
+    },
+    {
+      "name": "free mode runs the existing free rules (time-based arrivals) from the menu",
+      "pass": true,
+      "ms": 3774
+    },
+    {
+      "name": "layout 1366x768: highlighted control and coach visible without scrolling, no overlay overlap",
+      "pass": true,
+      "ms": 32353
+    },
+    {
+      "name": "layout 1920x1080: highlighted control and coach visible without scrolling, no overlay overlap",
+      "pass": true,
+      "ms": 32585
+    },
+    {
+      "name": "layout 1920x1080@150%: highlighted control and coach visible without scrolling, no overlay overlap",
+      "pass": true,
+      "ms": 32787
+    },
+    {
+      "name": "regression: 8 spaces navigate, campus cooling ops consistent, rack canvas picking from hall views, interiors",
+      "pass": true,
+      "ms": 34259
+    },
+    {
+      "name": "performance per space incl. interiors (avg >= 60 FPS), no long freeze, 10 navigation cycles keep resources bounded",
+      "pass": true,
+      "ms": 54349
+    },
+    {
+      "name": "no runtime or console errors",
+      "pass": true,
+      "ms": 1
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "opening-world-neutral.png",
+    "world-request-arrived.png",
+    "tutorial-briefing.png",
+    "tutorial-origin.png",
+    "tutorial-choose.png",
+    "tutorial-rack.png",
+    "tutorial-time.png",
+    "tutorial-respond.png",
+    "tutorial-verify.png",
+    "tutorial-report.png",
+    "tutorial-complete.png",
+    "story-briefing.png",
+    "story-first-job-done.png",
+    "story-next-request-world.png",
+    "story-chapter-clear.png",
+    "tutorial-skipped.png",
+    "consent-after-reply.png",
+    "layout-1366x768-read.png",
+    "layout-1366x768-choose.png",
+    "layout-1366x768-rack.png",
+    "layout-1366x768-start.png",
+    "layout-1366x768-respond.png",
+    "layout-1366x768-verify.png",
+    "layout-1920x1080-read.png",
+    "layout-1920x1080-choose.png",
+    "layout-1920x1080-rack.png",
+    "layout-1920x1080-start.png",
+    "layout-1920x1080-respond.png",
+    "layout-1920x1080-verify.png",
+    "layout-1920x1080-150pct-read.png",
+    "layout-1920x1080-150pct-choose.png",
+    "layout-1920x1080-150pct-rack.png",
+    "layout-1920x1080-150pct-start.png",
+    "layout-1920x1080-150pct-respond.png",
+    "layout-1920x1080-150pct-verify.png"
+  ],
+  "steps": [
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial origin → read",
+      "clock": "D1 09:00",
+      "step": "read",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "read",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 요청 출처 찾기 완료 · Merlion AI · 생성형 AI 모델 학습 요청 · 신규 요청"
+      },
+      "evidence": {
+        "step": "origin",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial read → compare",
+      "clock": "D1 09:00",
+      "step": "compare",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "compare",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 비교",
+        "folded": false,
+        "spot": "[data-ws-tab=plan]",
+        "spotSelector": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "last": "✓ 요청서 읽기 완료"
+      },
+      "evidence": {
+        "step": "read",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial compare → choose",
+      "clock": "D1 09:00",
+      "step": "choose",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "choose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 선택",
+        "folded": false,
+        "spot": "mode-list coach-spot",
+        "spotSelector": "data-plan-list=",
+        "ring": null,
+        "last": "✓ 배정안 비교 완료"
+      },
+      "evidence": {
+        "step": "compare",
+        "spot": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial choose → hall",
+      "clock": "D1 09:00",
+      "step": "hall",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "hall",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 서버동 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 배정안 선택 완료 · 고성능 모드 · 배정안 2 선택 (자원 미점유). 서버동에서 시작하세요."
+      },
+      "evidence": {
+        "step": "choose",
+        "spot": "data-plan-list=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial hall → rack",
+      "clock": "D1 09:00",
+      "step": "rack",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "rack",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "last": "✓ 서버동 이동 완료"
+      },
+      "evidence": {
+        "step": "hall",
+        "spot": "data-route=hall",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "rack canvas click",
+      "want": "A-01",
+      "got": "A-01",
+      "at": {
+        "x": 773.7003397167061,
+        "y": 354.34931745987353,
+        "visible": true
+      }
+    },
+    {
+      "label": "tutorial rack → start",
+      "clock": "D1 09:00",
+      "step": "start",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "start",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 작업 시작",
+        "folded": false,
+        "spot": "primary big coach-spot",
+        "spotSelector": "data-start-job=A-01",
+        "ring": null,
+        "last": "✓ 배정 서버 찾기 완료"
+      },
+      "evidence": {
+        "step": "rack",
+        "spot": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial start → time",
+      "clock": "D1 09:00",
+      "step": "time",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "time",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 시간 진행",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 작업 시작 완료 · 고성능 모드 시작 · 엔진이 GPU 7 / 전력 7을 점유했습니다."
+      },
+      "evidence": {
+        "step": "start",
+        "spot": "data-start-job=A-01",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial time → diagnose",
+      "clock": "D1 09:10",
+      "step": "diagnose",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "diagnose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 시간 진행 완료 · 10분 진행 · 현재 D1 09:10"
+      },
+      "evidence": {
+        "step": "time",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial diagnose → respond",
+      "clock": "D1 09:10",
+      "step": "respond",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "respond",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 대응 선택",
+        "folded": false,
+        "spot": "ws-card responses coach-spot",
+        "spotSelector": "data-responses=",
+        "ring": null,
+        "last": "✓ 증거 확인 완료"
+      },
+      "evidence": {
+        "step": "diagnose",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "misjudgements refused by the engine",
+      "journeyMisclicks": 6
+    },
+    {
+      "label": "tutorial respond → recover",
+      "clock": "D1 09:10",
+      "step": "recover",
+      "stage": "1:hw_repair:0",
+      "coach": {
+        "active": true,
+        "step": "recover",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 복구 기다리기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 대응 선택 완료 · Server A 장비 복구 시작 · 가상 시간 20분 필요"
+      },
+      "evidence": {
+        "step": "respond",
+        "spot": "data-responses=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial recover → verify",
+      "clock": "D1 09:30",
+      "step": "verify",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "verify",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 복구 기다리기 완료 · 10분 진행 · 현재 D1 09:30"
+      },
+      "evidence": {
+        "step": "recover",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial verify → finish",
+      "clock": "D1 09:30",
+      "step": "finish",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "finish",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 작업 마무리",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 사후 확인 완료 · 사후 확인 완료 · Server A HEALTHY · 작업 running · 진행률 0% · 배정 유지"
+      },
+      "evidence": {
+        "step": "verify",
+        "spot": "data-route=hall",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial finish → report",
+      "clock": "D1 09:40",
+      "step": "report",
+      "stage": "1:done:100",
+      "coach": {
+        "active": true,
+        "step": "report",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 작업 마무리 완료 · 10분 진행 · 현재 D1 09:40"
+      },
+      "evidence": {
+        "step": "finish",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial report → null",
+      "clock": "D1 09:40",
+      "step": null,
+      "stage": "1:done:100",
+      "coach": {
+        "active": false,
+        "step": null,
+        "bubble": false,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": null,
+        "last": "✓ 결과 보고 확인 완료"
+      },
+      "evidence": {
+        "step": "report",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial origin → read",
+      "clock": "D1 09:00",
+      "step": "read",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "read",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 요청 출처 찾기 완료 · Merlion AI · 생성형 AI 모델 학습 요청 · 신규 요청"
+      },
+      "evidence": {
+        "step": "origin",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial read → compare",
+      "clock": "D1 09:00",
+      "step": "compare",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "compare",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 비교",
+        "folded": false,
+        "spot": "[data-ws-tab=plan]",
+        "spotSelector": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "last": "✓ 요청서 읽기 완료"
+      },
+      "evidence": {
+        "step": "read",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial compare → choose",
+      "clock": "D1 09:00",
+      "step": "choose",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "choose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 선택",
+        "folded": false,
+        "spot": "mode-list coach-spot",
+        "spotSelector": "data-plan-list=",
+        "ring": null,
+        "last": "✓ 배정안 비교 완료"
+      },
+      "evidence": {
+        "step": "compare",
+        "spot": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial choose → hall",
+      "clock": "D1 09:00",
+      "step": "hall",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "hall",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 서버동 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 배정안 선택 완료 · 고성능 모드 · 배정안 2 선택 (자원 미점유). 서버동에서 시작하세요."
+      },
+      "evidence": {
+        "step": "choose",
+        "spot": "data-plan-list=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial origin → read",
+      "clock": "D1 09:00",
+      "step": "read",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "read",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 요청 출처 찾기 완료 · Merlion AI · 생성형 AI 모델 학습 요청 · 신규 요청"
+      },
+      "evidence": {
+        "step": "origin",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial read → compare",
+      "clock": "D1 09:00",
+      "step": "compare",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "compare",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 비교",
+        "folded": false,
+        "spot": "[data-ws-tab=plan]",
+        "spotSelector": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "last": "✓ 요청서 읽기 완료"
+      },
+      "evidence": {
+        "step": "read",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial origin → read",
+      "clock": "D1 09:00",
+      "step": "read",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "read",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 요청 출처 찾기 완료 · Merlion AI · 생성형 AI 모델 학습 요청 · 신규 요청"
+      },
+      "evidence": {
+        "step": "origin",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial read → compare",
+      "clock": "D1 09:00",
+      "step": "compare",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "compare",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 비교",
+        "folded": false,
+        "spot": "[data-ws-tab=plan]",
+        "spotSelector": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "last": "✓ 요청서 읽기 완료"
+      },
+      "evidence": {
+        "step": "read",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial compare → choose",
+      "clock": "D1 09:00",
+      "step": "choose",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "choose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 선택",
+        "folded": false,
+        "spot": "mode-list coach-spot",
+        "spotSelector": "data-plan-list=",
+        "ring": null,
+        "last": "✓ 배정안 비교 완료"
+      },
+      "evidence": {
+        "step": "compare",
+        "spot": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial choose → hall",
+      "clock": "D1 09:00",
+      "step": "hall",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "hall",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 서버동 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 배정안 선택 완료 · 고성능 모드 · 배정안 2 선택 (자원 미점유). 서버동에서 시작하세요."
+      },
+      "evidence": {
+        "step": "choose",
+        "spot": "data-plan-list=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial hall → rack",
+      "clock": "D1 09:00",
+      "step": "rack",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "rack",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "last": "✓ 서버동 이동 완료"
+      },
+      "evidence": {
+        "step": "hall",
+        "spot": "data-route=hall",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "rack canvas click",
+      "want": "A-01",
+      "got": "A-01",
+      "at": {
+        "x": 510.5454271958864,
+        "y": 255.76713348363333,
+        "visible": true
+      }
+    },
+    {
+      "label": "tutorial rack → start",
+      "clock": "D1 09:00",
+      "step": "start",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "start",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 작업 시작",
+        "folded": false,
+        "spot": "primary big coach-spot",
+        "spotSelector": "data-start-job=A-01",
+        "ring": null,
+        "last": "✓ 배정 서버 찾기 완료"
+      },
+      "evidence": {
+        "step": "rack",
+        "spot": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial start → time",
+      "clock": "D1 09:00",
+      "step": "time",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "time",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 시간 진행",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 작업 시작 완료 · 고성능 모드 시작 · 엔진이 GPU 7 / 전력 7을 점유했습니다."
+      },
+      "evidence": {
+        "step": "start",
+        "spot": "data-start-job=A-01",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial time → diagnose",
+      "clock": "D1 09:10",
+      "step": "diagnose",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "diagnose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 시간 진행 완료 · 10분 진행 · 현재 D1 09:10"
+      },
+      "evidence": {
+        "step": "time",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial diagnose → respond",
+      "clock": "D1 09:10",
+      "step": "respond",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "respond",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 대응 선택",
+        "folded": false,
+        "spot": "ws-card responses coach-spot",
+        "spotSelector": "data-responses=",
+        "ring": null,
+        "last": "✓ 증거 확인 완료"
+      },
+      "evidence": {
+        "step": "diagnose",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "misjudgements refused by the engine",
+      "journeyMisclicks": 6
+    },
+    {
+      "label": "tutorial respond → recover",
+      "clock": "D1 09:10",
+      "step": "recover",
+      "stage": "1:hw_repair:0",
+      "coach": {
+        "active": true,
+        "step": "recover",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 복구 기다리기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 대응 선택 완료 · Server A 장비 복구 시작 · 가상 시간 20분 필요"
+      },
+      "evidence": {
+        "step": "respond",
+        "spot": "data-responses=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial recover → verify",
+      "clock": "D1 09:30",
+      "step": "verify",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "verify",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 복구 기다리기 완료 · 10분 진행 · 현재 D1 09:30"
+      },
+      "evidence": {
+        "step": "recover",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial origin → read",
+      "clock": "D1 09:00",
+      "step": "read",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "read",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 요청 출처 찾기 완료 · Merlion AI · 생성형 AI 모델 학습 요청 · 신규 요청"
+      },
+      "evidence": {
+        "step": "origin",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial read → compare",
+      "clock": "D1 09:00",
+      "step": "compare",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "compare",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 비교",
+        "folded": false,
+        "spot": "[data-ws-tab=plan]",
+        "spotSelector": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "last": "✓ 요청서 읽기 완료"
+      },
+      "evidence": {
+        "step": "read",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial compare → choose",
+      "clock": "D1 09:00",
+      "step": "choose",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "choose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 선택",
+        "folded": false,
+        "spot": "mode-list coach-spot",
+        "spotSelector": "data-plan-list=",
+        "ring": null,
+        "last": "✓ 배정안 비교 완료"
+      },
+      "evidence": {
+        "step": "compare",
+        "spot": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial choose → hall",
+      "clock": "D1 09:00",
+      "step": "hall",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "hall",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 서버동 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 배정안 선택 완료 · 고성능 모드 · 배정안 2 선택 (자원 미점유). 서버동에서 시작하세요."
+      },
+      "evidence": {
+        "step": "choose",
+        "spot": "data-plan-list=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial hall → rack",
+      "clock": "D1 09:00",
+      "step": "rack",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "rack",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "last": "✓ 서버동 이동 완료"
+      },
+      "evidence": {
+        "step": "hall",
+        "spot": "data-route=hall",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "rack canvas click",
+      "want": "A-01",
+      "got": "A-01",
+      "at": {
+        "x": 773.7003397167061,
+        "y": 354.34931745987353,
+        "visible": true
+      }
+    },
+    {
+      "label": "tutorial rack → start",
+      "clock": "D1 09:00",
+      "step": "start",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "start",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 작업 시작",
+        "folded": false,
+        "spot": "primary big coach-spot",
+        "spotSelector": "data-start-job=A-01",
+        "ring": null,
+        "last": "✓ 배정 서버 찾기 완료"
+      },
+      "evidence": {
+        "step": "rack",
+        "spot": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial start → time",
+      "clock": "D1 09:00",
+      "step": "time",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "time",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 시간 진행",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 작업 시작 완료 · 고성능 모드 시작 · 엔진이 GPU 7 / 전력 7을 점유했습니다."
+      },
+      "evidence": {
+        "step": "start",
+        "spot": "data-start-job=A-01",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial time → diagnose",
+      "clock": "D1 09:10",
+      "step": "diagnose",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "diagnose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 시간 진행 완료 · 10분 진행 · 현재 D1 09:10"
+      },
+      "evidence": {
+        "step": "time",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial diagnose → respond",
+      "clock": "D1 09:10",
+      "step": "respond",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "respond",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 대응 선택",
+        "folded": false,
+        "spot": "ws-card responses coach-spot",
+        "spotSelector": "data-responses=",
+        "ring": null,
+        "last": "✓ 증거 확인 완료"
+      },
+      "evidence": {
+        "step": "diagnose",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "misjudgements refused by the engine",
+      "journeyMisclicks": 6
+    },
+    {
+      "label": "tutorial respond → recover",
+      "clock": "D1 09:10",
+      "step": "recover",
+      "stage": "1:hw_repair:0",
+      "coach": {
+        "active": true,
+        "step": "recover",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 복구 기다리기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 대응 선택 완료 · Server A 장비 복구 시작 · 가상 시간 20분 필요"
+      },
+      "evidence": {
+        "step": "respond",
+        "spot": "data-responses=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial recover → verify",
+      "clock": "D1 09:30",
+      "step": "verify",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "verify",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 복구 기다리기 완료 · 10분 진행 · 현재 D1 09:30"
+      },
+      "evidence": {
+        "step": "recover",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial briefing → campus-info",
+      "clock": "D1 09:00",
+      "step": "campus-info",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "campus-info",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=campus",
+        "ring": null,
+        "last": "✓ 선배 브리핑 완료"
+      },
+      "evidence": {
+        "step": "briefing",
+        "spot": null,
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial campus-info → enter",
+      "clock": "D1 09:00",
+      "step": "enter",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "enter",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "last": "✓ 건물 정보 보기 완료"
+      },
+      "evidence": {
+        "step": "campus-info",
+        "spot": "data-route=campus",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial enter → back",
+      "clock": "D1 09:00",
+      "step": "back",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "back",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 돌아오기",
+        "folded": false,
+        "spot": "#back",
+        "spotSelector": "id=back",
+        "ring": null,
+        "last": "✓ 건물 안으로 완료"
+      },
+      "evidence": {
+        "step": "enter",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "COOLING",
+          "label": "두 번 클릭"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial back → world",
+      "clock": "D1 09:00",
+      "step": "world",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "world",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 세계지도 열기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=world",
+        "ring": null,
+        "last": "✓ 돌아오기 완료"
+      },
+      "evidence": {
+        "step": "back",
+        "spot": "id=back",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial world → origin",
+      "clock": "D1 09:00",
+      "step": "origin",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "origin",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "last": "✓ 세계지도 열기 완료"
+      },
+      "evidence": {
+        "step": "world",
+        "spot": "data-route=world",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial origin → read",
+      "clock": "D1 09:00",
+      "step": "read",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "read",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 요청 출처 찾기 완료 · Merlion AI · 생성형 AI 모델 학습 요청 · 신규 요청"
+      },
+      "evidence": {
+        "step": "origin",
+        "spot": null,
+        "ring": {
+          "kind": "world",
+          "id": "SG",
+          "label": "요청이 온 곳"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial read → compare",
+      "clock": "D1 09:00",
+      "step": "compare",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "compare",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 배정안 비교",
+        "folded": false,
+        "spot": "[data-ws-tab=plan]",
+        "spotSelector": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "last": "✓ 요청서 읽기 완료"
+      },
+      "evidence": {
+        "step": "read",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial compare → choose",
+      "clock": "D1 09:00",
+      "step": "choose",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "choose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▼ 배정안 선택",
+        "folded": false,
+        "spot": "mode-list coach-spot",
+        "spotSelector": "data-plan-list=",
+        "ring": null,
+        "last": "✓ 배정안 비교 완료"
+      },
+      "evidence": {
+        "step": "compare",
+        "spot": "data-ws-tab=plan data-focus-key=tab-plan",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial choose → hall",
+      "clock": "D1 09:00",
+      "step": "hall",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "hall",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 서버동 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 배정안 선택 완료 · 고성능 모드 · 배정안 2 선택 (자원 미점유). 서버동에서 시작하세요."
+      },
+      "evidence": {
+        "step": "choose",
+        "spot": "data-plan-list=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial hall → rack",
+      "clock": "D1 09:00",
+      "step": "rack",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "rack",
+        "bubble": true,
+        "docked": true,
+        "tag": null,
+        "folded": false,
+        "spot": null,
+        "spotSelector": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "last": "✓ 서버동 이동 완료"
+      },
+      "evidence": {
+        "step": "hall",
+        "spot": "data-route=hall",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "rack canvas click",
+      "want": "A-01",
+      "got": "A-01",
+      "at": {
+        "x": 467.32368399188914,
+        "y": 242.02335416019523,
+        "visible": true
+      }
+    },
+    {
+      "label": "tutorial rack → start",
+      "clock": "D1 09:00",
+      "step": "start",
+      "stage": "1:incoming:0",
+      "coach": {
+        "active": true,
+        "step": "start",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 작업 시작",
+        "folded": false,
+        "spot": "primary big coach-spot",
+        "spotSelector": "data-start-job=A-01",
+        "ring": null,
+        "last": "✓ 배정 서버 찾기 완료"
+      },
+      "evidence": {
+        "step": "rack",
+        "spot": null,
+        "ring": {
+          "kind": "rack",
+          "id": "A-01",
+          "label": "배정안의 서버 랙"
+        },
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial start → time",
+      "clock": "D1 09:00",
+      "step": "time",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "time",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 시간 진행",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 작업 시작 완료 · 고성능 모드 시작 · 엔진이 GPU 7 / 전력 7을 점유했습니다."
+      },
+      "evidence": {
+        "step": "start",
+        "spot": "data-start-job=A-01",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial time → diagnose",
+      "clock": "D1 09:10",
+      "step": "diagnose",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "diagnose",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=noc",
+        "ring": null,
+        "last": "✓ 시간 진행 완료 · 10분 진행 · 현재 D1 09:10"
+      },
+      "evidence": {
+        "step": "time",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial diagnose → respond",
+      "clock": "D1 09:10",
+      "step": "respond",
+      "stage": "1:hw_fault:0",
+      "coach": {
+        "active": true,
+        "step": "respond",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 대응 선택",
+        "folded": false,
+        "spot": "ws-card responses coach-spot",
+        "spotSelector": "data-responses=",
+        "ring": null,
+        "last": "✓ 증거 확인 완료"
+      },
+      "evidence": {
+        "step": "diagnose",
+        "spot": "data-route=noc",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "misjudgements refused by the engine",
+      "journeyMisclicks": 6
+    },
+    {
+      "label": "tutorial respond → recover",
+      "clock": "D1 09:10",
+      "step": "recover",
+      "stage": "1:hw_repair:0",
+      "coach": {
+        "active": true,
+        "step": "recover",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 복구 기다리기",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-advance=10",
+        "ring": null,
+        "last": "✓ 대응 선택 완료 · Server A 장비 복구 시작 · 가상 시간 20분 필요"
+      },
+      "evidence": {
+        "step": "respond",
+        "spot": "data-responses=",
+        "ring": null,
+        "bubble": true
+      }
+    },
+    {
+      "label": "tutorial recover → verify",
+      "clock": "D1 09:30",
+      "step": "verify",
+      "stage": "1:running:0",
+      "coach": {
+        "active": true,
+        "step": "verify",
+        "bubble": true,
+        "docked": true,
+        "tag": "▲ 먼저 이곳으로 이동",
+        "folded": false,
+        "spot": "coach-spot",
+        "spotSelector": "data-route=hall",
+        "ring": null,
+        "last": "✓ 복구 기다리기 완료 · 10분 진행 · 현재 D1 09:30"
+      },
+      "evidence": {
+        "step": "recover",
+        "spot": "data-advance=10",
+        "ring": null,
+        "bubble": true
+      }
+    }
+  ],
+  "viewports": [
+    {
+      "label": "1366x768",
+      "css": "1366x768",
+      "dpr": 1,
+      "states": [
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "read",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": true,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": true
+          },
+          "step": "choose",
+          "ring": null
+        },
+        {
+          "spot": null,
+          "coach": {
+            "inView": true
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "rack",
+          "ring": {
+            "kind": "rack",
+            "id": "A-01",
+            "label": "배정안의 서버 랙"
+          }
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "start",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": true,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": true
+          },
+          "step": "respond",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": true
+          },
+          "step": "verify",
+          "ring": null
+        }
+      ]
+    },
+    {
+      "label": "1920x1080",
+      "css": "1920x1080",
+      "dpr": 1,
+      "states": [
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "read",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": false
+          },
+          "step": "choose",
+          "ring": null
+        },
+        {
+          "spot": null,
+          "coach": {
+            "inView": true
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "rack",
+          "ring": {
+            "kind": "rack",
+            "id": "A-01",
+            "label": "배정안의 서버 랙"
+          }
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "start",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": false
+          },
+          "step": "respond",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": false
+          },
+          "step": "verify",
+          "ring": null
+        }
+      ]
+    },
+    {
+      "label": "1920x1080@150%",
+      "css": "1280x720",
+      "dpr": 1.5,
+      "states": [
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "read",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": true,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": true
+          },
+          "step": "choose",
+          "ring": null
+        },
+        {
+          "spot": null,
+          "coach": {
+            "inView": true
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "rack",
+          "ring": {
+            "kind": "rack",
+            "id": "A-01",
+            "label": "배정안의 서버 랙"
+          }
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "step": "start",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": true,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": true
+          },
+          "step": "respond",
+          "ring": null
+        },
+        {
+          "spot": {
+            "big": false,
+            "inView": true,
+            "topmost": true
+          },
+          "coach": {
+            "inView": true,
+            "coversSpot": false
+          },
+          "pageScroll": false,
+          "timeButtons": true,
+          "workstation": {
+            "tabsInView": true,
+            "paneScroll": true
+          },
+          "step": "verify",
+          "ring": null
+        }
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "space": "world",
+      "fps": 240,
+      "p95": 4.3,
+      "max": 4.3,
+      "calls": 696
+    },
+    {
+      "space": "campus",
+      "fps": 240,
+      "p95": 4.3,
+      "max": 4.3,
+      "calls": 253
+    },
+    {
+      "space": "noc",
+      "fps": 237.6,
+      "p95": 4.3,
+      "max": 16.7,
+      "calls": 255
+    },
+    {
+      "space": "hall",
+      "fps": 238.4,
+      "p95": 4.3,
+      "max": 12.6,
+      "calls": 758
+    },
+    {
+      "space": "COOLING",
+      "fps": 240,
+      "p95": 4.3,
+      "max": 4.3,
+      "calls": 204
+    },
+    {
+      "space": "NETWORK",
+      "fps": 240,
+      "p95": 4.3,
+      "max": 4.3,
+      "calls": 376
+    }
+  ],
+  "startedAt": "2026-11-25T20:54:10.851Z",
+  "url": "http://127.0.0.1:5175/",
+  "saveDir": "(temporary, removed after QA)",
+  "browserVersion": "158.0.8127.38",
+  "tutorial": {
+    "gameId": "aidc_story_slot_002",
+    "misclicks": 6,
+    "score": 100,
+    "clock": "D1 09:40"
+  },
+  "story": {
+    "gameId": "aidc_story_slot_003",
+    "clock": "D1 10:30",
+    "result": [
+      [
+        "완료 업무",
+        "3/3건"
+      ],
+      [
+        "평균 운영 점수",
+        "100.0점"
+      ],
+      [
+        "자원 반환",
+        "GPU 누적 16개 · 전력 누적 17단위"
+      ],
+      [
+        "Merlion AI",
+        "정상 완료 · 100점"
+      ],
+      [
+        "Sakura Robotics",
+        "정상 완료 · 100점"
+      ],
+      [
+        "Northstar AI",
+        "정상 완료 · 100점"
+      ]
+    ]
+  },
+  "resources": {
+    "first": {
+      "g": 577,
+      "t": 93
+    },
+    "last": {
+      "g": 577,
+      "t": 93
+    }
+  },
+  "finishedAt": "2026-11-25T20:59:30.434Z"
+}

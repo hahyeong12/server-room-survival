@@ -1,0 +1,28 @@
+{
+  "phase": "after",
+  "user_data_files": 579,
+  "source_files": 153,
+  "original_user_baseline": {
+    "count": 53,
+    "changed": []
+  },
+  "original_qa_baseline": {
+    "count": 508,
+    "changed": []
+  },
+  "user_data_changed": [],
+  "source_changed": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "aidc/global_ops/session.py",
+    "aidc/incidents/__init__.py",
+    "aidc/incidents/content.py",
+    "aidc/incidents/incidents_v1.json",
+    "aidc/incidents/session.py",
+    "session.py",
+    "tests/incident_support.py",
+    "tests/test_global_shifts.py",
+    "tests/test_incidents.py"
+  ],
+  "user_data_identical": true
+}

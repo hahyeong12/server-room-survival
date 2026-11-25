@@ -267,15 +267,20 @@ try{
     for(const p of (await U.inc(page,id)).verifyProbes)await U.observe(page,id,p);await U.verify(page,id);await U.report(page,id);
     ({ctx,page}=await resumeAfterRestart(ctx,page,'practice: incident closed'));assert.equal((await U.inc(page,id)).state,'closed');await ctx.close();
   });
-  await check('duplicate run and port conflict are refused (the same save cannot open twice; a used port fails)',async()=>{
-    const id=incidentId;
-    const dup=spawn(python(),['-m','engine.server','--port','8799','--save-dir',stack.saveDir],{cwd:ROOT,env:{...process.env,PYTHONIOENCODING:'utf-8'}});
-    let ok=false;for(let i=0;i<40&&!ok;i++){try{ok=(await fetch('http://127.0.0.1:8799/api/health')).ok;}catch{}await new Promise(r=>setTimeout(r,250));}
-    const {ctx,page}=await open();if(!(await page.evaluate(()=>!document.querySelector('#menu').hidden)))await U.click(page,'#menu-open');await page.waitForSelector(`[data-resume="${id}"]`);await U.click(page,`[data-resume="${id}"]`);await page.waitForTimeout(600);
-    const second=await (await fetch(`http://127.0.0.1:8799/api/games/${id}`)).json();assert.equal(second.ok,false,'the second engine cannot open a save the first one holds');
-    const clash=spawn(python(),['-m','engine.server','--port','8799','--save-dir',stack.saveDir],{cwd:ROOT,env:{...process.env,PYTHONIOENCODING:'utf-8'}});
-    const code=await new Promise(r=>{clash.once('exit',r);setTimeout(()=>{clash.kill();r('timeout');},8000);});assert.notEqual(code,0,'port conflict exits with an error');
-    report.resumes.push({label:'duplicate/port',second:second.message,clashExit:code});dup.kill();await ctx.close();
+  await check('duplicate run and port conflict are refused (the same save cannot open twice; a used port fails with exit code 2)',async()=>{
+    const {ctx,page}=await open();await page.waitForSelector('[data-incident-practice]');await page.selectOption('[data-incident-practice]','dns');await U.click(page,'[data-new=incident_practice]');await page.waitForTimeout(700);
+    const id=(await U.G(page)).id;let dup=null,clash=null;
+    try{
+      dup=spawn(python(),['-m','engine.server','--port','8799','--save-dir',stack.saveDir],{cwd:ROOT,env:{...process.env,PYTHONIOENCODING:'utf-8'}});
+      let ok=false;for(let i=0;i<40&&!ok;i++){try{ok=(await fetch('http://127.0.0.1:8799/api/health')).ok;}catch{}await new Promise(r=>setTimeout(r,250));}
+      assert.ok(ok,'second engine on another port is up');
+      const second=await (await fetch(`http://127.0.0.1:8799/api/games/${id}`)).json();
+      assert.equal(second.ok,false,'the second engine cannot open a save the first one holds');assert.match(second.message,/사용 중/);
+      let err='';clash=spawn(python(),['-m','engine.server','--port','8799','--save-dir',stack.saveDir],{cwd:ROOT,env:{...process.env,PYTHONIOENCODING:'utf-8'}});clash.stderr.on('data',d=>{err+=d;});
+      const code=await new Promise(r=>{clash.once('exit',r);setTimeout(()=>r('timeout'),10000);});
+      assert.equal(code,2,'a used port is an error, not a silent second listener');assert.match(err,/already in use/);
+      report.resumes.push({label:'duplicate/port',save:id,second:second.message,clashExit:code,clashMessage:err.trim().slice(0,160)});
+    }finally{dup?.kill();clash?.kill();await ctx.close();}
   });
   await check('layout: incident card buttons and the senior/briefing box visible without page scroll at 1366x768, 1366x768@150% and 1920x1080@150%; tutorial/story too',async()=>{
     for(const [w,h,dpr,label]of [[1366,768,1,'1366x768'],[911,512,1.5,'1366x768 at 150% (emulated)'],[1280,720,1.5,'1920x1080 at 150% (emulated)']]){
