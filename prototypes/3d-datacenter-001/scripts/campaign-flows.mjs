@@ -148,3 +148,4 @@ export async function chapter5(page,shot){
   await page.waitForSelector('#screen-dialog[open]');
 }
 
+export {click} from './phase5-ui.mjs';
