@@ -246,3 +246,5 @@ pre.lab-out{margin:0 0 6px;white-space:pre-wrap;font-family:Consolas,"Malgun Got
 .inc-site-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.inc-facility dd{white-space:normal}
 .incident-result .postmortem li{color:#cfe3ee}
 @media (prefers-reduced-motion: reduce){.inc-stepper li.now{transition:none}}
+/* Phase 7: in an incident save a long card never squeezes the inbox list to zero height; the pane scrolls instead. */
+body[data-mode=incident] .ws-pane>*{flex-shrink:0}

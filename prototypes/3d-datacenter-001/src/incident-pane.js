@@ -151,7 +151,8 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
 // Physical instrument rows for a facility card (engine facilities view). Visible to anyone standing in the building.
 export function facilityRows(g, id) {
   const f = g?.incident?.facilities; if (!f) return null;
-  const need = { COOLING: 'cooling', UPS: 'ups', POWER: 'ups', NETWORK: 'tor', 'HALL-01': 'tor' }[id];
+  // Each building has its own instruments; a block from the previous place may still be in the snapshot for a frame.
+  const need = { COOLING: 'cooling', UPS: 'ups', POWER: 'ups', NETWORK: 'edge', 'HALL-01': 'storage' }[id];
   if (need && !f[need]) return [['계기', '건물 안에 들어가면 이 건물의 계기를 볼 수 있습니다(현장 정보).']];
   if (id === 'COOLING') return Object.entries(f.cooling).map(([z, c]) => [`냉각 구역 ${z} (${c.servers.join('·')})`, `${c.state === 'ok' ? '정상' : c.state === 'warn' ? '⚠ 경고' : '↻ 복구 중'} · P-1 ${c.pumps['P-1']} / P-2 ${c.pumps['P-2']} / 예비 P-3 ${c.pumps['P-3']} · 유량 ${c.flow} L/min · 흡입 ${c.inlet} °C`]);
   if (id === 'UPS' || id === 'POWER') return Object.entries(f.ups).map(([n, u]) => [`${n} (서버 ${u.servers.join('·')})`, u.mode === 'battery' ? `⚠ 배터리 운전 · 남은 보호 시간 약 ${u.runtime}분(가상) · 잔량 ${u.battery}%${u.restoring ? ' · 전원팀 복구 중' : ''}` : '상용 전원 정상 · 배터리 대기']);

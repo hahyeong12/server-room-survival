@@ -160,7 +160,14 @@ export function createInteriors() {
   }
   function update(time, state, dt) {
     if (!current) return;
-    if (state.game?.incident?.facilities) { engineUpdate(time, state.game.incident.facilities, dt); return; }
+    const f = state.game?.incident?.facilities;
+    if (f) {
+      // Phase 7: the engine sends a building's instruments only while the player stands in it. Until the reply to the
+      // navigation arrives, keep the last drawn frame instead of reading a block that is not there yet.
+      const need = { COOLING: 'cooling', UPS: 'ups', POWER: 'ups', NETWORK: 'edge' }[current];
+      if (f[need]) engineUpdate(time, f, dt);
+      return;
+    }
     const cv = coolingView(state), pv = powerView(state), uv = upsView(state), nv = networkView(state), checks = state.ops.checks;
     if (current === 'COOLING') {
       const speed = cv.mode === 'on' ? 5 : cv.mode === 'warn' ? 12 : 0; rotorAngle += speed * dt; for (const r of anim.cooling.rotors) r.rotation.x = rotorAngle;

@@ -14,7 +14,7 @@ import {execFileSync} from 'node:child_process';
 import {S,G,click,places,toastText,canvasClick,briefing,rid,req,tab,selectRow,read,planTab,choose,startHall,start,negotiate,wait,reject,drainJobs,advance} from './phase6-ui.mjs';
 import * as story5 from './campaign-flows.mjs';
 
-const out=resolve('../../docs/3d-world-expansion/qa/phase6');await mkdir(out,{recursive:true});
+const out=resolve(process.argv.find(x=>x.startsWith('--out='))?.slice(6)||'../../docs/3d-world-expansion/qa/phase6');   // Phase 7: --out= keeps a regression run apartawait mkdir(out,{recursive:true});
 const only=process.argv.find(x=>x.startsWith('--only='))?.slice(7);
 const report={issue:7,mode:'Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)',checks:[],errors:[],consoleErrors:[],screenshots:[],shifts:[],requests:[],resumes:[],engineTruth:[],performance:[],resources:[],layout:[],startedAt:new Date().toISOString()};
 let browser,stack,currentPage=null,careerId=null;

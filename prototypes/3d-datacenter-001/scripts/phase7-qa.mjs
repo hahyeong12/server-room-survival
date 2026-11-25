@@ -91,7 +91,7 @@ const SCRIPTS={
   congestion:[['hook','C-overlap'],['ack'],['obs','storage_latency','ok'],['obs','storage_space','ok'],['hyp','storage_latency','refuted'],['obs','link_stats','bad'],['hyp','congestion','confirmed'],['act','reroute_backup','none'],['wait','free'],['act','qos_adjust','fix']],
   storage_latency:[['ack'],['obs','storage_latency','bad'],['obs','storage_space','ok'],['hyp','storage_full','refuted'],['hyp','storage_latency','confirmed'],['act','cleanup_temp','none'],['wait','free'],['act','storage_path','fix']],
   gpu_oom:[['ack'],['obs','job_log','bad'],['obs','dcgm','ok'],['hyp','gpu_health','refuted'],['hyp','gpu_oom','confirmed'],['act','reduce_batch','refused'],['act','ask_consent','consent'],['oom']],
-  crashloop:[['ack'],['obs','service_events','bad'],['obs','job_log','bad'],['hyp','crashloop','confirmed'],['act','restart_service','none'],['act','escalate_platform','call'],['wait','approved:platform'],['wait','free'],['act','rollback_deploy','fix']],
+  crashloop:[['ack'],['obs','service_events','bad'],['obs','job_log','bad'],['hyp','crashloop','confirmed'],['act','restart_service','none'],['wait','free'],['act','escalate_platform','call'],['wait','approved:platform'],['act','rollback_deploy','fix']],
 };
 const ptr={};let HOOKS={};
 const P=()=>currentPage;

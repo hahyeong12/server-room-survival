@@ -44,4 +44,6 @@ test('facility rows come from the engine facilities view only', () => {
   assert.equal(facilityRows({ mode: 'free' }, 'COOLING'), null, 'outside an incident save the demo values stay');
   const away = { ...g, incident: { ...g.incident, facilities: { location: 'noc' } } };
   assert.match(facilityRows(away, 'UPS')[0][1], /건물 안에 들어가면/, 'instruments only on site');
+  const fromNetwork = { ...g, incident: { ...g.incident, facilities: { location: 'NETWORK', tor: f.tor, edge: f.edge, dns: f.dns } } };
+  assert.match(facilityRows(fromNetwork, 'HALL-01')[0][1], /건물 안에 들어가면/, 'a stale block from another building is not read');
 });
