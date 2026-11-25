@@ -6,8 +6,9 @@ import {readings,STATES} from './model.js';
 import {COOLING,coolingView,powerView,upsView,networkView,hallView} from './facility-ops.js';
 import {OPENING,OPENING_SECONDS,OPENING_STORAGE_KEY} from './opening.js';
 import {createEngineClient} from './api.js';
-import {focusRequest,requestById,isOpen,STAGE_LABEL,MODE_NAMES,COUNTRY_NAMES,serverOfRack,termsLine,allowedLine,engineTotals,storyGoal,freeGoal,planRacks} from './game-view.js';
-import {focusPath,activePaths} from './network-data.js';
+import {focusRequest,requestById,isOpen,STAGE_LABEL,MODE_NAMES,COUNTRY_NAMES,serverOfRack,termsLine,allowedLine,engineTotals,storyGoal,freeGoal,planRacks,placeName,isGlobal,globalGoal,inboxRows,inboxCounts,INBOX_FILTERS,INBOX_SORTS} from './game-view.js';
+import {focusPath,activePaths,litSites,pathName,SITE_PATHS} from './network-data.js';
+import {clusters as siteClusters,LEGACY,CATALOG} from './catalog.js';
 import {createCoach} from './coach.js';
 import {createScreens} from './screens.js';
 import {chapterGoal,talkFor,isLaterChapter} from './campaign-view.js';
@@ -55,7 +56,7 @@ const GAME_KEY='srs3d.game.v1';
 let scene,lastViewKey=null,frame=0,lastTime=performance.now(),lastPerf=0,perfOpen=false,reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let openingActive=false,openingStart=0,openingResult=null,openingLocation=null,transitTimer=0,toastTimer=0;
 let gameId=null,engine={online:null,message:''},pending=0;
-const ui={tab:'inbox',plans:{},diagnosis:{},conversation:{},talkPage:0,talkKey:'',talkClosed:''};
+const ui={tab:'inbox',plans:{},diagnosis:{},conversation:{},talkPage:0,talkKey:'',talkClosed:'',filter:'open',sort:'arrival'};
 const actionLog=[];
 const frameTimes=[],gpuTimes=[];let stats={fps:0,p95FrameMs:0,gpuMs:null};
 const descriptions={world:'한국을 중심으로 본 가상 국제망. 실제로 도착한 요청의 경로만 빛납니다.',campus:'건물을 한 번 누르면 정보, 두 번 누르면 내부로 들어갑니다.',noc:'요청을 받고, 배정을 계획하고, 장애를 진단하고, 결과를 확인하는 내 자리.',hall:'배정한 엔진 서버(1번 열 A-01~D-01)를 직접 찾아 작업을 시작하는 현장.',room:'시설의 기능을 보는 작은 작업 공간 (교육용 모식).'};
@@ -97,7 +98,7 @@ async function openGame(snapshotOrId){
 }
 async function newGame(mode,chapter){const res=await api.create(mode,chapter);if(!res.ok){toast(res.message||'새 게임을 시작할 수 없습니다.','hint');if(res.offline)setEngine(false,res.message);return false;}return openGame(res.game);}
 // [현재 장 재도전] / chapter select: the engine copies the chapter-start checkpoint into a NEW slot; the current save stays.
-async function retryChapter(){if(!gameId)return false;const res=await api.retry(gameId);logAction({type:'retry'},res);if(!res.ok){toast((res.message||'재도전을 준비할 수 없습니다.')+(res.hint?` · ${res.hint}`:''),'hint');return false;}toast(`새 슬롯에서 재도전 · ${res.game.story?.chapter?.heading??''} (이전 저장은 그대로)`);return openGame(res.game);}
+async function retryChapter(){if(!gameId)return false;const res=await api.retry(gameId);logAction({type:'retry'},res);if(!res.ok){toast((res.message||'재도전을 준비할 수 없습니다.')+(res.hint?` · ${res.hint}`:''),'hint');return false;}toast(`새 슬롯에서 재도전 · ${res.game.story?.chapter?.heading??(res.game.global?`교대 ${res.game.global.shift}`:'')} (이전 저장은 그대로)`);return openGame(res.game);}
 async function startCheckpoint(id,chapter){const res=await api.checkpoint(id,chapter);logAction({type:'checkpoint',id,chapter},res);if(!res.ok){toast(res.message||'장 시작 기록을 열 수 없습니다.','hint');return false;}return openGame(res.game);}
 
 // ---------- navigation (view-only locally, reported to the journey) ----------
@@ -110,7 +111,12 @@ function navigate(route,via='tab',building){
 }
 function enterFacility(id,via){if(!store.enterFacility(id))return;const r=store.state.navigation.route;if(location.hash!==`#${r}`)history.replaceState(null,'',`#${r}`);send({type:'navigate',route:r,via,building:id},{quiet:true});}
 function selectFacility(id,via){if(store.selectFacility(id))send({type:'select_facility',id,via},{quiet:true});}
-function selectCountry(id){if(store.selectCountry(id))send({type:'select_country',id});}
+// Phase 6: map picks carry the catalog city id. Outside a global game the three legacy cities keep their old
+// country codes (SG/JP/US), which chapters 1-5 and the tutorial use.
+const LEGACY_OF=Object.fromEntries(Object.entries(LEGACY).map(([code,l])=>[l.site,code]));
+// Outside a global game the other catalog cities have no requests at all: a click on them is ignored (not a misclick).
+function pickCode(id){if(isGlobal(game())||id==='KR'||!game())return LEGACY_OF[id]&&!isGlobal(game())?LEGACY_OF[id]:id;return LEGACY_OF[id]??(Object.hasOwn(LEGACY,id)?id:null);}
+function selectCountry(id){if(!store.selectCountry(id))return;send({type:'select_country',id}).then(res=>{if(res?.ok&&res.result?.rid){ui.tab='inbox';render();}});}
 function selectRack(id){if(store.selectRack(id)&&gameId)send({type:'inspect_rack',rack:id},{quiet:true});}
 function showTransit(from,to){
   const t=$('transit');t.replaceChildren();const path=el('div','transit-path');
@@ -199,6 +205,7 @@ function goalHead(){
   if(!g){step='게임 선택 전';title=engine.online===false?'Python 엔진이 꺼져 있습니다':'모드를 고르세요';hint=engine.online===false?'npm run play 로 엔진을 실행한 뒤 새로고침하세요. 3D 공간은 둘러볼 수 있습니다.':'위쪽 [메뉴 · 모드]에서 튜토리얼 / 스토리 도전 / 자유·연습을 시작합니다.';}
   else if(j?.kind==='tutorial'&&!j.skipped&&!j.completed&&cur){step=`튜토리얼 · 목표 ${cur.goalIndex}/${j.total}`;title=`${cur.goalTitle} — ${cur.title}`;hint=cur.what;why=`왜: ${cur.why}`;where=`어디서: ${cur.where}`;pips=j.goals.map(x=>x.done?'done':x.current?'now':'');}
   else if(j?.kind==='tutorial'){step=j.completed?'튜토리얼 · 실습 완료':'튜토리얼 · 안내 끔';title=j.completed?'실습을 모두 마쳤습니다':'안내 없이 자유롭게 진행 중';hint=j.completed?'[메뉴 · 모드]에서 스토리 도전을 시작하세요.':'엔진 상태는 그대로입니다. 완료하려면 실제 업무를 끝내세요.';}
+  else if(isGlobal(g)){const gg=globalGoal(g);step=gg.label;title=gg.title;hint=gg.what;where=gg.goal||'';}
   else if(isLaterChapter(g)){const cg=chapterGoal(g);step=cg.label;title=cg.title;hint=cg.what;where=cg.where?`어디서: ${cg.where}`:'';}
   else{const sg=storyGoal(g)||freeGoal(g);if(sg){step=sg.label;title=sg.title;hint=sg.what;why=sg.mentor?`선배: ${sg.mentor}`:'';}}
   $('goal-step').textContent=step;$('goal-title').textContent=title;$('goal-hint').textContent=hint;$('goal-why').textContent=why;$('goal-where').textContent=where;
@@ -210,6 +217,7 @@ function requestSummary(){
   if(!g){root.append(el('p','card-line','게임을 시작하면 Python 엔진의 실제 요청·자원·시각이 여기에 표시됩니다.'));return;}
   if(!r){root.append(el('p','card-line','아직 도착한 요청이 없습니다.'));return;}
   const row=el('div','req-row');row.append(el('span','flag',r.code),el('strong','',`요청 #${r.id} · ${r.company}`),chip(STAGE_LABEL[r.stage],STAGE_TONE[r.stage]));root.append(row);
+  if(r.site)root.append(el('div','req-terms',`${placeName(r)} · ${r.client.industry} · ${r.job.label}`));
   root.append(el('div','req-terms',`원래 요청 · ${termsLine(r)}`));
   if(r.planLabel&&r.allocation.length)root.append(el('div','req-terms',`실행 중 · ${r.planLabel} · GPU ${r.gpu} / 전력 ${r.power}${r.plan!==r.conditions?.requestedMode?' (원래 요청과 다른 모드: 고객 허용·동의 범위)':''}`));
   const track=el('div','progress-track'),bar=el('i');bar.style.width=`${r.progress}%`;track.append(bar);root.append(track);
@@ -219,6 +227,7 @@ function requestSummary(){
 }
 function contextCard(){
   const state=store.state,nav=state.navigation,route=nav.route,root=$('context-card'),g=game();root.replaceChildren();
+  if(route==='world'&&isGlobal(g)){root.append(siteList(state,g));return;}
   if(route==='world'){
     const chips=el('div','chip-row');for(const [id,c]of Object.entries(COUNTRIES)){const b=button(id,()=>selectCountry(id),id===nav.country?'active':'',{'data-country':id,'aria-label':`${c.name} 선택`});chips.append(b);}root.append(chips);
     const fp=focusPath(state);root.append(el('p','card-line',fp?fp.message:g?'지금 열린 요청이 없습니다. 모든 고객 경로가 어둡습니다.':'게임을 시작하면 도착한 요청의 경로만 빛납니다.'));
@@ -235,6 +244,21 @@ function contextCard(){
   }else if(route==='room'){
     root.append(facilityCard(nav.room,state,true));
   }
+}
+// Phase 6 world panel: lit cities first (click = select that city's request in the engine), then the simple source
+// list of every virtual customer city grouped by map cluster.
+function siteList(state,g){
+  const box=el('div','site-list'),lit=litSites(state),fp=focusPath(state);
+  box.append(el('p','card-line',fp?fp.message:'지금 열린 요청이 없습니다. 모든 고객 도시가 어둡습니다.'));
+  const live=el('div','site-live');live.dataset.siteLive='';
+  for(const s of lit){const b=button('',()=>selectCountry(s.code),s.focus?'site-chip active':'site-chip',{'data-site':s.code,'aria-label':`${pathName(s.code)} 요청 선택`});
+    b.append(el('strong','',s.code),el('span','',`${SITE_PATHS[s.code]?.name??pathName(s.code)} · 요청 #${s.rid}${s.count>1?` 외 ${s.count-1}건`:''}`));live.append(b);}
+  if(!lit.length)live.append(el('small','card-sub','점등된 도시 없음'));
+  box.append(el('strong','site-head',`도착한 요청의 도시 ${lit.length}곳`),live);
+  const det=el('details','site-sources');det.append(el('summary','',`가상 고객 도시 ${Object.keys(SITE_PATHS).length}곳 · 출처`));
+  for(const c of siteClusters()){const row=el('div','site-cluster');row.append(el('b','',c.name));for(const x of c.sites){const on=lit.some(s=>s.code===x.id);const b=button(`${x.city}${on?' ●':''}`,()=>selectCountry(x.id),on?'link on':'link',{'data-site-source':x.id,title:`${x.id} · ${x.lat}, ${x.lon} (지도 표시용 근사)`});row.append(b);}det.append(row);}
+  det.append(el('small','ops-note',CATALOG.notice));for(const src of CATALOG.sources)det.append(el('small','ops-note',`${src.topic}: ${src.note}${src.url?` (${src.url})`:''}`));
+  box.append(det);return box;
 }
 // Rack card: engine server data for A-01..D-01; decoration racks say so. Start / re-check are real actions.
 function rackCard(){
@@ -267,7 +291,7 @@ function detailBody(){
   const g=game(),r=focusRequest(g),root=$('detail-body');root.replaceChildren();
   if(!g||!r){root.append(el('p','ops-note','게임을 시작하면 엔진 기록이 표시됩니다.'));return;}
   const plans=r.conditions?.plans||{};
-  root.append(readingsGrid([['요청 / 고객',`#${r.id} / ${r.company} (${COUNTRY_NAMES[r.code]||r.country})`],['작업',r.title],
+  root.append(readingsGrid([['요청 / 고객',`#${r.id} / ${r.company} (${placeName(r)})`],['작업',r.title],...(r.job?[['업무 유형',`${r.job.label} — ${r.job.what}`],['실무 메모',r.job.practice]]:[]),
     ...Object.entries(plans).map(([k,p])=>[MODE_NAMES[k],`GPU ${p.gpu} · 전력 ${p.power} · 네트워크 ${p.network}`]),
     ['허용 모드',allowedLine(r)],['기한',`접수 ${r.terms.received} · 완료 기한 ${r.terms.due} · 최종 접수 ${r.terms.expires}`],
     ['실행',r.planLabel?`${r.planLabel} · GPU ${r.gpu} / 전력 ${r.power}`:'미배정'],['위치',r.allocation.length?r.allocation.map(p=>`${p.server}(${p.rack}) GPU${p.gpu}/전력${p.power}`).join(' · '):'—']]));
@@ -295,7 +319,7 @@ function renderWorkstation(){
   const r=focusRequest(g);
   if(ui.tab==='lab'&&!g.story?.training)ui.tab='inbox';
   for(const [id,label]of tabsFor(g)){
-    const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&r&&!isOpen(r)&&!r.reported?'●':id==='lab'&&g.story.training.status.headline?.tone==='warn'?'!':'';
+    const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&((r&&!isOpen(r)&&!r.reported)||(isGlobal(g)&&g.global.done))?'●':id==='lab'&&g.story.training.status.headline?.tone==='warn'?'!':'';
     const b=button(badge?`${label} ${badge}`:label,()=>openTab(id),ui.tab===id?'active':'',{'data-ws-tab':id,role:'tab','aria-selected':String(ui.tab===id)});b.dataset.focusKey=`tab-${id}`;tabs.append(b);
   }
   const body=el('div','ws-pane');body.dataset.pane=ui.tab;
@@ -306,14 +330,27 @@ function renderWorkstation(){
   const target=ws.querySelector('[data-lab-target]'),tkey=target?`${ui.tab}:${target.dataset.labQuestion||''}`:'';
   if(target&&ui.labShown!==tkey){ui.labShown=tkey;target.scrollIntoView({block:'nearest'});}
 }
+function inboxTools(body,g){
+  const counts=inboxCounts(g),bar=el('div','inbox-tools');
+  for(const [k,label]of Object.entries(INBOX_FILTERS)){const b=button(`${label} ${counts[k]}`,()=>{ui.filter=k;render();},ui.filter===k?'active':'',{'data-filter':k,'aria-pressed':String(ui.filter===k)});bar.append(b);}
+  const sel=el('select');sel.dataset.sort='';sel.setAttribute('aria-label','정렬');for(const [k,label]of Object.entries(INBOX_SORTS)){const o=el('option','',label);o.value=k;sel.append(o);}sel.value=ui.sort;sel.addEventListener('change',()=>{ui.sort=sel.value;render();});bar.append(sel);
+  if(counts.unread)bar.append(el('span','chip',`안 읽음 ${counts.unread}`));
+  body.append(bar);
+}
 function paneInbox(body,g,r){
   const compare=panes.compareCard(g);if(compare)body.append(compare);
+  const global=isGlobal(g);if(global)inboxTools(body,g);
   const list=el('div','ws-list');
-  for(const x of [...g.requests].reverse()){const row=button('',()=>{if(x.id!==g.focus)send({type:'select_request',rid:x.id},{quiet:true});},x.id===r?.id?'ws-row active':'ws-row',{'data-request-row':String(x.id)});row.append(el('span','flag',x.code),el('strong','',`#${x.id} ${x.company}`),el('span','',x.title),chip(STAGE_LABEL[x.stage],STAGE_TONE[x.stage]));if(x.unread)row.append(el('i','dot'));list.append(row);}
+  const rows=global?inboxRows(g,ui.filter,ui.sort):[...g.requests].reverse();
+  if(global&&r&&!rows.some(x=>x.id===r.id))rows.unshift(r);   // the selected request stays visible whatever the filter
+  for(const x of rows){const row=button('',()=>{if(x.id!==g.focus)send({type:'select_request',rid:x.id},{quiet:true});},x.id===r?.id?'ws-row active':'ws-row',{'data-request-row':String(x.id)});row.append(el('span','flag',x.code),el('strong','',`#${x.id} ${x.company}`),el('span','',x.job?`${x.site.city} · ${x.job.short} · 기한 ${x.terms.due}`:x.title),chip(STAGE_LABEL[x.stage],STAGE_TONE[x.stage]));if(x.unread)row.append(el('i','dot'));list.append(row);}
+  if(!rows.length)list.append(el('p','ws-note',`${INBOX_FILTERS[ui.filter]} 없음`));
   body.append(list);
   if(!r)return;
   const card=el('div','ws-card');
-  card.append(el('div','ws-label',`요청 #${r.id} · ${COUNTRY_NAMES[r.code]||r.country} · ${r.terms.priority||''}`));
+  card.append(el('div','ws-label',`요청 #${r.id} · ${placeName(r)} · ${r.terms.priority||''}`));
+  if(r.job){const who=el('p','ws-note job-line');who.dataset.job=r.job.type;who.textContent=`${r.client.industry} · ${r.job.label}: ${r.job.what}`;card.append(who);}
+  if(r.hint){const h=el('p','ws-tip mentor-hint',`선배: ${r.hint}`);h.dataset.hint=String(r.id);card.append(h);}
   const plans=r.conditions?.plans||{},table=el('table','terms-table');table.innerHTML='<thead><tr><th>모드</th><th>GPU</th><th>전력</th><th>네트워크</th><th>고객 허용</th></tr></thead>';
   const tb=el('tbody');for(const [k,p]of Object.entries(plans)){const tr=el('tr');const allowed=r.conditions.allowedModes.includes(k);tr.append(el('td','',`${MODE_NAMES[k]}${k===r.conditions.requestedMode?' (원래 요청)':''}`),el('td','',p.gpu),el('td','',p.power),el('td','',p.network),el('td',allowed?'ok':'warn',allowed?'허용':'동의 필요'));tb.append(tr);}table.append(tb);
   card.append(table,el('p','ws-note',`접수 ${r.terms.received} · 완료 기한 ${r.terms.due} · 미배정 시 최종 접수 종료 ${r.terms.expires}`));
@@ -322,7 +359,7 @@ function paneInbox(body,g,r){
   const read=button(conv?'요청서 다시 읽기':'요청서 열기 · 고객 메시지 읽기',async()=>{const res=await send({type:'read_request',rid:r.id},{quiet:true});if(res?.ok){ui.conversation[r.id]=res.result.conversation;render();}},'primary',{'data-read-request':String(r.id)});read.dataset.focusKey='read';
   card.append(read);
   const decide=panes.decisionRow(g,r);if(decide)card.append(decide);
-  if(r.stage==='incoming'&&!isLaterChapter(g))card.append(el('p','ws-tip','다음: [배정 계획] 탭에서 모드와 배정안을 비교하세요. 조회는 자원을 쓰지 않습니다.'));
+  if(r.stage==='incoming'&&!isLaterChapter(g)&&!(isGlobal(g)&&g.global.coaching==='none'))card.append(el('p','ws-tip','다음: [배정 계획] 탭에서 모드와 배정안을 비교하세요. 조회는 자원을 쓰지 않습니다.'));
   body.append(card);
 }
 function modeRow(r,row,res){
@@ -379,7 +416,18 @@ function paneDiagnosis(body,g,r){
   grid.append(ev,acts);body.append(grid);
   body.append(button('다시 진단',()=>openTab('diagnosis'),'link'));
 }
+function shiftActions(body,g){
+  const gl=g.global;if(!gl||gl.kind!=='shift'||!gl.done)return;
+  const box=el('div','ws-card shift-actions');box.dataset.shiftActions=String(gl.shift);
+  box.append(el('strong','',`교대 ${gl.shift} ${gl.result.cleared?'클리어':'목표 미달성'} · 정상 완료 ${gl.result.success}/${gl.result.total} · 평균 ${gl.result.average}점`));
+  const row=el('div','decision-row');
+  if(gl.result.cleared&&gl.next)row.append(button(`교대 ${gl.next} 시작`,()=>send({type:'start_next_shift',shift:String(gl.next)}),'primary',{'data-start-shift':String(gl.next)}));
+  if(!gl.result.cleared)row.append(button(`교대 ${gl.shift} 재도전 (새 슬롯)`,()=>retryChapter(),'',{'data-retry-shift':String(gl.shift)}));
+  row.append(button('교대 결과 다시 보기',()=>screens.showShift(),'link',{'data-shift-result':String(gl.shift)}));
+  box.append(row);body.append(box);
+}
 function paneResult(body,g,r){
+  if(isGlobal(g))shiftActions(body,g);
   const done=g.requests.filter(x=>!isOpen(x));
   if(!done.length){body.append(el('p','ws-note','아직 끝난 업무가 없습니다. 작업이 100%가 되면 엔진이 자원을 반환하고 결과를 기록합니다.'));return;}
   const target=r&&!isOpen(r)?r:done.at(-1),s=target.summary||{};
@@ -395,7 +443,7 @@ function paneResult(body,g,r){
 
 // ---------- header / strip ----------
 function renderHeader(){
-  const g=game();$('mode-badge').textContent=g?`${g.mode==='tutorial'?g.story.chapter.heading:g.story?`${g.modeLabel} · ${g.story.chapter.heading}`:g.modeLabel} · 엔진 연결`:engine.online===false?'엔진 미연결':'게임 선택 전';$('mode-badge').dataset.mode=g?.mode||'';
+  const g=game();$('mode-badge').textContent=g?`${g.mode==='tutorial'?g.story.chapter.heading:g.story?`${g.modeLabel} · ${g.story.chapter.heading}`:isGlobal(g)&&g.global.kind==='shift'?`${g.modeLabel} · 교대 ${g.global.shift}`:g.modeLabel} · 엔진 연결`:engine.online===false?'엔진 미연결':'게임 선택 전';$('mode-badge').dataset.mode=g?.mode||'';
   $('clock-time').textContent=g?.clock.label??'—';
   for(const b of document.querySelectorAll('[data-advance]')){b.disabled=!g||!g.canAdvance;b.title=!g?'게임을 시작하세요':!g.canAdvance?'진행 중인 작업이 없습니다 · 먼저 작업을 시작하세요':`가상 시간 ${b.dataset.advance}분 진행`;}
 }
@@ -405,17 +453,23 @@ function renderStrip(){
     $('stepper').replaceChildren(...j.goals.map(x=>el('li',x.done?'done':x.current?'now':'',x.title)));}
   else if(isLaterChapter(g)){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} ${st.chapter.stateLabel}`:chapterGoal(g).title;
     $('stepper').replaceChildren(...(st.campaign.length?st.campaign.map(c=>{const li=el('li',c.state==='cleared'?'done':c.key===st.chapterKey?'now':'',c.key===st.chapterKey?c.label:`${c.number}장`);li.dataset.chapter=String(c.key);li.title=`${c.heading} · ${c.stateLabel}`;return li;}):[el('li','now',`${st.chapter.label} 연습`)]));}
+  else if(isGlobal(g)&&g.global.kind==='shift'){const gl=g.global;$('strip-eyebrow').textContent=`GLOBAL SHIFT ${gl.shift}/${gl.shiftCount}`;$('objective').textContent=globalGoal(g).title;
+    $('stepper').replaceChildren(...gl.shifts.map(x=>{const done=gl.history.some(h=>h.shift===x.number&&h.cleared)||(x.number===gl.shift&&gl.done&&gl.result.cleared);const li=el('li',done?'done':x.number===gl.shift?'now':'',`교대 ${x.number} ${x.title}`);li.dataset.shift=String(x.number);return li;}));}
   else if(g?.story){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} 클리어`:storyGoal(g)?.what??'';
     $('stepper').replaceChildren(...Array.from({length:st.jobsTotal},(_,i)=>el('li',i<st.jobsDone?'done':i===st.jobsDone&&!st.done?'now':'',`업무 ${i+1}`)));}
+  else if(isGlobal(g)){$('strip-eyebrow').textContent='GLOBAL FREE · 글로벌 자유 운영';$('objective').textContent=globalGoal(g).what;$('stepper').replaceChildren();}
   else if(g){$('strip-eyebrow').textContent='FREE · 자유 운영';$('objective').textContent=freeGoal(g)?.what??'';$('stepper').replaceChildren();}
   else{$('strip-eyebrow').textContent='MY SHIFT';$('objective').textContent='모드를 고르면 근무가 시작됩니다';$('stepper').replaceChildren();}
-  const r=focusRequest(g);$('strip-id').textContent=r?`요청 #${r.id} · ${r.code}`:'—';$('strip-sub').textContent=g?`Python 엔진 · ${g.id}`:'엔진 저장 없음';
+  const r=focusRequest(g);$('strip-id').textContent=r?`요청 #${r.id} · ${r.code}${r.site?` ${r.site.city}`:''}`:'—';$('strip-sub').textContent=g?`Python 엔진 · ${g.id}`:'엔진 저장 없음';
 }
 function renderRouteChain(state){
   const box=$('route-chain');box.hidden=state.navigation.route!=='world';if(box.hidden)return;
-  const fp=focusPath(state);box.replaceChildren(el('span','eyebrow',fp?`요청 #${fp.rid} 경로 · ${COUNTRY_NAMES[fp.code]} → 울산 · 가상`:'도착한 요청 없음 · 모든 경로 소등'));
+  const fp=focusPath(state);box.replaceChildren(el('span','eyebrow',fp?`요청 #${fp.rid} 경로 · ${pathName(fp.code)} → 울산 · 가상`:'도착한 요청 없음 · 모든 경로 소등'));
   const chain=el('div','chain');
-  for(const [k,label]of [['sea','해저 구간'],['landing','부산 권역 육양국'],['backbone','국내 지상망'],['aidc','울산 AIDC · 서버동']]){const st=fp?.segments[k]||'off',bad=st!=='ok'&&st!=='off';const s=el('span',`hop${bad?' bad':''}${fp?' on':''}`,`${bad?'⚠ ':''}${label}`);s.dataset.hop=k;s.dataset.state=st;chain.append(s);}
+  const hasAccess=!!SITE_PATHS[fp?.code]?.legs?.some(l=>l.kind==='land');
+  const hops=fp?.domestic?[['backbone','국내 지상망 (국내 고객)'],['aidc','울산 AIDC · 서버동']]
+    :[...(hasAccess?[['access','도시 접속·지상 구간']]:[]),['sea','해저 구간'],['landing','부산 권역 육양국'],['backbone','국내 지상망'],['aidc','울산 AIDC · 서버동']];
+  for(const [k,label]of hops){const st=(k==='access'?fp?.segments.sea:fp?.segments[k])||'off',bad=st!=='ok'&&st!=='off';const s=el('span',`hop${bad?' bad':''}${fp?' on':''}`,`${bad?'⚠ ':''}${label}`);s.dataset.hop=k;s.dataset.state=st;chain.append(s);}
   box.append(chain,el('small','',fp?fp.message:'해저 케이블은 해안 육양국에서 국내망으로 이어집니다. 건물에 직접 닿지 않습니다.'));
 }
 
@@ -427,6 +481,7 @@ function talkPages(){
   const g=game();if(!g)return null;
   if(g.journey?.kind==='tutorial'&&!g.journey.skipped&&g.journey.current?.id==='briefing')return {key:`${g.id}:tutorial`,pages:TUTORIAL_BRIEFING};
   if(g.mode==='story'&&g.story?.step==='arrival'&&g.story.pages.length)return {key:`${g.id}:story`,pages:g.story.pages};
+  if(isGlobal(g)&&g.global.kind==='shift'&&!g.global.briefed)return {key:`${g.id}:shift${g.global.shift}`,pages:g.global.briefing.map(([role,speaker,text])=>[role,text,speaker])};
   const t=talkFor(g);if(t)return {key:t.key,pages:t.pages,event:t.event,briefing:t.briefing,speakers:true};
   return null;
 }
@@ -452,7 +507,7 @@ function renderTalk(){
 
 function render(){
   const state=store.state,nav=state.navigation,route=nav.route,viewKey=`${route}:${nav.nocView}:${nav.room}`;
-  document.body.dataset.route=route;
+  document.body.dataset.route=route;document.body.dataset.mode=game()?.mode||'';
   if(scene&&!openingActive&&lastViewKey!==viewKey){scene.setLocation(route,lastViewKey===null,nav.nocView,nav.room);lastViewKey=viewKey;}
   $('scene-eyebrow').textContent=LOCATIONS[route].subtitle;$('scene-title').textContent=routeTitle(route);$('scene-description').textContent=descriptions[route];
   $('scene-code').textContent=({world:'GLOBAL / KR-CENTRED',noc:'NOC / 01',campus:'ULSAN / 01',hall:'HALL / 01',room:`ROOM / ${nav.room}`})[route];$('scene-footnote').textContent=notes[route];
@@ -465,19 +520,20 @@ function render(){
 }
 
 // ---------- mode menu (title) ----------
+let lastUnlocks=null;
 const menu=(()=>{
   const box=$('menu');let shown=false;
   async function show(){
     shown=true;box.hidden=false;box.replaceChildren(el('div','menu-card',''));renderTalk();coach.render();
     const health=await api.health();setEngine(!!health.ok,health.message);
-    const saves=health.ok?(await api.saves()).saves||[]:[];
+    const savesRes=health.ok?await api.saves():null,saves=savesRes?.saves||[];lastUnlocks=savesRes?.unlocks||null;
     const card=el('div','menu-card');card.append(el('span','eyebrow','SERVER ROOM SURVIVAL · 3D'),el('h2','','모드를 고르세요'),el('p','menu-sub','튜토리얼은 선배와 함께하는 실습, 스토리 도전은 장 단위 본편, 자유·연습은 끝없는 근무입니다. 모든 규칙은 Python 게임 엔진이 계산합니다.'));
     if(!health.ok)card.append(el('p','menu-warn','Python 엔진에 연결할 수 없습니다. 터미널에서 npm run play (또는 python -m engine.server)를 실행한 뒤 이 창을 다시 여세요.'));
     const grid=el('div','mode-grid');
-    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠']]){
+    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐']]){
       const c=el('section','mode-card-big');c.dataset.modeCard=mode;c.append(el('span','mode-icon',icon),el('h3','',title),el('p','',desc));
       c.append(button('새로 시작',async()=>{if(await newGame(mode))hide();},'primary',{'data-new':mode,...(health.ok?{}:{disabled:''})}));
-      const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')).slice(-3).reverse();
+      const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')||(mode==='global'&&s.kind==='global_free')).slice(-3).reverse();
       for(const s of mine){c.append(button(`이어하기 · ${s.kind==='practice'?'장 연습 · ':''}${s.chapter?.heading&&s.kind!=='tutorial'?`${s.chapter.heading} · `:''}${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
       }
       // Chapter select (like the Python chapter menu): pick a story record, then a chapter-start point. It always
@@ -489,6 +545,12 @@ const menu=(()=>{
         const fill=()=>{const s=withCp.find(x=>x.id===sel.value);row.replaceChildren(el('small','','장 시작 지점부터 (새 슬롯):'));
           for(const k of s.checkpoints)row.append(button(`제${{1:1,2:2,3:3,'3b':4,lab:5}[k]}장`,async()=>{if(await startCheckpoint(s.id,k))hide();},'link',{'data-checkpoint':`${s.id}:${k}`}));};
         sel.addEventListener('change',fill);fill();box.append(el('small','','장 선택 · 재연습'),sel,row);c.append(box);
+      }
+      if(mode==='global'){
+        c.querySelector('[data-new]')?.remove();
+        const lock=lastUnlocks?.global;const start=button('교대 근무 시작 (교대 1부터)',async()=>{if(await newGame('global'))hide();},'primary',{'data-new':'global',...(health.ok&&lock?.available?{}:{disabled:''})});
+        c.querySelector('p').after(start);if(lock&&!lock.available)start.after(el('small','menu-warn',lock.reason));
+        const free=button('글로벌 자유 운영 (연습 · 진급 기록 없음)',async()=>{if(await newGame('global_free'))hide();},'',{'data-new':'global_free',...(health.ok?{}:{disabled:''})});start.parentNode.insertBefore(free,start.nextSibling?.nextSibling??null);
       }
       if(mode==='free'){const row=el('div','chapter-picks');row.append(el('small','','장 연습 (진급 기록 없음):'));for(const [k,label]of [['2','제2장'],['3','제3장'],['3b','제4장'],['lab','제5장 Lab']])row.append(button(label,async()=>{if(await newGame('practice',k))hide();},'link',{'data-practice':k,...(health.ok?{}:{disabled:''})}));c.append(row);}
       grid.append(c);
@@ -527,7 +589,7 @@ store.subscribe(render);
 $('screen-dialog').addEventListener('close',()=>render());
 try{
   scene=createScene($('viewport'),store.state.facility,id=>selectRack(id),{worldMode:true,getState:()=>store.state,reducedMotion:()=>reducedMotion,
-    onPick:id=>{const [type,key]=id.split(':');if(type==='country')selectCountry(key);if(type==='facility')selectFacility(key,'pick');},
+    onPick:id=>{const [type,key]=id.split(':');if(type==='country'){const code=pickCode(key);if(code)selectCountry(code);}if(type==='facility')selectFacility(key,'pick');},
     onEnter:id=>{const [type,key]=id.split(':');if(type==='facility')enterFacility(key,'dblclick');}});
   const hash=location.hash.slice(1);if(hash&&!store.navigate(hash))history.replaceState(null,'','#noc');render();$('loading').hidden=true;
   (async()=>{
@@ -537,7 +599,7 @@ try{
     if(!openingSeen())startOpening();else if(!gameId)menu.show();
     render();
   })();
-  window.worldQA=Object.freeze({snapshot:()=>({state:store.snapshot(),game:store.snapshot().game,gameId,engine:{...engine},pending,ui:{tab:ui.tab,talkPage:ui.talkPage,menu:!menu.hidden()},renderer:scene.snapshot(),stats:{...stats},heap:performance.memory?{used:performance.memory.usedJSHeapSize,total:performance.memory.totalJSHeapSize}:null,visuals:scene.visuals(),worldMarkers:{SG:scene.worldMarker('SG'),JP:scene.worldMarker('JP'),US:scene.worldMarker('US'),KR:scene.worldMarker('KR')},cooling:scene.coolingVisual(),deskScreen:scene.deskScreenKey(),network:scene.networkVisual?.()??null,interior:scene.interiorVisual?.()??null,rack:scene.rackVisual?.()??null,opening:{active:openingActive,state:scene.cinematicState(),result:openingResult,seconds:OPENING_SECONDS},coach:coach.state(),screens:screens.state()}),
+  window.worldQA=Object.freeze({snapshot:()=>({state:store.snapshot(),game:store.snapshot().game,gameId,engine:{...engine},pending,ui:{tab:ui.tab,talkPage:ui.talkPage,menu:!menu.hidden()},renderer:scene.snapshot(),stats:{...stats},heap:performance.memory?{used:performance.memory.usedJSHeapSize,total:performance.memory.totalJSHeapSize}:null,visuals:scene.visuals(),worldMarkers:{SG:scene.worldMarker('SG'),JP:scene.worldMarker('JP'),US:scene.worldMarker('US'),KR:scene.worldMarker('KR')},ui2:{filter:ui.filter,sort:ui.sort},cooling:scene.coolingVisual(),deskScreen:scene.deskScreenKey(),network:scene.networkVisual?.()??null,interior:scene.interiorVisual?.()??null,rack:scene.rackVisual?.()??null,opening:{active:openingActive,state:scene.cinematicState(),result:openingResult,seconds:OPENING_SECONDS},coach:coach.state(),screens:screens.state()}),
     actions:()=>actionLog.map(x=>({...x})),idle:()=>api.idle().then(()=>pending),projectAsset:id=>scene.projectAsset(id),projectWorld:id=>scene.projectWorld(id),projectPoint:p=>scene.projectPoint?.(p)??null,cameraState:()=>scene.cameraState()});
   function animate(now){const dt=Math.min((now-lastTime)/1000,.1),raw=now-lastTime;lastTime=now;
     if(!document.hidden){scene.pollGpuTimer();const timed=frame%30===0;if(timed)scene.beginGpuTimer();scene.animate(dt);if(timed)scene.endGpuTimer();const gpu=scene.pollGpuTimer();if(timed&&gpu!==null){gpuTimes.push(gpu);if(gpuTimes.length>60)gpuTimes.shift();}frameTimes.push(raw);if(frameTimes.length>300)frameTimes.shift();frame++;

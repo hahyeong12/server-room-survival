@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { createWorldMap } from './world-map.js';
-import { COUNTRIES, FACILITIES } from './world-store.js';
+import { COUNTRIES, FACILITIES, MAP_SITES } from './world-store.js';
 
 const V=(x,y,z)=>new THREE.Vector3(x,y,z);
 const COLORS={normal:0x68dfce,fault:0xff657d,repairing:0xf8be68,awaiting:0x89baff,request:0xf3c37b};
@@ -163,5 +163,5 @@ export function createWorldGeometry() {
   function project(kind,id,camera,rect){
     const p=kind==='world'?worldMap.point(id):buildings[id]?.point;if(!p)return null;const v=p.clone().project(camera);return {x:rect.left+(v.x+1)/2*rect.width,y:rect.top+(1-v.y)/2*rect.height,visible:v.z>-1&&v.z<1};
   }
-  return {world,campus,pickables,update,project,coolingVisual:()=>coolingVisual&&{...coolingVisual},markerColor:id=>worldMap.markers[id]?.mat.color.getHexString(),networkVisual:()=>worldMap.visual(),focusPoint:(kind,id)=>kind==='world'?worldMap.point(id):buildings[id]?.point?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?COUNTRIES[key]?.name:FACILITIES[key]?.name;}};
+  return {world,campus,pickables,update,project,coolingVisual:()=>coolingVisual&&{...coolingVisual},markerColor:id=>worldMap.markers[id]?.mat.color.getHexString(),networkVisual:()=>worldMap.visual(),focusPoint:(kind,id)=>kind==='world'?worldMap.point(id):buildings[id]?.point?.clone(),pickLabel:id=>{const [kind,key]=id.split(':');return kind==='country'?(MAP_SITES[key]?.name??COUNTRIES[key]?.name):FACILITIES[key]?.name;}};
 }

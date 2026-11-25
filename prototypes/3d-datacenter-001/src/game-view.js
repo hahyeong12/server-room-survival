@@ -80,3 +80,37 @@ export function freeGoal(game) {
   const open = (game.requests ?? []).filter(isOpen).length;
   return { title: '자유 운영', what: `열린 요청 ${open}건 · 대기 ${game.free.pending}건 · 다음 접수 예정 ${game.free.nextArrival}`, label: '자유 운영 · 끝없는 근무' };
 }
+
+// ---------- Phase 6 (Issue #7): global shifts / global free operations ----------
+// Where a request comes from, in words: a catalog city for global requests, the legacy country name otherwise.
+export function placeName(r) {
+  if (!r) return '';
+  return r.site ? `${r.site.city} · ${r.site.countryName}` : (COUNTRY_NAMES[r.code] || r.country);
+}
+export function isGlobal(game) { return game?.mode === 'global' && !!game.global; }
+// Inbox filter and sort (view only; the engine decides what each request can do).
+export const INBOX_FILTERS = Object.freeze({ open: '열린 요청', running: '진행 중', closed: '끝남', all: '전체' });
+export const INBOX_SORTS = Object.freeze({ arrival: '도착순', due: '완료 기한순', expires: '최종 접수 임박순' });
+export function inboxRows(game, filter = 'open', sort = 'arrival') {
+  const rows = [...(game?.requests ?? [])];
+  const keep = { open: r => r.stage === 'incoming', running: r => isOpen(r) && r.stage !== 'incoming', closed: r => !isOpen(r), all: () => true }[filter] || (() => true);
+  const key = { arrival: r => r.terms.receivedMinute ?? r.id, due: r => r.terms.dueMinute ?? Infinity, expires: r => (r.stage === 'incoming' ? r.terms.expiresMinute : null) ?? Infinity }[sort] || (r => r.id);
+  return rows.filter(keep).sort((a, b) => key(a) - key(b) || a.id - b.id);
+}
+export function inboxCounts(game) {
+  const rs = game?.requests ?? [];
+  return { open: rs.filter(r => r.stage === 'incoming').length, running: rs.filter(r => isOpen(r) && r.stage !== 'incoming').length,
+    closed: rs.filter(r => !isOpen(r)).length, all: rs.length, unread: rs.filter(r => r.unread).length };
+}
+// Goal line of a global shift, built only from the engine's shift status.
+export function globalGoal(game) {
+  const g = game?.global; if (!g) return null;
+  if (g.kind === 'free') { const open = (game.requests ?? []).filter(isOpen).length;
+    return { label: '글로벌 자유 운영 · 진급 기록 없음', title: '세계 각지의 요청을 계속 처리하세요', what: `열린 요청 ${open}건 · 대기 ${g.open}건 · 다음 접수 예정 ${g.next}` }; }
+  const goal = `목표: ${g.goal.minSuccess}건 이상 정상 완료${g.goal.maxExpired ? ` · 만료 ${g.goal.maxExpired}건까지` : ' · 만료 없이'}`;
+  if (!g.briefed) return { label: `교대 ${g.shift}/${g.shiftCount} · ${g.title}`, title: '선배 브리핑 확인', what: '아래 대화를 읽고 [근무 시작]을 누르세요. 그 전에는 시간이 흐르지 않습니다.', goal };
+  if (g.done) return { label: `교대 ${g.shift}/${g.shiftCount} · ${g.title}`, title: g.result.cleared ? '교대 클리어' : '교대 목표 미달성',
+    what: `정상 완료 ${g.result.success}/${g.result.total} · 평균 ${g.result.average}점 · 결과 화면을 확인하세요.`, goal };
+  return { label: `교대 ${g.shift}/${g.shiftCount} · ${g.title} · ${g.coachingLabel}`, title: `도착 ${g.arrived}/${g.total} · 종료 ${g.closed} · 정상 완료 ${g.success}`,
+    what: '요청함에서 도시·업무·원래 조건을 비교하고, 배정 계획 → 서버동 시작 → 시간 진행으로 처리하세요.', goal };
+}

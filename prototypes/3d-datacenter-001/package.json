@@ -13,7 +13,8 @@
     "play": "node scripts/play.mjs",
     "test:engine": "python -m unittest discover -s engine/tests -t .",
     "qa:phase4": "node scripts/phase4-qa.mjs",
-    "qa:phase5": "node scripts/phase5-qa.mjs"
+    "qa:phase5": "node scripts/phase5-qa.mjs",
+    "qa:phase6": "node scripts/phase6-qa.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

@@ -17,7 +17,7 @@ export function createChapterPanes({ el, button, chip, readingsGrid, send, ui, r
   }
   // Waiting and rejecting are real chapter-2 choices (engine wait_request / reject_request).
   function decisionRow(g, r) {
-    if (!g.story || g.story.chapterKey === 1 || r.stage !== 'incoming') return null;
+    if ((g.mode !== 'global' && (!g.story || g.story.chapterKey === 1)) || r.stage !== 'incoming') return null;
     const row = el('div', 'decision-row');
     row.append(button('요청 대기 (자원 미점유)', () => send({ type: 'wait_request', rid: r.id }), '', { 'data-wait': String(r.id) }));
     const input = el('input'); input.type = 'text'; input.placeholder = '거절 사유 (고객에게 전달)'; input.maxLength = 120; input.dataset.rejectReason = String(r.id);

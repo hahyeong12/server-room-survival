@@ -1,6 +1,6 @@
 // Result and transition screens (Issue #5). They only read the engine snapshot and offer real next steps:
 // a new story / free / tutorial game is a NEW engine save; nothing here forges completion, score or resources.
-import {isOpen,STAGE_LABEL,COUNTRY_NAMES} from './game-view.js';
+import {isOpen,STAGE_LABEL,COUNTRY_NAMES,placeName,isGlobal} from './game-view.js';
 import {resultRows,resultNotes,missionOf,cardRows} from './campaign-view.js';
 
 export function createScreens({ $, el, button, store, game, send, newGame, openGame, retryChapter, showMenu, toast, ui, render }) {
@@ -23,6 +23,11 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       'next-chapter': [`${game()?.story?.next?.heading ?? '다음 장'} 시작`, async () => { const nx = game()?.story?.next; close(); if (nx) await send({ type: 'start_next_chapter', chapter: String(nx.key) }); }, 'primary'],
       retry: [`${game()?.story?.chapter?.label ?? '현재 장'} 재도전 (새 슬롯)`, async () => { close(); await retryChapter(); }, ''],
       practice: ['같은 장 다시 연습 (새 연습 저장)', async () => { close(); await retryChapter(); }, ''],
+      // Phase 6: the next shift starts in THIS save (engine start_next_shift); a shift retry is a NEW save.
+      'next-shift': [`교대 ${game()?.global?.next ?? ''} 시작`, async () => { const nx = game()?.global?.next, ack = onClose; onClose = null; close(); await ack?.(); if (nx) await send({ type: 'start_next_shift', shift: String(nx) }); }, 'primary'],
+      // Record that the result was seen in THIS save first, then open the new slot (as a chapter retry does).
+      'retry-shift': [`교대 ${game()?.global?.shift ?? ''} 재도전 (새 슬롯)`, async () => { const ack = onClose; onClose = null; close(); await ack?.(); await retryChapter(); }, ''],
+      'global-free': ['글로벌 자유 운영', async () => { close(); await newGame('global_free'); }, ''],
     };
     for (const k of kinds) { const [label, fn, cls] = defs[k]; row.append(button(label, fn, cls, { 'data-next': k })); }
     return row;
@@ -133,11 +138,39 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     box.append(el('span', 'eyebrow', `${g.modeLabel}${g.story ? ` · ${g.story.chapter.label} 업무 ${g.story.jobsDone}/${g.story.jobsTotal}` : ''}`),
       el('h2', '', `요청 #${r.id} ${r.company} · ${s.label || STAGE_LABEL[r.stage]}`),
       rows([['실행', s.mode ? `${s.mode} · GPU ${s.gpu} / 전력 ${s.power}` : '—'], ['완료 / 기한', s.due ? `${s.completed} / ${s.due} · ${s.deadline}` : '—'], ['운영 점수', r.score != null ? `${r.score}점` : '—'], ['자원', r.stage === 'done' ? 'GPU·전력 반환됨' : '—']]));
-    if (next) box.append(el('p', 'screen-sub', `다음 업무 도착: ${COUNTRY_NAMES[next.code] || next.country} · ${next.company} (요청 #${next.id}). 내 모니터 요청함에서 확인하세요.`));
+    if (next) box.append(el('p', 'screen-sub', `다음 업무: ${placeName(next)} · ${next.company} (요청 #${next.id}). 내 모니터 요청함에서 확인하세요.`));
     box.append(nextButtons(['result', 'stay']));
     show('job-done', [box]);
   }
 
+  // Phase 6: a finished global shift. Every row is the engine's own record (outcome, score, mode, consent).
+  function shiftDone(g) {
+    const gl = g.global, res = gl.result, key = `shift${gl.shift}`, box = el('section', 'screen shift-result');
+    const played = new Set([...gl.history.filter(h => h.cleared).map(h => h.shift), res.cleared ? res.shift : null]);
+    const final = res.cleared && !gl.next && gl.shifts.every(x => played.has(x.number));
+    box.append(el('span', 'eyebrow', `GLOBAL SHIFT ${gl.shift}/${gl.shiftCount} · ${gl.coachingLabel}`),
+      el('h2', '', final ? `글로벌 교대 근무 ${gl.shiftCount}개 모두 클리어` : `교대 ${gl.shift} ${res.cleared ? '클리어' : '목표 미달성'} · ${res.title}`),
+      el('p', 'screen-sub', `엔진 판정: 정상 완료 ${res.success}/${res.total}건 (목표 ${res.goal.minSuccess}건 이상, 만료 ${res.goal.maxExpired}건까지) · 평균 ${res.average}점 · ${res.started} → ${res.finished}`));
+    const table = el('table', 'terms-table shift-table'); table.innerHTML = '<thead><tr><th>요청</th><th>도시</th><th>고객 · 업무</th><th>결과</th><th>실행 · 동의</th><th>점수</th></tr></thead>';
+    const tb = el('tbody');
+    for (const r of res.rows) { const tr = el('tr'); tr.dataset.outcome = r.outcome;
+      tr.append(el('td', '', `#${r.rid}`), el('td', '', `${r.city} (${r.site})`), el('td', '', `${r.client} · ${r.job}`), el('td', r.outcome === 'on_time' ? 'ok' : 'warn', r.label),
+        el('td', '', r.mode ? `${r.mode} · ${r.consent}` : r.outcome === 'rejected' ? `거절: ${r.reason}` : '미실행'), el('td', '', r.score ?? '—')); tb.append(tr); }
+    table.append(tb); box.append(table);
+    const ul = el('ul', 'screen-notes'); for (const t of res.feedback) ul.append(el('li', '', t));
+    box.append(el('strong', '', gl.coaching === 'none' ? '스스로 돌아보기' : '선배의 짧은 피드백'), ul);
+    if (final) { const hist = el('ul', 'screen-notes'); for (const h of [...gl.history, res]) hist.append(el('li', '', `교대 ${h.shift} ${h.title}: 정상 완료 ${h.success}/${h.total} · 평균 ${h.average}점`));
+      box.append(el('strong', '', '글로벌 근무 기록 (교육용 가상 기록 · 실제 자격 아님)'), hist); }
+    const kinds = [];
+    if (res.cleared && gl.next) kinds.push('next-shift');
+    if (!res.cleared) kinds.push('retry-shift');
+    kinds.push(final ? 'global-free' : 'result', 'menu', 'stay');
+    // Closing this screen (any button / Esc) only records that it was seen. The same actions stay on the
+    // monitor's 결과 tab, so a closed screen never strands the save.
+    box.append(nextButtons(kinds));
+    show(final ? 'global-complete' : res.cleared ? 'shift-clear' : 'shift-failed', [box],
+      gl.seen.includes(key) ? null : () => send({ type: 'mark_shift_seen', key }, { quiet: true }));
+  }
   // Decide which screen a new snapshot calls for. Each screen appears once per save (the engine state stays).
   function check(prev, g) {
     if (!g) return;
@@ -154,6 +187,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
         if (st.graduation) graduation(g); else if (m === 'success') chapterClear(g); else chapterFailed(g); return; }
       if (st.step === 'closed' && !seen.failed) { seen.failed = true; chapterFailed(g); return; }
     }
+    if (isGlobal(g) && g.global.kind === 'shift' && g.global.done && !g.global.seen.includes(`shift${g.global.shift}`) && !open?.startsWith('shift') && open !== 'global-complete') { shiftDone(g); return; }
     if (j?.kind !== 'tutorial') for (const r of g.requests) {
       const before = prev?.requests?.find(x => x.id === r.id);
       if (!isOpen(r) && before && isOpen(before) && !seen.jobs.has(r.id)) { seen.jobs.add(r.id); jobDone(g, r); return; }
@@ -167,12 +201,14 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       if (r.stage === 'net_fault') toast(`경보 · 요청 #${r.id} 작업 중단 · 고객 전송 경로 이상 (원인 미확인 · 서버 장비 ${r.hardware ? '확인 필요' : '정상'})`, 'hint');
     }
     const arrived = (g?.requests ?? []).filter(r => !prev?.requests?.some(x => x.id === r.id));
-    if (prev && arrived.length) toast(`새 고객 요청 도착 · ${arrived.map(r => `${COUNTRY_NAMES[r.code] || r.country} #${r.id}`).join(', ')} · 세계지도에 경로 점등`);
+    if (prev && arrived.length) toast(`새 고객 요청 도착 · ${arrived.map(r => `${placeName(r)} #${r.id}`).join(', ')} · 세계지도에 경로 점등`);
   }
   return {
     // A loaded save that is already finished goes straight to its screen, so a finished tutorial is never a dead end.
     reset(g) { onClose = null; if (dlg.open) dlg.close(); open = null; seen = { tutorial: false, skipped: false, chapters: new Set(), failed: false, jobs: new Set((g?.requests ?? []).filter(r => !isOpen(r)).map(r => r.id)) }; setTimeout(() => check(null, game()), 0); },
     afterAction(prev, g) { alarms(prev, g); check(prev, g); },
+    // Phase 6: the monitor's 결과 tab reopens the shift result screen (with its next-shift / retry buttons).
+    showShift() { const g = game(); if (isGlobal(g) && g.global.done) shiftDone(g); },
     state: () => ({ open, history: history.map(h => ({ ...h })) }),
   };
 }

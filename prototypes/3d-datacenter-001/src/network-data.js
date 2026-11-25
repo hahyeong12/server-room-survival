@@ -2,11 +2,12 @@
 // Inspired only by the general idea of public submarine-cable maps (many sea routes meeting at
 // coastal landing stations). No coordinates, names or graphics are copied from TeleGeography or any
 // operator; waypoints are rough sea paths drawn for readability. Not real cables, owners or routes.
+import { CATALOG, LEGACY, SITES, siteOf, routeOf } from './catalog.js';
+
 function freeze(v) { Object.values(v).forEach(x => { if (x && typeof x === 'object') freeze(x); }); return Object.freeze(v); }
 
-export const LANDING = freeze({
-  BUSAN: { name: '부산 권역 육양국 (가상)', lonLat: [129.05, 35.08] },
-});
+// Phase 6: landing stations, legacy country paths and every city route come from the single catalog.
+export const LANDING = freeze(structuredClone(CATALOG.landings));
 
 // Background virtual links: drawn thin and dark, never animated.
 export const BACKGROUND_LINKS = freeze([
@@ -33,20 +34,22 @@ const SEGMENTS = Object.freeze([
   { id: 'sea', name: '해저 구간 (가상)' }, { id: 'landing', name: '부산 권역 육양국' },
   { id: 'backbone', name: '국내 지상망' }, { id: 'aidc', name: '울산 AIDC · 서버동' },
 ]);
-export const REQUEST_PATHS = freeze({
-  SG: { name: '싱가포르', landing: 'BUSAN', segments: SEGMENTS,
-    sea: [[103.95, 1.3], [106.5, 4.5], [110.5, 9], [114.5, 15], [119.6, 20.2], [122.8, 24.6], [125.4, 30], [128.3, 33.7], [129.05, 35.08]] },
-  JP: { name: '일본', landing: 'BUSAN', segments: SEGMENTS,
-    sea: [[139.8, 35.05], [138.6, 34.2], [136.4, 33.4], [133.8, 32.7], [131.6, 32.6], [130.3, 33.6], [129.6, 34.4], [129.05, 35.08]] },
-  US: { name: '미국 서부', landing: 'BUSAN', segments: SEGMENTS,
-    sea: [[-122.6, 37.7], [-140, 30], [-158, 21.3], [180, 29], [165, 33], [150, 35], [141, 34], [136, 32.8], [131.5, 32.4], [129.05, 35.08]] },
-});
+// Legacy country paths (chapters 1-5, older saves): same names and sea points as before, now read from the catalog.
+export const REQUEST_PATHS = freeze(Object.fromEntries(Object.entries(LEGACY).map(([code, l]) => [code,
+  { name: l.name, landing: 'BUSAN', segments: SEGMENTS, sea: l.sea, site: l.site }])));
+// Phase 6: one route per catalog city (siteId, e.g. US-SFO / US-SEA). Domestic sites run on the domestic backbone only.
+const DOMESTIC_SEGMENTS = Object.freeze([{ id: 'backbone', name: '국내 지상망' }, { id: 'aidc', name: '울산 AIDC · 서버동' }]);
+export const SITE_PATHS = freeze(Object.fromEntries(Object.entries(SITES).map(([code, s]) => { const r = routeOf(code);
+  return [code, { name: s.city, country: s.countryName, cluster: s.cluster, domestic: !!s.domestic, landing: r.landing,
+    segments: s.domestic ? DOMESTIC_SEGMENTS : SEGMENTS, legs: r.legs }]; })));
+const known = code => Object.hasOwn(REQUEST_PATHS, code) || Object.hasOwn(SITE_PATHS, code);
+export function pathName(code) { return REQUEST_PATHS[code]?.name || (SITE_PATHS[code] ? `${SITE_PATHS[code].name}(${SITE_PATHS[code].country})` : code); }
 
 // Paths lit by the engine snapshot (game.world.paths). No game, no request -> nothing is lit, whatever
 // country the player selected or the opening shows.
 export function activePaths(state) {
   const paths = state?.game?.world?.paths;
-  return Array.isArray(paths) ? paths.filter(p => Object.hasOwn(REQUEST_PATHS, p.code)) : [];
+  return Array.isArray(paths) ? paths.filter(p => known(p.code)) : [];
 }
 
 const MESSAGE = {
@@ -63,11 +66,19 @@ export const CAUSE_TEXT = Object.freeze({
 export function pathStatus(path) {
   const seg = path.segments || {}, aidc = seg.aidc || 'ok', link = seg.sea === 'degraded' ? 'degraded' : 'ok';
   const cause = path.link || (link === 'degraded' ? 'symptom' : 'ok'), note = path.linkNote || CAUSE_TEXT[cause] || '';
-  const name = REQUEST_PATHS[path.code]?.name || path.code;
-  return { code: path.code, rid: path.rid, focus: !!path.focus, tone: path.tone, aidc, link, cause, note,
+  const name = pathName(path.code), domestic = !!(path.domestic || SITE_PATHS[path.code]?.domestic);
+  return { code: path.code, rid: path.rid, focus: !!path.focus, tone: path.tone, aidc, link, cause, note, domestic, site: siteOf(path.code)?.id ?? null,
     segments: { sea: seg.sea || 'ok', landing: seg.landing || 'ok', backbone: seg.backbone || 'ok', aidc },
     packets: true, message: aidc !== 'ok' ? MESSAGE[aidc] : cause !== 'ok' ? `${name} 경로 · ${note}`
       : (path.tone === 'incoming' ? `${name} 새 요청 도착 · 경로 확인` : `${name} 경로 정상 · 작업 트래픽 전송 중`) };
+}
+// Lit paths grouped per city: two requests from one city are one lit route with a "2건" badge (Issue #7).
+export function litSites(state) {
+  const out = new Map();
+  for (const p of activePaths(state)) { const s = pathStatus(p), cur = out.get(p.code);
+    if (!cur) out.set(p.code, { ...s, rids: [p.rid], count: 1 });
+    else { cur.rids.push(p.rid); cur.count++; if (s.focus) Object.assign(cur, { ...s, rids: cur.rids, count: cur.count }); } }
+  return [...out.values()];
 }
 // The path the panels describe: the focused request if it is lit, else the first lit path.
 export function focusPath(state) {
