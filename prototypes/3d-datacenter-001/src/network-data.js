@@ -55,12 +55,14 @@ export function activePaths(state) {
 const MESSAGE = {
   fault: '국제 구간·육양국·국내망 정상 · 울산 AIDC 서버 장애 (네트워크 문제 아님)',
   repairing: '국제 구간 정상 · AIDC 서버 복구/작업 이전 준비 중',
+  incident: '국제 구간·육양국·국내망 정상 · 원인은 울산 AIDC 내부 (사건 대응 중)',
 };
 // What the transit is known to be, from the engine evidence the player has opened (Issue #6). Before a network
 // diagnosis it is only a symptom; no single international hop is blamed by the display.
 export const CAUSE_TEXT = Object.freeze({
   symptom: '전송 이상 · 원인 미확인 (진단 전)', primary_down: '주 통신 경로 신호 없음 · 백업 경로 대기',
   congested: '경로 연결됨 · 대역폭 한계', rerouted: '백업 경로로 우회 전송 중', recovering: '조치 성공 · 복구 준비 중', ok: '',
+  incident: '작업 이상 · 원인 미확인 (사건 조사 중 · 위치 추정 안 함)', internal: '원인 확인 · AIDC 내부 · 국제 구간 정상',
 });
 // One path's display status. Every space reads the same derived value.
 export function pathStatus(path) {

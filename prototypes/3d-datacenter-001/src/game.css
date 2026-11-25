@@ -225,3 +225,24 @@ body[data-mode=global] .ws-list{max-height:min(34vh,260px);overflow:auto}
   body[data-mode=global][data-route=world] #req-summary{display:none}
   body[data-mode=global] #panel .site-list>.card-line{display:none}
 }
+/* Phase 7 (Issue #8): incident-management card, on-site evidence and the incident result screen */
+.inc-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.inc-tabs button{font-size:12px;padding:4px 8px}.inc-tabs button.active{border-color:#8af0d4;color:#e7fff8}
+.inc-tabs button[data-state=alert]{border-color:#ff8a9a}
+.inc-card{display:flex;flex-direction:column;gap:6px}.inc-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.inc-stepper{display:flex;gap:4px;list-style:none;margin:0;padding:0;flex-wrap:wrap}.inc-stepper li{font-size:11px;padding:2px 7px;border-radius:10px;border:1px solid #33546a;color:#8fa6b8}
+.inc-stepper li.done{color:#8af0d4;border-color:#2f6d62}.inc-stepper li.now{color:#0b111b;background:#f3c37b;border-color:#f3c37b;font-weight:600}
+.inc-now{margin:0;font-size:13px;line-height:1.45}.inc-now b{color:#f4ca8d}
+.inc-block{display:flex;flex-direction:column;gap:5px;border-top:1px dashed #2a4558;padding-top:6px}
+.inc-probes{display:flex;flex-wrap:wrap;gap:5px}.inc-probes button{font-size:12px;padding:4px 8px}.inc-probes .probe-away{opacity:.85}
+.inc-hypo{flex-direction:row;flex-wrap:wrap;align-items:center}.inc-hypo strong{width:100%}.inc-hypo select{min-width:220px}
+.inc-actions{display:flex;flex-direction:column;gap:4px;border-top:1px dashed #2a4558;padding-top:6px}
+.inc-group{display:flex;flex-wrap:wrap;gap:4px;align-items:center}.inc-group small{width:96px;color:#8fa6b8}.inc-group button{font-size:12px;padding:3px 7px}
+.inc-list,.inc-evidence{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:12px}
+.inc-list li{display:flex;gap:6px;align-items:flex-start}.inc-ev{border-left:3px solid #2f6d62;padding-left:6px}.inc-ev.warn{border-color:#f3c37b}.inc-ev.bad{border-color:#ff657d}
+.inc-ev p{margin:2px 0}.inc-ev-head{display:flex;gap:6px;align-items:center}.inc-line{display:block;color:#a9bccb}
+.inc-spark{display:flex;align-items:center;gap:6px;color:#f4ca8d}.inc-spark svg{width:120px;height:24px}
+.inc-details summary{cursor:pointer;font-size:12px;color:#a9bccb}.inc-scope{color:#cfe3ee}
+.inc-site{display:flex;flex-direction:column;gap:5px;margin-top:8px;border:1px solid #33546a;border-radius:6px;padding:8px}
+.inc-site-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.inc-facility dd{white-space:normal}
+.incident-result .postmortem li{color:#cfe3ee}
+@media (prefers-reduced-motion: reduce){.inc-stepper li.now{transition:none}}

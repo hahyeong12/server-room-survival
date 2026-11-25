@@ -2,11 +2,12 @@
 // every rule result computed by the Python engine; these helpers only pick and format what the screens show.
 
 export const STAGE_LABEL = Object.freeze({ incoming: '새 요청', running: '작업 진행 중', hw_fault: '서버 장애 · 작업 중단', hw_repair: '서버 복구 중 · 작업 중단',
-  migration: '작업 이전 준비 중', net_fault: '네트워크 장애', recovering: '복구 준비 중', done: '처리 완료', failed: '처리 실패', rejected: '요청 종료' });
+  migration: '작업 이전 준비 중', net_fault: '네트워크 장애', recovering: '복구 준비 중', done: '처리 완료', failed: '처리 실패', rejected: '요청 종료',
+  incident: '사건 대응 중' });
 // The 3D scene (desk screens, wall, campus tint, rack pin) still speaks the older phase words. Only server
 // (hardware) stages map to 'fault'/'repairing', which tint the server building; network stages never do.
 const SCENE_PHASE = Object.freeze({ incoming: 'new', running: 'running', hw_fault: 'fault', hw_repair: 'repairing', migration: 'repairing',
-  net_fault: 'degraded', recovering: 'recovering', done: 'completed', failed: 'completed', rejected: 'completed' });
+  net_fault: 'degraded', recovering: 'recovering', done: 'completed', failed: 'completed', rejected: 'completed', incident: 'degraded' });
 export const MODE_NAMES = Object.freeze({ performance: '고성능 모드', economy: '절약형 모드' });
 export const COUNTRY_NAMES = Object.freeze({ SG: '싱가포르', JP: '일본', US: '미국', KR: '대한민국 · 울산' });
 export const ENGINE_RACKS = Object.freeze({ A: 'A-01', B: 'B-01', C: 'C-01', D: 'D-01' });
@@ -39,6 +40,15 @@ export function syncFacility(facility, game) {
     const a = facility.assets.find(x => x.id === s.rack); if (!a) continue;
     const state = s.state === 'FAULT' ? 'fault' : s.state === 'REPAIRING' ? 'repairing' : 'normal';
     a.state = state; a.fault = state === 'normal' ? null : 'hardware';
+    // Phase 7: what is physically visible at the rack during an engine incident (server ledger state keeps precedence):
+    // a dead ToR uplink (red network), a cooling zone in warning (amber, warm coolant), a UPS feed on battery (amber power).
+    const f = game?.incident?.facilities;
+    if (f && state === 'normal') {
+      const tor = f.tor?.[s.key], zone = Object.values(f.cooling ?? {}).find(z => z.servers.includes(s.key)), ups = Object.values(f.ups ?? {}).find(u => u.servers.includes(s.key));
+      if (tor && Object.values(tor.ports).includes('DOWN') && !tor.rerouted) { a.state = 'fault'; a.fault = 'network'; }
+      else if (zone && zone.state !== 'ok') { a.state = 'repairing'; a.fault = 'cooling'; }
+      else if (ups && ups.mode === 'battery') { a.state = 'repairing'; a.fault = 'power'; }
+    }
   }
   return facility;
 }
@@ -87,7 +97,8 @@ export function placeName(r) {
   if (!r) return '';
   return r.site ? `${r.site.city} · ${r.site.countryName}` : (COUNTRY_NAMES[r.code] || r.country);
 }
-export function isGlobal(game) { return game?.mode === 'global' && !!game.global; }
+// Phase 7: incident-response shifts reuse the global shift flow (inbox, briefing, shift result) on their own save.
+export function isGlobal(game) { return (game?.mode === 'global' || game?.mode === 'incident') && !!game.global; }
 // Inbox filter and sort (view only; the engine decides what each request can do).
 export const INBOX_FILTERS = Object.freeze({ open: '열린 요청', running: '진행 중', closed: '끝남', all: '전체' });
 export const INBOX_SORTS = Object.freeze({ arrival: '도착순', due: '완료 기한순', expires: '최종 접수 임박순' });

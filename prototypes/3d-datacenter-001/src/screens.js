@@ -28,6 +28,9 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       // Record that the result was seen in THIS save first, then open the new slot (as a chapter retry does).
       'retry-shift': [`교대 ${game()?.global?.shift ?? ''} 재도전 (새 슬롯)`, async () => { const ack = onClose; onClose = null; close(); await ack?.(); await retryChapter(); }, ''],
       'global-free': ['글로벌 자유 운영', async () => { close(); await newGame('global_free'); }, ''],
+      // Phase 7: incident-response shifts (A -> B -> C) in the same incident save; a retry is a NEW incident save.
+      'next-incident': [`근무 ${({ 2: 'B', 3: 'C' })[game()?.global?.next] ?? ''} 시작`, async () => { const nx = game()?.global?.next, ack = onClose; onClose = null; close(); await ack?.(); if (nx) await send({ type: 'start_next_shift', shift: String(nx) }); }, 'primary'],
+      'retry-incident': [`${game()?.incident?.practice ? '같은 사건 다시 연습' : `근무 ${game()?.incident?.code ?? ''} 재도전`} (새 슬롯)`, async () => { const ack = onClose; onClose = null; close(); await ack?.(); await retryChapter(); }, ''],
     };
     for (const k of kinds) { const [label, fn, cls] = defs[k]; row.append(button(label, fn, cls, { 'data-next': k })); }
     return row;
@@ -143,8 +146,38 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     show('job-done', [box]);
   }
 
+  // Phase 7: a finished incident-response shift. Every row is the engine's incident record (evidence, hypotheses,
+  // actions, recovery, report) and the post-mortem the content gives for that cause.
+  function incidentShiftDone(g) {
+    const gl = g.global, res = gl.result, inc = g.incident, key = `shift${gl.shift}`, box = el('section', 'screen shift-result incident-result');
+    const final = res.cleared && !gl.next && !inc.practice;
+    box.append(el('span', 'eyebrow', inc.practice ? 'INCIDENT PRACTICE · 진급 기록 없음' : `INCIDENT SHIFT ${inc.code} · ${gl.shift}/${inc.shiftCount} · ${gl.coachingLabel}`),
+      el('h2', '', final ? '장애 대응 근무 A·B·C 모두 완료' : `${res.title} · ${res.cleared ? '목표 달성' : '목표 미달성'}`),
+      el('p', 'screen-sub', `엔진 판정: 사건 해결 ${res.resolved}/${res.incidents.length}(목표 ${res.goal.minResolved}) · 정상 완료 ${res.success}/${res.total}${res.goal.notifyBeforeRecovery ? ' · 복구 전 고객 안내 필요' : ''} · ${res.started} → ${res.finished}`));
+    const table = el('table', 'terms-table shift-table'); table.innerHTML = '<thead><tr><th>사건</th><th>원인(확정)</th><th>고객 · 도시</th><th>결과</th><th>근거 · 반박 · 개선 없음 · 허용 안 됨</th><th>해결 · 완화</th><th>영향</th></tr></thead>';
+    const tb = el('tbody');
+    for (const r of res.incidents) { const tr = el('tr'); tr.dataset.incident = r.id; tr.dataset.outcome = r.outcome;
+      tr.append(el('td', '', r.id), el('td', '', r.label), el('td', '', `${r.client} · ${r.city} (#${r.rid})`), el('td', r.outcome === 'resolved' ? 'ok' : 'warn', ({ resolved: '해결', failed: '실패', void: '사건 없음' })[r.outcome] ?? '진행 중'),
+        el('td', '', `관측 ${r.evidence}건${r.wrongHypotheses.length ? ` · 반박 ${r.wrongHypotheses.join(', ')}` : ''}${r.noEffect.length ? ` · 개선 없음 ${r.noEffect.join(', ')}` : ''}${r.refused.length ? ` · 허용 안 됨 ${r.refused.join(', ')}` : ''}`),
+        el('td', '', [r.fix, ...r.mitigations].filter(Boolean).join(' + ') || '—'), el('td', '', `정지 ${r.downtime}분 · 지연 ${r.slowMinutes}분${r.notices ? ` · 안내 ${r.notices}회` : ''}`)); tb.append(tr); }
+    table.append(tb); box.append(table);
+    const ul = el('ul', 'screen-notes'); for (const t of res.feedback) ul.append(el('li', '', t));
+    box.append(el('strong', '', gl.coaching === 'none' ? '스스로 돌아보기' : '선배의 짧은 피드백'), ul);
+    const pm = el('ul', 'screen-notes postmortem'); for (const r of res.incidents) pm.append(el('li', '', `${r.id} · ${r.postmortem.field}`));
+    box.append(el('strong', '', '실제 현장이라면 누구에게 알리고 무엇을 더 확인했을까?'), pm);
+    if (final) { const hist = el('ul', 'screen-notes'); for (const h of [...gl.history, res]) hist.append(el('li', '', `${h.title}: 사건 해결 ${h.resolved}/${h.incidents.length} · 정상 완료 ${h.success}/${h.total}`));
+      box.append(el('strong', '', '장애 대응 근무 기록 (교육용 가상 기록 · 실제 자격 아님)'), hist); }
+    const kinds = [];
+    if (res.cleared && gl.next) kinds.push('next-incident');
+    if (!res.cleared || inc.practice) kinds.push('retry-incident');
+    kinds.push('result', 'menu', 'stay');
+    box.append(nextButtons(kinds));
+    show(final ? 'incident-complete' : res.cleared ? 'incident-clear' : 'incident-failed', [box],
+      gl.seen.includes(key) ? null : () => send({ type: 'mark_shift_seen', key }, { quiet: true }));
+  }
   // Phase 6: a finished global shift. Every row is the engine's own record (outcome, score, mode, consent).
   function shiftDone(g) {
+    if (g.mode === 'incident') return incidentShiftDone(g);
     const gl = g.global, res = gl.result, key = `shift${gl.shift}`, box = el('section', 'screen shift-result');
     const played = new Set([...gl.history.filter(h => h.cleared).map(h => h.shift), res.cleared ? res.shift : null]);
     const final = res.cleared && !gl.next && gl.shifts.every(x => played.has(x.number));
@@ -187,7 +220,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
         if (st.graduation) graduation(g); else if (m === 'success') chapterClear(g); else chapterFailed(g); return; }
       if (st.step === 'closed' && !seen.failed) { seen.failed = true; chapterFailed(g); return; }
     }
-    if (isGlobal(g) && g.global.kind === 'shift' && g.global.done && !g.global.seen.includes(`shift${g.global.shift}`) && !open?.startsWith('shift') && open !== 'global-complete') { shiftDone(g); return; }
+    if (isGlobal(g) && g.global.kind === 'shift' && g.global.done && !g.global.seen.includes(`shift${g.global.shift}`) && !open?.startsWith('shift') && !open?.startsWith('incident-') && open !== 'global-complete') { shiftDone(g); return; }
     if (j?.kind !== 'tutorial') for (const r of g.requests) {
       const before = prev?.requests?.find(x => x.id === r.id);
       if (!isOpen(r) && before && isOpen(before) && !seen.jobs.has(r.id)) { seen.jobs.add(r.id); jobDone(g, r); return; }
@@ -198,6 +231,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       const before = prev?.requests?.find(x => x.id === r.id);
       if (!before || before.stage === r.stage) continue;
       if (r.stage === 'hw_fault') toast(`경보 · 요청 #${r.id} ${r.hardware}${g.journey?.kind === 'tutorial' ? ' (교육용 훈련 장애)' : ''} · 진행률 정지`, 'hint');
+      if (r.stage === 'incident' && r.incidentAffecting?.length) { const rec = g.incident?.records?.find(x => x.id === r.incidentAffecting[0]); if (rec && rec.state === 'alert') toast(`경보 · ${rec.id} ${rec.severity} · 요청 #${r.id} ${rec.symptom} (원인 미확인) · 내 모니터 [사건] 탭`, 'hint'); }
       if (r.stage === 'net_fault') toast(`경보 · 요청 #${r.id} 작업 중단 · 고객 전송 경로 이상 (원인 미확인 · 서버 장비 ${r.hardware ? '확인 필요' : '정상'})`, 'hint');
     }
     const arrived = (g?.requests ?? []).filter(r => !prev?.requests?.some(x => x.id === r.id));

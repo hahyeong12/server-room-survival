@@ -13,6 +13,7 @@ import {createCoach} from './coach.js';
 import {createScreens} from './screens.js';
 import {chapterGoal,talkFor,isLaterChapter} from './campaign-view.js';
 import {createChapterPanes} from './chapter-panes.js';
+import {createIncidentPane,isIncident,incidentGoal,facilityRows,focusIncident} from './incident-pane.js';
 
 document.querySelector('#app').innerHTML=`
 <header class="topbar"><a class="brand" href="#noc"><span class="brand-icon">▤</span><span>SERVER ROOM<span class="brand-sub">SURVIVAL / ULSAN AIDC</span></span></a>
@@ -166,12 +167,23 @@ const COOLING_LABELS={'cooling-off':'보조 냉각 끄기','cooling-on':'보조 
 const OPS_FEEDBACK={'cooling-off':'보조 냉각 꺼짐 · 팬 정지, 냉각수 흐름 중단','cooling-on':'보조 냉각 켜짐 · 팬 회전, 냉각수 순환','cooling-warn':'경고 · 냉각수 유량이 12 L/min으로 떨어졌습니다','cooling-reset':'점검 완료 · 보조 냉각이 정상 재가동됐습니다','power-check':'전력 계통 점검 완료','ups-test':'UPS 자가진단 정상','network-lookup':'경로 상태 조회 완료'};
 const FACILITY_ROLE={NOC:'운영 건물 · 내 자리와 업무 모니터','HALL-01':'현장 건물 · 엔진 서버 A~D',POWER:'A/B 이중 수전과 배전',UPS:'정전 순간을 버티는 예비 전원',COOLING:'교육용 보조 냉각 계통 AUX-C1',NETWORK:'국제 가상 회선과 서버동 업링크'};
 const chip=(text,tone)=>{const c=el('span','chip',text);if(tone)c.dataset.tone=tone;return c;};
-const STAGE_TONE={incoming:'new',running:'ok',hw_fault:'fault',hw_repair:'recover',migration:'recover',net_fault:'fault',recovering:'recover',done:'done',failed:'fault',rejected:'muted'};
+const STAGE_TONE={incoming:'new',running:'ok',hw_fault:'fault',hw_repair:'recover',migration:'recover',net_fault:'fault',recovering:'recover',done:'done',failed:'fault',rejected:'muted',incident:'fault'};
+const ROOM_IDS=['COOLING','POWER','UPS','NETWORK'];
+// Phase 7: where the player stands (on-site evidence is recorded only there) and how to go to a probe's place.
+function here(){const n=store.state.navigation;return n.route==='room'?n.room:n.route;}
+function goTo(loc){if(loc==='noc'){store.setNocView('desk');navigate('noc','incident');}else if(loc==='hall')navigate('hall','incident');else if(ROOM_IDS.includes(loc))enterFacility(loc,'incident');}
 
 // Facility card: what it is / current status / what you can do here. full=true inside the building.
 function facilityCard(id,state,full=false){
   const root=el('div','facility-card');root.dataset.panel=id;const f=FACILITIES[id];
   const head=el('div','fc-head');head.append(el('strong','',f.name),el('span','',FACILITY_ROLE[id]));root.append(head);
+  if(isIncident(state.game)&&[...ROOM_IDS,'HALL-01'].includes(id)){
+    // Phase 7: the engine's physical state of this building (what its instruments show) + the evidence recordable here.
+    const rows=facilityRows(state.game,id);if(rows)root.append(readingsGrid(rows,'ops-readings inc-facility'));
+    root.append(el('p','ops-note',id==='POWER'?'전력동: A/B 수전과 UPS 계통 요약. 설비 조작은 전원·시설팀이 합니다(운영자는 요청·승인·보고).':'교육용 가상 계기 값입니다. 운영자는 설비를 직접 조작하지 않고 담당팀에 요청합니다.'));
+    if(full&&ROOM_IDS.includes(id)){const site=incident.siteEvidence(state.game,id);if(site)root.append(site);}
+    return root;
+  }
   const actions=el('div','ops-actions');
   if(id==='COOLING'){
     const v=coolingView(state);root.append(coolingBadge(v,!full));
@@ -205,6 +217,7 @@ function goalHead(){
   if(!g){step='게임 선택 전';title=engine.online===false?'Python 엔진이 꺼져 있습니다':'모드를 고르세요';hint=engine.online===false?'npm run play 로 엔진을 실행한 뒤 새로고침하세요. 3D 공간은 둘러볼 수 있습니다.':'위쪽 [메뉴 · 모드]에서 튜토리얼 / 스토리 도전 / 자유·연습을 시작합니다.';}
   else if(j?.kind==='tutorial'&&!j.skipped&&!j.completed&&cur){step=`튜토리얼 · 목표 ${cur.goalIndex}/${j.total}`;title=`${cur.goalTitle} — ${cur.title}`;hint=cur.what;why=`왜: ${cur.why}`;where=`어디서: ${cur.where}`;pips=j.goals.map(x=>x.done?'done':x.current?'now':'');}
   else if(j?.kind==='tutorial'){step=j.completed?'튜토리얼 · 실습 완료':'튜토리얼 · 안내 끔';title=j.completed?'실습을 모두 마쳤습니다':'안내 없이 자유롭게 진행 중';hint=j.completed?'[메뉴 · 모드]에서 스토리 도전을 시작하세요.':'엔진 상태는 그대로입니다. 완료하려면 실제 업무를 끝내세요.';}
+  else if(isIncident(g)){const ig=incidentGoal(g);step=ig.label;title=ig.title;hint=ig.what;}
   else if(isGlobal(g)){const gg=globalGoal(g);step=gg.label;title=gg.title;hint=gg.what;where=gg.goal||'';}
   else if(isLaterChapter(g)){const cg=chapterGoal(g);step=cg.label;title=cg.title;hint=cg.what;where=cg.where?`어디서: ${cg.where}`:'';}
   else{const sg=storyGoal(g)||freeGoal(g);if(sg){step=sg.label;title=sg.title;hint=sg.what;why=sg.mentor?`선배: ${sg.mentor}`:'';}}
@@ -282,6 +295,7 @@ function rackCard(){
       if(check!==null)root.append(button('상태 재확인',()=>send({type:'verify',rid:check,rack:a.id}),'',{'data-verify':a.id}));
     }
   }
+  if(isIncident(g)){const rows=facilityRows(g,'HALL-01');if(rows)root.append(readingsGrid(rows,'ops-readings inc-facility'));const site=incident.siteEvidence(g,'hall');if(site)root.append(site);}
   const label=el('label','select-line','랙 선택 (키보드)'),select=el('select');select.id='equipment-select';select.setAttribute('aria-label','랙 선택');
   for(const x of state.facility.assets.filter(x=>x.kind==='rack')){const sv=serverOfRack(x.id);const o=el('option','',sv?`${x.id} · Server ${sv}`:`${x.id} · 장식`);o.value=x.id;select.append(o);}
   select.value=a.kind==='rack'?a.id:'A-01';select.addEventListener('change',()=>{selectRack(select.value);scene.focus();});label.append(select);root.append(label);
@@ -303,7 +317,8 @@ function detailBody(){
 // The diagnosis tab carries the name the engine's sentences use in that chapter: 장비 진단 (tutorial, 제1장, 제4장,
 // free), 네트워크 진단 (제3장), 진단 (제5장 — independent diagnosis, evidence comes from the Lab).
 const diagLabel=g=>g?.story?.chapterKey===3?'네트워크 진단':g?.story?.training?'진단':'장비 진단';
-const tabsFor=g=>{const base=[['inbox','요청함'],['plan','배정 계획'],['diagnosis',diagLabel(g)]];return g?.story?.training?[...base,['lab','연수 · Lab'],['result','결과']]:[...base,['result','결과']];};
+const tabsFor=g=>{if(isIncident(g))return [['inbox','요청함'],['incident','사건'],['plan','배정 계획'],['diagnosis','장비 진단'],['result','결과']];
+  const base=[['inbox','요청함'],['plan','배정 계획'],['diagnosis',diagLabel(g)]];return g?.story?.training?[...base,['lab','연수 · Lab'],['result','결과']]:[...base,['result','결과']];};
 function openTab(tab){
   ui.tab=tab;const r=focusRequest(game());
   if(tab==='plan'&&r&&r.stage==='incoming')send({type:'view_plans',rid:r.id},{quiet:true}).then(res=>{if(res?.ok){ui.plans[r.id]={...res.result.plans,briefing:res.result.briefing,clock:res.game.clock.label};render();}});
@@ -318,12 +333,13 @@ function renderWorkstation(){
   const tabs=el('div','ws-tabs');tabs.setAttribute('role','tablist');
   const r=focusRequest(g);
   if(ui.tab==='lab'&&!g.story?.training)ui.tab='inbox';
+  if(ui.tab==='incident'&&!isIncident(g))ui.tab='inbox';
   for(const [id,label]of tabsFor(g)){
-    const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&((r&&!isOpen(r)&&!r.reported)||(isGlobal(g)&&g.global.done))?'●':id==='lab'&&g.story.training.status.headline?.tone==='warn'?'!':'';
+    const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&((r&&!isOpen(r)&&!r.reported)||(isGlobal(g)&&g.global.done))?'●':id==='lab'&&g.story.training.status.headline?.tone==='warn'?'!':id==='incident'&&isIncident(g)&&g.incident.alerts.length?`⚠${g.incident.alerts.length}`:id==='incident'&&isIncident(g)&&g.incident.open?String(g.incident.open):'';
     const b=button(badge?`${label} ${badge}`:label,()=>openTab(id),ui.tab===id?'active':'',{'data-ws-tab':id,role:'tab','aria-selected':String(ui.tab===id)});b.dataset.focusKey=`tab-${id}`;tabs.append(b);
   }
   const body=el('div','ws-pane');body.dataset.pane=ui.tab;
-  ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult,lab:(b,gg)=>panes.paneLab(b,gg)})[ui.tab](body,g,r);
+  ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult,lab:(b,gg)=>panes.paneLab(b,gg),incident:(b,gg)=>incident.paneIncident(b,gg)})[ui.tab](body,g,r);
   ws.append(bar,tabs,body);
   if(focusKey){const again=ws.querySelector(`[data-focus-key="${focusKey}"]`);again?.focus({preventScroll:true});}
   // Lab: bring the question the player must answer now into view once (inside the monitor pane, no page scroll).
@@ -419,7 +435,7 @@ function paneDiagnosis(body,g,r){
 function shiftActions(body,g){
   const gl=g.global;if(!gl||gl.kind!=='shift'||!gl.done)return;
   const box=el('div','ws-card shift-actions');box.dataset.shiftActions=String(gl.shift);
-  box.append(el('strong','',`교대 ${gl.shift} ${gl.result.cleared?'클리어':'목표 미달성'} · 정상 완료 ${gl.result.success}/${gl.result.total} · 평균 ${gl.result.average}점`));
+  box.append(el('strong','',isIncident(g)?`${gl.title} ${gl.result.cleared?'목표 달성':'목표 미달성'} · 사건 해결 ${gl.result.resolved}/${gl.result.incidents.length} · 정상 완료 ${gl.result.success}/${gl.result.total}`:`교대 ${gl.shift} ${gl.result.cleared?'클리어':'목표 미달성'} · 정상 완료 ${gl.result.success}/${gl.result.total} · 평균 ${gl.result.average}점`));
   const row=el('div','decision-row');
   if(gl.result.cleared&&gl.next)row.append(button(`교대 ${gl.next} 시작`,()=>send({type:'start_next_shift',shift:String(gl.next)}),'primary',{'data-start-shift':String(gl.next)}));
   if(!gl.result.cleared)row.append(button(`교대 ${gl.shift} 재도전 (새 슬롯)`,()=>retryChapter(),'',{'data-retry-shift':String(gl.shift)}));
@@ -443,7 +459,7 @@ function paneResult(body,g,r){
 
 // ---------- header / strip ----------
 function renderHeader(){
-  const g=game();$('mode-badge').textContent=g?`${g.mode==='tutorial'?g.story.chapter.heading:g.story?`${g.modeLabel} · ${g.story.chapter.heading}`:isGlobal(g)&&g.global.kind==='shift'?`${g.modeLabel} · 교대 ${g.global.shift}`:g.modeLabel} · 엔진 연결`:engine.online===false?'엔진 미연결':'게임 선택 전';$('mode-badge').dataset.mode=g?.mode||'';
+  const g=game();$('mode-badge').textContent=g?`${g.mode==='tutorial'?g.story.chapter.heading:g.story?`${g.modeLabel} · ${g.story.chapter.heading}`:isIncident(g)?`${g.modeLabel} · ${g.incident.practice?'개별 연습':`근무 ${g.incident.code}`}`:isGlobal(g)&&g.global.kind==='shift'?`${g.modeLabel} · 교대 ${g.global.shift}`:g.modeLabel} · 엔진 연결`:engine.online===false?'엔진 미연결':'게임 선택 전';$('mode-badge').dataset.mode=g?.mode||'';
   $('clock-time').textContent=g?.clock.label??'—';
   for(const b of document.querySelectorAll('[data-advance]')){b.disabled=!g||!g.canAdvance;b.title=!g?'게임을 시작하세요':!g.canAdvance?'진행 중인 작업이 없습니다 · 먼저 작업을 시작하세요':`가상 시간 ${b.dataset.advance}분 진행`;}
 }
@@ -453,6 +469,8 @@ function renderStrip(){
     $('stepper').replaceChildren(...j.goals.map(x=>el('li',x.done?'done':x.current?'now':'',x.title)));}
   else if(isLaterChapter(g)){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} ${st.chapter.stateLabel}`:chapterGoal(g).title;
     $('stepper').replaceChildren(...(st.campaign.length?st.campaign.map(c=>{const li=el('li',c.state==='cleared'?'done':c.key===st.chapterKey?'now':'',c.key===st.chapterKey?c.label:`${c.number}장`);li.dataset.chapter=String(c.key);li.title=`${c.heading} · ${c.stateLabel}`;return li;}):[el('li','now',`${st.chapter.label} 연습`)]));}
+  else if(isIncident(g)){const gl=g.global,inc=g.incident;$('strip-eyebrow').textContent=inc.practice?'INCIDENT PRACTICE · 사건 연습':`INCIDENT SHIFT ${inc.code} · ${gl.shift}/${inc.shiftCount}`;$('objective').textContent=incidentGoal(g).title;
+    $('stepper').replaceChildren(...(inc.practice?inc.records:inc.records.filter(r=>r.state!=='armed')).map(r=>{const li=el('li',['closed'].includes(r.state)?'done':r.state==='armed'?'':'now',`${r.id} ${r.cause?r.causeLabel:r.symptom??'대기'}`);li.dataset.incident=r.id;return li;}));}
   else if(isGlobal(g)&&g.global.kind==='shift'){const gl=g.global;$('strip-eyebrow').textContent=`GLOBAL SHIFT ${gl.shift}/${gl.shiftCount}`;$('objective').textContent=globalGoal(g).title;
     $('stepper').replaceChildren(...gl.shifts.map(x=>{const done=gl.history.some(h=>h.shift===x.number&&h.cleared)||(x.number===gl.shift&&gl.done&&gl.result.cleared);const li=el('li',done?'done':x.number===gl.shift?'now':'',`교대 ${x.number} ${x.title}`);li.dataset.shift=String(x.number);return li;}));}
   else if(g?.story){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} 클리어`:storyGoal(g)?.what??'';
@@ -510,7 +528,7 @@ function render(){
   document.body.dataset.route=route;document.body.dataset.mode=game()?.mode||'';
   if(scene&&!openingActive&&lastViewKey!==viewKey){scene.setLocation(route,lastViewKey===null,nav.nocView,nav.room);lastViewKey=viewKey;}
   $('scene-eyebrow').textContent=LOCATIONS[route].subtitle;$('scene-title').textContent=routeTitle(route);$('scene-description').textContent=descriptions[route];
-  $('scene-code').textContent=({world:'GLOBAL / KR-CENTRED',noc:'NOC / 01',campus:'ULSAN / 01',hall:'HALL / 01',room:`ROOM / ${nav.room}`})[route];$('scene-footnote').textContent=notes[route];
+  $('scene-code').textContent=({world:'GLOBAL / KR-CENTRED',noc:'NOC / 01',campus:'ULSAN / 01',hall:'HALL / 01',room:`ROOM / ${nav.room}`})[route];$('scene-footnote').textContent=route==='room'&&isIncident(game())?'시설 내부 모식 / 계기 = Python 엔진 사건 상태 (교육용 가상 값)':notes[route];
   $('hall-tools').hidden=route!=='hall';$('noc-tools').hidden=route!=='noc';$('map-legend').hidden=route!=='world';$('back').disabled=route==='world';
   document.querySelectorAll('#noc-tools [data-noc-view]').forEach(b=>b.classList.toggle('active',b.dataset.nocView===nav.nocView));
   $('breadcrumbs').replaceChildren(...breadcrumbs(route).map(x=>{const b=button(x.id==='room'?routeTitle('room'):x.title,()=>navigate(x.id,'crumb'));b.dataset.crumb=x.id;if(x.id===route)b.setAttribute('aria-current','location');return b;}));
@@ -530,10 +548,10 @@ const menu=(()=>{
     const card=el('div','menu-card');card.append(el('span','eyebrow','SERVER ROOM SURVIVAL · 3D'),el('h2','','모드를 고르세요'),el('p','menu-sub','튜토리얼은 선배와 함께하는 실습, 스토리 도전은 장 단위 본편, 자유·연습은 끝없는 근무입니다. 모든 규칙은 Python 게임 엔진이 계산합니다.'));
     if(!health.ok)card.append(el('p','menu-warn','Python 엔진에 연결할 수 없습니다. 터미널에서 npm run play (또는 python -m engine.server)를 실행한 뒤 이 창을 다시 여세요.'));
     const grid=el('div','mode-grid');
-    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐']]){
+    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐'],['incident','장애 대응','글로벌 교대 3 클리어 후: 네트워크·GPU·스토리지·냉각·전원·플랫폼 사건 10건을 근무 A(선배와 함께)→B(팀 조정)→C(독립·겹친 증상)로 직접 진단·대응합니다.','🚨']]){
       const c=el('section','mode-card-big');c.dataset.modeCard=mode;c.append(el('span','mode-icon',icon),el('h3','',title),el('p','',desc));
       c.append(button('새로 시작',async()=>{if(await newGame(mode))hide();},'primary',{'data-new':mode,...(health.ok?{}:{disabled:''})}));
-      const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')||(mode==='global'&&s.kind==='global_free')).slice(-3).reverse();
+      const mine=saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')||(mode==='global'&&s.kind==='global_free')||(mode==='incident'&&s.kind==='incident_practice')).slice(-3).reverse();
       for(const s of mine){c.append(button(`이어하기 · ${s.kind==='practice'?'장 연습 · ':''}${s.chapter?.heading&&s.kind!=='tutorial'?`${s.chapter.heading} · `:''}${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
       }
       // Chapter select (like the Python chapter menu): pick a story record, then a chapter-start point. It always
@@ -551,6 +569,15 @@ const menu=(()=>{
         const lock=lastUnlocks?.global;const start=button('교대 근무 시작 (교대 1부터)',async()=>{if(await newGame('global'))hide();},'primary',{'data-new':'global',...(health.ok&&lock?.available?{}:{disabled:''})});
         c.querySelector('p').after(start);if(lock&&!lock.available)start.after(el('small','menu-warn',lock.reason));
         const free=button('글로벌 자유 운영 (연습 · 진급 기록 없음)',async()=>{if(await newGame('global_free'))hide();},'',{'data-new':'global_free',...(health.ok?{}:{disabled:''})});start.parentNode.insertBefore(free,start.nextSibling?.nextSibling??null);
+      }
+      if(mode==='incident'){
+        c.querySelector('[data-new]')?.remove();
+        const lock=lastUnlocks?.incident;const start=button('장애 대응 근무 시작 (근무 A부터)',async()=>{if(await newGame('incident'))hide();},'primary',{'data-new':'incident',...(health.ok&&lock?.available?{}:{disabled:''})});
+        c.querySelector('p').after(start);if(lock&&!lock.available)start.after(el('small','menu-warn',lock.reason));
+        const pick=el('div','chapter-picks');pick.append(el('small','','개별 사건 연습 (진급 기록 없음 · 원인은 직접 판단):'));
+        const sel=el('select');sel.dataset.incidentPractice='';sel.setAttribute('aria-label','연습할 사건');
+        for(const [k,label]of [['dns','작업 정지 ①'],['tor_uplink','작업 정지 ②'],['crashloop','작업 정지 ③'],['gpu_health','작업 정지 ④'],['gpu_oom','반복 종료'],['storage_full','기록 실패'],['congestion','속도 저하 ①'],['storage_latency','속도 저하 ②'],['cooling','속도 저하 ③'],['ups','전원 이벤트']]){const o=el('option','',label);o.value=k;sel.append(o);}
+        pick.append(sel,button('연습 시작',async()=>{if(await newGame('incident_practice',sel.value))hide();},'link',{'data-new':'incident_practice',...(health.ok?{}:{disabled:''})}));c.append(pick);
       }
       if(mode==='free'){const row=el('div','chapter-picks');row.append(el('small','','장 연습 (진급 기록 없음):'));for(const [k,label]of [['2','제2장'],['3','제3장'],['3b','제4장'],['lab','제5장 Lab']])row.append(button(label,async()=>{if(await newGame('practice',k))hide();},'link',{'data-practice':k,...(health.ok?{}:{disabled:''})}));c.append(row);}
       grid.append(c);
@@ -585,6 +612,7 @@ function openingProgress(){const c=scene.cinematicState();if(!c)return 0;return 
 const coach=createCoach({$,el,button,store,game,getScene:()=>scene,isBlocked:()=>openingActive||!menu.hidden(),send,toast});
 const screens=createScreens({$,el,button,store,game,send,newGame,openGame,retryChapter,showMenu:()=>menu.show(),toast,ui,render});
 const panes=createChapterPanes({el,button,chip,readingsGrid,send,ui,render});
+const incident=createIncidentPane({el,button,chip,readingsGrid,send,ui,render,here,goTo});
 store.subscribe(render);
 $('screen-dialog').addEventListener('close',()=>render());
 try{

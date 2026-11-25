@@ -11,7 +11,7 @@ import { SCALE, HALF_WIDTH, toMap, unwrap, copyOffsets } from './geo.js';
 import { LANDING, BACKGROUND_LINKS, REQUEST_PATHS, SITE_PATHS, litSites, focusPath, CAUSE_TEXT, pathName } from './network-data.js';
 
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
-const TONE = { incoming: 0xf3c37b, active: 0x6fe7d2, done: 0x5fb9a9, fault: 0xff657d, repairing: 0xf8be68, check: 0x89baff, ok: 0x6fe7d2, degraded: 0xff9a5c, idle: 0x2c4a5c };
+const TONE = { incoming: 0xf3c37b, active: 0x6fe7d2, done: 0x5fb9a9, fault: 0xff657d, repairing: 0xf8be68, check: 0x89baff, ok: 0x6fe7d2, degraded: 0xff9a5c, idle: 0x2c4a5c, incident: 0xf3a25c };
 const NEUTRAL = 0x6d8ea3;
 const Z_TOP = -84 * SCALE, Z_BOTTOM = 56 * SCALE;
 

@@ -890,6 +890,8 @@ class IncidentSession(GlobalSession):
                         'evidence': len(rec.evidence), 'probes': sorted({e['probe'] for e in rec.evidence}),
                         'wrongHypotheses': [h['label'] for h in rec.hypotheses if h['verdict'] == 'refuted'],
                         'wrongActions': [a['label'] for a in rec.actions if a['result'] in ('none', 'refused')],
+                        'noEffect': [a['label'] for a in rec.actions if a['result'] == 'none'],
+                        'refused': [a['label'] for a in rec.actions if a['result'] == 'refused'],
                         'notices': len(rec.notified),
                         'fix': next((a['label'] for a in rec.actions if a['result'] in ('fix', 'isolate_move', 'isolate_repair')), None),
                         'mitigations': [a['label'] for a in rec.actions if a['result'] in ('move', 'pause')],
@@ -911,14 +913,17 @@ class IncidentSession(GlobalSession):
             detail = []
             if r['wrongHypotheses']:
                 detail.append('반박된 가설 ' + ', '.join(r['wrongHypotheses']))
-            if r['wrongActions']:
-                detail.append('효과 없던 조치 ' + ', '.join(r['wrongActions']))
+            if r['noEffect']:
+                detail.append('개선 없던 조치 ' + ', '.join(r['noEffect']))
+            if r['refused']:
+                detail.append('허용 안 된 조치(승인·동의·정책) ' + ', '.join(r['refused']))
             if r['fix']:
                 detail.append('해결 조치 ' + r['fix'])
             lines.append(head + (' · ' + ' · '.join(detail) if detail else ''))
         if goal['notifyBeforeRecovery'] and not notified:
             lines.append('복구 전에 영향 고객에게 안내하지 않은 사건이 있습니다 — 고객은 복구 시각보다 먼저 영향을 알고 싶어 합니다.')
-        lines.append('교대 목표 달성' if cleared else '교대 목표 미달성 — 같은 교대를 새 슬롯에서 다시 도전할 수 있습니다.')
+        word = '연습' if self.incident.practice else '근무'
+        lines.append(f'{word} 목표 달성' if cleared else f'{word} 목표 미달성 — 같은 {word}을(를) 새 슬롯에서 다시 도전할 수 있습니다.')
         base.update(cleared=cleared, incidents=rows, resolved=resolved, goal=goal, feedback=lines, practice=self.incident.practice)
         return base
 

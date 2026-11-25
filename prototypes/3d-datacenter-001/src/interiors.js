@@ -103,14 +103,64 @@ export function createInteriors() {
   }
   for (const [id, g] of Object.entries(rooms)) { g.visible = false; g.userData.room = id; root.add(g); }
 
-  let keys = {}, current = null, visual = null, rotorAngle = 0, flowPhase = 0;
+  let keys = {}, current = null, visual = null, rotorAngle = 0, p2Angle = 0, flowPhase = 0;
   function draw(panel, lines, accent) {
     const c = panel.ctx, w = panel.canvas.width, h = panel.canvas.height; c.fillStyle = '#071423'; c.fillRect(0, 0, w, h); c.fillStyle = accent; c.fillRect(0, 0, w, 10);
     lines.forEach(([text, size, color], i) => { c.fillStyle = color || '#cfe3ee'; c.font = `${i === 0 ? 600 : 400} ${size}px "Malgun Gothic", Consolas, sans-serif`; c.fillText(text, 36, 40 + lines.slice(0, i + 1).reduce((s, l) => s + l[1] * 1.35, 0)); });
     panel.texture.needsUpdate = true;
   }
+  // Phase 7: in an incident-response save the rooms draw the ENGINE's physical state (IncidentSession.facilities_view)
+  // instead of the stand-alone demo values. Educational instruments only.
+  function engineUpdate(time, f, dt) {
+    const blink = Math.sin(time * 6) < 0;
+    if (current === 'COOLING') {
+      const zones = Object.entries(f.cooling), bad = zones.find(([, z]) => z.state !== 'ok'), z = bad?.[1];
+      const p2 = z?.pumps['P-2'] ?? 'ON', standby = z?.pumps['P-3'] === 'ON';
+      rotorAngle += 5 * dt; anim.cooling.rotors[0].rotation.x = rotorAngle;
+      p2Angle += (p2 === 'WARN' ? 1.1 : 5) * dt; anim.cooling.rotors[1].rotation.x = p2Angle;
+      flowPhase += (z ? (standby ? .09 : .04) : .12) * dt;
+      anim.cooling.dotMat.color.setHex(z && !standby ? 0xffad5c : 0x6fe7d2);
+      for (const { d, c, offset } of anim.cooling.dots) { d.visible = true; d.position.copy(anim.cooling.curves[c].getPointAt((flowPhase + offset) % 1)); }
+      anim.cooling.beacon.material.color.setHex(z ? (blink ? 0x6a3a1a : (standby ? 0xf8be68 : 0xffad5c)) : MODE_COLOR.on);
+      const key = JSON.stringify(f.cooling); if (keys.COOLING !== key) { keys.COOLING = key;
+        draw(anim.cooling.display, [[z ? `⚠ 냉각 구역 ${bad[0]} ${standby ? '예비 펌프 가동 · 회복 중' : '펌프 P-2 성능 저하'}` : '❄ 냉각 플랜트 정상', 52, z ? '#ffad5c' : '#6fe7d2'],
+          ...zones.map(([n, c]) => [`${n} (${c.servers.join('·')}): P-1 ${c.pumps['P-1']} · P-2 ${c.pumps['P-2']} · P-3 ${c.pumps['P-3']}`, 32, c.state === 'ok' ? '#cfe3ee' : '#ffd2a6']),
+          ...zones.map(([n, c]) => [`${n} 유량 ${c.flow} L/min · 서버 흡입 ${c.inlet} °C (가상)`, 30, '#a9bccb'])], z ? '#ffad5c' : '#6fe7d2'); }
+      visual = { room: current, engine: true, zones: Object.fromEntries(zones.map(([n, c]) => [n, c.state])), pumpP2: p2, standby, pumpsSpinning: true, flowVisible: true, display: keys.COOLING };
+    } else if (current === 'UPS') {
+      const feeds = Object.entries(f.ups);
+      anim.ups.bars.forEach((b, i) => { const u = feeds[i < 9 ? 0 : 1]?.[1]; const on = u?.mode === 'battery';
+        b.material.color.setHex(on ? (blink ? 0x6a3a1a : 0xffad5c) : 0x6fe7d2); b.scale.y = 1.4 * (on ? Math.max(.08, u.battery / 100) : 1); });
+      const key = JSON.stringify(f.ups); if (keys.UPS !== key) { keys.UPS = key; const bat = feeds.find(([, u]) => u.mode === 'battery');
+        draw(anim.ups.display, [[bat ? `⚠ ${bat[0]} 배터리 운전` : '🔋 UPS 상용 전원 정상', 54, bat ? '#ffad5c' : '#6fe7d2'],
+          ...feeds.map(([n, u]) => [`${n} (서버 ${u.servers.join('·')}): ${u.mode === 'battery' ? `배터리 ${u.battery}% · 보호 약 ${u.runtime}분` : '상용 전원'}`, 34, u.mode === 'battery' ? '#ffd2a6' : '#cfe3ee']),
+          ['조작은 전원·시설팀 · 운영자는 요청·보고', 28, '#a9bccb']], bat ? '#ffad5c' : '#6fe7d2'); }
+      visual = { room: current, engine: true, modes: Object.fromEntries(feeds.map(([n, u]) => [n, u.mode])), display: keys.UPS };
+    } else if (current === 'NETWORK') {
+      const order = [['A', 'P1'], ['A', 'P2'], ['B', 'P1'], ['B', 'P2'], ['C', 'P1'], ['D', 'P1']];
+      let up = 0; const down = [];
+      for (const { led, uplink } of anim.network.ports) {
+        if (!uplink) { led.material.color.setHex(0x6fe7d2); continue; }
+        const [rack, port] = order[up] ?? [null, null], idx = up++;
+        if (rack) { const st = f.tor[rack]?.ports[port]; if (st === 'DOWN') down.push(`${rack}-${port}`); led.material.color.setHex(st === 'DOWN' ? (blink ? 0x3a1018 : 0xff657d) : 0x6fe7d2); }
+        else led.material.color.setHex(f.edge.state === 'congested' ? (idx % 2 ? 0xffad5c : 0xf3c37b) : 0x6fe7d2);
+      }
+      const key = JSON.stringify([f.tor, f.edge, f.dns]); if (keys.NETWORK !== key) { keys.NETWORK = key;
+        draw(anim.network.display, [[down.length ? `✕ ToR 업링크 DOWN ${down.join(', ')}` : f.edge.state === 'congested' ? '⚠ 엣지 링크 혼잡' : f.dns.state === 'fail' ? '⚠ DNS 리졸버 이상' : '네트워크 정상', 50, down.length ? '#ff8a9a' : f.edge.state === 'congested' || f.dns.state === 'fail' ? '#ffd2a6' : '#6fe7d2'],
+          ...Object.values(f.tor).map(t => [`ToR-${t.rack}: ${Object.entries(t.ports).map(([p, s]) => `${p} ${s}`).join(' · ')}${t.dual ? '' : ' (단일)'}`, 30, Object.values(t.ports).includes('DOWN') ? '#ff8a9a' : '#cfe3ee']),
+          [`엣지 E1 ${f.edge.E1}% · E2 ${f.edge.E2}%${f.edge.qos ? ' · QoS' : ''} · DNS ${f.dns.state === 'fail' ? '주 리졸버 응답 없음' : '정상'}`, 30, '#a9bccb']], down.length ? '#ff657d' : '#6fe7d2'); }
+      visual = { room: current, engine: true, uplinkDown: down, edge: f.edge.state, dns: f.dns.state, faultPortsBlinking: down.length > 0, display: keys.NETWORK };
+    } else if (current === 'POWER') {
+      const bat = Object.entries(f.ups).filter(([, u]) => u.mode === 'battery');
+      anim.power.leds.forEach((l, i) => l.material.color.setHex(bat.length && i >= 4 ? (blink ? 0x6a3a1a : 0xffad5c) : 0x6fe7d2));
+      const key = JSON.stringify(f.ups); if (keys.POWER !== key) { keys.POWER = key;
+        draw(anim.power.display, [['⚡ 배전 · UPS 계통 요약', 52, '#e4bf7d'], ['A/B 수전: 상용 입력 감시', 36], ...Object.entries(f.ups).map(([n, u]) => [`${n} → 서버 ${u.servers.join('·')}: ${u.mode === 'battery' ? '⚠ 입력 이상 · 배터리' : '정상'}`, 34, u.mode === 'battery' ? '#ffd2a6' : '#cfe3ee'])], '#e4bf7d'); }
+      visual = { room: current, engine: true, battery: bat.map(([n]) => n), display: keys.POWER };
+    }
+  }
   function update(time, state, dt) {
     if (!current) return;
+    if (state.game?.incident?.facilities) { engineUpdate(time, state.game.incident.facilities, dt); return; }
     const cv = coolingView(state), pv = powerView(state), uv = upsView(state), nv = networkView(state), checks = state.ops.checks;
     if (current === 'COOLING') {
       const speed = cv.mode === 'on' ? 5 : cv.mode === 'warn' ? 12 : 0; rotorAngle += speed * dt; for (const r of anim.cooling.rotors) r.rotation.x = rotorAngle;
