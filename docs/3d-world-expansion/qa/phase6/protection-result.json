@@ -1,0 +1,28 @@
+{
+  "phase": "after",
+  "user_data_files": 579,
+  "source_files": 147,
+  "original_user_baseline": {
+    "count": 53,
+    "changed": []
+  },
+  "original_qa_baseline": {
+    "count": 508,
+    "changed": []
+  },
+  "user_data_changed": [],
+  "source_changed": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "aidc/global_ops/__init__.py",
+    "aidc/global_ops/catalog.py",
+    "aidc/global_ops/catalog_v1.json",
+    "aidc/global_ops/session.py",
+    "game.py",
+    "session.py",
+    "tests/global_catalog_v1_fingerprints.json",
+    "tests/test_global_catalog.py",
+    "tests/test_global_shifts.py"
+  ],
+  "user_data_identical": true
+}

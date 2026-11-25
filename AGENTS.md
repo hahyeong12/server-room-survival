@@ -146,6 +146,7 @@
   - **테스트:** `tests.run_gui --dpi system`으로 같은 스위트를 인식 모드로 실행합니다. 테스트 창 크기는 `dpi.geometry(...)`, 설계 크기 비교는 `dpi.px(...)`를 씁니다.
   - **알려진 한계:** 글꼴은 정수 px 반올림으로 정확히 비례하지 않습니다(9~10pt 줄 높이 1.33~1.35배). Per-Monitor 인식은 Tk 8.6 미지원으로 범위 밖입니다.
   - 화면 측정 도구: `tests/qa/capture_dpi.py`. 기록: `docs/qa/dpi-review-001/report.md`.
+- 3D Phase 6(Issue #7, 브랜치 `experiment/3d-global-operations-phase6`) `aidc/global_ops/`: **글로벌 고객 카탈로그 단일 원본** `catalog_v1.json`(21개 도시·13개국·32개 가상 고객·9개 업무 유형·32개 업무 템플릿·교대 3개)을 Python(`catalog.py`)과 3D(`src/catalog.js`)가 함께 읽습니다. 템플릿은 새 시나리오 키 `global_v1:<id>`로 `game.SCENARIOS`에 **추가만** 하며 같은 키를 다른 내용으로 바꾸면 오류입니다(v1 지문은 `tests/global_catalog_v1_fingerprints.json`). `GlobalSession(GameSession)`은 기존 접수·동의·원장·시간·기한·점수·저장 경로를 그대로 쓰고 교대 도착 일정·교대 결과(엔진 기록 집계)만 더합니다. 원본 변경은 `game.request_conditions`의 시나리오 `flexible` 선택 키, `GameSession.MODES`·`_extra_payload()` 훅뿐입니다. 저장은 3D 폴더의 `aidc_3d_global_NNN.db`(`mode='global'`)이며 요청마다 `conditions.catalog`에 의미를 고정합니다. 글로벌 장애 확률은 0(새 장애는 Phase 7). 테스트: `tests/test_global_catalog.py`·`tests/test_global_shifts.py`(비GUI 20), `engine/tests/test_global_adapter.py`, `tests/global-catalog.test.mjs`, 브라우저 `npm run qa:phase6`. 기록: `docs/3d-world-expansion/PHASE6_ARCHITECTURE.md`, `QA_REPORT_PHASE6.md`.
 - `tests/`: 자동화 테스트
 - 테스트 명령: `python -m unittest discover -s tests -v` (Windows에서는 `py -m unittest ...`; GUI 테스트는 사용자 요청 없이 실행하지 않습니다.)
 
