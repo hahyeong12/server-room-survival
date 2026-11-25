@@ -49,12 +49,15 @@ class MissionRun:
 
 
 class GameSession:
+    # Phase 6: 하위 클래스(aidc.global_ops.session.GlobalSession)가 'global'을 추가합니다. 기본 세션은 그대로입니다.
+    MODES = ('free', 'story', 'tutorial')
+
     def __init__(self, db: Database, seed=None, incident_chance=None, mode='free', start_chapter=1, intro_flow=False):
         self.db, self.center = db, DataCenter()
         self.servers = ServerPool()
         self.missions = {m['id']:m for m in db.get_missions()}
         saved = db.get_simulation()
-        if mode not in ('free', 'story', 'tutorial'):
+        if mode not in self.MODES:
             raise ValueError('존재하지 않는 게임 모드입니다.')
         if start_chapter not in (1, 2, 3, '3b', 'lab') or (start_chapter in (2, 3, '3b', 'lab') and (mode != 'story' or saved)):
             raise ValueError('Chapter 2/3 연습은 비어 있는 새 스토리 슬롯에서만 시작할 수 있습니다.')
@@ -224,6 +227,7 @@ class GameSession:
                                              'last_by_mission':self.arrival_last}}
         if self.story:
             payload.update(mode=self.mode, story=self.story.payload())
+        payload.update(self._extra_payload())
         self.db.save_simulation(payload)
         for rid,run in self.runs.items():
             state = {k:v for k,v in vars(run.state).items() if k != 'center'}
@@ -235,6 +239,10 @@ class GameSession:
                                   'hardware_downtime':run.hardware_downtime, 'migration_left':run.migration_left,
                                   'migration_downtime':run.migration_downtime,
                                   'server_allocations':[a.payload() for a in run.server_allocations], 'version':2})
+
+    def _extra_payload(self):
+        """Phase 6 저장 확장 지점. 기본 세션은 아무것도 더하지 않아 기존 저장 형식과 같습니다."""
+        return {}
 
     @contextmanager
     def _atomic(self):
