@@ -147,6 +147,7 @@ class Shifts(unittest.TestCase):
         run = s.runs[djn]
         self.assertEqual(s.allocation_preview(run, 'performance')['reason'], '서버별 GPU·전력 조합 불가')
         s.select(djn)
+        s.confirm_shift_briefing()   # Phase 7: game-changing actions wait for the shift briefing (tested separately)
         with self.assertRaisesRegex(ValueError, '조합'):
             s.choose_plan('performance')
         self.assertEqual(s.center.gpu_used, 0)

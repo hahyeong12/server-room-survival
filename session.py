@@ -244,6 +244,14 @@ class GameSession:
         """Phase 6 저장 확장 지점. 기본 세션은 아무것도 더하지 않아 기존 저장 형식과 같습니다."""
         return {}
 
+    def _job_hold(self, run):
+        """Phase 7 확장 지점: 정상 실행 중인 작업의 이번 10분 처리 배율(0=정지, 0~1=지연). 기본 세션은 None(영향 없음)."""
+        return None
+
+    def _hold_tick(self, run, factor):
+        """Phase 7 확장 지점. _job_hold가 None이 아닐 때만 하위 클래스가 호출됩니다."""
+        raise NotImplementedError
+
     @contextmanager
     def _atomic(self):
         before = {rid:(run, {**vars(run), 'terms':deepcopy(run.terms), 'proposals':deepcopy(run.proposals),
@@ -2432,6 +2440,9 @@ class GameSession:
                             self._feedback(run, '작업 이전 준비가 끝났습니다. '
                                            +('기존 네트워크 장애/준비는 별도로 확인해 주세요.' if run.state.phase != 'running' else
                                              '다음 시간 구간부터 기존 작업을 계속해 주세요.'), 'customer_migration_ready')
+                    elif run.state.phase == 'running' and self._job_hold(run) is not None:
+                        # Phase 7: 사건(DNS·스토리지·냉각 등)이 정상 실행 작업을 멈추거나 늦추는 구간. 기본 세션은 항상 None.
+                        self._hold_tick(run, self._job_hold(run))
                     else:
                         run.state.advance(10)
                     if before == 'running' and run.state.phase == 'incident':

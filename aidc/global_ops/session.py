@@ -72,15 +72,21 @@ def ensure_missions(db: Database, catalog):
     return mapping
 
 
+BRIEFING_LOCK = '먼저 교대 브리핑을 확인하고 근무를 시작해 주세요. 브리핑 전에는 요청 조회·시설 이동·복습만 할 수 있습니다.'
+
+
 class GlobalSession(GameSession):
     MODES = GameSession.MODES + ('global',)
+    # Phase 7: 같은 규칙을 쓰는 하위 세션(사건 대응 근무)이 자기 저장 모드 이름을 씁니다. 글로벌 근무는 그대로 'global'.
+    SAVE_MODE = 'global'
 
     def __init__(self, db: Database, kind=None, shift=1, seed=None):
         self.catalog = load()
         saved = db.get_simulation()
         if saved:
-            if saved.get('mode') != 'global':
-                raise ValueError('글로벌 근무 저장이 아닙니다. 모드별 저장 파일을 사용해 주세요.')
+            if saved.get('mode') != self.SAVE_MODE:
+                raise ValueError('글로벌 근무 저장이 아닙니다. 모드별 저장 파일을 사용해 주세요.'
+                                 if self.SAVE_MODE == 'global' else '이 모드의 저장 파일이 아닙니다. 모드별 저장 파일을 사용해 주세요.')
             self.global_ = GlobalProgress.from_payload(saved.get('global'))
             if self.global_.version != self.catalog.version:
                 raise ValueError(f'이 저장은 카탈로그 v{self.global_.version}로 만들어졌습니다. 같은 버전으로만 이어할 수 있습니다.')
@@ -94,13 +100,13 @@ class GlobalSession(GameSession):
             self.global_ = GlobalProgress(self.catalog.version, kind, ensure_missions(db, self.catalog),
                                           shift=int(shift) if kind == 'shift' else None)
         self._mission_template = {mid: tid for tid, mid in self.global_.missions.items()}
-        super().__init__(db, seed=seed, incident_chance=0, mode='global')
+        super().__init__(db, seed=seed, incident_chance=0, mode=self.SAVE_MODE)
         if saved:
             self._validate_global()
 
     # ------------------------------------------------------------------ engine hooks
     def _extra_payload(self):
-        return {'mode': 'global', 'global': self.global_.payload()}
+        return {'mode': self.SAVE_MODE, 'global': self.global_.payload()}
 
     @contextmanager
     def _atomic(self):
@@ -254,6 +260,56 @@ class GlobalSession(GameSession):
         if g.kind == 'shift' and not g.briefed:
             raise ValueError('먼저 교대 브리핑을 확인하고 근무를 시작해 주세요.')
         return super().advance_time(minutes)
+
+    # Phase 7(Issue #8 §3, Phase 6 알려진 위험): 교대 브리핑 전에는 게임을 바꾸는 행동을 막습니다. 요청 선택·읽기
+    # (조회)·시설 이동·복습은 허용하며, 시간·자원·고객 상태는 브리핑 확인 전까지 바뀌지 않습니다.
+    def _require_briefed(self):
+        if self.global_.kind == 'shift' and not self.global_.briefed:
+            raise ValueError(BRIEFING_LOCK)
+
+    def accept_request(self):
+        self._require_briefed()
+        return super().accept_request()
+
+    def choose_plan(self, key, server_plan=None):
+        self._require_briefed()
+        return super().choose_plan(key, server_plan)
+
+    def wait_request(self):
+        self._require_briefed()
+        return super().wait_request()
+
+    def reject_request(self, reason):
+        self._require_briefed()
+        return super().reject_request(reason)
+
+    def propose_alternative(self):
+        self._require_briefed()
+        return super().propose_alternative()
+
+    def review_alternative(self):
+        self._require_briefed()
+        return super().review_alternative()
+
+    def notify_delay(self):
+        self._require_briefed()
+        return super().notify_delay()
+
+    def report_failure(self):
+        self._require_briefed()
+        return super().report_failure()
+
+    def respond(self, key):
+        self._require_briefed()
+        return super().respond(key)
+
+    def begin_server_repair(self, server_id):
+        self._require_briefed()
+        return super().begin_server_repair(server_id)
+
+    def migrate(self, server_plan, source):
+        self._require_briefed()
+        return super().migrate(server_plan, source)
 
     def next_shift(self):
         g = self.global_

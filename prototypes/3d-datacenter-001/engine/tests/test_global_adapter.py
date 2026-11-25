@@ -120,7 +120,10 @@ class GlobalAdapterTests(GlobalBase):
         self.assertEqual({first['rid'], second['rid']}, set(sfo))
         self.assertIn('2건', first['info'])
         self.assertEqual(game.snapshot()['focus'], second['rid'])
-        none = self.act(game, type='select_country', id='GB-LON')
+        # A city without any request (the free-ops arrival draw uses the save's random seed, so pick one that is empty).
+        busy = {r['code'] for r in game.snapshot()['requests']}
+        empty = next(c for c in ('GB-LON', 'FR-PAR', 'AU-SYD', 'VN-SGN') if c not in busy)
+        none = self.act(game, type='select_country', id=empty)
         self.assertIn('없습니다', none['hint'])
         self.assertFalse(self.act(game, type='select_country', id='XX-XXX')['ok'])
         lit = [p['code'] for p in game.snapshot()['world']['paths']]

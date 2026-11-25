@@ -1,0 +1,315 @@
+{
+  "content": "incidents",
+  "version": 1,
+  "notice": "사건·수치·장비 이름·로그는 교육용 가상 모델입니다. 실제 장비의 동작·열/유체·전기 특성이나 실존 운영 절차를 그대로 옮긴 것이 아니며, 화면의 명령어는 예시일 뿐 실제로 실행되지 않습니다.",
+  "topology": {
+    "dualHomed": ["A", "B"],
+    "coolingZones": {"Z1": ["A", "B"], "Z2": ["C", "D"]},
+    "upsFeeds": {"UPS-01": ["A", "B"], "UPS-02": ["C", "D"]},
+    "note": "서버동 01의 가상 배치: 랙 A-01·B-01은 ToR 업링크 2개(이중화), C-01·D-01은 1개. 냉각 구역 Z1=A·B, Z2=C·D. UPS-01=A·B, UPS-02=C·D 계통."
+  },
+  "stages": [
+    ["alert", "경보"], ["scope", "범위 확인"], ["evidence", "근거 수집"], ["cause", "원인 판단"],
+    ["mitigate", "완화·복구"], ["verify", "검증"], ["report", "보고/종료"]
+  ],
+  "probes": {
+    "ping": {"label": "IP 통신 테스트", "location": "noc", "where": "내 모니터", "fact": "IP 주소로 대상까지 패킷이 오가는지(도달성·손실·왕복 시간)를 봅니다. 이름 해석과는 별개입니다.", "example": "ping -c 3 10.20.<랙>.15"},
+    "dns": {"label": "이름 조회(DNS)", "location": "noc", "where": "내 모니터", "fact": "서비스 이름이 IP 주소로 해석되는지 봅니다. ping이 되어도 이름 조회는 실패할 수 있습니다.", "example": "nslookup storage-api.aidc.internal"},
+    "link_stats": {"label": "회선 이용률·드롭·RTT", "location": "NETWORK", "where": "네트워크동 MMR", "fact": "링크가 살아 있어도 이용률이 한계에 닿으면 큐가 차서 패킷 드롭과 지연(RTT)이 늘어납니다.", "example": "show interface counters (예시)"},
+    "tor_port": {"label": "ToR/업링크 포트 상태", "location": "NETWORK", "where": "네트워크동 MMR", "fact": "랙 상단 스위치(ToR)에서 코어로 가는 업링크 포트의 LINK UP/DOWN을 봅니다.", "example": "show interface status (예시)"},
+    "dcgm": {"label": "GPU 건강 검사(DCGM)", "location": "hall", "where": "서버동 01 랙", "fact": "GPU 관리 도구의 건강 검사는 장치 오류(Xid·ECC)·온도·접근 가능 여부를 보고합니다.", "example": "dcgmi health -c (예시)"},
+    "job_log": {"label": "작업 로그", "location": "noc", "where": "내 모니터", "fact": "작업 프로세스가 남긴 마지막 오류 줄을 봅니다. 같은 '작업 정지'라도 로그 문장이 원인을 가릅니다.", "example": "kubectl logs <작업> --tail=20 (예시)"},
+    "service_events": {"label": "서비스 이벤트·재시작", "location": "noc", "where": "내 모니터", "fact": "서비스(컨테이너)가 몇 번 재시작했는지, 직전 배포·설정 변경이 있었는지 이벤트 기록을 봅니다.", "example": "kubectl describe pod <작업> (예시)"},
+    "storage_space": {"label": "스토리지 가용 공간", "location": "hall", "where": "서버동 01 스토리지 패널", "fact": "작업 볼륨의 사용률을 봅니다. 가득 차면 체크포인트 기록이 'No space left on device'로 실패합니다.", "example": "df -h /data (예시)"},
+    "storage_latency": {"label": "스토리지 지연·처리량", "location": "hall", "where": "서버동 01 스토리지 패널", "fact": "공간이 남아 있어도 I/O 대기시간이 늘면 작업이 데이터를 기다리느라 느려집니다.", "example": "iostat -x 5 (예시)"},
+    "cooling": {"label": "냉각 플랜트 상태", "location": "COOLING", "where": "냉각 플랜트", "fact": "펌프 운전 상태, 냉각수 유량, 서버 흡입 공기 온도 추세를 봅니다. 운영자는 설비를 직접 조작하지 않고 시설팀에 요청합니다.", "example": "BMS 화면 조회 (예시)"},
+    "ups": {"label": "UPS 상태", "location": "UPS", "where": "UPS 구역", "fact": "UPS가 상용 전원으로 운전 중인지 배터리로 운전 중인지, 남은 보호 시간을 봅니다. 전력 설비 조작은 전원·시설 담당의 일입니다.", "example": "UPS 패널 조회 (예시)"}
+  },
+  "causes": {
+    "dns": {"label": "DNS 이름 해석 장애", "domain": "network", "probes": ["ping", "dns"]},
+    "tor_uplink": {"label": "ToR/업링크 포트 단절", "domain": "network", "probes": ["tor_port"]},
+    "congestion": {"label": "회선 혼잡·패킷 손실", "domain": "network", "probes": ["link_stats"]},
+    "transit": {"label": "국제 전송 경로 단절", "domain": "network", "probes": ["ping", "link_stats"]},
+    "gpu_health": {"label": "GPU 장치 오류(Xid/ECC)", "domain": "gpu", "probes": ["dcgm"]},
+    "gpu_oom": {"label": "GPU 메모리 부족(CUDA OOM)", "domain": "gpu", "probes": ["job_log", "dcgm"]},
+    "storage_full": {"label": "스토리지 공간 소진", "domain": "storage", "probes": ["storage_space"]},
+    "storage_latency": {"label": "스토리지 I/O 지연 증가", "domain": "storage", "probes": ["storage_latency", "storage_space"]},
+    "cooling": {"label": "냉각 펌프 성능 저하", "domain": "facility", "probes": ["cooling"]},
+    "ups": {"label": "UPS 입력 이상·배터리 운전", "domain": "facility", "probes": ["ups"]},
+    "crashloop": {"label": "서비스 반복 재시작(CrashLoop)", "domain": "platform", "probes": ["service_events", "job_log"]}
+  },
+  "teams": {
+    "network": {"label": "네트워크 담당", "approval": 10},
+    "facility": {"label": "시설·전원팀", "approval": 10},
+    "platform": {"label": "플랫폼·GPU 담당", "approval": 10}
+  },
+  "actions": {
+    "notify_customer": {"label": "고객 영향 안내 · 예상 시각 업데이트", "group": "comm"},
+    "escalate_network": {"label": "네트워크 담당 호출", "group": "escalate", "team": "network"},
+    "escalate_facility": {"label": "시설·전원팀 호출", "group": "escalate", "team": "facility"},
+    "escalate_platform": {"label": "플랫폼·GPU 담당 호출", "group": "escalate", "team": "platform"},
+    "dns_failover": {"label": "보조 DNS 리졸버로 전환", "group": "network"},
+    "reroute_uplink": {"label": "이중화 업링크로 우회", "group": "network"},
+    "qos_adjust": {"label": "트래픽 우선순위(QoS)·대역 예약 조정", "group": "network"},
+    "reroute_backup": {"label": "백업 경로로 트래픽 우회", "group": "network"},
+    "isolate_migrate": {"label": "의심 GPU 서버 격리 후 작업 이전", "group": "compute"},
+    "gpu_repair": {"label": "의심 GPU 서버 격리 후 장비 수리 요청", "group": "compute"},
+    "ask_consent": {"label": "고객에게 작업 매개변수 조정 동의 요청", "group": "compute"},
+    "reduce_batch": {"label": "배치 크기 축소(고객 동의 조건)", "group": "compute"},
+    "memory_saving": {"label": "메모리 절약 설정 적용(플랫폼 담당)", "group": "compute"},
+    "cleanup_temp": {"label": "게임 내부 임시 파일 정리", "group": "storage"},
+    "expand_storage": {"label": "승인된 스토리지 용량 확장", "group": "storage"},
+    "delete_data": {"label": "작업 데이터 파일 삭제", "group": "storage"},
+    "storage_path": {"label": "대체 스토리지 경로로 전환", "group": "storage"},
+    "standby_pump": {"label": "예비 냉각 펌프 가동 요청", "group": "facility"},
+    "load_shed": {"label": "영향 범위 밖 서버로 작업 이전", "group": "facility"},
+    "planned_pause": {"label": "작업 계획 중단(안전 정지)", "group": "facility"},
+    "ups_bypass": {"label": "UPS 바이패스 직접 전환", "group": "facility"},
+    "restart_service": {"label": "서비스 재시작", "group": "platform"},
+    "rollback_deploy": {"label": "직전 배포 롤백", "group": "platform"},
+    "config_fix": {"label": "설정 수정 후 재배포(플랫폼 담당)", "group": "platform"}
+  },
+  "common": {
+    "refused": {
+      "delete_data": "안전 정책상 허용되지 않습니다. 고객 작업 데이터와 DB 파일은 운영자가 임의로 지우지 않습니다.",
+      "ups_bypass": "운영자 권한 밖입니다. UPS·차단기 조작은 전원·시설 담당만 절차에 따라 수행합니다.",
+      "reduce_batch": "고객 작업 조건을 바꾸는 조치입니다. 먼저 고객 동의를 받아야 합니다.",
+      "ask_consent": "이 사건에는 고객 작업 조건을 바꿀 조치가 필요하지 않습니다."
+    },
+    "none": "조치를 수행했지만 관측된 증상이 바뀌지 않았습니다(개선 없음). 결과를 확인하는 동안 10분 동안 다음 조치를 할 수 없습니다.",
+    "escalateNone": "담당팀 확인 결과: 해당 영역에는 이상이 없습니다. 근거를 다시 모아 보세요."
+  },
+  "types": {
+    "dns": {
+      "severity": "SEV2", "effect": "blocked", "asset": "resolver",
+      "alert": "작업이 외부 저장소에 접속하지 못하고 멈췄습니다 · 원인 미확인",
+      "symptom": "작업 정지",
+      "readings": {
+        "ping": {"status": "ok", "summary": "storage-api(10.20.0.15) IP 응답 3/3 · RTT 0.8 ms", "lines": ["IP 주소로는 정상 응답합니다."]},
+        "dns": {"status": "bad", "summary": "storage-api.aidc.internal 이름 조회 실패(SERVFAIL) · 주 리졸버 응답 없음", "lines": ["주 리졸버 10.20.0.53: 시간 초과", "보조 리졸버 10.20.1.53: 정상 응답 가능"]},
+        "job_log": {"status": "bad", "summary": "로그: 이름 해석 실패 — storage-api.aidc.internal (재시도 중)", "lines": ["ERROR resolve storage-api.aidc.internal: temporary failure in name resolution"]}
+      },
+      "actions": {
+        "dns_failover": {"result": "fix", "minutes": 10, "text": "작업 노드의 리졸버를 보조 리졸버로 전환했습니다. 이름 조회가 다시 응답합니다."},
+        "escalate_network": {"result": "fix", "minutes": 30, "team": "network", "text": "네트워크 담당이 주 리졸버를 복구합니다(가상 30분)."}
+      },
+      "verify": ["dns", "job_log"],
+      "mentor": {"scope": "먼저 어느 고객 작업이 멈췄는지 범위를 확인해요.", "evidence": "IP로는 통하는데 이름으로는 안 되는 경우가 있어요. 두 가지를 따로 비교해 봐요.", "cause": "관측 두 개가 서로 다르게 나왔다면, 그 차이가 원인을 가리켜요.", "mitigate": "리졸버를 바꾸거나 담당에게 맡길 수 있어요. 해저 케이블은 정상이에요."},
+      "postmortem": {"field": "실제 현장이라면 네트워크 담당과 DNS 서비스 소유자에게 알리고, 주 리졸버의 로그·다른 서비스 영향 여부를 더 확인했을 것입니다.", "causal": "주 리졸버 응답 없음 → 이름 해석 실패 → 작업이 저장소에 접속 못 함(IP 경로는 정상).", "alternatives": "국제 경로 단절은 IP 테스트가 정상이라 배제, 서비스 재시작 문제는 재시작 기록이 없어 배제."}
+    },
+    "tor_uplink": {
+      "severity": "SEV2", "effect": "blocked", "asset": "tor", "hold": true,
+      "alert": "서버동 01 일부 서버와 통신이 끊겨 작업이 멈췄습니다 · 원인 미확인",
+      "symptom": "작업 정지",
+      "readings": {
+        "ping": {"status": "bad", "summary": "{rack} 서버 IP 응답 0/3 · 다른 랙은 정상", "lines": ["10.20.{net}.15 응답 없음", "외부 회선·다른 랙 서버는 정상"]},
+        "dns": {"status": "ok", "summary": "이름 조회 정상(리졸버 응답)", "lines": []},
+        "tor_port": {"status": "bad", "summary": "ToR-{rack} 업링크 {downPorts} DOWN · {uplinkNote}", "lines": ["코어 스위치 쪽 포트 LINK DOWN"]},
+        "link_stats": {"status": "ok", "summary": "국제·국내 회선 이용률 정상 · 드롭 0", "lines": []},
+        "job_log": {"status": "bad", "summary": "로그: 데이터 노드 연결 시간 초과", "lines": ["WARN connection timed out: 10.20.{net}.15:7000"]}
+      },
+      "actions": {
+        "reroute_uplink": {"result": "fix", "minutes": 10, "requires": "dualHomed", "text": "같은 랙의 두 번째 업링크로 트래픽을 옮겼습니다.", "refused": "이 랙(ToR-{rack})은 업링크가 하나뿐이라 우회할 경로가 없습니다."},
+        "escalate_network": {"result": "fix", "minutes": 30, "team": "network", "text": "네트워크 담당이 업링크 포트·광모듈을 교체합니다(가상 30분)."},
+        "load_shed": {"result": "move", "text": "영향을 받은 랙 밖의 정상 서버로 작업을 옮깁니다(준비 10분). 포트 복구는 네트워크 담당이 따로 해야 합니다."}
+      },
+      "verify": ["tor_port", "ping"],
+      "mentor": {"scope": "어느 서버의 작업이 멈췄는지부터 봐요.", "evidence": "회선 문제인지, 랙 안쪽 스위치 문제인지 네트워크동에서 직접 봐요.", "cause": "끊긴 위치가 국제 구간인지 서버동 랙인지 구분해요.", "mitigate": "이중화된 랙이면 우회, 아니면 담당 복구나 작업 이전이에요."},
+      "postmortem": {"field": "실제 현장이라면 네트워크 담당에 포트·광모듈 교체를 요청하고, 같은 ToR의 다른 서버 영향과 이중화 구성 여부를 더 확인했을 것입니다.", "causal": "ToR 업링크 포트 DOWN → 해당 랙 서버 고립 → 작업 정지(국제 회선은 정상).", "alternatives": "국제 경로 단절은 회선 지표가 정상이라 배제, DNS는 이름 조회가 정상이라 배제."}
+    },
+    "congestion": {
+      "severity": "SEV3", "effect": "slow", "factor": 0.5, "asset": "edge",
+      "alert": "작업 처리 속도가 절반 정도로 떨어졌습니다 · 원인 미확인",
+      "symptom": "처리 속도 저하",
+      "readings": {
+        "ping": {"status": "warn", "summary": "IP 응답 3/3이지만 RTT 42 ms(평소 2 ms) · 손실 2%", "lines": []},
+        "dns": {"status": "ok", "summary": "이름 조회 정상", "lines": []},
+        "link_stats": {"status": "bad", "summary": "AIDC 엣지 링크 E1 UP · 이용률 98% · 드롭 3.1% · RTT 상승 · 백업 E2 이용률 91%", "lines": ["E1(주): 이용률 98% · 출력 큐 가득", "E2(백업): 이용률 91% · 여유 거의 없음"], "trend": {"label": "E1 RTT (ms)", "values": [2, 9, 26, 42]}},
+        "tor_port": {"status": "ok", "summary": "모든 ToR 업링크 UP", "lines": []},
+        "storage_latency": {"status": "ok", "summary": "작업 볼륨 지연 정상", "lines": []},
+        "job_log": {"status": "warn", "summary": "로그: 데이터 전송 재시도 증가(오류 아님)", "lines": []}
+      },
+      "actions": {
+        "qos_adjust": {"result": "fix", "minutes": 10, "text": "고객 작업 트래픽을 예약 대역 클래스로 옮기고 백그라운드 복제를 낮췄습니다."},
+        "reroute_backup": {"result": "none", "text": "백업 경로 E2도 이용률이 높아 우회해도 처리 속도가 그대로입니다(개선 없음)."},
+        "escalate_network": {"result": "fix", "minutes": 30, "team": "network", "text": "네트워크 담당이 대역을 증설·재분배합니다(가상 30분)."}
+      },
+      "verify": ["link_stats"],
+      "mentor": {"scope": "멈춘 게 아니라 느려진 거예요. 어느 작업인지부터 봐요.", "evidence": "링크가 살아 있는지와 얼마나 붐비는지는 다른 질문이에요.", "cause": "속도 저하는 회선·스토리지·열 등 여러 원인이 있어요.", "mitigate": "백업 경로도 붐비는지 확인했나요?"},
+      "postmortem": {"field": "실제 현장이라면 네트워크 담당에 대역 증설을 요청하고, 혼잡을 만든 다른 트래픽(백업·복제 일정)을 더 확인했을 것입니다.", "causal": "엣지 링크 이용률 한계 → 큐 드롭·RTT 증가 → 작업 데이터 전송 지연.", "alternatives": "링크 단절은 LINK UP이라 배제, 스토리지 지연은 볼륨 지연이 정상이라 배제."}
+    },
+    "gpu_health": {
+      "severity": "SEV2", "effect": "blocked", "asset": "gpu", "hold": true, "gpu": true,
+      "alert": "작업 프로세스가 오류로 종료되어 작업이 멈췄습니다 · 원인 미확인",
+      "symptom": "작업 정지",
+      "readings": {
+        "dcgm": {"status": "bad", "summary": "Server {server}({rack}) GPU{slot}: Xid 79(장치 응답 없음) · 건강 검사 FAIL · 다른 GPU PASS", "lines": ["가상 장치 ID GPU-{server}{slot} · ECC 오류 증가", "다른 서버: PASS"]},
+        "job_log": {"status": "bad", "summary": "로그: GPU 장치 접근 실패로 프로세스 종료", "lines": ["ERROR CUDA error: unspecified launch failure (device {slot})"]},
+        "service_events": {"status": "warn", "summary": "작업 재시작 1회 · 같은 서버에서 다시 실패 · 배포 변경 없음", "lines": []},
+        "storage_space": {"status": "ok", "summary": "작업 볼륨 사용률 54%", "lines": []}
+      },
+      "actions": {
+        "isolate_migrate": {"result": "isolate_move", "text": "의심 서버를 격리(사용 불가)하고 정상 서버로 작업 이전을 시작했습니다(준비 10분)."},
+        "gpu_repair": {"result": "isolate_repair", "text": "의심 서버를 격리하고 장비 담당이 수리합니다(가상 20분, 작업은 기존 위치에서 대기)."},
+        "escalate_platform": {"result": "none", "team": "platform", "text": "플랫폼 담당 확인: 소프트웨어·배포 문제는 아닙니다. 장치 쪽을 보라는 회신입니다."}
+      },
+      "verify": ["dcgm", "job_log"],
+      "mentor": {"scope": "어느 서버에서 멈췄는지 봐요.", "evidence": "같은 '작업 정지'라도 장치 오류인지 소프트웨어인지 랙에서 건강 검사를 봐요.", "cause": "장치 검사가 FAIL인지 PASS인지가 갈림길이에요.", "mitigate": "격리 후 이전과 수리 대기 중 기한에 맞는 쪽을 골라요."},
+      "postmortem": {"field": "실제 현장이라면 장비 담당에 RMA·진단 로그를 넘기고, 같은 서버의 다른 GPU와 최근 펌웨어 변경을 더 확인했을 것입니다.", "causal": "GPU 장치 오류(Xid) → 작업 프로세스 종료 → 같은 서버 재시작도 실패.", "alternatives": "메모리 부족(OOM)은 로그에 OOM이 없어 배제, 배포 문제는 배포 변경이 없어 배제."}
+    },
+    "gpu_oom": {
+      "severity": "SEV3", "effect": "blocked", "asset": "job",
+      "alert": "작업이 시작 직후 반복해서 종료됩니다 · 원인 미확인",
+      "symptom": "작업 정지(반복 종료)",
+      "readings": {
+        "dcgm": {"status": "ok", "summary": "Server {servers} GPU 건강 검사 PASS · 장치 오류 없음", "lines": []},
+        "job_log": {"status": "bad", "summary": "로그: CUDA out of memory — 이번 배치 설정이 GPU 메모리에 들어가지 않음", "lines": ["RuntimeError: CUDA out of memory (교육용 예시 로그 · 수치 없음)", "직전: 고객이 배치 크기 설정을 올림"]},
+        "service_events": {"status": "warn", "summary": "작업 재시작 4회 · 매번 같은 단계에서 종료 · 배포 변경 없음", "lines": []},
+        "storage_space": {"status": "ok", "summary": "작업 볼륨 사용률 48%", "lines": []}
+      },
+      "actions": {
+        "ask_consent": {"result": "consent", "text": "고객에게 배치 크기 축소(학습 결과 동일 · 처리 시간 소폭 증가) 동의를 요청했습니다."},
+        "reduce_batch": {"result": "fix", "minutes": 10, "requires": "consent", "text": "고객이 동의한 배치 크기로 다시 시작합니다."},
+        "memory_saving": {"result": "fix", "minutes": 20, "requires": "approval:platform", "text": "플랫폼 담당이 작업 조건을 바꾸지 않는 메모리 절약 설정(체크포인팅)을 적용합니다(가상 20분)."},
+        "gpu_repair": {"result": "none", "text": "장비 담당 확인: GPU 장치는 정상(PASS)입니다. 수리할 대상이 없습니다(개선 없음)."}
+      },
+      "verify": ["job_log", "service_events"],
+      "mentor": {"scope": "반복 종료되는 작업을 확인해요.", "evidence": "GPU가 고장 난 것과 GPU 메모리가 모자란 것은 달라요. 로그와 장치 검사를 함께 봐요.", "cause": "장치 PASS인데 로그에 메모리 부족이 있다면?", "mitigate": "작업 조건을 바꾸려면 고객 동의가 먼저예요."},
+      "postmortem": {"field": "실제 현장이라면 고객에게 배치·모델 설정 변경 이력을 확인하고, 필요한 메모리를 미리 검토하는 절차를 제안했을 것입니다.", "causal": "배치 설정 증가 → GPU 메모리 부족(OOM) → 같은 단계에서 반복 종료(장치는 정상).", "alternatives": "GPU 장치 오류는 DCGM PASS라 배제, 배포 오류는 로그가 OOM이라 배제."}
+    },
+    "storage_full": {
+      "severity": "SEV2", "effect": "blocked", "asset": "volume",
+      "alert": "작업이 체크포인트를 저장하지 못하고 멈췄습니다 · 원인 미확인",
+      "symptom": "작업 정지",
+      "readings": {
+        "storage_space": {"status": "bad", "summary": "작업 볼륨 vol-{rid} 사용률 100% · 임시 파일 영역 38% 차지", "lines": ["/data: No space left on device", "tmp/ 영역(게임 내부 임시 파일): 정리 가능"]},
+        "storage_latency": {"status": "ok", "summary": "볼륨 지연 정상 · 쓰기 요청이 오류로 즉시 실패", "lines": []},
+        "job_log": {"status": "bad", "summary": "로그: 체크포인트 기록 실패 — No space left on device", "lines": ["OSError: [Errno 28] No space left on device"]},
+        "dcgm": {"status": "ok", "summary": "GPU 건강 검사 PASS", "lines": []}
+      },
+      "actions": {
+        "cleanup_temp": {"result": "fix", "minutes": 10, "text": "게임 내부 임시 파일 영역만 정리했습니다. 고객 데이터·DB는 건드리지 않았습니다."},
+        "expand_storage": {"result": "fix", "minutes": 20, "requires": "approval:platform", "text": "승인된 범위에서 볼륨 용량을 늘립니다(가상 20분)."},
+        "storage_path": {"result": "none", "text": "다른 경로로 바꿔도 같은 볼륨이 가득 차 있어 기록이 실패합니다(개선 없음)."}
+      },
+      "verify": ["storage_space", "job_log"],
+      "mentor": {"scope": "체크포인트를 못 쓰는 작업이 어느 것인지 봐요.", "evidence": "기록 실패는 공간 때문일 수도, 느려서일 수도 있어요. 서버동 스토리지 패널을 봐요.", "cause": "공간과 지연 중 어느 쪽이 비정상인지 봐요.", "mitigate": "데이터를 마구 지우는 건 안 돼요. 정리해도 되는 영역만요."},
+      "postmortem": {"field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.", "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.", "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."}
+    },
+    "storage_latency": {
+      "severity": "SEV3", "effect": "slow", "factor": 0.5, "asset": "volume",
+      "alert": "작업 처리 속도가 절반 정도로 떨어졌습니다 · 원인 미확인",
+      "symptom": "처리 속도 저하",
+      "readings": {
+        "storage_space": {"status": "ok", "summary": "작업 볼륨 vol-{rid} 사용률 61% · 공간 여유 있음", "lines": []},
+        "storage_latency": {"status": "bad", "summary": "vol-{rid} 읽기 지연 85 ms(평소 4 ms) · 처리량 120 MB/s로 감소 · 다른 볼륨 정상", "lines": ["같은 스토리지 노드의 다른 작업 스캔 부하가 큼"], "trend": {"label": "vol 지연 (ms)", "values": [4, 22, 61, 85]}},
+        "link_stats": {"status": "ok", "summary": "회선 이용률 정상(41%) · 드롭 0", "lines": []},
+        "ping": {"status": "ok", "summary": "IP 응답 정상 · RTT 0.9 ms", "lines": []},
+        "job_log": {"status": "warn", "summary": "로그: 데이터 로더 대기 시간 증가(오류 아님)", "lines": []}
+      },
+      "actions": {
+        "storage_path": {"result": "fix", "minutes": 10, "text": "작업 데이터를 여유 있는 대체 스토리지 경로(복제본)에서 읽도록 바꿨습니다."},
+        "escalate_platform": {"result": "fix", "minutes": 30, "team": "platform", "text": "스토리지 담당이 다른 작업의 스캔 부하를 낮춥니다(가상 30분)."},
+        "cleanup_temp": {"result": "none", "text": "공간은 원래 충분했습니다. 정리해도 지연이 그대로입니다(개선 없음)."},
+        "expand_storage": {"result": "none", "text": "용량을 늘려도 지연은 그대로입니다(개선 없음)."}
+      },
+      "verify": ["storage_latency"],
+      "mentor": {"scope": "느려진 작업이 어느 것인지 봐요.", "evidence": "공간은 남는데 느릴 수 있어요. 공간과 지연을 따로 봐요.", "cause": "다른 작업의 볼륨과 비교했나요?", "mitigate": "공간 부족과는 해결책이 달라요."},
+      "postmortem": {"field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.", "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.", "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."}
+    },
+    "cooling": {
+      "severity": "SEV2", "effect": "slow", "factor": 0.5, "asset": "cooling", "hold": true, "limit": 40,
+      "limitText": "서버 흡입 온도가 보호 기준을 넘어 영향 서버가 열 보호로 정지했습니다. 작업이 실패했습니다.",
+      "alert": "서버동 01 일부 작업의 처리 속도가 떨어졌습니다 · 원인 미확인",
+      "symptom": "처리 속도 저하",
+      "readings": {
+        "cooling": {"status": "bad", "summary": "냉각 구역 {zone}: 펌프 P-2 WARN(성능 저하) · 유량 18 L/min(평소 42) · 흡입 온도 상승 중", "lines": ["P-1 ON 정상", "P-2 WARN · 진동·유량 저하", "예비 펌프 P-3 대기(OFF)"], "trend": {"label": "{racks} 흡입 온도 (°C, 가상)", "values": [24.5, 27.0, 29.5, 31.5]}},
+        "dcgm": {"status": "warn", "summary": "Server {servers}: 장치 오류 없음 · 온도로 클럭 제한(throttle) 중", "lines": []},
+        "link_stats": {"status": "ok", "summary": "회선 이용률 정상 · 드롭 0", "lines": []},
+        "storage_latency": {"status": "ok", "summary": "볼륨 지연 정상", "lines": []},
+        "ups": {"status": "ok", "summary": "UPS-01·02 상용 전원 운전 정상", "lines": []}
+      },
+      "actions": {
+        "standby_pump": {"result": "fix", "minutes": 20, "requires": "approval:facility", "text": "시설팀이 예비 펌프 P-3을 가동했습니다. 흡입 온도가 정상 범위로 돌아오는 데 가상 20분이 걸립니다."},
+        "load_shed": {"result": "move", "text": "냉각 영향 구역 밖의 정상 서버로 작업을 옮깁니다(준비 10분). 펌프는 시설팀이 따로 복구해야 합니다."},
+        "escalate_facility": {"result": "call", "team": "facility", "text": "시설팀에 냉각 구역 이상을 알렸습니다. 승인 후 예비 계통 가동을 요청할 수 있습니다."}
+      },
+      "verify": ["cooling", "dcgm"],
+      "mentor": {"scope": "어느 서버들의 작업이 느려졌는지 봐요.", "evidence": "느려진 서버들이 같은 냉각 구역에 있나요? 냉각 플랜트에서 직접 봐요.", "cause": "GPU가 고장 난 게 아니라 뜨거워서 스스로 느려진 걸 수도 있어요.", "mitigate": "설비는 시설팀이 다뤄요. 우리는 요청하고, 필요하면 부하를 옮겨요."},
+      "postmortem": {"field": "실제 현장이라면 시설팀에 펌프 점검·교체 일정을 요청하고, 같은 구역의 다른 랙 온도와 경보 기준을 더 확인했을 것입니다.", "causal": "펌프 P-2 성능 저하 → 냉각수 유량 감소 → 흡입 온도 상승 → GPU 열 보호 클럭 제한 → 작업 지연.", "alternatives": "GPU 장치 오류는 DCGM에 장치 오류가 없어 배제, 회선 혼잡은 이용률 정상이라 배제."}
+    },
+    "ups": {
+      "severity": "SEV1", "effect": "exposed", "asset": "ups", "hold": true, "limit": 20,
+      "limitText": "UPS 배터리 보호 시간이 끝나 영향 서버의 전원이 끊겼습니다. 작업이 비정상 종료되었습니다.",
+      "alert": "서버동 01 전원 계통 이벤트가 들어왔습니다 · 작업 영향 범위 확인 필요",
+      "symptom": "작업은 계속 실행 중 · 전원 이벤트",
+      "readings": {
+        "ups": {"status": "bad", "summary": "{ups}: 입력 이상 · 배터리 운전 중 · 남은 보호 시간 약 {runtime}분(가상) · 공급 서버 {servers}", "lines": ["다른 UPS: 상용 전원 정상", "운영자는 UPS를 조작하지 않습니다: 전원·시설팀 요청"], "trend": {"label": "배터리 잔량 (%, 가상)", "values": [100, 86, 71, 58]}},
+        "cooling": {"status": "ok", "summary": "냉각 구역 정상 · 펌프 P-1·P-2 ON", "lines": []},
+        "dcgm": {"status": "ok", "summary": "GPU 건강 검사 PASS", "lines": []},
+        "ping": {"status": "ok", "summary": "IP 응답 정상", "lines": []}
+      },
+      "actions": {
+        "escalate_facility": {"result": "fix", "minutes": 30, "team": "facility", "keepHold": true, "text": "전원·시설팀이 UPS 입력 계통을 복구합니다(가상 30분). 그동안 배터리 보호 시간이 줄어듭니다."},
+        "load_shed": {"result": "move", "text": "UPS 영향 계통 밖의 서버로 작업을 안전하게 이관합니다(준비 10분)."},
+        "planned_pause": {"result": "pause", "text": "작업을 체크포인트까지 저장하고 계획 중단했습니다. 전원 복구 후 재개합니다."}
+      },
+      "verify": ["ups"],
+      "mentor": {"scope": "작업은 아직 돌고 있어요. 어느 서버가 어떤 전원을 쓰는지 봐요.", "evidence": "UPS 구역에서 상용 전원인지 배터리인지 직접 봐요.", "cause": "GPU가 0개 남은 것과 전원이 이상한 건 완전히 다른 문제예요.", "mitigate": "배터리 시간이 끝나기 전에 팀을 부르고, 부하를 옮기거나 안전하게 멈춰요."},
+      "postmortem": {"field": "실제 현장이라면 전원팀과 함께 계획 중단 범위를 고객에게 미리 알리고, 배터리 교체 주기와 입력 계통 이중화를 더 확인했을 것입니다.", "causal": "UPS-02 입력 이상 → 배터리 운전 → 보호 시간 안에 이관/계획 중단이 필요.", "alternatives": "냉각 문제는 냉각 지표가 정상이라 배제, GPU 문제는 DCGM PASS라 배제."}
+    },
+    "crashloop": {
+      "severity": "SEV2", "effect": "blocked", "asset": "service",
+      "alert": "작업 서비스가 반복해서 재시작되며 멈췄습니다 · 원인 미확인",
+      "symptom": "작업 정지(반복 재시작)",
+      "readings": {
+        "service_events": {"status": "bad", "summary": "서비스 재시작 9회(CrashLoop) · 직전 배포 v2.3.1(설정 변경) 후 시작", "lines": ["이전 정상 버전: v2.3.0"]},
+        "job_log": {"status": "bad", "summary": "로그: 설정 파일의 모델 경로를 찾을 수 없음 — 시작 직후 종료", "lines": ["FATAL config: model_path '/models/v2' not found"]},
+        "dcgm": {"status": "ok", "summary": "GPU 건강 검사 PASS", "lines": []},
+        "ping": {"status": "ok", "summary": "IP 응답 정상", "lines": []},
+        "dns": {"status": "ok", "summary": "이름 조회 정상", "lines": []}
+      },
+      "actions": {
+        "rollback_deploy": {"result": "fix", "minutes": 10, "requires": "approval:platform", "text": "플랫폼 담당 승인으로 직전 정상 버전 v2.3.0으로 롤백했습니다."},
+        "config_fix": {"result": "fix", "minutes": 30, "requires": "approval:platform", "text": "플랫폼 담당이 v2.3.1의 모델 경로 설정을 고쳐 다시 배포합니다(가상 30분). 롤백보다 느리지만 새 버전을 유지합니다."},
+        "restart_service": {"result": "none", "text": "재시작했지만 같은 설정 오류로 다시 종료됩니다(개선 없음). 재시작 연타는 해결이 아닙니다."},
+        "escalate_platform": {"result": "call", "team": "platform", "text": "플랫폼 담당에게 배포 이상을 알렸습니다. 승인 후 롤백할 수 있습니다."}
+      },
+      "verify": ["service_events", "job_log"],
+      "mentor": {"scope": "반복 재시작되는 서비스를 확인해요.", "evidence": "재시작 횟수만 보지 말고, 왜 종료되는지 로그와 직전 변경을 봐요.", "cause": "장비·네트워크가 정상인데 서비스만 죽는다면?", "mitigate": "다시 켜기만 하면 또 죽어요. 원인이 된 변경을 되돌려요."},
+      "postmortem": {"field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.", "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).", "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."}
+    }
+  },
+  "shifts": {
+    "1": {"code": "A", "title": "장애 대응 근무 A · 선배와 1차 분류", "subtitle": "서로 다른 사건 세 건", "coaching": "full",
+          "intro": "관제석 03에 첫 사건 경보가 들어옵니다. 오늘은 선배와 함께 증상 → 범위 → 근거 → 원인 → 조치 → 검증 → 보고 순서를 익힙니다.",
+          "arrivals": [[0, "sfo-bayfog-video", "dns", 0.3], [50, "pus-harborline-async", "gpu_health", 0.3], [100, "bom-marine-batch", "storage_full", 0.3]],
+          "goal": {"minResolved": 3, "minSuccess": 3, "notifyBeforeRecovery": false, "maxExpired": 0}},
+    "2": {"code": "B", "title": "장애 대응 근무 B · 고객 영향과 팀 조정", "subtitle": "네트워크·냉각·전원 사건", "coaching": "short",
+          "intro": "오늘은 시설팀·네트워크 담당과 함께 움직입니다. 설비는 직접 조작하지 않고 요청·승인·보고로 다룹니다. 영향 받는 고객에게는 복구 전에 먼저 알립니다.",
+          "arrivals": [[0, "osa-naniwa-batch", "tor_uplink", 0.3], [20, "nyc-empire-vision", "cooling", 0.3], [60, "sgn-mekong-batch", "ups", 0.3]],
+          "goal": {"minResolved": 3, "minSuccess": 3, "notifyBeforeRecovery": true, "maxExpired": 0}},
+    "3": {"code": "C", "title": "장애 대응 근무 C · 독립 당직과 겹친 증상", "subtitle": "비슷한 증상, 다른 원인", "coaching": "none",
+          "intro": "선배는 다른 현장에 있습니다. 비슷한 증상의 경보가 겹쳐 들어옵니다. 사건마다 원인과 영향 범위를 따로 판단하세요.",
+          "arrivals": [[0, "sea-cascade-async", "congestion", 0.3], [0, "tyo-tsukiji-vision", "storage_latency", 0.3], [60, "par-seine-finetune", "gpu_oom", 0.3], [70, "sin-merbau-research", "crashloop", 0.3]],
+          "goal": {"minResolved": 4, "minSuccess": 4, "notifyBeforeRecovery": false, "maxExpired": 0}}
+  },
+  "practice": {
+    "dns": "sfo-bayfog-video", "tor_uplink": "osa-naniwa-batch", "congestion": "sea-cascade-async",
+    "gpu_health": "pus-harborline-async", "gpu_oom": "par-seine-finetune", "storage_full": "bom-marine-batch",
+    "storage_latency": "tyo-tsukiji-vision", "cooling": "nyc-empire-vision", "ups": "sgn-mekong-batch", "crashloop": "sin-merbau-research"
+  },
+  "sources": [
+    {"topic": "사고 대응 역할·커뮤니케이션", "url": "https://sre.google/sre-book/managing-incidents/", "note": "역할 분리·상태 공유·사후 분석 방식(사실). 게임의 승인 10분·단계 이름은 가상."},
+    {"topic": "사고 대응 실무", "url": "https://sre.google/workbook/incident-response/", "note": "영향 범위 확인·완화 우선·고객 안내(사실)."},
+    {"topic": "GPU 건강 검사", "url": "https://docs.nvidia.com/datacenter/dcgm/latest/learn/modules/health-monitoring.html", "note": "DCGM 건강 감시 개념(사실). 장치 ID·Xid 번호 사용은 교육용 예시."},
+    {"topic": "Xid 오류", "url": "https://docs.nvidia.com/deploy/xid-errors/latest/working-with-xid-errors.html", "note": "Xid로 장치 오류를 분류(사실)."},
+    {"topic": "GPU 메모리 부족", "url": "https://docs.nvidia.com/nim/large-language-models/troubleshooting/memory/", "note": "OOM 진단 개념(사실). 게임에 VRAM 수치 모델은 없음."},
+    {"topic": "DNS·서비스·리소스", "url": "https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/", "note": "이름 해석 디버깅(사실)."},
+    {"topic": "Pod 디버깅", "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/", "note": "재시작·이벤트·로그 확인(사실)."},
+    {"topic": "컨테이너 자원", "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/", "note": "메모리 한도와 OOM(사실)."},
+    {"topic": "스토리지 용량", "url": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/lfs-migrate-ts.html", "note": "공간 소진 시 쓰기 실패(사실). 볼륨 사용률 숫자는 가상."},
+    {"topic": "열 관리", "url": "https://www.ashrae.org/technical-resources/topics-and-initiatives/ai-data-center/energy-and-thermal-efficiency", "note": "흡입 온도 모니터링(사실). 온도 추세·40분 한계는 가상, 열/유체 예측 아님."},
+    {"topic": "UPS 경보", "url": "https://productinfo.se.com/galaxyvs_ul/990-5910_master-galaxy-vs-operation/990-5910B%20Galaxy%20VS%20Operation/English/990-5910%20Operation%20manual%20Galaxy%20VS_0000153852.xml/$/AlarmMessages_operation_0000438237", "note": "배터리 운전 경보 종류(사실). 실제 기기 모델·전압·조작 순서는 옮기지 않음, 보호 시간은 가상."}
+  ]
+}
