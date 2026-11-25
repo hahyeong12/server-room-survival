@@ -103,7 +103,7 @@ def make_handler(host: GameHost, log=None):
                     return self._send(200, {'ok': True, 'api': API_VERSION, 'engine': 'python:session.GameSession',
                                             'saveDir': host.dir.name})
                 if path == '/api/saves':
-                    return self._send(200, {'ok': True, 'saves': host.run(host.saves)})
+                    return self._send(200, {'ok': True, 'saves': host.run(host.saves), 'unlocks': host.run(host.unlocks)})
                 m = GAME_PATH.fullmatch(path)
                 if m and not m[2]:
                     return self._send(200, {'ok': True, 'game': host.run(lambda: lookup(host, m[1]).snapshot())})

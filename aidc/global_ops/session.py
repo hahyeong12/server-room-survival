@@ -162,7 +162,7 @@ class GlobalSession(GameSession):
                 self._deliver_shift()
             else:
                 g.free_next = self.minute + FREE_INTERVAL
-                for tid in self._free_pick(self.minute, 2):
+                for tid in self._free_pick(self.minute, 2, exact=True):
                     self._receive(self.global_.missions[tid], f'gfree:{self.minute}:{tid}')
         return next(iter(self.runs), None)
 
@@ -179,7 +179,7 @@ class GlobalSession(GameSession):
             g.free_next += FREE_INTERVAL
             g.free_slot += 1
 
-    def _free_pick(self, due, room):
+    def _free_pick(self, due, room, exact=False):
         """글로벌 자유 운영의 재현 가능한 접수 추첨. 같은 고객은 열린 요청이 있거나 쿨다운 중이면 제외합니다."""
         if room <= 0:
             return []
@@ -195,13 +195,14 @@ class GlobalSession(GameSession):
             tid = self._mission_template[r.mission['id']]
             counts[tid] = counts.get(tid, 0) + 1
         eligible.sort(key=lambda tid: counts.get(tid, 0))
+        amount = room if exact else min(room, rng.randint(1, 2))
         picked, clients = [], set()
         for tid in eligible:
             client = self.catalog.templates[tid]['client']
             if client not in clients:
                 picked.append(tid)
                 clients.add(client)
-            if len(picked) >= min(room, rng.randint(1, 2)):
+            if len(picked) >= amount:
                 break
         return picked
 
