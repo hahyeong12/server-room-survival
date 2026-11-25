@@ -156,6 +156,10 @@ def request_conditions(mission, due, scenario=None):
     """신규 접수 때만 고객 의사와 자원 조건을 고정합니다. 과거 요청에는 적용하지 않습니다."""
     # 긴급 추론과 지정 환경의 학습은 고성능 요청, 배치 분석은 두 환경을 허용합니다.
     flexible = mission['country'] == '미국'
+    # Phase 6: 글로벌 카탈로그 시나리오는 국가가 아니라 고객 계약의 허용 범위를 사용합니다.
+    # 기존 시나리오에는 'flexible' 키가 없으므로 위의 규칙이 그대로 적용됩니다.
+    if scenario and 'flexible' in SCENARIOS[scenario]:
+        flexible = bool(SCENARIOS[scenario]['flexible'])
     return {'type': 'flexible' if flexible else 'fixed', 'task': mission['title'],
             'requested_mode': 'performance',
             'allowed_modes': ['performance', 'economy'] if flexible else ['performance'],
