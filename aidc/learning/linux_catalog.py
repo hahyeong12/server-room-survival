@@ -75,7 +75,7 @@ ROWS = (
     ('dig','dig $name','any','dns','DNS 질의','응답 코드와 DNS 응답을 확인했다','dig 종료 코드 0이면 SERVFAIL도 정상이다','dig'),
     ('resolvectl','resolvectl status','any',None,'리졸버 설정','리졸버 주소와 사용 링크 설정이다','설정된 DNS 주소는 반드시 응답한다','resolve'),
     ('ethtool','ethtool eth0','network','tor_port','물리 링크 조회','이 인터페이스의 link detected 값이다','링크 UP이면 혼잡은 없다','ethtool'),
-    ('curl','curl -I $url','any','job_log','HTTP 헤더','이 URL의 이름 해석·연결·HTTP 응답을 구분했다','HTTP 503이어도 curl 종료 0이면 정상이다','curl'),
+    ('curl','curl -I $url','any',None,'HTTP 헤더','이 URL의 이름 해석·연결·HTTP 응답을 구분했다','HTTP 503이어도 curl 종료 0이면 정상이다','curl'),
     ('traceroute','traceroute $host','any','link_stats','경로 응답·지연','각 홉의 응답 지연을 관측했다','별표 하나가 곧 그 라우터의 고장이다','trace'),
     ('systemctl','systemctl status $unit','worker','service_events','서비스 상태','가상 worker 서비스의 실행 상태다','active이면 작업 로그도 오류가 없다','systemctl'),
     ('journalctl','journalctl -u $unit -n $count','worker','job_log','서비스 최근 로그','선택 서비스가 남긴 최근 오류·상태다','로그의 OOM은 GPU 장치 손상을 입증한다','journal'),
@@ -97,8 +97,8 @@ ROWS = (
 )
 COMMANDS = tuple(Command(*r) for r in ROWS)
 BY_ID = {c.command_id: c for c in COMMANDS}
-ARGUMENTS = {'$host': ('10.20.0.15',), '$name': ('storage-api.aidc.internal',),
-             '$url': ('http://storage-api.aidc.internal/health',), '$path': ('/data/work',),
+ARGUMENTS = {'$host': ('10.20.0.15', '10.20.11.15', '10.20.12.15', '10.20.13.15', '10.20.14.15'), '$name': ('storage-api.aidc.internal',),
+             '$url': ('http://storage-api.aidc.internal/health', 'http://worker.aidc.internal/health'), '$path': ('/data/work',),
              '$unit': ('worker.service',), '$pod': ('worker-0',), '$ns': ('aidc',),
              '$count': ('1', '3', '10', '20')}
 DEFAULTS = {k: v[0] for k, v in ARGUMENTS.items()}

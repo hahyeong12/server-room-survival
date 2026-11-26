@@ -4,6 +4,7 @@ Static configuration and bounded numeric telemetry are educational fixtures v1.
 Each incident probe remains the source for the status, summary and error log text.
 """
 from .linux_catalog import BY_ID, COMMANDS, MAX_OUTPUT, CLIError, example, parse
+from .linux_curriculum import CLUSTER_TEMPLATES
 
 NODES = {'noc': '관제 모니터', 'network': '가상 네트워크 Linux 노드',
          'cluster': '가상 Kubernetes 관리 컨텍스트',
@@ -20,13 +21,16 @@ def job_servers(session, rec):
 
 def contexts(session, rec):
     assigned = job_servers(session, rec)
-    return [{'id': key, 'label': label, 'available': (key != 'cluster' or rec.type == 'crashloop'),
+    return [{'id': key, 'label': label, 'available': (key != 'cluster' or cluster_exists(session, rec)),
              'assigned': key.startswith('server-') and key[-1] in assigned} for key, label in NODES.items()]
 
+def cluster_exists(session, rec):
+    return session.runs[rec.rid].conditions.get('catalog', {}).get('template') in CLUSTER_TEMPLATES
+
 def check_context(session, rec, command, node):
-    if node not in NODES:
+    if not isinstance(node, str) or node not in NODES:
         raise CLIError('존재하지 않는 가상 노드입니다.', 'context', 2)
-    if node == 'cluster' and rec.type != 'crashloop':
+    if node == 'cluster' and not cluster_exists(session, rec):
         raise CLIError('이 업무에는 Kubernetes 클러스터가 없습니다(kubeconfig 없음).', 'environment', 1)
     need = command.context
     kind = context_kind(node)
@@ -46,9 +50,18 @@ def result(session, rec, line, node):
                 'command_id': command, 'probe': None, 'status': None}
     check_context(session, rec, command, node)
     readings = {p: session.reading(rec, p) for p in session.content.probes}
-    reading = readings.get(command.probe)
     active = rec.cause_active
     fault = rec.type if active else None
+    eligible = True
+    if command.probe == 'dcgm' and fault == 'gpu_health' and node.startswith('server-') and node[-1] != rec.primary:
+        readings['dcgm'] = {'status': 'ok', 'summary': f'Server {node[-1]} GPU 건강 검사 PASS · 이 장치에는 Xid 오류 없음', 'lines': []}
+        eligible = False
+    if command.command_id == 'ping' and rec.type == 'tor_uplink':
+        affected_ip = f'10.20.{11 + "ABCD".index(rec.primary or "A")}.15'
+        if args['$host'] != affected_ip:
+            readings['ping'] = {'status':'ok', 'summary':f'{args["$host"]} IP 응답 정상 · 해당 랙 IP 도달성은 별도로 확인해야 합니다.', 'lines': []}
+            eligible = False
+    reading = readings.get(command.probe)
     run = session.runs[rec.rid]
     # Use the same affected scope and job state as 3D. These fixtures model sampled telemetry, not real hardware.
     assigned = job_servers(session, rec)
@@ -98,7 +111,7 @@ def result(session, rec, line, node):
         count = int(args['$count'])
         lost = readings['ping']['status'] == 'bad'
         code = 1 if lost else 0
-        output = f'PING 10.20.0.15\n{count} packets transmitted, {0 if lost else count} received, {100 if lost else 0}% packet loss (이번 3회 이하 표본)\n' + readings['ping']['summary']
+        output = f'PING {args["$host"]}\n{count} packets transmitted, {0 if lost else count} received, {100 if lost else 0}% packet loss (이번 제한된 표본)\n' + readings['ping']['summary']
     elif ident in ('getent', 'dig'):
         bad = readings['dns']['status'] == 'bad'
         code = 2 if bad and ident == 'getent' else 0  # dig can exit 0 on a received SERVFAIL reply
@@ -107,21 +120,23 @@ def result(session, rec, line, node):
     elif ident == 'curl':
         if fault == 'dns':
             code, output = 6, 'curl: (6) Could not resolve host: storage-api.aidc.internal'
-        elif fault == 'tor_uplink':
+        elif fault == 'tor_uplink' and node == f'server-{rec.primary}':
             code, output = 7, 'curl: (7) Failed to connect to storage-api.aidc.internal port 80'
-        elif service_bad:
+        elif service_bad and 'worker.aidc.internal' in args['$url']:
             output = 'HTTP/1.1 503 Service Unavailable\nContent-Length: 0\n-I는 HTTP 오류 상태 자체로 종료 코드를 실패로 만들지 않습니다.'
         else:
             output = 'HTTP/1.1 200 OK\nContent-Type: application/json\nContent-Length: 16'
     elif ident == 'traceroute':
-        output = 'traceroute to 10.20.0.15, 30 hops max\n1 10.20.0.1 0.2 ms\n2 10.20.2.1 ' + ('28 ms' if fault == 'congestion' else '0.5 ms') + '\n3 10.20.0.15 ' + ('42 ms' if fault == 'congestion' else '* * *' if fault == 'tor_uplink' else '0.8 ms') + '\n' + readings['link_stats']['summary']
+        output = f'traceroute to {args["$host"]}, 30 hops max\n1 10.20.{net}.1 0.2 ms\n2 10.20.2.1 ' + ('28 ms' if fault == 'congestion' else '0.5 ms') + '\n3 ' + args['$host'] + ' ' + ('42 ms' if fault == 'congestion' else '* * *' if fault == 'tor_uplink' else '0.8 ms') + '\n' + readings['link_stats']['summary']
     else:
         output = values[ident]
+        if ident == 'journalctl':
+            output = '\n'.join(output.splitlines()[-int(args['$count']):])
         if ident == 'systemctl' and service_bad:
             code = 3
         if ident == 'pod_logs' and not service_bad and rec.recovered is None:
             code = 1
     return {'kind': 'output', 'command_id': ident, 'code': code, 'category': 'observation',
             'probe': command.probe, 'status': reading['status'] if reading else 'ok',
-            'output': output[:MAX_OUTPUT], 'label': command.label, 'correct': command.correct, 'wrong': command.wrong,
+            'output': output[:MAX_OUTPUT], 'label': command.label, 'eligible': eligible,
             'historical': ident == 'pod_logs', 'completedJob': run.state.phase == 'finished'}

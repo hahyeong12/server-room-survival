@@ -707,6 +707,8 @@ class Game:
 
     def do_linux_command(self, a):
         s = self._linux()
+        if not isinstance(a.get('token'), str):
+            raise ActionError('현재 화면의 사건 토큰이 필요합니다. 새로고침 후 다시 실행하세요.')
         out = s.cli(self._iid(a), a.get('line'), a.get('node'), a.get('token'))
         return {'linux': out}
 
@@ -1166,7 +1168,12 @@ class GameHost:
                 number += 1
             else:
                 break
-        game = self._open(path, kind, fresh=True, chapter=which)
+        try:
+            game = self._open(path, kind, fresh=True, chapter=which)
+        except Exception:
+            for created in (path, self._sidecar(path), path.with_name(path.name + '.lock')):
+                created.unlink(missing_ok=True)
+            raise
         if origin:
             game.journey.data['origin'] = origin
             game.journey.save()

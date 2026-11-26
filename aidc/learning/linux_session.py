@@ -5,6 +5,7 @@ Old incidents, global shifts and Chapter5 do not instantiate this class.
 """
 from contextlib import contextmanager
 from copy import deepcopy
+import hashlib
 
 from aidc.incidents.session import IncidentSession, FINAL
 from . import linux_catalog as catalog
@@ -85,6 +86,14 @@ class LinuxSession(IncidentSession):
     def token(self, rec):
         return f'{self.global_.shift}:{rec.id}:{rec.state}:{self.minute}:{self.linux["seq"]}'
 
+    @staticmethod
+    def choices(obs):
+        spec = catalog.BY_ID[obs['command_id']]
+        texts = [spec.correct, spec.wrong]
+        if hashlib.sha256(f'{obs["incident"]}:{obs["seq"]}:{obs["command_id"]}'.encode()).digest()[0] % 2:
+            texts.reverse()
+        return [{'id': k, 'text': text} for k, text in zip(('a', 'b'), texts)]
+
     def cli(self, iid, line, node, token=None):
         rec = self._open(iid)
         if token is not None and token != self.token(rec):
@@ -103,7 +112,8 @@ class LinuxSession(IncidentSession):
             self.linux['observations'].append(entry)
             # CLI is a simulated remote console on a selected node. BMS probes cannot
             # enter here. Site buttons for other probes are disabled in this subclass.
-            if out['probe'] and (not out.get('historical') or rec.recovered is None):
+            entry['choices'] = self.choices(entry)
+            if out['probe'] and out.get('eligible', True) and (not out.get('historical') or rec.recovered is None):
                 probe = out['probe']
                 super().incident_observe(iid, probe, self.content.probes[probe]['location'])
         return deepcopy(entry)
@@ -114,16 +124,17 @@ class LinuxSession(IncidentSession):
         if obs is None:
             raise ValueError('이 사건에서 실제 실행한 관측을 선택하세요.')
         spec = catalog.BY_ID[obs['command_id']]
-        if answer not in (spec.correct, spec.wrong):
+        choices = {c['id']: c['text'] for c in self.choices(obs)}
+        if answer not in choices:
             raise ValueError('현재 관측의 해석 선택지를 골라 주세요.')
-        correct = answer == spec.correct
+        correct = choices[answer] == spec.correct
         existing = next((x for x in self.linux['interpretations'] if x['seq'] == seq and x['answer'] == answer), None)
         if existing:
             return deepcopy(existing)
         with self._atomic():
             entry = {'incident': iid, 'seq': seq, 'answer': answer, 'correct': correct, 'minute': self.minute,
                      'feedback': ('관측의 범위에 맞는 해석입니다. 다른 계층은 추가 관측으로 확인하세요.' if correct else
-                                  '관측 범위를 넘어선 추측입니다. ' + spec.correct + '. 다른 도구로 추가 확인하세요.')}
+                                  '관측 범위를 넘어선 추측입니다. ' + (spec.correct + '. ' if self.global_.shift <= 2 else '') + '다른 도구로 추가 확인하세요.')}
             self.linux['interpretations'].append(entry)
             obs['interpretation'] = correct
         return deepcopy(entry)
@@ -133,11 +144,11 @@ class LinuxSession(IncidentSession):
             raise ValueError('이 근무의 Linux 증거는 내 모니터에서 명령을 실행해 수집하세요. BMS는 현장 계기를 사용합니다.')
         return super().incident_observe(iid, probe, location)
 
-    def _proof(self, rec, after=False):
-        entries = [o for o in self.linux['observations'] if o['incident'] == rec.id and
+    def _proof(self, rec, after=False, cause=None):
+        entries = [o for o in self.linux['observations'] if o['incident'] == rec.id and o.get('eligible', True) and
                    (not after or (o['after'] and o['minute'] >= rec.recovered and not o.get('historical')))]
         ids = {o['command_id'] for o in entries}
-        rule = curriculum.CASES[rec.type]
+        rule = curriculum.CASES.get(cause or rec.type, {'groups': [['ping'], ['traceroute']]})
         return all(ids.intersection(group) for group in rule['groups'])
 
     def incident_hypothesis(self, iid, cause):
@@ -149,7 +160,7 @@ class LinuxSession(IncidentSession):
             raise ValueError('서로 다른 CLI 관측을 두 가지 이상 수집하세요. 한 출력만으로 원인을 확정할 수 없습니다.')
         if not any(x['incident'] == iid and x['correct'] for x in self.linux['interpretations']):
             raise ValueError('출력 한 가지에서 사실과 추측을 구분한 뒤 가설을 판단하세요.')
-        if cause == rec.type and not self._proof(rec):
+        if not self._proof(rec, cause=cause):
             raise ValueError('현재 관측만으로는 근거가 부족합니다. 다른 계층의 보완적 증거를 수집하세요.')
         return super().incident_hypothesis(iid, cause)
 
@@ -186,6 +197,9 @@ class LinuxSession(IncidentSession):
 
     def incident_view(self, rec):
         view = super().incident_view(rec)
+        if rec.state == 'investigating':
+            view['why'] = ('내 모니터 Linux 탭에서 서로 다른 계층의 명령을 실행하고 출력의 의미를 해석하세요. '
+                           '현장 BMS가 필요하면 해당 건물에서 별도로 확인합니다.')
         if self.global_.shift >= 3:
             view['hint'] = None
         return view
@@ -213,7 +227,8 @@ class LinuxSession(IncidentSession):
         ids = {r.id for r in records}
         observations = [deepcopy(o) for o in self.linux['observations'] if o['incident'] in ids]
         # Catalog always contains every tool, never a cause-dependent command menu.
-        specs = [{**c.view(), 'example': catalog.example(c)} for c in catalog.COMMANDS]
+        specs = [{k: v for k, v in {**c.view(), 'example': catalog.example(c)}.items() if k not in ('correct', 'wrong', 'source_key')}
+                 for c in catalog.COMMANDS]
         return {'version': curriculum.VERSION, 'catalogVersion': catalog.VERSION, 'shift': self.global_.shift,
                 'shiftCount': len(curriculum.SHIFTS), 'title': d['title'], 'role': d['role'], 'inputMode': d['input'],
                 'practice': self.linux['practice'], 'rank': d['rank'], 'maxLine': catalog.MAX_LINE,

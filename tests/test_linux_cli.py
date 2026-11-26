@@ -44,7 +44,7 @@ class LinuxTests(unittest.TestCase):
                 self.assertEqual(s._extra_payload(),old)
 
     def test_wrong_context_permission_and_absent_cluster(self):
-        s,r = opened(self.temp)
+        s,r = opened(self.temp,'tor_uplink')
         for line,node,category in [('nvidia-smi','noc','environment'), ('df -h','server-D','permission'),
                                     ('kubectl get pods -n aidc','cluster','environment'),('ip addr','../noc','context')]:
             with self.subTest(line=line,node=node):
@@ -52,6 +52,86 @@ class LinuxTests(unittest.TestCase):
                 out=s.cli(r.id,line,node)
                 self.assertEqual(out['category'],category)
                 self.assertEqual(s._extra_payload(),old)
+
+    def test_review_unhashable_node_is_a_context_error(self):
+        s,r=opened(self.temp)
+        old=deepcopy(s._extra_payload())
+        for node in ([],{},None,1):
+            self.assertEqual(s.cli(r.id,'ip addr',node)['category'],'context')
+        self.assertEqual(old,s._extra_payload())
+
+    def test_review_no_answer_key_in_snapshot_or_command_response(self):
+        s,r=opened(self.temp)
+        obs=command(s,r,'ping')
+        self.assertNotIn('correct',obs)
+        self.assertNotIn('wrong',obs)
+        self.assertEqual({x['id'] for x in obs['choices']},{'a','b'})
+        for c in s.learning_view()['commands']:
+            self.assertNotIn('correct',c)
+            self.assertNotIn('wrong',c)
+
+    def test_review_insufficient_proof_is_symmetric_for_submitted_causes(self):
+        s,r=opened(self.temp,'dns')
+        command(s,r,'ip_addr',interpret=True);command(s,r,'ip_route')
+        errors=[]
+        for cause in s.content.causes:
+            with self.assertRaises(ValueError) as cm:
+                s.incident_hypothesis(r.id,cause)
+            errors.append(str(cm.exception))
+        self.assertEqual(len(set(errors)),1)
+
+    def test_review_cluster_is_deployment_metadata_not_hidden_cause(self):
+        from aidc.learning.linux_terminal import cluster_exists
+        s,r=opened(self.temp,'dns')
+        self.assertTrue(cluster_exists(s,r))
+        self.assertIn('Running',s.cli(r.id,'kubectl get pods -n aidc','cluster')['output'])
+        self.assertEqual(s.cli(r.id,'kubectl logs worker-0 -n aidc --previous','cluster')['code'],1)
+
+    def test_review_ping_target_scopes_the_evidence(self):
+        s,r=opened(self.temp,'tor_uplink')
+        storage=s.cli(r.id,'ping -c 3 10.20.0.15','noc')
+        self.assertEqual(storage['code'],0)
+        self.assertFalse(storage['eligible'])
+        self.assertFalse(any(e['probe']=='ping' for e in r.evidence))
+        rack=command(s,r,'ping')
+        self.assertEqual(rack['code'],1)
+        self.assertTrue(rack['eligible'])
+
+    def test_review_count_and_journal_limits(self):
+        s,r=opened(self.temp,'crashloop')
+        for n in (1,3,10,20):
+            out=s.cli(r.id,f'ping -c {n} 10.20.0.15','noc')
+            self.assertIn(f'{n} packets transmitted',out['output'])
+            out=s.cli(r.id,f'journalctl -u worker.service -n {n}','server-A')
+            self.assertLessEqual(len(out['output'].splitlines()),n)
+
+    def test_review_healthy_gpu_node_cannot_prove_another_nodes_fault(self):
+        from aidc.core.server_resources import ServerSlice
+        from tests.incident_support import start_open
+        s=LinuxSession(self.temp.db('two_nodes.db'),practice='gpu_health',seed=5)
+        s.confirm_shift_briefing()
+        rid=next(iter(s.runs));s.select(rid);s.read_conversation(rid)
+        s.choose_plan('performance',(ServerSlice('A',(0,1),2),ServerSlice('B',(0,1),1)))
+        for _ in range(15):
+            s.advance_time(10)
+            if s.incident.records[0].state=='alert':break
+        r=s.incident.records[0];s.incident_ack(r.id)
+        normal=s.cli(r.id,'dcgmi health --check','server-B')
+        self.assertFalse(normal['eligible']);self.assertEqual(normal['status'],'ok')
+        self.assertFalse(any(e['probe']=='dcgm' for e in r.evidence))
+        command(s,r,'journalctl',interpret=True)
+        with self.assertRaisesRegex(ValueError,'보완적'):
+            s.incident_hypothesis(r.id,'gpu_health')
+        self.assertEqual(command(s,r,'dcgm')['status'],'bad')
+        self.assertEqual(s.incident_hypothesis(r.id,'gpu_health')['verdict'],'confirmed')
+
+    def test_review_interpretation_answer_order_varies(self):
+        s,r=opened(self.temp)
+        correct_ids=set()
+        for _ in range(10):
+            out=command(s,r,'ping')
+            correct_ids.add(next(x['id'] for x in out['choices'] if x['text']==C.BY_ID['ping'].correct))
+        self.assertEqual(correct_ids,{'a','b'})
 
     def test_ping_success_dns_failure_and_exit_zero_is_not_healthy(self):
         s,r=opened(self.temp,'dns')
@@ -67,7 +147,7 @@ class LinuxTests(unittest.TestCase):
         s,r=opened(self.temp,'crashloop')
         self.assertEqual(command(s,r,'systemctl')['code'],3)
         self.assertEqual(command(s,r,'curl')['code'],0)
-        self.assertIn('503',command(s,r,'curl')['output'])
+        self.assertIn('503',s.cli(r.id,'curl -I http://worker.aidc.internal/health','noc')['output'])
         self.assertIn('CrashLoopBackOff',command(s,r,'pods')['output'])
         self.assertTrue(command(s,r,'pod_logs')['historical'])
 
@@ -87,7 +167,7 @@ class LinuxTests(unittest.TestCase):
     def test_wrong_interpretation_has_feedback_and_no_fake_diagnosis(self):
         s,r=opened(self.temp)
         out=command(s,r,'ping')
-        interpreted=s.interpret(r.id,out['seq'],C.BY_ID['ping'].wrong)
+        interpreted=s.interpret(r.id,out['seq'],next(x['id'] for x in out['choices'] if x['text']==C.BY_ID['ping'].wrong))
         self.assertFalse(interpreted['correct'])
         self.assertIn('추측',interpreted['feedback'])
         self.assertIsNone(r.cause)

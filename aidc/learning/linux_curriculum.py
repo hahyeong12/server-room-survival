@@ -5,6 +5,9 @@ import json
 from aidc.incidents.content import load
 
 VERSION = 1
+# Deployment environment is a property of the pre-existing virtual workload,
+# independent of its hidden fault. These templates can suffer DNS/I/O/congestion too.
+CLUSTER_TEMPLATES = ('sin-merbau-research', 'sfo-bayfog-video', 'bom-marine-batch')
 # Two complementary CLI evidence families per cause, plus a deliberate non-proof.
 # BMS probes stay physically on site. CLI cannot inspect or change a pump/UPS directly.
 CASES = {
@@ -42,7 +45,7 @@ SHIFTS = {
 }
 
 def fingerprint():
-    return hashlib.sha256(json.dumps({'version': VERSION, 'shifts': SHIFTS, 'cases': CASES},
+    return hashlib.sha256(json.dumps({'version': VERSION, 'shifts': SHIFTS, 'cases': CASES, 'cluster': CLUSTER_TEMPLATES},
                                     sort_keys=True, ensure_ascii=False).encode()).hexdigest()
 
 def shift_def(number, practice=None):

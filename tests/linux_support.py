@@ -22,9 +22,12 @@ def command(s, rec, ident, interpret=False):
     c = BY_ID[ident]
     node = {'any': 'noc', 'network': 'network', 'cluster': 'cluster',
             'worker': f'server-{job_servers(s, rec)[0]}'}[c.context]
-    out = s.cli(rec.id, example(c), node, s.token(rec))
+    line = example(c)
+    if ident == 'ping' and rec.type == 'tor_uplink':
+        line = line.replace('10.20.0.15', f'10.20.{11 + "ABCD".index(rec.primary)}.15')
+    out = s.cli(rec.id, line, node, s.token(rec))
     if interpret:
-        s.interpret(rec.id, out['seq'], c.correct)
+        s.interpret(rec.id, out['seq'], next(x['id'] for x in out['choices'] if x['text'] == c.correct))
     return out
 
 def evidence(s, rec, after=False):
