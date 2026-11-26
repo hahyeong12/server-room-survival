@@ -32,7 +32,11 @@ class LinuxSession(IncidentSession):
                 raise ValueError('존재하지 않는 Linux 사건 연습입니다.')
             self.linux = {'version': curriculum.VERSION, 'fingerprint': self._fingerprint(),
                           'practice': practice, 'seq': 0, 'observations': [], 'interpretations': [], 'help': []}
-        super().__init__(db, shift=shift, seed=seed)
+        # Parent result wording ('연습'), adapter stamp and menus read IncidentBook.practice. The Linux curriculum still
+        # owns shift_def/next_shift/briefing (overridden below), so the parent's Phase7 practice definitions are unused.
+        super().__init__(db, shift=shift, practice=self.linux['practice'], seed=seed)
+        if self.incident.practice != self.linux['practice']:
+            raise ValueError('사건 연습 기록과 Linux 학습 기록이 일치하지 않습니다.')
         self._validate_learning()
 
     @staticmethod
@@ -86,6 +90,14 @@ class LinuxSession(IncidentSession):
     def token(self, rec):
         return f'{self.global_.shift}:{rec.id}:{rec.state}:{self.minute}:{self.linux["seq"]}'
 
+    PRIVATE = ('eligible', 'status')
+
+    @classmethod
+    def public(cls, obs):
+        """Client copy of an observation. Eligibility and the engine's incident-level probe status stay server-side:
+        they follow one rule for every cause, and hiding them keeps any accidental difference from becoming a hint."""
+        return {k: deepcopy(v) for k, v in obs.items() if k not in cls.PRIVATE}
+
     @staticmethod
     def choices(obs):
         spec = catalog.BY_ID[obs['command_id']]
@@ -116,10 +128,12 @@ class LinuxSession(IncidentSession):
             if out['probe'] and out.get('eligible', True) and (not out.get('historical') or rec.recovered is None):
                 probe = out['probe']
                 super().incident_observe(iid, probe, self.content.probes[probe]['location'])
-        return deepcopy(entry)
+        return self.public(entry)
 
-    def interpret(self, iid, seq, answer):
+    def interpret(self, iid, seq, answer, token=None):
         rec = self._open(iid)
+        if token is not None and token != self.token(rec):
+            raise ValueError('오래된 화면입니다. 현재 사건을 확인하고 다시 선택하세요.')
         obs = next((o for o in self.linux['observations'] if o['seq'] == seq and o['incident'] == iid), None)
         if obs is None:
             raise ValueError('이 사건에서 실제 실행한 관측을 선택하세요.')
@@ -128,8 +142,10 @@ class LinuxSession(IncidentSession):
         if answer not in choices:
             raise ValueError('현재 관측의 해석 선택지를 골라 주세요.')
         correct = choices[answer] == spec.correct
-        existing = next((x for x in self.linux['interpretations'] if x['seq'] == seq and x['answer'] == answer), None)
+        existing = next((x for x in self.linux['interpretations'] if x['seq'] == seq and x['incident'] == iid), None)
         if existing:
+            # The first answer to an observation is final. Trying the other choice would turn the gate into guessing;
+            # run the command again (a new observation) to answer again.
             return deepcopy(existing)
         with self._atomic():
             entry = {'incident': iid, 'seq': seq, 'answer': answer, 'correct': correct, 'minute': self.minute,
@@ -225,7 +241,7 @@ class LinuxSession(IncidentSession):
         d = self.shift_def()
         records = [r for r in self.shift_records() if r.state != 'armed']
         ids = {r.id for r in records}
-        observations = [deepcopy(o) for o in self.linux['observations'] if o['incident'] in ids]
+        observations = [self.public(o) for o in self.linux['observations'] if o['incident'] in ids]
         # Catalog always contains every tool, never a cause-dependent command menu.
         specs = [{k: v for k, v in {**c.view(), 'example': catalog.example(c)}.items() if k not in ('correct', 'wrong', 'source_key')}
                  for c in catalog.COMMANDS]

@@ -5,9 +5,12 @@ import json
 from aidc.incidents.content import load
 
 VERSION = 1
-# Deployment environment is a property of the pre-existing virtual workload,
-# independent of its hidden fault. These templates can suffer DNS/I/O/congestion too.
-CLUSTER_TEMPLATES = ('sin-merbau-research', 'sfo-bayfog-video', 'bom-marine-batch')
+# Deployment environment is a property of the pre-existing virtual workload, independent of its hidden fault.
+# Inside every regular shift all workloads share the same answer (shifts 1, 2 and 5: all on Kubernetes; shifts 3
+# and 4: none), so "Kubernetes · 환경 없음" can never tell the candidate causes of one shift apart.
+CLUSTER_TEMPLATES = ('sin-merbau-research', 'sfo-bayfog-video', 'bom-marine-batch', 'osa-naniwa-batch', 'tyo-tsukiji-vision')
+# Practice uses the input level of the shift that teaches that case.
+PRACTICE_INPUT = {'tor_uplink': 'choice', 'dns': 'choice', 'storage_latency': 'assemble', 'storage_full': 'assemble'}
 # Two complementary CLI evidence families per cause, plus a deliberate non-proof.
 # BMS probes stay physically on site. CLI cannot inspect or change a pump/UPS directly.
 CASES = {
@@ -51,6 +54,11 @@ def fingerprint():
 def shift_def(number, practice=None):
     spec = deepcopy(SHIFTS[number])
     content = load()
+    if practice:
+        # Practice is titled by the symptom, never by the hidden cause, and grants no rank.
+        spec.update(title=f'Linux 사건 연습 · 증상: {content.types[practice]["symptom"]}', role='사건 연습(승급 없음)',
+                    input=PRACTICE_INPUT.get(practice, 'terminal'), coaching='short', rank='연습',
+                    intro='고른 증상 하나를 처음부터 끝까지 처리합니다. 서로 다른 계층의 증거, 출력 해석, 승인된 대응, 복구 뒤 새 관측, 고객 보고까지 연습하세요.')
     types = [practice] if practice else spec['cases']
     # Exam deliberately recombines clients. Two simultaneous cases plus a later one.
     templates = ([content.practice['storage_full'], content.practice['dns'], content.practice['crashloop']]
@@ -59,6 +67,6 @@ def shift_def(number, practice=None):
     if number == 5 and len(arrivals) == 3:
         arrivals[2][0] = 80
     n = len(types)
-    return {**spec, 'code': f'L{number}', 'subtitle': spec['role'],
+    return {**spec, 'code': 'LP' if practice else f'L{number}', 'subtitle': spec['role'],
             'arrivals': arrivals, 'incidents': [[i, t, 0.2 if number == 5 else 0.3] for i, t in enumerate(types)],
             'goal': {'minResolved': n, 'minSuccess': n, 'maxExpired': 0, 'notifyBeforeRecovery': False}}

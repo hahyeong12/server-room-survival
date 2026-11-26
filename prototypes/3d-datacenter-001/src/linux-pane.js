@@ -107,8 +107,9 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
     const last = [...l.observations].reverse().find(o=>o.incident===rec.id);
     if(last && open){
       const interpretation=el('div','linux-interpret');interpretation.append(el('small','',`관측 #${last.seq}의 의미 · 사실과 추측 중 선택`));
-      for(const choice of interpretationChoices(last)) interpretation.append(button(choice.text,()=>send({type:'linux_interpret',incident:rec.id,seq:last.seq,answer:choice.id}),'',{'data-linux-answer':choice.id}));
-      const feedback=[...l.interpretations].reverse().find(x=>x.seq===last.seq);
+      // One answer per observation (the engine keeps the first). Run the command again to answer a new observation.
+      const feedback=l.interpretations.find(x=>x.seq===last.seq&&x.incident===rec.id);
+      for(const choice of interpretationChoices(last)) interpretation.append(button(choice.text,()=>send({type:'linux_interpret',incident:rec.id,seq:last.seq,answer:choice.id,token:l.tokens[rec.id]}),feedback?.answer===choice.id?'active':'',{'data-linux-answer':choice.id,...(feedback?{disabled:'','aria-pressed':String(feedback.answer===choice.id)}:{})}));
       if(feedback)interpretation.append(el('small',feedback.correct?'ok':'terminal-warn',feedback.feedback));dock.append(interpretation);
     }
     const actions=el('div','linux-actions');
@@ -119,7 +120,7 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
     glossary.append(el('p','','RTT: 왕복 시간 · NSS/DNS: 이름 조회 · inode: 파일 메타데이터 항목 · VRAM: GPU 메모리 · OOM: 메모리 할당 실패 · await: I/O 평균 대기 · passive: 부하 시험 없이 관측 자료 평가. 가상 IP: storage 10.20.0.15 / Server A~D 10.20.11~14.15.'));
     for(const c of l.commands){const p=el('p','',`${c.example} — ${c.label} [${c.context}]. `);const a=el('a','','공식 문서');a.href=c.source;a.target='_blank';a.rel='noopener noreferrer';p.append(a);glossary.append(p);}
     actions.append(glossary);dock.append(actions);
-    if(u.busy)for(const control of dock.querySelectorAll('select,input,[data-linux-choice],[data-linux-assemble]'))control.disabled=true;
+    if(u.busy)for(const control of dock.querySelectorAll('select,input,[data-linux-choice],[data-linux-assemble],[data-linux-answer],[data-linux-help],[data-linux-run]'))control.disabled=true;
     body.append(dock);
   }
   return {pane};

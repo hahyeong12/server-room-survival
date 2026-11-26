@@ -84,7 +84,9 @@ class LinuxAdapterTests(GlobalBase):
         for line in ('ping -c 3 10.20.0.15','dig storage-api.aidc.internal'):
             out=self.ok(g,type='linux_command',incident=r.id,line=line,node='noc',token=g.session.token(r))['linux']
         answer=next(x['id'] for x in out['choices'] if x['text']==BY_ID['dig'].correct)
-        self.ok(g,type='linux_interpret',incident=r.id,seq=out['seq'],answer=answer)
+        self.assertFalse(self.act(g,type='linux_interpret',incident=r.id,seq=out['seq'],answer=answer)['ok'])
+        self.assertFalse(self.act(g,type='linux_interpret',incident=r.id,seq=out['seq'],answer=answer,token='stale')['ok'])
+        self.ok(g,type='linux_interpret',incident=r.id,seq=out['seq'],answer=answer,token=g.session.token(r))
         self.ok(g,type='incident_hypothesis',incident=r.id,cause='dns')
         self.assertFalse(self.act(g,type='incident_act',incident=r.id,action='dns_failover')['ok'])
         self.ok(g,type='navigate',route='campus',via='tab')

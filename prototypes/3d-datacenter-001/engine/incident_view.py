@@ -7,6 +7,7 @@ engine confirmed the cause (or the incident ended). Nothing here changes a sessi
 from __future__ import annotations
 
 from aidc.incidents.content import load
+from aidc.learning import linux_curriculum
 
 CONTENT = load()
 LOCATION_LABELS = {'noc': '내 모니터 (관제동)', 'hall': '서버동 01', 'NETWORK': '네트워크동 MMR', 'COOLING': '냉각 플랜트', 'UPS': 'UPS 구역'}
@@ -34,9 +35,11 @@ def view(session, location=None):
             'records': records, 'open': sum(r['state'] not in ('closed', 'failed', 'void', 'armed') for r in records),
             'alerts': [r['id'] for r in records if r['state'] == 'alert'],
             'facilities': session.facilities_view(location), 'menu': menu(), 'topology': CONTENT.topology['note'],
-            'sources': CONTENT.data['sources'], 'shiftCount': 5 if session.mode == 'linux' else len(CONTENT.shifts),
-            'shifts': [{'number': int(k), 'code': v['code'], 'title': v['title'], 'incidents': sum(1 for x in v['arrivals'] if x[2])}
-                       for k, v in sorted(CONTENT.shifts.items())]}
+            'sources': CONTENT.data['sources'], 'shiftCount': len(linux_curriculum.SHIFTS) if session.mode == 'linux' else len(CONTENT.shifts),
+            'shifts': ([{'number': n, 'code': f'L{n}', 'title': v['title'], 'incidents': len(v['cases'])}
+                        for n, v in sorted(linux_curriculum.SHIFTS.items())] if session.mode == 'linux' else
+                       [{'number': int(k), 'code': v['code'], 'title': v['title'], 'incidents': sum(1 for x in v['arrivals'] if x[2])}
+                        for k, v in sorted(CONTENT.shifts.items())])}
 
 
 def request_incidents(session, rid):

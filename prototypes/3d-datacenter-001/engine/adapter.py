@@ -62,7 +62,6 @@ MODE_LABELS = {'tutorial': '튜토리얼', 'story': '스토리 도전', 'free': 
 FREE_PATTERN = re.compile(r'aidc_3d_free_([0-9]+)\.db')
 GLOBAL_PATTERN = re.compile(r'aidc_3d_global_([0-9]+)\.db')
 INCIDENT_PATTERN = re.compile(r'aidc_3d_incident_([0-9]+)\.db')
-GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global|aidc_3d_incident)_[0-9]{3,}')
 KINDS = ('tutorial', 'story', 'free', 'practice', 'global', 'global_free', 'incident', 'incident_practice', 'linux', 'linux_practice')
 MODE_LABELS.update(linux='Linux 실무 연수', linux_practice='Linux 사건 연습')
 LINUX_PATTERN = re.compile(r'aidc_3d_linux_([0-9]+)\.db')
@@ -716,7 +715,9 @@ class Game:
         s = self._linux()
         if type(a.get('seq')) is not int:
             raise ActionError('실행한 관측 번호를 선택하세요.')
-        return {'linux': s.interpret(self._iid(a), a['seq'], a.get('answer'))}
+        if not isinstance(a.get('token'), str):
+            raise ActionError('현재 화면의 사건 토큰이 필요합니다. 새로고침 후 다시 선택하세요.')
+        return {'linux': s.interpret(self._iid(a), a['seq'], a.get('answer'), a['token'])}
 
     def do_linux_help(self, a):
         return {'info': self._linux().help_for(self._iid(a))}

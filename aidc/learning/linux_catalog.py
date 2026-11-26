@@ -111,6 +111,23 @@ def fingerprint():
     value = {'version': VERSION, 'commands': [c.view() for c in COMMANDS], 'args': ARGUMENTS}
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 
+# Change/active operations are refused with an explanation (never executed). Options are tool-specific so read-only
+# forms (for example ss -s) are not mislabelled.
+MUTATING_TOOLS = ('sudo', 'su', 'rm', 'kill', 'killall', 'pkill', 'shutdown', 'reboot', 'poweroff', 'halt', 'exec',
+                  'python', 'python3', 'sh', 'bash', 'dd', 'mkfs', 'fdisk', 'parted', 'iptables', 'nft', 'mount', 'umount',
+                  'chmod', 'chown', 'mv', 'cp', 'tee', 'truncate', 'service')
+MUTATING_WORDS = ('restart', 'delete', 'apply', 'set', 'add', 'flush', 'edit', 'run', 'stop', 'start', 'reload', 'enable',
+                  'disable', 'mask', 'isolate', 'scale', 'drain', 'cordon', 'uncordon', 'rollout', 'patch', 'label', 'annotate',
+                  'create', 'replace', 'del', 'change')
+MUTATING_OPTIONS = {
+    'nvidia-smi': ('-r', '--gpu-reset', '-pm', '--persistence-mode', '-pl', '--power-limit', '-ac', '-rac', '-lgc', '-rgc',
+                   '-e', '--ecc-config', '-c', '--compute-mode'),
+    'ethtool': ('-s', '--change', '-K', '--features', '-G', '--set-ring', '-A', '--pause', '-r', '--negotiate'),
+    'journalctl': ('--vacuum-size', '--vacuum-time', '--vacuum-files', '--rotate', '--flush'),
+    'kubectl': ('exec', 'cp', 'port-forward'),
+    'systemctl': ('kill',),
+}
+
 class CLIError(ValueError):
     def __init__(self, message, category='syntax', code=2):
         super().__init__(message)
@@ -129,8 +146,11 @@ def parse(line):
         return tokens[0], {}
     if not tokens:
         raise CLIError('조회 명령 하나를 입력하세요.')
-    if tokens[0] in ('sudo','su','rm','kill','shutdown','reboot','exec','python','sh','bash') or any(
-            t in ('restart','delete','apply','set','add','flush','edit','run') for t in tokens):
+    if tokens[:2] == ('dcgmi', 'diag'):
+        raise CLIError('dcgmi diag는 GPU에 부하를 거는 활성 진단입니다. 운영 중인 작업 서버에서는 실행하지 않고, '
+                       '수동(passive) 건강 결과는 dcgmi health --check로 조회합니다.', 'mutation', 126)
+    if tokens[0].split('.')[0] in MUTATING_TOOLS or any(t in MUTATING_WORDS for t in tokens) or (
+            tokens[0] in MUTATING_OPTIONS and any(t.split('=')[0] in MUTATING_OPTIONS[tokens[0]] for t in tokens[1:])):
         raise CLIError('변경 명령은 실행하지 않습니다. 승인된 현장 대응 화면을 사용하세요.', 'mutation', 126)
     candidates = [c for c in COMMANDS if c.tool == tokens[0]]
     if not candidates:

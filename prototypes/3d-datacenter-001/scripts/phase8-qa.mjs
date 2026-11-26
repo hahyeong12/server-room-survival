@@ -65,9 +65,9 @@ async function evidence(id,type,post=false){const rec=await U.inc(page,id);for(c
 async function independentEvidence(id){
   const rows=[];for(const ident of ['ping','getent','journalctl','df','iostat','traceroute','pods'])rows.push(await command(id,ident,{interpret:ident==='journalctl'}));
   const own=ident=>rows.find(r=>r.command_id===ident)?.output??'';
-  if(/CrashLoopBackOff 9/.test(own('pods')))return 'crashloop';
-  if(/vdb 40.0 10.0 85.0/.test(own('iostat')))return 'storage_latency';
-  if(/이용률 98%/.test(own('traceroute')))return 'congestion';
+  if(/CrashLoopBackOff\s+9/.test(own('pods')))return 'crashloop';
+  if(/vdb\s+40\.0\s+10\.0\s+85\.0/.test(own('iostat')))return 'storage_latency';
+  if(/ 3  \S+  42\.1 ms/.test(own('traceroute')))return 'congestion';
   throw new Error('Could not explain this exam incident from its visible output');
 }
 const TYPES={1:['tor_uplink','dns'],2:['storage_latency','storage_full'],3:['gpu_oom','gpu_health'],4:['ups','cooling']};

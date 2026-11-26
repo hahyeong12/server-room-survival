@@ -40,6 +40,27 @@ class CurriculumTests(unittest.TestCase):
             s.advance_time(10)
         self.fail(str([(r.id,r.state) for r in s.shift_records()]))
 
+    def test_review_kubernetes_environment_is_uniform_inside_every_regular_shift(self):
+        from aidc.learning.linux_curriculum import CLUSTER_TEMPLATES, SHIFTS, shift_def
+        for n in SHIFTS:
+            present={tid in CLUSTER_TEMPLATES for _,tid in shift_def(n)['arrivals']}
+            self.assertEqual(len(present),1,(n,shift_def(n)['arrivals']))
+
+    def test_review_practice_has_its_own_metadata(self):
+        from aidc.learning.linux_session import LinuxSession
+        from aidc.learning.linux_curriculum import shift_def
+        d=shift_def(1,'gpu_oom')
+        self.assertEqual(d['code'],'LP')
+        self.assertIn('연습',d['title'])
+        self.assertNotIn('OOM',d['title'])
+        self.assertEqual(d['input'],'terminal')
+        self.assertEqual(shift_def(1,'dns')['input'],'choice')
+        s=LinuxSession(self.temp.db('practice_meta.db'),practice='gpu_oom',seed=5)
+        self.assertEqual(s.incident.practice,'gpu_oom')
+        path=s.db.path;s.db.close()
+        again=LinuxSession(self.temp.db(path))
+        self.assertEqual((again.incident.practice,again.linux['practice']),('gpu_oom','gpu_oom'))
+
     def test_five_shifts_promote_and_finish(self):
         s=LinuxSession(self.temp.db('campaign.db'),seed=5)
         done=[]
