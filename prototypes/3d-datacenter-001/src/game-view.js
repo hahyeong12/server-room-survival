@@ -93,7 +93,7 @@ export function placeName(r) {
   return r.site ? `${r.site.city} · ${r.site.countryName}` : (COUNTRY_NAMES[r.code] || r.country);
 }
 // Phase 7: incident-response shifts reuse the global shift flow (inbox, briefing, shift result) on their own save.
-export function isGlobal(game) { return (game?.mode === 'global' || game?.mode === 'incident') && !!game.global; }
+export function isGlobal(game) { return ['global', 'incident', 'linux'].includes(game?.mode) && !!game.global; }
 // Inbox filter and sort (view only; the engine decides what each request can do).
 export const INBOX_FILTERS = Object.freeze({ open: '열린 요청', running: '진행 중', closed: '끝남', all: '전체' });
 export const INBOX_SORTS = Object.freeze({ arrival: '도착순', due: '완료 기한순', expires: '최종 접수 임박순' });

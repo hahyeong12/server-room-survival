@@ -30,7 +30,8 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       'global-free': ['글로벌 자유 운영', async () => { close(); await newGame('global_free'); }, ''],
       // Phase 7: incident-response shifts (A -> B -> C) in the same incident save; a retry is a NEW incident save.
       'next-incident': [`근무 ${({ 2: 'B', 3: 'C' })[game()?.global?.next] ?? ''} 시작`, async () => { const nx = game()?.global?.next, ack = onClose; onClose = null; close(); await ack?.(); if (nx) await send({ type: 'start_next_shift', shift: String(nx) }); }, 'primary'],
-      'retry-incident': [`${game()?.incident?.practice ? '같은 사건 다시 연습' : `근무 ${game()?.incident?.code ?? ''} 재도전`} (새 슬롯)`, async () => { const ack = onClose; onClose = null; close(); await ack?.(); await retryChapter(); }, ''],
+      'next-linux': [`Linux 근무 ${game()?.global?.next ?? ''} 시작`, async () => {const nx=game()?.global?.next,ack=onClose;onClose=null;close();await ack?.();if(nx)await send({type:'start_next_shift',shift:String(nx)});}, 'primary'],
+      'retry-incident': [`${game()?.incident?.practice || game()?.linux?.practice ? '같은 사건 다시 연습' : `근무 ${game()?.incident?.code ?? ''} 재도전`} (새 슬롯)`, async () => { const ack = onClose; onClose = null; close(); await ack?.(); await retryChapter(); }, ''],
     };
     for (const k of kinds) { const [label, fn, cls] = defs[k]; row.append(button(label, fn, cls, { 'data-next': k })); }
     return row;
@@ -150,9 +151,9 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
   // actions, recovery, report) and the post-mortem the content gives for that cause.
   function incidentShiftDone(g) {
     const gl = g.global, res = gl.result, inc = g.incident, key = `shift${gl.shift}`, box = el('section', 'screen shift-result incident-result');
-    const final = res.cleared && !gl.next && !inc.practice;
+    const final = res.cleared && !gl.next && !inc.practice && !g.linux?.practice;
     box.append(el('span', 'eyebrow', inc.practice ? 'INCIDENT PRACTICE · 진급 기록 없음' : `INCIDENT SHIFT ${inc.code} · ${gl.shift}/${inc.shiftCount} · ${gl.coachingLabel}`),
-      el('h2', '', final ? '장애 대응 근무 A·B·C 모두 완료' : `${res.title} · ${res.cleared ? '목표 달성' : '목표 미달성'}`),
+      el('h2', '', final ? (g.linux ? '독립 관제 엔지니어 · Linux 연수 수료' : '장애 대응 근무 A·B·C 모두 완료') : `${res.title} · ${res.cleared ? '목표 달성' : '목표 미달성'}`),
       el('p', 'screen-sub', `엔진 판정: 사건 해결 ${res.resolved}/${res.incidents.length}(목표 ${res.goal.minResolved}) · 정상 완료 ${res.success}/${res.total}${res.goal.notifyBeforeRecovery ? ' · 복구 전 고객 안내 필요' : ''} · ${res.started} → ${res.finished}`));
     const table = el('table', 'terms-table shift-table'); table.innerHTML = '<thead><tr><th>사건</th><th>원인(확정)</th><th>고객 · 도시</th><th>결과</th><th>근거 · 반박 · 개선 없음 · 허용 안 됨</th><th>해결 · 완화</th><th>영향</th></tr></thead>';
     const tb = el('tbody');
@@ -163,13 +164,14 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     table.append(tb); box.append(table);
     const ul = el('ul', 'screen-notes'); for (const t of res.feedback) ul.append(el('li', '', t));
     box.append(el('strong', '', gl.coaching === 'none' ? '스스로 돌아보기' : '선배의 짧은 피드백'), ul);
+    if(res.linux){const l=res.linux;box.append(el('p','linux-promotion',`교육용 승급: ${l.rank} · 명령 ${l.commands}종 / 관측 ${l.observations}회 · 올바른 해석 ${l.interpreted}회 / 추측 수정 ${l.misinterpretations}회 · 요청한 도움 ${l.help}회${l.practice?' · 진급 기록 없음':''}`));}
     const pm = el('ul', 'screen-notes postmortem'); for (const r of res.incidents) pm.append(el('li', '', `${r.id} · ${r.postmortem.field}`));
     box.append(el('strong', '', '실제 현장이라면 누구에게 알리고 무엇을 더 확인했을까?'), pm);
     if (final) { const hist = el('ul', 'screen-notes'); for (const h of [...gl.history, res]) hist.append(el('li', '', `${h.title}: 사건 해결 ${h.resolved}/${h.incidents.length} · 정상 완료 ${h.success}/${h.total}`));
       box.append(el('strong', '', '장애 대응 근무 기록 (교육용 가상 기록 · 실제 자격 아님)'), hist); }
     const kinds = [];
-    if (res.cleared && gl.next) kinds.push('next-incident');
-    if (!res.cleared || inc.practice) kinds.push('retry-incident');
+    if (res.cleared && gl.next) kinds.push(g.linux?'next-linux':'next-incident');
+    if (!res.cleared || inc.practice || g.linux?.practice) kinds.push('retry-incident');
     kinds.push('result', 'menu', 'stay');
     box.append(nextButtons(kinds));
     show(final ? 'incident-complete' : res.cleared ? 'incident-clear' : 'incident-failed', [box],
@@ -177,7 +179,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
   }
   // Phase 6: a finished global shift. Every row is the engine's own record (outcome, score, mode, consent).
   function shiftDone(g) {
-    if (g.mode === 'incident') return incidentShiftDone(g);
+    if (['incident','linux'].includes(g.mode)) return incidentShiftDone(g);
     const gl = g.global, res = gl.result, key = `shift${gl.shift}`, box = el('section', 'screen shift-result');
     const played = new Set([...gl.history.filter(h => h.cleared).map(h => h.shift), res.cleared ? res.shift : null]);
     const final = res.cleared && !gl.next && gl.shifts.every(x => played.has(x.number));

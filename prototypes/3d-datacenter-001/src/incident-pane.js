@@ -10,7 +10,7 @@ const RESULT = { fix: ['해결 조치', 'ok'], move: ['작업 이전', 'recover'
   consent: ['동의 요청', 'new'], isolate_move: ['격리·이전', 'recover'], isolate_repair: ['격리·수리', 'recover'], none: ['개선 없음', 'warn'], refused: ['허용 안 됨', 'fault'] };
 const GROUP_LABEL = { escalate: '담당팀 호출', network: '네트워크', compute: 'GPU·작업', storage: '스토리지', facility: '시설·전원(요청)', platform: '플랫폼' };
 
-export function isIncident(game) { return game?.mode === 'incident' && !!game.incident; }
+export function isIncident(game) { return ['incident', 'linux'].includes(game?.mode) && !!game.incident; }
 export function incidentRecords(game) { return game?.incident?.records ?? []; }
 export function focusIncident(game, id) {
   const recs = incidentRecords(game).filter(r => r.state !== 'armed');
@@ -19,7 +19,7 @@ export function focusIncident(game, id) {
 // One line for the goal head / strip, from the engine records only.
 export function incidentGoal(game) {
   const inc = game?.incident, g = game?.global; if (!inc || !g) return null;
-  const label = `${inc.practice ? '사건 연습' : `장애 대응 근무 ${inc.code}`} · ${g.coachingLabel ?? ''}`;
+  const label = `${game.linux ? (game.linux.practice ? 'Linux 사건 연습' : `Linux 근무 ${game.linux.shift}/5`) : inc.practice ? '사건 연습' : `장애 대응 근무 ${inc.code}`} · ${g.coachingLabel ?? ''}`;
   if (!g.briefed) return { label, title: '근무 브리핑 확인', what: '아래 대화를 읽고 [근무 시작]을 누르세요. 그 전에는 시간이 흐르지 않고 배정·대응도 잠겨 있습니다.' };
   if (g.done) return { label, title: g.result.cleared ? '근무 목표 달성' : '근무 목표 미달성', what: `사건 해결 ${g.result.resolved}/${g.result.incidents.length} · 정상 완료 ${g.result.success}/${g.result.total} · 결과 화면을 확인하세요.` };
   const open = inc.records.filter(r => !['armed', 'closed', 'failed', 'void'].includes(r.state));
@@ -48,6 +48,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
   function probeButtons(g, rec, probes, { compact = false } = {}) {
     const box = el('div', 'inc-probes'), at = here();
     for (const p of probes) {
+      if (g.linux && !['cooling', 'ups'].includes(p.id)) continue;
       const ok = p.location === at, seen = rec.evidence.some(e => e.probe === p.id && e.minute === g.clock.minute);
       if (ok) { const b = button(`${seen ? '✓ ' : ''}관측 · ${p.label}`, () => send({ type: 'incident_observe', incident: rec.id, probe: p.id }), 'probe', { 'data-probe': p.id, title: `${p.fact} 명령어 예시(입력 불가): ${p.example}` }); box.append(b); }
       else if (!compact) box.append(button(`→ ${p.where} · ${p.label}`, () => goTo(p.location), 'link probe-away', { 'data-goto': p.location, 'data-probe-away': p.id, title: '현장 관측은 그 장소에서만 기록됩니다' }));
@@ -68,7 +69,11 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     for (const a of g.incident.menu.actions) if (a.group !== 'comm') (groups[a.group] ||= []).push(a);
     for (const [group, list] of Object.entries(groups)) {
       const row = el('div', 'inc-group'); row.append(el('small', '', GROUP_LABEL[group] || group));
-      for (const a of list) row.append(button(a.label, () => send({ type: 'incident_act', incident: rec.id, action: a.id, ...(['load_shed', 'planned_pause'].includes(a.id) ? { rid: Number(sel.value) } : {}) }), '', { 'data-incident-action': a.id }));
+      for (const a of list) {
+        const location=g.linux?.actionLocations?.[rec.id]?.[a.id];
+        if(location&&location!==here())row.append(button(`→ ${where(g,location)} · ${a.label}`,()=>goTo(location),'link',{'data-action-goto':a.id}));
+        else row.append(button(a.label, () => send({ type: 'incident_act', incident: rec.id, action: a.id, ...(['load_shed', 'planned_pause'].includes(a.id) ? { rid: Number(sel.value) } : {}) }), '', { 'data-incident-action': a.id }));
+      }
       box.append(row);
     }
     if (scope.length > 1) { const l = el('label', 'select-line', '이전·계획 중단 대상'); l.append(sel); box.prepend(l); }
@@ -96,6 +101,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     const row = el('div', 'decision-row');
     if (rec.state === 'alert') row.append(button('범위 확인 · 영향 고객·작업·장비', () => send({ type: 'incident_ack', incident: rec.id }), 'primary', { 'data-incident-ack': rec.id }));
     if (open && rec.acknowledged) row.append(button('고객 영향 안내 · 예상 시각', () => send({ type: 'incident_act', incident: rec.id, action: 'notify_customer' }), '', { 'data-incident-notify': rec.id }));
+    if (g.linux && open && rec.acknowledged) row.append(button('Linux 진단 · 내 모니터', () => {ui.tab='linux';ui.incident=rec.id;if(ui.linux)ui.linux.incident=rec.id;goTo('noc');render();}, 'primary', {'data-open-linux':rec.id}));
     if (rec.state === 'monitoring') row.append(button('사후 확인', () => send({ type: 'incident_verify', incident: rec.id }), 'primary', { 'data-incident-verify': rec.id }));
     if (rec.state === 'verified') row.append(button('고객에게 사건 보고 · 종료', () => send({ type: 'incident_report', incident: rec.id }), 'primary', { 'data-incident-report': rec.id }));
     if (row.childElementCount) box.append(row);
@@ -105,7 +111,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     if (rec.verifyProbes?.length && ['recovering', 'monitoring'].includes(rec.state)) box.append(el('p', 'ws-note', '복구 뒤 다시 볼 지표: ' + rec.verifyProbes.map(id => { const p = g.incident.menu.probes.find(x => x.id === id); return p ? `${p.label}(${p.where})` : id; }).join(', ')));
     if (open && rec.acknowledged && ['investigating', 'monitoring'].includes(rec.state)) {
       const p = el('div', 'inc-block'); p.dataset.labTarget = ''; p.dataset.labQuestion = `${rec.id}:${rec.state}`; p.append(el('strong', '', rec.state === 'monitoring' ? '복구 뒤 다시 관측 (지금 있는 곳에서 가능한 것)' : `근거 수집 · 지금 위치: ${where(g, here())}`));
-      p.append(probeButtons(g, rec, g.incident.menu.probes)); p.append(el('small', 'ops-note', '명령어 예시는 버튼 설명(마우스 올림)에만 있고 이번 단계에서 직접 입력하지 않습니다. 실제 OS·장비 명령은 실행되지 않습니다.')); box.append(p);
+      p.append(probeButtons(g, rec, g.incident.menu.probes)); p.append(el('small', 'ops-note', g.linux ? 'Linux 증거는 내 모니터 [Linux]에서 수집합니다. 냉각·UPS BMS는 해당 현장에서 별도로 관측합니다.' : '명령어 예시는 버튼 설명(마우스 올림)에만 있고 이번 단계에서 직접 입력하지 않습니다. 실제 OS·장비 명령은 실행되지 않습니다.')); box.append(p);
     }
     if (rec.state === 'investigating') {
       const h = el('div', 'inc-block inc-hypo'), sel = el('select'); sel.dataset.causeSelect = rec.id; sel.setAttribute('aria-label', '원인 가설');
@@ -139,10 +145,12 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     if (!g?.incident || !g.global?.briefed) return null;
     const box = el('div', 'inc-site'); box.dataset.siteEvidence = location;
     const probes = g.incident.menu.probes.filter(p => p.location === location);
-    const open = incidentRecords(g).filter(r => r.acknowledged && ['investigating', 'monitoring'].includes(r.state));
+    const open = incidentRecords(g).filter(r => r.acknowledged && (g.linux ? ['investigating','diagnosed','recovering','monitoring'] : ['investigating','monitoring']).includes(r.state));
     box.append(el('strong', '', `현장 관측 · ${where(g, location)}`), el('small', 'ops-note', `여기서 기록할 수 있는 관측: ${probes.map(p => p.label).join(', ') || '없음'}`));
     if (!open.length) box.append(el('small', 'ops-note', '범위를 확인한 진행 중 사건이 없으면 관측을 기록하지 않습니다. 계기는 그대로 볼 수 있습니다.'));
-    for (const rec of open) { const row = el('div', 'inc-site-row'); row.append(el('span', '', `${rec.id} · 요청 #${rec.rid}`), probeButtons(g, rec, probes, { compact: true })); box.append(row); }
+    for (const rec of open) { const row = el('div', 'inc-site-row'); row.append(el('span', '', `${rec.id} · 요청 #${rec.rid}`), probeButtons(g, rec, probes, { compact: true })); box.append(row);
+      if(g.linux&&['diagnosed','recovering'].includes(rec.state))box.append(actionsBlock(g,rec));
+    }
     return box;
   }
   return { paneIncident, siteEvidence };

@@ -14,6 +14,7 @@ import {createScreens} from './screens.js';
 import {chapterGoal,talkFor,isLaterChapter} from './campaign-view.js';
 import {createChapterPanes} from './chapter-panes.js';
 import {createIncidentPane,isIncident,incidentGoal,facilityRows,focusIncident} from './incident-pane.js';
+import {createLinuxPane} from './linux-pane.js';
 
 document.querySelector('#app').innerHTML=`
 <header class="topbar"><a class="brand" href="#noc"><span class="brand-icon">▤</span><span>SERVER ROOM<span class="brand-sub">SURVIVAL / ULSAN AIDC</span></span></a>
@@ -317,7 +318,8 @@ function detailBody(){
 // The diagnosis tab carries the name the engine's sentences use in that chapter: 장비 진단 (tutorial, 제1장, 제4장,
 // free), 네트워크 진단 (제3장), 진단 (제5장 — independent diagnosis, evidence comes from the Lab).
 const diagLabel=g=>g?.story?.chapterKey===3?'네트워크 진단':g?.story?.training?'진단':'장비 진단';
-const tabsFor=g=>{if(isIncident(g))return [['inbox','요청함'],['incident','사건'],['plan','배정 계획'],['diagnosis','장비 진단'],['result','결과']];
+const tabsFor=g=>{if(g?.linux)return [['inbox','요청함'],['incident','사건'],['linux','Linux'],['plan','배정 계획'],['result','결과']];
+  if(isIncident(g))return [['inbox','요청함'],['incident','사건'],['plan','배정 계획'],['diagnosis','장비 진단'],['result','결과']];
   const base=[['inbox','요청함'],['plan','배정 계획'],['diagnosis',diagLabel(g)]];return g?.story?.training?[...base,['lab','연수 · Lab'],['result','결과']]:[...base,['result','결과']];};
 function openTab(tab){
   ui.tab=tab;const r=focusRequest(game());
@@ -334,12 +336,13 @@ function renderWorkstation(){
   const r=focusRequest(g);
   if(ui.tab==='lab'&&!g.story?.training)ui.tab='inbox';
   if(ui.tab==='incident'&&!isIncident(g))ui.tab='inbox';
+  if(ui.tab==='linux'&&!g.linux)ui.tab='inbox';
   for(const [id,label]of tabsFor(g)){
     const badge=id==='inbox'?(g.requests.filter(x=>x.unread).length||''):id==='diagnosis'&&r&&['hw_fault','net_fault'].includes(r.stage)?'!':id==='result'&&((r&&!isOpen(r)&&!r.reported)||(isGlobal(g)&&g.global.done))?'●':id==='lab'&&g.story.training.status.headline?.tone==='warn'?'!':id==='incident'&&isIncident(g)&&g.incident.alerts.length?`⚠${g.incident.alerts.length}`:id==='incident'&&isIncident(g)&&g.incident.open?String(g.incident.open):'';
     const b=button(badge?`${label} ${badge}`:label,()=>openTab(id),ui.tab===id?'active':'',{'data-ws-tab':id,role:'tab','aria-selected':String(ui.tab===id)});b.dataset.focusKey=`tab-${id}`;tabs.append(b);
   }
   const body=el('div','ws-pane');body.dataset.pane=ui.tab;
-  ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult,lab:(b,gg)=>panes.paneLab(b,gg),incident:(b,gg)=>incident.paneIncident(b,gg)})[ui.tab](body,g,r);
+  ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult,lab:(b,gg)=>panes.paneLab(b,gg),incident:(b,gg)=>incident.paneIncident(b,gg),linux:(b,gg)=>linuxPane.pane(b,gg)})[ui.tab](body,g,r);
   ws.append(bar,tabs,body);
   if(focusKey){const again=ws.querySelector(`[data-focus-key="${focusKey}"]`);again?.focus({preventScroll:true});}
   // Lab: bring the question the player must answer now into view once (inside the monitor pane, no page scroll).
@@ -548,11 +551,11 @@ const menu=(()=>{
     const card=el('div','menu-card');card.append(el('span','eyebrow','SERVER ROOM SURVIVAL · 3D'),el('h2','','모드를 고르세요'),el('p','menu-sub','튜토리얼은 선배와 함께하는 실습, 스토리 도전은 장 단위 본편, 자유·연습은 끝없는 근무입니다. 모든 규칙은 Python 게임 엔진이 계산합니다.'));
     if(!health.ok)card.append(el('p','menu-warn','Python 엔진에 연결할 수 없습니다. 터미널에서 npm run play (또는 python -m engine.server)를 실행한 뒤 이 창을 다시 여세요.'));
     const grid=el('div','mode-grid');
-    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐'],['incident','장애 대응','글로벌 교대 3 클리어 후: 네트워크·GPU·스토리지·냉각·전원·플랫폼 사건 10건을 근무 A(선배와 함께)→B(팀 조정)→C(독립·겹친 증상)로 직접 진단·대응합니다.','🚨']]){
+    for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐'],['incident','장애 대응','글로벌 교대 3 클리어 후: 네트워크·GPU·스토리지·냉각·전원·플랫폼 사건 10건을 근무 A(선배와 함께)→B(팀 조정)→C(독립·겹친 증상)로 직접 진단·대응합니다.','🚨'],['linux','Linux 실무 연수','제5장 수료 후 5개 유한 근무: 도구 선택 → 명령 조립 → 직접 입력 → 독립 진단·복구·검증·보고. 기존 수료 슬롯이 있으면 바로 시작할 수 있고 사건별 연습도 가능합니다.','⌨']]){
       const c=el('section','mode-card-big');c.dataset.modeCard=mode;c.append(el('span','mode-icon',icon),el('h3','',title),el('p','',desc));
       c.append(button('새로 시작',async()=>{if(await newGame(mode))hide();},'primary',{'data-new':mode,...(health.ok?{}:{disabled:''})}));
       // Phase 7: the incident card lists its shift saves and its practice saves separately (practice never hides a shift save).
-      const mine=mode==='incident'?[...saves.filter(s=>s.kind==='incident').slice(-2),...saves.filter(s=>s.kind==='incident_practice').slice(-2)].reverse()
+      const mine=mode==='linux'?[...saves.filter(s=>s.kind==='linux').slice(-2),...saves.filter(s=>s.kind==='linux_practice').slice(-2)].reverse():mode==='incident'?[...saves.filter(s=>s.kind==='incident').slice(-2),...saves.filter(s=>s.kind==='incident_practice').slice(-2)].reverse()
         :saves.filter(s=>s.kind===mode||(mode==='free'&&s.kind==='practice')||(mode==='global'&&s.kind==='global_free')).slice(-3).reverse();
       for(const s of mine){c.append(button(`이어하기 · ${s.kind==='practice'?'장 연습 · ':''}${s.chapter?.heading&&s.kind!=='tutorial'?`${s.chapter.heading} · `:''}${s.describe||s.id}${s.clock?` · ${s.clock}`:''}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));
       }
@@ -565,6 +568,15 @@ const menu=(()=>{
         const fill=()=>{const s=withCp.find(x=>x.id===sel.value);row.replaceChildren(el('small','','장 시작 지점부터 (새 슬롯):'));
           for(const k of s.checkpoints)row.append(button(`제${{1:1,2:2,3:3,'3b':4,lab:5}[k]}장`,async()=>{if(await startCheckpoint(s.id,k))hide();},'link',{'data-checkpoint':`${s.id}:${k}`}));};
         sel.addEventListener('change',fill);fill();box.append(el('small','','장 선택 · 재연습'),sel,row);c.append(box);
+      }
+      if(mode==='linux'){
+        c.querySelector('[data-new]')?.remove();
+        const lock=lastUnlocks?.linux;
+        const start=button('Linux 연수 시작 (근무 1부터)',async()=>{if(await newGame('linux'))hide();},'primary',{'data-new':'linux',...(health.ok&&lock?.available?{}:{disabled:''})});
+        c.querySelector('p').after(start);if(lock&&!lock.available)start.after(el('small','menu-warn',lock.reason));
+        const pick=el('div','chapter-picks'),sel=el('select');sel.dataset.linuxPractice='';sel.setAttribute('aria-label','Linux 연습 사건');
+        for(const [k,label]of [['dns','작업 정지 ①'],['tor_uplink','작업 정지 ②'],['crashloop','작업 정지 ③'],['gpu_health','작업 정지 ④'],['gpu_oom','반복 종료'],['storage_full','기록 실패'],['congestion','속도 저하 ①'],['storage_latency','속도 저하 ②'],['cooling','속도 저하 ③'],['ups','전원 이벤트']]){const o=el('option','',label);o.value=k;sel.append(o);}
+        pick.append(el('small','','Linux 사건 연습 · 별도 슬롯 · 승급 없음'),sel,button('Linux 연습 시작',async()=>{if(await newGame('linux_practice',sel.value))hide();},'link',{'data-new':'linux_practice',...(health.ok?{}:{disabled:''})}));c.append(pick);
       }
       if(mode==='global'){
         c.querySelector('[data-new]')?.remove();
@@ -615,6 +627,7 @@ const coach=createCoach({$,el,button,store,game,getScene:()=>scene,isBlocked:()=
 const screens=createScreens({$,el,button,store,game,send,newGame,openGame,retryChapter,showMenu:()=>menu.show(),toast,ui,render});
 const panes=createChapterPanes({el,button,chip,readingsGrid,send,ui,render});
 const incident=createIncidentPane({el,button,chip,readingsGrid,send,ui,render,here,goTo});
+const linuxPane=createLinuxPane({el,button,send,ui,render,toast});
 store.subscribe(render);
 $('screen-dialog').addEventListener('close',()=>render());
 try{
