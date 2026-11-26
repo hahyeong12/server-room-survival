@@ -1,0 +1,18 @@
+PASS neutral world before any game: 21 city markers and routes exist, nothing is lit, legacy markers neutral
+PASS global shifts locked before graduation; global free ops open (menu)
+PASS precondition: regular story chapters 1 -> 5 cleared through the real UI (graduation)
+PASS shift 1 (intro): two US cities and a Seoul customer through the real UI, map lights only arrived cities, engine restart mid-shift
+PASS shift 2 (contention): engine refuses the plan that no longer fits, customer rejects one alternative and accepts another
+PASS shift 3 (independent): no senior hints, original condition impossible on the servers, final global summary
+PASS a failed shift: expiry, a late job and a justified rejection → shift failed → retry in a NEW slot (source unchanged)
+PASS global free operations: requests keep arriving from many cities; save → engine restart → resume
+PASS earlier modes still resume: graduated story save, a new tutorial / free / practice save after an engine restart
+PASS layout 1366x768: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1366x768 at 150% (emulated, full screen): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1366x768 at 150% inside a browser window (emulated): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1920x1080 at 150% (emulated): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1920x1080: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS reduced motion: lit routes stay lit with packets frozen
+PASS WebGL resources and heap stay flat across 10 cycles of every space
+
+16 PASS / 0 FAIL · page errors 0 · console errors 0

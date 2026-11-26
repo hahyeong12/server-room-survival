@@ -28,3 +28,4 @@
 - 독립 리뷰 에이전트에 수정 사항을 다시 전달했다. 추가 확정 중대 결함 없음. 정상 노드 `eligible=False`의 부모 증거·CLI `_proof` 제외는 실제 Python 회귀가 검사한다. 리뷰 에이전트 자체 실행은 없었다.
 - 보호 재검사 1,047개 변경0. 이제 Phase7→6→5→4→lab→비GUI Python→adapter→JS→build의 최종 직렬 회귀를 수행 중이다. 미실행 결과를 PASS로 기록하지 않는다.
 - 16:28 KST 기존 Phase7 전체 브라우저 회귀 **12/12 PASS**, 오류/크래시0. 새 `regression-phase7` 폴더에 증거를 분리했다. 원래 global/incident v1·Lab/training·game/session/database 코드와 lab.html은 기준점 대비 변경0. README/학습/로드맵에는 역사적 Tk 범위와 실험 3D 범위를 구분했다.
+- 16:40 KST 기존 Phase6 전체 브라우저 회귀 **16/16 PASS**, page/console 오류0. 제1~5장, 글로벌3교대, 실패/새 슬롯, 이전 모드 저장 재시작, 자유 운영, 5개 레이아웃, 움직임 줄이기와 반복 자원 검사. Phase5를 이어서 시작했다.
