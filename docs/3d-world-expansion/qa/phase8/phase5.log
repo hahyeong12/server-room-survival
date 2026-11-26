@@ -1,0 +1,10 @@
+PASS regular story chapters 1 -> 5 through the real UI, engine restart + resume after every chapter, graduation
+PASS chapter 2 failure through the UI: original conditions in a row are late → senior feedback → retry in a new slot (source unchanged)
+PASS chapter 3 failure: three wrong responses → failed card → retry; responses before the diagnosis are not offered
+PASS chapter 4 failure: repair on the tight deadline is late → chapter failed (no next chapter) → retry; impossible migration refused
+PASS chapter practice from the menu is a separate save: no campaign, no next chapter, free stage choice in the Lab
+PASS layout 1366x768: talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll
+PASS layout 150% of 1920x1080 (emulated): talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll
+PASS layout 1920x1080: talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll
+PASS WebGL resources and heap stay flat while cycling every space three times in one page
+9/9 checks passed · errors 0 · console 0

@@ -13,11 +13,12 @@ import * as C from './campaign-flows.mjs';
 const out=resolve(process.argv.find(x=>x.startsWith('--out='))?.slice(6)??'../../docs/3d-world-expansion/qa/phase8');
 await mkdir(out,{recursive:true});
 const dev=process.argv.includes('--practice-only');
+const only=process.argv.find(x=>x.startsWith('--only='))?.slice(7);
 const report={issue:9,mode:'real Chrome mouse/select/typing; no seed/no API progression; OS temporary saves',developmentOnly:dev,
   checks:[],errors:[],consoleErrors:[],commands:[],actions:[],shifts:[],truth:[],resumes:[],layouts:[],performance:[],screenshots:[],startedAt:new Date().toISOString()};
 let stack,browser,page,ctx,career;
 const shot=async name=>{await page.screenshot({path:join(out,name)});report.screenshots.push(name);};
-async function check(name,fn){const t=Date.now();try{await fn();report.checks.push({name,pass:true,ms:Date.now()-t});console.log(`PASS ${name}`);}catch(e){try{await shot(`FAIL-${report.checks.length}.png`);}catch{}report.checks.push({name,pass:false,error:e.stack});console.log(`FAIL ${name}: ${e.message}`);throw e;}}
+async function check(name,fn){if(only&&!name.includes(only))return;const t=Date.now();try{await fn();report.checks.push({name,pass:true,ms:Date.now()-t});console.log(`PASS ${name}`);}catch(e){try{await shot(`FAIL-${report.checks.length}.png`);}catch{}report.checks.push({name,pass:false,error:e.stack});console.log(`FAIL ${name}: ${e.message}`);throw e;}}
 async function open({width=1920,height=1080,dpr=1}={}){
   ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:dpr,reducedMotion:'reduce',permissions:['clipboard-read','clipboard-write']});
   await ctx.addInitScript(()=>localStorage.setItem('srs3d.opening.seen.v1','1'));
@@ -154,7 +155,7 @@ try{
   await check('keyboard typing, errors, Enter, history, max length and clipboard in terminal',async()=>{
     const rec=await practice('dns');await linuxTab(rec.id);const before=(await U.G(page)).linux.observations.length;
     await page.locator('[data-linux-input]').pressSequentially('sudo rm /data/work');await page.locator('[data-linux-input]').press('Enter');await settle(page);assert.equal((await U.G(page)).linux.observations.length,before);assert.match(await page.locator('[data-linux-output]').innerText(),/변경 명령/);
-    await command(rec.id,'ping',{forceTyping:true});await page.locator('[data-linux-input]').press('ArrowUp');assert.equal(await page.locator('[data-linux-input]').inputValue(),'ping -c 3 10.20.0.15');
+    await command(rec.id,'ping',{forceTyping:true});assert.equal(await page.locator('[data-linux-input]').evaluate(e=>e===document.activeElement),true,'command result restores keyboard focus to the terminal input');await page.locator('[data-linux-input]').press('ArrowUp');assert.equal(await page.locator('[data-linux-input]').inputValue(),'ping -c 3 10.20.0.15');
     await page.locator('[data-linux-input]').fill('x'.repeat(300));assert.equal((await page.locator('[data-linux-input]').inputValue()).length,240);await page.locator('[data-linux-input]').fill('');
     await U.click(page,'[data-linux-copy]');assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/PING/);await shot('p8-keyboard.png');
   });

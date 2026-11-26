@@ -1,0 +1,14 @@
+PASS neutral opening: no game, no lit path or request badge, whatever is selected; first request lights only its own path
+PASS tutorial: every step completed by its own real action on world / campus / desk / hall / monitor / rack / responses
+PASS tutorial completion → new story save → first job started, run and finished on the engine → chapter clear → other mode
+PASS reload and browser back/forward keep the engine state and journey; nothing advances by itself
+PASS skip: guide off, recorded as not completed, engine untouched; completion screen offers real modes
+PASS customer consent: economy needs consent; proposal and reply come from the engine customer
+PASS free mode runs the existing free rules (time-based arrivals) from the menu
+PASS layout 1366x768: highlighted control and coach visible without scrolling, no overlay overlap
+PASS layout 1920x1080: highlighted control and coach visible without scrolling, no overlay overlap
+PASS layout 1920x1080@150%: highlighted control and coach visible without scrolling, no overlay overlap
+PASS regression: 8 spaces navigate, campus cooling ops consistent, rack canvas picking from hall views, interiors
+PASS performance per space incl. interiors (avg >= 60 FPS), no long freeze, 10 navigation cycles keep resources bounded
+PASS no runtime or console errors
+13 PASS / 0 FAIL

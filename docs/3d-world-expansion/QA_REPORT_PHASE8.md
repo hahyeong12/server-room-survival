@@ -11,7 +11,8 @@
 | 신규 Python Linux 검사 | **95/95 PASS** (CLI·10종·5근무·저장·반례) | `tests.test_linux_cli`, `tests.test_linux_curriculum`; 최종 전체 로그에 포함 |
 | 기존 Phase7 Chrome 회귀 | **12/12 PASS** | [regression-phase7/phase7-qa.json](qa/phase8/regression-phase7/phase7-qa.json) |
 | 기존 Phase6 Chrome 회귀 | **16/16 PASS** | [regression-phase6/phase6-qa.json](qa/phase8/regression-phase6/phase6-qa.json) |
-| Phase4~5·lab·Python 전체·adapter·JS·build | 최종 직렬 회귀 실행 중 | 완료 후 수치 확정 |
+| 기존 Phase5 Chrome 회귀 | **9/9 PASS** | [regression-phase5/phase5-qa.json](qa/phase8/regression-phase5/phase5-qa.json) |
+| Phase4·lab·Python 전체·adapter·JS·build | 최종 직렬 회귀 실행 중 | 완료 후 수치 확정 |
 | Tk GUI 311개 | **미실행**, PASS 수에 포함하지 않음 | Issue/AGENTS 지침 |
 | 기존 사용자 저장·과거 QA 보호 | **1,047개 변경 0** | [protection-result.json](qa/phase8/protection-result.json), [시작 해시](qa/phase8/protected-before.json) |
 
