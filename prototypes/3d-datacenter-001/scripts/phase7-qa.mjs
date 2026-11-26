@@ -15,7 +15,7 @@ import * as P6 from './phase6-ui.mjs';
 import * as U from './phase7-ui.mjs';
 import * as story5 from './campaign-flows.mjs';
 
-const out=resolve('../../docs/3d-world-expansion/qa/phase7');await mkdir(out,{recursive:true});
+const out=resolve(process.argv.find(x=>x.startsWith('--out='))?.slice(6)??'../../docs/3d-world-expansion/qa/phase7');await mkdir(out,{recursive:true});
 const only=process.argv.find(x=>x.startsWith('--only='))?.slice(7);
 const report={issue:8,mode:'Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)',checks:[],errors:[],consoleErrors:[],crashes:[],screenshots:[],
   shifts:[],incidents:[],wrong:[],resumes:[],engineTruth:[],consistency:[],performance:[],resources:[],layout:[],startedAt:new Date().toISOString()};

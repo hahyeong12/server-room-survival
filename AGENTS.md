@@ -40,6 +40,14 @@
 - 오류가 발생하면 원인을 분석하고 해결 방법을 제시합니다.
 - 개발 완료 후 다음 단계로 자동 진행하지 않고 사용자의 요청을 기다립니다.
 
+## Phase 8 실험 브랜치 인계
+
+- `experiment/3d-linux-learning-phase8` / Issue #9: `aidc/learning/linux_catalog.py`·`linux_terminal.py`·`linux_curriculum.py`·`linux_session.py`에 28개 가상 진단 호출과 5개 유한 Linux 근무를 구현합니다. 기존 `IncidentSession` 판독/대응과 단일 Python 상태를 공유하며 실제 셸·장비·네트워크를 실행하지 않습니다.
+- 저장은 별도 `aidc_3d_linux_NNN.db`, `mode=linux`, Linux JSON v1과 지문입니다. 기존 사건/global v1·SQL·Chapter5 Lab을 바꾸지 않습니다. `_has_shift()` 확장 훅의 기본 구현은 기존 근무만 허용합니다. 정규 입장은 3D 제5장 수료 기록, 사건별 연습은 항상 가능하며 재도전은 새 슬롯입니다.
+- 보완적 CLI 증거·출력 해석·기존 가설/승인/현장 조치·복구 후 새 관측·고객 보고를 요구합니다. 냉각/UPS는 별도 BMS·시설팀 분업입니다. Linux 탭은 선택/조립/직접 입력, 사건별 화면 clear, 요청 대기 잠금과 게임/사건/노드 응답 검사를 제공합니다.
+- 실제 검증과 한계는 `docs/3d-world-expansion/QA_REPORT_PHASE8.md`, 구조·사건별 학습표는 `PHASE8_ARCHITECTURE.md`, 공식 문법은 `PHASE8_REFERENCES.md`, 독립 리뷰는 `REVIEW_PHASE8.md`를 확인합니다. 테스트용 저장은 OS 임시 폴더만 사용하고 기존 사용자 DB·기존 QA 파일은 읽기 전용 해시로 보호합니다.
+- Issue #8의 글로벌 자유 운영 seeded/random 장애는 여전히 미구현입니다. Tk GUI 311개는 이번 Phase에서도 실행하지 않습니다. 사용자 요청 없이 다음 Phase로 진행하지 않습니다.
+
 ## 프로젝트 정보
 
 - 프로젝트명: 서버실 생존기 (Server Room Survival)

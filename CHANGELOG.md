@@ -1,6 +1,14 @@
 
 # 서버실 생존기 (Server Room Survival) 개발 기록
 
+## 3D Phase 8 Linux 진단·유한 연수·독립 대응 — Issue #9 (2026-11-26)
+
+- `experiment/3d-linux-learning-phase8`의 실험 기능입니다. `linux_catalog` v1의 28개 읽기 전용 진단 호출과 안전한 허용 목록 해석기, `LinuxSession(IncidentSession)`의 5개 유한 근무를 추가했습니다. 기존 사건 10종의 실제 Python 판독·작업 영향·승인·고객 동의·복구·보고를 사용합니다. 실제 OS·셸·네트워크는 실행하지 않습니다.
+- 3D 내 모니터 Linux 탭에서 도구 선택 → 옵션/대상 조립 → 직접 입력으로 진행합니다. 보완적 증거와 출력 해석, 현장 대응, 복구 후 새 관측, 고객 보고를 요구하며 마지막 근무는 새 고객·일정·동시 사건 조합입니다. 결과와 승급은 Python이 판정합니다.
+- 전용 `aidc_3d_linux_NNN.db`와 버전/지문으로 저장하며 제5장 수료 후 정규 연수·항상 가능한 사건 연습·새 슬롯 재도전·이어하기를 제공합니다. 기존 v1 카탈로그·사건 schema·Chapter5 Lab과 저장을 유지합니다.
+- 독립 정적 리뷰의 정답 키 노출·가설 검사 비대칭·오래된 요청·비동기 UI·사건별 clear 문제를 수정했습니다. 실제 테스트 수치와 보호 해시는 [QA 보고서](docs/3d-world-expansion/QA_REPORT_PHASE8.md), 구조/학습표는 `PHASE8_ARCHITECTURE.md`, 공식 문법·간소화 한계는 `PHASE8_REFERENCES.md`에 기록합니다.
+- Issue #8의 글로벌 자유 운영 seeded/random 장애는 여전히 미구현입니다. main 병합·PR 생성은 하지 않습니다.
+
 ## 3D Phase 7 실무형 장애 10종·근거 기반 진단·사건 대응 근무 — Issue #8 (2026-11-26)
 
 - 버전 사건 콘텐츠 `aidc/incidents/incidents_v1.json`: 네트워크(DNS·ToR 업링크·혼잡)·GPU(장치 Xid·OOM)·스토리지(공간 소진·I/O 지연)·시설(냉각 펌프·UPS)·플랫폼(CrashLoop) 10종. 관측 11종은 모든 사건에 같은 메뉴이고 판독값만 숨은 원인과 엔진 상태에서 계산됩니다.

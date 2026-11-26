@@ -1,5 +1,7 @@
 # 3D 세계 확장 작업 기록 — Issue #1
 
+> Phase8(Issue #9) 후속 개발 기록은 [WORK_LOG_PHASE8.md](WORK_LOG_PHASE8.md), 구현 구조는 [PHASE8_ARCHITECTURE.md](PHASE8_ARCHITECTURE.md)를 확인합니다. 아래 Phase0~2의 당시 기록은 보존합니다.
+
 범위: Phase 0~2. Phase 3 사용자 평가 전에 중단. 작업 브랜치 `experiment/3d-world-skeleton-001`.
 
 ## 시작 사실 확인 (2026-11-20 KST)

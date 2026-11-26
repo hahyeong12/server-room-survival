@@ -14,7 +14,9 @@
     "test:engine": "python -m unittest discover -s engine/tests -t .",
     "qa:phase4": "node scripts/phase4-qa.mjs",
     "qa:phase5": "node scripts/phase5-qa.mjs",
-    "qa:phase6": "node scripts/phase6-qa.mjs"
+    "qa:phase6": "node scripts/phase6-qa.mjs",
+    "qa:phase8": "node scripts/phase8-qa.mjs",
+    "qa:phase8:regression": "node scripts/phase8-regression.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

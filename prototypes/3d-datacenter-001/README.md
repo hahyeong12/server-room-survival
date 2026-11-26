@@ -1,8 +1,16 @@
-# 3D 데이터센터 — 서버실 생존기 3D (Phase 6)
+# 3D 데이터센터 — 서버실 생존기 3D (Phase 8)
 
 서버실 생존기의 3D 화면입니다. **Phase 4(Issue #5)부터 기존 Python 게임 엔진(`session.GameSession`)과 연결**되어, 가상 시간·GPU/전력 원장·서버 배정·고객 조건/동의·기한·점수·서버 장애/복구를 모두 Python 엔진이 계산합니다. 3D 화면은 규칙을 복제하지 않고 엔진 결과를 보여 주며, 플레이어의 실제 조작을 엔진 행동으로 보냅니다. 구조는 [Phase 4 아키텍처](../../docs/3d-world-expansion/PHASE4_ARCHITECTURE.md), **[Phase 5 아키텍처 — 스토리 1~5장](../../docs/3d-world-expansion/PHASE5_ARCHITECTURE.md)**, **[Phase 6 아키텍처 — 글로벌 고객·교대 근무](../../docs/3d-world-expansion/PHASE6_ARCHITECTURE.md)**를 보세요.
 
 ![실제 Chrome 실행 화면 — 제1~5장 완주 후 수료](../../docs/3d-world-expansion/qa/phase5/graduation.png)
+
+**Phase 8 Linux 연수:** 제5장을 수료한 3D 스토리 저장이 있으면 메뉴의 Linux 연수에서 정규 근무를 시작할 수 있습니다. 5개 근무에서 도구 선택 → 명령어 조립 → 직접 입력 → 시설팀과의 분업 → 독립 평가로 성장합니다. 수료 기록 없이도 10종 사건별 연습을 선택할 수 있습니다. [구조와 사건별 학습표](../../docs/3d-world-expansion/PHASE8_ARCHITECTURE.md), [공식 명령 문법·한계](../../docs/3d-world-expansion/PHASE8_REFERENCES.md), [실행 QA 결과](../../docs/3d-world-expansion/QA_REPORT_PHASE8.md)를 확인하세요.
+
+내 자리 모니터의 **Linux 탭**에서 가상 NOC·네트워크 노드·배정된 GPU 서버·해당 업무의 Kubernetes 환경을 선택합니다. 지원하는 읽기 전용 진단 호출은 28개이며 `help`로 구문을 확인합니다. 출력에서 증거를 모으고 해석한 뒤 사건 탭에서 가설을 제출하고, 해당 현장 콘솔에서 승인된 조치를 요청합니다. 복구 후에는 새 명령 출력과 정상 관찰을 근거로 검증하고 고객에게 보고해야 합니다. Linux 입력으로 실제 컴퓨터의 명령어를 실행하지 않습니다. 입력 240자·출력 6,000자와 정해진 대상만 지원하며 셸 연결·파이프·변경 명령은 거절합니다.
+
+Linux 저장은 `aidc_3d_linux_NNN.db`로 분리됩니다. 새 시작·실패 재도전은 새 슬롯이며 연습에는 승급 기록이 없습니다. 기존 제1~5장·글로벌·사건 저장은 유지합니다. **Issue #8의 글로벌 자유 운영 seeded/random 장애는 여전히 미구현입니다.**
+
+검증 명령: `npm.cmd run qa:phase8`(실제 UI 완주), `npm.cmd run qa:phase8:regression`(Phase7→6→5→4→lab→Python→JS→build 직렬 회귀). 기존 QA 결과를 덮어쓰지 않도록 새 결과는 `qa/phase8/`에 저장합니다.
 
 ## 실행 (엔진 + 3D)
 
