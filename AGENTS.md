@@ -45,6 +45,7 @@
 - `experiment/3d-linux-learning-phase8` / Issue #9: `aidc/learning/linux_catalog.py`·`linux_terminal.py`·`linux_curriculum.py`·`linux_session.py`에 28개 가상 진단 호출과 5개 유한 Linux 근무를 구현합니다. 기존 `IncidentSession` 판독/대응과 단일 Python 상태를 공유하며 실제 셸·장비·네트워크를 실행하지 않습니다.
 - 저장은 별도 `aidc_3d_linux_NNN.db`, `mode=linux`, Linux JSON v1과 지문입니다. 기존 사건/global v1·SQL·Chapter5 Lab을 바꾸지 않습니다. `_has_shift()` 확장 훅의 기본 구현은 기존 근무만 허용합니다. 정규 입장은 3D 제5장 수료 기록, 사건별 연습은 항상 가능하며 재도전은 새 슬롯입니다.
 - 보완적 CLI 증거·출력 해석·기존 가설/승인/현장 조치·복구 후 새 관측·고객 보고를 요구합니다. 냉각/UPS는 별도 BMS·시설팀 분업입니다. Linux 탭은 선택/조립/직접 입력, 사건별 화면 clear, 요청 대기 잠금과 게임/사건/노드 응답 검사를 제공합니다.
+- 인계 후(Claude Code) 규칙: 노드·대상 의존 관측(ping·traceroute, GPU 건강 3종, ToR 포트)은 `LinuxSession.scope_of()`의 영향 범위 전체를 비교했을 때만 엔진 증거가 됩니다. 관측의 `eligible`·사건 단위 `status`는 화면에 보내지 않으며 정상 노드·범위 밖 대상 출력은 숨은 원인과 무관하게 같아야 합니다. 네트워크 노드는 가상 스위치(eth0 관리 + swp1~4 = ToR-A~D 업링크)입니다. 해석은 관측당 첫 답만 인정합니다. Linux 탭의 터미널 확대(`ui.linuxExpanded`, Esc·탭 이동 복귀)는 입력 초안·히스토리·기록과 분리됩니다.
 - 실제 검증과 한계는 `docs/3d-world-expansion/QA_REPORT_PHASE8.md`, 구조·사건별 학습표는 `PHASE8_ARCHITECTURE.md`, 공식 문법은 `PHASE8_REFERENCES.md`, 독립 리뷰는 `REVIEW_PHASE8.md`를 확인합니다. 테스트용 저장은 OS 임시 폴더만 사용하고 기존 사용자 DB·기존 QA 파일은 읽기 전용 해시로 보호합니다.
 - Issue #8의 글로벌 자유 운영 seeded/random 장애는 여전히 미구현입니다. Tk GUI 311개는 이번 Phase에서도 실행하지 않습니다. 사용자 요청 없이 다음 Phase로 진행하지 않습니다.
 

@@ -1,0 +1,2453 @@
+{
+  "issue": 9,
+  "mode": "real Chrome mouse/select/typing; no seed/no API progression; OS temporary saves",
+  "developmentOnly": false,
+  "checks": [
+    {
+      "name": "menu separates regular Linux training and ten ungraded incident practices",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "name": "prerequisite Chapter1 to Chapter5 graduation through real 3D UI, no seed",
+      "pass": true,
+      "ms": 148859
+    },
+    {
+      "name": "five finite shifts: choice to assembly to typing and independent diagnosis, all ten causes",
+      "pass": true,
+      "ms": 334257
+    },
+    {
+      "name": "promotion survives engine process restart and resume",
+      "pass": true,
+      "ms": 1610
+    },
+    {
+      "name": "keyboard typing, errors, Enter, history, max length and clipboard in terminal",
+      "pass": true,
+      "ms": 11964
+    },
+    {
+      "name": "real click targets at 1366x768, 1920x1080 and 150 percent emulation",
+      "pass": true,
+      "ms": 3143
+    },
+    {
+      "name": "wrong interpretation and wrong node cannot create fake success",
+      "pass": true,
+      "ms": 1119
+    },
+    {
+      "name": "delayed command response keeps input and context locked until the result arrives",
+      "pass": true,
+      "ms": 1689
+    },
+    {
+      "name": "expanded terminal at 1366x768, 1920x1080 and 150 percent: mouse/keyboard toggle keeps draft, history and records",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: emulated device pixel ratio\n\n1 !== 1.5\n\n    at emulate (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:167:137)\n    at async expandLayout (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:183:59)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:228:68\n    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:21:91)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:227:3"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [
+    {
+      "id": "INC-L11",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 1
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 2
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 1,
+      "after": false,
+      "seq": 3
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 4
+    },
+    {
+      "id": "INC-L11",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 5
+    },
+    {
+      "id": "INC-L11",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": true,
+      "seq": 6
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 7
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 8
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 9
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 10
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 11
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 12
+    },
+    {
+      "id": "INC-L12",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 2,
+      "after": false,
+      "seq": 13
+    },
+    {
+      "id": "INC-L12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 14
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 15
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 16
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 17
+    },
+    {
+      "id": "INC-L12",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 18
+    },
+    {
+      "id": "INC-L12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 19
+    },
+    {
+      "id": "INC-L21",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 20
+    },
+    {
+      "id": "INC-L21",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 21
+    },
+    {
+      "id": "INC-L21",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 22
+    },
+    {
+      "id": "INC-L21",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 23
+    },
+    {
+      "id": "INC-L22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 24
+    },
+    {
+      "id": "INC-L22",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 25
+    },
+    {
+      "id": "INC-L22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 26
+    },
+    {
+      "id": "INC-L22",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 27
+    },
+    {
+      "id": "INC-L31",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 28
+    },
+    {
+      "id": "INC-L31",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 29
+    },
+    {
+      "id": "INC-L31",
+      "command": "systemctl",
+      "line": "systemctl status worker.service",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 30
+    },
+    {
+      "id": "INC-L31",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 31
+    },
+    {
+      "id": "INC-L31",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 32
+    },
+    {
+      "id": "INC-L31",
+      "command": "systemctl",
+      "line": "systemctl status worker.service",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 33
+    },
+    {
+      "id": "INC-L32",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 34
+    },
+    {
+      "id": "INC-L32",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 35
+    },
+    {
+      "id": "INC-L32",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 36
+    },
+    {
+      "id": "INC-L32",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-C",
+      "code": 0,
+      "after": true,
+      "seq": 37
+    },
+    {
+      "id": "INC-L32",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 38
+    },
+    {
+      "id": "INC-L41",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 39
+    },
+    {
+      "id": "INC-L41",
+      "command": "ps",
+      "line": "ps aux",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 40
+    },
+    {
+      "id": "INC-L41",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 41
+    },
+    {
+      "id": "INC-L41",
+      "command": "ps",
+      "line": "ps aux",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 42
+    },
+    {
+      "id": "INC-L42",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 43
+    },
+    {
+      "id": "INC-L42",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 44
+    },
+    {
+      "id": "INC-L42",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 45
+    },
+    {
+      "id": "INC-L42",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 46
+    },
+    {
+      "id": "INC-L51",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 47
+    },
+    {
+      "id": "INC-L51",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 48
+    },
+    {
+      "id": "INC-L51",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 49
+    },
+    {
+      "id": "INC-L51",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 50
+    },
+    {
+      "id": "INC-L51",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 51
+    },
+    {
+      "id": "INC-L51",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 52
+    },
+    {
+      "id": "INC-L51",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 53
+    },
+    {
+      "id": "INC-L51",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 54
+    },
+    {
+      "id": "INC-L51",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 55
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 56
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 57
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 58
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 59
+    },
+    {
+      "id": "INC-L52",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 60
+    },
+    {
+      "id": "INC-L52",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 61
+    },
+    {
+      "id": "INC-L52",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 62
+    },
+    {
+      "id": "INC-L52",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 63
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 64
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 65
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 66
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 67
+    },
+    {
+      "id": "INC-L52",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 68
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 69
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 70
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 71
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 72
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 73
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 74
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 75
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 76
+    },
+    {
+      "id": "INC-L51",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": true,
+      "seq": 77
+    },
+    {
+      "id": "INC-L51",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 78
+    },
+    {
+      "id": "INC-L53",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 79
+    },
+    {
+      "id": "INC-L53",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 80
+    },
+    {
+      "id": "INC-L53",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 81
+    },
+    {
+      "id": "INC-L53",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 82
+    },
+    {
+      "id": "INC-L53",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 83
+    },
+    {
+      "id": "INC-L53",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 84
+    },
+    {
+      "id": "INC-L53",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 85
+    },
+    {
+      "id": "INC-L53",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 86
+    },
+    {
+      "id": "INC-L53",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 87
+    },
+    {
+      "id": "INC-L53",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 88
+    },
+    {
+      "id": "INC-L53",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 89
+    },
+    {
+      "id": "INC-L53",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 90
+    },
+    {
+      "id": "INC-L53",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 91
+    },
+    {
+      "id": "INC-LP1",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 1
+    }
+  ],
+  "actions": [
+    {
+      "id": "INC-L11",
+      "action": "reroute_uplink",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L12",
+      "action": "clear scoped to incident",
+      "result": "UI only"
+    },
+    {
+      "id": "INC-L12",
+      "action": "restart_service",
+      "result": "none",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L12",
+      "action": "dns_failover",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L21",
+      "action": "storage_path",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L22",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L31",
+      "action": "ask_consent",
+      "result": "consent",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L31",
+      "action": "reduce_batch",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L32",
+      "action": "isolate_migrate",
+      "result": "isolate_move",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L41",
+      "action": "escalate_facility",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L41",
+      "action": "planned_pause",
+      "result": "pause",
+      "at": "room"
+    },
+    {
+      "id": "INC-L42",
+      "action": "escalate_facility",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L42",
+      "action": "standby_pump",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L51",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L52",
+      "action": "qos_adjust",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L51",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L53",
+      "action": "storage_path",
+      "result": "fix",
+      "at": "hall"
+    }
+  ],
+  "shifts": [
+    {
+      "shift": 1,
+      "title": "Linux 근무 1 · 같은 증상, 다른 계층",
+      "cleared": true,
+      "rows": [
+        {
+          "rid": 1,
+          "template": "osa-naniwa-batch",
+          "client": "Naniwa Pixel Games",
+          "industry": "게임 제작",
+          "site": "JP-OSA",
+          "city": "오사카",
+          "country": "일본",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 09:00",
+          "started": "D1 09:00",
+          "completed": "D1 10:20",
+          "due": "D1 13:00",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        },
+        {
+          "rid": 2,
+          "template": "sfo-bayfog-video",
+          "client": "Bayfog Motion Studio",
+          "industry": "게임·미디어 제작",
+          "site": "US-SFO",
+          "city": "샌프란시스코",
+          "country": "미국",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 11:50",
+          "started": "D1 11:50",
+          "completed": "D1 13:10",
+          "due": "D1 15:50",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        }
+      ],
+      "counts": {
+        "in_progress": 0,
+        "on_time": 2,
+        "late": 0,
+        "failed": 0,
+        "rejected": 0,
+        "expired": 0
+      },
+      "success": 2,
+      "total": 2,
+      "goal": {
+        "minResolved": 2,
+        "minSuccess": 2,
+        "maxExpired": 0,
+        "notifyBeforeRecovery": false
+      },
+      "average": 100,
+      "finished": "D1 13:10",
+      "started": "D1 09:00",
+      "feedback": [
+        "INC-L11 ToR/업링크 포트 단절 (오사카 요청 #1): 해결 · 반박된 가설 DNS 이름 해석 장애 · 해결 조치 이중화 업링크로 우회",
+        "INC-L12 DNS 이름 해석 장애 (샌프란시스코 요청 #2): 해결 · 개선 없던 조치 서비스 재시작 · 해결 조치 보조 DNS 리졸버로 전환",
+        "근무 목표 달성",
+        "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+      ],
+      "incidents": [
+        {
+          "id": "INC-L11",
+          "rid": 1,
+          "type": "tor_uplink",
+          "label": "ToR/업링크 포트 단절",
+          "domain": "network",
+          "client": "Naniwa Pixel Games",
+          "city": "오사카",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 09:30",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 5,
+          "probes": [
+            "dns",
+            "ping",
+            "tor_port"
+          ],
+          "wrongHypotheses": [
+            "DNS 이름 해석 장애"
+          ],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "이중화 업링크로 우회",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 10,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 네트워크 담당에 포트·광모듈 교체를 요청하고, 같은 ToR의 다른 서버 영향과 이중화 구성 여부를 더 확인했을 것입니다.",
+            "causal": "ToR 업링크 포트 DOWN → 해당 랙 서버 고립 → 작업 정지(국제 회선은 정상).",
+            "alternatives": "국제 경로 단절은 회선 지표가 정상이라 배제, DNS는 이름 조회가 정상이라 배제."
+          }
+        },
+        {
+          "id": "INC-L12",
+          "rid": 2,
+          "type": "dns",
+          "label": "DNS 이름 해석 장애",
+          "domain": "network",
+          "client": "Bayfog Motion Studio",
+          "city": "샌프란시스코",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 12:10",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 20,
+          "evidence": 6,
+          "probes": [
+            "dns",
+            "job_log",
+            "ping"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [
+            "서비스 재시작"
+          ],
+          "noEffect": [
+            "서비스 재시작"
+          ],
+          "refused": [],
+          "notices": 1,
+          "fix": "보조 DNS 리졸버로 전환",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 20,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 네트워크 담당과 DNS 서비스 소유자에게 알리고, 주 리졸버의 로그·다른 서비스 영향 여부를 더 확인했을 것입니다.",
+            "causal": "주 리졸버 응답 없음 → 이름 해석 실패 → 작업이 저장소에 접속 못 함(IP 경로는 정상).",
+            "alternatives": "국제 경로 단절은 IP 테스트가 정상이라 배제, 서비스 재시작 문제는 재시작 기록이 없어 배제."
+          }
+        }
+      ],
+      "resolved": 2,
+      "practice": null,
+      "linux": {
+        "version": 1,
+        "role": "신입 관제 담당",
+        "rank": "신입",
+        "graduated": false,
+        "practice": false,
+        "observations": 19,
+        "commands": 4,
+        "interpreted": 5,
+        "misinterpretations": 0,
+        "help": 0
+      }
+    },
+    {
+      "shift": 2,
+      "title": "Linux 근무 2 · 저장장치의 두 얼굴",
+      "cleared": true,
+      "rows": [
+        {
+          "rid": 3,
+          "template": "tyo-tsukiji-vision",
+          "client": "Tsukiji Cold-chain Vision",
+          "industry": "물류 영상 분석",
+          "site": "JP-TYO",
+          "city": "도쿄",
+          "country": "일본",
+          "job": "영상·이미지 분석",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 13:10",
+          "started": "D1 13:10",
+          "completed": "D1 14:10",
+          "due": "D1 16:30",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        },
+        {
+          "rid": 4,
+          "template": "bom-marine-batch",
+          "client": "Marine Drive Studios",
+          "industry": "게임·미디어 제작",
+          "site": "IN-BOM",
+          "city": "뭄바이",
+          "country": "인도",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 16:00",
+          "started": "D1 16:00",
+          "completed": "D1 17:10",
+          "due": "D1 19:40",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        }
+      ],
+      "counts": {
+        "in_progress": 0,
+        "on_time": 2,
+        "late": 0,
+        "failed": 0,
+        "rejected": 0,
+        "expired": 0
+      },
+      "success": 2,
+      "total": 2,
+      "goal": {
+        "minResolved": 2,
+        "minSuccess": 2,
+        "maxExpired": 0,
+        "notifyBeforeRecovery": false
+      },
+      "average": 100,
+      "finished": "D1 17:10",
+      "started": "D1 13:10",
+      "feedback": [
+        "INC-L21 스토리지 I/O 지연 증가 (도쿄 요청 #3): 해결 · 해결 조치 대체 스토리지 경로로 전환",
+        "INC-L22 스토리지 공간 소진 (뭄바이 요청 #4): 해결 · 해결 조치 게임 내부 임시 파일 정리",
+        "근무 목표 달성",
+        "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+      ],
+      "incidents": [
+        {
+          "id": "INC-L21",
+          "rid": 3,
+          "type": "storage_latency",
+          "label": "스토리지 I/O 지연 증가",
+          "domain": "storage",
+          "client": "Tsukiji Cold-chain Vision",
+          "city": "도쿄",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 13:30",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 4,
+          "probes": [
+            "storage_latency",
+            "storage_space"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "대체 스토리지 경로로 전환",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 0,
+          "slowMinutes": 10,
+          "postmortem": {
+            "field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.",
+            "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.",
+            "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."
+          }
+        },
+        {
+          "id": "INC-L22",
+          "rid": 4,
+          "type": "storage_full",
+          "label": "스토리지 공간 소진",
+          "domain": "storage",
+          "client": "Marine Drive Studios",
+          "city": "뭄바이",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 16:20",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 4,
+          "probes": [
+            "job_log",
+            "storage_space"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "게임 내부 임시 파일 정리",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 10,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.",
+            "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.",
+            "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+          }
+        }
+      ],
+      "resolved": 2,
+      "practice": null,
+      "linux": {
+        "version": 1,
+        "role": "주니어 운영 담당",
+        "rank": "주니어",
+        "graduated": false,
+        "practice": false,
+        "observations": 8,
+        "commands": 3,
+        "interpreted": 4,
+        "misinterpretations": 0,
+        "help": 0
+      }
+    },
+    {
+      "shift": 3,
+      "title": "Linux 근무 3 · GPU와 작업 프로세스",
+      "cleared": true,
+      "rows": [
+        {
+          "rid": 5,
+          "template": "par-seine-finetune",
+          "client": "Atelier Seine Génératif",
+          "industry": "생성형 AI 미디어",
+          "site": "FR-PAR",
+          "city": "파리",
+          "country": "프랑스",
+          "job": "파인튜닝",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 17:10",
+          "started": "D1 17:10",
+          "completed": "D1 18:30",
+          "due": "D1 20:00",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        },
+        {
+          "rid": 6,
+          "template": "pus-harborline-async",
+          "client": "하버라인 물류 AI",
+          "industry": "물류 분석",
+          "site": "KR-PUS",
+          "city": "부산",
+          "country": "대한민국",
+          "job": "비동기 대량 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 20:00",
+          "started": "D1 20:00",
+          "completed": "D1 20:50",
+          "due": "D2 00:00",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        }
+      ],
+      "counts": {
+        "in_progress": 0,
+        "on_time": 2,
+        "late": 0,
+        "failed": 0,
+        "rejected": 0,
+        "expired": 0
+      },
+      "success": 2,
+      "total": 2,
+      "goal": {
+        "minResolved": 2,
+        "minSuccess": 2,
+        "maxExpired": 0,
+        "notifyBeforeRecovery": false
+      },
+      "average": 100,
+      "finished": "D1 20:50",
+      "started": "D1 17:10",
+      "feedback": [
+        "INC-L31 GPU 메모리 부족(CUDA OOM) (파리 요청 #5): 해결 · 해결 조치 배치 크기 축소(고객 동의 조건)",
+        "INC-L32 GPU 장치 오류(Xid/ECC) (부산 요청 #6): 해결 · 해결 조치 의심 GPU 서버 격리 후 작업 이전",
+        "근무 목표 달성",
+        "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+      ],
+      "incidents": [
+        {
+          "id": "INC-L31",
+          "rid": 5,
+          "type": "gpu_oom",
+          "label": "GPU 메모리 부족(CUDA OOM)",
+          "domain": "gpu",
+          "client": "Atelier Seine Génératif",
+          "city": "파리",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 17:40",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 6,
+          "probes": [
+            "dcgm",
+            "job_log",
+            "service_events"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "배치 크기 축소(고객 동의 조건)",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 10,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 고객에게 배치·모델 설정 변경 이력을 확인하고, 필요한 메모리를 미리 검토하는 절차를 제안했을 것입니다.",
+            "causal": "배치 설정 증가 → GPU 메모리 부족(OOM) → 같은 단계에서 반복 종료(장치는 정상).",
+            "alternatives": "GPU 장치 오류는 DCGM PASS라 배제, 배포 오류는 로그가 OOM이라 배제."
+          }
+        },
+        {
+          "id": "INC-L32",
+          "rid": 6,
+          "type": "gpu_health",
+          "label": "GPU 장치 오류(Xid/ECC)",
+          "domain": "gpu",
+          "client": "하버라인 물류 AI",
+          "city": "부산",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 20:20",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 4,
+          "probes": [
+            "dcgm",
+            "job_log"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "의심 GPU 서버 격리 후 작업 이전",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 0,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 장비 담당에 RMA·진단 로그를 넘기고, 같은 서버의 다른 GPU와 최근 펌웨어 변경을 더 확인했을 것입니다.",
+            "causal": "GPU 장치 오류(Xid) → 작업 프로세스 종료 → 같은 서버 재시작도 실패.",
+            "alternatives": "메모리 부족(OOM)은 로그에 OOM이 없어 배제, 배포 문제는 배포 변경이 없어 배제."
+          }
+        }
+      ],
+      "resolved": 2,
+      "practice": null,
+      "linux": {
+        "version": 1,
+        "role": "GPU 운영 담당",
+        "rank": "주니어",
+        "graduated": false,
+        "practice": false,
+        "observations": 11,
+        "commands": 4,
+        "interpreted": 5,
+        "misinterpretations": 0,
+        "help": 0
+      }
+    },
+    {
+      "shift": 4,
+      "title": "Linux 근무 4 · 현장과 관제의 분업",
+      "cleared": true,
+      "rows": [
+        {
+          "rid": 7,
+          "template": "sgn-mekong-batch",
+          "client": "Mekong Pixel Forge",
+          "industry": "게임 제작",
+          "site": "VN-SGN",
+          "city": "호찌민",
+          "country": "베트남",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 20:50",
+          "started": "D1 20:50",
+          "completed": "D1 22:20",
+          "due": "D2 00:30",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        },
+        {
+          "rid": 8,
+          "template": "nyc-empire-vision",
+          "client": "Empire Frame Media",
+          "industry": "미디어 제작",
+          "site": "US-NYC",
+          "city": "뉴욕",
+          "country": "미국",
+          "job": "영상·이미지 분석",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D1 23:40",
+          "started": "D1 23:40",
+          "completed": "D2 01:00",
+          "due": "D2 03:00",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        }
+      ],
+      "counts": {
+        "in_progress": 0,
+        "on_time": 2,
+        "late": 0,
+        "failed": 0,
+        "rejected": 0,
+        "expired": 0
+      },
+      "success": 2,
+      "total": 2,
+      "goal": {
+        "minResolved": 2,
+        "minSuccess": 2,
+        "maxExpired": 0,
+        "notifyBeforeRecovery": false
+      },
+      "average": 100,
+      "finished": "D2 01:00",
+      "started": "D1 20:50",
+      "feedback": [
+        "INC-L41 UPS 입력 이상·배터리 운전 (호찌민 요청 #7): 해결 · 해결 조치 시설·전원팀 호출",
+        "INC-L42 냉각 펌프 성능 저하 (뉴욕 요청 #8): 해결 · 해결 조치 예비 냉각 펌프 가동 요청",
+        "근무 목표 달성",
+        "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+      ],
+      "incidents": [
+        {
+          "id": "INC-L41",
+          "rid": 7,
+          "type": "ups",
+          "label": "UPS 입력 이상·배터리 운전",
+          "domain": "facility",
+          "client": "Mekong Pixel Forge",
+          "city": "호찌민",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D1 21:10",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 30,
+          "evidence": 4,
+          "probes": [
+            "job_log",
+            "ups"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "시설·전원팀 호출",
+          "mitigations": [
+            "작업 계획 중단(안전 정지)"
+          ],
+          "notifiedBeforeRecovery": true,
+          "downtime": 30,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 전원팀과 함께 계획 중단 범위를 고객에게 미리 알리고, 배터리 교체 주기와 입력 계통 이중화를 더 확인했을 것입니다.",
+            "causal": "UPS-02 입력 이상 → 배터리 운전 → 보호 시간 안에 이관/계획 중단이 필요.",
+            "alternatives": "냉각 문제는 냉각 지표가 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+          }
+        },
+        {
+          "id": "INC-L42",
+          "rid": 8,
+          "type": "cooling",
+          "label": "냉각 펌프 성능 저하",
+          "domain": "facility",
+          "client": "Empire Frame Media",
+          "city": "뉴욕",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D2 00:00",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 30,
+          "evidence": 6,
+          "probes": [
+            "cooling",
+            "dcgm",
+            "job_log"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "예비 냉각 펌프 가동 요청",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 0,
+          "slowMinutes": 30,
+          "postmortem": {
+            "field": "실제 현장이라면 시설팀에 펌프 점검·교체 일정을 요청하고, 같은 구역의 다른 랙 온도와 경보 기준을 더 확인했을 것입니다.",
+            "causal": "펌프 P-2 성능 저하 → 냉각수 유량 감소 → 흡입 온도 상승 → GPU 열 보호 클럭 제한 → 작업 지연.",
+            "alternatives": "GPU 장치 오류는 DCGM에 장치 오류가 없어 배제, 회선 혼잡은 이용률 정상이라 배제."
+          }
+        }
+      ],
+      "resolved": 2,
+      "practice": null,
+      "linux": {
+        "version": 1,
+        "role": "교대 조정 담당",
+        "rank": "운영 엔지니어",
+        "graduated": false,
+        "practice": false,
+        "observations": 8,
+        "commands": 3,
+        "interpreted": 4,
+        "misinterpretations": 0,
+        "help": 0
+      }
+    },
+    {
+      "shift": 5,
+      "title": "Linux 근무 5 · 독립 대응 평가",
+      "cleared": true,
+      "rows": [
+        {
+          "rid": 9,
+          "template": "bom-marine-batch",
+          "client": "Marine Drive Studios",
+          "industry": "게임·미디어 제작",
+          "site": "IN-BOM",
+          "city": "뭄바이",
+          "country": "인도",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D2 01:00",
+          "started": "D2 01:00",
+          "completed": "D2 02:20",
+          "due": "D2 04:40",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        },
+        {
+          "rid": 10,
+          "template": "sfo-bayfog-video",
+          "client": "Bayfog Motion Studio",
+          "industry": "게임·미디어 제작",
+          "site": "US-SFO",
+          "city": "샌프란시스코",
+          "country": "미국",
+          "job": "배치 추론",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D2 01:00",
+          "started": "D2 01:00",
+          "completed": "D2 02:10",
+          "due": "D2 05:00",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        },
+        {
+          "rid": 11,
+          "template": "sin-merbau-research",
+          "client": "Merbau Climate Research",
+          "industry": "연구기관",
+          "site": "SG-SIN",
+          "city": "싱가포르",
+          "country": "싱가포르",
+          "job": "GPU 연구 배치",
+          "outcome": "on_time",
+          "label": "정상 완료 · 기한 준수",
+          "score": 100,
+          "mode": "고성능 모드",
+          "consent": "원래 요청 조건",
+          "proposal": null,
+          "received": "D2 02:20",
+          "started": "D2 02:20",
+          "completed": "D2 03:40",
+          "due": "D2 05:40",
+          "waited": 0,
+          "late": 0,
+          "reason": null
+        }
+      ],
+      "counts": {
+        "in_progress": 0,
+        "on_time": 3,
+        "late": 0,
+        "failed": 0,
+        "rejected": 0,
+        "expired": 0
+      },
+      "success": 3,
+      "total": 3,
+      "goal": {
+        "minResolved": 3,
+        "minSuccess": 3,
+        "maxExpired": 0,
+        "notifyBeforeRecovery": false
+      },
+      "average": 100,
+      "finished": "D2 03:40",
+      "started": "D2 01:00",
+      "feedback": [
+        "INC-L51 서비스 반복 재시작(CrashLoop) (뭄바이 요청 #9): 해결 · 해결 조치 직전 배포 롤백",
+        "INC-L52 회선 혼잡·패킷 손실 (샌프란시스코 요청 #10): 해결 · 해결 조치 트래픽 우선순위(QoS)·대역 예약 조정",
+        "INC-L53 스토리지 I/O 지연 증가 (싱가포르 요청 #11): 해결 · 해결 조치 대체 스토리지 경로로 전환",
+        "근무 목표 달성",
+        "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+      ],
+      "incidents": [
+        {
+          "id": "INC-L51",
+          "rid": 9,
+          "type": "crashloop",
+          "label": "서비스 반복 재시작(CrashLoop)",
+          "domain": "platform",
+          "client": "Marine Drive Studios",
+          "city": "뭄바이",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D2 01:20",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 20,
+          "evidence": 9,
+          "probes": [
+            "dns",
+            "job_log",
+            "link_stats",
+            "ping",
+            "service_events",
+            "storage_latency",
+            "storage_space"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "직전 배포 롤백",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 20,
+          "slowMinutes": 0,
+          "postmortem": {
+            "field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.",
+            "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).",
+            "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."
+          }
+        },
+        {
+          "id": "INC-L52",
+          "rid": 10,
+          "type": "congestion",
+          "label": "회선 혼잡·패킷 손실",
+          "domain": "network",
+          "client": "Bayfog Motion Studio",
+          "city": "샌프란시스코",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D2 01:20",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 9,
+          "probes": [
+            "dns",
+            "job_log",
+            "link_stats",
+            "ping",
+            "service_events",
+            "storage_latency",
+            "storage_space"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "트래픽 우선순위(QoS)·대역 예약 조정",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 0,
+          "slowMinutes": 10,
+          "postmortem": {
+            "field": "실제 현장이라면 네트워크 담당에 대역 증설을 요청하고, 혼잡을 만든 다른 트래픽(백업·복제 일정)을 더 확인했을 것입니다.",
+            "causal": "엣지 링크 이용률 한계 → 큐 드롭·RTT 증가 → 작업 데이터 전송 지연.",
+            "alternatives": "링크 단절은 LINK UP이라 배제, 스토리지 지연은 볼륨 지연이 정상이라 배제."
+          }
+        },
+        {
+          "id": "INC-L53",
+          "rid": 11,
+          "type": "storage_latency",
+          "label": "스토리지 I/O 지연 증가",
+          "domain": "storage",
+          "client": "Merbau Climate Research",
+          "city": "싱가포르",
+          "outcome": "resolved",
+          "reason": "",
+          "detected": "D2 02:40",
+          "diagnosedAfter": 0,
+          "recoveredAfter": 10,
+          "evidence": 9,
+          "probes": [
+            "dns",
+            "job_log",
+            "link_stats",
+            "ping",
+            "service_events",
+            "storage_latency",
+            "storage_space"
+          ],
+          "wrongHypotheses": [],
+          "wrongActions": [],
+          "noEffect": [],
+          "refused": [],
+          "notices": 1,
+          "fix": "대체 스토리지 경로로 전환",
+          "mitigations": [],
+          "notifiedBeforeRecovery": true,
+          "downtime": 0,
+          "slowMinutes": 10,
+          "postmortem": {
+            "field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.",
+            "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.",
+            "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."
+          }
+        }
+      ],
+      "resolved": 3,
+      "practice": null,
+      "linux": {
+        "version": 1,
+        "role": "독립 관제 엔지니어 평가",
+        "rank": "독립 관제 엔지니어",
+        "graduated": true,
+        "practice": false,
+        "observations": 45,
+        "commands": 7,
+        "interpreted": 3,
+        "misinterpretations": 0,
+        "help": 0
+      }
+    }
+  ],
+  "truth": [
+    {
+      "shift": 1,
+      "save": "aidc_3d_linux_001",
+      "types": [
+        "tor_uplink",
+        "dns"
+      ],
+      "states": [
+        "closed",
+        "closed"
+      ],
+      "observations": 19
+    },
+    {
+      "shift": 2,
+      "save": "aidc_3d_linux_001",
+      "types": [
+        "storage_latency",
+        "storage_full"
+      ],
+      "states": [
+        "closed",
+        "closed"
+      ],
+      "observations": 27
+    },
+    {
+      "shift": 3,
+      "save": "aidc_3d_linux_001",
+      "types": [
+        "gpu_oom",
+        "gpu_health"
+      ],
+      "states": [
+        "closed",
+        "closed"
+      ],
+      "observations": 38
+    },
+    {
+      "shift": 4,
+      "save": "aidc_3d_linux_001",
+      "types": [
+        "ups",
+        "cooling"
+      ],
+      "states": [
+        "closed",
+        "closed"
+      ],
+      "observations": 46
+    },
+    {
+      "shift": 5,
+      "save": "aidc_3d_linux_001",
+      "types": [
+        "crashloop",
+        "congestion",
+        "storage_latency"
+      ],
+      "states": [
+        "closed",
+        "closed",
+        "closed"
+      ],
+      "observations": 91
+    }
+  ],
+  "resumes": [
+    {
+      "label": "learning before diagnosis",
+      "id": "aidc_3d_linux_001",
+      "minute": 570
+    },
+    {
+      "label": "facility recovery timer",
+      "id": "aidc_3d_linux_001",
+      "minute": 1450
+    },
+    {
+      "label": "graduation",
+      "id": "aidc_3d_linux_001",
+      "minute": 1660
+    }
+  ],
+  "layouts": [
+    {
+      "width": 1366,
+      "height": 768,
+      "dpr": 1,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 192.6875,
+          "y": 520.25,
+          "w": 600.3125,
+          "h": 31,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 799,
+          "y": 519.25,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 163,
+          "y": 607,
+          "w": 109.40625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 511,
+          "y": 306,
+          "w": 342,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 163,
+          "y": 379,
+          "w": 690,
+          "h": 79.25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 240.578125,
+          "y": 267,
+          "w": 60.578125,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 254.6875,
+          "y": 789.25,
+          "w": 1000.3125,
+          "h": 31,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 1261,
+          "y": 788.25,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 225,
+          "y": 876,
+          "w": 109.40625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 773,
+          "y": 365,
+          "w": 542,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 225,
+          "y": 438,
+          "w": 1090,
+          "h": 289.25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 310.390625,
+          "y": 318,
+          "w": 69.390625,
+          "h": 36,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "dpr": 1.5,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 192.6875,
+          "y": 485,
+          "w": 514.3125,
+          "h": 31,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 713,
+          "y": 484,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 163,
+          "y": 571.75,
+          "w": 109.40625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 468,
+          "y": 306,
+          "w": 299,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 163,
+          "y": 379,
+          "w": 604,
+          "h": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 240.578125,
+          "y": 267,
+          "w": 60.578125,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 911,
+      "height": 512,
+      "dpr": 1.5,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 15,
+          "y": 404.5,
+          "w": 531,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 552,
+          "y": 400.5,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 15,
+          "y": 479,
+          "w": 105.40625,
+          "h": 23,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 313.5,
+          "y": 153,
+          "w": 292.5,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 15,
+          "y": 224,
+          "w": 591,
+          "h": 120.5,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 84.765625,
+          "y": 121,
+          "w": 53.765625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "dpr": 1,
+      "emulation": true,
+      "expanded": {
+        "collapsedTerminal": 79,
+        "expandedTerminal": 225,
+        "boxes": [
+          {
+            "selector": "[data-linux-input]",
+            "x": 48.6875,
+            "y": 522.25,
+            "w": 888.3125,
+            "h": 31,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-run]",
+            "x": 943,
+            "y": 521.25,
+            "w": 54,
+            "h": 33,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-back]",
+            "x": 19,
+            "y": 609,
+            "w": 109.40625,
+            "h": 25,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-node]",
+            "x": 511,
+            "y": 152,
+            "w": 486,
+            "h": 30,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-incident]",
+            "x": 19,
+            "y": 152,
+            "w": 486,
+            "h": 30,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-output]",
+            "x": 19,
+            "y": 235,
+            "w": 978,
+            "h": 225.25,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-expand]",
+            "x": 895.796875,
+            "y": 206,
+            "w": 101.203125,
+            "h": 23,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-ws-tab=incident]",
+            "x": 96.578125,
+            "y": 113,
+            "w": 60.578125,
+            "h": 30,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": ".linux-incident-summary",
+            "x": 19,
+            "y": 210,
+            "w": 870.796875,
+            "h": 15,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "#goal-title",
+            "x": 1035,
+            "y": 131,
+            "w": 313,
+            "h": 26,
+            "visible": true,
+            "hit": true
+          }
+        ]
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1,
+      "emulation": true,
+      "expanded": {
+        "collapsedTerminal": 289,
+        "expandedTerminal": 465,
+        "boxes": [
+          {
+            "selector": "[data-linux-input]",
+            "x": 50.6875,
+            "y": 797.25,
+            "w": 1408.3125,
+            "h": 31,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-run]",
+            "x": 1465,
+            "y": 796.25,
+            "w": 54,
+            "h": 33,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-back]",
+            "x": 21,
+            "y": 884,
+            "w": 109.40625,
+            "h": 25,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-node]",
+            "x": 773,
+            "y": 187,
+            "w": 746,
+            "h": 30,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-incident]",
+            "x": 21,
+            "y": 187,
+            "w": 746,
+            "h": 30,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-output]",
+            "x": 21,
+            "y": 270,
+            "w": 1498,
+            "h": 465.25,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-linux-expand]",
+            "x": 1417.796875,
+            "y": 241,
+            "w": 101.203125,
+            "h": 23,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "[data-ws-tab=incident]",
+            "x": 106.390625,
+            "y": 140,
+            "w": 69.390625,
+            "h": 36,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": ".linux-incident-summary",
+            "x": 21,
+            "y": 245,
+            "w": 1390.796875,
+            "h": 15,
+            "visible": true,
+            "hit": true
+          },
+          {
+            "selector": "#goal-title",
+            "x": 1563,
+            "y": 167,
+            "w": 335,
+            "h": 28,
+            "visible": true,
+            "hit": true
+          }
+        ]
+      }
+    }
+  ],
+  "performance": [],
+  "screenshots": [
+    "p8-menu.png",
+    "p8-learning-choice.png",
+    "p8-shift-1-clear.png",
+    "p8-shift-2-clear.png",
+    "p8-shift-3-clear.png",
+    "p8-cooling-recovery.png",
+    "p8-shift-4-clear.png",
+    "p8-shift-5-clear.png",
+    "p8-keyboard.png",
+    "p8-layout-1366x768-1.png",
+    "p8-layout-1920x1080-1.png",
+    "p8-layout-1280x720-1.5.png",
+    "p8-layout-911x512-1.5.png",
+    "p8-expanded-1366x768-1.png",
+    "p8-expanded-1920x1080-1.png",
+    "p8-expanded-1280x720-1.5.png",
+    "FAIL-8.png"
+  ],
+  "startedAt": "2026-11-26T09:33:43.312Z",
+  "url": "http://127.0.0.1:5208/",
+  "browserVersion": "158.0.8127.38",
+  "failure": "AssertionError [ERR_ASSERTION]: emulated device pixel ratio\n\n1 !== 1.5\n\n    at emulate (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:167:137)\n    at async expandLayout (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:183:59)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:228:68\n    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:21:91)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:227:3",
+  "finishedAt": "2026-11-26T09:42:15.643Z",
+  "summary": {
+    "pass": 8,
+    "total": 9
+  }
+}

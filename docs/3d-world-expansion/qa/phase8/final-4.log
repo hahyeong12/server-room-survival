@@ -1,0 +1,7 @@
+PASS menu separates regular Linux training and ten ungraded incident practices
+PASS prerequisite Chapter1 to Chapter5 graduation through real 3D UI, no seed
+PASS five finite shifts: choice to assembly to typing and independent diagnosis, all ten causes
+PASS promotion survives engine process restart and resume
+PASS keyboard typing, errors, Enter, history, max length and clipboard in terminal
+FAIL real click targets at 1366x768, 1920x1080 and 150 percent emulation: [{"selector":"[data-linux-input]","x":192.6875,"y":500,"w":514.3125,"h":31,"visible":true,"hit":true},{"selector":"[data-linux-run]","x":713,"y":499,"w":54,"h":33,"visible":true,"hit":true},{"selector":"[data-linux-back]","x":163,"y":586.75,"w":109.40625,"h":25,"visible":true,"hit":false},{"selector":"[data-linux-node]","x":468,"y":306,"w":299,"h":30,"visible":true,"hit":true},{"selector":"[data-linux-output]","x":163,"y":379,"w":604,"h":44,"visible":true,"hit":true},{"selector":"[data-ws-tab=incident]","x":240.578125,"y":267,"w":60.578125,"h":30,"visible":true,"hit":true}]
+Phase8 QA 5/6

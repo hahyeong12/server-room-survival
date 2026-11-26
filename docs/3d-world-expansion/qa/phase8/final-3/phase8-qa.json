@@ -1,0 +1,44 @@
+{
+  "issue": 9,
+  "mode": "real Chrome mouse/select/typing; no seed/no API progression; OS temporary saves",
+  "developmentOnly": false,
+  "checks": [
+    {
+      "name": "menu separates regular Linux training and ten ungraded incident practices",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "name": "prerequisite Chapter1 to Chapter5 graduation through real 3D UI, no seed",
+      "pass": true,
+      "ms": 148886
+    },
+    {
+      "name": "five finite shifts: choice to assembly to typing and independent diagnosis, all ten causes",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: ip_link meaning on UI\n    at command (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:50:175)\n    at async evidence (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:73:77)\n    at async handle (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:98:19)\n    at async shift (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:139:122)\n    at async file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:199:180\n    at async check (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:21:91)\n    at async file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:199:5"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [],
+  "actions": [],
+  "shifts": [],
+  "truth": [],
+  "resumes": [],
+  "layouts": [],
+  "performance": [],
+  "screenshots": [
+    "p8-menu.png",
+    "FAIL-2.png"
+  ],
+  "startedAt": "2026-11-26T08:29:53.028Z",
+  "url": "http://127.0.0.1:5208/",
+  "browserVersion": "158.0.8127.38",
+  "failure": "AssertionError [ERR_ASSERTION]: ip_link meaning on UI\n    at command (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:50:175)\n    at async evidence (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:73:77)\n    at async handle (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:98:19)\n    at async shift (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:139:122)\n    at async file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:199:180\n    at async check (file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:21:91)\n    at async file:///c:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase8-qa.mjs:199:5",
+  "finishedAt": "2026-11-26T08:32:36.665Z",
+  "summary": {
+    "pass": 2,
+    "total": 3
+  }
+}

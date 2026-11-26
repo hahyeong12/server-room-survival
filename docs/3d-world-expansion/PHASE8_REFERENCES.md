@@ -4,13 +4,13 @@
 
 | 채택한 구문 | 공식 출처 | 게임에서의 관측 및 한계 |
 | --- | --- | --- |
-| `ping -c N IP` | [iputils ping 원문](https://github.com/iputils/iputils/blob/master/doc/ping.xml) | 제한된 ICMP 표본. IP 대상은 storage와 Server A~D로 제한. 응답 성공은 DNS/HTTP 정상 증거가 아님. 사건의 장기 손실 추세와 짧은 표본을 구별. |
-| `ip addr`, `ip route`, `ip link show` | [iproute2 ip(8)](https://man7.org/linux/man-pages/man8/ip.8.html) | 선택 노드의 주소/다음 홉/링크는 다른 조회. addr/route는 worker·NOC 설정, link는 가상 네트워크 Linux 노드의 업링크 조회. 서버 NIC와 ToR 업링크를 혼동하지 않음. 변경 subcommand는 거절. |
+| `ping -c N IP` | [iputils ping 원문](https://github.com/iputils/iputils/blob/master/doc/ping.xml), [ping(8)](https://man7.org/linux/man-pages/man8/ping.8.html) | 제한된 ICMP 표본. IP 대상은 storage와 Server A~D로 제한. **종료 코드(2026-11-26 재확인):** 응답이 하나도 없으면 1, `-c`만 쓰고 일부만 손실되면 0("Otherwise it exits with code 0"), 기타 오류 2. 통계 줄(transmitted/received/loss)은 노드·대상별 한 경로 모델에서 계산해 traceroute와 모순되지 않음. 영향 범위 밖 IP는 모든 원인에서 같은 문구로 "증거 아님"을 알림. 응답 성공은 DNS/HTTP 정상 증거가 아님. |
+| `ip addr`, `ip route`, `ip link show` | [iproute2 ip(8)](https://man7.org/linux/man-pages/man8/ip.8.html), [ip-link(8)](https://man7.org/linux/man-pages/man8/ip-link.8.html) | 선택 노드의 주소/다음 홉/링크는 다른 조회. 네트워크 노드는 **가상 Linux 기반 스위치**(관리 포트 eth0 + ToR-A~D 업링크 포트 swp1~4, 포트 별칭 표시)로 모델링해 "스위치 업링크 하나가 끊겨도 노드 자신의 관리 링크와 통신은 정상"을 구분. 끊긴 포트는 관리상 UP 플래그를 유지한 채 `NO-CARRIER ... state DOWN`으로 표시. **ip-link(8) man 페이지는 출력 플래그 형식을 문서화하지 않음**(본문에 NO-CARRIER/LOWER_UP 설명 없음) — 이 표기는 커널 링크 플래그(IFF_UP/IFF_LOWER_UP) 관례에 따른 교육용 재현이며 공식 man 페이지로 검증한 출력 형식이 아님. 변경 subcommand는 거절. |
 | `ss -tuln` | [ss(8)](https://man7.org/linux/man-pages/man8/ss.8.html) | TCP/UDP 수신 소켓과 숫자 주소. LISTEN은 종단 서비스 성공 보장이 아님. 가상 노드 프록시가 8080에서 수신. |
 | `getent hosts NAME` | [getent(1)](https://man7.org/linux/man-pages/man1/getent.1.html) | NSS의 hosts 조회. 게임은 지정 이름 1개, 실패 종료 2. 실제 NSS의 모든 backend는 재현하지 않음. |
 | `dig NAME` | [BIND dig 매뉴얼](https://bind9.readthedocs.io/en/latest/manpages.html#dig-dns-lookup-utility) | DNS 응답 코드. SERVFAIL 응답을 받는 경우 종료 0이어도 조회 내용은 실패. 실제 패킷을 보내지 않음. |
 | `resolvectl status` | [systemd resolvectl](https://www.freedesktop.org/software/systemd/man/latest/resolvectl.html) | systemd-resolved를 쓰는 가상 배포판의 설정. 등록된 리졸버와 실제 응답은 별개. |
-| `ethtool eth0` | [ethtool(8)](https://man7.org/linux/man-pages/man8/ethtool.8.html) | 네트워크 노드의 지정 인터페이스 링크 조회만 허용. NIC 설정/활성 시험 없음. |
+| `ethtool PORT` (swp1~4, eth0) | [ethtool(8)](https://man7.org/linux/man-pages/man8/ethtool.8.html) | 가상 스위치 노드에서 지정 포트 하나의 Link detected 조회. 포트 하나는 그 포트의 범위만 말함(`ip link show`가 전체 포트). NIC 설정 변경(`-s`, `-K`, `-G` 등)·활성 시험은 변경 명령으로 거절. |
 | `curl -I URL` | [curl 공식 매뉴얼](https://curl.se/docs/manpage.html) | 고정 storage/worker health URL 헤더. 이름 실패 6, 연결 실패 7, HTTP 503은 `--fail` 없이 종료 0. HTTP 헤더는 작업 로그가 아니므로 로그 근거로 저장하지 않음. |
 | `traceroute IP` | [traceroute(8)](https://man7.org/linux/man-pages/man8/traceroute.8.html) | 노드별 다음 홉과 가상 RTT 표본. 별표만으로 해당 라우터 고장을 확정하지 않음. 실제 전체 망·홉 수를 재현하지 않음. |
 | `systemctl status worker.service` | [systemctl](https://www.freedesktop.org/software/systemd/man/latest/systemctl.html) | 가상 systemd 서비스. failed이면 종료 3, active와 작업의 정상 진행은 별개. restart 거절. |
@@ -18,7 +18,7 @@
 | `ps aux` | [procps ps(1)](https://man7.org/linux/man-pages/man1/ps.1.html) | 프로세스 표본. D(대기)/S/R 및 실제 작업 진행률을 함께 표시. kill 없음. |
 | `free -h` | [procps free(1)](https://man7.org/linux/man-pages/man1/free.1.html) | 호스트 RAM만 표시. CUDA OOM과 호스트 RAM 부족을 동일시하지 않음. |
 | `top -b -n 1` | [procps top(1)](https://man7.org/linux/man-pages/man1/top.1.html) | batch 1회 표본, CPU와 I/O wait. 실제 인터랙티브 top은 미구현. |
-| `nvidia-smi`, `nvidia-smi -q` | [NVIDIA SMI](https://docs.nvidia.com/deploy/nvidia-smi/index.html) | 기본 사용량·온도와 상세 장치 상태/ECC를 구분. VRAM은 가상 40GiB 장치이며 기존 GPU 슬롯 단위와 다름. Xid 79를 ECC 오류로 바꾸지 않음. |
+| `nvidia-smi`, `nvidia-smi -q` | [NVIDIA SMI](https://docs.nvidia.com/deploy/nvidia-smi/index.html) | 기본 사용량·온도와 상세 장치 상태/ECC·Clocks Event Reasons를 구분. GPU-Util은 실제 작업 상태(정지/저하/실행)를 따름. 장치 응답 없음(Xid 79) 서버에서는 종료 코드 **15** — 공식 RETURN VALUE: "The GPU has fallen off the bus or has otherwise become inaccessible"(2026-11-26 확인). 함께 표시하는 "GPU is lost" 문장은 현장에서 흔히 보이는 드라이버 메시지 형식을 본뜬 것으로, **공식 문서 본문에서 확인한 문구가 아님**. 정상 서버의 출력은 어떤 사건이든 같음. `-r`/`-pm`/`-pl` 등 설정 변경은 거절. VRAM은 가상 40GiB 장치. |
 | `dcgmi health --check` | [DCGM passive health](https://docs.nvidia.com/datacenter/dcgm/latest/learn/modules/health-monitoring.html), [dcgmi health](https://docs.nvidia.com/datacenter/dcgm/latest/reference/command-line-reference/dcgmi/dcgmi-health.html) | **Issue 후보 `--fetch`는 감시 설정을 조회하므로 건강 판정에 채택하지 않음.** `--check`는 사전 설정된 watch의 보관 표본을 평가하는 수동 조회. `health --set/--clear`, `dcgmi diag` 활성 부하 시험은 미지원. 정상 결과는 감시 범위 내 결과일 뿐 전체 장치 보증이 아님. |
 | `df -h`, `df -i` | [GNU df](https://www.gnu.org/software/coreutils/manual/html_node/df-invocation.html) | 블록 용량과 inode 수를 별도 출력. GNU 본문 open은 timeout이었지만 같은 공식 페이지의 검색 결과에서 -h/-i 의미를 확인. 용량 소진은 I/O 지연과 별개. |
 | `du -sh /data/work` | [GNU du](https://www.gnu.org/software/coreutils/manual/html_node/du-invocation.html), [GNU 공식 매뉴얼](https://www.gnu.org/s/coreutils/manual/coreutils.pdf) | 허용 경로 합계만 조회. df와 범위가 다르므로 값이 항상 같지 않음. 실제 파일 순회·삭제·경로 탈출 없음. |
@@ -26,6 +26,10 @@
 | `iostat -xz` | [sysstat 원문](https://github.com/sysstat/sysstat/blob/master/man/iostat.in) | 확장 장치 지표·유휴 장치 제외. 게임은 가상 누적 표본 1개와 사건 판독의 지연 추세를 보여 줌. 실제 interval sampling·특정 SSD 병목 판정은 구현하지 않음. |
 | `kubectl get pods -n aidc`, `kubectl describe pod worker-0 -n aidc` | [Kubernetes Pod 디버깅](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/) | Pod 상태/재시작과 상세 종료 이유/이벤트는 보완적 관측. CrashLoopBackOff는 증상이며 근본 원인은 로그에서 확인. 클러스터는 배포 환경을 가진 가상 업무에만 존재하며 DNS·용량·혼잡 사건도 그 환경에 생길 수 있어 환경 목록이 정답을 표시하지 않음. |
 | `kubectl logs worker-0 -n aidc --previous` | [kubectl logs](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/) | 직전 종료 컨테이너의 보관 로그. 현재 상태나 복구 후 정상 검증으로 인정하지 않음. 이전 인스턴스가 없으면 BadRequest/종료 1. 실제 Kubernetes API 호출 없음. |
+
+## 증거 범위 규칙 (2026-11-26 독립 리뷰 후 추가)
+
+노드·대상에 따라 결과가 달라지는 관측(ping·traceroute = 이 요청의 스토리지와 모든 작업 서버, GPU 건강 조회 3종 = 모든 작업 서버, ToR 포트 = 작업 서버 랙의 업링크 포트)은 **영향 범위 전체를 비교했을 때만** 엔진 사건 증거로 기록합니다. 이때 엔진이 남기는 요약(예: "A-01 서버 IP 응답 0/3 · 다른 랙은 정상")은 플레이어가 범위 전체에서 실제로 본 출력의 종합과 같습니다. 이 규칙은 숨은 원인과 무관하게 같으며, 일부만 확인한 상태의 안내 문구도 제출한 가설과 관측만으로 정해집니다. 실무의 "영향 범위 비교"를 게임 규칙으로 단순화한 것이며, 실제 운영 절차의 표준 규정은 아닙니다.
 
 ## 의도적인 간소화
 
