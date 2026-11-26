@@ -162,7 +162,9 @@ const visibleHit=sels=>page.evaluate(list=>list.map(s=>{const e=document.querySe
 const termHeight=()=>page.locator('[data-linux-output]').evaluate(e=>e.getBoundingClientRect().height);
 const expandedNow=()=>page.locator('#workstation').evaluate(e=>e.classList.contains('ws-expanded'));
 async function expandLayout(width,height,dpr){
-  await page.setViewportSize({width,height});const cdp=await ctx.newCDPSession(page);await cdp.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:dpr,mobile:false});
+  await page.setViewportSize({width,height});const cdp=await ctx.newCDPSession(page);
+  const emulate=async()=>{await cdp.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:dpr,mobile:false});assert.equal(await page.evaluate(()=>devicePixelRatio),dpr,'emulated device pixel ratio');};
+  await emulate();
   const rec=(await U.G(page)).incident.records[0];await linuxTab(rec.id);await page.waitForTimeout(300);
   if(await expandedNow()){await page.locator('[data-linux-expand]').click();await settle(page,100);}
   const input=page.locator('[data-linux-input]'),small=await termHeight(),n=(await U.G(page)).linux.observations.length;
@@ -177,7 +179,9 @@ async function expandLayout(width,height,dpr){
   await input.press('Enter');await settle(page,150);const g=await U.G(page);assert.equal(g.linux.observations.length,n+1,'command runs in expanded view');assert.equal(g.linux.observations.at(-1).command_id,'ip_route');
   assert.equal(await expandedNow(),true,'stays expanded after a command');assert.equal(await input.evaluate(e=>e===document.activeElement),true,'focus back on input');
   await input.press('ArrowUp');assert.equal(await input.inputValue(),'ip route','history kept');await input.fill('');
-  await shot(`p8-expanded-${width}x${height}-${dpr}.png`);
+  // Capture through the same CDP session: Playwright's page.screenshot resets the emulated device metrics.
+  {const name=`p8-expanded-${width}x${height}-${dpr}.png`,{data}=await cdp.send('Page.captureScreenshot',{format:'png'});await writeFile(join(out,name),Buffer.from(data,'base64'));report.screenshots.push(name);}
+  assert.equal(await page.evaluate(()=>devicePixelRatio),dpr,'ratio kept after the capture');
   await input.pressSequentially('ping -c 1 10.20.0.15',{delay:1});await page.keyboard.press('Escape');await settle(page,100);
   assert.equal(await expandedNow(),false,'Esc returns to normal size');assert.equal(await input.inputValue(),'ping -c 1 10.20.0.15','draft kept after Esc');
   assert.equal((await U.G(page)).linux.observations.length,n+1,'collapse does not run or drop records');assert.ok(await page.locator(`[data-linux-observation="${g.linux.observations.at(-1).seq}"]`).count(),'output kept after collapse');
@@ -186,6 +190,7 @@ async function expandLayout(width,height,dpr){
   assert.ok(await page.locator(`.inc-card, [data-incident-actions="${rec.id}"]`).first().isVisible(),'incident card visible after return');
   await U.tab(page,'linux');assert.equal(await expandedNow(),true,'Linux tab restores the expanded preference');assert.equal(await input.inputValue(),'ping -c 1 10.20.0.15','draft kept across tabs');
   await page.locator('[data-linux-expand]').click();await settle(page,100);assert.equal(await expandedNow(),false);await input.fill('');
+  assert.equal(await page.evaluate(()=>devicePixelRatio),dpr,'ratio kept through Esc/tab/collapse steps');
   report.layouts.push({width,height,dpr:await page.evaluate(()=>devicePixelRatio),emulation:true,expanded:{collapsedTerminal:Math.round(small),expandedTerminal:Math.round(big),boxes}});await cdp.detach();
 }
 try{
