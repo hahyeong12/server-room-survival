@@ -260,3 +260,14 @@ body[data-mode=linux] .ws-pane:not(.linux-pane)>*{flex-shrink:0}
 .linux-interpret{display:grid;grid-template-columns:1fr 1fr;gap:4px;align-items:start}.linux-interpret>small{grid-column:1/-1;font-size:11px}.linux-interpret button{text-align:left;font-size:11px;line-height:1.25;padding:5px 7px}
 .linux-actions{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.linux-actions button{font-size:11px;padding:4px 7px}.linux-glossary{position:relative;font-size:11px}.linux-glossary[open]{position:absolute;z-index:8;left:12px;right:12px;bottom:12px;max-height:70%;overflow:auto;background:#122737;border:1px solid #6b9b9a;padding:12px;box-shadow:0 5px 25px #0009}.linux-glossary summary{cursor:pointer;color:#b0e7dd}.linux-glossary a{color:#99ddff}.linux-promotion{padding:12px;border:1px solid #69c3a8;background:#12372f;color:#c7fff0}
 @media(max-height:600px){.ws-pane.linux-pane{gap:4px;padding:5px 8px}.linux-current small{max-height:30px;overflow:hidden}.linux-terminal{padding:5px;font-size:11px}.linux-dock{gap:3px}.linux-interpret button{padding:3px 5px;font-size:10px}.linux-tool-meaning{display:none}.linux-builder>select{max-width:190px}.linux-builder{gap:3px}.linux-input-row input{padding:4px}.linux-actions button{padding:3px 5px}.linux-input-row .terminal-prompt{display:none}}
+/* Phase8: expanded Linux terminal. The monitor covers the 3D view (not the right panel, which keeps the goal and
+   request); [기본 크기]/Esc or switching tab returns to the normal layout. Higher specificity beats compact rules. */
+.linux-viewbar{display:flex;gap:6px;align-items:center;justify-content:flex-end;min-width:0}
+.linux-viewbar button{font-size:11px;padding:3px 8px;white-space:nowrap;flex-shrink:0}
+.linux-incident-summary{flex:1;min-width:0;font-size:11px;color:#d6e8ef;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.linux-current{position:relative;min-width:0}
+.ws-pane.linux-pane{grid-template-columns:minmax(0,1fr)}
+.linux-current:not(:has(.linux-incident-summary))>.linux-viewbar{position:absolute;right:0;top:0}
+body[data-mode] #workstation.ws-expanded{top:6px!important;bottom:6px!important;width:calc(100% - 12px)!important;max-height:none!important;z-index:5;background:#08131f}
+body[data-mode] #workstation.ws-expanded .ws-titlebar{display:none}
+.linux-expanded .linux-current>small{display:none}

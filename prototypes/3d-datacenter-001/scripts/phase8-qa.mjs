@@ -141,6 +141,39 @@ async function layout(width,height,dpr){await page.setViewportSize({width,height
   const boxes=await page.evaluate(()=>['[data-linux-input]','[data-linux-run]','[data-linux-back]','[data-linux-node]','[data-linux-output]','[data-ws-tab=incident]'].map(s=>{const e=document.querySelector(s),b=e.getBoundingClientRect();const x=b.x+b.width/2,y=b.y+b.height/2;return {selector:s,x:b.x,y:b.y,w:b.width,h:b.height,visible:b.y>=0&&b.bottom<=innerHeight&&b.x>=0&&b.right<=innerWidth,hit:e.contains(document.elementFromPoint(x,y))};}));
   assert.ok(boxes.every(b=>b.visible&&b.hit),JSON.stringify(boxes));const actualDpr=await page.evaluate(()=>devicePixelRatio);assert.equal(actualDpr,dpr);report.layouts.push({width,height,dpr:actualDpr,emulation:true,boxes});await shot(`p8-layout-${width}x${height}-${dpr}.png`);await cdp.detach();
 }
+
+// Expanded terminal: real mouse clicks and keys. Draft, history and engine records must survive every toggle.
+const visibleHit=sels=>page.evaluate(list=>list.map(s=>{const e=document.querySelector(s);if(!e)return {selector:s,missing:true};const b=e.getBoundingClientRect();const x=b.x+b.width/2,y=b.y+b.height/2;
+  return {selector:s,x:b.x,y:b.y,w:b.width,h:b.height,visible:b.width>0&&b.y>=0&&b.bottom<=innerHeight&&b.x>=0&&b.right<=innerWidth,hit:e.contains(document.elementFromPoint(x,y))};}),sels);
+const termHeight=()=>page.locator('[data-linux-output]').evaluate(e=>e.getBoundingClientRect().height);
+const expandedNow=()=>page.locator('#workstation').evaluate(e=>e.classList.contains('ws-expanded'));
+async function expandLayout(width,height,dpr){
+  await page.setViewportSize({width,height});const cdp=await ctx.newCDPSession(page);await cdp.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:dpr,mobile:false});
+  const rec=(await U.G(page)).incident.records[0];await linuxTab(rec.id);await page.waitForTimeout(300);
+  if(await expandedNow()){await page.locator('[data-linux-expand]').click();await settle(page,100);}
+  const input=page.locator('[data-linux-input]'),small=await termHeight(),n=(await U.G(page)).linux.observations.length;
+  await input.click();await input.fill('');await input.pressSequentially('ip route',{delay:1});
+  await page.locator('[data-linux-expand]').click();await settle(page,100);
+  assert.equal(await expandedNow(),true,'expand button enlarges the monitor');assert.equal(await page.locator('[data-linux-expand]').getAttribute('aria-pressed'),'true');
+  const big=await termHeight();assert.ok((big>=small*1.3&&big-small>=90)||(small>=120&&big>small),`terminal grows ${small}→${big} at ${width}x${height}@${dpr}`);console.log(`  expanded ${width}x${height}@${dpr}: terminal ${Math.round(small)}→${Math.round(big)}px`);
+  assert.equal(await input.inputValue(),'ip route','draft kept when expanding');
+  const summary=await page.locator('.linux-incident-summary').innerText();assert.ok(summary.includes(rec.id),'incident info visible while expanded');
+  const boxes=await visibleHit(['[data-linux-input]','[data-linux-run]','[data-linux-back]','[data-linux-node]','[data-linux-incident]','[data-linux-output]','[data-linux-expand]','[data-ws-tab=incident]','.linux-incident-summary','#goal-title']);
+  assert.ok(boxes.every(b=>b.visible&&b.hit),JSON.stringify(boxes));
+  await input.press('Enter');await settle(page,150);const g=await U.G(page);assert.equal(g.linux.observations.length,n+1,'command runs in expanded view');assert.equal(g.linux.observations.at(-1).command_id,'ip_route');
+  assert.equal(await expandedNow(),true,'stays expanded after a command');assert.equal(await input.evaluate(e=>e===document.activeElement),true,'focus back on input');
+  await input.press('ArrowUp');assert.equal(await input.inputValue(),'ip route','history kept');await input.fill('');
+  await shot(`p8-expanded-${width}x${height}-${dpr}.png`);
+  await input.pressSequentially('ping -c 1 10.20.0.15',{delay:1});await page.keyboard.press('Escape');await settle(page,100);
+  assert.equal(await expandedNow(),false,'Esc returns to normal size');assert.equal(await input.inputValue(),'ping -c 1 10.20.0.15','draft kept after Esc');
+  assert.equal((await U.G(page)).linux.observations.length,n+1,'collapse does not run or drop records');assert.ok(await page.locator(`[data-linux-observation="${g.linux.observations.at(-1).seq}"]`).count(),'output kept after collapse');
+  await page.locator('[data-linux-expand]').focus();await page.keyboard.press('Enter');await settle(page,100);assert.equal(await expandedNow(),true,'keyboard Enter on the toggle expands');
+  await page.locator('[data-linux-back]').click();await settle(page,100);assert.equal(await expandedNow(),false,'incident tab uses the normal monitor size');
+  assert.ok(await page.locator(`.inc-card, [data-incident-actions="${rec.id}"]`).first().isVisible(),'incident card visible after return');
+  await U.tab(page,'linux');assert.equal(await expandedNow(),true,'Linux tab restores the expanded preference');assert.equal(await input.inputValue(),'ping -c 1 10.20.0.15','draft kept across tabs');
+  await page.locator('[data-linux-expand]').click();await settle(page,100);assert.equal(await expandedNow(),false);await input.fill('');
+  report.layouts.push({width,height,dpr:await page.evaluate(()=>devicePixelRatio),emulation:true,expanded:{collapsedTerminal:Math.round(small),expandedTerminal:Math.round(big),boxes}});await cdp.detach();
+}
 try{
   stack=await startStack({enginePort:8808,vitePort:5208});report.url=stack.url;
   browser=await chromium.launch({executablePath:CHROME,headless:false,args:['--window-size=1920,1080']});report.browserVersion=browser.version();await open();
@@ -172,6 +205,9 @@ try{
     assert.equal(await page.locator('[data-linux-input]').isDisabled(),true);assert.equal(await page.locator('[data-linux-node]').isDisabled(),true);assert.equal(await page.locator('[data-linux-incident]').isDisabled(),true);
     await settle(page,150);assert.equal(delayed,true);assert.equal(await page.locator('[data-linux-input]').isDisabled(),false);assert.equal(await page.locator('[data-linux-input]').inputValue(),'');
     assert.equal((await U.G(page)).linux.observations.at(-1).command_id,'ip_route');await page.unroute('**/api/games/*/actions',handler);
+  });
+  await check('expanded terminal at 1366x768, 1920x1080 and 150 percent: mouse/keyboard toggle keeps draft, history and records',async()=>{
+    await expandLayout(1366,768,1);await expandLayout(1920,1080,1);await expandLayout(1280,720,1.5);await expandLayout(911,512,1.5);await page.setViewportSize({width:1920,height:1080});
   });
   await check('all 28 catalog commands execute through actual controls in a virtual Kubernetes workload',async()=>{
     const rec=await practice('crashloop'),specs=(await U.G(page)).linux.commands;

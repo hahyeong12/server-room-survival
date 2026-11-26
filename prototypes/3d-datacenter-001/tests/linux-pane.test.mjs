@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildCommand,interpretationChoices} from '../src/linux-pane.js';
+import {buildCommand,interpretationChoices,toggleExpanded} from '../src/linux-pane.js';
 import {isIncident} from '../src/incident-pane.js';
 import {isGlobal} from '../src/game-view.js';
 
@@ -20,4 +20,10 @@ test('Linux sessions use existing incident and world views; old modes keep their
   assert.equal(isGlobal({mode:'linux',global:{}}),true);
   assert.equal(isIncident({mode:'story',incident:{}}),false);
   assert.equal(isGlobal({mode:'global',global:{}}),true);
+});
+test('expanded terminal is a view preference outside the terminal draft/history state',()=>{
+  const ui={linux:{draft:'ping -c 3 10.20.0.15',history:['df -h']}};
+  assert.equal(toggleExpanded(ui),true);assert.equal(ui.linuxExpanded,true);
+  assert.equal(toggleExpanded(ui),false);assert.equal(toggleExpanded(ui,true),true);
+  assert.deepEqual(ui.linux,{draft:'ping -c 3 10.20.0.15',history:['df -h']});
 });

@@ -144,6 +144,8 @@ document.querySelectorAll('[data-advance]').forEach(b=>b.addEventListener('click
 $('opening-skip').addEventListener('click',()=>finishOpening('skipped'));$('opening-replay').addEventListener('click',()=>startOpening());
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&openingActive){e.preventDefault();finishOpening('skipped');return;}
+  // Esc returns an expanded Linux terminal to its normal size (no other Esc meaning on the monitor). Draft/history are kept.
+  if(e.key==='Escape'&&ui.linuxExpanded&&ui.tab==='linux'&&!$('workstation').hidden&&!document.querySelector('#menu:not([hidden])')){e.preventDefault();ui.linuxExpanded=false;render();return;}
   // Keyboard alternative to double-click: Enter on the 3D view enters the selected building.
   if(e.key==='Enter'&&!openingActive&&store.state.navigation.route==='campus'&&document.activeElement===scene?.renderer.domElement){e.preventDefault();enterFacility(store.state.navigation.facility,'key');}
 });
@@ -344,6 +346,8 @@ function renderWorkstation(){
   const body=el('div','ws-pane');body.dataset.pane=ui.tab;
   ({inbox:paneInbox,plan:panePlan,diagnosis:paneDiagnosis,result:paneResult,lab:(b,gg)=>panes.paneLab(b,gg),incident:(b,gg)=>incident.paneIncident(b,gg),linux:(b,gg)=>linuxPane.pane(b,gg)})[ui.tab](body,g,r);
   ws.append(bar,tabs,body);
+  // Linux terminal expanded: only while the Linux tab is shown; other tabs keep the normal monitor size.
+  ws.classList.toggle('ws-expanded',ui.tab==='linux'&&!!ui.linuxExpanded&&body.classList.contains('linux-expanded'));
   if(focusKey){const again=ws.querySelector(`[data-focus-key="${focusKey}"]`);again?.focus({preventScroll:true});}
   // Lab: bring the question the player must answer now into view once (inside the monitor pane, no page scroll).
   const target=ws.querySelector('[data-lab-target]'),tkey=target?`${ui.tab}:${target.dataset.labQuestion||''}`:'';

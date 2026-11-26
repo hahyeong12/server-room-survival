@@ -2,6 +2,12 @@
 export function buildCommand(spec, parts = {}) {
   return spec.syntax.split(' ').map((token, i) => i === 0 ? token : (parts[i] ?? '')).join(' ').trim();
 }
+// Expanded view is a per-player preference kept outside the per-shift terminal state so a new shift,
+// a tab switch or a re-render never resets it. Draft, history and scroll stay in ui.linux.
+export function toggleExpanded(ui, value = !ui.linuxExpanded) {
+  ui.linuxExpanded = !!value;
+  return ui.linuxExpanded;
+}
 export function interpretationChoices(observation) {
   return observation.choices ?? [];
 }
@@ -9,6 +15,8 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
   function pane(body, g) {
     const l = g.linux;
     body.classList.add('linux-pane');
+    const expanded = !!ui.linuxExpanded;
+    body.classList.toggle('linux-expanded', expanded);
     if (!l || !g.global.briefed) {body.append(el('p', '', '먼저 근무 브리핑을 확인하세요.')); return;}
     const recs = g.incident.records.filter(r => r.state !== 'armed');
     if (!recs.length) {body.append(el('p', '', '아직 경보가 없습니다. 요청함 → 배정 계획 → 서버동의 실제 랙에서 업무를 시작하고 시간을 진행하세요.')); return;}
@@ -31,6 +39,12 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
     const current = el('div','linux-current'); current.dataset.linuxCurrent='';
     current.append(el('strong','',`${l.role} · ${rec.next}`), el('small','', rec.state==='investigating' ? '서로 다른 계층의 증거 → 출력 해석 → [사건]에서 가설 판단' : rec.why));
     if (!rec.acknowledged && open) current.append(button('범위 확인 후 진단 시작',()=>send({type:'incident_ack',incident:rec.id}),'primary',{'data-linux-ack':rec.id}));
+    const view = el('div', 'linux-viewbar');
+    const toggle = button(expanded ? '⤡ 기본 크기 (Esc)' : '⤢ 터미널 확대', () => {toggleExpanded(ui); render();}, '', {'data-linux-expand': '', 'aria-pressed': String(expanded), title: expanded ? '터미널을 원래 크기로 줄입니다 (Esc)' : '출력을 더 많이 보도록 터미널을 확대합니다. 입력·기록은 그대로 유지됩니다.'});
+    toggle.dataset.focusKey = 'linux-expand';
+    if (expanded) {const text = `${rec.id} · ${rec.severity ?? ''} · ${rec.title} · 요청 #${rec.rid} ${rec.client ?? ''} · ${rec.stateLabel}${rec.scope?.text ? ` · 영향: ${rec.scope.text}` : ''}`; const s = el('span', 'linux-incident-summary', text); s.title = text; view.append(s);}
+    view.append(toggle);
+    current.append(view);
     body.append(current);
     const terminal = el('div', 'linux-terminal'); terminal.dataset.linuxOutput=''; terminal.tabIndex=0; terminal.setAttribute('role','log');terminal.setAttribute('aria-label','가상 터미널 출력 · 내부 스크롤');
     terminal.append(el('div','terminal-notice',`${l.notice}\n${rec.id} · 현재 선택 ${u.node} · 가상 시각 ${g.clock.label}`));
