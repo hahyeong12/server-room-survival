@@ -1,0 +1,33 @@
+{
+  "issue": 9,
+  "mode": "real Chrome mouse/select/typing; no seed/no API progression; OS temporary saves",
+  "developmentOnly": true,
+  "checks": [
+    {
+      "name": "menu separates regular Linux training and ten ungraded incident practices",
+      "pass": false,
+      "error": "locator.isDisabled: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-new=linux]')\u001b[22m\n\n    at C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase8-qa.mjs:137:150\n    at check (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase8-qa.mjs:20:60)\n    at C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase8-qa.mjs:137:9"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [],
+  "actions": [],
+  "shifts": [],
+  "truth": [],
+  "resumes": [],
+  "layouts": [],
+  "performance": [],
+  "screenshots": [
+    "FAIL-0.png"
+  ],
+  "startedAt": "2026-11-25T23:53:36.013Z",
+  "url": "http://127.0.0.1:5208/",
+  "browserVersion": "158.0.8127.38",
+  "failure": "locator.isDisabled: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-new=linux]')\u001b[22m\n\n    at C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase8-qa.mjs:137:150\n    at check (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase8-qa.mjs:20:60)\n    at C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase8-qa.mjs:137:9",
+  "finishedAt": "2026-11-25T23:54:09.517Z",
+  "summary": {
+    "pass": 0,
+    "total": 1
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "issue": 9,
+  "mode": "real Chrome mouse/select/typing; no seed/no API progression; OS temporary saves",
+  "developmentOnly": true,
+  "checks": [
+    {
+      "name": "menu separates regular Linux training and ten ungraded incident practices",
+      "pass": true,
+      "ms": 119
+    },
+    {
+      "name": "keyboard typing, errors, Enter, history, max length and clipboard in terminal",
+      "pass": true,
+      "ms": 11710
+    },
+    {
+      "name": "real click targets at 1366x768, 1920x1080 and 150 percent emulation",
+      "pass": true,
+      "ms": 3200
+    },
+    {
+      "name": "wrong interpretation and wrong node cannot create fake success",
+      "pass": true,
+      "ms": 1097
+    },
+    {
+      "name": "repeat world/campus/NOC/hall visits retain WebGL resources and reduced motion",
+      "pass": true,
+      "ms": 34253
+    },
+    {
+      "name": "no page errors or renderer crashes",
+      "pass": true,
+      "ms": 1
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "status": "ok",
+      "after": false,
+      "seq": 1
+    }
+  ],
+  "actions": [],
+  "shifts": [],
+  "truth": [],
+  "resumes": [],
+  "layouts": [
+    {
+      "width": 1366,
+      "height": 768,
+      "dpr": 1,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 192.6875,
+          "y": 520.25,
+          "w": 600.3125,
+          "h": 31,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 799,
+          "y": 519.25,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 163,
+          "y": 607,
+          "w": 109.40625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 511,
+          "y": 306,
+          "w": 342,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 163,
+          "y": 379,
+          "w": 690,
+          "h": 79.25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 240.578125,
+          "y": 267,
+          "w": 60.578125,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 254.6875,
+          "y": 789.25,
+          "w": 1000.3125,
+          "h": 31,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 1261,
+          "y": 788.25,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 225,
+          "y": 876,
+          "w": 109.40625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 773,
+          "y": 365,
+          "w": 542,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 225,
+          "y": 438,
+          "w": 1090,
+          "h": 289.25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 310.390625,
+          "y": 318,
+          "w": 69.390625,
+          "h": 36,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "dpr": 1.5,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 192.6875,
+          "y": 485,
+          "w": 514.3125,
+          "h": 31,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 713,
+          "y": 484,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 163,
+          "y": 571.75,
+          "w": 109.40625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 468,
+          "y": 306,
+          "w": 299,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 163,
+          "y": 379,
+          "w": 604,
+          "h": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 240.578125,
+          "y": 267,
+          "w": 60.578125,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    },
+    {
+      "width": 911,
+      "height": 512,
+      "dpr": 1.5,
+      "emulation": true,
+      "boxes": [
+        {
+          "selector": "[data-linux-input]",
+          "x": 15,
+          "y": 404.5,
+          "w": 531,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-run]",
+          "x": 552,
+          "y": 400.5,
+          "w": 54,
+          "h": 33,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-back]",
+          "x": 15,
+          "y": 479,
+          "w": 105.40625,
+          "h": 23,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-node]",
+          "x": 313.5,
+          "y": 153,
+          "w": 292.5,
+          "h": 30,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-linux-output]",
+          "x": 15,
+          "y": 224,
+          "w": 591,
+          "h": 138.5,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "selector": "[data-ws-tab=incident]",
+          "x": 84.765625,
+          "y": 121,
+          "w": 53.765625,
+          "h": 25,
+          "visible": true,
+          "hit": true
+        }
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "i": 0,
+      "fps": 166.62963785825391,
+      "p95": 6.100000000002183,
+      "geometries": 535,
+      "textures": 84,
+      "heap": 36989957
+    },
+    {
+      "i": 1,
+      "fps": 166.96349065004458,
+      "p95": 6.100000000002183,
+      "geometries": 535,
+      "textures": 84,
+      "heap": 41960092
+    },
+    {
+      "i": 2,
+      "fps": 166.85205784204672,
+      "p95": 6.099999999998545,
+      "geometries": 535,
+      "textures": 84,
+      "heap": 39499054
+    },
+    {
+      "i": 3,
+      "fps": 166.47244880972147,
+      "p95": 6.100000000005821,
+      "geometries": 535,
+      "textures": 84,
+      "heap": 36883034
+    },
+    {
+      "i": 4,
+      "fps": 167.34534501031922,
+      "p95": 6.100000000005821,
+      "geometries": 535,
+      "textures": 84,
+      "heap": 55303679
+    },
+    {
+      "i": 5,
+      "fps": 166.2971175166297,
+      "p95": 6.099999999998545,
+      "geometries": 535,
+      "textures": 84,
+      "heap": 36527538
+    }
+  ],
+  "screenshots": [
+    "p8-menu.png",
+    "p8-keyboard.png",
+    "p8-layout-1366x768-1.png",
+    "p8-layout-1920x1080-1.png",
+    "p8-layout-1280x720-1.5.png",
+    "p8-layout-911x512-1.5.png",
+    "p8-performance.png"
+  ],
+  "startedAt": "2026-11-25T23:54:24.813Z",
+  "url": "http://127.0.0.1:5208/",
+  "browserVersion": "158.0.8127.38",
+  "finishedAt": "2026-11-25T23:55:19.161Z",
+  "summary": {
+    "pass": 6,
+    "total": 6
+  }
+}
