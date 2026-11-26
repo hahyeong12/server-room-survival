@@ -6,7 +6,7 @@ from database import Database
 from aidc.learning.linux_session import LinuxSession
 from aidc.learning.linux_curriculum import SHIFTS, CASES
 from tests.incident_support import Temp, start_open
-from tests.linux_support import opened, command, evidence, diagnose, respond, close_out
+from tests.linux_support import opened, command, evidence, diagnose, respond, close_out, observe_probe
 
 class CurriculumTests(unittest.TestCase):
     def setUp(self):
@@ -32,7 +32,7 @@ class CurriculumTests(unittest.TestCase):
                         if p in ('ups','cooling'):
                             s.incident_observe(r.id,p,where(p))
                         elif not any(e['probe']==p and e['after'] for e in r.evidence):
-                            command(s,r,next(k for k,c in BY_ID.items() if c.probe==p and k!='pod_logs'))
+                            observe_probe(s,r,p)
                     s.incident_verify(r.id)
                     s.incident_report(r.id)
             if s.global_.result is not None:

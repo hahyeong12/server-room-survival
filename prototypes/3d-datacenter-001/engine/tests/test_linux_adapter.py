@@ -81,7 +81,8 @@ class LinuxAdapterTests(GlobalBase):
     def test_physical_response_must_use_approved_site(self):
         g,r=self.practice()
         self.ok(g,type='navigate',route='noc',via='tab')
-        for line in ('ping -c 3 10.20.0.15','dig storage-api.aidc.internal'):
+        # the whole scope of the request (storage + both job servers) is compared before the engine records ping
+        for line in ('ping -c 3 10.20.0.15','ping -c 3 10.20.11.15','ping -c 3 10.20.12.15','dig storage-api.aidc.internal'):
             out=self.ok(g,type='linux_command',incident=r.id,line=line,node='noc',token=g.session.token(r))['linux']
         answer=next(x['id'] for x in out['choices'] if x['text']==BY_ID['dig'].correct)
         self.assertFalse(self.act(g,type='linux_interpret',incident=r.id,seq=out['seq'],answer=answer)['ok'])

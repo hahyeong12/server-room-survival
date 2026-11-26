@@ -72,13 +72,15 @@ def path(fault, rec, node, host, scope):
         return 'congested'
     return 'ok'
 
-def ping_output(host, count, state):
+PORTS = {f'swp{i + 1}': x for i, x in enumerate('ABCD')}
+
+def ping_output(host, count, state, source='10.20.0.10'):
     lost = count if state.startswith('down') else count // 20 if state == 'congested' else 0
     got = count - lost
     rtt = (38.4, 42.1, 61.7, 7.9) if state == 'congested' else (0.6, 0.8, 1.1, 0.1)
     lines = [f'PING {host} ({host}) 56(84) bytes of data.']
     if state == 'down_local':
-        lines.append(f'From {host} icmp_seq=1 Destination Host Unreachable')
+        lines.append(f'From {source} icmp_seq=1 Destination Host Unreachable')
     lines += [f'--- {host} ping statistics ---',
               f'{count} packets transmitted, {got} received, {round(100 * lost / count)}% packet loss']
     if got:
@@ -87,11 +89,20 @@ def ping_output(host, count, state):
     return (1 if not got else 0), '\n'.join(lines)
 
 def trace_output(node, host, state):
+    if host == node_ip(node):
+        return f'traceroute to {host} ({host}), 30 hops max, 60 byte packets\n 1  {host}  0.0 ms'
     gw = '.'.join(node_ip(node).split('.')[:3]) + '.1'
     hop2 = '* * *' if state == 'down_local' else f'10.20.2.1  {"28.3" if state == "congested" else "0.5"} ms'
     hop3 = '* * *' if state.startswith('down') else f'{host}  {"42.1" if state == "congested" else "0.8"} ms'
     return (f'traceroute to {host} ({host}), 30 hops max, 60 byte packets\n 1  {gw}  0.2 ms\n 2  {hop2}\n 3  {hop3}\n'
             '별표(* * *)는 그 홉이 응답하지 않았다는 뜻일 뿐, 그 장비의 고장을 단독으로 입증하지 않습니다.')
+
+def port_lines(down_rack):
+    """`ip link show` on the switch node: management eth0 plus one uplink port per ToR, with its alias."""
+    rows = [f'1: eth0: {link_flags(False)}\n    alias management']
+    for i, (port, rack) in enumerate(PORTS.items()):
+        rows.append(f'{i + 2}: {port}: {link_flags(rack == down_rack)}\n    alias ToR-{rack} uplink')
+    return '\n'.join(rows)
 
 def link_flags(down):
     # Admin state stays UP (configured up); only the carrier is missing, as iproute2 prints it.
@@ -132,13 +143,16 @@ def result(session, rec, line, node):
     ident = command.command_id
     code = 0
     eligible = True
+    down_rack = rec.primary if uplink_down else None
+    covers = None
     if ident in ('ping', 'traceroute'):
         host = args['$host']
         scope = in_scope(session, rec, host)
         eligible = scope
+        covers = [host]
         state = path(fault, rec, node, host, scope)
         if ident == 'ping':
-            code, output = ping_output(host, int(args['$count']), state)
+            code, output = ping_output(host, int(args['$count']), state, ip)
         else:
             output = trace_output(node, host, state)
         output += '\n(교육용 가상 표본 · 실제 패킷 없음)'
@@ -172,6 +186,13 @@ def result(session, rec, line, node):
             output = 'Previous terminated container (읽기 전용 보관 로그; 현재 상태 검증 아님)\n' + '\n'.join([crash['summary'], *crash.get('lines', [])])
         else:
             code, output = 1, 'Error from server (BadRequest): previous terminated container "worker" in pod "worker-0" not found'
+    elif ident == 'ethtool':
+        port = args['$iface']
+        rack = PORTS.get(port)
+        covers = [port]
+        output = (f'Settings for {port}:\n\tSpeed: {"1000" if port == "eth0" else "100000"}Mb/s\n\tDuplex: Full\n'
+                  f'\tLink detected: {"no" if rack and rack == down_rack else "yes"}\n'
+                  + (f'(포트 별칭: ToR-{rack} uplink)' if rack else '(관리 포트)'))
     elif ident in ('nvidia_smi', 'nvidia_query') and lost_gpu:
         # nvidia-smi return value 15: the GPU has fallen off the bus or otherwise become inaccessible.
         code = 15
@@ -194,13 +215,14 @@ def result(session, rec, line, node):
             health = f'Server {own}: 감시 항목 경고 없음 · 건강 검사 PASS'
         resolver = '10.20.1.53' if rec.type == 'dns' and rec.recovered is not None else '10.20.0.53'
         values = {
-            'ip_addr': f'2: eth0: {link_flags(node == "network" and uplink_down)}\n    inet {ip}/24 brd {net}.255 scope global eth0',
+            'ip_addr': (f'1: eth0: {link_flags(False)}\n    inet {ip}/24 brd {net}.255 scope global eth0'
+                        + (''.join(f'\n{i + 2}: {port}: {link_flags(rack == down_rack)}' for i, (port, rack) in enumerate(PORTS.items()))
+                           if node == 'network' else '')),
             'ip_route': f'default via {net}.1 dev eth0\n{net}.0/24 dev eth0 proto kernel scope link src {ip}',
-            'ip_link': f'2: eth0: {link_flags(uplink_down)}\n' + session.reading(rec, 'tor_port')['summary'],
+            'ip_link': port_lines(down_rack),
             'ss': 'Netid State  Recv-Q Send-Q Local Address:Port Peer Address:Port\ntcp   LISTEN 0      128    0.0.0.0:8080     0.0.0.0:*\nudp   UNCONN 0      0      0.0.0.0:5353     0.0.0.0:*',
             'resolvectl': (f'Global\n       Protocols: +DefaultRoute\nCurrent DNS Server: {resolver}\n       DNS Servers: {resolver}\n        DNS Domain: aidc.internal\n'
                            '설정 조회만으로 리졸버의 실제 응답을 보장하지 않습니다.'),
-            'ethtool': 'Settings for eth0:\n\tSpeed: 10000Mb/s\n\tDuplex: Full\n\tLink detected: ' + ('no' if uplink_down else 'yes') + '\n' + session.reading(rec, 'tor_port')['summary'],
             'systemctl': '● worker.service - AIDC worker\n     Loaded: loaded (/etc/systemd/system/worker.service; enabled)\n     Active: ' + ('failed (Result: exit-code)' if service_bad else 'active (running)') + '\n' + events['summary'],
             'journalctl': log,
             'ps': (f'USER  PID %CPU %MEM     VSZ     RSS TTY STAT START TIME COMMAND\naidc 4815 {0 if job == "stopped" else 30 if job == "slow" else 65}.0 12.0 8388608 4194304 ?   '
@@ -229,6 +251,10 @@ def result(session, rec, line, node):
                              + '\n' + '\n'.join(events['lines']) + '\n' + events['summary']),
         }
         output = values[ident]
+        if ident == 'ip_link':
+            covers = list(PORTS)
+        elif command.probe == 'dcgm':
+            covers = [node]
         if ident == 'journalctl':
             output = '\n'.join(output.splitlines()[-int(args['$count']):])
         if ident == 'systemctl' and service_bad:
@@ -236,4 +262,4 @@ def result(session, rec, line, node):
     return {'kind': 'output', 'command_id': ident, 'code': code, 'category': 'observation',
             'probe': command.probe, 'status': reading['status'] if reading else 'ok',
             'output': output[:MAX_OUTPUT], 'label': command.label, 'eligible': eligible,
-            'historical': ident == 'pod_logs', 'completedJob': run.state.phase == 'finished'}
+            'historical': ident == 'pod_logs', 'completedJob': run.state.phase == 'finished', 'covers': covers}

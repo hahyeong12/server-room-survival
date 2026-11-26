@@ -10,7 +10,7 @@ import hashlib
 from aidc.incidents.session import IncidentSession, FINAL
 from . import linux_catalog as catalog
 from . import linux_curriculum as curriculum
-from .linux_terminal import result, contexts
+from .linux_terminal import result, contexts, job_servers, server_ip, STORAGE_IP, PORTS
 
 class LinuxSession(IncidentSession):
     SAVE_MODE = 'linux'
@@ -127,7 +127,10 @@ class LinuxSession(IncidentSession):
             entry['choices'] = self.choices(entry)
             if out['probe'] and out.get('eligible', True) and (not out.get('historical') or rec.recovered is None):
                 probe = out['probe']
-                super().incident_observe(iid, probe, self.content.probes[probe]['location'])
+                # Node/target dependent probes become engine evidence only once the player compared the whole scope of
+                # this request (same rule for every cause). The engine summary then states what those outputs showed.
+                if not self.uncovered(rec, probe):
+                    super().incident_observe(iid, probe, self.content.probes[probe]['location'])
         return self.public(entry)
 
     def interpret(self, iid, seq, answer, token=None):
@@ -160,6 +163,30 @@ class LinuxSession(IncidentSession):
             raise ValueError('이 근무의 Linux 증거는 내 모니터에서 명령을 실행해 수집하세요. BMS는 현장 계기를 사용합니다.')
         return super().incident_observe(iid, probe, location)
 
+    def scope_of(self, rec, probe):
+        """What must be compared for a node/target dependent probe: the request's storage and servers (ping,
+        traceroute), its GPU servers (dcgm family) or their ToR uplink ports (tor_port). None = one reading suffices."""
+        servers = job_servers(self, rec)
+        if probe in ('ping', 'link_stats'):
+            return {STORAGE_IP, *(server_ip(x) for x in servers)}
+        if probe == 'dcgm':
+            return {f'server-{x}' for x in servers}
+        if probe == 'tor_port':
+            return {port for port, rack in PORTS.items() if rack in servers}
+        return None
+
+    def uncovered(self, rec, probe):
+        need = self.scope_of(rec, probe)
+        if not need:
+            return set()
+        after = rec.recovered is not None
+        # Same window as the engine's post-check: from 10 minutes after recovery while the job still runs.
+        since = (rec.recovered + 10 if self.runs[rec.rid].state.phase != 'finished' else rec.recovered) if after else 0
+        seen = {c for o in self.linux['observations'] if o['incident'] == rec.id and o.get('probe') == probe
+                and o.get('eligible', True) and o['after'] == after and o['minute'] >= since
+                for c in (o.get('covers') or [])}
+        return need - seen
+
     def _proof(self, rec, after=False, cause=None):
         entries = [o for o in self.linux['observations'] if o['incident'] == rec.id and o.get('eligible', True) and
                    (not after or (o['after'] and o['minute'] >= rec.recovered and not o.get('historical')))]
@@ -178,10 +205,22 @@ class LinuxSession(IncidentSession):
             raise ValueError('출력 한 가지에서 사실과 추측을 구분한 뒤 가설을 판단하세요.')
         if not self._proof(rec, cause=cause):
             raise ValueError('현재 관측만으로는 근거가 부족합니다. 다른 계층의 보완적 증거를 수집하세요.')
+        partial = {p: self.uncovered(rec, p) for p in self.content.causes[cause]['probes']}
+        partial = {p: left for p, left in partial.items() if left and any(
+            o['incident'] == iid and o.get('probe') == p for o in self.linux['observations'])}
+        if partial:
+            # Depends only on the submitted cause and what was observed: never on the hidden cause.
+            raise ValueError('영향 범위 전체를 비교해야 합니다. 아직 확인하지 않은 대상: '
+                             + ', '.join(sorted(x for left in partial.values() for x in left))
+                             + ' — 한 노드·한 대상의 결과로 다른 노드를 판단하지 마세요.')
         return super().incident_hypothesis(iid, cause)
 
     def verify_blocker(self, rec):
         base = super().verify_blocker(rec)
+        left = sorted(x for p in self.content.types[rec.type]['verify'] for x in self.uncovered(rec, p)) if rec.state == 'monitoring' else []
+        if base and left and base.startswith('복구 뒤 다시 관측'):
+            # The engine still lacks a post-check because part of the scope was not compared again.
+            return base + ' · 영향 범위 중 아직 다시 확인하지 않은 대상: ' + ', '.join(left)
         if base:
             return base
         if not self._proof(rec, after=True):

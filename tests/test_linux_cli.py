@@ -9,7 +9,7 @@ from aidc.learning import linux_catalog as C
 from aidc.learning.linux_session import LinuxSession
 from aidc.learning.linux_terminal import result
 from tests.incident_support import Temp
-from tests.linux_support import opened, command, diagnose, respond, close_out
+from tests.linux_support import opened, command, diagnose, respond, close_out, scoped
 from aidc.learning.linux_terminal import job_servers
 from aidc.learning.linux_curriculum import CASES
 
@@ -128,6 +128,66 @@ class LinuxTests(unittest.TestCase):
         self.assertGreaterEqual(len(healthy),2)
         self.assertEqual(len(set(healthy.values())),1,healthy)
 
+    def _two_servers(self,cause):
+        from aidc.core.server_resources import ServerSlice
+        s=LinuxSession(self.temp.db(f'two_{cause}_{len(self.temp.dbs)}.db'),practice=cause,seed=5)
+        s.confirm_shift_briefing()
+        rid=next(iter(s.runs));s.select(rid);s.read_conversation(rid)
+        s.choose_plan('performance',(ServerSlice('A',(0,1),2),ServerSlice('B',(0,1),1)))
+        for _ in range(15):
+            s.advance_time(10)
+            if s.incident.records[0].state=='alert':break
+        r=s.incident.records[0];s.incident_ack(r.id)
+        return s,r
+
+    def test_review_healthy_node_alone_never_becomes_engine_evidence(self):
+        # Coverage rule is the same for every cause: one node/target is not the scope of this request.
+        for cause in ('gpu_health','storage_full','tor_uplink','dns'):
+            s,r=opened(self.temp,cause)
+            nodes=job_servers(s,r)
+            s.cli(r.id,'dcgmi health --check',f'server-{nodes[-1]}')
+            s.cli(r.id,'ping -c 3 10.20.0.15','noc')
+            if len(nodes)>1:
+                self.assertFalse(any(e['probe']=='dcgm' for e in r.evidence),cause)
+            self.assertFalse(any(e['probe']=='ping' for e in r.evidence),cause)
+
+    def test_review_gpu_fault_needs_its_own_server_and_records_what_was_seen(self):
+        s,r=self._two_servers('gpu_health')
+        healthy='B' if r.primary=='A' else 'A'
+        s.cli(r.id,'dcgmi health --check',f'server-{healthy}')
+        command(s,r,'journalctl',interpret=True,node=f'server-{healthy}')
+        with self.assertRaisesRegex(ValueError,f'server-{r.primary}'):
+            s.incident_hypothesis(r.id,'gpu_health')
+        s.cli(r.id,'dcgmi health --check',f'server-{r.primary}')
+        dcgm=[e for e in r.evidence if e['probe']=='dcgm']
+        self.assertEqual(len(dcgm),1)
+        self.assertIn('Xid 79',dcgm[0]['summary'])        # the aggregate equals the two outputs the player compared
+        self.assertIn('다른 GPU PASS',dcgm[0]['summary'])
+        self.assertEqual(s.incident_hypothesis(r.id,'gpu_health')['verdict'],'confirmed')
+
+    def test_review_tor_ping_aggregate_matches_the_compared_targets(self):
+        s,r=opened(self.temp,'tor_uplink')
+        scoped(s,r,'ping')
+        ping=[e for e in r.evidence if e['probe']=='ping']
+        self.assertEqual(len(ping),1)
+        self.assertEqual(ping[0]['status'],'bad')
+        self.assertIn('다른 랙은 정상',ping[0]['summary'])
+        outs=[o for o in s.linux['observations'] if o['command_id']=='ping']
+        self.assertEqual(sum(o['code']==1 for o in outs),1)    # exactly the cut-off rack failed among the compared targets
+
+    def test_review_partial_scope_message_does_not_depend_on_hidden_cause(self):
+        messages=set()
+        for cause in ('dns','tor_uplink','congestion','crashloop'):
+            s,r=opened(self.temp,cause)
+            self.assertEqual(job_servers(s,r),['A','B'])
+            command(s,r,'ping',interpret=True,target='10.20.0.15')
+            command(s,r,'dig')
+            with self.assertRaises(ValueError) as cm:
+                s.incident_hypothesis(r.id,'dns')
+            messages.add(str(cm.exception))
+        self.assertEqual(len(messages),1,messages)
+        self.assertIn('10.20.11.15',messages.pop())
+
     def test_review_lost_gpu_only_on_its_own_server(self):
         from aidc.core.server_resources import ServerSlice
         s=LinuxSession(self.temp.db('lost.db'),practice='gpu_health',seed=5)
@@ -150,7 +210,11 @@ class LinuxTests(unittest.TestCase):
         affected=f'10.20.{11+"ABCD".index(r.primary)}.15'
         for line in ('ip addr','ip link show'):
             self.assertIn('<NO-CARRIER,BROADCAST,MULTICAST,UP>',s.cli(r.id,line,'network')['output'])
-        self.assertIn('Link detected: no',s.cli(r.id,'ethtool eth0','network')['output'])
+        port=f'swp{1+"ABCD".index(r.primary)}'
+        self.assertIn('Link detected: no',s.cli(r.id,f'ethtool {port}','network')['output'])
+        self.assertIn('Link detected: yes',s.cli(r.id,'ethtool eth0','network')['output'])   # management port stays up
+        self.assertEqual(s.cli(r.id,'ping -c 3 10.20.0.15','network')['code'],0)                # so the switch node itself reaches storage
+        self.assertIn('From 10.20.',s.cli(r.id,'ping -c 3 10.20.0.15',f'server-{r.primary}')['output'])
         # cut-off rack: ping and traceroute both fail at the last hop; a healthy in-scope target answers both
         self.assertEqual(s.cli(r.id,f'ping -c 3 {affected}','noc')['code'],1)
         self.assertIn(' 3  * * *',s.cli(r.id,f'traceroute {affected}','noc')['output'])
@@ -195,7 +259,7 @@ class LinuxTests(unittest.TestCase):
         self.assertFalse(s.interpret(r.id,out['seq'],wrong)['correct'])
         self.assertFalse(s.interpret(r.id,out['seq'],right)['correct'])
         self.assertEqual(len(s.linux['interpretations']),1)
-        command(s,r,'dig')
+        scoped(s,r,'ping');command(s,r,'dig')
         with self.assertRaisesRegex(ValueError,'사실과 추측'):
             s.incident_hypothesis(r.id,'dns')
         again=command(s,r,'ping',interpret=True)
@@ -289,7 +353,7 @@ class LinuxTests(unittest.TestCase):
 
     def test_two_complementary_evidence_and_interpretation_required(self):
         s,r=opened(self.temp,'dns')
-        command(s,r,'ping');command(s,r,'ip_addr')
+        scoped(s,r,'ping');command(s,r,'ip_addr')
         with self.assertRaisesRegex(ValueError,'사실과 추측'):
             s.incident_hypothesis(r.id,'dns')
         command(s,r,'ip_route',interpret=True)
@@ -348,7 +412,8 @@ class LinuxTests(unittest.TestCase):
 GROUNDED = {'ping': r'3 packets transmitted, 3 received, 0% packet loss', 'traceroute': r' 3  10\.20\.0\.15  0\.8 ms',
             'getent': r'^10\.20\.0\.15 +storage-api', 'dig': r'status: NOERROR[\s\S]*ANSWER SECTION',
             'nvidia_smi': r'   0%\n', 'dcgm': r'Server [AB]: 감시 항목 경고 없음 · 건강 검사 PASS', 'top': r' 2\.0 wa',
-            'ps': r' S 09:00', 'pod_logs': r'FATAL|모델 경로', 'nvidia_query': r'HW Thermal Slowdown : Not Active'}
+            'ps': r' S 09:00', 'pod_logs': r'FATAL|모델 경로', 'nvidia_query': r'HW Thermal Slowdown : Not Active',
+            'ip_link': r'swp1: <BROADCAST,MULTICAST,UP,LOWER_UP>[\s\S]*alias ToR-A uplink', 'ethtool': r'Link detected: yes'}
 
 def valid_case(spec):
     def test(self):

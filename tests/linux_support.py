@@ -18,22 +18,42 @@ def opened(temp, cause='dns', shift=1, practice=True):
     s.incident_ack(rec.id)
     return s, rec
 
-def command(s, rec, ident, interpret=False):
+def command(s, rec, ident, interpret=False, node=None, target=None):
     c = BY_ID[ident]
-    node = {'any': 'noc', 'network': 'network', 'cluster': 'cluster',
-            'worker': f'server-{job_servers(s, rec)[0]}'}[c.context]
+    node = node or {'any': 'noc', 'network': 'network', 'cluster': 'cluster',
+                    'worker': f'server-{job_servers(s, rec)[0]}'}[c.context]
     line = example(c)
-    if ident == 'ping' and rec.type == 'tor_uplink':
+    if ident == 'ping' and rec.type == 'tor_uplink' and target is None:
         line = line.replace('10.20.0.15', f'10.20.{11 + "ABCD".index(rec.primary)}.15')
+    if target is not None:
+        line = line.replace('10.20.0.15', target).replace('swp1', target)
     out = s.cli(rec.id, line, node, s.token(rec))
     if interpret:
         s.interpret(rec.id, out['seq'], next(x['id'] for x in out['choices'] if x['text'] == c.correct))
     return out
 
+def scoped(s, rec, ident, interpret=False):
+    """Run one command over the whole scope the engine needs (all targets / all job servers / all uplink ports)."""
+    c = BY_ID[ident]
+    need = sorted(s.scope_of(rec, c.probe) or []) if c.probe else []
+    if not need or ident == 'ip_link':
+        return command(s, rec, ident, interpret)
+    out = None
+    for i, x in enumerate(need):
+        if x.startswith('server-'):
+            out = command(s, rec, ident, interpret and i == 0, node=x)
+        else:
+            out = command(s, rec, ident, interpret and i == 0, target=x)
+    return out
+
+def observe_probe(s, rec, probe):
+    ident = next(k for k, c in BY_ID.items() if c.probe == probe and k != 'pod_logs')
+    return scoped(s, rec, ident)
+
 def evidence(s, rec, after=False):
     for group in CASES[rec.type]['groups']:
         ident = next((k for k in group if k != 'pod_logs' or not after), group[0])
-        command(s, rec, ident, interpret=not after)
+        scoped(s, rec, ident, interpret=not after)
     for probe in (CASES[rec.type].get('bms'),):
         if probe:
             s.incident_observe(rec.id, probe, where(probe))
@@ -69,7 +89,6 @@ def close_out(s, rec):
         if p in ('ups', 'cooling'):
             s.incident_observe(rec.id, p, where(p))
         elif not any(e['probe'] == p and e['after'] for e in rec.evidence):
-            ident = next(k for k,c in BY_ID.items() if c.probe == p and k != 'pod_logs')
-            command(s, rec, ident)
+            observe_probe(s, rec, p)
     s.incident_verify(rec.id)
     return s.incident_report(rec.id)

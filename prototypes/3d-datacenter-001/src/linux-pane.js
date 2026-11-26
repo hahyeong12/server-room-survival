@@ -8,6 +8,11 @@ export function toggleExpanded(ui, value = !ui.linuxExpanded) {
   ui.linuxExpanded = !!value;
   return ui.linuxExpanded;
 }
+// Choice level: the example line with the player's chosen IP target / switch port.
+export function choiceLine(spec, {host, iface} = {}) {
+  const example = spec.example.split(' ');
+  return spec.syntax.split(' ').map((t, i) => t === '$host' ? (host ?? example[i]) : t === '$iface' ? (iface ?? example[i]) : example[i]).join(' ');
+}
 export function interpretationChoices(observation) {
   return observation.choices ?? [];
 }
@@ -83,8 +88,9 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
       const spec=l.commands.find(c=>c.command_id===u.command)??l.commands[0];
       if(l.inputMode==='choice'){
         if(spec.syntax.includes('$host')){const target=el('select');target.dataset.linuxTarget='';target.setAttribute('aria-label','조회할 IP 대상');for(const value of l.arguments.$host){const o=el('option','',value);o.value=value;target.append(o);}target.value=u.target??'10.20.0.15';target.onchange=()=>{u.target=target.value;};builder.append(target);}
-        builder.append(button('선택한 도구로 조회',()=>run(spec.example.replace('10.20.0.15',u.target??'10.20.0.15')),'primary',{'data-linux-choice':'',...(!rec.acknowledged||!open?{disabled:''}:{})}));
-        dock.append(builder,el('small','linux-tool-meaning',`${spec.label} · 환경 ${spec.context}. IP: storage 10.20.0.15 / Server A~D 10.20.11~14.15. 영향 범위의 서버와 대상을 비교하세요.`));
+        if(spec.syntax.includes('$iface')){const port=el('select');port.dataset.linuxIface='';port.setAttribute('aria-label','조회할 스위치 포트');for(const value of l.arguments.$iface){const o=el('option','',value);o.value=value;port.append(o);}port.value=u.iface??l.arguments.$iface[0];port.onchange=()=>{u.iface=port.value;};builder.append(port);}
+        builder.append(button('선택한 도구로 조회',()=>run(choiceLine(spec,{host:u.target,iface:u.iface})),'primary',{'data-linux-choice':'',...(!rec.acknowledged||!open?{disabled:''}:{})}));
+        dock.append(builder,el('small','linux-tool-meaning',`${spec.label} · 환경 ${spec.context}. IP: storage 10.20.0.15 / Server A~D 10.20.11~14.15 · 스위치 포트 swp1~4 = ToR-A~D 업링크. 영향 범위의 모든 서버·대상을 비교하세요.`));
       }else{
         const bits=el('div','linux-bits');bits.append(el('code','',spec.tool));
         spec.syntax.split(' ').slice(1).forEach((token, index)=>{
@@ -117,7 +123,7 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
       button('도움 요청',()=>send({type:'linux_help',incident:rec.id}),'link',{'data-linux-help':''}),
       button('출력 복사',async()=>{try{await navigator.clipboard.writeText(terminal.innerText);toast('터미널 출력을 복사했습니다.');}catch{toast('이 브라우저에서 복사가 허용되지 않습니다. 출력을 선택해 복사할 수 있습니다.','hint');}},'link',{'data-linux-copy':''}));
     const glossary=el('details','linux-glossary');glossary.append(el('summary','','용어·지원 구문·공식 자료'));
-    glossary.append(el('p','','RTT: 왕복 시간 · NSS/DNS: 이름 조회 · inode: 파일 메타데이터 항목 · VRAM: GPU 메모리 · OOM: 메모리 할당 실패 · await: I/O 평균 대기 · passive: 부하 시험 없이 관측 자료 평가. 가상 IP: storage 10.20.0.15 / Server A~D 10.20.11~14.15.'));
+    glossary.append(el('p','','RTT: 왕복 시간 · NSS/DNS: 이름 조회 · inode: 파일 메타데이터 항목 · VRAM: GPU 메모리 · OOM: 메모리 할당 실패 · await: I/O 평균 대기 · passive: 부하 시험 없이 관측 자료 평가 · carrier: 물리 링크 신호. 가상 IP: storage 10.20.0.15 / Server A~D 10.20.11~14.15. 네트워크 노드는 가상 Linux 기반 스위치(eth0 관리 포트, swp1~4 = ToR-A~D 업링크). 한 노드·한 대상의 결과는 그 범위만 말합니다. 영향 범위 전체를 비교해야 엔진 증거로 기록됩니다.'));
     for(const c of l.commands){const p=el('p','',`${c.example} — ${c.label} [${c.context}]. `);const a=el('a','','공식 문서');a.href=c.source;a.target='_blank';a.rel='noopener noreferrer';p.append(a);glossary.append(p);}
     actions.append(glossary);dock.append(actions);
     if(u.busy)for(const control of dock.querySelectorAll('select,input,[data-linux-choice],[data-linux-assemble],[data-linux-answer],[data-linux-help],[data-linux-run]'))control.disabled=true;

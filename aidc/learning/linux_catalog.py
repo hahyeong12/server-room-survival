@@ -69,12 +69,12 @@ ROWS = (
     ('ping','ping -c $count $host','any','ping','IP 도달성','ICMP 응답·손실만 확인했다','ping 성공이면 DNS와 서비스도 정상이다','ping'),
     ('ip_addr','ip addr','any',None,'주소·서브넷','선택한 노드의 주소 설정이다','주소가 있으면 원격 서비스도 정상이다','ip'),
     ('ip_route','ip route','any',None,'로컬 경로','선택한 노드의 다음 홉 설정이다','경로가 있으면 종단 통신도 성공한다','ip'),
-    ('ip_link','ip link show','network','tor_port','링크 상태','이 네트워크 노드 업링크의 carrier 상태다','UP이면 모든 애플리케이션이 정상이다','ip'),
+    ('ip_link','ip link show','network','tor_port','링크 상태','이 스위치 노드 각 포트의 carrier 상태다','UP이면 모든 애플리케이션이 정상이다','ip'),
     ('ss','ss -tuln','worker',None,'수신 포트','선택 노드의 TCP·UDP 수신 소켓이다','LISTEN이면 원격 요청도 성공한다','ss'),
     ('getent','getent hosts $name','any','dns','NSS 이름 조회','설정된 이름 조회 경로의 결과다','IP ping 실패가 DNS 오류를 입증한다','getent'),
     ('dig','dig $name','any','dns','DNS 질의','응답 코드와 DNS 응답을 확인했다','dig 종료 코드 0이면 SERVFAIL도 정상이다','dig'),
     ('resolvectl','resolvectl status','any',None,'리졸버 설정','리졸버 주소와 사용 링크 설정이다','설정된 DNS 주소는 반드시 응답한다','resolve'),
-    ('ethtool','ethtool eth0','network','tor_port','물리 링크 조회','이 인터페이스의 link detected 값이다','링크 UP이면 혼잡은 없다','ethtool'),
+    ('ethtool','ethtool $iface','network','tor_port','물리 링크 조회','지정한 포트 하나의 link detected 값이다','링크 UP이면 혼잡은 없다','ethtool'),
     ('curl','curl -I $url','any',None,'HTTP 헤더','이 URL의 이름 해석·연결·HTTP 응답을 구분했다','HTTP 503이어도 curl 종료 0이면 정상이다','curl'),
     ('traceroute','traceroute $host','any','link_stats','경로 응답·지연','각 홉의 응답 지연을 관측했다','별표 하나가 곧 그 라우터의 고장이다','trace'),
     ('systemctl','systemctl status $unit','worker','service_events','서비스 상태','가상 worker 서비스의 실행 상태다','active이면 작업 로그도 오류가 없다','systemctl'),
@@ -97,7 +97,9 @@ ROWS = (
 )
 COMMANDS = tuple(Command(*r) for r in ROWS)
 BY_ID = {c.command_id: c for c in COMMANDS}
+# Network node = virtual Linux-based switch: eth0 is its management port, swp1..swp4 are the ToR-A..D uplink ports.
 ARGUMENTS = {'$host': ('10.20.0.15', '10.20.11.15', '10.20.12.15', '10.20.13.15', '10.20.14.15'), '$name': ('storage-api.aidc.internal',),
+             '$iface': ('swp1', 'swp2', 'swp3', 'swp4', 'eth0'),
              '$url': ('http://storage-api.aidc.internal/health', 'http://worker.aidc.internal/health'), '$path': ('/data/work',),
              '$unit': ('worker.service',), '$pod': ('worker-0',), '$ns': ('aidc',),
              '$count': ('1', '3', '10', '20')}
@@ -118,7 +120,8 @@ MUTATING_TOOLS = ('sudo', 'su', 'rm', 'kill', 'killall', 'pkill', 'shutdown', 'r
                   'chmod', 'chown', 'mv', 'cp', 'tee', 'truncate', 'service')
 MUTATING_WORDS = ('restart', 'delete', 'apply', 'set', 'add', 'flush', 'edit', 'run', 'stop', 'start', 'reload', 'enable',
                   'disable', 'mask', 'isolate', 'scale', 'drain', 'cordon', 'uncordon', 'rollout', 'patch', 'label', 'annotate',
-                  'create', 'replace', 'del', 'change')
+                  'create', 'replace', 'del', 'change', 'rm', 'kill', 'flush-caches', 'daemon-reload', 'daemon-reexec',
+                  'reset-failed', 'reset-statistics', 'revert')
 MUTATING_OPTIONS = {
     'nvidia-smi': ('-r', '--gpu-reset', '-pm', '--persistence-mode', '-pl', '--power-limit', '-ac', '-rac', '-lgc', '-rgc',
                    '-e', '--ecc-config', '-c', '--compute-mode'),
@@ -126,6 +129,7 @@ MUTATING_OPTIONS = {
     'journalctl': ('--vacuum-size', '--vacuum-time', '--vacuum-files', '--rotate', '--flush'),
     'kubectl': ('exec', 'cp', 'port-forward'),
     'systemctl': ('kill',),
+    'resolvectl': ('dns', 'domain', 'default-route', 'llmnr', 'mdns', 'dnssec', 'dnsovertls', 'nta'),
 }
 
 class CLIError(ValueError):
