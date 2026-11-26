@@ -9,7 +9,8 @@
 | Phase8 최종 Chrome 실제 UI | **12/12 PASS** | [final/phase8-qa.json](qa/phase8/final/phase8-qa.json) |
 | 앞선 전체 UI 실행 | 11/11 PASS, 이후 리뷰 수정으로 최종 12개 재시험 | [full-attempt-1](qa/phase8/full-attempt-1/phase8-qa.json) |
 | 신규 Python Linux 검사 | **95/95 PASS** (CLI·10종·5근무·저장·반례) | `tests.test_linux_cli`, `tests.test_linux_curriculum`; 최종 전체 로그에 포함 |
-| Phase4~7·lab·Python 전체·adapter·JS·build | 최종 직렬 회귀 실행 중 | 완료 후 아래 수치 확정 |
+| 기존 Phase7 Chrome 회귀 | **12/12 PASS** | [regression-phase7/phase7-qa.json](qa/phase8/regression-phase7/phase7-qa.json) |
+| Phase4~6·lab·Python 전체·adapter·JS·build | 최종 직렬 회귀 실행 중 | 완료 후 수치 확정 |
 | Tk GUI 311개 | **미실행**, PASS 수에 포함하지 않음 | Issue/AGENTS 지침 |
 | 기존 사용자 저장·과거 QA 보호 | **1,047개 변경 0** | [protection-result.json](qa/phase8/protection-result.json), [시작 해시](qa/phase8/protected-before.json) |
 

@@ -4,6 +4,10 @@
 > 이 문서는 앞으로의 **우선순위와 완료 조건**입니다. 일정·버전명은 협의 가능한 제안이며 무단 기능 구현을 승인하지 않습니다.
 > 목적의 출처: [PROJECT_VISION.md](../PROJECT_VISION.md). 학습 방식: [LEARNING_DESIGN.md](LEARNING_DESIGN.md).
 
+## 3D Phase8 실험 브랜치의 별도 구현 (2026-11-26)
+
+Issue #9 / `experiment/3d-linux-learning-phase8`에 28개 가상 진단 호출·기존 사건 10종 연계·5개 유한 근무와 승급을 구현했습니다. Python 단일 상태에서 CLI 증거→해석→가설→승인/현장 대응→복구 후 새 관측→고객 보고를 판정합니다. 아래 Tk 버전의 역사적 구현 표와 별도로 [Phase8 구조·학습표](3d-world-expansion/PHASE8_ARCHITECTURE.md), [실제 QA](3d-world-expansion/QA_REPORT_PHASE8.md)를 확인합니다. 실제 OS 실행·완성형 셸·글로벌 자유 운영 random 장애는 구현 범위가 아닙니다. 기존 Tk 저장·Chapter5 Lab은 보존하며 main 병합을 뜻하지 않습니다.
+
 ## 1. 현 시점: 이미 있는 교육용 '첫 번째 층'
 
 **2026-11-16 v0.9-4b:** 기존 콘텐츠를 튜토리얼 / 스토리 도전 / 자유·연습으로 구성하고 제1장~제5장 표시·새 정규 장 시작 체크포인트를 추가했습니다. 기존 슬롯의 과거 체크포인트·프로필 통합 해금은 미구현입니다. 실제 Tk 포함 최신 검사와 구현 범위는 [모드 재구성 기록](PLAY_MODE_REORGANIZATION.md)을 확인합니다. 아래 버전별 미실행 표기는 당시 상태입니다.
