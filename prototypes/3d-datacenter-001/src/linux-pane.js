@@ -90,7 +90,9 @@ export function createLinuxPane({el, button, send, ui, render, toast}) {
         if(spec.syntax.includes('$host')){const target=el('select');target.dataset.linuxTarget='';target.setAttribute('aria-label','조회할 IP 대상');for(const value of l.arguments.$host){const o=el('option','',value);o.value=value;target.append(o);}target.value=u.target??'10.20.0.15';target.onchange=()=>{u.target=target.value;};builder.append(target);}
         if(spec.syntax.includes('$iface')){const port=el('select');port.dataset.linuxIface='';port.setAttribute('aria-label','조회할 스위치 포트');for(const value of l.arguments.$iface){const o=el('option','',value);o.value=value;port.append(o);}port.value=u.iface??l.arguments.$iface[0];port.onchange=()=>{u.iface=port.value;};builder.append(port);}
         builder.append(button('선택한 도구로 조회',()=>run(choiceLine(spec,{host:u.target,iface:u.iface})),'primary',{'data-linux-choice':'',...(!rec.acknowledged||!open?{disabled:''}:{})}));
-        dock.append(builder,el('small','linux-tool-meaning',`${spec.label} · 환경 ${spec.context}. IP: storage 10.20.0.15 / Server A~D 10.20.11~14.15 · 스위치 포트 swp1~4 = ToR-A~D 업링크. 영향 범위의 모든 서버·대상을 비교하세요.`));
+        // One line (full text on hover) so the action row below never leaves the monitor on short screens.
+        const meaning=el('small','linux-tool-meaning',`${spec.label} · 환경 ${spec.context} · IP storage 10.20.0.15 / Server A~D 10.20.11~14.15 · swp1~4 = ToR-A~D 업링크 · 영향 범위 전체를 비교`);
+        meaning.title=meaning.textContent;dock.append(builder,meaning);
       }else{
         const bits=el('div','linux-bits');bits.append(el('code','',spec.tool));
         spec.syntax.split(' ').slice(1).forEach((token, index)=>{

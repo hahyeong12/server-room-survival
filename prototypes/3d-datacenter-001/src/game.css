@@ -271,3 +271,4 @@ body[data-mode=linux] .ws-pane:not(.linux-pane)>*{flex-shrink:0}
 body[data-mode] #workstation.ws-expanded{top:6px!important;bottom:6px!important;width:calc(100% - 12px)!important;max-height:none!important;z-index:5;background:#08131f}
 body[data-mode] #workstation.ws-expanded .ws-titlebar{display:none}
 .linux-expanded .linux-current>small{display:none}
+.linux-tool-meaning{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}

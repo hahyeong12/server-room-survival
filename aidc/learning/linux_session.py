@@ -211,7 +211,7 @@ class LinuxSession(IncidentSession):
         if partial:
             # Depends only on the submitted cause and what was observed: never on the hidden cause.
             raise ValueError('영향 범위 전체를 비교해야 합니다. 아직 확인하지 않은 대상: '
-                             + ', '.join(sorted(x for left in partial.values() for x in left))
+                             + ', '.join(sorted({x for left in partial.values() for x in left}))
                              + ' — 한 노드·한 대상의 결과로 다른 노드를 판단하지 마세요.')
         return super().incident_hypothesis(iid, cause)
 
