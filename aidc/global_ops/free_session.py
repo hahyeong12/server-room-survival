@@ -12,6 +12,7 @@ from aidc.global_ops.session import GlobalSession, BRIEFING_LOCK
 from aidc.incidents.session import IncidentSession, IncidentBook, IncidentRecord, FINAL, OPEN
 from aidc.incidents.content import load
 from aidc.incidents.operating_rules import OperatingRules, FINGERPRINT
+from aidc.learning.linux_session import LinuxSession
 
 DIFFICULTIES = {
     'none': {'label': '무사건 연습', 'interval': 0, 'maximum': 0},
@@ -20,11 +21,12 @@ DIFFICULTIES = {
     'challenge': {'label': '도전', 'interval': 20, 'maximum': 2},
 }
 SCHEDULE_FINGERPRINT = hashlib.sha256(json.dumps(
-    [DIFFICULTIES, FINGERPRINT, 'eligible-v1:remaining20/slack60;closing-no-injection'], sort_keys=True).encode()).hexdigest()
+    [DIFFICULTIES, FINGERPRINT, 'eligible-v1:remaining20/slack60;closing-no-injection;optional-cli'], sort_keys=True).encode()).hexdigest()
 
 
-class FreeShiftSession(OperatingRules, IncidentSession):
+class FreeShiftSession(OperatingRules, LinuxSession):
     SAVE_MODE = 'global'
+    learning_optional = True
 
     def __init__(self, db, seed=None, difficulty='standard'):
         self.content = load()
@@ -43,8 +45,17 @@ class FreeShiftSession(OperatingRules, IncidentSession):
             self.free_incidents = {'version': 1, 'rules': SCHEDULE_FINGERPRINT, 'difficulty': difficulty, 'cursor': 0,
                                    'last': None, 'next': None, 'events': [], 'closing': False}
             self.incident = IncidentBook(self.content.version)
+        if saved:
+            value = saved.get('linux')
+            if not isinstance(value, dict) or value.get('version') != 1 or value.get('fingerprint') != self._fingerprint():
+                raise ValueError('자유 교대의 가상 터미널 기록 형식이 올바르지 않습니다.')
+            self.linux = deepcopy(value)
+        else:
+            self.linux = {'version': 1, 'fingerprint': self._fingerprint(), 'practice': None,
+                          'seq': 0, 'observations': [], 'interpretations': [], 'help': []}
         GlobalSession.__init__(self, db, kind='free', seed=seed)
         self._validate_free()
+        self._validate_learning()
         if saved:
             self._validate_incidents()
 
@@ -107,6 +118,7 @@ class FreeShiftSession(OperatingRules, IncidentSession):
 
     def shift_def(self, number=None):
         return {'code': 'FREE', 'title': '글로벌 자유 교대', 'coaching': 'short', 'subtitle': '진급 없는 운영 연습',
+                'role': '자유 교대 운영 담당', 'rank': '연습 · 진급 없음', 'input': 'terminal',
                 'intro': '요청 조건과 실제 서버 상황에 따라 돌발 사건이 발생합니다. 마무리를 누르면 새 접수를 멈춥니다.',
                 'goal': {'minSuccess': 0, 'maxExpired': 999, 'minResolved': 0, 'notifyBeforeRecovery': False}}
 
@@ -120,6 +132,26 @@ class FreeShiftSession(OperatingRules, IncidentSession):
 
     def shift_records(self):
         return list(self.incident.records)
+
+    def incident_view(self, rec):
+        return IncidentSession.incident_view(self, rec)
+
+    def incident_observe(self, iid, probe, location):
+        return IncidentSession.incident_observe(self, iid, probe, location)
+
+    def incident_hypothesis(self, iid, cause):
+        return IncidentSession.incident_hypothesis(self, iid, cause)
+
+    def verify_blocker(self, rec):
+        return IncidentSession.verify_blocker(self, rec)
+
+    def reveal_interpretation(self):
+        return False
+
+    def learning_view(self):
+        view = super().learning_view()
+        view.update(optional=True, shiftCount=None, rank='연습 · 진급 없음')
+        return view
 
     def shift_request_ids(self):
         return list(self.runs)

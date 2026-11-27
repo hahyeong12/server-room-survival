@@ -42,12 +42,12 @@ async function infer(id,linux){
   if(/배터리 운전|입력 이상/.test(text('ups')))return 'ups';
   throw new Error('Cannot infer from visible evidence: '+JSON.stringify(ev));
 }
-async function handle(rec){const id=rec.id;let g=await U.G(page),linux=!!g.linux;
+async function handle(rec){const id=rec.id;let g=await U.G(page),linux=!!g.linux&&!g.linux.optional;
   if(rec.state==='alert'){
     await U.ack(page,id);const type=await infer(id,linux);types[g.id+id]=type;
     if(linux)await player.evidence(id,type);else for(const p of PROBES[type])if(!(await U.inc(page,id)).evidence.some(e=>e.probe===p))await U.observe(page,id,p);
     const verdict=await U.hypothesis(page,id,type);assert.equal(verdict.verdict,'confirmed',JSON.stringify(verdict));await U.notify(page,id);
-    const act=async(a,rid)=>linux?player.act(id,a,rid):U.act(page,id,a,rid);
+    const act=async(a,rid)=>g.linux?player.act(id,a,rid):U.act(page,id,a,rid);
     const path={dns:['dns_failover'],tor_uplink:['escalate_network'],congestion:['qos_adjust'],gpu_health:['gpu_repair'],gpu_oom:['ask_consent','reduce_batch'],storage_full:['cleanup_temp'],storage_latency:['storage_path'],cooling:['escalate_facility','+10','standby_pump'],ups:['escalate_facility'],crashloop:['escalate_platform','+10','rollback_deploy']}[type];
     for(const a of path){if(a==='+10'){await U.advance(page,10);continue;}const result=await act(a);assert.ok(result&&!['none','refused'].includes(result.result),`${id} ${a}: ${JSON.stringify(result)}`);}
     if(type==='ups')for(const j of (await U.inc(page,id)).scope.jobs)await act('planned_pause',j.rid);

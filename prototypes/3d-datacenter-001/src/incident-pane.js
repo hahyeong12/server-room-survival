@@ -49,7 +49,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
   function probeButtons(g, rec, probes, { compact = false } = {}) {
     const box = el('div', 'inc-probes'), at = here();
     for (const p of probes) {
-      if (g.linux && !['cooling', 'ups'].includes(p.id)) continue;
+      if (g.linux && !g.linux.optional && !['cooling', 'ups'].includes(p.id)) continue;
       const ok = p.location === at, seen = rec.evidence.some(e => e.probe === p.id && e.minute === g.clock.minute);
       if (ok) { const b = button(`${seen ? '✓ ' : ''}관측 · ${p.label}`, () => send({ type: 'incident_observe', incident: rec.id, probe: p.id }), 'probe', { 'data-probe': p.id, title: `${p.fact} 명령어 예시(입력 불가): ${p.example}` }); box.append(b); }
       else if (!compact) box.append(button(`→ ${p.where} · ${p.label}`, () => goTo(p.location), 'link probe-away', { 'data-goto': p.location, 'data-probe-away': p.id, title: '현장 관측은 그 장소에서만 기록됩니다' }));

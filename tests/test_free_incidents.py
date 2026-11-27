@@ -166,6 +166,28 @@ class FreeIncidentTests(unittest.TestCase):
         s.mark_shift_seen('shiftfree')
         self.assertEqual(s.global_.seen, ['shiftfree'])
 
+    def test_optional_cli_shares_incident_without_advancing_or_fixing(self):
+        s = self.make(7, name='cli.db')
+        s.confirm_shift_briefing()
+        for _ in range(20):
+            start_open(s)
+            s.advance_time(10)
+            if s.incident.records:
+                break
+        rec = s.incident.records[0]
+        s.incident_ack(rec.id)
+        before = (s.minute, s.free_incidents['cursor'], rec.state, rec.cause_active, s.runs[rec.rid].state.work_done)
+        o = s.cli(rec.id, 'ip route', 'noc', s.token(rec))
+        self.assertEqual(o['command_id'], 'ip_route')
+        self.assertEqual(before, (s.minute, s.free_incidents['cursor'], rec.state, rec.cause_active, s.runs[rec.rid].state.work_done))
+        self.assertTrue(s.learning_view()['optional'])
+        self.assertNotIn('eligible', o)
+        saved = deepcopy(s.db.get_simulation())
+        s.db.close()
+        restored = FreeShiftSession(self.temp.db('cli.db'))
+        self.assertEqual(saved, restored.db.get_simulation())
+        self.assertEqual(restored.linux, s.linux)
+
 
 if __name__ == '__main__':
     unittest.main()

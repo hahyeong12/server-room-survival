@@ -24,6 +24,8 @@ def assess(session):
                                       for r in records), len(records), 15)}
     ids = {r.id for r in records}
     learning = getattr(session, 'linux', {})
+    if getattr(session, 'learning_optional', False) and not learning.get('observations'):
+        learning = {}
     answers = [x for x in learning.get('interpretations', []) if x['incident'] in ids]
     hypotheses = [h for r in records for h in r.hypotheses]
     # With no CLI curriculum, use the actual evidence-grounded hypothesis record for interpretation.
