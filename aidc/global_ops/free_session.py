@@ -5,6 +5,8 @@ Old GlobalSession saves are intentionally not migrated. No wall-clock timers or 
 from contextlib import contextmanager
 from copy import deepcopy
 import random
+import hashlib
+import json
 
 from aidc.global_ops.session import GlobalSession, BRIEFING_LOCK
 from aidc.incidents.session import IncidentSession, IncidentBook, IncidentRecord, FINAL, OPEN
@@ -17,6 +19,8 @@ DIFFICULTIES = {
     'standard': {'label': '표준', 'interval': 40, 'maximum': 2},
     'challenge': {'label': '도전', 'interval': 20, 'maximum': 2},
 }
+SCHEDULE_FINGERPRINT = hashlib.sha256(json.dumps(
+    [DIFFICULTIES, FINGERPRINT, 'eligible-v1:remaining20/slack60;closing-no-injection'], sort_keys=True).encode()).hexdigest()
 
 
 class FreeShiftSession(OperatingRules, IncidentSession):
@@ -32,11 +36,11 @@ class FreeShiftSession(OperatingRules, IncidentSession):
             self.free_incidents = deepcopy(value)
             self.incident = IncidentBook.from_payload(saved.get('incident'))
         else:
-            if difficulty not in DIFFICULTIES:
+            if not isinstance(difficulty, str) or difficulty not in DIFFICULTIES:
                 raise ValueError('장애 빈도는 무사건/편안한/표준/도전 중에서 선택하세요.')
             if seed is not None and (type(seed) is not int or not 0 <= seed < 2**31):
                 raise ValueError('seed는 0~2147483647 정수입니다.')
-            self.free_incidents = {'version': 1, 'rules': FINGERPRINT, 'difficulty': difficulty, 'cursor': 0,
+            self.free_incidents = {'version': 1, 'rules': SCHEDULE_FINGERPRINT, 'difficulty': difficulty, 'cursor': 0,
                                    'last': None, 'next': None, 'events': [], 'closing': False}
             self.incident = IncidentBook(self.content.version)
         GlobalSession.__init__(self, db, kind='free', seed=seed)
@@ -46,13 +50,24 @@ class FreeShiftSession(OperatingRules, IncidentSession):
 
     def _validate_free(self):
         f = self.free_incidents
-        if (self.global_.kind != 'free' or self.incident.version != self.content.version or f.get('rules') != FINGERPRINT or
-                f.get('difficulty') not in DIFFICULTIES or type(f.get('cursor')) is not int or
+        if (self.global_.kind != 'free' or self.incident.version != self.content.version or f.get('rules') != SCHEDULE_FINGERPRINT or
+                not isinstance(f.get('difficulty'), str) or f['difficulty'] not in DIFFICULTIES or type(f.get('cursor')) is not int or
                 f['cursor'] < 0 or type(f.get('closing')) is not bool or not isinstance(f.get('events'), list)):
             raise ValueError('자유 교대 기록이 올바르지 않습니다. 원본 저장은 보존됩니다.')
         for key in ('last', 'next'):
-            if f.get(key) is not None and (type(f[key]) is not int or f[key] % 10):
+            if f.get(key) is not None and (type(f[key]) is not int or f[key] % 10 or f[key] < self.global_.start):
                 raise ValueError('저장된 사건 시각이 올바르지 않습니다.')
+        if len(f['events']) != len(self.incident.records) or len(f['events']) > f['cursor']:
+            raise ValueError('사건 생성 이력과 사건 원장이 일치하지 않습니다.')
+        previous = 0
+        for event, rec in zip(f['events'], self.incident.records):
+            if (not isinstance(event, dict) or type(event.get('cursor')) is not int or
+                    not previous < event['cursor'] <= f['cursor'] or type(event.get('minute')) is not int or
+                    event['minute'] < self.global_.start or event['minute'] % 10 or
+                    event.get('id') != rec.id or event.get('rid') != rec.rid or
+                    event.get('type') != rec.type or event['minute'] != rec.detected):
+                raise ValueError('저장된 사건 생성 이력이 올바르지 않습니다.')
+            previous = event['cursor']
 
     def _extra_payload(self):
         return {**super()._extra_payload(), 'free_incidents': deepcopy(self.free_incidents)}
@@ -126,7 +141,7 @@ class FreeShiftSession(OperatingRules, IncidentSession):
 
     def _arm(self):
         f = self.free_incidents
-        if not self.global_.briefed or self.global_.result is not None or f['last'] == self.minute:
+        if not self.global_.briefed or self.global_.result is not None or f['closing'] or f['last'] == self.minute:
             return False
         f['last'] = self.minute
         config = DIFFICULTIES[f['difficulty']]
@@ -168,7 +183,7 @@ class FreeShiftSession(OperatingRules, IncidentSession):
         return result
 
     def mark_shift_seen(self, key):
-        if self.global_.result is None or key != 'shiftNone':
+        if self.global_.result is None or key != 'shiftfree':
             raise ValueError('끝난 자유 교대 결과만 기록할 수 있습니다.')
         if key not in self.global_.seen:
             with self._atomic():

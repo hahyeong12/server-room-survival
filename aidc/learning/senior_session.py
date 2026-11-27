@@ -5,7 +5,7 @@ import json
 
 from aidc.learning.linux_session import LinuxSession
 from aidc.learning import linux_curriculum, linux_catalog
-from aidc.learning.career import assess
+from aidc.learning.career import assess, FINGERPRINT as ASSESSMENT_FINGERPRINT
 from aidc.incidents.operating_rules import OperatingRules, FINGERPRINT
 
 SHIFTS = {
@@ -31,7 +31,7 @@ class SeniorSession(OperatingRules, LinuxSession):
     @staticmethod
     def _fingerprint():
         definition = json.dumps(SHIFTS, sort_keys=True, ensure_ascii=False)
-        return 'senior-v1:' + FINGERPRINT + ':' + hashlib.sha256(definition.encode()).hexdigest() + ':' + linux_curriculum.fingerprint() + ':' + linux_catalog.fingerprint()
+        return 'senior-v1:' + ASSESSMENT_FINGERPRINT + ':' + FINGERPRINT + ':' + hashlib.sha256(definition.encode()).hexdigest() + ':' + linux_curriculum.fingerprint() + ':' + linux_catalog.fingerprint()
 
     def _has_shift(self, number):
         return number in SHIFTS

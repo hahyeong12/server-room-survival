@@ -93,6 +93,22 @@ class SeniorCareerTests(unittest.TestCase):
         s.incident_act(rec.id, 'delete_data')
         self.assertTrue(assess(s)['unsafe'])
 
+    def test_unanswered_interpretation_is_zero_and_repeats_cannot_farm_score(self):
+        s = SeniorSession(self.temp.db(), seed=5)
+        s.confirm_shift_briefing()
+        start_open(s)
+        s.advance_time(30)
+        rec = next(r for r in s.shift_records() if r.state == 'alert')
+        s.incident_ack(rec.id)
+        self.assertEqual(assess(s)['learning']['items']['interpretation'], 0)
+        from aidc.learning.linux_catalog import BY_ID
+        o = L.command(s, rec, 'journalctl')
+        answer = next(x['id'] for x in o['choices'] if x['text'] == BY_ID['journalctl'].wrong)
+        s.interpret(rec.id, o['seq'], answer)
+        first = assess(s)['learning']['items']['interpretation']
+        L.command(s, rec, 'journalctl', interpret=True)
+        self.assertEqual(assess(s)['learning']['items']['interpretation'], first)
+
 
 if __name__ == '__main__':
     unittest.main()

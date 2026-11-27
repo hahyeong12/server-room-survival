@@ -19,7 +19,7 @@ export function focusIncident(game, id) {
 // One line for the goal head / strip, from the engine records only.
 export function incidentGoal(game) {
   const inc = game?.incident, g = game?.global; if (!inc || !g) return null;
-  const label = `${game.senior ? `담당 엔지니어 · 선임 평가 ${g.shift}/2` : game.linux ? (game.linux.practice ? 'Linux 사건 연습' : `Linux 근무 ${game.linux.shift}/5`) : inc.practice ? '사건 연습' : `장애 대응 근무 ${inc.code}`} · ${g.coachingLabel ?? ''}`;
+  const label = `${g.kind==='free'?`글로벌 자유 교대 · ${g.difficultyLabel}`:game.senior ? `담당 엔지니어 · 선임 평가 ${g.shift}/2` : game.linux ? (game.linux.practice ? 'Linux 사건 연습' : `Linux 근무 ${game.linux.shift}/5`) : inc.practice ? '사건 연습' : `장애 대응 근무 ${inc.code}`} · ${g.coachingLabel ?? ''}`;
   if (!g.briefed) return { label, title: '근무 브리핑 확인', what: '아래 대화를 읽고 [근무 시작]을 누르세요. 그 전에는 시간이 흐르지 않고 배정·대응도 잠겨 있습니다.' };
   if (g.done) return { label, title: g.result.cleared ? '근무 목표 달성' : '근무 목표 미달성', what: `사건 해결 ${g.result.resolved}/${g.result.incidents.length} · 정상 완료 ${g.result.success}/${g.result.total} · 결과 화면을 확인하세요.` };
   const open = inc.records.filter(r => !['armed', 'closed', 'failed', 'void'].includes(r.state));

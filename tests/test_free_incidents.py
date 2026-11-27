@@ -119,6 +119,53 @@ class FreeIncidentTests(unittest.TestCase):
         self.assertEqual(before['free_incidents'], s.free_incidents)
         self.assertEqual(before['incident'], s.incident.payload())
 
+    def test_natural_overlap_bounded_and_same_tick_cannot_duplicate(self):
+        maximum = 0
+        for seed in range(5):
+            s = self.make(seed)
+            s.confirm_shift_briefing()
+            for _ in range(20):
+                start_open(s)
+                s.advance_time(10)
+                count = s.free_status()['openIncidents']
+                self.assertLessEqual(count, 2)
+                maximum = max(maximum, count)
+                events = deepcopy(s.free_incidents['events'])
+                self.assertFalse(s._arm())
+                self.assertEqual(events, s.free_incidents['events'])
+        self.assertEqual(maximum, 2)
+
+    def test_rejected_options_and_legacy_reader_protect_new_save(self):
+        from aidc.global_ops.session import GlobalSession
+        for seed, difficulty in ((True, 'standard'), (-1, 'standard'), (2**31, 'none'), (1, []), (1, 'unknown')):
+            with self.assertRaises(ValueError):
+                self.make(seed, difficulty)
+        s = self.make()
+        before = deepcopy(s.db.get_simulation())
+        with self.assertRaisesRegex(ValueError, 'FreeShiftSession'):
+            GlobalSession(s.db)
+        self.assertEqual(before, s.db.get_simulation())
+
+    def test_wrapup_stops_new_incidents_but_finishes_running_work(self):
+        s = self.make()
+        s.confirm_shift_briefing()
+        start_open(s)
+        self.assertTrue(s._eligible())
+        s.end_free_shift()
+        count = len(s.runs)
+        for _ in range(25):
+            if s.global_.result:
+                break
+            start_open(s)
+            s.advance_time(10)
+        self.assertTrue(s.global_.result)
+        self.assertEqual(count, len(s.runs))
+        self.assertEqual(s.free_incidents['events'], [])
+        self.assertEqual(s.incident.records, [])
+        s.mark_shift_seen('shiftfree')
+        s.mark_shift_seen('shiftfree')
+        self.assertEqual(s.global_.seen, ['shiftfree'])
+
 
 if __name__ == '__main__':
     unittest.main()
