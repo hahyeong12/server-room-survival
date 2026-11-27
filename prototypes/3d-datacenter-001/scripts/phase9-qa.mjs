@@ -25,21 +25,25 @@ function payload(id){const db=new DatabaseSync(join(stack.saveDir,id+'.db'),{rea
 async function startAvailable(){let g=await U.G(page);for(const r of g.requests.filter(x=>x.stage==='incoming'&&(g.global.kind==='free'||g.global.requestIds.includes(x.id)))){await U.read(page,r.id);await U.tab(page,'plan');const mode=await page.locator('[data-plan-option^="performance:"]').count()?'performance':await page.locator('[data-plan-option^="economy:"]').count()?'economy':null;if(mode){await U.choose(page,r.id,mode);await U.startHall(page,r.id);}}}
 const PROBES={dns:['ping','dns'],tor_uplink:['tor_port'],congestion:['link_stats'],gpu_health:['dcgm'],gpu_oom:['job_log','dcgm'],storage_full:['storage_space'],storage_latency:['storage_latency','storage_space'],cooling:['cooling'],ups:['ups'],crashloop:['service_events','job_log']};
 const VERIFY={dns:['dns','ping'],tor_uplink:['tor_port','ping'],congestion:['link_stats'],gpu_health:['dcgm'],gpu_oom:['job_log','dcgm'],storage_full:['storage_space','job_log'],storage_latency:['storage_latency','storage_space'],cooling:['cooling'],ups:['ups'],crashloop:['service_events','job_log']};
+function classify(ev){const text=p=>ev.filter(e=>e.probe===p).at(-1)?.summary??'';
+    if(/SERVFAIL|이름 조회 실패/.test(text('dns')))return 'dns';
+    if(/Xid|ECC|FAIL/.test(text('dcgm')))return 'gpu_health';
+    if(/OOM|out of memory/i.test(text('job_log')))return 'gpu_oom';
+    if(/CrashLoop|재시작 [1-9]/.test(text('service_events')))return 'crashloop';
+    if(/9[89]%|100%|공간 소진/.test(text('storage_space')))return 'storage_full';
+    if(/85 ms|지연 증가/.test(text('storage_latency')))return 'storage_latency';
+    if(/DOWN/.test(text('tor_port')))return 'tor_uplink';
+    if(/95%|98%|혼잡|드롭 [1-9]/.test(text('link_stats')))return 'congestion';
+    if(/WARN|저하|유량 1|31.5/.test(text('cooling')))return 'cooling';
+    if(/배터리 운전|입력 이상/.test(text('ups')))return 'ups';
+    return null;}
 async function infer(id,linux){
   if(linux){for(const ident of ['ping','ip_link','getent','journalctl','df','iostat','traceroute','nvidia_smi','dcgm','pods']){const g=await U.G(page);if(ident==='pods'&&!g.linux.contexts[id].some(n=>n.id==='cluster'&&n.available))continue;await player.scoped(id,ident,{interpret:ident==='journalctl'});}}
   else for(const probe of Object.keys((await U.G(page)).incident.menu.probes.reduce((o,p)=>(o[p.id]=true,o),{})))await U.observe(page,id,probe);
-  const r=await U.inc(page,id),ev=r.evidence;
-  const text=p=>ev.filter(e=>e.probe===p).at(-1)?.summary??'';
-  if(/SERVFAIL|이름 조회 실패/.test(text('dns')))return 'dns';
-  if(/Xid|ECC|FAIL/.test(text('dcgm')))return 'gpu_health';
-  if(/OOM|out of memory/i.test(text('job_log')))return 'gpu_oom';
-  if(/CrashLoop|재시작 [1-9]/.test(text('service_events')))return 'crashloop';
-  if(/9[89]%|100%|공간 소진/.test(text('storage_space')))return 'storage_full';
-  if(/85 ms|지연 증가/.test(text('storage_latency')))return 'storage_latency';
-  if(/DOWN/.test(text('tor_port')))return 'tor_uplink';
-  if(/95%|98%|혼잡|드롭 [1-9]/.test(text('link_stats')))return 'congestion';
-  if(/WARN|저하|유량 1|31.5/.test(text('cooling')))return 'cooling';
-  if(/배터리 운전|입력 이상/.test(text('ups')))return 'ups';
+  // Cooling/UPS readings belong to the BMS (facilities), not the Linux hosts: when every CLI reading is normal the
+  // player checks the cooling plant and the UPS panel too, as Phase 8 QA does.
+  if(linux&&!classify((await U.inc(page,id)).evidence))for(const probe of ['cooling','ups'])await U.observe(page,id,probe);
+  const ev=(await U.inc(page,id)).evidence,type=classify(ev);if(type)return type;
   throw new Error('Cannot infer from visible evidence: '+JSON.stringify(ev));
 }
 async function handle(rec){const id=rec.id;let g=await U.G(page),linux=!!g.linux&&!g.linux.optional;
