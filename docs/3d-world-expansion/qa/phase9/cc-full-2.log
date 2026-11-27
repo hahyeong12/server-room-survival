@@ -1,0 +1,26 @@
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-f7o8f5)
+[vite] 
+  [32m[1mVITE[22m v7.3.8[39m  [2mready in [0m[1m193[22m[2m[0m ms[22m
+[vite]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5189[22m/[39m
+PASS public career map and senior lock
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-f7o8f5)
+PASS free none: start, jobs, restart, finish
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-f7o8f5)
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-f7o8f5)
+PASS seeded challenge: real incidents, recovery, report, finish; same seed replay
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-f7o8f5)
+PASS different seed standard produces distinct incident layout
+PASS story chapters 1 to 5 through first public menu
+PASS regular global three shifts through UI
+PASS regular incident three shifts through UI
+AssertionError [ERR_ASSERTION]: INC-L31 kubectl get pods -n aidc records valid CLI observation
+
+11 !== 12
+
+    at command (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-ui.mjs:23:38)
+    at async infer (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:29:228)
+    at async handle (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:47:37)
+    at async workShift (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:65:220)
+    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:79:126
+    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:19:35)
+    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:79:2

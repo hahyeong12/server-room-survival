@@ -1,0 +1,15 @@
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-ilKc3B)
+[vite] 
+  [32m[1mVITE[22m v7.3.8[39m  [2mready in [0m[1m207[22m[2m[0m ms[22m
+[vite]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5189[22m/[39m
+PASS public career map and senior lock
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-ilKc3B)
+PASS free none: start, jobs, restart, finish
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-ilKc3B)
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-ilKc3B)
+PASS seeded challenge: real incidents, recovery, report, finish; same seed replay
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-ilKc3B)
+PASS different seed standard produces distinct incident layout
+PASS story chapters 1 to 5 through first public menu
+PASS regular global three shifts through UI
+PASS regular incident three shifts through UI

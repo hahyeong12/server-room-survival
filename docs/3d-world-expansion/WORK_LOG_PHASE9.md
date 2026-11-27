@@ -43,3 +43,37 @@
 - Codex의 마지막 브라우저 QA `full-3`는 7번째 검사(사건 3교대)에서 FAIL(`monitoring` ≠ `verified`)로 끝나 있었음. 원인: `phase9-qa.mjs`가 복구 직후의 `after` 관측이 있으면 재관측을 건너뜀. 엔진은 복구+10분 이후 관측을 요구(Phase7 QA는 매번 `verifyProbes` 재관측). QA 스크립트만 엔진 규칙에 맞춤(현재 시각에 관측이 없으면 재관측). 엔진 변경 아님.
 - P2 보완(설계 결정): 기존 분기 다수가 "빠른 현장 조치 10분 vs 담당팀 30분"으로 빠른 쪽이 항상 유리한 지배 전략이었음. Phase9 덧층(`OperatingRules`, 자유 교대·선임 평가에만 적용, 사건 v1·기존 저장 불변)에 **임시 우회 감속 운전**(`RESIDUAL`)을 추가: 빠른 우회는 정지가 짧지만 복구 뒤 60분간 처리량 0.5배(감속형 사건 0.7배), batch 축소는 동의 계산과 같은 0.8배로 완료까지. 감속 시간은 원장 `slow_minutes`와 실제 완료 시각에 반영.
 - 진행 규칙: QA 실행 중에는 엔진/화면 소스를 수정하지 않음(Codex dev-free-3·full-1 오염 사례). 변경안은 OS 임시 폴더의 detached worktree에서 먼저 검증한 뒤 본 저장소에 적용.
+
+## 2026-11-28 사용자 요청으로 일시 중단 — 재개 지점
+
+### 완료
+- `819a99a`: QA 스크립트를 엔진 규칙에 맞춤(복구+10분 뒤 재관측, Linux 추론에 `ip link`, 환경 없는 Kubernetes 컨텍스트 건너뜀).
+- `a922a7b`: 임시 우회 vs 근본 조치 trade-off(`OperatingRules.RESIDUAL`, 규칙 `residual-v2`)와 2차 독립 리뷰 확인 결함 7건 수정(평가 v2 포함). 상세는 `REVIEW_PHASE9.md` 2차 리뷰 표.
+- 문서 갱신: `PHASE9_ARCHITECTURE.md`(trade-off 표·평가 v2), `PHASE9_GAME_DESIGN.md`(선택과 비용), `REVIEW_PHASE9.md`(2차 독립 리뷰), `AGENTS.md`(Phase 9 인계 절).
+
+### 실행한 테스트 (PASS 합산 기준: 같은 코드에서 끝까지 실행한 것만)
+| 실행 | 코드 | 결과 |
+| --- | --- | --- |
+| Python 비GUI `cc-headless-2.log` | `a922a7b` | 972/972 OK |
+| adapter `cc-adapter-2.log` | `a922a7b` | 57/57 OK |
+| JS `cc-js-2.log` | `a922a7b` | 53/53 PASS |
+| 브라우저 `cc-full-1` | `29ee9c8`+QA 수정1 | 7/8, Linux 추론(ToR) QA 결함으로 FAIL — 최종 증거 아님 |
+| 브라우저 `cc-full-2` | 중간 코드(리뷰 수정 전) | 7/8, Linux `kubectl` 환경 없음 QA 결함으로 FAIL — 최종 증거 아님 |
+| 브라우저 `cc-full-3` | `a922a7b` | **미완료**: 7개 PASS(경력 지도·자유 무사건·seed 도전 재현·다른 seed·제1~5장·글로벌3·사건3) 후 Linux 5근무 진행 중 사용자 요청으로 작업자가 중단. Linux 5근무·선임 평가/엔딩 2개 검사는 미실행 |
+
+### 다음에 할 일 (순서)
+1. `cd prototypes/3d-datacenter-001 && node scripts/phase9-qa.mjs --out=../../docs/3d-world-expansion/qa/phase9/cc-full-4` — 8/8 확인. 실패 시 원인 분석(QA 결함인지 엔진 결함인지 구분) 후 수정·재실행. 실행 중 엔진/src 수정 금지.
+2. 직렬 회귀 `node scripts/phase9-regression.mjs --tag=cc-final` (Phase8 13·Phase7 12·Phase6 16·Phase5 9·Phase4 13·lab·Python·adapter·JS·build).
+3. 보호 해시 `python prototypes/3d-datacenter-001/scripts/protect_phase9.py after` → `protection-result.json`.
+4. `QA_REPORT_PHASE9.md` 작성(최종 결과만 PASS로), 작업 기록 마감, 커밋·일반 Push.
+5. Issue #10 최종 보고 댓글, Issue #8에 P0 검증 근거 댓글(남은 요건 확인 후 열기/닫기 판단). `gh` 없음 → git credential manager 토큰으로 GitHub REST API 사용 가능(토큰 출력 금지).
+
+### 미해결 / Phase10 후보
+- 공유 범위 사건(냉각·UPS·ToR)의 자유 교대 적격성은 주 요청의 기한 여유만 확인(다른 작업은 계획 중단·이전으로 대응 가능).
+- 감속형 사건(혼잡·I/O)은 남은 작업 20~40분에서 두 경로 완료 시각이 같을 수 있음.
+- 수정 후 독립 재리뷰는 하지 않음.
+
+### Git 상태
+- 마지막 기능 커밋 `a922a7b`(원격 동기화 확인). 이 기록 커밋 뒤 Push 예정.
+- 분리 검증용 detached worktree: OS 임시 폴더 `scratchpad/wt`(`git worktree list`로 확인, 재개 후 `git worktree remove`로 정리 가능. 사용자 파일 아님).
+- 기존 미추적 Phase7/8/9 PNG는 stage하지 않음.
