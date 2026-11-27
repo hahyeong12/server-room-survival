@@ -9,6 +9,7 @@ import random
 from aidc.global_ops.session import GlobalSession, BRIEFING_LOCK
 from aidc.incidents.session import IncidentSession, IncidentBook, IncidentRecord, FINAL, OPEN
 from aidc.incidents.content import load
+from aidc.incidents.operating_rules import OperatingRules, FINGERPRINT
 
 DIFFICULTIES = {
     'none': {'label': '무사건 연습', 'interval': 0, 'maximum': 0},
@@ -18,7 +19,7 @@ DIFFICULTIES = {
 }
 
 
-class FreeShiftSession(IncidentSession):
+class FreeShiftSession(OperatingRules, IncidentSession):
     SAVE_MODE = 'global'
 
     def __init__(self, db, seed=None, difficulty='standard'):
@@ -35,7 +36,7 @@ class FreeShiftSession(IncidentSession):
                 raise ValueError('장애 빈도는 무사건/편안한/표준/도전 중에서 선택하세요.')
             if seed is not None and (type(seed) is not int or not 0 <= seed < 2**31):
                 raise ValueError('seed는 0~2147483647 정수입니다.')
-            self.free_incidents = {'version': 1, 'difficulty': difficulty, 'cursor': 0,
+            self.free_incidents = {'version': 1, 'rules': FINGERPRINT, 'difficulty': difficulty, 'cursor': 0,
                                    'last': None, 'next': None, 'events': [], 'closing': False}
             self.incident = IncidentBook(self.content.version)
         GlobalSession.__init__(self, db, kind='free', seed=seed)
@@ -45,7 +46,7 @@ class FreeShiftSession(IncidentSession):
 
     def _validate_free(self):
         f = self.free_incidents
-        if (self.global_.kind != 'free' or self.incident.version != self.content.version or
+        if (self.global_.kind != 'free' or self.incident.version != self.content.version or f.get('rules') != FINGERPRINT or
                 f.get('difficulty') not in DIFFICULTIES or type(f.get('cursor')) is not int or
                 f['cursor'] < 0 or type(f.get('closing')) is not bool or not isinstance(f.get('events'), list)):
             raise ValueError('자유 교대 기록이 올바르지 않습니다. 원본 저장은 보존됩니다.')

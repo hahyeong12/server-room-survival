@@ -272,3 +272,9 @@ body[data-mode] #workstation.ws-expanded{top:6px!important;bottom:6px!important;
 body[data-mode] #workstation.ws-expanded .ws-titlebar{display:none}
 .linux-expanded .linux-current>small{display:none}
 .linux-tool-meaning{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+/* Phase 9: engine-led career and independent score cards. */
+.career-map{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:12px;border:1px solid #43647b;border-radius:10px;margin:10px 0;background:#142333}
+.career-map strong,.career-map small{flex-basis:100%}.career-map span{color:#a4b8c9}.career-map .career-done{color:#7de1c3}
+.career-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.career-score{display:flex;flex-direction:column;gap:3px}.career-score strong{color:#8ce2d0}.career-score-note{grid-column:1/-1;color:#adbdcb}
+.career-ending{padding:12px;background:#163a36;border:1px solid #75cdb4;border-radius:8px}.career-ending p{margin:5px 0}
+.free-settings{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.free-settings input{width:150px}.free-settings input,.free-settings select{background:#172638;color:#e3edf5;padding:6px;border:1px solid #547086;border-radius:5px}

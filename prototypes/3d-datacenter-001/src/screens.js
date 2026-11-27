@@ -2,6 +2,7 @@
 // a new story / free / tutorial game is a NEW engine save; nothing here forges completion, score or resources.
 import {isOpen,STAGE_LABEL,COUNTRY_NAMES,placeName,isGlobal} from './game-view.js';
 import {resultRows,resultNotes,missionOf,cardRows} from './campaign-view.js';
+import {assessmentCard} from './career-view.js';
 
 export function createScreens({ $, el, button, store, game, send, newGame, openGame, retryChapter, showMenu, toast, ui, render }) {
   const dlg = $('screen-dialog'), slot = $('screen-slot');
@@ -30,7 +31,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       'global-free': ['글로벌 자유 운영', async () => { close(); await newGame('global_free'); }, ''],
       // Phase 7: incident-response shifts (A -> B -> C) in the same incident save; a retry is a NEW incident save.
       'next-incident': [`근무 ${({ 2: 'B', 3: 'C' })[game()?.global?.next] ?? ''} 시작`, async () => { const nx = game()?.global?.next, ack = onClose; onClose = null; close(); await ack?.(); if (nx) await send({ type: 'start_next_shift', shift: String(nx) }); }, 'primary'],
-      'next-linux': [`Linux 근무 ${game()?.global?.next ?? ''} 시작`, async () => {const nx=game()?.global?.next,ack=onClose;onClose=null;close();await ack?.();if(nx)await send({type:'start_next_shift',shift:String(nx)});}, 'primary'],
+      'next-linux': [`${game()?.senior?'선임 평가':'Linux 근무'} ${game()?.global?.next ?? ''} 시작`, async () => {const nx=game()?.global?.next,ack=onClose;onClose=null;close();await ack?.();if(nx)await send({type:'start_next_shift',shift:String(nx)});}, 'primary'],
       'retry-incident': [`${game()?.incident?.practice || game()?.linux?.practice ? '같은 사건 다시 연습' : `근무 ${game()?.incident?.code ?? ''} 재도전`} (새 슬롯)`, async () => { const ack = onClose; onClose = null; close(); await ack?.(); await retryChapter(); }, ''],
     };
     for (const k of kinds) { const [label, fn, cls] = defs[k]; row.append(button(label, fn, cls, { 'data-next': k })); }
@@ -153,8 +154,10 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     const gl = g.global, res = gl.result, inc = g.incident, key = `shift${gl.shift}`, box = el('section', 'screen shift-result incident-result');
     const final = res.cleared && !gl.next && !inc.practice && !g.linux?.practice;
     box.append(el('span', 'eyebrow', inc.practice ? 'INCIDENT PRACTICE · 진급 기록 없음' : `INCIDENT SHIFT ${inc.code} · ${gl.shift}/${inc.shiftCount} · ${gl.coachingLabel}`),
-      el('h2', '', final ? (g.linux ? '독립 관제 엔지니어 · Linux 연수 수료' : '장애 대응 근무 A·B·C 모두 완료') : `${res.title} · ${res.cleared ? '목표 달성' : '목표 미달성'}`),
+      el('h2', '', g.senior&&res.senior?.ending ? '서버실 생존기 · 선임 엔지니어 엔딩' : final ? (g.linux ? '독립 관제 엔지니어 · Linux 연수 수료' : '장애 대응 근무 A·B·C 모두 완료') : `${res.title} · ${res.cleared ? '목표 달성' : '목표 미달성'}`),
       el('p', 'screen-sub', `엔진 판정: 사건 해결 ${res.resolved}/${res.incidents.length}(목표 ${res.goal.minResolved}) · 정상 완료 ${res.success}/${res.total}${res.goal.notifyBeforeRecovery ? ' · 복구 전 고객 안내 필요' : ''} · ${res.started} → ${res.finished}`));
+    if(res.assessment)box.append(assessmentCard(res.assessment,el));
+    if(res.senior?.ending){const ending=el('div','career-ending');ending.dataset.ending='';ending.append(el('p','','선배: 이제는 혼자 답을 찾고, 동료와 함께 서비스를 지키는 엔지니어가 되었네요.'),el('p','','나: 명령을 실행하는 것보다, 무엇을 확인하고 누구에게 알려야 하는지 배웠습니다.'),el('p','','동료: 오늘 교대는 우리가 이어받을게요. 수고하셨습니다.'),el('strong','','직무: 선임 엔지니어 · 기존 독립 관제 엔지니어 교육 수료는 그대로 보존됩니다.'),el('p','','제작 hahyeong12 · Server Room Survival · MIT License · Three.js 및 Python 생태계에 감사합니다.'),el('p','','본편 완료 · 이후 글로벌 자유 운영은 원하는 날 새 교대로 시작하세요.'));box.append(ending);}
     const table = el('table', 'terms-table shift-table'); table.innerHTML = '<thead><tr><th>사건</th><th>원인(확정)</th><th>고객 · 도시</th><th>결과</th><th>근거 · 반박 · 개선 없음 · 허용 안 됨</th><th>해결 · 완화</th><th>영향</th></tr></thead>';
     const tb = el('tbody');
     for (const r of res.incidents) { const tr = el('tr'); tr.dataset.incident = r.id; tr.dataset.outcome = r.outcome;
@@ -172,6 +175,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     const kinds = [];
     if (res.cleared && gl.next) kinds.push(g.linux?'next-linux':'next-incident');
     if (!res.cleared || inc.practice || g.linux?.practice) kinds.push('retry-incident');
+    if(g.senior&&res.senior?.ending)kinds.push('global-free');
     kinds.push('result', 'menu', 'stay');
     box.append(nextButtons(kinds));
     show(final ? 'incident-complete' : res.cleared ? 'incident-clear' : 'incident-failed', [box],
@@ -183,7 +187,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
       box.append(el('span','eyebrow','FREE SHIFT · 진급 기록 없음'),el('h2','','오늘의 자유 교대를 마쳤습니다'),el('p','screen-sub',`seed ${gl.seed} · ${gl.difficultyLabel} · 정상 완료 ${res.success}/${res.total} · 사건 해결 ${res.resolved}/${res.incidents.length}`));
       const list=el('ul','screen-notes');for(const r of res.rows)list.append(el('li','',`${r.city} · ${r.client}: ${r.label}`));for(const r of res.incidents)list.append(el('li','',`${r.id} ${r.label}: ${r.outcome} · 정지 ${r.downtime}분 · 지연 ${r.slowMinutes}분`));box.append(list,nextButtons(['global-free','menu','stay']));
       show('shift-free',[box],()=>send({type:'mark_shift_seen',key:'shiftNone'},{quiet:true}));return;}
-    if (['incident','linux'].includes(g.mode)) return incidentShiftDone(g);
+    if (['incident','linux','senior'].includes(g.mode)) return incidentShiftDone(g);
     const gl = g.global, res = gl.result, key = `shift${gl.shift}`, box = el('section', 'screen shift-result');
     const played = new Set([...gl.history.filter(h => h.cleared).map(h => h.shift), res.cleared ? res.shift : null]);
     const final = res.cleared && !gl.next && gl.shifts.every(x => played.has(x.number));

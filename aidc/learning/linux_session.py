@@ -153,10 +153,13 @@ class LinuxSession(IncidentSession):
         with self._atomic():
             entry = {'incident': iid, 'seq': seq, 'answer': answer, 'correct': correct, 'minute': self.minute,
                      'feedback': ('관측의 범위에 맞는 해석입니다. 다른 계층은 추가 관측으로 확인하세요.' if correct else
-                                  '관측 범위를 넘어선 추측입니다. ' + (spec.correct + '. ' if self.global_.shift <= 2 else '') + '다른 도구로 추가 확인하세요.')}
+                                  '관측 범위를 넘어선 추측입니다. ' + (spec.correct + '. ' if self.reveal_interpretation() else '') + '다른 도구로 추가 확인하세요.')}
             self.linux['interpretations'].append(entry)
             obs['interpretation'] = correct
         return deepcopy(entry)
+
+    def reveal_interpretation(self):
+        return self.global_.shift <= 2
 
     def incident_observe(self, iid, probe, location):
         if probe not in ('cooling', 'ups'):

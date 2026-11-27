@@ -15,6 +15,7 @@ import {chapterGoal,talkFor,isLaterChapter} from './campaign-view.js';
 import {createChapterPanes} from './chapter-panes.js';
 import {createIncidentPane,isIncident,incidentGoal,facilityRows,focusIncident} from './incident-pane.js';
 import {createLinuxPane} from './linux-pane.js';
+import {assessmentCard} from './career-view.js';
 
 document.querySelector('#app').innerHTML=`
 <header class="topbar"><a class="brand" href="#noc"><span class="brand-icon">▤</span><span>SERVER ROOM<span class="brand-sub">SURVIVAL / ULSAN AIDC</span></span></a>
@@ -227,6 +228,7 @@ function goalHead(){
   $('goal-step').textContent=step;$('goal-title').textContent=title;$('goal-hint').textContent=hint;$('goal-why').textContent=why;$('goal-where').textContent=where;
   $('goal-why').hidden=!why;$('goal-where').hidden=!where;
   $('goal-pips').replaceChildren(...pips.map(c=>{const p=el('i');p.className=c;return p;}));
+  if(g?.global?.kind==='free'&&g.incident&&g.global.briefed&&!g.global.done&&!g.global.closing)$('goal-pips').append(button('교대 마무리·결과 보기',()=>send({type:'end_free_shift'}),'link',{'data-free-end':''}));
 }
 function requestSummary(){
   const root=$('req-summary'),g=game(),r=focusRequest(g);root.replaceChildren();
@@ -458,6 +460,7 @@ function shiftActions(body,g){
 }
 function paneResult(body,g,r){
   if(isGlobal(g))shiftActions(body,g);
+  if(g.assessment)body.append(assessmentCard(g.assessment,el));
   const done=g.requests.filter(x=>!isOpen(x));
   if(!done.length){body.append(el('p','ws-note','아직 끝난 업무가 없습니다. 작업이 100%가 되면 엔진이 자원을 반환하고 결과를 기록합니다.'));return;}
   const target=r&&!isOpen(r)?r:done.at(-1),s=target.summary||{};
@@ -483,7 +486,7 @@ function renderStrip(){
     $('stepper').replaceChildren(...j.goals.map(x=>el('li',x.done?'done':x.current?'now':'',x.title)));}
   else if(isLaterChapter(g)){const st=g.story;$('strip-eyebrow').textContent=`STORY · ${st.chapter.heading}`;$('objective').textContent=st.done?`${st.chapter.label} ${st.chapter.stateLabel}`:chapterGoal(g).title;
     $('stepper').replaceChildren(...(st.campaign.length?st.campaign.map(c=>{const li=el('li',c.state==='cleared'?'done':c.key===st.chapterKey?'now':'',c.key===st.chapterKey?c.label:`${c.number}장`);li.dataset.chapter=String(c.key);li.title=`${c.heading} · ${c.stateLabel}`;return li;}):[el('li','now',`${st.chapter.label} 연습`)]));}
-  else if(isIncident(g)){const gl=g.global,inc=g.incident;$('strip-eyebrow').textContent=inc.practice?'INCIDENT PRACTICE · 사건 연습':`INCIDENT SHIFT ${inc.code} · ${gl.shift}/${inc.shiftCount}`;$('objective').textContent=incidentGoal(g).title;
+  else if(isIncident(g)){const gl=g.global,inc=g.incident;$('strip-eyebrow').textContent=g.senior?`담당 엔지니어 · 선임 평가 ${gl.shift}/2`:gl.kind==='free'?`GLOBAL FREE · ${gl.difficultyLabel} · seed ${gl.seed}`:inc.practice?'INCIDENT PRACTICE · 사건 연습':`INCIDENT SHIFT ${inc.code} · ${gl.shift}/${inc.shiftCount}`;$('objective').textContent=incidentGoal(g).title;
     $('stepper').replaceChildren(...(inc.practice?inc.records:inc.records.filter(r=>r.state!=='armed')).map(r=>{const li=el('li',['closed'].includes(r.state)?'done':r.state==='armed'?'':'now',`${r.id} ${r.cause?r.causeLabel:r.symptom??'대기'}`);li.dataset.incident=r.id;return li;}));}
   else if(isGlobal(g)&&g.global.kind==='shift'){const gl=g.global;$('strip-eyebrow').textContent=`GLOBAL SHIFT ${gl.shift}/${gl.shiftCount}`;$('objective').textContent=globalGoal(g).title;
     $('stepper').replaceChildren(...gl.shifts.map(x=>{const done=gl.history.some(h=>h.shift===x.number&&h.cleared)||(x.number===gl.shift&&gl.done&&gl.result.cleared);const li=el('li',done?'done':x.number===gl.shift?'now':'',`교대 ${x.number} ${x.title}`);li.dataset.shift=String(x.number);return li;}));}
@@ -559,7 +562,13 @@ const menu=(()=>{
     shown=true;box.hidden=false;box.replaceChildren(el('div','menu-card',''));renderTalk();coach.render();
     const health=await api.health();setEngine(!!health.ok,health.message);
     const savesRes=health.ok?await api.saves():null,saves=savesRes?.saves||[];lastUnlocks=savesRes?.unlocks||null;
-    const card=el('div','menu-card');card.append(el('span','eyebrow','SERVER ROOM SURVIVAL · 3D'),el('h2','','모드를 고르세요'),el('p','menu-sub','튜토리얼은 선배와 함께하는 실습, 스토리 도전은 장 단위 본편, 자유·연습은 끝없는 근무입니다. 모든 규칙은 Python 게임 엔진이 계산합니다.'));
+    const card=el('div','menu-card');card.append(el('span','eyebrow','SERVER ROOM SURVIVAL · 3D'),el('h2','','모드를 고르세요'),el('p','menu-sub','정규 근무를 따라 성장하고 선임 평가로 본편을 마칩니다. 자유 운영은 원하는 때 교대를 마칠 수 있는 연습입니다.'));
+    const career=lastUnlocks?.career;
+    if(career){const map=el('div','career-map');map.dataset.career='';map.append(el('strong','',`내 직무: ${career.role} · 교육: ${career.education}`));
+      for(const stage of career.stages)map.append(el('span',stage.done?'career-done':'',`${stage.done?'✓':'○'} ${stage.title} ${stage.completed}/${stage.total}`));
+      map.append(button(career.ending?'선임 평가 다시 도전 (새 슬롯)':'최종 선임 평가 시작',async()=>{if(await newGame('senior'))hide();},'primary',{'data-new':'senior',...(health.ok&&career.seniorAvailable?{}:{disabled:''})}));
+      if(!career.seniorAvailable)map.append(el('small','',career.reason));
+      for(const s of saves.filter(x=>x.kind==='senior').slice(-2).reverse())map.append(button(`이어하기 · ${s.describe} · ${s.clock}`,async()=>{if(await openGame(s.id))hide();},'link',{'data-resume':s.id}));card.append(map);}
     if(!health.ok)card.append(el('p','menu-warn','Python 엔진에 연결할 수 없습니다. 터미널에서 npm run play (또는 python -m engine.server)를 실행한 뒤 이 창을 다시 여세요.'));
     const grid=el('div','mode-grid');
     for(const [mode,title,desc,icon]of [['tutorial','튜토리얼','선배가 실제 화면의 위치와 이유를 알려 줍니다. 요청 확인부터 장애 복구·결과 보고까지 직접 조작합니다.','🎓'],['story','스토리 도전','제1장 첫 근무 → 제2장 한정된 자원 → 제3장 끊어진 연결 → 제4장 서버실의 경보 → 제5장 홀로 선 엔지니어. 장을 클리어하면 같은 저장에서 다음 장이 열리고, 안내는 점점 줄어듭니다.','📘'],['free','자유·연습','시간에 따라 요청이 계속 도착하고 네트워크 장애도 납니다. 장 연습은 진급 기록이 남지 않는 별도 저장입니다.','🛠'],['global','글로벌 운영','제5장 수료 후: 세계 21개 도시·32개 가상 고객의 서로 다른 AI 업무를 교대 근무 3개로 처리합니다. 자유 운영은 언제든 연습할 수 있습니다.','🌐'],['incident','장애 대응','글로벌 교대 3 클리어 후: 네트워크·GPU·스토리지·냉각·전원·플랫폼 사건 10건을 근무 A(선배와 함께)→B(팀 조정)→C(독립·겹친 증상)로 직접 진단·대응합니다.','🚨'],['linux','Linux 실무 연수','제5장 수료 후 5개 유한 근무: 도구 선택 → 명령 조립 → 직접 입력 → 독립 진단·복구·검증·보고. 기존 수료 슬롯이 있으면 바로 시작할 수 있고 사건별 연습도 가능합니다.','⌨']]){

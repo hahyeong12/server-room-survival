@@ -39,7 +39,7 @@ def request_extra(session, run):
 
 
 def view(session):
-    if session.mode not in ('global', 'incident', 'linux'):   # Phase 7: incident shifts reuse the same shift progress
+    if session.mode not in ('global', 'incident', 'linux', 'senior'):   # incident shifts reuse the same shift progress
         return None
     status = session.shift_status()
     pages = [[role, SPEAKERS.get(role, role), text] for role, text in session.shift_briefing()]
@@ -49,7 +49,7 @@ def view(session):
     if status['kind'] == 'shift':
         out['shiftCount'] = len(CATALOG.shifts)
         out['requestIds'] = session.shift_request_ids()
-        shifts = ({str(n): session.shift_def(n) for n in range(1, 6)} if session.mode == 'linux' else
+        shifts = ({str(n): session.shift_def(n) for n in range(1, getattr(session, 'SHIFT_COUNT', 5) + 1)} if session.mode in ('linux', 'senior') else
                   session.content.shifts if session.mode == 'incident' else CATALOG.shifts)
         out['shiftCount'] = len(shifts)
         out['shifts'] = [{'number': int(k), 'title': v['title'], 'subtitle': v['subtitle'], 'coaching': v['coaching'],

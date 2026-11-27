@@ -83,6 +83,8 @@ class GlobalSession(GameSession):
     def __init__(self, db: Database, kind=None, shift=1, seed=None):
         self.catalog = load()
         saved = db.get_simulation()
+        if saved and saved.get('free_incidents') and not hasattr(self, 'free_incidents'):
+            raise ValueError('새 자유 교대 저장은 사건을 지원하는 FreeShiftSession으로 이어하세요. 원본은 보존됩니다.')
         if saved:
             if saved.get('mode') != self.SAVE_MODE:
                 raise ValueError('글로벌 근무 저장이 아닙니다. 모드별 저장 파일을 사용해 주세요.'

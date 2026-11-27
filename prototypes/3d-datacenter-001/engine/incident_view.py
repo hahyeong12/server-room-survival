@@ -36,9 +36,9 @@ def view(session, location=None):
             'records': records, 'open': sum(r['state'] not in ('closed', 'failed', 'void', 'armed') for r in records),
             'alerts': [r['id'] for r in records if r['state'] == 'alert'],
             'facilities': session.facilities_view(location), 'menu': menu(), 'topology': CONTENT.topology['note'],
-            'sources': CONTENT.data['sources'], 'shiftCount': len(linux_curriculum.SHIFTS) if session.mode == 'linux' else len(CONTENT.shifts),
-            'shifts': ([{'number': n, 'code': f'L{n}', 'title': v['title'], 'incidents': len(v['cases'])}
-                        for n, v in sorted(linux_curriculum.SHIFTS.items())] if session.mode == 'linux' else
+            'sources': CONTENT.data['sources'], 'shiftCount': getattr(session, 'SHIFT_COUNT', len(linux_curriculum.SHIFTS)) if session.mode in ('linux', 'senior') else len(CONTENT.shifts),
+            'shifts': ([{'number': n, 'code': session.shift_def(n)['code'], 'title': session.shift_def(n)['title'], 'incidents': len(session.shift_def(n)['incidents'])}
+                        for n in range(1, getattr(session, 'SHIFT_COUNT', 5) + 1)] if session.mode in ('linux', 'senior') else
                        [{'number': int(k), 'code': v['code'], 'title': v['title'], 'incidents': sum(1 for x in v['arrivals'] if x[2])}
                         for k, v in sorted(CONTENT.shifts.items())])}
 

@@ -37,6 +37,8 @@ from aidc.incidents.content import load as load_incidents  # noqa: E402
 from aidc.learning.linux_session import LinuxSession  # noqa: E402
 from aidc.learning import linux_curriculum  # noqa: E402
 from aidc.global_ops.free_session import FreeShiftSession  # noqa: E402
+from aidc.learning.senior_session import SeniorSession, SHIFTS as SENIOR_SHIFTS  # noqa: E402
+from aidc.learning.career import assess  # noqa: E402
 
 from .journey import Journey, ROUTES, BUILDINGS  # noqa: E402
 from . import campaign  # noqa: E402
@@ -63,10 +65,12 @@ MODE_LABELS = {'tutorial': '튜토리얼', 'story': '스토리 도전', 'free': 
 FREE_PATTERN = re.compile(r'aidc_3d_free_([0-9]+)\.db')
 GLOBAL_PATTERN = re.compile(r'aidc_3d_global_([0-9]+)\.db')
 INCIDENT_PATTERN = re.compile(r'aidc_3d_incident_([0-9]+)\.db')
-KINDS = ('tutorial', 'story', 'free', 'practice', 'global', 'global_free', 'incident', 'incident_practice', 'linux', 'linux_practice')
+KINDS = ('tutorial', 'story', 'free', 'practice', 'global', 'global_free', 'incident', 'incident_practice', 'linux', 'linux_practice', 'senior')
 MODE_LABELS.update(linux='Linux 실무 연수', linux_practice='Linux 사건 연습')
+MODE_LABELS['senior'] = '선임 평가'
+SENIOR_PATTERN = re.compile(r'aidc_3d_senior_([0-9]+)\.db')
 LINUX_PATTERN = re.compile(r'aidc_3d_linux_([0-9]+)\.db')
-GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global|aidc_3d_incident|aidc_3d_linux)_[0-9]{3,}')
+GAME_ID = re.compile(r'(aidc_story_slot|aidc_3d_free|aidc_3d_global|aidc_3d_incident|aidc_3d_linux|aidc_3d_senior)_[0-9]{3,}')
 INCIDENT_LOCK = '장애 대응 근무는 글로벌 교대 근무 교대 3을 클리어한 뒤 열립니다.'
 INCIDENT_TYPES = tuple(load_incidents().types)
 GLOBAL_LOCK = '글로벌 교대 근무는 스토리 도전 제5장까지 클리어(운영 엔지니어 수료)한 뒤 열립니다.'
@@ -130,7 +134,7 @@ class Game:
         key = current_chapter(s.story).key if s.story and s.mode == 'story' else s.mode
         if s.mode == 'global' and s.global_.kind == 'shift':
             key = f'shift{s.global_.shift}'
-        if s.mode in ('incident', 'linux'):
+        if isinstance(s, IncidentSession) and not isinstance(s, FreeShiftSession):
             key = f'practice:{s.incident.practice}' if s.incident.practice else f'incident{s.global_.shift}'
         return {'chapter': str(key), 'minute': s.minute, 'requests': len(s.runs)}
 
@@ -310,7 +314,7 @@ class Game:
         s = self.session
         if isinstance(s, FreeShiftSession):
             return s.global_.briefed and s.global_.result is None
-        if s.mode in ('global', 'incident', 'linux'):
+        if isinstance(s, GlobalSession):
             # Phase 6: a shift runs after its briefing; waiting is a real choice there (deadlines keep coming).
             return s.global_.kind == 'free' or s.global_.briefed
         if s.mode == 'free' or any(run.state.allocated for run in s.runs.values()):
@@ -327,7 +331,7 @@ class Game:
         healthy_gpu, healthy_power = s.servers.available()
         return {
             'api': API_VERSION, 'apiCompat': list(API_COMPAT), 'features': list(FEATURES), 'engine': 'python:session.GameSession', 'id': self.id, 'mode': s.mode,
-            'modeLabel': MODE_LABELS[self.kind if s.mode in ('global', 'incident', 'linux') else s.mode], 'kind': self.kind,
+            'modeLabel': MODE_LABELS[self.kind if isinstance(s, GlobalSession) else s.mode], 'kind': self.kind,
             'clock': {'minute': s.minute, 'label': s.time_label},
             'focus': s.selected_id,
             'requests': [self._request(rid, run) for rid, run in s.runs.items()],
@@ -341,6 +345,10 @@ class Game:
                      if s.mode == 'global' and s.global_.kind == 'free' else None),
             'global': global_view.view(s),
             'linux': s.learning_view() if isinstance(s, LinuxSession) else None,
+            'assessment': assess(s) if isinstance(s, GlobalSession) else None,
+            'senior': ({'shift': s.global_.shift, 'count': 2, 'role': '담당 엔지니어 · 선임 평가',
+                        'ending': bool(s.global_.result and s.global_.result.get('senior', {}).get('ending')),
+                        'qualification': '독립 관제 엔지니어 (교육 수료 · 직무와 별도)'} if isinstance(s, SeniorSession) else None),
             'incident': incident_view.view(s, self._location() if isinstance(s, IncidentSession) else None),
             'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
             'world': self._world(),
@@ -622,7 +630,7 @@ class Game:
     # engine actions -----------------------------------------------------------------------------------
     def do_confirm_briefing(self, a):
         s = self.session
-        if s.mode in ('incident', 'linux'):
+        if isinstance(s, IncidentSession):
             self.journey.record('engine', self._minute(), name='confirm_shift_briefing')
             s.confirm_shift_briefing()
             return {'info': f'{s.shift_def()["title"]} 시작 · 요청함의 업무를 배정하고, 경보가 오면 [사건] 탭에서 대응하세요.'}
@@ -675,7 +683,7 @@ class Game:
     def do_start_next_shift(self, a):
         """Phase 6: the next global shift starts in THIS save (engine start_next_shift). A stale screen is refused."""
         s = self.session
-        if s.mode not in ('global', 'incident', 'linux') or s.global_.kind != 'shift':
+        if not isinstance(s, GlobalSession) or s.global_.kind != 'shift':
             raise ActionError('글로벌 교대 근무 저장에서만 다음 교대를 시작할 수 있습니다.')
         nxt = s.next_shift()
         if nxt is None or str(a.get('shift')) != str(nxt):
@@ -687,7 +695,7 @@ class Game:
 
     def do_mark_shift_seen(self, a):
         """The player closed a shift result screen (display fact only)."""
-        if self.session.mode not in ('global', 'incident', 'linux'):
+        if not isinstance(self.session, GlobalSession):
             raise ActionError('글로벌 근무에서만 사용합니다.')
         key = a.get('key')
         self.journey.record('feedback', self._minute(), card='shift', key=str(key)[:40])
@@ -1094,7 +1102,9 @@ class GameHost:
             if fresh and (db.get_simulation() or db.get_requests()):
                 raise ValueError('새 게임에 기존 기록을 사용할 수 없습니다.')
             db.claim_game()
-            if kind in ('linux', 'linux_practice'):
+            if kind == 'senior':
+                session = SeniorSession(db, shift=chapter or 1) if fresh else SeniorSession(db)
+            elif kind in ('linux', 'linux_practice'):
                 session = (LinuxSession(db, practice=chapter if kind == 'linux_practice' else None,
                                         shift=1 if kind == 'linux_practice' else chapter or 1)
                            if fresh else LinuxSession(db))
@@ -1124,7 +1134,7 @@ class GameHost:
                 kind = 'incident_practice' if session.incident.practice else 'incident'
             journey = Journey(self._sidecar(path), {'practice': 'story', 'global': 'free', 'global_free': 'free',
                                                     'incident': 'free', 'incident_practice': 'free',
-                                                    'linux': 'free', 'linux_practice': 'free'}.get(kind, kind))
+                                                    'linux': 'free', 'linux_practice': 'free', 'senior': 'free'}.get(kind, kind))
             game = Game(Path(path).stem, path, kind, db, session, journey)
             game.reconcile()
             journey.evaluate(game.facts())
@@ -1151,6 +1161,11 @@ class GameHost:
             if chapter not in PRACTICE_CHAPTERS:
                 raise ActionError('연습할 장을 고르세요 (제2~5장).')
         with self.lock:
+            if mode == 'senior':
+                career = self.career()
+                if not career['seniorAvailable']:
+                    raise ActionError(career['reason'])
+                return self._new_senior(1)
             if mode in ('linux', 'linux_practice'):
                 if mode == 'linux' and not self.graduated():
                     raise ActionError('제5장 수료 후 Linux 실무 연수가 열립니다. 기존 수료 저장을 이어하거나 Linux 사건 연습을 이용하세요.')
@@ -1191,6 +1206,24 @@ class GameHost:
             for created in (path, self._sidecar(path), path.with_name(path.name + '.lock')):
                 created.unlink(missing_ok=True)
             raise
+        if origin:
+            game.journey.data['origin'] = origin
+            game.journey.save()
+        return game
+
+    def _new_senior(self, shift, origin=None):
+        number = max((int(m[1]) for p in self.dir.glob('aidc_3d_senior_*.db')
+                      if (m := SENIOR_PATTERN.fullmatch(p.name))), default=0) + 1
+        while True:
+            path = self.dir / f'aidc_3d_senior_{number:03d}.db'
+            try:
+                with path.open('xb'):
+                    pass
+            except FileExistsError:
+                number += 1
+            else:
+                break
+        game = self._open(path, 'senior', fresh=True, chapter=shift)
         if origin:
             game.journey.data['origin'] = origin
             game.journey.save()
@@ -1283,7 +1316,37 @@ class GameHost:
                 'incident': {'available': bool(shifts), 'reason': '' if shifts else INCIDENT_LOCK, 'proof': shifts[:1]},
                 'incidentPractice': {'available': True, 'reason': '', 'types': list(INCIDENT_TYPES)},
                 'linux': {'available': bool(grads), 'reason': '' if grads else '제5장 수료 후 시작 · 기존 수료 슬롯 이어하기 또는 사건 연습 가능', 'proof': grads[:1]},
-                'linuxPractice': {'available': True, 'types': list(INCIDENT_TYPES)}}
+                'linuxPractice': {'available': True, 'types': list(INCIDENT_TYPES)},
+                'career': self.career()}
+
+    def career(self):
+        """Read-only career map, regular engine result proofs only. No XP or mutable cross-save ledger."""
+        complete = {'global': set(), 'incident': set(), 'linux': set(), 'senior': set()}
+        for path in self.dir.glob('*.db'):
+            if not GAME_ID.fullmatch(path.stem):
+                continue
+            data = self.slots.payload(path)
+            mode, g = data.get('mode'), data.get('global', {})
+            if mode not in complete or g.get('kind') != 'shift':
+                continue
+            if data.get('incident', {}).get('practice') or data.get('linux', {}).get('practice'):
+                continue
+            for r in (g.get('history') or []) + [g.get('result')]:
+                if isinstance(r, dict) and r.get('cleared') is True:
+                    complete[mode].add(r.get('shift'))
+        story = bool(self.graduated())
+        specs = [('story', '제1~5장', 5, 5 if story else 0),
+                 ('global', '글로벌 교대', 3, len(complete['global'] & {1, 2, 3})),
+                 ('incident', '사건 대응', 3, len(complete['incident'] & {1, 2, 3})),
+                 ('linux', 'Linux 실무 연수', 5, len(complete['linux'] & {1, 2, 3, 4, 5})),
+                 ('senior', '선임 평가', 2, len(complete['senior'] & {1, 2}))]
+        available = story and all(n == total for key, _, total, n in specs if key != 'senior')
+        ending = complete['senior'] >= {1, 2}
+        return {'version': 1, 'role': '선임 엔지니어' if ending else '담당 엔지니어' if complete['global'] >= {1, 2, 3} else '신입 엔지니어',
+                'education': '독립 관제 엔지니어' if complete['linux'] >= {1, 2, 3, 4, 5} else '운영 엔지니어 수료' if story else '교육 중',
+                'stages': [{'id': k, 'title': label, 'total': total, 'completed': n, 'done': total == n} for k, label, total, n in specs],
+                'seniorAvailable': available, 'ending': ending,
+                'reason': '' if available else '제1~5장·글로벌 3교대·사건 3교대·Linux 5근무를 모두 수료하면 선임 평가가 열립니다.'}
 
     def retry(self, gid):
         """[현재 장 재도전]: save the current game, then copy its chapter-start checkpoint into a NEW exclusive slot
@@ -1292,6 +1355,8 @@ class GameHost:
         with self.lock:
             game = self.get(gid)
             s = game.session
+            if game.kind == 'senior':
+                return self._new_senior(s.global_.shift, origin={'source': game.id, 'shift': s.global_.shift})
             if game.kind in ('linux', 'linux_practice'):
                 return self._new_linux(game.kind, s.linux['practice'] if game.kind == 'linux_practice' else s.global_.shift,
                                        origin={'source': game.id, 'shift': s.global_.shift})
@@ -1391,7 +1456,8 @@ class GameHost:
                 story = payload.get('story') if isinstance(payload.get('story'), dict) else None
                 chapter = chapter_from_payload(story) if story and kind in ('story', 'practice') else None
                 out.append({'id': path.stem, 'kind': kind, 'label': MODE_LABELS.get(kind, kind),
-                            'describe': (f'Linux 근무 {payload.get("global", {}).get("shift", 1)}' + (' · 연습' if kind == 'linux_practice' else '') if kind in ('linux', 'linux_practice') else
+                            'describe': (f'선임 평가 {payload.get("global", {}).get("shift", 1)}' if kind == 'senior' else
+                                         f'Linux 근무 {payload.get("global", {}).get("shift", 1)}' + (' · 연습' if kind == 'linux_practice' else '') if kind in ('linux', 'linux_practice') else
                                          self._describe_incident(payload) if kind in ('incident', 'incident_practice') else
                                          self._describe_global(payload) if kind in ('global', 'global_free') else
                                          self.slots.describe(path).lstrip(' ·') if kind != 'free' else '자유 운영'),
@@ -1404,6 +1470,8 @@ class GameHost:
 
     def _kind(self, path):
         path = Path(path)
+        if SENIOR_PATTERN.fullmatch(path.name):
+            return 'senior'
         if LINUX_PATTERN.fullmatch(path.name):
             l = self.slots.payload(path).get('linux')
             return 'linux_practice' if isinstance(l, dict) and l.get('practice') else 'linux'
