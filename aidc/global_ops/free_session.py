@@ -61,10 +61,16 @@ class FreeShiftSession(OperatingRules, LinuxSession):
 
     def _validate_free(self):
         f = self.free_incidents
+        if isinstance(f.get('rules'), str) and f['rules'] != SCHEDULE_FINGERPRINT:
+            raise ValueError('이 자유 교대는 이전 버전의 Phase 9 운영 규칙(사건 일정·임시 우회 비용)으로 만들어졌습니다. '
+                             '규칙을 바꿔 다시 해석하지 않도록 열지 않습니다. 원본 저장은 보존됩니다. 새 자유 교대를 시작하세요.')
         if (self.global_.kind != 'free' or self.incident.version != self.content.version or f.get('rules') != SCHEDULE_FINGERPRINT or
                 not isinstance(f.get('difficulty'), str) or f['difficulty'] not in DIFFICULTIES or type(f.get('cursor')) is not int or
                 f['cursor'] < 0 or type(f.get('closing')) is not bool or not isinstance(f.get('events'), list)):
             raise ValueError('자유 교대 기록이 올바르지 않습니다. 원본 저장은 보존됩니다.')
+        interval = DIFFICULTIES[f['difficulty']]['interval']
+        if self.global_.briefed and self.global_.result is None and interval and not f['closing'] and f.get('next') is None:
+            raise ValueError('저장된 사건 일정이 비어 있습니다. 원본 저장은 보존됩니다.')
         for key in ('last', 'next'):
             if f.get(key) is not None and (type(f[key]) is not int or f[key] % 10 or f[key] < self.global_.start):
                 raise ValueError('저장된 사건 시각이 올바르지 않습니다.')
@@ -134,7 +140,7 @@ class FreeShiftSession(OperatingRules, LinuxSession):
         return list(self.incident.records)
 
     def incident_view(self, rec):
-        return IncidentSession.incident_view(self, rec)
+        return self._overlay_view(rec, IncidentSession.incident_view(self, rec))
 
     def incident_observe(self, iid, probe, location):
         return IncidentSession.incident_observe(self, iid, probe, location)

@@ -26,6 +26,11 @@ class SeniorSession(OperatingRules, LinuxSession):
     SHIFT_COUNT = 2
 
     def __init__(self, db, shift=1, seed=None):
+        saved = (db.get_simulation() or {}).get('linux')
+        stamp = saved.get('fingerprint') if isinstance(saved, dict) else None
+        if isinstance(stamp, str) and stamp.startswith('senior-v1:') and stamp != self._fingerprint():
+            raise ValueError('이 선임 평가는 이전 버전의 Phase 9 평가·운영 규칙으로 만들어졌습니다. 규칙을 바꿔 다시 채점하지 않도록 '
+                             '열지 않습니다. 원본 저장은 보존됩니다. 선임 평가를 새 슬롯에서 시작하세요.')
         super().__init__(db, shift=shift, seed=seed)
 
     @staticmethod

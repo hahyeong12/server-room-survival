@@ -20,6 +20,10 @@ class Phase9AdapterTests(unittest.TestCase):
         self.assertFalse(snap['canAdvance'])
         self.assertEqual(snap['global']['seed'], 42)
         self.assertIsNotNone(snap['incident'])
+        # Phase9 sessions state the real cost of quick workarounds; the legacy incident mode does not.
+        self.assertIn('임시 우회', snap['incident']['tradeoff'])
+        legacy = self.host.new_game('incident_practice', chapter='dns').snapshot()
+        self.assertIsNone(legacy['incident']['tradeoff'])
         g.act({'type': 'confirm_briefing'})
         self.assertTrue(g.snapshot()['canAdvance'])
         before = g.session.db.get_simulation()

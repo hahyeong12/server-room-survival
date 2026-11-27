@@ -66,14 +66,16 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     const scope = rec.scope?.jobs ?? [], sel = el('select'); sel.dataset.incidentRid = rec.id; sel.setAttribute('aria-label', '조치 대상 작업');
     for (const j of scope) { const o = el('option', '', `요청 #${j.rid} ${j.client} · 서버 ${j.servers.join('·') || '—'}`); o.value = String(j.rid); sel.append(o); }
     sel.value = String(ui.incidentRid?.[rec.id] ?? rec.rid); sel.addEventListener('change', () => { ui.incidentRid = { ...(ui.incidentRid || {}), [rec.id]: Number(sel.value) }; });
-    const groups = {};
+    const groups = {}, notes = rec.actionNotes || {};
     for (const a of g.incident.menu.actions) if (a.group !== 'comm') (groups[a.group] ||= []).push(a);
+    // Phase9 sessions only: the engine states the real cost of quick workarounds (shorter stop, slower running after).
+    if (g.incident.tradeoff) box.append(el('p', 'ws-note inc-tradeoff', g.incident.tradeoff));
     for (const [group, list] of Object.entries(groups)) {
       const row = el('div', 'inc-group'); row.append(el('small', '', GROUP_LABEL[group] || group));
       for (const a of list) {
         const location=g.linux?.actionLocations?.[rec.id]?.[a.id];
         if(location&&location!==here())row.append(button(`→ ${where(g,location)} · ${a.label}`,()=>goTo(location),'link',{'data-action-goto':a.id}));
-        else row.append(button(a.label, () => send({ type: 'incident_act', incident: rec.id, action: a.id, ...(['load_shed', 'planned_pause'].includes(a.id) ? { rid: Number(sel.value) } : {}) }), '', { 'data-incident-action': a.id }));
+        else row.append(button(notes[a.id] ? `${a.label} · 임시 우회` : a.label, () => send({ type: 'incident_act', incident: rec.id, action: a.id, ...(['load_shed', 'planned_pause'].includes(a.id) ? { rid: Number(sel.value) } : {}) }), '', { 'data-incident-action': a.id, ...(notes[a.id] ? { title: notes[a.id] } : {}) }));
       }
       box.append(row);
     }
@@ -87,6 +89,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
     if (rec.busyUntil) lines.push(`직전 조치 결과 확인 중 · ${rec.busyUntil} 이후 다음 조치`);
     if (rec.recoveryBy) lines.push(`복구 조치: ${rec.recoveryBy}${rec.eta ? ` · 예상 ${rec.eta}` : ''}`);
     if (rec.limitLeft != null) lines.push(`제한 시간 남음 ${rec.limitLeft}분(가상) · 영향이 남으면 작업 실패`);
+    if (rec.residual) lines.push(`${rec.residual.label} — ${rec.residual.text}`);
     if (rec.recovered) lines.push(`복구 ${rec.recovered}${rec.verified ? ` · 사후 확인 ${rec.verified}` : ''}${rec.reported ? ` · 보고 ${rec.reported}` : ''}`);
     if (rec.notified.length) lines.push(`고객 안내: ${rec.notified.join(', ')}`);
     return lines;

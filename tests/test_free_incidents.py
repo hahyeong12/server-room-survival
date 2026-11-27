@@ -189,5 +189,38 @@ class FreeIncidentTests(unittest.TestCase):
         self.assertEqual(restored.linux, s.linux)
 
 
+    def test_optional_cli_scores_per_incident_source(self):
+        """Using the optional terminal for one incident must not zero the GUI-diagnosed incidents."""
+        from aidc.learning.career import assess
+        s = self.make(7, 'challenge')
+        s.confirm_shift_briefing()
+        for _ in range(30):
+            start_open(s)
+            s.advance_time(10)
+            if s.incident.records and all(r.state == 'alert' for r in s.incident.records):
+                break
+        rec = s.incident.records[0]
+        diagnose(s, rec)
+        before = assess(s)['learning']
+        s.cli(rec.id, 'ip route', 'noc', s.token(rec))
+        after = assess(s)['learning']
+        self.assertEqual(before['items']['interpretation'], 35)
+        self.assertEqual(after['items']['interpretation'], 0, 'a used-but-unanswered CLI reading still scores 0')
+        others = [r for r in s.incident.records if r is not rec]
+        if others:
+            diagnose(s, others[0])
+            self.assertGreater(assess(s)['learning']['items']['interpretation'], 0)
+
+    def test_outdated_rule_save_is_refused_with_a_clear_reason(self):
+        s = self.make(3, 'standard', name='old-rules.db')
+        s.confirm_shift_briefing()
+        payload = s.db.get_simulation()
+        payload['free_incidents']['rules'] = 'old-phase9-rules'
+        s.db.save_simulation(payload)
+        s.db.close()
+        with self.assertRaisesRegex(ValueError, '이전 버전의 Phase 9 운영 규칙'):
+            FreeShiftSession(self.temp.db('old-rules.db'))
+
+
 if __name__ == '__main__':
     unittest.main()

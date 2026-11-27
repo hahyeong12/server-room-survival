@@ -35,3 +35,11 @@
 - 최종 게임 코드 `29ee9c8`, full-3 실제 브라우저 실행 중. 결과를 확인하기 전 완료로 보고하지 않음.
 - 이전 headless-final963/963·adapter57/57·JS53/53·build PASS는 선택적 터미널 연결 전 실행이며, 최종 코드로 다시 실행 예정.
 - 남은 작업: Phase9 브라우저 전체/레이아웃·재도전/비동기·기존Phase4~8 회귀·보호 재검사·최종 문서/원격SHA/Issue댓글. 사용자 직접 플레이 요청 없음.
+
+## 2026-11-27 Claude Code 인계 (Codex 사용량 한도로 중단된 지점부터)
+
+- 인계 시점: 로컬=원격 `29ee9c8`. 미커밋은 WORK_LOG 수정, `PHASE9_ARCHITECTURE.md`·`REVIEW_PHASE9.md`, `qa/phase9/*.log`·`*/phase9-qa.json`. 삭제·초기화 없이 `ed0fb99`로 보존 커밋 후 일반 Push(원격 동기화 확인). 기존 미추적 Phase7/8/9 PNG는 그대로 두고 stage하지 않음.
+- 인계 시 기준 재실행(코드 `29ee9c8`): Python 비GUI 964/964, adapter 57/57, JS 53/53 PASS.
+- Codex의 마지막 브라우저 QA `full-3`는 7번째 검사(사건 3교대)에서 FAIL(`monitoring` ≠ `verified`)로 끝나 있었음. 원인: `phase9-qa.mjs`가 복구 직후의 `after` 관측이 있으면 재관측을 건너뜀. 엔진은 복구+10분 이후 관측을 요구(Phase7 QA는 매번 `verifyProbes` 재관측). QA 스크립트만 엔진 규칙에 맞춤(현재 시각에 관측이 없으면 재관측). 엔진 변경 아님.
+- P2 보완(설계 결정): 기존 분기 다수가 "빠른 현장 조치 10분 vs 담당팀 30분"으로 빠른 쪽이 항상 유리한 지배 전략이었음. Phase9 덧층(`OperatingRules`, 자유 교대·선임 평가에만 적용, 사건 v1·기존 저장 불변)에 **임시 우회 감속 운전**(`RESIDUAL`)을 추가: 빠른 우회는 정지가 짧지만 복구 뒤 60분간 처리량 0.5배(감속형 사건 0.7배), batch 축소는 동의 계산과 같은 0.8배로 완료까지. 감속 시간은 원장 `slow_minutes`와 실제 완료 시각에 반영.
+- 진행 규칙: QA 실행 중에는 엔진/화면 소스를 수정하지 않음(Codex dev-free-3·full-1 오염 사례). 변경안은 OS 임시 폴더의 detached worktree에서 먼저 검증한 뒤 본 저장소에 적용.
