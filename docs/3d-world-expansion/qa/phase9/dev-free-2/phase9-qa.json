@@ -1,0 +1,172 @@
+{
+  "issue": 10,
+  "checks": [
+    {
+      "name": "public career map and senior lock",
+      "pass": true
+    },
+    {
+      "name": "free none: start, jobs, restart, finish",
+      "pass": true
+    },
+    {
+      "name": "seeded challenge: real incidents, recovery, report, finish; same seed replay",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: INC-F1 storage_space recorded on site\n\n11 !== 12\n\n    at Module.observe (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase7-ui.mjs:60:12)\n    at async handle (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:48:78)\n    at async free (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:65:324)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:111\n    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:19:35)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:2"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [],
+  "actions": [],
+  "shifts": [],
+  "free": [
+    {
+      "seed": 42,
+      "difficulty": "none",
+      "events": [],
+      "result": {
+        "shift": null,
+        "title": "글로벌 자유 교대 결과",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:50",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "tyo-sumida-eval",
+            "client": "Sumida Language Works",
+            "industry": "생성형 AI 플랫폼",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "평가·벤치마크",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:40",
+            "due": "D1 10:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:30",
+            "completed": "D1 11:00",
+            "due": "D1 13:10",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "sin-straits-realtime",
+            "client": "Straits Generative Lab",
+            "industry": "생성형 AI 플랫폼",
+            "site": "SG-SIN",
+            "city": "싱가포르",
+            "country": "싱가포르",
+            "job": "기간 한정 실시간 추론 용량 확보",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:40",
+            "completed": "D1 10:20",
+            "due": "D1 10:30",
+            "waited": 10,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 4,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 4,
+        "total": 4,
+        "goal": {
+          "minSuccess": 0,
+          "maxExpired": 999,
+          "minResolved": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 99,
+        "finished": "D1 11:00",
+        "started": "D1 09:00",
+        "feedback": [
+          "근무 목표 달성"
+        ],
+        "incidents": [],
+        "resolved": 0,
+        "practice": null,
+        "regular": false,
+        "seed": 42,
+        "difficulty": "none"
+      }
+    }
+  ],
+  "resumes": [
+    {
+      "label": "free midshift",
+      "id": "aidc_3d_global_001",
+      "minute": 570
+    }
+  ],
+  "layouts": [],
+  "startedAt": "2026-11-27T14:06:15.712Z",
+  "failure": "AssertionError [ERR_ASSERTION]: INC-F1 storage_space recorded on site\n\n11 !== 12\n\n    at Module.observe (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase7-ui.mjs:60:12)\n    at async handle (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:48:78)\n    at async free (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:65:324)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:111\n    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:19:35)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:2",
+  "finishedAt": "2026-11-27T14:07:50.244Z",
+  "summary": {
+    "pass": 2,
+    "total": 3
+  }
+}

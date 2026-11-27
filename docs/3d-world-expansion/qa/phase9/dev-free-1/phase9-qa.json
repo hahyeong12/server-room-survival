@@ -1,0 +1,172 @@
+{
+  "issue": 10,
+  "checks": [
+    {
+      "name": "public career map and senior lock",
+      "pass": true
+    },
+    {
+      "name": "free none: start, jobs, restart, finish",
+      "pass": true
+    },
+    {
+      "name": "seeded challenge: real incidents, recovery, report, finish; same seed replay",
+      "pass": false,
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu-open').first()\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"menu-open\">메뉴 · 모드</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" id=\"screen-dialog\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" id=\"screen-dialog\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <dialog open=\"\" id=\"screen-dialog\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at Module.click (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase6-ui.mjs:9:74)\n    at menu (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:21:198)\n    at async fresh (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:22:36)\n    at async free (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:65:38)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:111\n    at async check (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:19:35)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:2"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [],
+  "actions": [],
+  "shifts": [],
+  "free": [
+    {
+      "seed": 42,
+      "difficulty": "none",
+      "events": [],
+      "result": {
+        "shift": null,
+        "title": "글로벌 자유 교대 결과",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:50",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "tyo-sumida-eval",
+            "client": "Sumida Language Works",
+            "industry": "생성형 AI 플랫폼",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "평가·벤치마크",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:40",
+            "due": "D1 10:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:30",
+            "completed": "D1 11:00",
+            "due": "D1 13:10",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "sin-straits-realtime",
+            "client": "Straits Generative Lab",
+            "industry": "생성형 AI 플랫폼",
+            "site": "SG-SIN",
+            "city": "싱가포르",
+            "country": "싱가포르",
+            "job": "기간 한정 실시간 추론 용량 확보",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:40",
+            "completed": "D1 10:20",
+            "due": "D1 10:30",
+            "waited": 10,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 4,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 4,
+        "total": 4,
+        "goal": {
+          "minSuccess": 0,
+          "maxExpired": 999,
+          "minResolved": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 99,
+        "finished": "D1 11:00",
+        "started": "D1 09:00",
+        "feedback": [
+          "근무 목표 달성"
+        ],
+        "incidents": [],
+        "resolved": 0,
+        "practice": null,
+        "regular": false,
+        "seed": 42,
+        "difficulty": "none"
+      }
+    }
+  ],
+  "resumes": [
+    {
+      "label": "free midshift",
+      "id": "aidc_3d_global_001",
+      "minute": 570
+    }
+  ],
+  "layouts": [],
+  "startedAt": "2026-11-27T14:04:28.164Z",
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu-open').first()\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"menu-open\">메뉴 · 모드</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" id=\"screen-dialog\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" id=\"screen-dialog\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <dialog open=\"\" id=\"screen-dialog\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at Module.click (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase6-ui.mjs:9:74)\n    at menu (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:21:198)\n    at async fresh (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:22:36)\n    at async free (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:65:38)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:111\n    at async check (C:\\Users\\hahye\\Desktop\\server-room-survival\\prototypes\\3d-datacenter-001\\scripts\\phase9-qa.mjs:19:35)\n    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:70:2",
+  "finishedAt": "2026-11-27T14:05:41.464Z",
+  "summary": {
+    "pass": 2,
+    "total": 3
+  }
+}
