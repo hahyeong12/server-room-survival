@@ -26,7 +26,7 @@ async function startAvailable(){let g=await U.G(page);for(const r of g.requests.
 const PROBES={dns:['ping','dns'],tor_uplink:['tor_port'],congestion:['link_stats'],gpu_health:['dcgm'],gpu_oom:['job_log','dcgm'],storage_full:['storage_space'],storage_latency:['storage_latency','storage_space'],cooling:['cooling'],ups:['ups'],crashloop:['service_events','job_log']};
 const VERIFY={dns:['dns','ping'],tor_uplink:['tor_port','ping'],congestion:['link_stats'],gpu_health:['dcgm'],gpu_oom:['job_log','dcgm'],storage_full:['storage_space','job_log'],storage_latency:['storage_latency','storage_space'],cooling:['cooling'],ups:['ups'],crashloop:['service_events','job_log']};
 async function infer(id,linux){
-  if(linux){for(const ident of ['ping','getent','journalctl','df','iostat','traceroute','nvidia_smi','dcgm','pods']){const g=await U.G(page);if(ident==='pods'&&!g.linux.contexts[id].some(n=>n.id==='cluster'))continue;await player.scoped(id,ident,{interpret:ident==='journalctl'});}}
+  if(linux){for(const ident of ['ping','ip_link','getent','journalctl','df','iostat','traceroute','nvidia_smi','dcgm','pods']){const g=await U.G(page);if(ident==='pods'&&!g.linux.contexts[id].some(n=>n.id==='cluster'&&n.available))continue;await player.scoped(id,ident,{interpret:ident==='journalctl'});}}
   else for(const probe of Object.keys((await U.G(page)).incident.menu.probes.reduce((o,p)=>(o[p.id]=true,o),{})))await U.observe(page,id,probe);
   const r=await U.inc(page,id),ev=r.evidence;
   const text=p=>ev.filter(e=>e.probe===p).at(-1)?.summary??'';
@@ -55,7 +55,10 @@ async function handle(rec){const id=rec.id;let g=await U.G(page),linux=!!g.linux
   rec=await U.inc(page,id);const type=types[(await U.G(page)).id+id]??rec.cause;
   if(rec.state==='monitoring'&&!rec.verifyBlocker?.includes('10분')){
     if(linux)await player.evidence(id,type,true);
-    for(const p of VERIFY[type]){rec=await U.inc(page,id);if(!rec.evidence.some(e=>e.probe===p&&e.after))await U.observe(page,id,p);}
+    // The engine needs a fresh post-recovery reading taken at least 10 minutes after recovery, so an early
+    // `after` reading does not count. Re-observe now (same-minute repeats are idempotent in the engine).
+    const now=(await U.G(page)).clock.minute;
+    for(const p of rec.verifyProbes?.length?rec.verifyProbes:VERIFY[type]){rec=await U.inc(page,id);if(!rec.evidence.some(e=>e.probe===p&&e.minute===now))await U.observe(page,id,p);}
     assert.equal((await U.verify(page,id)).state,'verified');assert.equal((await U.report(page,id)).state,'closed');
   }
 }
