@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from aidc.incidents.content import load
 from aidc.learning import linux_curriculum
+from aidc.incidents.session import IncidentSession
 
 CONTENT = load()
 LOCATION_LABELS = {'noc': '내 모니터 (관제동)', 'hall': '서버동 01', 'NETWORK': '네트워크동 MMR', 'COOLING': '냉각 플랜트', 'UPS': 'UPS 구역'}
@@ -25,7 +26,7 @@ def menu():
 
 
 def view(session, location=None):
-    if getattr(session, 'SAVE_MODE', None) not in ('incident', 'linux'):
+    if not isinstance(session, IncidentSession):
         return None
     g = session.global_
     d = session.shift_def()
@@ -43,7 +44,7 @@ def view(session, location=None):
 
 
 def request_incidents(session, rid):
-    if getattr(session, 'SAVE_MODE', None) not in ('incident', 'linux'):
+    if not isinstance(session, IncidentSession):
         return {}
     recs = [r for r in session.incident.records if r.rid == rid and r.state != 'armed']
     affecting = [r.id for r in session.incidents_for(rid)]

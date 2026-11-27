@@ -179,6 +179,10 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
   }
   // Phase 6: a finished global shift. Every row is the engine's own record (outcome, score, mode, consent).
   function shiftDone(g) {
+    if(g.global.kind==='free'&&g.incident){const gl=g.global,res=gl.result,box=el('section','screen shift-result');
+      box.append(el('span','eyebrow','FREE SHIFT · 진급 기록 없음'),el('h2','','오늘의 자유 교대를 마쳤습니다'),el('p','screen-sub',`seed ${gl.seed} · ${gl.difficultyLabel} · 정상 완료 ${res.success}/${res.total} · 사건 해결 ${res.resolved}/${res.incidents.length}`));
+      const list=el('ul','screen-notes');for(const r of res.rows)list.append(el('li','',`${r.city} · ${r.client}: ${r.label}`));for(const r of res.incidents)list.append(el('li','',`${r.id} ${r.label}: ${r.outcome} · 정지 ${r.downtime}분 · 지연 ${r.slowMinutes}분`));box.append(list,nextButtons(['global-free','menu','stay']));
+      show('shift-free',[box],()=>send({type:'mark_shift_seen',key:'shiftNone'},{quiet:true}));return;}
     if (['incident','linux'].includes(g.mode)) return incidentShiftDone(g);
     const gl = g.global, res = gl.result, key = `shift${gl.shift}`, box = el('section', 'screen shift-result');
     const played = new Set([...gl.history.filter(h => h.cleared).map(h => h.shift), res.cleared ? res.shift : null]);
@@ -222,7 +226,7 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
         if (st.graduation) graduation(g); else if (m === 'success') chapterClear(g); else chapterFailed(g); return; }
       if (st.step === 'closed' && !seen.failed) { seen.failed = true; chapterFailed(g); return; }
     }
-    if (isGlobal(g) && g.global.kind === 'shift' && g.global.done && !g.global.seen.includes(`shift${g.global.shift}`) && !open?.startsWith('shift') && !open?.startsWith('incident-') && open !== 'global-complete') { shiftDone(g); return; }
+    if (isGlobal(g) && g.global.done && !g.global.seen.includes(`shift${g.global.shift}`) && !open?.startsWith('shift') && !open?.startsWith('incident-') && open !== 'global-complete') { shiftDone(g); return; }
     if (j?.kind !== 'tutorial') for (const r of g.requests) {
       const before = prev?.requests?.find(x => x.id === r.id);
       if (!isOpen(r) && before && isOpen(before) && !seen.jobs.has(r.id)) { seen.jobs.add(r.id); jobDone(g, r); return; }

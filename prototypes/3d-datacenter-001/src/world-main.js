@@ -98,7 +98,7 @@ async function openGame(snapshotOrId){
   const route=res.game.journey?.route||'noc';store.state.navigation.nocView='desk';store.navigate(route);history.replaceState(null,'',`#${route}`);
   menu.hide();return true;
 }
-async function newGame(mode,chapter){const res=await api.create(mode,chapter);if(!res.ok){toast(res.message||'새 게임을 시작할 수 없습니다.','hint');if(res.offline)setEngine(false,res.message);return false;}return openGame(res.game);}
+async function newGame(mode,chapter,options){const res=await api.create(mode,chapter,options);if(!res.ok){toast(res.message||'새 게임을 시작할 수 없습니다.','hint');if(res.offline)setEngine(false,res.message);return false;}return openGame(res.game);}
 // [현재 장 재도전] / chapter select: the engine copies the chapter-start checkpoint into a NEW slot; the current save stays.
 async function retryChapter(){if(!gameId)return false;const res=await api.retry(gameId);logAction({type:'retry'},res);if(!res.ok){toast((res.message||'재도전을 준비할 수 없습니다.')+(res.hint?` · ${res.hint}`:''),'hint');return false;}toast(`새 슬롯에서 재도전 · ${res.game.story?.chapter?.heading??(res.game.global?`교대 ${res.game.global.shift}`:'')} (이전 저장은 그대로)`);return openGame(res.game);}
 async function startCheckpoint(id,chapter){const res=await api.checkpoint(id,chapter);logAction({type:'checkpoint',id,chapter},res);if(!res.ok){toast(res.message||'장 시작 기록을 열 수 없습니다.','hint');return false;}return openGame(res.game);}
@@ -440,7 +440,14 @@ function paneDiagnosis(body,g,r){
   body.append(button('다시 진단',()=>openTab('diagnosis'),'link'));
 }
 function shiftActions(body,g){
-  const gl=g.global;if(!gl||gl.kind!=='shift'||!gl.done)return;
+  const gl=g.global;if(!gl)return;
+  if(gl.kind==='free'&&g.incident){const box=el('div','ws-card shift-actions');
+    box.append(el('strong','',`글로벌 자유 교대 · ${gl.difficultyLabel} · seed ${gl.seed}`));
+    if(gl.done)box.append(button('자유 교대 결과 보기',()=>screens.showShift(),'primary',{'data-free-result':''}));
+    else if(gl.closing)box.append(el('p','',`새 접수 중지 · 남은 요청 ${gl.remaining}건 / 사건 ${gl.openIncidents}건을 처리하세요.`));
+    else box.append(button('교대 마무리·결과 보기',()=>send({type:'end_free_shift'}),'primary',{'data-end-free':'',...(!gl.briefed?{disabled:''}:{})}));
+    body.append(box);return;}
+  if(gl.kind!=='shift'||!gl.done)return;
   const box=el('div','ws-card shift-actions');box.dataset.shiftActions=String(gl.shift);
   box.append(el('strong','',isIncident(g)?`${gl.title} ${gl.result.cleared?'목표 달성':'목표 미달성'} · 사건 해결 ${gl.result.resolved}/${gl.result.incidents.length} · 정상 완료 ${gl.result.success}/${gl.result.total}`:`교대 ${gl.shift} ${gl.result.cleared?'클리어':'목표 미달성'} · 정상 완료 ${gl.result.success}/${gl.result.total} · 평균 ${gl.result.average}점`));
   const row=el('div','decision-row');
@@ -506,7 +513,7 @@ function talkPages(){
   const g=game();if(!g)return null;
   if(g.journey?.kind==='tutorial'&&!g.journey.skipped&&g.journey.current?.id==='briefing')return {key:`${g.id}:tutorial`,pages:TUTORIAL_BRIEFING};
   if(g.mode==='story'&&g.story?.step==='arrival'&&g.story.pages.length)return {key:`${g.id}:story`,pages:g.story.pages};
-  if(isGlobal(g)&&g.global.kind==='shift'&&!g.global.briefed)return {key:`${g.id}:shift${g.global.shift}`,pages:g.global.briefing.map(([role,speaker,text])=>[role,text,speaker])};
+  if(isGlobal(g)&&(g.global.kind==='shift'||g.incident)&&!g.global.briefed)return {key:`${g.id}:shift${g.global.shift}`,pages:g.global.briefing.map(([role,speaker,text])=>[role,text,speaker])};
   const t=talkFor(g);if(t)return {key:t.key,pages:t.pages,event:t.event,briefing:t.briefing,speakers:true};
   return null;
 }
@@ -586,7 +593,10 @@ const menu=(()=>{
         c.querySelector('[data-new]')?.remove();
         const lock=lastUnlocks?.global;const start=button('교대 근무 시작 (교대 1부터)',async()=>{if(await newGame('global'))hide();},'primary',{'data-new':'global',...(health.ok&&lock?.available?{}:{disabled:''})});
         c.querySelector('p').after(start);if(lock&&!lock.available)start.after(el('small','menu-warn',lock.reason));
-        const free=button('글로벌 자유 운영 (연습 · 진급 기록 없음)',async()=>{if(await newGame('global_free'))hide();},'',{'data-new':'global_free',...(health.ok?{}:{disabled:''})});start.parentNode.insertBefore(free,start.nextSibling?.nextSibling??null);
+        const settings=el('div','free-settings'),seed=el('input'),difficulty=el('select');seed.type='number';seed.min='0';seed.max='2147483647';seed.placeholder='새 seed (자동)';seed.setAttribute('aria-label','자유 교대 seed');seed.dataset.freeSeed='';
+        difficulty.setAttribute('aria-label','장애 빈도');difficulty.dataset.freeDifficulty='';
+        for(const [v,t]of [['none','무사건 연습'],['relaxed','편안한 · 동시 1건'],['standard','표준 · 동시 2건'],['challenge','도전 · 잦은 사건']]){const o=el('option','',t);o.value=v;o.selected=v==='standard';difficulty.append(o);}
+        const free=button('글로벌 자유 운영 (연습 · 진급 기록 없음)',async()=>{const options={difficulty:difficulty.value,...(seed.value===''?{}:{seed:Number(seed.value)})};if(await newGame('global_free',undefined,options))hide();},'',{'data-new':'global_free',...(health.ok?{}:{disabled:''})});settings.append(seed,difficulty,free);c.append(settings);
       }
       if(mode==='incident'){
         c.querySelector('[data-new]')?.remove();

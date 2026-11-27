@@ -36,6 +36,7 @@ from aidc.incidents.session import IncidentSession  # noqa: E402  (Phase 7: Glob
 from aidc.incidents.content import load as load_incidents  # noqa: E402
 from aidc.learning.linux_session import LinuxSession  # noqa: E402
 from aidc.learning import linux_curriculum  # noqa: E402
+from aidc.global_ops.free_session import FreeShiftSession  # noqa: E402
 
 from .journey import Journey, ROUTES, BUILDINGS  # noqa: E402
 from . import campaign  # noqa: E402
@@ -176,7 +177,7 @@ class Game:
             return 'hw_fault' if any(s.servers.hardware[k].state == 'FAULT' for k in servers) else 'hw_repair'
         if st.allocated and run.migration_left:
             return 'migration'
-        if s.mode in ('incident', 'linux') and st.allocated and s.incidents_for(run.request['id']):
+        if isinstance(s, IncidentSession) and st.allocated and s.incidents_for(run.request['id']):
             return 'incident'   # Phase 7: an engine incident affects this job (cause shown only after diagnosis)
         if st.phase in ('incident', 'paused'):
             return 'net_fault'
@@ -269,7 +270,7 @@ class Game:
                 continue
             aidc = {'hw_fault': 'fault', 'hw_repair': 'repairing', 'migration': 'repairing'}.get(stage, 'ok')
             link, note = self._link(run, stage)
-            wl = incident_view.world_link(s, run) if s.mode in ('incident', 'linux') and stage == 'incident' else None
+            wl = incident_view.world_link(s, run) if isinstance(s, IncidentSession) and stage == 'incident' else None
             if wl:
                 link, note, aidc = wl
             # A network symptom is shown on the customer->AIDC transit as a whole; the server building (aidc) keeps
@@ -307,6 +308,8 @@ class Game:
         """Time runs when a job runs, in free mode, and from chapter 2 on also while a request waits (waiting is a
         real choice there: the customer's deadline keeps coming). Chapter 1 / the tutorial keep the Phase 4 rule."""
         s = self.session
+        if isinstance(s, FreeShiftSession):
+            return s.global_.briefed and s.global_.result is None
         if s.mode in ('global', 'incident', 'linux'):
             # Phase 6: a shift runs after its briefing; waiting is a real choice there (deadlines keep coming).
             return s.global_.kind == 'free' or s.global_.briefed
@@ -338,7 +341,7 @@ class Game:
                      if s.mode == 'global' and s.global_.kind == 'free' else None),
             'global': global_view.view(s),
             'linux': s.learning_view() if isinstance(s, LinuxSession) else None,
-            'incident': incident_view.view(s, self._location() if s.mode in ('incident', 'linux') else None),
+            'incident': incident_view.view(s, self._location() if isinstance(s, IncidentSession) else None),
             'journey': {**self.journey.view(), **({'verifyRacks': self.verify_racks()} if self.journey.kind == 'tutorial' else {})},
             'world': self._world(),
             'racks': {'engine': SERVER_RACKS, 'decor': list(DECOR_RACKS)},
@@ -693,9 +696,15 @@ class Game:
 
     # Phase 7 · incident response: every judgement is the engine's (IncidentSession) ----------------------------
     def _incidents(self):
-        if self.session.mode not in ('incident', 'linux'):
+        if not isinstance(self.session, IncidentSession):
             raise ActionError('장애 대응 근무 또는 사건 연습에서만 사용할 수 있습니다.')
         return self.session
+
+    def do_end_free_shift(self, a):
+        if not isinstance(self.session, FreeShiftSession):
+            raise ActionError('새 글로벌 자유 교대에서만 사용할 수 있습니다.')
+        out = self.session.end_free_shift()
+        return {'freeShift': out, 'info': '새 접수를 멈췄습니다. 남은 요청·사건을 정리하면 결과를 표시합니다.'}
 
     def _linux(self):
         if not isinstance(self.session, LinuxSession):
@@ -1079,7 +1088,7 @@ class GameHost:
             else:
                 return path
 
-    def _open(self, path, kind, fresh, chapter=1):
+    def _open(self, path, kind, fresh, chapter=1, options=None):
         db = Database(path)
         try:
             if fresh and (db.get_simulation() or db.get_requests()):
@@ -1095,8 +1104,12 @@ class GameHost:
                            if fresh else IncidentSession(db))
             elif kind in ('global', 'global_free'):
                 # Phase 6: the same GameSession rules through its subclass; a saved file says its own kind/shift.
-                session = (GlobalSession(db, kind='shift' if kind == 'global' else 'free', shift=chapter or 1)
-                           if fresh else GlobalSession(db))
+                payload = db.get_simulation() if not fresh else None
+                if (fresh and kind == 'global_free') or (payload and payload.get('free_incidents')):
+                    session = FreeShiftSession(db, **(options or {}))
+                else:
+                    session = (GlobalSession(db, kind='shift' if kind == 'global' else 'free', shift=chapter or 1)
+                               if fresh else GlobalSession(db))
             else:
                 mode = {'free': 'free', 'practice': 'story'}.get(kind, kind)
                 options = {'intro_flow': True} if fresh and kind in ('tutorial', 'story') else {}
@@ -1126,7 +1139,7 @@ class GameHost:
         self.games[game.id] = game
         return game
 
-    def new_game(self, mode, chapter=None):
+    def new_game(self, mode, chapter=None, options=None):
         if mode not in KINDS:
             raise ActionError('지원하지 않는 모드입니다.')
         if mode == 'incident_practice' and chapter not in INCIDENT_TYPES:
@@ -1147,7 +1160,10 @@ class GameHost:
                     raise ActionError(GLOBAL_LOCK, '스토리 도전에서 제1~5장을 클리어하면 메뉴의 글로벌 운영 카드가 열립니다.')
                 return self._new_global('global', 1)
             if mode == 'global_free':
-                return self._new_global('global_free', None)
+                options = options or {}
+                if not isinstance(options, dict) or set(options) - {'seed', 'difficulty'}:
+                    raise ActionError('자유 교대 옵션이 올바르지 않습니다.')
+                return self._new_global('global_free', None, options=options)
             if mode == 'incident':
                 if not self.incident_unlocked():
                     raise ActionError(INCIDENT_LOCK, '글로벌 운영 카드의 교대 근무에서 교대 3까지 클리어하면 장애 대응 근무가 열립니다.')
@@ -1231,10 +1247,10 @@ class GameHost:
                 out.append(path.stem)
         return out
 
-    def _new_global(self, kind, shift, origin=None):
+    def _new_global(self, kind, shift, origin=None, options=None):
         path = self._reserve_global()
         try:
-            game = self._open(path, kind, fresh=True, chapter=shift)
+            game = self._open(path, kind, fresh=True, chapter=shift, options=options)
         except Exception:
             for created in (path, self._sidecar(path), path.with_name(path.name + '.lock')):
                 created.unlink(missing_ok=True)
@@ -1289,7 +1305,9 @@ class GameHost:
                 shift = s.global_.shift
                 return self._new_global('global', shift, origin={'source': game.id, 'shift': shift})
             if game.kind == 'global_free':
-                return self.new_game('global_free')
+                options = ({'seed': s.seed, 'difficulty': s.free_incidents['difficulty']}
+                           if isinstance(s, FreeShiftSession) else {'seed': s.seed, 'difficulty': 'none'})
+                return self._new_global('global_free', None, origin={'source': game.id}, options=options)
             if game.kind == 'incident':
                 # Phase 7: a NEW incident save starting at the same response shift; this save stays as it is.
                 shift = s.global_.shift

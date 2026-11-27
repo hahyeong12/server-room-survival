@@ -10,7 +10,7 @@ const RESULT = { fix: ['해결 조치', 'ok'], move: ['작업 이전', 'recover'
   consent: ['동의 요청', 'new'], isolate_move: ['격리·이전', 'recover'], isolate_repair: ['격리·수리', 'recover'], none: ['개선 없음', 'warn'], refused: ['허용 안 됨', 'fault'] };
 const GROUP_LABEL = { escalate: '담당팀 호출', network: '네트워크', compute: 'GPU·작업', storage: '스토리지', facility: '시설·전원(요청)', platform: '플랫폼' };
 
-export function isIncident(game) { return ['incident', 'linux'].includes(game?.mode) && !!game.incident; }
+export function isIncident(game) { return ['global', 'incident', 'linux', 'senior'].includes(game?.mode) && !!game.incident; }
 export function incidentRecords(game) { return game?.incident?.records ?? []; }
 export function focusIncident(game, id) {
   const recs = incidentRecords(game).filter(r => r.state !== 'armed');
@@ -26,6 +26,7 @@ export function incidentGoal(game) {
   const alert = inc.records.find(r => r.state === 'alert');
   if (alert) return { label, title: `경보 · ${alert.id} ${alert.title}`, what: '내 모니터 [사건] 탭에서 범위부터 확인하세요. 원인은 아직 모릅니다.' };
   if (open.length) { const r = open[0]; return { label, title: `${r.id} · ${r.stateLabel}`, what: `지금 할 일: ${r.next} — ${r.why}` }; }
+  if (g.kind === 'free') return {label: `글로벌 자유 교대 · ${g.difficultyLabel} · seed ${g.seed}`, title: g.closing ? '남은 업무 정리' : '요청 배정·돌발 사건 대응', what: g.closing ? `남은 요청 ${g.remaining}건 · 사건 ${g.openIncidents}건을 마무리하세요.` : '요청함에서 조건을 읽고 배정하세요. 원할 때 [교대 마무리·결과 보기]로 접수를 멈출 수 있습니다.'};
   return { label, title: `도착 ${g.arrived}/${g.total} · 사건 ${inc.records.filter(r => r.state === 'closed').length}건 종료`, what: '요청함의 업무를 배정하고 시간을 진행하세요. 경보는 작업 진행 중에 들어옵니다.' };
 }
 

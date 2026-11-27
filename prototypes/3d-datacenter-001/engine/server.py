@@ -127,7 +127,7 @@ def make_handler(host: GameHost, log=None):
                 return self._send(400, {'ok': False, 'message': f'잘못된 요청: {exc}'})
             try:
                 if path == '/api/games':
-                    return self._send(200, {'ok': True, 'game': host.run(lambda: host.new_game(data.get('mode'), data.get('chapter')).snapshot())})
+                    return self._send(200, {'ok': True, 'game': host.run(lambda: host.new_game(data.get('mode'), data.get('chapter'), data.get('options')).snapshot())})
                 m = GAME_PATH.fullmatch(path)
                 if m and m[2] == '/actions':
                     def act():
