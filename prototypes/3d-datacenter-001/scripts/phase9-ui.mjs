@@ -45,7 +45,9 @@ async function scoped(id,ident,{interpret=false}={}){
   if(spec.probe==='dcgm'){for(const [i,n]of nodes.entries())out=await command(id,ident,{interpret:interpret&&i===0,node:n});return out;}
   return command(id,ident,{interpret});
 }
-async function bms(id,type){if(type==='cooling'||type==='ups')await U.observe(page,id,type);}
+// The engine keeps one reading per probe per virtual minute, so a BMS reading already taken this minute (for example
+// while inferring the cause) is not requested again.
+async function bms(id,type){if(type!=='cooling'&&type!=='ups')return;const now=(await U.G(page)).clock.minute;if(!(await U.inc(page,id)).evidence.some(e=>e.probe===type&&e.minute===now))await U.observe(page,id,type);}
 function targetIP(rec){const server=rec.scope.jobs.find(j=>j.rid===rec.rid)?.servers?.[0]??'A';return `10.20.${11+'ABCD'.indexOf(server)}.15`;}
 async function evidence(id,type,post=false){for(const ident of GROUPS[type])await scoped(id,ident,{interpret:!post});await bms(id,type);}
 // For the final exam infer from the output, not from a hidden engine type or a seeded result.
