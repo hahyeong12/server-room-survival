@@ -581,6 +581,12 @@ class IncidentSession(GlobalSession):
         self._log(rec, 'action', f'조치 · {entry["label"]}: {word} — {text}')
         return dict(entry)
 
+    def _consent_finish(self, run):
+        """Expected completion if the customer agrees to the smaller batch (published Phase 7 estimate, kept as is so
+        incident/Linux saves are judged the same way; the Phase 9 overlay overrides it with an exact 10-minute ceiling)."""
+        s = run.state
+        return self.minute + 10 + int((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * 0.8) + 9) // 10 * 10
+
     def _refuse(self, rec, action, text):
         last = rec.actions[-1] if rec.actions else None
         if last and last['action'] == action and last['result'] == 'refused' and last['minute'] == self.minute:
@@ -630,8 +636,7 @@ class IncidentSession(GlobalSession):
             if rec.consent is not None:
                 raise ValueError('이미 고객 동의를 요청했습니다. 회신 결과를 확인하세요.')
             run = self.runs[rec.rid]
-            s = run.state
-            finish = self.minute + 10 + int((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * 0.8) + 9) // 10 * 10
+            finish = self._consent_finish(run)
             ok = bool(run.terms) and finish <= run.terms['due']
             rec.consent = 'accepted' if ok else 'rejected'
             self._feedback(run, ('배치 크기 조정에 동의합니다. 결과가 같고 완료 기한 안이라면 진행해 주세요.' if ok else

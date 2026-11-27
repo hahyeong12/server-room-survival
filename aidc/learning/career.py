@@ -7,18 +7,23 @@ Rules (v2):
   condition change) or an action tried before its required approval/consent. Refusals that are the engine's
   condition checks (no second uplink, no capacity to move, deadline no longer allows the change) are not penalised;
 * learning interpretation: the first answer per incident. With the optional CLI (free shifts) each incident is
-  judged by its own source: CLI answers if the player used the CLI for that incident, otherwise the
-  evidence-grounded hypothesis record. Unanswered CLI readings of a used incident score 0; repeats cannot farm.
+  judged by the first answer of every source the player used for it: the first CLI interpretation if the CLI was
+  used, and the first decisive hypothesis if one was made. Unanswered CLI readings of a used incident score 0, and
+  a wrong first answer in one source cannot be replaced from the other; repeats cannot farm.
+* (v3) a refusal without a plan is unsafe only for the policy list (deletion, UPS bypass, batch change without
+  consent); asking the customer where no condition change is needed is not unsafe.
 """
 from result_summary import outcome_key
 import hashlib
 import json
 
-VERSION = 2
+VERSION = 3
+# Actions the engine refuses by policy without a plan: data deletion, UPS bypass, a condition change without consent.
+POLICY = frozenset({'delete_data', 'ups_bypass', 'reduce_batch'})
 WEIGHTS = {'operations': {'contracts': 40, 'recovery': 25, 'safety': 20, 'communication': 15},
            'learning': {'evidence': 30, 'interpretation': 35, 'hypothesis': 25, 'independence': 10}}
 RULE = ('first-interpretation-per-incident;unanswered-zero;required-probes-v1;per-incident-source-when-optional;'
-        'decided-requests;policy-or-approval-refusals-only')
+        'decided-requests;policy-or-approval-refusals-only;policy-list;first-answer-of-every-used-source')
 FINGERPRINT = hashlib.sha256(json.dumps([VERSION, WEIGHTS, RULE], sort_keys=True).encode()).hexdigest()
 
 
@@ -27,7 +32,7 @@ def _unsafe_refusal(session, rec, entry):
         return False
     plan = session._tdef(rec)['actions'].get(entry['action'])
     if plan is None:
-        return True          # only policy-listed actions are refused without a plan (common.refused)
+        return entry['action'] in POLICY   # e.g. ask_consent where no condition change is needed is not unsafe
     need = plan.get('requires', '')
     return need == 'consent' or need.startswith('approval:')
 
@@ -53,10 +58,16 @@ def assess(session):
     hypotheses = [h for r in records for h in r.hypotheses]
 
     def reading(rec):
-        if learning and (not optional or rec.id in cli_used):
-            return next((x['correct'] for x in answers if x['incident'] == rec.id), False)
+        cli = next((x['correct'] for x in answers if x['incident'] == rec.id), False)
+        if learning and not optional:
+            return cli
         decisive = next((h for h in rec.hypotheses if h['verdict'] != 'insufficient'), None)
-        return decisive is not None and decisive['verdict'] == 'confirmed'
+        gui = decisive is not None and decisive['verdict'] == 'confirmed'
+        # Optional terminal: every source the player used for this incident is judged by its own first answer, so a
+        # wrong first answer in one source cannot be replaced by a later right answer in the other.
+        if rec.id in cli_used:
+            return cli and (decisive is None or gui)
+        return gui
 
     def evidence_ok(rec):
         required = set(session.content.causes[rec.type]['probes'])

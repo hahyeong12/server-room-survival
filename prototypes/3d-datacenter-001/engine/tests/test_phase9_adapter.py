@@ -62,5 +62,14 @@ class Phase9AdapterTests(unittest.TestCase):
         self.assertFalse(self.host.career()['ending'])
 
 
+    def test_senior_slot_that_fails_to_open_is_removed(self):
+        from unittest.mock import patch
+        before = sorted(p.name for p in Path(self.temp.name).iterdir())
+        with patch.object(GameHost, '_open', side_effect=RuntimeError('boom')):
+            with self.assertRaises(RuntimeError):
+                self.host._new_senior(1)
+        self.assertEqual(sorted(p.name for p in Path(self.temp.name).iterdir()), before)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -211,6 +211,63 @@ class FreeIncidentTests(unittest.TestCase):
             diagnose(s, others[0])
             self.assertGreater(assess(s)['learning']['items']['interpretation'], 0)
 
+    def _first_alert(self, seed=7):
+        s = self.make(seed, 'challenge')
+        s.confirm_shift_briefing()
+        while not s.incident.records:
+            start_open(s)
+            s.advance_time(10)
+        rec = s.incident.records[0]
+        s.incident_ack(rec.id)
+        observe(s, rec.id, list(C.probes))
+        return s, rec
+
+    def _cli_answer(self, s, rec, correct=True):
+        from aidc.learning import linux_catalog as catalog
+        o = s.cli(rec.id, 'ip route', 'noc', s.token(rec))
+        spec = catalog.BY_ID[o['command_id']]
+        obs = next(x for x in s.linux['observations'] if x['seq'] == o['seq'])
+        pick = next(c['id'] for c in s.choices(obs) if (c['text'] == spec.correct) == correct)
+        return s.interpret(rec.id, o['seq'], pick, s.token(rec))
+
+    def test_wrong_first_answer_cannot_be_replaced_from_the_other_source(self):
+        """Review 4B: a refuted first hypothesis followed by one right CLI answer used to score full interpretation."""
+        from aidc.learning.career import assess
+        s, rec = self._first_alert()
+        wrong = next(c for c in C.causes if c != rec.type)
+        self.assertEqual(s.incident_hypothesis(rec.id, wrong)['verdict'], 'refuted')
+        self.assertEqual(s.incident_hypothesis(rec.id, rec.type)['verdict'], 'confirmed')
+        self.assertEqual(assess(s)['learning']['items']['interpretation'], 0)
+        self.assertTrue(self._cli_answer(s, rec)['correct'])
+        self.assertEqual(assess(s)['learning']['items']['interpretation'], 0, 'the wrong first GUI answer still counts')
+        # The other way round: a wrong first CLI reading is not rescued by a right hypothesis.
+        s, rec = self._first_alert(seed=11)
+        self.assertFalse(self._cli_answer(s, rec, correct=False)['correct'])
+        self.assertEqual(s.incident_hypothesis(rec.id, rec.type)['verdict'], 'confirmed')
+        self.assertEqual(assess(s)['learning']['items']['interpretation'], 0)
+        # Both sources right on the first try: full credit.
+        s, rec = self._first_alert(seed=13)
+        self.assertTrue(self._cli_answer(s, rec)['correct'])
+        self.assertEqual(s.incident_hypothesis(rec.id, rec.type)['verdict'], 'confirmed')
+        self.assertEqual(assess(s)['learning']['items']['interpretation'], 35)
+
+    def test_asking_consent_is_never_a_safety_violation(self):
+        """Review 4A: ask_consent where no condition change is needed is refused, but asking is the safe action."""
+        from aidc.learning.career import assess, _unsafe_refusal
+        for seed in range(1, 40):
+            s, rec = self._first_alert(seed)
+            if rec.type != 'gpu_oom':
+                break
+        self.assertEqual(s.incident_hypothesis(rec.id, rec.type)['verdict'], 'confirmed')
+        e = s.incident_act(rec.id, 'ask_consent')
+        self.assertEqual(e['result'], 'refused')
+        self.assertFalse(_unsafe_refusal(s, rec, e))
+        self.assertEqual(assess(s)['operations']['items']['safety'], 20)
+        bad = s.incident_act(rec.id, 'delete_data')
+        self.assertTrue(_unsafe_refusal(s, rec, bad), 'policy refusals still count')
+        self.assertEqual(assess(s)['operations']['items']['safety'], 0)
+        self.assertEqual(assess(s)['unsafe'], ['delete_data'])
+
     def test_outdated_rule_save_is_refused_with_a_clear_reason(self):
         s = self.make(3, 'standard', name='old-rules.db')
         s.confirm_shift_briefing()
@@ -218,7 +275,7 @@ class FreeIncidentTests(unittest.TestCase):
         payload['free_incidents']['rules'] = 'old-phase9-rules'
         s.db.save_simulation(payload)
         s.db.close()
-        with self.assertRaisesRegex(ValueError, '이전 버전의 Phase 9 운영 규칙'):
+        with self.assertRaisesRegex(ValueError, '이전 버전의 Phase 9 운영·평가 규칙'):
             FreeShiftSession(self.temp.db('old-rules.db'))
 
 

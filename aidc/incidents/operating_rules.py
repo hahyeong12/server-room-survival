@@ -12,6 +12,7 @@ The degraded minutes are recorded in the real ledger (`slow_minutes`) and move t
 """
 import hashlib
 import json
+import math
 from copy import deepcopy
 
 from game import MODE_SPEEDS, game_time
@@ -33,8 +34,15 @@ RESIDUAL = {
     'crashloop': {'rollback_deploy': {'factor': 0.7, 'minutes': 90, 'text': '최적화가 빠진 이전 버전으로 실행합니다'}},
     'gpu_oom': {'reduce_batch': {'factor': 0.8, 'minutes': None, 'text': '고객이 동의한 작은 배치로 완료까지 실행합니다'}},
 }
-RULE_VERSION = 'residual-v2:jobs-on-scope;window-inclusive;reduce-batch-deadline-recheck'
+RULE_VERSION = 'residual-v2:jobs-on-scope;window-inclusive;reduce-batch-deadline-recheck;deadline-ceil10'
 FINGERPRINT = hashlib.sha256(json.dumps([RULES, RESIDUAL, RULE_VERSION], sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+
+
+def ceil10(minutes):
+    """Minutes the 10-minute clock really needs for `minutes` of work (float noise rounded away first)."""
+    return max(0, math.ceil(round(minutes, 6) / 10)) * 10
+
+
 TRADEOFF_NOTE = ('임시 우회는 정지가 짧지만 복구 뒤 감속 운전, 담당팀 근본 조치는 정지가 길지만 복구 뒤 정상 속도입니다. '
                  '남은 작업량과 기한을 보고 고르세요. 원인을 판단하면 이 사건에 쓸 수 있는 우회의 비용이 버튼에 표시됩니다.')
 
@@ -90,12 +98,17 @@ class OperatingRules:
             if factor > 0 and factor == self._residual(rec)['factor']:
                 rec.slow_minutes += 10
 
+    def _consent_finish(self, run):
+        # Phase 7's `int(x + 9) // 10 * 10` floors for x in (10k, 10k+1): a consent could then end 10 minutes late.
+        s = run.state
+        return self.minute + 10 + ceil10((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * 0.8))
+
     def _apply(self, rec, action, plan, rid, index):
         spec = RESIDUAL.get(rec.type, {}).get(action)
         if action == 'reduce_batch' and spec and rec.consent == 'accepted' and rec.state != 'recovering':
             run = self.runs[rec.rid]
             s = run.state
-            finish = self.minute + plan['minutes'] + int((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * spec['factor']) + 9) // 10 * 10
+            finish = self.minute + plan['minutes'] + ceil10((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * spec['factor']))
             if run.terms and finish > run.terms['due']:
                 last = rec.actions[-1] if rec.actions else None
                 if last and last['action'] == action and last['result'] == 'refused' and last['minute'] == self.minute:

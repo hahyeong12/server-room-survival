@@ -1223,7 +1223,12 @@ class GameHost:
                 number += 1
             else:
                 break
-        game = self._open(path, 'senior', fresh=True, chapter=shift)
+        try:
+            game = self._open(path, 'senior', fresh=True, chapter=shift)
+        except Exception:
+            for created in (path, self._sidecar(path), path.with_name(path.name + '.lock')):
+                created.unlink(missing_ok=True)
+            raise
         if origin:
             game.journey.data['origin'] = origin
             game.journey.save()

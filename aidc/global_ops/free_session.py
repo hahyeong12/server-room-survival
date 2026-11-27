@@ -13,6 +13,7 @@ from aidc.incidents.session import IncidentSession, IncidentBook, IncidentRecord
 from aidc.incidents.content import load
 from aidc.incidents.operating_rules import OperatingRules, FINGERPRINT
 from aidc.learning.linux_session import LinuxSession
+from aidc.learning.career import FINGERPRINT as ASSESSMENT_FINGERPRINT
 
 DIFFICULTIES = {
     'none': {'label': '무사건 연습', 'interval': 0, 'maximum': 0},
@@ -21,7 +22,8 @@ DIFFICULTIES = {
     'challenge': {'label': '도전', 'interval': 20, 'maximum': 2},
 }
 SCHEDULE_FINGERPRINT = hashlib.sha256(json.dumps(
-    [DIFFICULTIES, FINGERPRINT, 'eligible-v1:remaining20/slack60;closing-no-injection;optional-cli'], sort_keys=True).encode()).hexdigest()
+    [DIFFICULTIES, FINGERPRINT, ASSESSMENT_FINGERPRINT, 'eligible-v1:remaining20/slack60;closing-no-injection;optional-cli'],
+    sort_keys=True).encode()).hexdigest()
 
 
 class FreeShiftSession(OperatingRules, LinuxSession):
@@ -62,7 +64,7 @@ class FreeShiftSession(OperatingRules, LinuxSession):
     def _validate_free(self):
         f = self.free_incidents
         if isinstance(f.get('rules'), str) and f['rules'] != SCHEDULE_FINGERPRINT:
-            raise ValueError('이 자유 교대는 이전 버전의 Phase 9 운영 규칙(사건 일정·임시 우회 비용)으로 만들어졌습니다. '
+            raise ValueError('이 자유 교대는 이전 버전의 Phase 9 운영·평가 규칙(사건 일정·임시 우회 비용·점수 기준)으로 만들어졌습니다. '
                              '규칙을 바꿔 다시 해석하지 않도록 열지 않습니다. 원본 저장은 보존됩니다. 새 자유 교대를 시작하세요.')
         if (self.global_.kind != 'free' or self.incident.version != self.content.version or f.get('rules') != SCHEDULE_FINGERPRINT or
                 not isinstance(f.get('difficulty'), str) or f['difficulty'] not in DIFFICULTIES or type(f.get('cursor')) is not int or
