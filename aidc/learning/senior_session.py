@@ -11,7 +11,7 @@ from aidc.incidents.operating_rules import OperatingRules, FINGERPRINT
 SHIFTS = {
     1: {'title': '선임 평가 1 · 계약과 공유 자원', 'role': '담당 엔지니어 · 선임 평가',
         'cases': ['dns', 'gpu_oom', 'storage_full'],
-        'arrivals': [[0, 'sin-merbau-research'], [0, 'bom-marine-batch'], [110, 'sfo-bayfog-video']],
+        'arrivals': [[0, 'sin-merbau-research'], [0, 'bom-marine-batch'], [40, 'sfo-bayfog-video']],
         'intro': '연구 배치와 유연형 추론이 공유 자원을 사용합니다. 계약을 지키며 두 작업의 이상을 구분하고, 후속 영상 작업까지 처리하세요. 원인과 명령은 직접 선택합니다.'},
     2: {'title': '선임 평가 2 · 동시 사건과 팀 조정', 'role': '담당 엔지니어 · 최종 교대',
         'cases': ['crashloop', 'storage_latency', 'congestion'],

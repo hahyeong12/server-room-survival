@@ -222,7 +222,7 @@ try{
     assert.equal(records(savePath(id)),before,'the failed save keeps every game record (only the display flag of the closed screen is added)');report.retry={from:id,to:g.id};await ctx.close();
   });
   await check('global free operations: requests keep arriving from many cities; save → engine restart → resume',async()=>{
-    let {ctx,page,shot}=await open();await page.waitForSelector('[data-new=global_free]');await click(page,'[data-new=global_free]');await page.waitForTimeout(800);
+    let {ctx,page,shot}=await open();await page.waitForSelector('[data-new=global_free]');await page.selectOption('[data-free-difficulty]','none');await click(page,'[data-new=global_free]');await briefing(page);await page.waitForTimeout(800);
     for(let i=0;i<8;i++){
       const g=await G(page);
       for(const r of g.requests.filter(x=>x.stage==='incoming')){await read(page,r.id);await planTab(page,r.id);
@@ -247,7 +247,7 @@ try{
   });
   for(const [w,h,dpr,label]of [[1366,768,1,'1366x768'],[911,512,1.5,'1366x768 at 150% (emulated, full screen)'],[911,430,1.5,'1366x768 at 150% inside a browser window (emulated)'],[1280,720,1.5,'1920x1080 at 150% (emulated)'],[1920,1080,1,'1920x1080']]){
     await check(`layout ${label}: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll`,async()=>{
-      const {ctx,page,shot}=await open({width:w,height:h,dpr});await page.waitForSelector('[data-new=global_free]');await click(page,'[data-new=global_free]');await page.waitForTimeout(700);
+      const {ctx,page,shot}=await open({width:w,height:h,dpr});await page.waitForSelector('[data-new=global_free]');await page.selectOption('[data-free-difficulty]','none');await click(page,'[data-new=global_free]');await briefing(page);await page.waitForTimeout(700);
       const id=(await G(page)).requests[0].id;await tab(page,'inbox');
       const inView=async sel=>page.evaluate(sel=>{const e=document.querySelector(sel);if(!e)return {sel,found:false};const r=e.getBoundingClientRect();return {sel,found:true,ok:r.width>0&&r.top>=0&&r.left>=0&&r.bottom<=innerHeight+1&&r.right<=innerWidth+1,top:Math.round(r.top),bottom:Math.round(r.bottom)};},sel);
       const rows=[];for(const sel of ['[data-filter=open]','[data-sort]',`[data-request-row="${id}"]`,`[data-read-request="${id}"]`,`[data-wait="${id}"]`,'[data-ws-tab=plan]','[data-advance="10"]'])rows.push(await inView(sel));
@@ -260,11 +260,11 @@ try{
     });
   }
   await check('reduced motion: lit routes stay lit with packets frozen',async()=>{
-    const {ctx,page}=await open({reducedMotion:true});await page.waitForSelector('[data-new=global_free]');await click(page,'[data-new=global_free]');await page.waitForTimeout(600);
+    const {ctx,page}=await open({reducedMotion:true});await page.waitForSelector('[data-new=global_free]');await page.selectOption('[data-free-difficulty]','none');await click(page,'[data-new=global_free]');await briefing(page);await page.waitForTimeout(600);
     await places(page,'world');const v=(await S(page)).network;assert.ok(v.lit.length>=1);assert.equal(v.packetsMoving,false);await ctx.close();
   });
   await check('WebGL resources and heap stay flat across 10 cycles of every space',async()=>{
-    const {ctx,page}=await open();await page.waitForSelector('[data-new=global_free]');await click(page,'[data-new=global_free]');await page.waitForTimeout(600);
+    const {ctx,page}=await open();await page.waitForSelector('[data-new=global_free]');await page.selectOption('[data-free-difficulty]','none');await click(page,'[data-new=global_free]');await briefing(page);await page.waitForTimeout(600);
     for(let i=0;i<10;i++){for(const r of ['world','campus','noc','hall'])await places(page,r);const s=await S(page);report.resources.push({cycle:i+1,geometries:s.renderer.geometries,textures:s.renderer.textures,heapMiB:s.heap?+(s.heap.used/1048576).toFixed(1):null});}
     const geo=report.resources.map(r=>r.geometries),tex=report.resources.map(r=>r.textures);
     assert.ok(Math.max(...geo.slice(1))-Math.min(...geo.slice(1))<=2,`geometries ${geo}`);assert.ok(Math.max(...tex.slice(1))-Math.min(...tex.slice(1))<=2,`textures ${tex}`);

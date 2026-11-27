@@ -478,6 +478,7 @@ function paneResult(body,g,r){
 function renderHeader(){
   const g=game();$('mode-badge').textContent=g?`${g.mode==='tutorial'?g.story.chapter.heading:g.story?`${g.modeLabel} · ${g.story.chapter.heading}`:isIncident(g)?`${g.modeLabel} · ${g.incident.practice?'개별 연습':`근무 ${g.incident.code}`}`:isGlobal(g)&&g.global.kind==='shift'?`${g.modeLabel} · 교대 ${g.global.shift}`:g.modeLabel} · 엔진 연결`:engine.online===false?'엔진 미연결':'게임 선택 전';$('mode-badge').dataset.mode=g?.mode||'';
   $('clock-time').textContent=g?.clock.label??'—';
+  if(g?.senior)$('mode-badge').textContent=`${g.senior.role} · 선임 평가 ${g.global.shift}/2`;
   for(const b of document.querySelectorAll('[data-advance]')){b.disabled=!g||!g.canAdvance;b.title=!g?'게임을 시작하세요':!g.canAdvance?'진행 중인 작업이 없습니다 · 먼저 작업을 시작하세요':`가상 시간 ${b.dataset.advance}분 진행`;}
 }
 function renderStrip(){

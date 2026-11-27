@@ -346,7 +346,7 @@ class Game:
             'global': global_view.view(s),
             'linux': s.learning_view() if isinstance(s, LinuxSession) else None,
             'assessment': assess(s) if isinstance(s, GlobalSession) else None,
-            'senior': ({'shift': s.global_.shift, 'count': 2, 'role': '담당 엔지니어 · 선임 평가',
+            'senior': ({'shift': s.global_.shift, 'count': 2, 'role': ('선임 엔지니어' if s.global_.result and s.global_.result.get('senior', {}).get('ending') else '담당 엔지니어 · 선임 평가'),
                         'ending': bool(s.global_.result and s.global_.result.get('senior', {}).get('ending')),
                         'qualification': '독립 관제 엔지니어 (교육 수료 · 직무와 별도)'} if isinstance(s, SeniorSession) else None),
             'incident': incident_view.view(s, self._location() if isinstance(s, IncidentSession) else None),

@@ -237,6 +237,9 @@ export function createScreens({ $, el, button, store, game, send, newGame, openG
     }
   }
   function alarms(prev, g) {
+    for(const rec of g?.incident?.records??[]){const before=prev?.incident?.records?.find(x=>x.id===rec.id);if(!before||before.state===rec.state)continue;
+      const messages={recovering:`🔧 ${rec.id} · 담당 조치 진행 중 · 가상 시간으로 복구가 진행됩니다`,monitoring:`✓ ${rec.id} · 서비스 영향 해소 · 복구 후 지표를 다시 확인하세요`,closed:`✓ ${rec.id} · 검증과 고객 보고 완료 · 근무 일지에 기록했습니다`,failed:`⚠ ${rec.id} · 대응 종료 · 결과에서 영향과 다음 전략을 확인하세요`};
+      if(messages[rec.state])toast(messages[rec.state],rec.state==='failed'?'hint':'');}
     for (const r of g?.requests ?? []) {
       const before = prev?.requests?.find(x => x.id === r.id);
       if (!before || before.stage === r.stage) continue;
