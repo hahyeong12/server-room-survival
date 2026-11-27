@@ -114,10 +114,12 @@ try{
     await menu();assert.equal(await page.locator('[data-new=senior]').isDisabled(),false);
   });
 
-  await check('senior evaluation fails honestly when incidents are ignored; retry opens a new slot and preserves the source bytes',async()=>{
-    await U.click(page,'[data-new=senior]');await page.waitForTimeout(500);await U.talkThrough(page);let g=await U.G(page);
-    for(let i=0;i<60&&!g.global.done;i++){await F.startAvailable();g=await U.G(page);if(g.global.done)break;assert.ok(g.canAdvance,`not done but time cannot advance at ${g.clock.label}`);await U.advance(page,10);g=await U.G(page);}
-    assert.equal(g.global.done,true,'an ignored senior shift still ends');assert.equal(g.global.result.cleared,false);assert.equal(g.senior.ending,false);
+  // An ignored incident never ends a shift (existing Phase 7 rule: held jobs wait for recovery; no time limit), so the
+  // honest failure here is one refused policy action (data deletion) during an otherwise complete shift.
+  await check('senior evaluation: one refused data-deletion attempt fails the shift; retry opens a new slot and preserves the source bytes',async()=>{
+    await U.click(page,'[data-new=senior]');await page.waitForTimeout(500);let tried=false;
+    let g=await F.workShift({expectCleared:false,onDiagnosed:async(id,act)=>{if(tried)return;tried=true;const e=await act('delete_data');assert.equal(e.result,'refused',JSON.stringify(e));}});
+    assert.equal(tried,true);g=await U.G(page);assert.equal(g.global.done,true);assert.equal(g.global.result.cleared,false,'unsafe attempt is not cleared');assert.deepEqual(g.global.result.assessment.unsafe,['delete_data']);assert.equal(g.senior.ending,false);
     report.notes.push({seniorFailure:{operations:g.global.result.assessment.operations.score,learning:g.global.result.assessment.learning.score,rows:g.global.result.rows.map(r=>r.outcome),incidents:g.global.result.incidents.map(r=>r.outcome)}});
     await page.waitForSelector('#screen-dialog[open] [data-next=retry-incident]');await shot('p9-senior-failed.png');
     await layoutCheck('senior-failed',['#screen-dialog [data-next=retry-incident]','#screen-dialog [data-next=menu]']);

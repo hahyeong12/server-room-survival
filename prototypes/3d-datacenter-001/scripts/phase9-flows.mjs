@@ -36,12 +36,13 @@ function classify(ev){const text=p=>ev.filter(e=>e.probe===p).at(-1)?.summary??'
   const ev=(await U.inc(pg,id)).evidence,type=classify(ev);if(type)return type;
     throw new Error('Cannot infer from visible evidence: '+JSON.stringify(ev));
   }
-  async function handle(rec){const pg=page(),id=rec.id;let g=await U.G(pg);const linux=!!g.linux&&!g.linux.optional;
+  async function handle(rec,{onDiagnosed}={}){const pg=page(),id=rec.id;let g=await U.G(pg);const linux=!!g.linux&&!g.linux.optional;
     if(rec.state==='alert'){
       await U.ack(pg,id);const type=await infer(id,linux);types[g.id+id]=type;
       if(linux)await P().evidence(id,type);else for(const p of PROBES[type])if(!(await U.inc(pg,id)).evidence.some(e=>e.probe===p))await U.observe(pg,id,p);
       const verdict=await U.hypothesis(pg,id,type);assert.equal(verdict.verdict,'confirmed',JSON.stringify(verdict));await U.notify(pg,id);
       const act=async(a,rid)=>g.linux?P().act(id,a,rid):U.act(pg,id,a,rid);
+      if(onDiagnosed)await onDiagnosed(id,act);
       for(const a of PATH[type]){if(a==='+10'){await U.advance(pg,10);continue;}const result=await act(a);assert.ok(result&&!['none','refused'].includes(result.result),`${id} ${a}: ${JSON.stringify(result)}`);}
       if(type==='ups')for(const j of (await U.inc(pg,id)).scope.jobs)await act('planned_pause',j.rid);
     }
@@ -53,8 +54,8 @@ function classify(ev){const text=p=>ev.filter(e=>e.probe===p).at(-1)?.summary??'
       assert.equal((await U.verify(pg,id)).state,'verified');assert.equal((await U.report(pg,id)).state,'closed');
     }
   }
-  async function handleOpen(){for(const r of (await U.G(page())).incident.records.filter(OPEN))await handle(r);}
-  async function workShift(){const pg=page();await U.talkThrough(pg);for(let n=0;n<80;n++){await startAvailable();await handleOpen();const g=await U.G(pg);if(g.global.done){assert.equal(g.global.result.cleared,true,JSON.stringify(g.global.result));report.shifts.push({kind:g.kind,shift:g.global.shift,result:g.global.result});return g;}await U.advance(pg,10);}throw new Error('Shift did not finish');}
+  async function handleOpen(opts){for(const r of (await U.G(page())).incident.records.filter(OPEN))await handle(r,opts);}
+  async function workShift({expectCleared=true,onDiagnosed}={}){const pg=page();await U.talkThrough(pg);for(let n=0;n<80;n++){await startAvailable();await handleOpen({onDiagnosed});const g=await U.G(pg);if(g.global.done){if(expectCleared)assert.equal(g.global.result.cleared,true,JSON.stringify(g.global.result));report.shifts.push({kind:g.kind,shift:g.global.shift,result:g.global.result});return g;}await U.advance(pg,10);}throw new Error('Shift did not finish');}
   async function globalShift(n){const pg=page();await U.talkThrough(pg);const begin=(await U.G(pg)).clock.minute;for(let i=0;i<40;i++){const g=await U.G(pg);for(const [kind,site,arg]of ORDER[n][g.clock.minute-begin]??[]){const id=await P6.rid(pg,site);if(kind==='start')await P6.start(pg,id,arg);else if(kind==='wait')await P6.wait(pg,id);else assert.equal((await P6.negotiate(pg,id)).status,arg?'accepted':'rejected');}if((await U.G(pg)).global.done)break;await U.advance(pg,10);}assert.equal((await U.G(pg)).global.result.cleared,true);}
   return {startAvailable,handle,handleOpen,workShift,globalShift,OPEN};
 }
