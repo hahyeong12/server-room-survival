@@ -123,7 +123,11 @@ try{
     report.notes.push({seniorFailure:{operations:g.global.result.assessment.operations.score,learning:g.global.result.assessment.learning.score,rows:g.global.result.rows.map(r=>r.outcome),incidents:g.global.result.incidents.map(r=>r.outcome)}});
     await page.waitForSelector('#screen-dialog[open] [data-next=retry-incident]');await shot('p9-senior-failed.png');
     await layoutCheck('senior-failed',['#screen-dialog [data-next=retry-incident]','#screen-dialog [data-next=menu]']);
-    const source=g.id,before=await bytes(source);await U.click(page,'#screen-dialog [data-next=retry-incident]');await page.waitForTimeout(500);
+    // Closing the result screen records only that it was seen (global.seen) in the source save; nothing else changes.
+    // Then the source bytes are fixed and the retry (result tab, as in Phase 8 QA) must not touch them.
+    const source=g.id,p0=payload(source);await U.click(page,'#screen-dialog [data-next=stay]');await settle(page,300);const p1=payload(source);
+    const strip=p=>{const c=structuredClone(p);delete c.global.seen;return c;};assert.deepEqual(strip(p1),strip(p0),'closing the result screen changes only the seen record');assert.ok(p1.global.seen.length>p0.global.seen.length);
+    const before=await bytes(source);await U.tab(page,'result');await U.click(page,'[data-retry-shift]');await page.waitForTimeout(500);
     const n=await U.G(page);assert.notEqual(n.id,source);assert.equal(n.mode,'senior');assert.equal(n.global.shift,1);assert.equal(await bytes(source),before,'source save unchanged byte for byte');
     report.resumes.push({label:'senior retry source bytes preserved',source,newSlot:n.id});
   });
