@@ -53,11 +53,11 @@
 
 - `experiment/3d-growth-balance-phase9` / Issue #10 (Codex 착수 → 사용량 한도로 중단 → Claude Code 인계·완료). 기준 Phase 8 `3893cb6`.
 - P0 `aidc/global_ops/free_session.py` `FreeShiftSession`: 새 글로벌 자유 교대만 seed + 난도(무사건/편안한/표준/도전)로 기존 10종 사건을 가상 10분 경계에서 추첨합니다. `random.Random(f'{seed}:free-incidents-v1:{cursor}')`, 버전형 `free_incidents` JSON v1(규칙 지문·cursor·last·next·이력·closing). 기존 자유 저장은 기존 `GlobalSession` 규칙 그대로 열리며 사건이 생기지 않습니다. [교대 마무리·결과 보기]는 신규 접수·사건을 멈추고 남은 업무를 끝내게 합니다. 자유 결과는 진급에 쓰지 않습니다.
-- P1 `aidc/learning/career.py` `assess()`(운영/학습 분리 평가 v2, 원장·학습 기록만), `SeniorSession`(선임 평가 2교대, `aidc_3d_senior_NNN.db`, `mode=senior`), `GameHost.career()`(정규 결과만 읽는 경력 지도: 신입→담당→선임 직무와 교육 수료 등급을 분리).
-- P2 `aidc/incidents/operating_rules.py` `OperatingRules`(Phase9 세션 전용 덧층): 임시 우회 = 짧은 정지 + 복구 뒤 감속 운전(`RESIDUAL`), 근본 조치 = 긴 정지 + 정상 속도. 감속은 실제 작업 위치(서버 원장) 기준으로 진행률·완료 시각·`slow_minutes`에 반영합니다. 사건 v1 정의·지문·기존 저장은 바꾸지 않습니다.
+- P1 `aidc/learning/career.py` `assess()`(운영/학습 분리 평가 v3, 원장·학습 기록만. 계획 없는 거부는 정책 목록(`delete_data`·`ups_bypass`·`reduce_batch`)만 안전 감점, 선택형 CLI 사건은 사용한 모든 출처의 첫 답으로 판정), `SeniorSession`(선임 평가 2교대, `aidc_3d_senior_NNN.db`, `mode=senior`), `GameHost.career()`(정규 결과만 읽는 경력 지도: 신입→담당→선임 직무와 교육 수료 등급을 분리).
+- P2 `aidc/incidents/operating_rules.py` `OperatingRules`(Phase9 세션 전용 덧층): 임시 우회 = 짧은 정지 + 복구 뒤 감속 운전(`RESIDUAL`), 근본 조치 = 긴 정지 + 정상 속도. 감속은 실제 작업 위치(서버 원장) 기준으로 진행률·완료 시각·`slow_minutes`에 반영합니다. 동의·배치 축소 기한 재확인은 덧층의 `ceil10`(10분 올림)을 쓰고, Phase 7 사건/Linux는 `_consent_finish()` 훅의 기존 식을 유지합니다. 사건 v1 정의·지문·기존 저장은 바꾸지 않습니다.
 - 규칙·평가 지문이 바뀌면 이전 Phase9 자유/선임 저장은 원인을 밝히는 문구와 함께 열지 않습니다(소급 재해석 금지).
-- 검증: `tests/test_free_incidents.py`·`test_senior_career.py`·`test_operating_branches.py`, `engine/tests/test_phase9_adapter.py`, 브라우저 `scripts/phase9-qa.mjs`(포트 8789/5189, OS 임시 저장), 직렬 회귀 `scripts/phase9-regression.mjs --tag=이름`. **QA 실행 중에는 엔진/화면 소스를 수정하지 않습니다**(엔진 재시작·Vite 핫리로드로 결과 오염).
-- 기록: `docs/3d-world-expansion/PHASE9_GAME_DESIGN.md`·`PHASE9_ARCHITECTURE.md`·`QA_REPORT_PHASE9.md`·`REVIEW_PHASE9.md`·`WORK_LOG_PHASE9.md`·`PHASE9_REFERENCES.md`. Tk GUI 311개는 실행하지 않았습니다. 사용자 요청 없이 Phase 10으로 진행하지 않습니다.
+- 검증: `tests/test_free_incidents.py`·`test_senior_career.py`·`test_operating_branches.py`, `engine/tests/test_phase9_adapter.py`, 브라우저 `scripts/phase9-qa.mjs`(9개 검사, 포트 8789/5189, OS 임시 저장)·보완 `phase9-ux-qa.mjs`(9개, 8791/5191)·`phase9-seed-qa.mjs`(4개, 8792/5192, 공용 흐름 `phase9-flows.mjs`), 직렬 회귀 `scripts/phase9-regression.mjs --tag=이름`. **QA 실행 중에는 엔진/화면 소스를 수정하지 않습니다**(엔진 재시작·Vite 핫리로드로 결과 오염).
+- 기록: `docs/3d-world-expansion/PHASE9_GAME_DESIGN.md`·`PHASE9_ARCHITECTURE.md`·`QA_REPORT_PHASE9.md`·`REVIEW_PHASE9.md`·`WORK_LOG_PHASE9.md`·`PHASE9_REFERENCES.md`. 최종 결과(주 9/9·seed 4/4·UX 9/9·직렬 회귀 10/10·Python 976·adapter 58·보호 1,482개 불변)와 알려진 한계(무시된 사건은 근무를 끝내지 않는 Phase 7 규칙, Phase 7 동의 내림 식 유지)는 `QA_REPORT_PHASE9.md`를 확인합니다. Tk GUI 311개는 실행하지 않았습니다. 사용자 요청 없이 Phase 10으로 진행하지 않습니다.
 
 ## 프로젝트 정보
 
