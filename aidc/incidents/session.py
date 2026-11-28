@@ -25,6 +25,8 @@ from aidc.global_ops.session import GlobalSession
 from result_summary import outcome_key
 
 from .content import load
+from . import phase10
+from .operating_rules import ceil10
 
 RACKS = {'A': 'A-01', 'B': 'B-01', 'C': 'C-01', 'D': 'D-01'}
 NET = {'A': 11, 'B': 12, 'C': 13, 'D': 14}
@@ -94,6 +96,9 @@ class IncidentRecord:
     slow_minutes: int = 0
     seq: int = 0
     timeline: list = field(default_factory=list)
+    # Phase 10 (ops_rules saves only): requests this incident really affected, and each customer notice [minute, rid].
+    impacted: list = field(default_factory=list)
+    notices: list = field(default_factory=list)
 
     @classmethod
     def from_payload(cls, value):
@@ -119,13 +124,19 @@ class IncidentBook:
         return cls(value['version'], value.get('practice'), [IncidentRecord.from_payload(r) for r in value['records']])
 
 
+PHASE10_FIELDS = ('impacted', 'notices')
+HANDOFF_LOCK = '미해결 업무를 인계하고 마친 교대입니다. 결과를 확인하거나 같은 근무를 새 슬롯에서 다시 시작하세요.'
+
+
 class IncidentSession(GlobalSession):
     MODES = GlobalSession.MODES + ('incident',)
     SAVE_MODE = 'incident'
+    _dry = False        # True only inside a rolled-back forecast
 
     def __init__(self, db, shift=1, practice=None, seed=None):
         self.content = load()
         saved = db.get_simulation()
+        self.ops_rules = phase10.load(saved)
         if saved:
             if saved.get('mode') != self.SAVE_MODE:
                 raise ValueError('장애 대응 근무 저장이 아닙니다. 모드별 저장 파일을 사용해 주세요.')
@@ -146,8 +157,25 @@ class IncidentSession(GlobalSession):
     def _has_shift(self, number):
         return str(number) in self.content.shifts
 
+    @property
+    def rules10(self):
+        return getattr(self, 'ops_rules', None) is not None
+
     def _extra_payload(self):
-        return {**super()._extra_payload(), 'incident': self.incident.payload()}
+        book = self.incident.payload()
+        if not self.rules10:
+            # A save made before Phase 10 keeps its published record shape.
+            for r in book['records']:
+                for k in PHASE10_FIELDS:
+                    r.pop(k, None)
+        extra = {**super()._extra_payload(), 'incident': book}
+        if self.rules10:
+            extra['ops_rules'] = dict(self.ops_rules)
+        return extra
+
+    def _persist(self):
+        if not self._dry:        # a forecast is rolled back; nothing to write
+            super()._persist()
 
     @contextmanager
     def _atomic(self):
@@ -181,6 +209,8 @@ class IncidentSession(GlobalSession):
         return nxt if str(nxt) in self.content.shifts else None
 
     def _deliver_shift(self):
+        if self._dry:
+            return
         g = self.global_
         before = len(g.delivered)
         super()._deliver_shift()
@@ -321,6 +351,8 @@ class IncidentSession(GlobalSession):
         for rec in self.incident.records:
             if rec.state in FINAL or rec.state == 'armed':
                 continue
+            if self.rules10:
+                rec.impacted = sorted(set(rec.impacted) | set(self._affected(rec)))
             for team, at in rec.escalations.items():
                 if at + self.content.teams[team]['approval'] == self.minute:
                     self._log(rec, 'approval', f'{self.content.teams[team]["label"]} 승인 · 요청한 조치를 진행할 수 있습니다.')
@@ -347,6 +379,8 @@ class IncidentSession(GlobalSession):
                     self._log(rec, 'limit', t['limitText'] + f' (영향 요청 #{", #".join(map(str, exposed))})')
 
     def _arm(self):
+        if self._dry:
+            return False
         fired = False
         for rec in self.incident.records:
             if rec.state != 'armed':
@@ -370,6 +404,8 @@ class IncidentSession(GlobalSession):
         rec.servers = ({'cooling': self.content.topology['coolingZones'][rec.zone], 'ups': self.content.topology['upsFeeds'][rec.ups]}
                        .get(rec.type, [rec.primary]) if t.get('hold') else [])
         rec.state, rec.detected, rec.cause_active = 'alert', self.minute, True
+        if self.rules10:
+            rec.impacted = sorted(set(self._affected(rec)) | {rec.rid})
         self._log(rec, 'alert', f'경보({t["severity"]}): {t["alert"]}')
         if t['effect'] != 'exposed':
             self._feedback(run, '작업 진행이 평소와 다릅니다. 현재 상황과 예상 시각을 알려 주세요.', 'customer_incident')
@@ -585,6 +621,8 @@ class IncidentSession(GlobalSession):
         """Expected completion if the customer agrees to the smaller batch (published Phase 7 estimate, kept as is so
         incident/Linux saves are judged the same way; the Phase 9 overlay overrides it with an exact 10-minute ceiling)."""
         s = run.state
+        if self.rules10:
+            return self.minute + 10 + ceil10((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * 0.8))
         return self.minute + 10 + int((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * 0.8) + 9) // 10 * 10
 
     def _refuse(self, rec, action, text):
@@ -616,6 +654,16 @@ class IncidentSession(GlobalSession):
         if need == 'consent' and rec.consent != 'accepted':
             return self._refuse(rec, action, '고객이 조건 변경을 거절했습니다. 조건을 바꾸지 않는 다른 방법을 찾으세요.' if rec.consent == 'rejected'
                                 else self.content.data['common']['refused']['reduce_batch'])
+        if need == 'consent' and self.rules10 and result == 'fix':
+            run = self.runs[rec.rid]
+            s = run.state
+            finish = self.minute + plan['minutes'] + ceil10((s.work_total - s.work_done) / (MODE_SPEEDS[s.plan] * 0.8))
+            if run.terms and finish > run.terms['due']:
+                last = rec.actions[-1] if rec.actions else None
+                if last and last['action'] == action and last['result'] == 'refused' and last['minute'] == self.minute:
+                    return dict(last)
+                return self._entry(rec, action, 'refused', f'동의를 받은 뒤 시간이 지나 지금 배치를 줄이면 예상 완료 {game_time(finish)}로 '
+                                   f'기한 {game_time(run.terms["due"])}을 넘깁니다. 조건을 바꾸지 않는 다른 방법을 찾으세요.', condition=True)
         if need.startswith('approval:'):
             blocked = self._approval(rec, need[9:])
             if blocked:
@@ -720,25 +768,38 @@ class IncidentSession(GlobalSession):
             else:
                 eta = '원인 조사 중 · 다음 안내 때 예상 시각을 알려 드립니다'
             rec.notified.append(self.minute)
-            self._emit(run, 'notice', f'[사건 {rec.id}] 고객 영향 안내: {self._tdef(rec)["symptom"]} · {eta}')
-            self._feedback(run, f'상황 안내 감사합니다. ({eta}) 진행 상황을 계속 알려 주세요.', 'customer_notice')
-            return self._entry(rec, 'notify_customer', 'notice', f'고객에게 영향과 예상 시각을 안내했습니다: {eta}')
+            targets = [rid for rid in (rec.impacted or [rec.rid]) if rid in self.runs] if self.rules10 else [rec.rid]
+            for rid in targets:
+                other = self.runs[rid]
+                self._emit(other, 'notice', f'[사건 {rec.id}] 고객 영향 안내: {self._tdef(rec)["symptom"]} · {eta}')
+                self._feedback(other, f'상황 안내 감사합니다. ({eta}) 진행 상황을 계속 알려 주세요.', 'customer_notice')
+                if self.rules10:
+                    rec.notices.append([self.minute, rid])
+            who = '' if len(targets) == 1 else f' (영향 고객 {len(targets)}곳: 요청 #' + ', #'.join(map(str, targets)) + ')'
+            return self._entry(rec, 'notify_customer', 'notice', f'고객에게 영향과 예상 시각을 안내했습니다: {eta}{who}')
 
     def verify_blocker(self, rec):
         if rec.state != 'monitoring':
             return {'alert': '먼저 범위를 확인하세요.', 'investigating': '원인을 아직 판단하지 않았습니다.',
                     'diagnosed': '아직 조치하지 않았습니다.', 'recovering': '복구가 아직 끝나지 않았습니다.',
                     'verified': '이미 사후 확인을 마쳤습니다. 고객에게 보고하세요.'}.get(rec.state, '확인할 수 없는 상태입니다.')
-        run = self.runs[rec.rid]
-        if self.minute < rec.recovered + 10 and run.state.phase != 'finished':
-            return f'경보가 사라진 직후입니다. 정상 실행을 10분 이상 지켜본 뒤({game_time(rec.recovered + 10)} 이후) 확인하세요.'
-        missing = [p for p in self._tdef(rec)['verify'] if not self._seen(rec, p, max(rec.recovered, rec.recovered + 10 if run.state.phase != 'finished' else rec.recovered))]
+        since = self.post_since(rec)
+        if self.minute < since:
+            return f'경보가 사라진 직후입니다. 정상 실행을 10분 이상 지켜본 뒤({game_time(since)} 이후) 확인하세요.'
+        missing = [p for p in self._tdef(rec)['verify'] if not self._seen(rec, p, since)]
         if missing:
             return '복구 뒤 다시 관측해야 할 지표: ' + ', '.join(f'{self.content.probes[p]["label"]}({self.content.probes[p]["where"]})' for p in missing)
         bad = [p for p in self._tdef(rec)['verify'] if self.reading(rec, p)['status'] == 'bad']
         if bad:
             return '아직 비정상인 지표가 있습니다: ' + ', '.join(self.content.probes[p]['label'] for p in bad)
         return ''
+
+    def post_since(self, rec):
+        """First minute a post-recovery observation counts: 10 minutes of normal running after recovery while a job the
+        incident affected still runs (Phase 10: every affected job; before Phase 10: the incident's own request)."""
+        rids = [r for r in (rec.impacted or [rec.rid]) if r in self.runs] if self.rules10 else [rec.rid]
+        running = any(self.runs[r].state.phase != 'finished' for r in rids)
+        return rec.recovered + 10 if running else rec.recovered
 
     def incident_verify(self, iid):
         rec = self._open(iid)
@@ -765,7 +826,8 @@ class IncidentSession(GlobalSession):
                 self.servers.hardware[rec.isolated] = ServerHealth('REPAIRING', 20, self.servers.hardware[rec.isolated].reason)
                 text += f' 격리한 Server {rec.isolated}는 장비 담당 수리 접수(가상 20분).'
             self._log(rec, 'report', text)
-            self._feedback(run, '사건 보고를 받았습니다. 원인과 재발 방지 내용을 확인했습니다.', 'customer_incident_report')
+            for rid in ([r for r in (rec.impacted or [rec.rid]) if r in self.runs] if self.rules10 else [rec.rid]):
+                self._feedback(self.runs[rid], '사건 보고를 받았습니다. 원인과 재발 방지 내용을 확인했습니다.', 'customer_incident_report')
         return {'report': text}
 
     # ------------------------------------------------------------------ views (read-only)
@@ -832,6 +894,7 @@ class IncidentSession(GlobalSession):
             'verifyProbes': list(t['verify']) if known else [],
             'notified': [game_time(m) for m in rec.notified], 'outcome': rec.outcome, 'reason': rec.reason,
             'downtime': rec.downtime, 'slowMinutes': rec.slow_minutes,
+            'customers': self.customer_notices(rec) if rec.acknowledged is not None else [],
             'wrongHypotheses': sum(h['verdict'] == 'refuted' for h in rec.hypotheses),
             'wrongActions': sum(a['result'] in ('none', 'refused') for a in rec.actions),
             'next': step, 'why': why, 'hint': hint,
@@ -893,7 +956,7 @@ class IncidentSession(GlobalSession):
         for rec in self.shift_records():
             run = self.runs[rec.rid]
             meta = run.conditions.get('catalog', {})
-            first_notice = min(rec.notified) if rec.notified else None
+            customers = self.customer_notices(rec)
             out.append({'id': rec.id, 'rid': rec.rid, 'type': rec.type, 'label': self.content.causes[rec.type]['label'],
                         'domain': self.content.causes[rec.type]['domain'], 'client': meta.get('clientName'), 'city': meta.get('city'),
                         'outcome': rec.outcome or 'open', 'reason': rec.reason,
@@ -908,7 +971,9 @@ class IncidentSession(GlobalSession):
                         'notices': len(rec.notified),
                         'fix': next((a['label'] for a in rec.actions if a['result'] in ('fix', 'isolate_move', 'isolate_repair')), None),
                         'mitigations': [a['label'] for a in rec.actions if a['result'] in ('move', 'pause')],
-                        'notifiedBeforeRecovery': first_notice is not None and (rec.recovered is None or first_notice <= rec.recovered),
+                        'notifiedBeforeRecovery': self.notified_before_recovery(rec),
+                        'customers': customers,
+                        'lost': [c['rid'] for c in customers if c['failed']],
                         'downtime': rec.downtime, 'slowMinutes': rec.slow_minutes,
                         'postmortem': deepcopy(self._tdef(rec)['postmortem'])})
         return out
@@ -935,9 +1000,24 @@ class IncidentSession(GlobalSession):
             lines.append(head + (' · ' + ' · '.join(detail) if detail else ''))
         if goal['notifyBeforeRecovery'] and not notified:
             lines.append('복구 전에 영향 고객에게 안내하지 않은 사건이 있습니다 — 고객은 복구 시각보다 먼저 영향을 알고 싶어 합니다.')
+        for r in rows:
+            if r['lost']:
+                lines.append(f'{r["id"]}: 영향 범위의 요청 #' + ', #'.join(map(str, r['lost'])) + ' 작업이 실패했습니다 — 공유 장애는 모든 영향 작업을 함께 지켜야 합니다.')
+        handoff = getattr(self, '_handoff_items', None)
+        if handoff is not None:
+            neglect = [x for x in handoff['incidents'] if x['class'] == 'neglect']
+            cleared = cleared and not neglect
+            for x in handoff['incidents']:
+                lines.append(f'{x["id"]} 인계({x["classLabel"]}): {x["note"]}')
+            for x in handoff['requests']:
+                lines.append(f'요청 #{x["rid"]} {x["client"]}: {x["statusLabel"]} 상태로 다음 교대에 인계 — 이번 교대의 완료로 세지 않습니다.')
+            if neglect:
+                lines.append('고객 영향이 있는 사건을 영향 고객에게 알리지 않고 넘겼습니다(방치). 해결하지 못하더라도 범위 확인과 고객 안내는 이번 교대의 책임입니다.')
         word = '연습' if self.incident.practice else '근무'
         lines.append(f'{word} 목표 달성' if cleared else f'{word} 목표 미달성 — 같은 {word}을(를) 새 슬롯에서 다시 도전할 수 있습니다.')
         base.update(cleared=cleared, incidents=rows, resolved=resolved, goal=goal, feedback=lines, practice=self.incident.practice)
+        if handoff is not None:
+            base['handoff'] = handoff
         return base
 
     def shift_briefing(self):
@@ -954,3 +1034,241 @@ class IncidentSession(GlobalSession):
 
     def request_hint(self, rid):
         return None   # 사건 근무의 선배 안내는 사건 카드(incident_view.hint)에서만 합니다.
+
+    # ------------------------------------------------------------------ Phase 10: customers of a shared incident
+    def customer_notices(self, rec):
+        """Every request the incident affected, with its customer notices (read-only). Before Phase 10: the own request."""
+        rids = (rec.impacted or [rec.rid]) if self.rules10 else [rec.rid]
+        out = []
+        for rid in rids:
+            run = self.runs.get(rid)
+            if run is None:
+                continue
+            meta = run.conditions.get('catalog', {})
+            minutes = sorted(m for m, r in rec.notices if r == rid) if self.rules10 else sorted(rec.notified)
+            first = minutes[0] if minutes else None
+            out.append({'rid': rid, 'client': meta.get('clientName', run.mission['company_name']), 'city': meta.get('city', ''),
+                        'notified': [game_time(m) for m in minutes],
+                        'beforeRecovery': first is not None and (rec.recovered is None or first <= rec.recovered),
+                        'failed': outcome_key(run) == 'failed', 'primary': rid == rec.rid})
+        return out
+
+    def notified_before_recovery(self, rec):
+        if not self.rules10:
+            first = min(rec.notified) if rec.notified else None
+            return first is not None and (rec.recovered is None or first <= rec.recovered)
+        rows = self.customer_notices(rec)
+        return bool(rows) and all(c['beforeRecovery'] for c in rows)
+
+    # ------------------------------------------------------------------ Phase 10: explicit handoff of unresolved work
+    def handed_off(self):
+        result = self.global_.result
+        return bool(result and result.get('handoff'))
+
+    def _require_briefed(self):
+        if self.handed_off():
+            raise ValueError(HANDOFF_LOCK)
+        super()._require_briefed()
+
+    def advance_time(self, minutes):
+        if self.handed_off():
+            raise ValueError(HANDOFF_LOCK)
+        return super().advance_time(minutes)
+
+    def _handoff_blocker(self):
+        g = self.global_
+        if not self.rules10:
+            return '이 저장은 Phase 10 이전 규칙으로 만들어져 인계 기능이 없습니다(기존 판정 보존). 새 근무에서 사용할 수 있습니다.'
+        if not g.briefed:
+            return '먼저 근무 브리핑을 확인하세요.'
+        if g.result is not None:
+            return '이미 결과가 확정된 교대입니다.'
+        if g.kind == 'shift' and len(g.delivered) < len(self.shift_def()['arrivals']):
+            return '아직 도착 예정인 요청이 있습니다. 교대 시간이 남아 있으니 시간을 진행해 모든 요청을 받은 뒤 인계하세요.'
+        return ''
+
+    def handoff_items(self):
+        """What would be handed to the next shift now, with an honest class per incident (read-only)."""
+        incidents, requests = [], []
+        for rec in self.shift_records():
+            if rec.state in FINAL or rec.state == 'armed':
+                continue
+            customers = self.customer_notices(rec)
+            told = bool(customers) and all(c['notified'] for c in customers)
+            responsible = rec.acknowledged is not None and told
+            missing = []
+            if not responsible:
+                if rec.acknowledged is None:
+                    missing.append('범위 확인 안 함')
+                missing += [f'요청 #{c["rid"]} {c["client"]} 고객 안내 없음' for c in customers if not c['notified']]
+            cause = self.content.causes[rec.cause]['label'] if rec.cause else '원인 미확인'
+            if rec.state == 'recovering':
+                doing = f'복구 진행 중({self.content.actions[rec.recovery_by]["label"]}' + (f', 남은 {rec.recovery_left}분)' if rec.recovery_left else ')')
+            else:
+                doing = STATE_LABELS[rec.state]
+            teams = ', '.join(f'{self.content.teams[t]["label"]} 호출 {game_time(a)}' for t, a in rec.escalations.items())
+            told_line = ', '.join(f'#{c["rid"]} {c["notified"][-1]}' for c in customers if c['notified']) or '없음'
+            note = (f'{cause} · {doing} · 관측 {len(rec.evidence)}건 · 가설 {len(rec.hypotheses)}건'
+                    + (f' · {teams}' if teams else '') + f' · 고객 안내 {told_line}')
+            incidents.append({'id': rec.id, 'rid': rec.rid, 'state': rec.state, 'stateLabel': STATE_LABELS[rec.state],
+                              'cause': rec.cause, 'class': 'handover' if responsible else 'neglect',
+                              'classLabel': '책임 인계' if responsible else '방치', 'missing': missing, 'note': note,
+                              'customers': customers})
+        for rid in self.shift_request_ids():
+            run = self.runs[rid]
+            if run.request['status'] in ('completed', 'rejected'):
+                continue
+            meta = run.conditions.get('catalog', {})
+            requests.append({'rid': rid, 'client': meta.get('clientName', run.mission['company_name']), 'status': run.request['status'],
+                             'statusLabel': f'실행 중 {round(run.state.progress)}%' if run.state.allocated else '배정 전 대기',
+                             'due': game_time(run.terms['due']) if run.terms else None,
+                             'affectedBy': [r.id for r in self.incidents_for(rid)]})
+        return {'incidents': incidents, 'requests': requests}
+
+    def handoff_view(self):
+        if not self.rules10:
+            return None
+        blocker = self._handoff_blocker()
+        items = self.handoff_items() if not blocker else {'incidents': [], 'requests': []}
+        if not blocker and not items['incidents'] and not items['requests']:
+            blocker = '인계할 미해결 업무가 없습니다. 남은 결과는 자동으로 확정됩니다.'
+        return {'available': not blocker, 'reason': blocker, **items,
+                'notice': '인계는 미해결 업무를 다음 교대에 넘기고 이번 교대를 끝냅니다. 인계한 사건은 해결로 세지 않으며, '
+                          '영향 고객에게 알리지 않은 사건은 방치로 기록됩니다.'}
+
+    def handoff_shift(self):
+        blocker = self._handoff_blocker()
+        if blocker:
+            raise ValueError(blocker)
+        items = self.handoff_items()
+        if not items['incidents'] and not items['requests']:
+            raise ValueError('인계할 미해결 업무가 없습니다.')
+        with self._atomic():
+            self._handoff_items = {'version': 1, 'rules': phase10.ID, 'minute': self.minute, 'time': game_time(self.minute), **items,
+                                   'handedOver': sum(x['class'] == 'handover' for x in items['incidents']),
+                                   'neglected': sum(x['class'] == 'neglect' for x in items['incidents'])}
+            try:
+                for x in items['incidents']:
+                    self._log(self.record(x['id']), 'handoff', f'다음 교대에 인계({x["classLabel"]}): {x["note"]}')
+                result = self.shift_result()
+            finally:
+                del self._handoff_items
+            if hasattr(self, 'free_incidents'):
+                self.free_incidents['closing'] = True
+            self.global_.result = result
+        return deepcopy(result)
+
+    # ------------------------------------------------------------------ Phase 10: impact forecast on a rolled-back engine
+    def incident_forecast(self, iid):
+        """Compare the recovery paths of the diagnosed cause by running each on the real engine and rolling it back.
+        Same ticks, approvals, consent, residual slowdown and limits as play. No future arrivals or incidents."""
+        rec = self._open(iid)
+        if not self.rules10:
+            raise ValueError('영향 예측은 Phase 10 규칙의 새 근무에서 제공합니다.')
+        if rec.cause is None:
+            raise ValueError('원인을 판단한 뒤에 조치별 영향을 비교할 수 있습니다. 원인을 모르는 상태의 예측은 근거가 없습니다.')
+        if rec.state != 'diagnosed':
+            raise ValueError('조치를 고르기 전(원인 확정 상태)에만 비교합니다. 진행 중인 복구는 사건 카드의 예상 시각을 보세요.')
+        plan = self._tdef(rec)['actions']
+        options = [a for a, p in plan.items() if p['result'] in phase10.FIX_RESULTS]
+        rids = [r for r in (rec.impacted or [rec.rid]) if r in self.runs and self.runs[r].request['status'] == 'operating']
+        return {'incident': iid, 'minute': self.minute, 'time': game_time(self.minute), 'cap': phase10.FORECAST_CAP,
+                'baseline': self._dry_run(iid, None, rids), 'options': [self._dry_run(iid, a, rids) for a in options],
+                'notice': '현재 엔진 상태에서 각 조치를 실제 규칙으로 시험한 뒤 되돌린 결과입니다(저장·시간 변화 없음). '
+                          '앞으로 도착할 요청·다른 사건·플레이어의 다른 선택은 포함하지 않습니다. '
+                          '계획 중단·작업 이전은 영향 범위의 작업 하나씩 따로 고르는 완화 조치라 이 표에 없습니다.'}
+
+    def _residual_spec(self, rec, action):
+        """Phase 9 overlay sessions slow a job down after a quick workaround; other sessions have no such rule."""
+        return None
+
+    def _dry_run(self, iid, action, rids):
+        rec = self.record(iid)
+        label = self.content.actions[action]['label'] if action else '조치하지 않고 지켜보기'
+        residual = self._residual_spec(rec, action) if action else None
+        kind = None if not action else 'workaround' if residual else 'fix'
+        start = self.minute
+        info = {'action': action, 'label': label, 'kind': kind, 'feasible': True, 'reason': '', 'steps': [], 'jobs': [],
+                'residual': (f'복구 뒤 {"완료까지" if residual["minutes"] is None else str(residual["minutes"]) + "분간"} 처리량 {residual["factor"]}배'
+                             if residual else None), 'restored': None, 'restoredMinute': None}
+        trace = {rid: {'stop': 0, 'slow': 0, 'finish': None, 'failed': None} for rid in rids}
+        self._dry = True
+        try:
+            with self._atomic():
+                if action:
+                    self._dry_execute(iid, action, info, start)
+                while info['feasible'] and self.minute - start < phase10.FORECAST_CAP:
+                    live = [r for r in rids if trace[r]['finish'] is None and trace[r]['failed'] is None]
+                    if not live:
+                        break
+                    before = {r: self.runs[r].state.work_done for r in live}
+                    speed = {r: 10 * MODE_SPEEDS[self.runs[r].state.plan] for r in live}
+                    self.advance_time(10)
+                    for r in live:
+                        st = self.runs[r].state
+                        if st.phase == 'finished':
+                            trace[r]['finish' if st.succeeded else 'failed'] = self.minute
+                            continue
+                        gained = st.work_done - before[r]
+                        if gained <= 1e-9:
+                            trace[r]['stop'] += 10
+                        elif gained < speed[r] - 1e-6:
+                            trace[r]['slow'] += 10
+                now = self.record(iid)
+                if now.recovered is not None:
+                    info['restored'], info['restoredMinute'] = game_time(now.recovered), now.recovered
+                for r in rids:
+                    run = self.runs[r]
+                    due = run.terms['due'] if run.terms else None
+                    t = trace[r]
+                    meta = run.conditions.get('catalog', {})
+                    late = t['finish'] - due if t['finish'] is not None and due is not None and t['finish'] > due else 0
+                    risk = 'fail' if t['failed'] is not None else 'stuck' if t['finish'] is None else 'late' if late else 'ok'
+                    info['jobs'].append({'rid': r, 'client': meta.get('clientName', run.mission['company_name']),
+                                         'finish': game_time(t['finish']) if t['finish'] is not None else None,
+                                         'finishMinute': t['finish'], 'due': game_time(due) if due is not None else None,
+                                         'dueMinute': due, 'late': late, 'failedAt': game_time(t['failed']) if t['failed'] is not None else None,
+                                         'stopMinutes': t['stop'], 'slowMinutes': t['slow'], 'risk': risk})
+                raise phase10.Rollback()
+        except phase10.Rollback:
+            pass
+        finally:
+            self._dry = False
+        return info
+
+    def _dry_execute(self, iid, action, info, start):
+        """What a player would do as soon as possible for this path: call the team, wait for its approval and the busy
+        window, ask the customer when the path changes the contract, then start the action."""
+        plan = self._tdef(self.record(iid))['actions'][action]
+        need = plan.get('requires', '')
+
+        def wait_until(minute, why):
+            while self.minute < minute and self.minute - start < phase10.FORECAST_CAP:
+                self.advance_time(10)
+            info['steps'].append(f'{game_time(self.minute)} {why}')
+        if self.minute < self.record(iid).busy_until:
+            wait_until(self.record(iid).busy_until, '직전 조치 결과 확인 끝')
+        if need.startswith('approval:'):
+            team = need[9:]
+            if team not in self.record(iid).escalations:
+                call = next(a for a, spec in self.content.actions.items() if spec['group'] == 'escalate' and spec.get('team') == team)
+                self.incident_act(iid, call)
+                info['steps'].append(f'{game_time(self.minute)} {self.content.teams[team]["label"]} 호출')
+            rec = self.record(iid)
+            wait_until(max(rec.escalations[team] + self.content.teams[team]['approval'], rec.busy_until),
+                       f'{self.content.teams[team]["label"]} 승인')
+        if need == 'consent':
+            if self.record(iid).consent is None:
+                self.incident_act(iid, 'ask_consent')
+                info['steps'].append(f'{game_time(self.minute)} 고객 동의 요청 → ' + ('동의' if self.record(iid).consent == 'accepted' else '거절'))
+            if self.record(iid).consent != 'accepted':
+                info.update(feasible=False, reason='배치 축소 뒤 예상 완료가 고객 기한을 넘겨 고객이 조건 변경에 동의하지 않습니다(같은 기한 계산식).')
+                return
+        if self.record(iid).state != 'diagnosed':
+            info.update(feasible=False, reason='준비하는 동안 사건 상태가 바뀌었습니다(대상 작업 종료 등).')
+            return
+        entry = self.incident_act(iid, action)
+        if entry['result'] in ('refused', 'none'):
+            info.update(feasible=False, reason=entry['text'])
+            return
+        info['steps'].append(f'{game_time(self.minute)} {entry["label"]} 시작')

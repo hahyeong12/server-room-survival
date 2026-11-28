@@ -48,7 +48,9 @@ def assess(session):
     ops = {'contracts': ratio(sum(k == 'on_time' for k in decided), len(decided), 40),
            'recovery': ratio(sum(r.state == 'closed' for r in records), len(records), 25),
            'safety': ratio(sum(not any(_unsafe_refusal(session, r, a) for a in r.actions) for r in records), len(records), 20),
-           'communication': ratio(sum(bool(r.notified) and (r.recovered is None or min(r.notified) <= r.recovered)
+           # Phase 10 saves: every customer the incident affected (shared incidents); older saves: the own request.
+           'communication': ratio(sum(session.notified_before_recovery(r) if hasattr(session, 'notified_before_recovery') else
+                                      bool(r.notified) and (r.recovered is None or min(r.notified) <= r.recovered)
                                       for r in records), len(records), 15)}
     ids = {r.id for r in records}
     learning = getattr(session, 'linux', {}) or {}
@@ -81,9 +83,12 @@ def assess(session):
         available = sum(WEIGHTS[category][k] for k, v in parts.items() if v is not None)
         return round(100 * sum(v for v in parts.values() if v is not None) / available) if available else None
     unsafe = [a['action'] for a in safety if a['action'] in ('delete_data', 'ups_bypass')]
+    result = getattr(getattr(session, 'global_', None), 'result', None) or {}
+    neglected = [x['id'] for x in (result.get('handoff') or {}).get('incidents', []) if x['class'] == 'neglect']
+    handed = [x['id'] for x in (result.get('handoff') or {}).get('incidents', []) if x['class'] == 'handover']
     return {'version': VERSION, 'operations': {'score': total(ops, 'operations'), 'items': ops},
             'learning': {'score': total(learn, 'learning'), 'items': learn}, 'weights': WEIGHTS,
-            'unsafe': unsafe, 'basis': {'requests': len(runs), 'decided': len(decided), 'incidents': len(records),
+            'unsafe': unsafe, 'handedOver': handed, 'neglected': neglected, 'basis': {'requests': len(runs), 'decided': len(decided), 'incidents': len(records),
                                        'interpretations': len(answers), 'wrongOrRefusedActions': len(safety)},
             'notice': ('운영은 계약·복구·안전·소통, 학습은 근거·출력 해석·가설·도움 기록입니다. 해석은 사건별 첫 답을 평가하며 미응답은 0점입니다. '
                        '선택 사항인 터미널은 쓴 사건에서만 터미널 해석으로, 쓰지 않은 사건은 근거 있는 가설로 평가합니다. 반복 조회로 점수를 올릴 수 없습니다. '

@@ -98,6 +98,9 @@ class OperatingRules:
             if factor > 0 and factor == self._residual(rec)['factor']:
                 rec.slow_minutes += 10
 
+    def _residual_spec(self, rec, action):
+        return RESIDUAL.get(rec.type, {}).get(action)
+
     def _consent_finish(self, run):
         # Phase 7's `int(x + 9) // 10 * 10` floors for x in (10k, 10k+1): a consent could then end 10 minutes late.
         s = run.state

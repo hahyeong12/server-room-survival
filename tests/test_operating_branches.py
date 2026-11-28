@@ -183,11 +183,13 @@ class OperatingBranchesTests(unittest.TestCase):
         self.assertEqual(outcome_key(run), 'on_time')
 
     def test_legacy_incident_consent_estimate_is_unchanged(self):
-        """The fix lives in the Phase9 overlay; published Phase 7 incident/Linux saves keep their consent estimate."""
+        """Published Phase 7 incident/Linux saves (no Phase 10 `ops_rules` stamp) keep their consent estimate.
+        Phase 10: new saves of every mode use the 10-minute ceiling (tests/test_phase10_rules.py)."""
         from game import MODE_SPEEDS
+        from tests.phase10_support import legacy
         temp = Temp()
         self.addCleanup(temp.cleanup)
-        s = IncidentSession(temp.db('legacy.db'), practice='gpu_oom', seed=5)
+        s = legacy(temp, lambda db: IncidentSession(db, practice='gpu_oom', seed=5), 'legacy.db')
         s.confirm_shift_briefing()
         start_open(s)
         rec = s.incident.records[0]

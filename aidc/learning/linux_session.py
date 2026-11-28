@@ -184,7 +184,7 @@ class LinuxSession(IncidentSession):
             return set()
         after = rec.recovered is not None
         # Same window as the engine's post-check: from 10 minutes after recovery while the job still runs.
-        since = (rec.recovered + 10 if self.runs[rec.rid].state.phase != 'finished' else rec.recovered) if after else 0
+        since = self.post_since(rec) if after else 0
         seen = {c for o in self.linux['observations'] if o['incident'] == rec.id and o.get('probe') == probe
                 and o.get('eligible', True) and o['after'] == after and o['minute'] >= since
                 for c in (o.get('covers') or [])}

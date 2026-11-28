@@ -11,6 +11,7 @@ import json
 from aidc.global_ops.session import GlobalSession, BRIEFING_LOCK
 from aidc.incidents.session import IncidentSession, IncidentBook, IncidentRecord, FINAL, OPEN
 from aidc.incidents.content import load
+from aidc.incidents import phase10
 from aidc.incidents.operating_rules import OperatingRules, FINGERPRINT
 from aidc.learning.linux_session import LinuxSession
 from aidc.learning.career import FINGERPRINT as ASSESSMENT_FINGERPRINT
@@ -33,6 +34,7 @@ class FreeShiftSession(OperatingRules, LinuxSession):
     def __init__(self, db, seed=None, difficulty='standard'):
         self.content = load()
         saved = db.get_simulation()
+        self.ops_rules = phase10.load(saved)
         if saved:
             value = saved.get('free_incidents')
             if not isinstance(value, dict) or value.get('version') != 1:
@@ -121,7 +123,7 @@ class FreeShiftSession(OperatingRules, LinuxSession):
         return super().advance_time(minutes)
 
     def _deliver_scheduled_requests(self):
-        if not self.free_incidents['closing'] and self.global_.briefed:
+        if not self.free_incidents['closing'] and self.global_.briefed and not self._dry:
             super()._deliver_scheduled_requests()
 
     def shift_def(self, number=None):
@@ -181,7 +183,7 @@ class FreeShiftSession(OperatingRules, LinuxSession):
 
     def _arm(self):
         f = self.free_incidents
-        if not self.global_.briefed or self.global_.result is not None or f['closing'] or f['last'] == self.minute:
+        if self._dry or not self.global_.briefed or self.global_.result is not None or f['closing'] or f['last'] == self.minute:
             return False
         f['last'] = self.minute
         config = DIFFICULTIES[f['difficulty']]

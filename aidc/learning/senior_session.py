@@ -76,7 +76,7 @@ class SeniorSession(OperatingRules, LinuxSession):
         evaluation = assess(self)
         scores_ok = all(evaluation[k]['score'] is not None and evaluation[k]['score'] >= 70 for k in ('operations', 'learning'))
         result['cleared'] = (result['cleared'] and all(r['outcome'] == 'on_time' for r in result['rows'])
-                             and scores_ok and not evaluation['unsafe'])
+                             and scores_ok and not evaluation['unsafe'] and not result.get('handoff'))
         result['assessment'] = evaluation
         result['senior'] = {'version': 1, 'role': '선임 엔지니어' if result['cleared'] and self.global_.shift == 2 else '담당 엔지니어',
                             'ending': result['cleared'] and self.global_.shift == 2,
