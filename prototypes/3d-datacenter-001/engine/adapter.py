@@ -312,6 +312,8 @@ class Game:
         """Time runs when a job runs, in free mode, and from chapter 2 on also while a request waits (waiting is a
         real choice there: the customer's deadline keeps coming). Chapter 1 / the tutorial keep the Phase 4 rule."""
         s = self.session
+        if isinstance(s, IncidentSession) and s.handed_off():
+            return False     # Phase 10: a shift ended by an explicit handoff is fixed
         if isinstance(s, FreeShiftSession):
             return s.global_.briefed and s.global_.result is None
         if isinstance(s, GlobalSession):
@@ -796,6 +798,24 @@ class Game:
         out = {'incident': {'action': campaign.jsonable(entry)}}
         out['hint' if entry['result'] in ('none', 'refused') else 'info'] = f'{entry["label"]} · {entry["text"]}'
         return out
+
+    def do_incident_forecast(self, a):
+        """Read-only: the engine tries each recovery path of the diagnosed cause and rolls it back (Phase 10)."""
+        s, iid = self._incidents(), self._iid(a)
+        self.journey.record('incident', self._minute(), name='forecast', incident=iid)
+        out = s.incident_forecast(iid)
+        return {'incident': {'forecast': campaign.jsonable(out)}, 'info': f'조치별 영향 비교 · {out["time"]} 기준 엔진 예측 (저장·시간 변화 없음)'}
+
+    def do_handoff_shift(self, a):
+        """Phase 10: end the shift by handing the unresolved work to the next shift. Never counted as a resolution."""
+        s = self._incidents()
+        if a.get('confirm') is not True:
+            raise ActionError('인계 목록을 확인한 뒤 [인계하고 교대 종료]로 확정하세요.')
+        self.journey.record('incident', self._minute(), name='handoff')
+        result = s.handoff_shift()
+        h = result['handoff']
+        return {'handoff': campaign.jsonable(h),
+                ('hint' if h['neglected'] else 'info'): f'교대 종료 · 미해결 인계 {len(h["incidents"])}건(방치 {h["neglected"]}) · 요청 {len(h["requests"])}건 — 해결로 세지 않습니다.'}
 
     def do_incident_verify(self, a):
         s, iid = self._incidents(), self._iid(a)

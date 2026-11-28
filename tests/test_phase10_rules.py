@@ -254,6 +254,15 @@ class HandoffTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             s.handoff_shift()
 
+    def test_handoff_needs_an_open_incident(self):
+        s = practice(self.temp, 'dns')
+        s.confirm_shift_briefing()
+        start_open(s)
+        self.assertIn('미해결 사건이 없습니다', s.handoff_view()['reason'])
+        with self.assertRaises(ValueError):
+            s.handoff_shift()
+        self.assertIsNone(s.global_.result)
+
     def test_free_shift_handoff_stops_intake_and_fixes_the_result(self):
         s = FreeShiftSession(self.temp.db('free.db'), seed=91, difficulty='challenge')
         s.confirm_shift_briefing()

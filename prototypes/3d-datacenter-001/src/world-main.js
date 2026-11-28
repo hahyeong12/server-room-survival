@@ -229,6 +229,8 @@ function goalHead(){
   $('goal-why').hidden=!why;$('goal-where').hidden=!where;
   $('goal-pips').replaceChildren(...pips.map(c=>{const p=el('i');p.className=c;return p;}));
   if(g?.global?.kind==='free'&&g.incident&&g.global.briefed&&!g.global.done&&!g.global.closing)$('goal-pips').append(button('교대 마무리·결과 보기',()=>send({type:'end_free_shift'}),'link',{'data-free-end':''}));
+  // Phase 10: an explicit handoff is reachable from the goal card (it opens the review list, never ends the shift by itself).
+  if(g?.incident?.handoff?.available&&g.global?.briefed&&!g.global.done)$('goal-pips').append(button('미해결 인계 검토',()=>{ui.handoffOpen=true;if(store.state.navigation.route!=='noc')store.navigate('noc');store.state.navigation.nocView='desk';openTab('incident');},'link',{'data-handoff-shortcut':''}));
 }
 function requestSummary(){
   const root=$('req-summary'),g=game(),r=focusRequest(g);root.replaceChildren();

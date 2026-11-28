@@ -35,7 +35,8 @@ def view(session, location=None):
             'shift': g.shift, 'code': d['code'], 'title': d['title'], 'coaching': d['coaching'],
             'records': records, 'open': sum(r['state'] not in ('closed', 'failed', 'void', 'armed') for r in records),
             'alerts': [r['id'] for r in records if r['state'] == 'alert'],
-            'facilities': session.facilities_view(location), 'menu': menu(), 'tradeoff': getattr(session, 'TRADEOFF_NOTE', None), 'topology': CONTENT.topology['note'],
+            'facilities': session.facilities_view(location), 'menu': menu(),
+            'rules10': session.rules10, 'handoff': session.handoff_view(), 'handedOff': session.handed_off(), 'tradeoff': getattr(session, 'TRADEOFF_NOTE', None), 'topology': CONTENT.topology['note'],
             'sources': CONTENT.data['sources'], 'shiftCount': getattr(session, 'SHIFT_COUNT', len(linux_curriculum.SHIFTS)) if session.mode in ('linux', 'senior') else len(CONTENT.shifts),
             'shifts': ([{'number': n, 'code': session.shift_def(n)['code'], 'title': session.shift_def(n)['title'], 'incidents': len(session.shift_def(n)['incidents'])}
                         for n in range(1, getattr(session, 'SHIFT_COUNT', 5) + 1)] if session.mode in ('linux', 'senior') else

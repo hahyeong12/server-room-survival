@@ -278,3 +278,11 @@ body[data-mode] #workstation.ws-expanded .ws-titlebar{display:none}
 .career-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}.career-score{display:flex;flex-direction:column;gap:3px}.career-score strong{color:#8ce2d0}.career-score-note{grid-column:1/-1;color:#adbdcb}
 .career-ending{padding:12px;background:#163a36;border:1px solid #75cdb4;border-radius:8px}.career-ending p{margin:5px 0}
 .free-settings{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.free-settings input{width:150px}.free-settings input,.free-settings select{background:#172638;color:#e3edf5;padding:6px;border:1px solid #547086;border-radius:5px}
+/* Phase 10: impact forecast table and explicit shift handoff */
+.inc-forecast-table{width:100%;border-collapse:collapse;font-size:12px}
+.inc-forecast-table th{text-align:left;color:#9fb6c8;font-weight:600;border-bottom:1px solid #2a4558;padding:3px 4px}
+.inc-forecast-table td{vertical-align:top;border-bottom:1px dashed #22394a;padding:4px}
+.inc-fc-job{display:flex;flex-wrap:wrap;gap:4px;align-items:baseline;margin-bottom:3px}
+.inc-fc-job .inc-line{flex-basis:100%}
+.inc-handoff{border-left:3px solid #f3c37b}
+.inc-handoff [data-handoff-class=neglect]{color:#ffc29b}

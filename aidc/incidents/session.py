@@ -1085,6 +1085,9 @@ class IncidentSession(GlobalSession):
             return '이미 결과가 확정된 교대입니다.'
         if g.kind == 'shift' and len(g.delivered) < len(self.shift_def()['arrivals']):
             return '아직 도착 예정인 요청이 있습니다. 교대 시간이 남아 있으니 시간을 진행해 모든 요청을 받은 뒤 인계하세요.'
+        if not any(r.state in OPEN for r in self.shift_records()):
+            # Without an open incident every request reaches a result on its own (completion or expiry).
+            return '진행 중인 미해결 사건이 없습니다. 남은 요청은 시간이 지나면 완료·만료로 결론이 나므로 인계할 필요가 없습니다.'
         return ''
 
     def handoff_items(self):
@@ -1130,8 +1133,6 @@ class IncidentSession(GlobalSession):
             return None
         blocker = self._handoff_blocker()
         items = self.handoff_items() if not blocker else {'incidents': [], 'requests': []}
-        if not blocker and not items['incidents'] and not items['requests']:
-            blocker = '인계할 미해결 업무가 없습니다. 남은 결과는 자동으로 확정됩니다.'
         return {'available': not blocker, 'reason': blocker, **items,
                 'notice': '인계는 미해결 업무를 다음 교대에 넘기고 이번 교대를 끝냅니다. 인계한 사건은 해결로 세지 않으며, '
                           '영향 고객에게 알리지 않은 사건은 방치로 기록됩니다.'}
@@ -1141,8 +1142,6 @@ class IncidentSession(GlobalSession):
         if blocker:
             raise ValueError(blocker)
         items = self.handoff_items()
-        if not items['incidents'] and not items['requests']:
-            raise ValueError('인계할 미해결 업무가 없습니다.')
         with self._atomic():
             self._handoff_items = {'version': 1, 'rules': phase10.ID, 'minute': self.minute, 'time': game_time(self.minute), **items,
                                    'handedOver': sum(x['class'] == 'handover' for x in items['incidents']),
