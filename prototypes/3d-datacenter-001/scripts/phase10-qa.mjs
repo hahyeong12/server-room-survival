@@ -53,7 +53,7 @@ async function forecast(id){await U.incidentTab(page,id);const before=engineStat
   assert.equal(engineState(await U.G(page)),before,'forecast changes no engine state');
   const rows=await page.$$eval(`[data-forecast="${id}"] tr[data-forecast-option]`,trs=>trs.map(tr=>({option:tr.dataset.forecastOption,text:tr.innerText,jobs:[...tr.querySelectorAll('[data-risk]')].map(j=>({risk:j.dataset.risk,text:j.innerText}))})));
   report.forecasts.push({id,rows});return rows;}
-const finishOf=text=>text.match(/완료 (\d\d:\d\d)/)?.[1]??null;
+const finishOf=text=>text.match(/완료 (D\d+ \d\d:\d\d)/)?.[1]??null;
 
 try{
   stack=await startStack({enginePort:8793,vitePort:5193,log:()=>{}});
@@ -71,11 +71,19 @@ try{
     const rows=await forecast(id);const root=rows.find(r=>r.option==='escalate_facility');assert.ok(root,'facility repair is a recovery path');
     assert.equal(root.jobs.length,2);assert.ok(root.jobs.every(j=>j.risk==='fail'),'battery runs out before the 30-minute repair for every affected job: '+JSON.stringify(root.jobs));
     await layoutCheck('forecast',[`[data-forecast="${id}"] table`,`[data-forecast-run="${id}"]`],{prepare:()=>U.incidentTab(page,id)});
-    for(const j of rec.scope.jobs)await U.act(page,id,'planned_pause',j.rid);
-    assert.notEqual((await U.act(page,id,'escalate_facility')).result,'refused');
+    // Free shifts take facility requests on the UPS site screen: the player walks there with the card's own button and
+    // uses the site panel (scoped to the visible site panel; the hidden monitor keeps its last render).
+    async function siteAct(action,rid){await U.incidentTab(page,id);const away=page.locator(`.inc-card [data-action-goto="${action}"]`);
+      const onSite=await away.count()>0;if(onSite){await away.first().click();await settle(page,300);await page.waitForTimeout(850);}
+      const scope=page.locator(onSite?`.inc-site [data-incident-actions="${id}"]`:`.inc-card[data-incident="${id}"] [data-incident-actions="${id}"]`);
+      if(rid!==undefined&&await scope.locator('[data-incident-rid]').count()){await scope.locator('[data-incident-rid]').selectOption(String(rid));await settle(page,100);}
+      const n=(await U.inc(page,id)).actions.length;await scope.locator(`[data-incident-action="${action}"]`).click();await settle(page,160);
+      const r=await U.inc(page,id);assert.equal(r.actions.length,n+1,action);report.actions.push({id,action,rid,result:r.actions.at(-1).result});return r.actions.at(-1);}
+    for(const j of rec.scope.jobs){const e=await siteAct('planned_pause',j.rid);assert.equal(e.result,'pause');assert.equal(e.rid,j.rid);}
+    assert.notEqual((await siteAct('escalate_facility')).result,'refused');
     for(let i=0;i<8&&(await U.inc(page,id)).state!=='monitoring';i++)await U.advance(page,10);
     await U.advance(page,10);rec=await U.inc(page,id);
-    if(!rec.evidence.some(e=>e.probe==='ups'&&e.minute===(await U.G(page)).clock.minute))await U.observe(page,id,'ups');
+    {const now=(await U.G(page)).clock.minute;if(!rec.evidence.some(e=>e.probe==='ups'&&e.minute===now))await U.observe(page,id,'ups');}
     assert.equal((await U.verify(page,id)).state,'verified');assert.equal((await U.report(page,id)).state,'closed');
     const g=await U.G(page);for(const j of rec.scope.jobs)assert.notEqual(g.requests.find(r=>r.id===j.rid).stage,'failed','paused jobs survived');
     rec=await U.inc(page,id);assert.ok(rec.customers.every(c=>c.beforeRecovery),'every affected customer told before recovery');
@@ -114,7 +122,7 @@ try{
     await shot('p10-handoff-result.png');
     await restart('after handoff');g=await U.G(page);assert.equal(g.incident.handedOff,true);assert.equal(g.canAdvance,false);
     await U.drain(page);if(await page.locator('#screen-dialog[open]').count()){await U.click(page,'#screen-dialog[open] [data-next=stay]').catch(()=>{});await settle(page);}
-    const src=g.id,h0=await bytes(src);await U.incidentTab(page);await U.click(page,'[data-ws-tab=inbox]');
+    const src=g.id,h0=await bytes(src);await U.incidentTab(page);await U.click(page,'[data-ws-tab=result]');
     await page.waitForSelector('[data-retry-shift]');await U.click(page,'[data-retry-shift]');await page.waitForTimeout(800);
     g=await U.G(page);assert.notEqual(g.id,src,'retry is a new slot');assert.equal(await bytes(src),h0,'source save bytes unchanged by retry');
   });

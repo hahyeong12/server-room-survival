@@ -378,6 +378,7 @@ class ForecastTests(unittest.TestCase):
         f = s.incident_forecast(rec.id)
         root = next(o for o in f['options'] if o['action'] == 'escalate_facility')
         self.assertEqual(root['jobs'][0]['risk'], 'fail', 'battery runs out before the 30-minute repair')
+        self.assertEqual(root['incidentState'], 'failed', 'the forecast says the incident itself fails, not "no recovery yet"')
 
 
 class SaveCompatibilityTests(unittest.TestCase):

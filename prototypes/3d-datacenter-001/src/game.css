@@ -286,3 +286,7 @@ body[data-mode] #workstation.ws-expanded .ws-titlebar{display:none}
 .inc-fc-job .inc-line{flex-basis:100%}
 .inc-handoff{border-left:3px solid #f3c37b}
 .inc-handoff [data-handoff-class=neglect]{color:#ffc29b}
+/* Phase 10 fix: in the narrow site panel a long job option pushed the target select out of the panel and broke the
+   label into one character per line. The label keeps one line; the select shrinks or wraps below it. */
+.select-line{flex-wrap:wrap;white-space:nowrap}
+.select-line select{min-width:0;max-width:100%;flex:1 1 160px;white-space:normal;text-overflow:ellipsis}

@@ -1187,7 +1187,7 @@ class IncidentSession(GlobalSession):
         residual = self._residual_spec(rec, action) if action else None
         kind = None if not action else 'workaround' if residual else 'fix'
         start = self.minute
-        info = {'action': action, 'label': label, 'kind': kind, 'feasible': True, 'reason': '', 'steps': [], 'jobs': [],
+        info = {'action': action, 'label': label, 'kind': kind, 'feasible': True, 'reason': '', 'steps': [], 'jobs': [], 'incidentState': None,
                 'residual': (f'복구 뒤 {"완료까지" if residual["minutes"] is None else str(residual["minutes"]) + "분간"} 처리량 {residual["factor"]}배'
                              if residual else None), 'restored': None, 'restoredMinute': None}
         trace = {rid: {'stop': 0, 'slow': 0, 'finish': None, 'failed': None} for rid in rids}
@@ -1198,7 +1198,9 @@ class IncidentSession(GlobalSession):
                     self._dry_execute(iid, action, info, start)
                 while info['feasible'] and self.minute - start < phase10.FORECAST_CAP:
                     live = [r for r in rids if trace[r]['finish'] is None and trace[r]['failed'] is None]
-                    if not live:
+                    now = self.record(iid)
+                    # Follow the path until every job ended and the recovery itself is known (restored or ended).
+                    if not live and not (action and now.recovered is None and now.state not in FINAL):
                         break
                     before = {r: self.runs[r].state.work_done for r in live}
                     speed = {r: 10 * MODE_SPEEDS[self.runs[r].state.plan] for r in live}
@@ -1214,6 +1216,7 @@ class IncidentSession(GlobalSession):
                         elif gained < speed[r] - 1e-6:
                             trace[r]['slow'] += 10
                 now = self.record(iid)
+                info['incidentState'] = now.state
                 if now.recovered is not None:
                     info['restored'], info['restoredMinute'] = game_time(now.recovered), now.recovered
                 for r in rids:

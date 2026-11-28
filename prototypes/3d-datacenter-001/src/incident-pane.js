@@ -105,7 +105,7 @@ export function createIncidentPane({ el, button, chip, readingsGrid, send, ui, r
       const tr = el('tr'); tr.dataset.forecastOption = o.action ?? 'none';
       const name = el('td'); name.append(el('strong', '', o.label));
       if (o.kind) name.append(el('small', 'inc-line', o.kind === 'workaround' ? '임시 우회 · 정지 짧음 · 복구 뒤 감속' : '원인 조치 · 복구 뒤 정상 속도'));
-      const prep = el('td'); prep.append(el('span', '', !o.feasible ? `불가 — ${o.reason}` : o.restored ? `복구 ${o.restored}` : o.action ? '예측 범위 안에 복구 안 됨' : '원인 그대로'));
+      const prep = el('td'); prep.append(el('span', '', !o.feasible ? `불가 — ${o.reason}` : o.restored ? `복구 ${o.restored}` : o.incidentState === 'failed' ? '복구 전에 영향 작업이 실패 → 사건 실패' : o.action ? '8시간 안에 복구 안 됨' : '원인 그대로'));
       for (const st of o.steps || []) prep.append(el('small', 'inc-line', st));
       if (o.residual) prep.append(el('small', 'inc-line', o.residual));
       const jobs = el('td'); if (o.feasible) for (const j of o.jobs) jobs.append(jobLine(j)); else jobs.append(el('span', '', '—'));
