@@ -1,0 +1,15 @@
+[engine] SRS 3D engine ready on http://127.0.0.1:8791  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-tSJb4j)
+[vite] 
+  [32m[1mVITE[22m v7.3.8[39m  [2mready in [0m[1m172[22m[2m[0m ms[22m
+[vite]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5191[22m/[39m
+PASS menu: career map, senior lock and free seed/difficulty/start reachable at 1366x768, 1920x1080 and 150 percent
+PASS keyboard only: Tab to seed, type it, arrow-select difficulty, Enter starts that free shift
+PASS free shift HUD: wrap-up, time and incident actions reachable at all four sizes without page scroll
+PASS delayed reply interrupted by reload: the 10 minutes and the incident draw happen exactly once
+[engine] SRS 3D engine ready on http://127.0.0.1:8791  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-tSJb4j)
+PASS wrap-up double click, result shown once, not again after reload or engine restart, result tab reopens it
+PASS prerequisites through real UI: chapters 1 to 5, global 3, incident 3, Linux 5
+PASS senior evaluation: one refused data-deletion attempt fails the shift; retry opens a new slot and preserves the source bytes
+[engine] SRS 3D engine ready on http://127.0.0.1:8791  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-tSJb4j)
+PASS senior retry slot: two shifts cleared, ending and free branch reachable at all sizes, career map shows the role
+PASS no page errors or renderer crashes

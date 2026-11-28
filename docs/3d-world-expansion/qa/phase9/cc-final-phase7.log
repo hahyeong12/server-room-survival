@@ -1,0 +1,14 @@
+PASS incident shifts locked before global shift 3; per-cause practice open, labelled by symptom (menu)
+PASS precondition: story chapters 1 -> 5 cleared through the real UI (graduation)
+PASS precondition: global shifts 1 -> 3 cleared through the real UI (Phase 6 decisions)
+PASS shift A (with the senior): DNS, GPU device, storage full — evidence before cause, wrong hypotheses/actions recorded, map never blames the subsea path
+PASS shift B (team coordination): ToR uplink, cooling, UPS — customer notice before recovery, approvals, facility interiors show engine state, engine restart mid-incident
+PASS shift C (independent, overlapping symptoms): congestion + I/O latency at once, OOM + CrashLoop — no senior hints, scope kept apart, consent before condition change
+PASS failure -> new slot retry: UPS battery runs out without mitigation, job fails, source save unchanged
+PASS practice save -> engine restart -> resume at alert, mid-recovery and after close (same evidence, timers, ledger)
+PASS duplicate run and port conflict are refused (the same save cannot open twice; a used port fails with exit code 2)
+PASS layout: incident card buttons and the senior/briefing box visible without page scroll at 1366x768, 1366x768@150% and 1920x1080@150%; tutorial/story too
+PASS performance and WebGL stability: 10 cycles over world, campus, NOC, hall and four facility interiors; reduced motion
+PASS no page errors / console errors / target crashes during the whole run
+
+Phase 7 QA 12/12

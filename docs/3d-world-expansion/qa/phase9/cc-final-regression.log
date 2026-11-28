@@ -1,0 +1,314 @@
+START phase8
+PASS menu separates regular Linux training and ten ungraded incident practices
+PASS prerequisite Chapter1 to Chapter5 graduation through real 3D UI, no seed
+PASS five finite shifts: choice to assembly to typing and independent diagnosis, all ten causes
+PASS promotion survives engine process restart and resume
+PASS keyboard typing, errors, Enter, history, max length and clipboard in terminal
+PASS real click targets at 1366x768, 1920x1080 and 150 percent emulation
+PASS wrong interpretation and wrong node cannot create fake success
+PASS delayed command response keeps input and context locked until the result arrives
+  expanded 1366x768@1: terminal 79→225px
+  expanded 1920x1080@1: terminal 289→465px
+  expanded 1280x720@1.5: terminal 44→177px
+  expanded 911x512@1.5: terminal 121→142px
+PASS expanded terminal at 1366x768, 1920x1080 and 150 percent: mouse/keyboard toggle keeps draft, history and records
+PASS all 28 catalog commands execute through actual controls in a virtual Kubernetes workload
+PASS failed UPS practice retries into a new slot and preserves the source DB byte for byte
+PASS repeat world/campus/NOC/hall visits retain WebGL resources and reduced motion
+PASS no page errors or renderer crashes
+Phase8 QA 13/13
+PASS phase8
+START phase7
+PASS incident shifts locked before global shift 3; per-cause practice open, labelled by symptom (menu)
+PASS precondition: story chapters 1 -> 5 cleared through the real UI (graduation)
+PASS precondition: global shifts 1 -> 3 cleared through the real UI (Phase 6 decisions)
+PASS shift A (with the senior): DNS, GPU device, storage full — evidence before cause, wrong hypotheses/actions recorded, map never blames the subsea path
+PASS shift B (team coordination): ToR uplink, cooling, UPS — customer notice before recovery, approvals, facility interiors show engine state, engine restart mid-incident
+PASS shift C (independent, overlapping symptoms): congestion + I/O latency at once, OOM + CrashLoop — no senior hints, scope kept apart, consent before condition change
+PASS failure -> new slot retry: UPS battery runs out without mitigation, job fails, source save unchanged
+PASS practice save -> engine restart -> resume at alert, mid-recovery and after close (same evidence, timers, ledger)
+PASS duplicate run and port conflict are refused (the same save cannot open twice; a used port fails with exit code 2)
+PASS layout: incident card buttons and the senior/briefing box visible without page scroll at 1366x768, 1366x768@150% and 1920x1080@150%; tutorial/story too
+PASS performance and WebGL stability: 10 cycles over world, campus, NOC, hall and four facility interiors; reduced motion
+PASS no page errors / console errors / target crashes during the whole run
+
+Phase 7 QA 12/12
+PASS phase7
+START phase6
+PASS neutral world before any game: 21 city markers and routes exist, nothing is lit, legacy markers neutral
+PASS global shifts locked before graduation; global free ops open (menu)
+PASS precondition: regular story chapters 1 -> 5 cleared through the real UI (graduation)
+PASS shift 1 (intro): two US cities and a Seoul customer through the real UI, map lights only arrived cities, engine restart mid-shift
+PASS shift 2 (contention): engine refuses the plan that no longer fits, customer rejects one alternative and accepts another
+PASS shift 3 (independent): no senior hints, original condition impossible on the servers, final global summary
+PASS a failed shift: expiry, a late job and a justified rejection → shift failed → retry in a NEW slot (source unchanged)
+PASS global free operations: requests keep arriving from many cities; save → engine restart → resume
+PASS earlier modes still resume: graduated story save, a new tutorial / free / practice save after an engine restart
+PASS layout 1366x768: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1366x768 at 150% (emulated, full screen): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1366x768 at 150% inside a browser window (emulated): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1920x1080 at 150% (emulated): inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS layout 1920x1080: inbox filter, request rows, read/wait/reject, plan, time, world city list reachable without page scroll
+PASS reduced motion: lit routes stay lit with packets frozen
+PASS WebGL resources and heap stay flat across 10 cycles of every space
+
+16 PASS / 0 FAIL · page errors 0 · console errors 0
+PASS phase6
+START phase5
+PASS regular story chapters 1 -> 5 through the real UI, engine restart + resume after every chapter, graduation
+PASS chapter 2 failure through the UI: original conditions in a row are late → senior feedback → retry in a new slot (source unchanged)
+PASS chapter 3 failure: three wrong responses → failed card → retry; responses before the diagnosis are not offered
+PASS chapter 4 failure: repair on the tight deadline is late → chapter failed (no next chapter) → retry; impossible migration refused
+PASS chapter practice from the menu is a separate save: no campaign, no next chapter, free stage choice in the Lab
+PASS layout 1366x768: talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll
+PASS layout 150% of 1920x1080 (emulated): talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll
+PASS layout 1920x1080: talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll
+PASS WebGL resources and heap stay flat while cycling every space three times in one page
+9/9 checks passed · errors 0 · console 0
+PASS phase5
+START phase4
+PASS neutral opening: no game, no lit path or request badge, whatever is selected; first request lights only its own path
+PASS tutorial: every step completed by its own real action on world / campus / desk / hall / monitor / rack / responses
+PASS tutorial completion → new story save → first job started, run and finished on the engine → chapter clear → other mode
+PASS reload and browser back/forward keep the engine state and journey; nothing advances by itself
+PASS skip: guide off, recorded as not completed, engine untouched; completion screen offers real modes
+PASS customer consent: economy needs consent; proposal and reply come from the engine customer
+PASS free mode runs the existing free rules (time-based arrivals) from the menu
+PASS layout 1366x768: highlighted control and coach visible without scrolling, no overlay overlap
+PASS layout 1920x1080: highlighted control and coach visible without scrolling, no overlay overlap
+PASS layout 1920x1080@150%: highlighted control and coach visible without scrolling, no overlay overlap
+PASS regression: 8 spaces navigate, campus cooling ops consistent, rack canvas picking from hall views, interiors
+PASS performance per space incl. interiors (avg >= 60 FPS), no long freeze, 10 navigation cycles keep resources bounded
+PASS no runtime or console errors
+13 PASS / 0 FAIL
+PASS phase4
+START isolated lab Vite on 5199
+START lab
+{
+  "checks": [
+    {
+      "name": "RTX 5070 hardware WebGL renderer",
+      "pass": true
+    },
+    {
+      "name": "initial scene: 24 racks, four utility devices, normal state",
+      "pass": true
+    },
+    {
+      "name": "raycast selection with real canvas mouse input",
+      "pass": true
+    },
+    {
+      "name": "orbit / wheel zoom / right drag pan / keyboard move / focus",
+      "pass": true
+    },
+    {
+      "name": "layer toggles affect scene; restored after test",
+      "pass": true
+    },
+    {
+      "name": "network: UI fault / repair / explicit post-check; consistent visuals and telemetry",
+      "pass": true
+    },
+    {
+      "name": "power: UI fault / repair / explicit post-check; consistent visuals and telemetry",
+      "pass": true
+    },
+    {
+      "name": "cooling: UI fault / repair / explicit post-check; consistent visuals and telemetry",
+      "pass": true
+    },
+    {
+      "name": "utility equipment selection and independent state change",
+      "pass": true
+    },
+    {
+      "name": "geometry and textures stay bounded after state cycles",
+      "pass": true
+    },
+    {
+      "name": "layout 1440x900 no horizontal overflow or canvas zero size",
+      "pass": true
+    },
+    {
+      "name": "layout 1280x800 no horizontal overflow or canvas zero size",
+      "pass": true
+    },
+    {
+      "name": "layout 720x900 no horizontal overflow or canvas zero size",
+      "pass": true
+    },
+    {
+      "name": "reload resets only memory demo; no persistence or external requests",
+      "pass": true
+    },
+    {
+      "name": "no browser runtime / console errors / failed requests",
+      "pass": true
+    }
+  ],
+  "renderer": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "width": 1560,
+    "height": 839,
+    "dpr": 1,
+    "calls": 736,
+    "triangles": 126794,
+    "geometries": 157,
+    "textures": 56,
+    "camera": [
+      26.999999999999993,
+      25.000000000000007,
+      29.999999999999996
+    ],
+    "target": [
+      -0.5,
+      0,
+      0
+    ],
+    "contextLost": false,
+    "location": "hall",
+    "quality": "Desktop High · 2048 shadow · SSAO · bloom · FXAA · DPR ≤ 2",
+    "layers": {
+      "network": true,
+      "cooling": true,
+      "power": true
+    },
+    "nocView": "desk",
+    "clip": [],
+    "clipSlots": 0,
+    "fog": false,
+    "cinematic": false
+  },
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "13-production-overview.png",
+    "02-server-hall.png",
+    "03-control-room.png",
+    "04-cold-aisle.png",
+    "05-overview-selected.png",
+    "06-network-fault.png",
+    "07-network-repairing.png",
+    "08-network-awaiting.png",
+    "09-network-verified.png",
+    "06-power-fault.png",
+    "07-power-repairing.png",
+    "08-power-awaiting.png",
+    "09-power-verified.png",
+    "06-cooling-fault.png",
+    "07-cooling-repairing.png",
+    "08-cooling-awaiting.png",
+    "09-cooling-verified.png",
+    "10-layout-1440.png",
+    "10-layout-1280.png",
+    "10-layout-720.png",
+    "11-performance.png",
+    "12-final-overview.png"
+  ]
+}
+PASS lab
+START python-headless
+비GUI 선택: 976 / GUI 등 제외: 311
+................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 976 tests in 89.969s
+
+OK
+PASS python-headless
+START python-adapter
+C:\Users\hahye\anaconda3\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 403: 'Forbidden'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+C:\Users\hahye\anaconda3\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 404: 'Not Found'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+----------------------------------------------------------------------
+Ran 58 tests in 13.830s
+
+OK
+PASS python-adapter
+START javascript
+✔ chapter 1 and the tutorial keep the Phase 4 views; chapters 2-5 use the campaign views (0.5724ms)
+✔ the senior pages come from the engine; the last page of a briefing is the briefing action (0.3314ms)
+✔ chapter clear / failure screens read the engine result and its verdict only (0.5139ms)
+✔ campaign list: cleared / available / locked from the engine unlock rules (0.1807ms)
+✔ chapter 3: the world shows a symptom before the diagnosis and the engine evidence after it (0.2984ms)
+✔ chapter 5 Lab view never ships an answer key or hidden fault position (0.3152ms)
+✔ review fix: a briefing stays offered until the engine confirmed it, even if its pages were marked read (0.4619ms)
+✔ auxiliary cooling ON -> OFF -> ON -> WARN -> ON with consistent label, icon, readings, trend and power load (1.9264ms)
+✔ invalid or out-of-state facility actions are refused without changing state (1.8844ms)
+✔ network lookup reads the engine snapshot: a server fault is reported as network OK + server cause (0.9773ms)
+✔ facility actions and navigation never advance the request or demo time (0.1824ms)
+✔ fixtures come from the Python engine contract (api v2 keeps v1 fields, GameSession) (1.1896ms)
+✔ scene request follows the engine stage; the pin rack comes from the chosen or running allocation (0.2648ms)
+✔ engine server health is mirrored on racks A-01..D-01 only; decoration racks never change (0.5474ms)
+✔ world paths: lit only for open engine requests; a finished job turns its path off (0.3103ms)
+✔ panel text uses the engine terms and totals (GPU 10 / power 10), not decoration numbers (0.43ms)
+✔ store keeps a private copy of the snapshot; view selection never changes game data (0.8451ms)
+✔ a network incident never tints the server building as a hardware fault (review finding) (0.1169ms)
+✔ catalog targets: 20+ cities, 12+ countries, 4+ US cities, 3+ European countries, 2+ KR/IN/JP cities (0.6421ms)
+✔ legacy codes keep their names and sea points and alias the catalog city at the same place (0.5473ms)
+✔ every city route starts at its city and ends at the virtual Busan landing (international) or Ulsan (domestic) (0.3844ms)
+✔ lit cities: only arrived requests, grouped per city with a count; unknown codes ignored (0.6658ms)
+✔ inbox filter / sort and the shift goal read only the engine snapshot (0.4262ms)
+✔ seven incident stages in the issue order (0.652ms)
+✔ incident saves reuse the global shift flow but are told apart (0.1536ms)
+✔ focus prefers an alert, then an open incident, never an armed one (0.1044ms)
+✔ goal line tells the alert without naming a cause (0.1809ms)
+✔ facility rows come from the engine facilities view only (0.2364ms)
+✔ assembly uses the actual selected options and target; no answer is auto-filled (0.4372ms)
+✔ interpretation options contain neutral IDs and no client-side answer key (0.3383ms)
+✔ Linux sessions use existing incident and world views; old modes keep their identity (0.1284ms)
+✔ expanded terminal is a view preference outside the terminal draft/history state (0.1611ms)
+✔ choice level only swaps the chosen target or port into the catalog example (0.1225ms)
+✔ 24 racks and four utility assets, deterministic memory-only initial state (2.0298ms)
+✔ network: fault → repair → explicit verification; other assets preserved (0.4229ms)
+✔ power: fault → repair → explicit verification; other assets preserved (0.2078ms)
+✔ cooling: fault → repair → explicit verification; other assets preserved (0.2693ms)
+✔ independent simultaneous incidents survive selection changes (0.5136ms)
+✔ invalid input cannot mutate state or move time backwards (0.1656ms)
+✔ Korea (Ulsan) is the centre; Japan and the US stay east, Singapore south-west, no break at the date line (0.4895ms)
+✔ rings crossing the Atlantic seam are made continuous and duplicated for clipping (0.3747ms)
+✔ request paths: every customer sea route ends at a coastal landing station, never at the AIDC (0.1405ms)
+✔ no engine request -> nothing lit, whatever country is selected; only arrived requests light their own path (0.2706ms)
+✔ a server fault changes only the AIDC segment; a network incident is not placed on a guessed segment (0.1308ms)
+✔ after the engine diagnosis the transit names only what the evidence says; rerouting is not a fault (0.1372ms)
+✔ opening is 8-15 s and follows world -> Ulsan -> district/campus -> my desk (0.847ms)
+✔ captions mark the network and site as virtual; Ulsan pin is Nam-gu Hwangseong/Yongyeon, not Dong-gu (0.1118ms)
+✔ opening is neutral: no customer country is shown as sending a request before the game starts (Issue #5) (0.1177ms)
+✔ a taken port is reported, never taken over; the message names another port and does not kill anything (7.9837ms)
+✔ campus hierarchy: control and server buildings are siblings; upper navigation without domain changes (1.1268ms)
+✔ a fresh session starts at my desk in the control building (0.0858ms)
+✔ invalid route/country/facility/rack IDs including object prototypes are rejected atomically (0.2579ms)
+✔ selection is view-only; there is no client-side request fixture any more (rules live in the engine) (0.2656ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 53
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104.2137
+PASS javascript
+START build
+[36mvite v7.3.8 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 48 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                [39m[1m[2m  0.81 kB[22m[1m[22m[2m │ gzip:   0.52 kB[22m
+[2mdist/[22m[32mlab.html                  [39m[1m[2m  7.24 kB[22m[1m[22m[2m │ gzip:   2.91 kB[22m
+[2mdist/[22m[35massets/lab-C88Uys7p.css   [39m[1m[2m 12.70 kB[22m[1m[22m[2m │ gzip:   3.51 kB[22m
+[2mdist/[22m[35massets/main-CTJ-qCAR.css  [39m[1m[2m 55.91 kB[22m[1m[22m[2m │ gzip:  12.29 kB[22m
+[2mdist/[22m[36massets/lab-GRxTsfnJ.js    [39m[1m[2m  6.59 kB[22m[1m[22m[2m │ gzip:   3.03 kB[22m
+[2mdist/[22m[36massets/main-BI56T7fB.js   [39m[1m[2m133.88 kB[22m[1m[22m[2m │ gzip:  48.23 kB[22m
+[2mdist/[22m[36massets/scene-pqHvkO9b.js  [39m[1m[2m329.33 kB[22m[1m[22m[2m │ gzip: 115.56 kB[22m
+[2mdist/[22m[36massets/three-D_v2ZSRG.js  [39m[1m[33m536.06 kB[39m[22m[2m │ gzip: 136.85 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 736ms[39m
+PASS build
+{"pass":10,"total":10}

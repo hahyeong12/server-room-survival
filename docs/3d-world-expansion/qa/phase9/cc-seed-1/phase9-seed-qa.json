@@ -1,0 +1,261 @@
+{
+  "issue": 10,
+  "kind": "phase9-seed",
+  "checks": [
+    {
+      "name": "seed 91 challenge: incidents happen and are all closed through the UI",
+      "pass": true,
+      "ms": 183372
+    },
+    {
+      "name": "other seeds at the same difficulty give a different non-empty incident layout",
+      "pass": true,
+      "ms": 582539
+    },
+    {
+      "name": "same seed and same actions replay the same incidents",
+      "pass": true,
+      "ms": 183973
+    },
+    {
+      "name": "no page errors or renderer crashes",
+      "pass": true,
+      "ms": 0
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [],
+  "actions": [
+    {
+      "id": "INC-F1",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F2",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F1",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F1",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "dns_failover",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-F1",
+      "action": "gpu_repair",
+      "result": "isolate_repair",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F2",
+      "action": "ask_consent",
+      "result": "consent",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "reduce_batch",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F3",
+      "action": "qos_adjust",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-F1",
+      "action": "storage_path",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F2",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F1",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F2",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    }
+  ],
+  "shifts": [],
+  "runs": [
+    {
+      "seed": 91,
+      "difficulty": "challenge",
+      "id": "aidc_3d_global_001",
+      "events": [
+        {
+          "type": "storage_full",
+          "minute": 560,
+          "rid": 2
+        },
+        {
+          "type": "crashloop",
+          "minute": 580,
+          "rid": 3
+        }
+      ],
+      "result": {
+        "success": 7,
+        "total": 8,
+        "resolved": 2
+      }
+    },
+    {
+      "seed": 3,
+      "difficulty": "challenge",
+      "id": "aidc_3d_global_002",
+      "events": [
+        {
+          "type": "crashloop",
+          "minute": 560,
+          "rid": 1
+        },
+        {
+          "type": "dns",
+          "minute": 660,
+          "rid": 5
+        }
+      ],
+      "result": {
+        "success": 8,
+        "total": 8,
+        "resolved": 2
+      }
+    },
+    {
+      "seed": 17,
+      "difficulty": "challenge",
+      "id": "aidc_3d_global_003",
+      "events": [
+        {
+          "type": "gpu_health",
+          "minute": 560,
+          "rid": 1
+        },
+        {
+          "type": "gpu_oom",
+          "minute": 600,
+          "rid": 4
+        },
+        {
+          "type": "congestion",
+          "minute": 650,
+          "rid": 6
+        }
+      ],
+      "result": {
+        "success": 8,
+        "total": 8,
+        "resolved": 3
+      }
+    },
+    {
+      "seed": 2026,
+      "difficulty": "challenge",
+      "id": "aidc_3d_global_004",
+      "events": [
+        {
+          "type": "storage_latency",
+          "minute": 560,
+          "rid": 2
+        },
+        {
+          "type": "crashloop",
+          "minute": 580,
+          "rid": 1
+        }
+      ],
+      "result": {
+        "success": 6,
+        "total": 7,
+        "resolved": 2
+      }
+    },
+    {
+      "seed": 91,
+      "difficulty": "challenge",
+      "id": "aidc_3d_global_005",
+      "events": [
+        {
+          "type": "storage_full",
+          "minute": 560,
+          "rid": 2
+        },
+        {
+          "type": "crashloop",
+          "minute": 580,
+          "rid": 3
+        }
+      ],
+      "result": {
+        "success": 7,
+        "total": 8,
+        "resolved": 2
+      }
+    }
+  ],
+  "startedAt": "2026-11-27T23:03:08.571Z",
+  "browserVersion": "158.0.8127.38",
+  "types": [
+    "storage_full",
+    "crashloop",
+    "dns",
+    "gpu_health",
+    "gpu_oom",
+    "congestion",
+    "storage_latency"
+  ],
+  "finishedAt": "2026-11-27T23:19:01.926Z",
+  "summary": {
+    "pass": 4,
+    "total": 4
+  }
+}

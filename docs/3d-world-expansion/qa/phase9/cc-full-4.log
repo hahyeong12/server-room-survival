@@ -1,0 +1,22 @@
+[vite] 
+  [32m[1mVITE[22m v7.3.8[39m  [2mready in [0m[1m205[22m[2m[0m ms[22m
+[vite]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5189[22m/[39m
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-QaSWwf)
+PASS public career map and senior lock
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-QaSWwf)
+PASS free none: start, jobs, restart, finish
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-QaSWwf)
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-QaSWwf)
+PASS seeded challenge: real incidents, recovery, report, finish; same seed replay
+[engine] SRS 3D engine ready on http://127.0.0.1:8789  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-QaSWwf)
+PASS different seed standard produces distinct incident layout
+PASS story chapters 1 to 5 through first public menu
+PASS regular global three shifts through UI
+PASS regular incident three shifts through UI
+Error: Cannot infer from visible evidence: [{"seq":1,"probe":"ping","minute":1270,"time":"D1 21:10","location":"noc","after":false,"status":"ok","summary":"IP 응답 정상","lines":[],"trend":null},{"seq":2,"probe":"tor_port","minute":1270,"time":"D1 21:10","location":"NETWORK","after":false,"status":"ok","summary":"서버동 01 ToR 업링크 모두 UP","lines":[],"trend":null},{"seq":3,"probe":"dns","minute":1270,"time":"D1 21:10","location":"noc","after":false,"status":"ok","summary":"이름 조회 정상 · 주 리졸버 응답","lines":[],"trend":null},{"seq":4,"probe":"job_log","minute":1270,"time":"D1 21:10","location":"noc","after":false,"status":"ok","summary":"로그: 정상 처리 중 · 오류 없음","lines":[],"trend":null},{"seq":5,"probe":"storage_space","minute":1270,"time":"D1 21:10","location":"hall","after":false,"status":"ok","summary":"작업 볼륨 vol-7 사용률 46%","lines":[],"trend":null},{"seq":6,"probe":"storage_latency","minute":1270,"time":"D1 21:10","location":"hall","after":false,"status":"ok","summary":"vol-7 읽기 지연 4 ms · 처리량 정상","lines":[],"trend":null},{"seq":7,"probe":"link_stats","minute":1270,"time":"D1 21:10","location":"NETWORK","after":false,"status":"ok","summary":"AIDC 엣지 링크 E1 UP · 이용률 42% · 드롭 0 · RTT 2 ms","lines":[],"trend":null},{"seq":8,"probe":"dcgm","minute":1270,"time":"D1 21:10","location":"hall","after":false,"status":"ok","summary":"GPU 건강 검사 PASS","lines":[],"trend":null}]
+    at infer (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:43:9)
+    at async handle (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:47:37)
+    at async workShift (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:65:220)
+    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:79:126
+    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:19:35)
+    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-qa.mjs:79:2

@@ -1,0 +1,6504 @@
+{
+  "issue": 10,
+  "checks": [
+    {
+      "name": "public career map and senior lock",
+      "pass": true
+    },
+    {
+      "name": "free none: start, jobs, restart, finish",
+      "pass": true
+    },
+    {
+      "name": "seeded challenge: real incidents, recovery, report, finish; same seed replay",
+      "pass": true
+    },
+    {
+      "name": "different seed standard produces distinct incident layout",
+      "pass": true
+    },
+    {
+      "name": "story chapters 1 to 5 through first public menu",
+      "pass": true
+    },
+    {
+      "name": "regular global three shifts through UI",
+      "pass": true
+    },
+    {
+      "name": "regular incident three shifts through UI",
+      "pass": true
+    },
+    {
+      "name": "Linux five shifts through UI, education remains separate",
+      "pass": true
+    },
+    {
+      "name": "senior evaluation 1 and 2, restart, ending, free branch",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "commands": [
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 1
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 1,
+      "after": false,
+      "seq": 2
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 3
+    },
+    {
+      "id": "INC-L11",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 4
+    },
+    {
+      "id": "INC-L11",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 5
+    },
+    {
+      "id": "INC-L11",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 6
+    },
+    {
+      "id": "INC-L11",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 7
+    },
+    {
+      "id": "INC-L11",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 8
+    },
+    {
+      "id": "INC-L11",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 9
+    },
+    {
+      "id": "INC-L11",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 10
+    },
+    {
+      "id": "INC-L11",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 11
+    },
+    {
+      "id": "INC-L11",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 12
+    },
+    {
+      "id": "INC-L11",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 13
+    },
+    {
+      "id": "INC-L11",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 14
+    },
+    {
+      "id": "INC-L11",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 15
+    },
+    {
+      "id": "INC-L11",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 16
+    },
+    {
+      "id": "INC-L11",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 17
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 18
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 1,
+      "after": false,
+      "seq": 19
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 20
+    },
+    {
+      "id": "INC-L11",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": true,
+      "seq": 21
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 22
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 23
+    },
+    {
+      "id": "INC-L11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 24
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 25
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 26
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 27
+    },
+    {
+      "id": "INC-L12",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 28
+    },
+    {
+      "id": "INC-L12",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 2,
+      "after": false,
+      "seq": 29
+    },
+    {
+      "id": "INC-L12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 30
+    },
+    {
+      "id": "INC-L12",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 31
+    },
+    {
+      "id": "INC-L12",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 32
+    },
+    {
+      "id": "INC-L12",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 33
+    },
+    {
+      "id": "INC-L12",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 34
+    },
+    {
+      "id": "INC-L12",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 35
+    },
+    {
+      "id": "INC-L12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 36
+    },
+    {
+      "id": "INC-L12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 37
+    },
+    {
+      "id": "INC-L12",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 38
+    },
+    {
+      "id": "INC-L12",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 39
+    },
+    {
+      "id": "INC-L12",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 40
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 41
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 42
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 43
+    },
+    {
+      "id": "INC-L12",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 2,
+      "after": false,
+      "seq": 44
+    },
+    {
+      "id": "INC-L12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 45
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 46
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 47
+    },
+    {
+      "id": "INC-L12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 48
+    },
+    {
+      "id": "INC-L12",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 49
+    },
+    {
+      "id": "INC-L12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 50
+    },
+    {
+      "id": "INC-L21",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 51
+    },
+    {
+      "id": "INC-L21",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 52
+    },
+    {
+      "id": "INC-L21",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 53
+    },
+    {
+      "id": "INC-L21",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 54
+    },
+    {
+      "id": "INC-L21",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 55
+    },
+    {
+      "id": "INC-L21",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 56
+    },
+    {
+      "id": "INC-L21",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 57
+    },
+    {
+      "id": "INC-L21",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 58
+    },
+    {
+      "id": "INC-L21",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 59
+    },
+    {
+      "id": "INC-L21",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 60
+    },
+    {
+      "id": "INC-L21",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 61
+    },
+    {
+      "id": "INC-L21",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 62
+    },
+    {
+      "id": "INC-L21",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 63
+    },
+    {
+      "id": "INC-L21",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 64
+    },
+    {
+      "id": "INC-L21",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 65
+    },
+    {
+      "id": "INC-L21",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 66
+    },
+    {
+      "id": "INC-L22",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 67
+    },
+    {
+      "id": "INC-L22",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 68
+    },
+    {
+      "id": "INC-L22",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 69
+    },
+    {
+      "id": "INC-L22",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 70
+    },
+    {
+      "id": "INC-L22",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 71
+    },
+    {
+      "id": "INC-L22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 72
+    },
+    {
+      "id": "INC-L22",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 73
+    },
+    {
+      "id": "INC-L22",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 74
+    },
+    {
+      "id": "INC-L22",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 75
+    },
+    {
+      "id": "INC-L22",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 76
+    },
+    {
+      "id": "INC-L22",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 77
+    },
+    {
+      "id": "INC-L22",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 78
+    },
+    {
+      "id": "INC-L22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 79
+    },
+    {
+      "id": "INC-L22",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 80
+    },
+    {
+      "id": "INC-L22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 81
+    },
+    {
+      "id": "INC-L22",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 82
+    },
+    {
+      "id": "INC-L31",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 83
+    },
+    {
+      "id": "INC-L31",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 84
+    },
+    {
+      "id": "INC-L31",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 85
+    },
+    {
+      "id": "INC-L31",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 86
+    },
+    {
+      "id": "INC-L31",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 87
+    },
+    {
+      "id": "INC-L31",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 88
+    },
+    {
+      "id": "INC-L31",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 89
+    },
+    {
+      "id": "INC-L31",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 90
+    },
+    {
+      "id": "INC-L31",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 91
+    },
+    {
+      "id": "INC-L31",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 92
+    },
+    {
+      "id": "INC-L31",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 93
+    },
+    {
+      "id": "INC-L31",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 94
+    },
+    {
+      "id": "INC-L31",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 95
+    },
+    {
+      "id": "INC-L31",
+      "command": "systemctl",
+      "line": "systemctl status worker.service",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 96
+    },
+    {
+      "id": "INC-L31",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 97
+    },
+    {
+      "id": "INC-L31",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 98
+    },
+    {
+      "id": "INC-L31",
+      "command": "systemctl",
+      "line": "systemctl status worker.service",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 99
+    },
+    {
+      "id": "INC-L32",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 100
+    },
+    {
+      "id": "INC-L32",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 101
+    },
+    {
+      "id": "INC-L32",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 102
+    },
+    {
+      "id": "INC-L32",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 103
+    },
+    {
+      "id": "INC-L32",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 104
+    },
+    {
+      "id": "INC-L32",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 105
+    },
+    {
+      "id": "INC-L32",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 106
+    },
+    {
+      "id": "INC-L32",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 107
+    },
+    {
+      "id": "INC-L32",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 108
+    },
+    {
+      "id": "INC-L32",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 15,
+      "after": false,
+      "seq": 109
+    },
+    {
+      "id": "INC-L32",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 110
+    },
+    {
+      "id": "INC-L32",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 111
+    },
+    {
+      "id": "INC-L32",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 112
+    },
+    {
+      "id": "INC-L32",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 113
+    },
+    {
+      "id": "INC-L32",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 114
+    },
+    {
+      "id": "INC-L41",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 115
+    },
+    {
+      "id": "INC-L41",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 116
+    },
+    {
+      "id": "INC-L41",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 117
+    },
+    {
+      "id": "INC-L41",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 118
+    },
+    {
+      "id": "INC-L41",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 119
+    },
+    {
+      "id": "INC-L41",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 120
+    },
+    {
+      "id": "INC-L41",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 121
+    },
+    {
+      "id": "INC-L41",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 122
+    },
+    {
+      "id": "INC-L41",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 123
+    },
+    {
+      "id": "INC-L41",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 124
+    },
+    {
+      "id": "INC-L41",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 125
+    },
+    {
+      "id": "INC-L41",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 126
+    },
+    {
+      "id": "INC-L41",
+      "command": "ps",
+      "line": "ps aux",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 127
+    },
+    {
+      "id": "INC-L41",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 128
+    },
+    {
+      "id": "INC-L41",
+      "command": "ps",
+      "line": "ps aux",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 129
+    },
+    {
+      "id": "INC-L42",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 130
+    },
+    {
+      "id": "INC-L42",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 131
+    },
+    {
+      "id": "INC-L42",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 132
+    },
+    {
+      "id": "INC-L42",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 133
+    },
+    {
+      "id": "INC-L42",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 134
+    },
+    {
+      "id": "INC-L42",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 135
+    },
+    {
+      "id": "INC-L42",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 136
+    },
+    {
+      "id": "INC-L42",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 137
+    },
+    {
+      "id": "INC-L42",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 138
+    },
+    {
+      "id": "INC-L42",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 139
+    },
+    {
+      "id": "INC-L42",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 140
+    },
+    {
+      "id": "INC-L42",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 141
+    },
+    {
+      "id": "INC-L42",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 142
+    },
+    {
+      "id": "INC-L42",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 143
+    },
+    {
+      "id": "INC-L42",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 144
+    },
+    {
+      "id": "INC-L51",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 145
+    },
+    {
+      "id": "INC-L51",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 146
+    },
+    {
+      "id": "INC-L51",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 147
+    },
+    {
+      "id": "INC-L51",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 148
+    },
+    {
+      "id": "INC-L51",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 149
+    },
+    {
+      "id": "INC-L51",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 150
+    },
+    {
+      "id": "INC-L51",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 151
+    },
+    {
+      "id": "INC-L51",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 152
+    },
+    {
+      "id": "INC-L51",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 153
+    },
+    {
+      "id": "INC-L51",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 154
+    },
+    {
+      "id": "INC-L51",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 155
+    },
+    {
+      "id": "INC-L51",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 156
+    },
+    {
+      "id": "INC-L51",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 157
+    },
+    {
+      "id": "INC-L51",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 158
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 159
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 160
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 161
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 162
+    },
+    {
+      "id": "INC-L52",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 163
+    },
+    {
+      "id": "INC-L52",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 164
+    },
+    {
+      "id": "INC-L52",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 165
+    },
+    {
+      "id": "INC-L52",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 166
+    },
+    {
+      "id": "INC-L52",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 167
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 168
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 169
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 170
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 171
+    },
+    {
+      "id": "INC-L52",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 172
+    },
+    {
+      "id": "INC-L52",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 173
+    },
+    {
+      "id": "INC-L52",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-D",
+      "code": 0,
+      "after": false,
+      "seq": 174
+    },
+    {
+      "id": "INC-L52",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 175
+    },
+    {
+      "id": "INC-L52",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 176
+    },
+    {
+      "id": "INC-L52",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-D",
+      "code": 0,
+      "after": false,
+      "seq": 177
+    },
+    {
+      "id": "INC-L52",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 178
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 179
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 180
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 181
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 182
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 183
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 184
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 185
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 186
+    },
+    {
+      "id": "INC-L51",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": true,
+      "seq": 187
+    },
+    {
+      "id": "INC-L51",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 188
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 189
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 190
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 191
+    },
+    {
+      "id": "INC-L52",
+      "command": "traceroute",
+      "line": "traceroute 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 192
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 193
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 194
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 195
+    },
+    {
+      "id": "INC-L52",
+      "command": "ping",
+      "line": "ping -c 3 10.20.14.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 196
+    },
+    {
+      "id": "INC-L53",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 197
+    },
+    {
+      "id": "INC-L53",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 198
+    },
+    {
+      "id": "INC-L53",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 199
+    },
+    {
+      "id": "INC-L53",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 200
+    },
+    {
+      "id": "INC-L53",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 201
+    },
+    {
+      "id": "INC-L53",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 202
+    },
+    {
+      "id": "INC-L53",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 203
+    },
+    {
+      "id": "INC-L53",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 204
+    },
+    {
+      "id": "INC-L53",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 205
+    },
+    {
+      "id": "INC-L53",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 206
+    },
+    {
+      "id": "INC-L53",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 207
+    },
+    {
+      "id": "INC-L53",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 208
+    },
+    {
+      "id": "INC-L53",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 209
+    },
+    {
+      "id": "INC-L53",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 210
+    },
+    {
+      "id": "INC-L53",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 211
+    },
+    {
+      "id": "INC-L53",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 212
+    },
+    {
+      "id": "INC-L53",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 213
+    },
+    {
+      "id": "INC-L53",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 214
+    },
+    {
+      "id": "INC-L53",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 215
+    },
+    {
+      "id": "INC-L53",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 216
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 1
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 2
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 3
+    },
+    {
+      "id": "INC-S11",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 4
+    },
+    {
+      "id": "INC-S11",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 2,
+      "after": false,
+      "seq": 5
+    },
+    {
+      "id": "INC-S11",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 6
+    },
+    {
+      "id": "INC-S11",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 7
+    },
+    {
+      "id": "INC-S11",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 8
+    },
+    {
+      "id": "INC-S11",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 9
+    },
+    {
+      "id": "INC-S11",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 10
+    },
+    {
+      "id": "INC-S11",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 11
+    },
+    {
+      "id": "INC-S11",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 12
+    },
+    {
+      "id": "INC-S11",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 13
+    },
+    {
+      "id": "INC-S11",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 14
+    },
+    {
+      "id": "INC-S11",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 15
+    },
+    {
+      "id": "INC-S11",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 16
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 17
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 18
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 19
+    },
+    {
+      "id": "INC-S11",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 2,
+      "after": false,
+      "seq": 20
+    },
+    {
+      "id": "INC-S11",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 21
+    },
+    {
+      "id": "INC-S12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 22
+    },
+    {
+      "id": "INC-S12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 23
+    },
+    {
+      "id": "INC-S12",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 24
+    },
+    {
+      "id": "INC-S12",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 25
+    },
+    {
+      "id": "INC-S12",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 26
+    },
+    {
+      "id": "INC-S12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 27
+    },
+    {
+      "id": "INC-S12",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 28
+    },
+    {
+      "id": "INC-S12",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 29
+    },
+    {
+      "id": "INC-S12",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 30
+    },
+    {
+      "id": "INC-S12",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 31
+    },
+    {
+      "id": "INC-S12",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 32
+    },
+    {
+      "id": "INC-S12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 33
+    },
+    {
+      "id": "INC-S12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 34
+    },
+    {
+      "id": "INC-S12",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 35
+    },
+    {
+      "id": "INC-S12",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 36
+    },
+    {
+      "id": "INC-S12",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 37
+    },
+    {
+      "id": "INC-S12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 38
+    },
+    {
+      "id": "INC-S12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 39
+    },
+    {
+      "id": "INC-S12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 40
+    },
+    {
+      "id": "INC-S12",
+      "command": "systemctl",
+      "line": "systemctl status worker.service",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 41
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 42
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 43
+    },
+    {
+      "id": "INC-S11",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 44
+    },
+    {
+      "id": "INC-S11",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 45
+    },
+    {
+      "id": "INC-S11",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 46
+    },
+    {
+      "id": "INC-S12",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 47
+    },
+    {
+      "id": "INC-S12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 48
+    },
+    {
+      "id": "INC-S12",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-C",
+      "code": 0,
+      "after": true,
+      "seq": 49
+    },
+    {
+      "id": "INC-S12",
+      "command": "systemctl",
+      "line": "systemctl status worker.service",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 50
+    },
+    {
+      "id": "INC-S13",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 51
+    },
+    {
+      "id": "INC-S13",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 52
+    },
+    {
+      "id": "INC-S13",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 53
+    },
+    {
+      "id": "INC-S13",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 54
+    },
+    {
+      "id": "INC-S13",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 55
+    },
+    {
+      "id": "INC-S13",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 56
+    },
+    {
+      "id": "INC-S13",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 57
+    },
+    {
+      "id": "INC-S13",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 58
+    },
+    {
+      "id": "INC-S13",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 59
+    },
+    {
+      "id": "INC-S13",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 60
+    },
+    {
+      "id": "INC-S13",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 61
+    },
+    {
+      "id": "INC-S13",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 62
+    },
+    {
+      "id": "INC-S13",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 63
+    },
+    {
+      "id": "INC-S13",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 64
+    },
+    {
+      "id": "INC-S13",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 65
+    },
+    {
+      "id": "INC-S13",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 66
+    },
+    {
+      "id": "INC-S13",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 67
+    },
+    {
+      "id": "INC-S13",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 68
+    },
+    {
+      "id": "INC-S13",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 69
+    },
+    {
+      "id": "INC-S13",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 70
+    },
+    {
+      "id": "INC-S21",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 71
+    },
+    {
+      "id": "INC-S21",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 72
+    },
+    {
+      "id": "INC-S21",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 73
+    },
+    {
+      "id": "INC-S21",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 74
+    },
+    {
+      "id": "INC-S21",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 75
+    },
+    {
+      "id": "INC-S21",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 76
+    },
+    {
+      "id": "INC-S21",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 77
+    },
+    {
+      "id": "INC-S21",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 78
+    },
+    {
+      "id": "INC-S21",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 79
+    },
+    {
+      "id": "INC-S21",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 80
+    },
+    {
+      "id": "INC-S21",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 81
+    },
+    {
+      "id": "INC-S21",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 82
+    },
+    {
+      "id": "INC-S21",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 83
+    },
+    {
+      "id": "INC-S21",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 84
+    },
+    {
+      "id": "INC-S22",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 85
+    },
+    {
+      "id": "INC-S22",
+      "command": "ping",
+      "line": "ping -c 3 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 86
+    },
+    {
+      "id": "INC-S22",
+      "command": "ping",
+      "line": "ping -c 3 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 87
+    },
+    {
+      "id": "INC-S22",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 88
+    },
+    {
+      "id": "INC-S22",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 89
+    },
+    {
+      "id": "INC-S22",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 90
+    },
+    {
+      "id": "INC-S22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 91
+    },
+    {
+      "id": "INC-S22",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 92
+    },
+    {
+      "id": "INC-S22",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 93
+    },
+    {
+      "id": "INC-S22",
+      "command": "traceroute",
+      "line": "traceroute 10.20.12.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 94
+    },
+    {
+      "id": "INC-S22",
+      "command": "traceroute",
+      "line": "traceroute 10.20.13.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 95
+    },
+    {
+      "id": "INC-S22",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 96
+    },
+    {
+      "id": "INC-S22",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 97
+    },
+    {
+      "id": "INC-S22",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 98
+    },
+    {
+      "id": "INC-S22",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-C",
+      "code": 0,
+      "after": false,
+      "seq": 99
+    },
+    {
+      "id": "INC-S22",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 100
+    },
+    {
+      "id": "INC-S22",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 101
+    },
+    {
+      "id": "INC-S22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": false,
+      "seq": 102
+    },
+    {
+      "id": "INC-S21",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": true,
+      "seq": 103
+    },
+    {
+      "id": "INC-S21",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": true,
+      "seq": 104
+    },
+    {
+      "id": "INC-S22",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 105
+    },
+    {
+      "id": "INC-S22",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-B",
+      "code": 0,
+      "after": true,
+      "seq": 106
+    },
+    {
+      "id": "INC-S23",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 107
+    },
+    {
+      "id": "INC-S23",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 108
+    },
+    {
+      "id": "INC-S23",
+      "command": "ip_link",
+      "line": "ip link show",
+      "node": "network",
+      "code": 0,
+      "after": false,
+      "seq": 109
+    },
+    {
+      "id": "INC-S23",
+      "command": "getent",
+      "line": "getent hosts storage-api.aidc.internal",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 110
+    },
+    {
+      "id": "INC-S23",
+      "command": "journalctl",
+      "line": "journalctl -u worker.service -n 3",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 111
+    },
+    {
+      "id": "INC-S23",
+      "command": "df",
+      "line": "df -h",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 112
+    },
+    {
+      "id": "INC-S23",
+      "command": "iostat",
+      "line": "iostat -xz",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 113
+    },
+    {
+      "id": "INC-S23",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 114
+    },
+    {
+      "id": "INC-S23",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 115
+    },
+    {
+      "id": "INC-S23",
+      "command": "nvidia_smi",
+      "line": "nvidia-smi",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 116
+    },
+    {
+      "id": "INC-S23",
+      "command": "dcgm",
+      "line": "dcgmi health --check",
+      "node": "server-A",
+      "code": 0,
+      "after": false,
+      "seq": 117
+    },
+    {
+      "id": "INC-S23",
+      "command": "pods",
+      "line": "kubectl get pods -n aidc",
+      "node": "cluster",
+      "code": 0,
+      "after": false,
+      "seq": 118
+    },
+    {
+      "id": "INC-S23",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 119
+    },
+    {
+      "id": "INC-S23",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 120
+    },
+    {
+      "id": "INC-S23",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 121
+    },
+    {
+      "id": "INC-S23",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": false,
+      "seq": 122
+    },
+    {
+      "id": "INC-S23",
+      "command": "traceroute",
+      "line": "traceroute 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 123
+    },
+    {
+      "id": "INC-S23",
+      "command": "traceroute",
+      "line": "traceroute 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 124
+    },
+    {
+      "id": "INC-S23",
+      "command": "ping",
+      "line": "ping -c 3 10.20.0.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 125
+    },
+    {
+      "id": "INC-S23",
+      "command": "ping",
+      "line": "ping -c 3 10.20.11.15",
+      "node": "noc",
+      "code": 0,
+      "after": true,
+      "seq": 126
+    }
+  ],
+  "actions": [
+    {
+      "id": "INC-F1",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F2",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F1",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-F2",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-F2",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L11",
+      "action": "escalate_network",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L12",
+      "action": "dns_failover",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L21",
+      "action": "storage_path",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L22",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L31",
+      "action": "ask_consent",
+      "result": "consent",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L31",
+      "action": "reduce_batch",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L32",
+      "action": "gpu_repair",
+      "result": "isolate_repair",
+      "at": "hall"
+    },
+    {
+      "id": "INC-L41",
+      "action": "escalate_facility",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L41",
+      "action": "planned_pause",
+      "result": "pause",
+      "at": "room"
+    },
+    {
+      "id": "INC-L42",
+      "action": "escalate_facility",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L42",
+      "action": "standby_pump",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L51",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L51",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-L52",
+      "action": "qos_adjust",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-L53",
+      "action": "storage_path",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-S11",
+      "action": "dns_failover",
+      "result": "fix",
+      "at": "room"
+    },
+    {
+      "id": "INC-S12",
+      "action": "ask_consent",
+      "result": "consent",
+      "at": "noc"
+    },
+    {
+      "id": "INC-S12",
+      "action": "reduce_batch",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-S13",
+      "action": "cleanup_temp",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-S21",
+      "action": "escalate_platform",
+      "result": "call",
+      "at": "noc"
+    },
+    {
+      "id": "INC-S21",
+      "action": "rollback_deploy",
+      "result": "fix",
+      "at": "noc"
+    },
+    {
+      "id": "INC-S22",
+      "action": "storage_path",
+      "result": "fix",
+      "at": "hall"
+    },
+    {
+      "id": "INC-S23",
+      "action": "qos_adjust",
+      "result": "fix",
+      "at": "room"
+    }
+  ],
+  "shifts": [
+    {
+      "kind": "incident",
+      "result": {
+        "shift": 1,
+        "title": "장애 대응 근무 A · 선배와 1차 분류",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "sfo-bayfog-video",
+            "client": "Bayfog Motion Studio",
+            "industry": "게임·미디어 제작",
+            "site": "US-SFO",
+            "city": "샌프란시스코",
+            "country": "미국",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 10:10",
+            "due": "D1 13:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "pus-harborline-async",
+            "client": "하버라인 물류 AI",
+            "industry": "물류 분석",
+            "site": "KR-PUS",
+            "city": "부산",
+            "country": "대한민국",
+            "job": "비동기 대량 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:50",
+            "started": "D1 09:50",
+            "completed": "D1 11:10",
+            "due": "D1 13:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "bom-marine-batch",
+            "client": "Marine Drive Studios",
+            "industry": "게임·미디어 제작",
+            "site": "IN-BOM",
+            "city": "뭄바이",
+            "country": "인도",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 10:40",
+            "started": "D1 10:40",
+            "completed": "D1 11:50",
+            "due": "D1 14:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 3,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 3,
+        "total": 3,
+        "goal": {
+          "minResolved": 3,
+          "minSuccess": 3,
+          "notifyBeforeRecovery": false,
+          "maxExpired": 0
+        },
+        "average": 98,
+        "finished": "D1 11:50",
+        "started": "D1 09:00",
+        "feedback": [
+          "INC-A1 DNS 이름 해석 장애 (샌프란시스코 요청 #1): 해결 · 해결 조치 보조 DNS 리졸버로 전환",
+          "INC-A2 GPU 장치 오류(Xid/ECC) (부산 요청 #2): 해결 · 해결 조치 의심 GPU 서버 격리 후 장비 수리 요청",
+          "INC-A3 스토리지 공간 소진 (뭄바이 요청 #3): 해결 · 해결 조치 게임 내부 임시 파일 정리",
+          "근무 목표 달성"
+        ],
+        "incidents": [
+          {
+            "id": "INC-A1",
+            "rid": 1,
+            "type": "dns",
+            "label": "DNS 이름 해석 장애",
+            "domain": "network",
+            "client": "Bayfog Motion Studio",
+            "city": "샌프란시스코",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "보조 DNS 리졸버로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당과 DNS 서비스 소유자에게 알리고, 주 리졸버의 로그·다른 서비스 영향 여부를 더 확인했을 것입니다.",
+              "causal": "주 리졸버 응답 없음 → 이름 해석 실패 → 작업이 저장소에 접속 못 함(IP 경로는 정상).",
+              "alternatives": "국제 경로 단절은 IP 테스트가 정상이라 배제, 서비스 재시작 문제는 재시작 기록이 없어 배제."
+            }
+          },
+          {
+            "id": "INC-A2",
+            "rid": 2,
+            "type": "gpu_health",
+            "label": "GPU 장치 오류(Xid/ECC)",
+            "domain": "gpu",
+            "client": "하버라인 물류 AI",
+            "city": "부산",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 10:10",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "의심 GPU 서버 격리 후 장비 수리 요청",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 장비 담당에 RMA·진단 로그를 넘기고, 같은 서버의 다른 GPU와 최근 펌웨어 변경을 더 확인했을 것입니다.",
+              "causal": "GPU 장치 오류(Xid) → 작업 프로세스 종료 → 같은 서버 재시작도 실패.",
+              "alternatives": "메모리 부족(OOM)은 로그에 OOM이 없어 배제, 배포 문제는 배포 변경이 없어 배제."
+            }
+          },
+          {
+            "id": "INC-A3",
+            "rid": 3,
+            "type": "storage_full",
+            "label": "스토리지 공간 소진",
+            "domain": "storage",
+            "client": "Marine Drive Studios",
+            "city": "뭄바이",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 11:00",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "게임 내부 임시 파일 정리",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.",
+              "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.",
+              "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          }
+        ],
+        "resolved": 3,
+        "practice": null
+      }
+    },
+    {
+      "kind": "incident",
+      "result": {
+        "shift": 2,
+        "title": "장애 대응 근무 B · 고객 영향과 팀 조정",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 4,
+            "template": "osa-naniwa-batch",
+            "client": "Naniwa Pixel Games",
+            "industry": "게임 제작",
+            "site": "JP-OSA",
+            "city": "오사카",
+            "country": "일본",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 11:50",
+            "started": "D1 11:50",
+            "completed": "D1 13:40",
+            "due": "D1 15:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 5,
+            "template": "nyc-empire-vision",
+            "client": "Empire Frame Media",
+            "industry": "미디어 제작",
+            "site": "US-NYC",
+            "city": "뉴욕",
+            "country": "미국",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 12:10",
+            "started": "D1 12:10",
+            "completed": "D1 13:30",
+            "due": "D1 15:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 6,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 12:50",
+            "started": "D1 13:30",
+            "completed": "D1 15:00",
+            "due": "D1 16:30",
+            "waited": 40,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 3,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 3,
+        "total": 3,
+        "goal": {
+          "minResolved": 3,
+          "minSuccess": 3,
+          "notifyBeforeRecovery": true,
+          "maxExpired": 0
+        },
+        "average": 100,
+        "finished": "D1 15:00",
+        "started": "D1 11:50",
+        "feedback": [
+          "INC-B1 ToR/업링크 포트 단절 (오사카 요청 #4): 해결 · 해결 조치 네트워크 담당 호출",
+          "INC-B2 냉각 펌프 성능 저하 (뉴욕 요청 #5): 해결 · 해결 조치 예비 냉각 펌프 가동 요청",
+          "INC-B3 UPS 입력 이상·배터리 운전 (호찌민 요청 #6): 해결 · 해결 조치 시설·전원팀 호출",
+          "근무 목표 달성"
+        ],
+        "incidents": [
+          {
+            "id": "INC-B1",
+            "rid": 4,
+            "type": "tor_uplink",
+            "label": "ToR/업링크 포트 단절",
+            "domain": "network",
+            "client": "Naniwa Pixel Games",
+            "city": "오사카",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 12:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 30,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "네트워크 담당 호출",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 30,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당에 포트·광모듈 교체를 요청하고, 같은 ToR의 다른 서버 영향과 이중화 구성 여부를 더 확인했을 것입니다.",
+              "causal": "ToR 업링크 포트 DOWN → 해당 랙 서버 고립 → 작업 정지(국제 회선은 정상).",
+              "alternatives": "국제 경로 단절은 회선 지표가 정상이라 배제, DNS는 이름 조회가 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-B2",
+            "rid": 5,
+            "type": "cooling",
+            "label": "냉각 펌프 성능 저하",
+            "domain": "facility",
+            "client": "Empire Frame Media",
+            "city": "뉴욕",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 12:30",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 30,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "예비 냉각 펌프 가동 요청",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 60,
+            "postmortem": {
+              "field": "실제 현장이라면 시설팀에 펌프 점검·교체 일정을 요청하고, 같은 구역의 다른 랙 온도와 경보 기준을 더 확인했을 것입니다.",
+              "causal": "펌프 P-2 성능 저하 → 냉각수 유량 감소 → 흡입 온도 상승 → GPU 열 보호 클럭 제한 → 작업 지연.",
+              "alternatives": "GPU 장치 오류는 DCGM에 장치 오류가 없어 배제, 회선 혼잡은 이용률 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-B3",
+            "rid": 6,
+            "type": "ups",
+            "label": "UPS 입력 이상·배터리 운전",
+            "domain": "facility",
+            "client": "Mekong Pixel Forge",
+            "city": "호찌민",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 13:50",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 30,
+            "evidence": 12,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "시설·전원팀 호출",
+            "mitigations": [
+              "작업 계획 중단(안전 정지)"
+            ],
+            "notifiedBeforeRecovery": true,
+            "downtime": 30,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 전원팀과 함께 계획 중단 범위를 고객에게 미리 알리고, 배터리 교체 주기와 입력 계통 이중화를 더 확인했을 것입니다.",
+              "causal": "UPS-02 입력 이상 → 배터리 운전 → 보호 시간 안에 이관/계획 중단이 필요.",
+              "alternatives": "냉각 문제는 냉각 지표가 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          }
+        ],
+        "resolved": 3,
+        "practice": null
+      }
+    },
+    {
+      "kind": "incident",
+      "result": {
+        "shift": 3,
+        "title": "장애 대응 근무 C · 독립 당직과 겹친 증상",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 7,
+            "template": "sea-cascade-async",
+            "client": "Cascade Ledger Analytics",
+            "industry": "전자상거래 수요 예측",
+            "site": "US-SEA",
+            "city": "시애틀",
+            "country": "미국",
+            "job": "비동기 대량 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 15:00",
+            "started": "D1 15:00",
+            "completed": "D1 16:00",
+            "due": "D1 18:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 8,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 15:00",
+            "started": "D1 15:00",
+            "completed": "D1 16:00",
+            "due": "D1 18:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 9,
+            "template": "par-seine-finetune",
+            "client": "Atelier Seine Génératif",
+            "industry": "생성형 AI 미디어",
+            "site": "FR-PAR",
+            "city": "파리",
+            "country": "프랑스",
+            "job": "파인튜닝",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 16:00",
+            "started": "D1 16:00",
+            "completed": "D1 17:20",
+            "due": "D1 18:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 10,
+            "template": "sin-merbau-research",
+            "client": "Merbau Climate Research",
+            "industry": "연구기관",
+            "site": "SG-SIN",
+            "city": "싱가포르",
+            "country": "싱가포르",
+            "job": "GPU 연구 배치",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 16:10",
+            "started": "D1 16:10",
+            "completed": "D1 17:40",
+            "due": "D1 19:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 4,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 4,
+        "total": 4,
+        "goal": {
+          "minResolved": 4,
+          "minSuccess": 4,
+          "notifyBeforeRecovery": false,
+          "maxExpired": 0
+        },
+        "average": 100,
+        "finished": "D1 17:40",
+        "started": "D1 15:00",
+        "feedback": [
+          "INC-C1 회선 혼잡·패킷 손실 (시애틀 요청 #7): 해결 · 해결 조치 트래픽 우선순위(QoS)·대역 예약 조정",
+          "INC-C2 스토리지 I/O 지연 증가 (도쿄 요청 #8): 해결 · 해결 조치 대체 스토리지 경로로 전환",
+          "INC-C3 GPU 메모리 부족(CUDA OOM) (파리 요청 #9): 해결 · 해결 조치 배치 크기 축소(고객 동의 조건)",
+          "INC-C4 서비스 반복 재시작(CrashLoop) (싱가포르 요청 #10): 해결 · 해결 조치 직전 배포 롤백",
+          "근무 목표 달성"
+        ],
+        "incidents": [
+          {
+            "id": "INC-C1",
+            "rid": 7,
+            "type": "congestion",
+            "label": "회선 혼잡·패킷 손실",
+            "domain": "network",
+            "client": "Cascade Ledger Analytics",
+            "city": "시애틀",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 15:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 12,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "트래픽 우선순위(QoS)·대역 예약 조정",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 10,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당에 대역 증설을 요청하고, 혼잡을 만든 다른 트래픽(백업·복제 일정)을 더 확인했을 것입니다.",
+              "causal": "엣지 링크 이용률 한계 → 큐 드롭·RTT 증가 → 작업 데이터 전송 지연.",
+              "alternatives": "링크 단절은 LINK UP이라 배제, 스토리지 지연은 볼륨 지연이 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-C2",
+            "rid": 8,
+            "type": "storage_latency",
+            "label": "스토리지 I/O 지연 증가",
+            "domain": "storage",
+            "client": "Tsukiji Cold-chain Vision",
+            "city": "도쿄",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 15:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 12,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "대체 스토리지 경로로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 10,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.",
+              "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.",
+              "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-C3",
+            "rid": 9,
+            "type": "gpu_oom",
+            "label": "GPU 메모리 부족(CUDA OOM)",
+            "domain": "gpu",
+            "client": "Atelier Seine Génératif",
+            "city": "파리",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 16:30",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "배치 크기 축소(고객 동의 조건)",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 고객에게 배치·모델 설정 변경 이력을 확인하고, 필요한 메모리를 미리 검토하는 절차를 제안했을 것입니다.",
+              "causal": "배치 설정 증가 → GPU 메모리 부족(OOM) → 같은 단계에서 반복 종료(장치는 정상).",
+              "alternatives": "GPU 장치 오류는 DCGM PASS라 배제, 배포 오류는 로그가 OOM이라 배제."
+            }
+          },
+          {
+            "id": "INC-C4",
+            "rid": 10,
+            "type": "crashloop",
+            "label": "서비스 반복 재시작(CrashLoop)",
+            "domain": "platform",
+            "client": "Merbau Climate Research",
+            "city": "싱가포르",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 16:40",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "직전 배포 롤백",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 20,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.",
+              "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).",
+              "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."
+            }
+          }
+        ],
+        "resolved": 4,
+        "practice": null
+      }
+    },
+    {
+      "kind": "linux",
+      "result": {
+        "shift": 1,
+        "title": "Linux 근무 1 · 같은 증상, 다른 계층",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "osa-naniwa-batch",
+            "client": "Naniwa Pixel Games",
+            "industry": "게임 제작",
+            "site": "JP-OSA",
+            "city": "오사카",
+            "country": "일본",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 10:40",
+            "due": "D1 13:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "sfo-bayfog-video",
+            "client": "Bayfog Motion Studio",
+            "industry": "게임·미디어 제작",
+            "site": "US-SFO",
+            "city": "샌프란시스코",
+            "country": "미국",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 11:50",
+            "started": "D1 11:50",
+            "completed": "D1 13:00",
+            "due": "D1 15:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 2,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 2,
+        "total": 2,
+        "goal": {
+          "minResolved": 2,
+          "minSuccess": 2,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 100,
+        "finished": "D1 13:00",
+        "started": "D1 09:00",
+        "feedback": [
+          "INC-L11 ToR/업링크 포트 단절 (오사카 요청 #1): 해결 · 해결 조치 네트워크 담당 호출",
+          "INC-L12 DNS 이름 해석 장애 (샌프란시스코 요청 #2): 해결 · 해결 조치 보조 DNS 리졸버로 전환",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-L11",
+            "rid": 1,
+            "type": "tor_uplink",
+            "label": "ToR/업링크 포트 단절",
+            "domain": "network",
+            "client": "Naniwa Pixel Games",
+            "city": "오사카",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:30",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 30,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "네트워크 담당 호출",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 30,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당에 포트·광모듈 교체를 요청하고, 같은 ToR의 다른 서버 영향과 이중화 구성 여부를 더 확인했을 것입니다.",
+              "causal": "ToR 업링크 포트 DOWN → 해당 랙 서버 고립 → 작업 정지(국제 회선은 정상).",
+              "alternatives": "국제 경로 단절은 회선 지표가 정상이라 배제, DNS는 이름 조회가 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-L12",
+            "rid": 2,
+            "type": "dns",
+            "label": "DNS 이름 해석 장애",
+            "domain": "network",
+            "client": "Bayfog Motion Studio",
+            "city": "샌프란시스코",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 12:10",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 12,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "보조 DNS 리졸버로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당과 DNS 서비스 소유자에게 알리고, 주 리졸버의 로그·다른 서비스 영향 여부를 더 확인했을 것입니다.",
+              "causal": "주 리졸버 응답 없음 → 이름 해석 실패 → 작업이 저장소에 접속 못 함(IP 경로는 정상).",
+              "alternatives": "국제 경로 단절은 IP 테스트가 정상이라 배제, 서비스 재시작 문제는 재시작 기록이 없어 배제."
+            }
+          }
+        ],
+        "resolved": 2,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "신입 관제 담당",
+          "rank": "신입",
+          "graduated": false,
+          "practice": false,
+          "observations": 50,
+          "commands": 10,
+          "interpreted": 7,
+          "misinterpretations": 0,
+          "help": 0
+        }
+      }
+    },
+    {
+      "kind": "linux",
+      "result": {
+        "shift": 2,
+        "title": "Linux 근무 2 · 저장장치의 두 얼굴",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 3,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 13:00",
+            "started": "D1 13:00",
+            "completed": "D1 14:00",
+            "due": "D1 16:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "bom-marine-batch",
+            "client": "Marine Drive Studios",
+            "industry": "게임·미디어 제작",
+            "site": "IN-BOM",
+            "city": "뭄바이",
+            "country": "인도",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 15:50",
+            "started": "D1 15:50",
+            "completed": "D1 17:00",
+            "due": "D1 19:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 2,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 2,
+        "total": 2,
+        "goal": {
+          "minResolved": 2,
+          "minSuccess": 2,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 100,
+        "finished": "D1 17:00",
+        "started": "D1 13:00",
+        "feedback": [
+          "INC-L21 스토리지 I/O 지연 증가 (도쿄 요청 #3): 해결 · 해결 조치 대체 스토리지 경로로 전환",
+          "INC-L22 스토리지 공간 소진 (뭄바이 요청 #4): 해결 · 해결 조치 게임 내부 임시 파일 정리",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-L21",
+            "rid": 3,
+            "type": "storage_latency",
+            "label": "스토리지 I/O 지연 증가",
+            "domain": "storage",
+            "client": "Tsukiji Cold-chain Vision",
+            "city": "도쿄",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 13:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "대체 스토리지 경로로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 10,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.",
+              "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.",
+              "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-L22",
+            "rid": 4,
+            "type": "storage_full",
+            "label": "스토리지 공간 소진",
+            "domain": "storage",
+            "client": "Marine Drive Studios",
+            "city": "뭄바이",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 16:10",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "게임 내부 임시 파일 정리",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.",
+              "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.",
+              "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          }
+        ],
+        "resolved": 2,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "주니어 운영 담당",
+          "rank": "주니어",
+          "graduated": false,
+          "practice": false,
+          "observations": 32,
+          "commands": 10,
+          "interpreted": 6,
+          "misinterpretations": 0,
+          "help": 0
+        }
+      }
+    },
+    {
+      "kind": "linux",
+      "result": {
+        "shift": 3,
+        "title": "Linux 근무 3 · GPU와 작업 프로세스",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 5,
+            "template": "par-seine-finetune",
+            "client": "Atelier Seine Génératif",
+            "industry": "생성형 AI 미디어",
+            "site": "FR-PAR",
+            "city": "파리",
+            "country": "프랑스",
+            "job": "파인튜닝",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 17:00",
+            "started": "D1 17:00",
+            "completed": "D1 18:20",
+            "due": "D1 19:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 6,
+            "template": "pus-harborline-async",
+            "client": "하버라인 물류 AI",
+            "industry": "물류 분석",
+            "site": "KR-PUS",
+            "city": "부산",
+            "country": "대한민국",
+            "job": "비동기 대량 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 19:50",
+            "started": "D1 19:50",
+            "completed": "D1 20:50",
+            "due": "D1 23:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 2,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 2,
+        "total": 2,
+        "goal": {
+          "minResolved": 2,
+          "minSuccess": 2,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 100,
+        "finished": "D1 20:50",
+        "started": "D1 17:00",
+        "feedback": [
+          "INC-L31 GPU 메모리 부족(CUDA OOM) (파리 요청 #5): 해결 · 해결 조치 배치 크기 축소(고객 동의 조건)",
+          "INC-L32 GPU 장치 오류(Xid/ECC) (부산 요청 #6): 해결 · 해결 조치 의심 GPU 서버 격리 후 장비 수리 요청",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-L31",
+            "rid": 5,
+            "type": "gpu_oom",
+            "label": "GPU 메모리 부족(CUDA OOM)",
+            "domain": "gpu",
+            "client": "Atelier Seine Génératif",
+            "city": "파리",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 17:30",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 12,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "배치 크기 축소(고객 동의 조건)",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 고객에게 배치·모델 설정 변경 이력을 확인하고, 필요한 메모리를 미리 검토하는 절차를 제안했을 것입니다.",
+              "causal": "배치 설정 증가 → GPU 메모리 부족(OOM) → 같은 단계에서 반복 종료(장치는 정상).",
+              "alternatives": "GPU 장치 오류는 DCGM PASS라 배제, 배포 오류는 로그가 OOM이라 배제."
+            }
+          },
+          {
+            "id": "INC-L32",
+            "rid": 6,
+            "type": "gpu_health",
+            "label": "GPU 장치 오류(Xid/ECC)",
+            "domain": "gpu",
+            "client": "하버라인 물류 AI",
+            "city": "부산",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 20:10",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 10,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "의심 GPU 서버 격리 후 장비 수리 요청",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 장비 담당에 RMA·진단 로그를 넘기고, 같은 서버의 다른 GPU와 최근 펌웨어 변경을 더 확인했을 것입니다.",
+              "causal": "GPU 장치 오류(Xid) → 작업 프로세스 종료 → 같은 서버 재시작도 실패.",
+              "alternatives": "메모리 부족(OOM)은 로그에 OOM이 없어 배제, 배포 문제는 배포 변경이 없어 배제."
+            }
+          }
+        ],
+        "resolved": 2,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "GPU 운영 담당",
+          "rank": "주니어",
+          "graduated": false,
+          "practice": false,
+          "observations": 32,
+          "commands": 10,
+          "interpreted": 7,
+          "misinterpretations": 0,
+          "help": 0
+        }
+      }
+    },
+    {
+      "kind": "linux",
+      "result": {
+        "shift": 4,
+        "title": "Linux 근무 4 · 현장과 관제의 분업",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 7,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 20:50",
+            "started": "D1 20:50",
+            "completed": "D1 22:20",
+            "due": "D2 00:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 8,
+            "template": "nyc-empire-vision",
+            "client": "Empire Frame Media",
+            "industry": "미디어 제작",
+            "site": "US-NYC",
+            "city": "뉴욕",
+            "country": "미국",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 23:40",
+            "started": "D1 23:40",
+            "completed": "D2 01:00",
+            "due": "D2 03:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 2,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 2,
+        "total": 2,
+        "goal": {
+          "minResolved": 2,
+          "minSuccess": 2,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 100,
+        "finished": "D2 01:00",
+        "started": "D1 20:50",
+        "feedback": [
+          "INC-L41 UPS 입력 이상·배터리 운전 (호찌민 요청 #7): 해결 · 해결 조치 시설·전원팀 호출",
+          "INC-L42 냉각 펌프 성능 저하 (뉴욕 요청 #8): 해결 · 해결 조치 예비 냉각 펌프 가동 요청",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-L41",
+            "rid": 7,
+            "type": "ups",
+            "label": "UPS 입력 이상·배터리 운전",
+            "domain": "facility",
+            "client": "Mekong Pixel Forge",
+            "city": "호찌민",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 21:10",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 30,
+            "evidence": 12,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "시설·전원팀 호출",
+            "mitigations": [
+              "작업 계획 중단(안전 정지)"
+            ],
+            "notifiedBeforeRecovery": true,
+            "downtime": 30,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 전원팀과 함께 계획 중단 범위를 고객에게 미리 알리고, 배터리 교체 주기와 입력 계통 이중화를 더 확인했을 것입니다.",
+              "causal": "UPS-02 입력 이상 → 배터리 운전 → 보호 시간 안에 이관/계획 중단이 필요.",
+              "alternatives": "냉각 문제는 냉각 지표가 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          },
+          {
+            "id": "INC-L42",
+            "rid": 8,
+            "type": "cooling",
+            "label": "냉각 펌프 성능 저하",
+            "domain": "facility",
+            "client": "Empire Frame Media",
+            "city": "뉴욕",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D2 00:00",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 30,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "예비 냉각 펌프 가동 요청",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 30,
+            "postmortem": {
+              "field": "실제 현장이라면 시설팀에 펌프 점검·교체 일정을 요청하고, 같은 구역의 다른 랙 온도와 경보 기준을 더 확인했을 것입니다.",
+              "causal": "펌프 P-2 성능 저하 → 냉각수 유량 감소 → 흡입 온도 상승 → GPU 열 보호 클럭 제한 → 작업 지연.",
+              "alternatives": "GPU 장치 오류는 DCGM에 장치 오류가 없어 배제, 회선 혼잡은 이용률 정상이라 배제."
+            }
+          }
+        ],
+        "resolved": 2,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "교대 조정 담당",
+          "rank": "운영 엔지니어",
+          "graduated": false,
+          "practice": false,
+          "observations": 30,
+          "commands": 10,
+          "interpreted": 6,
+          "misinterpretations": 0,
+          "help": 0
+        }
+      }
+    },
+    {
+      "kind": "linux",
+      "result": {
+        "shift": 5,
+        "title": "Linux 근무 5 · 독립 대응 평가",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 9,
+            "template": "bom-marine-batch",
+            "client": "Marine Drive Studios",
+            "industry": "게임·미디어 제작",
+            "site": "IN-BOM",
+            "city": "뭄바이",
+            "country": "인도",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D2 01:00",
+            "started": "D2 01:00",
+            "completed": "D2 02:20",
+            "due": "D2 04:40",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 10,
+            "template": "sfo-bayfog-video",
+            "client": "Bayfog Motion Studio",
+            "industry": "게임·미디어 제작",
+            "site": "US-SFO",
+            "city": "샌프란시스코",
+            "country": "미국",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D2 01:00",
+            "started": "D2 01:00",
+            "completed": "D2 02:10",
+            "due": "D2 05:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 11,
+            "template": "sin-merbau-research",
+            "client": "Merbau Climate Research",
+            "industry": "연구기관",
+            "site": "SG-SIN",
+            "city": "싱가포르",
+            "country": "싱가포르",
+            "job": "GPU 연구 배치",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D2 02:20",
+            "started": "D2 02:20",
+            "completed": "D2 03:40",
+            "due": "D2 05:40",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 3,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 3,
+        "total": 3,
+        "goal": {
+          "minResolved": 3,
+          "minSuccess": 3,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 100,
+        "finished": "D2 03:40",
+        "started": "D2 01:00",
+        "feedback": [
+          "INC-L51 서비스 반복 재시작(CrashLoop) (뭄바이 요청 #9): 해결 · 해결 조치 직전 배포 롤백",
+          "INC-L52 회선 혼잡·패킷 손실 (샌프란시스코 요청 #10): 해결 · 해결 조치 트래픽 우선순위(QoS)·대역 예약 조정",
+          "INC-L53 스토리지 I/O 지연 증가 (싱가포르 요청 #11): 해결 · 해결 조치 대체 스토리지 경로로 전환",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-L51",
+            "rid": 9,
+            "type": "crashloop",
+            "label": "서비스 반복 재시작(CrashLoop)",
+            "domain": "platform",
+            "client": "Marine Drive Studios",
+            "city": "뭄바이",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D2 01:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "직전 배포 롤백",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 20,
+            "slowMinutes": 0,
+            "postmortem": {
+              "field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.",
+              "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).",
+              "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-L52",
+            "rid": 10,
+            "type": "congestion",
+            "label": "회선 혼잡·패킷 손실",
+            "domain": "network",
+            "client": "Bayfog Motion Studio",
+            "city": "샌프란시스코",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D2 01:20",
+            "diagnosedAfter": 10,
+            "recoveredAfter": 20,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "트래픽 우선순위(QoS)·대역 예약 조정",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 20,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당에 대역 증설을 요청하고, 혼잡을 만든 다른 트래픽(백업·복제 일정)을 더 확인했을 것입니다.",
+              "causal": "엣지 링크 이용률 한계 → 큐 드롭·RTT 증가 → 작업 데이터 전송 지연.",
+              "alternatives": "링크 단절은 LINK UP이라 배제, 스토리지 지연은 볼륨 지연이 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-L53",
+            "rid": 11,
+            "type": "storage_latency",
+            "label": "스토리지 I/O 지연 증가",
+            "domain": "storage",
+            "client": "Merbau Climate Research",
+            "city": "싱가포르",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D2 02:40",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "대체 스토리지 경로로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 10,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.",
+              "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.",
+              "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."
+            }
+          }
+        ],
+        "resolved": 3,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "독립 관제 엔지니어 평가",
+          "rank": "독립 관제 엔지니어",
+          "graduated": true,
+          "practice": false,
+          "observations": 72,
+          "commands": 10,
+          "interpreted": 9,
+          "misinterpretations": 0,
+          "help": 0
+        }
+      }
+    },
+    {
+      "kind": "senior",
+      "result": {
+        "shift": 1,
+        "title": "선임 평가 1 · 계약과 공유 자원",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "sin-merbau-research",
+            "client": "Merbau Climate Research",
+            "industry": "연구기관",
+            "site": "SG-SIN",
+            "city": "싱가포르",
+            "country": "싱가포르",
+            "job": "GPU 연구 배치",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 10:50",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "bom-marine-batch",
+            "client": "Marine Drive Studios",
+            "industry": "게임·미디어 제작",
+            "site": "IN-BOM",
+            "city": "뭄바이",
+            "country": "인도",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 10:20",
+            "due": "D1 12:40",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "sfo-bayfog-video",
+            "client": "Bayfog Motion Studio",
+            "industry": "게임·미디어 제작",
+            "site": "US-SFO",
+            "city": "샌프란시스코",
+            "country": "미국",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:40",
+            "started": "D1 10:20",
+            "completed": "D1 12:30",
+            "due": "D1 13:40",
+            "waited": 40,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 3,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 3,
+        "total": 3,
+        "goal": {
+          "minSuccess": 3,
+          "minResolved": 3,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": true
+        },
+        "average": 98,
+        "finished": "D1 12:30",
+        "started": "D1 09:00",
+        "feedback": [
+          "INC-S11 DNS 이름 해석 장애 (싱가포르 요청 #1): 해결 · 해결 조치 보조 DNS 리졸버로 전환",
+          "INC-S12 GPU 메모리 부족(CUDA OOM) (뭄바이 요청 #2): 해결 · 해결 조치 배치 크기 축소(고객 동의 조건)",
+          "INC-S13 스토리지 공간 소진 (샌프란시스코 요청 #3): 해결 · 해결 조치 게임 내부 임시 파일 정리",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다.",
+          "운영과 학습 각각 70점 이상, 기한 내 완료와 안전 정책을 함께 충족했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-S11",
+            "rid": 1,
+            "type": "dns",
+            "label": "DNS 이름 해석 장애",
+            "domain": "network",
+            "client": "Merbau Climate Research",
+            "city": "싱가포르",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 12,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "보조 DNS 리졸버로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 80,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당과 DNS 서비스 소유자에게 알리고, 주 리졸버의 로그·다른 서비스 영향 여부를 더 확인했을 것입니다.",
+              "causal": "주 리졸버 응답 없음 → 이름 해석 실패 → 작업이 저장소에 접속 못 함(IP 경로는 정상).",
+              "alternatives": "국제 경로 단절은 IP 테스트가 정상이라 배제, 서비스 재시작 문제는 재시작 기록이 없어 배제."
+            }
+          },
+          {
+            "id": "INC-S12",
+            "rid": 2,
+            "type": "gpu_oom",
+            "label": "GPU 메모리 부족(CUDA OOM)",
+            "domain": "gpu",
+            "client": "Marine Drive Studios",
+            "city": "뭄바이",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 12,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "배치 크기 축소(고객 동의 조건)",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 50,
+            "postmortem": {
+              "field": "실제 현장이라면 고객에게 배치·모델 설정 변경 이력을 확인하고, 필요한 메모리를 미리 검토하는 절차를 제안했을 것입니다.",
+              "causal": "배치 설정 증가 → GPU 메모리 부족(OOM) → 같은 단계에서 반복 종료(장치는 정상).",
+              "alternatives": "GPU 장치 오류는 DCGM PASS라 배제, 배포 오류는 로그가 OOM이라 배제."
+            }
+          },
+          {
+            "id": "INC-S13",
+            "rid": 3,
+            "type": "storage_full",
+            "label": "스토리지 공간 소진",
+            "domain": "storage",
+            "client": "Bayfog Motion Studio",
+            "city": "샌프란시스코",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 10:40",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "게임 내부 임시 파일 정리",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 90,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.",
+              "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.",
+              "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          }
+        ],
+        "resolved": 3,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "담당 엔지니어 · 선임 평가",
+          "rank": "직무 평가 · 기존 Linux 수료와 별도",
+          "graduated": false,
+          "practice": false,
+          "observations": 70,
+          "commands": 11,
+          "interpreted": 11,
+          "misinterpretations": 0,
+          "help": 0
+        },
+        "assessment": {
+          "version": 3,
+          "operations": {
+            "score": 100,
+            "items": {
+              "contracts": 40,
+              "recovery": 25,
+              "safety": 20,
+              "communication": 15
+            }
+          },
+          "learning": {
+            "score": 100,
+            "items": {
+              "evidence": 30,
+              "interpretation": 35,
+              "hypothesis": 25,
+              "independence": 10
+            }
+          },
+          "weights": {
+            "operations": {
+              "contracts": 40,
+              "recovery": 25,
+              "safety": 20,
+              "communication": 15
+            },
+            "learning": {
+              "evidence": 30,
+              "interpretation": 35,
+              "hypothesis": 25,
+              "independence": 10
+            }
+          },
+          "unsafe": [],
+          "basis": {
+            "requests": 3,
+            "decided": 3,
+            "incidents": 3,
+            "interpretations": 11,
+            "wrongOrRefusedActions": 0
+          },
+          "notice": "운영은 계약·복구·안전·소통, 학습은 근거·출력 해석·가설·도움 기록입니다. 해석은 사건별 첫 답을 평가하며 미응답은 0점입니다. 선택 사항인 터미널은 쓴 사건에서만 터미널 해석으로, 쓰지 않은 사건은 근거 있는 가설로 평가합니다. 반복 조회로 점수를 올릴 수 없습니다. 안전은 정책 위반·승인/동의 전 시도만 감점하며, 엔진이 조건을 확인해 거절한 시도(우회 경로 없음·이전 용량 부족 등)는 감점하지 않습니다. 실시간 대기·읽기·화면 이동·장애 발생 자체는 감점하지 않습니다. 평가 기회가 없는 항목은 제외합니다."
+        },
+        "senior": {
+          "version": 1,
+          "role": "담당 엔지니어",
+          "ending": false,
+          "qualification": "독립 관제 엔지니어 (기존 교육 수료 기록 보존)"
+        }
+      }
+    },
+    {
+      "kind": "senior",
+      "result": {
+        "shift": 2,
+        "title": "선임 평가 2 · 동시 사건과 팀 조정",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 4,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 12:30",
+            "started": "D1 12:30",
+            "completed": "D1 14:00",
+            "due": "D1 15:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 5,
+            "template": "osa-naniwa-batch",
+            "client": "Naniwa Pixel Games",
+            "industry": "게임 제작",
+            "site": "JP-OSA",
+            "city": "오사카",
+            "country": "일본",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 12:30",
+            "started": "D1 12:30",
+            "completed": "D1 14:10",
+            "due": "D1 16:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 6,
+            "template": "bom-marine-batch",
+            "client": "Marine Drive Studios",
+            "industry": "게임·미디어 제작",
+            "site": "IN-BOM",
+            "city": "뭄바이",
+            "country": "인도",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 14:10",
+            "started": "D1 14:10",
+            "completed": "D1 15:30",
+            "due": "D1 17:50",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 3,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 3,
+        "total": 3,
+        "goal": {
+          "minSuccess": 3,
+          "minResolved": 3,
+          "maxExpired": 0,
+          "notifyBeforeRecovery": true
+        },
+        "average": 100,
+        "finished": "D1 15:30",
+        "started": "D1 12:30",
+        "feedback": [
+          "INC-S21 서비스 반복 재시작(CrashLoop) (도쿄 요청 #4): 해결 · 해결 조치 직전 배포 롤백",
+          "INC-S22 스토리지 I/O 지연 증가 (오사카 요청 #5): 해결 · 해결 조치 대체 스토리지 경로로 전환",
+          "INC-S23 회선 혼잡·패킷 손실 (뭄바이 요청 #6): 해결 · 해결 조치 트래픽 우선순위(QoS)·대역 예약 조정",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다.",
+          "운영과 학습 각각 70점 이상, 기한 내 완료와 안전 정책을 함께 충족했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-S21",
+            "rid": 4,
+            "type": "crashloop",
+            "label": "서비스 반복 재시작(CrashLoop)",
+            "domain": "platform",
+            "client": "Tsukiji Cold-chain Vision",
+            "city": "도쿄",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 12:40",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "직전 배포 롤백",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 20,
+            "slowMinutes": 60,
+            "postmortem": {
+              "field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.",
+              "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).",
+              "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-S22",
+            "rid": 5,
+            "type": "storage_latency",
+            "label": "스토리지 I/O 지연 증가",
+            "domain": "storage",
+            "client": "Naniwa Pixel Games",
+            "city": "오사카",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 12:50",
+            "diagnosedAfter": 10,
+            "recoveredAfter": 20,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "대체 스토리지 경로로 전환",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 80,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 무거운 스캔 작업의 일정·QoS를 조정하고, 같은 노드의 다른 고객 영향을 더 확인했을 것입니다.",
+              "causal": "같은 스토리지 노드의 스캔 부하 → 읽기 지연 증가 → 데이터 대기로 작업 지연.",
+              "alternatives": "공간 부족은 사용률 61%라 배제, 회선 혼잡은 이용률 정상이라 배제."
+            }
+          },
+          {
+            "id": "INC-S23",
+            "rid": 6,
+            "type": "congestion",
+            "label": "회선 혼잡·패킷 손실",
+            "domain": "network",
+            "client": "Marine Drive Studios",
+            "city": "뭄바이",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 14:30",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 11,
+            "probes": [
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "트래픽 우선순위(QoS)·대역 예약 조정",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 0,
+            "slowMinutes": 60,
+            "postmortem": {
+              "field": "실제 현장이라면 네트워크 담당에 대역 증설을 요청하고, 혼잡을 만든 다른 트래픽(백업·복제 일정)을 더 확인했을 것입니다.",
+              "causal": "엣지 링크 이용률 한계 → 큐 드롭·RTT 증가 → 작업 데이터 전송 지연.",
+              "alternatives": "링크 단절은 LINK UP이라 배제, 스토리지 지연은 볼륨 지연이 정상이라 배제."
+            }
+          }
+        ],
+        "resolved": 3,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "담당 엔지니어 · 최종 교대",
+          "rank": "직무 평가 · 기존 Linux 수료와 별도",
+          "graduated": false,
+          "practice": false,
+          "observations": 56,
+          "commands": 10,
+          "interpreted": 9,
+          "misinterpretations": 0,
+          "help": 0
+        },
+        "assessment": {
+          "version": 3,
+          "operations": {
+            "score": 100,
+            "items": {
+              "contracts": 40,
+              "recovery": 25,
+              "safety": 20,
+              "communication": 15
+            }
+          },
+          "learning": {
+            "score": 100,
+            "items": {
+              "evidence": 30,
+              "interpretation": 35,
+              "hypothesis": 25,
+              "independence": 10
+            }
+          },
+          "weights": {
+            "operations": {
+              "contracts": 40,
+              "recovery": 25,
+              "safety": 20,
+              "communication": 15
+            },
+            "learning": {
+              "evidence": 30,
+              "interpretation": 35,
+              "hypothesis": 25,
+              "independence": 10
+            }
+          },
+          "unsafe": [],
+          "basis": {
+            "requests": 3,
+            "decided": 3,
+            "incidents": 3,
+            "interpretations": 9,
+            "wrongOrRefusedActions": 0
+          },
+          "notice": "운영은 계약·복구·안전·소통, 학습은 근거·출력 해석·가설·도움 기록입니다. 해석은 사건별 첫 답을 평가하며 미응답은 0점입니다. 선택 사항인 터미널은 쓴 사건에서만 터미널 해석으로, 쓰지 않은 사건은 근거 있는 가설로 평가합니다. 반복 조회로 점수를 올릴 수 없습니다. 안전은 정책 위반·승인/동의 전 시도만 감점하며, 엔진이 조건을 확인해 거절한 시도(우회 경로 없음·이전 용량 부족 등)는 감점하지 않습니다. 실시간 대기·읽기·화면 이동·장애 발생 자체는 감점하지 않습니다. 평가 기회가 없는 항목은 제외합니다."
+        },
+        "senior": {
+          "version": 1,
+          "role": "선임 엔지니어",
+          "ending": true,
+          "qualification": "독립 관제 엔지니어 (기존 교육 수료 기록 보존)"
+        }
+      }
+    }
+  ],
+  "free": [
+    {
+      "seed": 42,
+      "difficulty": "none",
+      "events": [],
+      "result": {
+        "shift": null,
+        "title": "글로벌 자유 교대 결과",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:50",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "tyo-sumida-eval",
+            "client": "Sumida Language Works",
+            "industry": "생성형 AI 플랫폼",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "평가·벤치마크",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:40",
+            "due": "D1 10:00",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:30",
+            "completed": "D1 11:00",
+            "due": "D1 13:10",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "sin-straits-realtime",
+            "client": "Straits Generative Lab",
+            "industry": "생성형 AI 플랫폼",
+            "site": "SG-SIN",
+            "city": "싱가포르",
+            "country": "싱가포르",
+            "job": "기간 한정 실시간 추론 용량 확보",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:40",
+            "completed": "D1 10:20",
+            "due": "D1 10:30",
+            "waited": 10,
+            "late": 0,
+            "reason": null
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 4,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 0
+        },
+        "success": 4,
+        "total": 4,
+        "goal": {
+          "minSuccess": 0,
+          "maxExpired": 999,
+          "minResolved": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 99,
+        "finished": "D1 11:00",
+        "started": "D1 09:00",
+        "feedback": [
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [],
+        "resolved": 0,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "자유 교대 운영 담당",
+          "rank": "연습 · 진급 없음",
+          "graduated": false,
+          "practice": false,
+          "observations": 0,
+          "commands": 0,
+          "interpreted": 0,
+          "misinterpretations": 0,
+          "help": 0
+        },
+        "regular": false,
+        "seed": 42,
+        "difficulty": "none"
+      }
+    },
+    {
+      "seed": 91,
+      "difficulty": "challenge",
+      "events": [
+        {
+          "minute": 560,
+          "cursor": 1,
+          "id": "INC-F1",
+          "rid": 2,
+          "type": "storage_full"
+        },
+        {
+          "minute": 580,
+          "cursor": 2,
+          "id": "INC-F2",
+          "rid": 3,
+          "type": "crashloop"
+        }
+      ],
+      "result": {
+        "shift": null,
+        "title": "글로벌 자유 교대 결과",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "sel-namsan-batch",
+            "client": "남산 리스크 분석실",
+            "industry": "금융 이상탐지",
+            "site": "KR-SEL",
+            "city": "서울",
+            "country": "대한민국",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:40",
+            "due": "D1 10:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 10:20",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:30",
+            "completed": "D1 11:50",
+            "due": "D1 13:10",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "tpe-formosa-vision",
+            "client": "Formosa Fab Vision",
+            "industry": "제조 비전 검사",
+            "site": "TW-TPE",
+            "city": "타이베이",
+            "country": "대만",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 96,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 10:20",
+            "completed": "D1 11:10",
+            "due": "D1 11:50",
+            "waited": 50,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 5,
+            "template": "djn-hanbit-research",
+            "client": "한빛 계산과학연구소",
+            "industry": "연구기관",
+            "site": "KR-DJN",
+            "city": "대전",
+            "country": "대한민국",
+            "job": "GPU 연구 배치",
+            "outcome": "expired",
+            "label": "기한 만료 · 미처리",
+            "score": 0,
+            "mode": null,
+            "consent": "배정 없음",
+            "proposal": null,
+            "received": "D1 10:00",
+            "started": null,
+            "completed": "D1 13:40",
+            "due": "D1 13:20",
+            "waited": 220,
+            "late": 0,
+            "reason": "최종 배정 기한 초과 · 미처리 종료"
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 4,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 1
+        },
+        "success": 4,
+        "total": 5,
+        "goal": {
+          "minSuccess": 0,
+          "maxExpired": 999,
+          "minResolved": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 78,
+        "finished": "D1 13:40",
+        "started": "D1 09:00",
+        "feedback": [
+          "INC-F1 스토리지 공간 소진 (도쿄 요청 #2): 해결 · 해결 조치 게임 내부 임시 파일 정리",
+          "INC-F2 서비스 반복 재시작(CrashLoop) (호찌민 요청 #3): 해결 · 해결 조치 직전 배포 롤백",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-F1",
+            "rid": 2,
+            "type": "storage_full",
+            "label": "스토리지 공간 소진",
+            "domain": "storage",
+            "client": "Tsukiji Cold-chain Vision",
+            "city": "도쿄",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "게임 내부 임시 파일 정리",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 50,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.",
+              "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.",
+              "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          },
+          {
+            "id": "INC-F2",
+            "rid": 3,
+            "type": "crashloop",
+            "label": "서비스 반복 재시작(CrashLoop)",
+            "domain": "platform",
+            "client": "Mekong Pixel Forge",
+            "city": "호찌민",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:40",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "직전 배포 롤백",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 20,
+            "slowMinutes": 90,
+            "postmortem": {
+              "field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.",
+              "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).",
+              "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."
+            }
+          }
+        ],
+        "resolved": 2,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "자유 교대 운영 담당",
+          "rank": "연습 · 진급 없음",
+          "graduated": false,
+          "practice": false,
+          "observations": 0,
+          "commands": 0,
+          "interpreted": 0,
+          "misinterpretations": 0,
+          "help": 0
+        },
+        "regular": false,
+        "seed": 91,
+        "difficulty": "challenge"
+      }
+    },
+    {
+      "seed": 91,
+      "difficulty": "challenge",
+      "events": [
+        {
+          "minute": 560,
+          "cursor": 1,
+          "id": "INC-F1",
+          "rid": 2,
+          "type": "storage_full"
+        },
+        {
+          "minute": 580,
+          "cursor": 2,
+          "id": "INC-F2",
+          "rid": 3,
+          "type": "crashloop"
+        }
+      ],
+      "result": {
+        "shift": null,
+        "title": "글로벌 자유 교대 결과",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "sel-namsan-batch",
+            "client": "남산 리스크 분석실",
+            "industry": "금융 이상탐지",
+            "site": "KR-SEL",
+            "city": "서울",
+            "country": "대한민국",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:40",
+            "due": "D1 10:30",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "tyo-tsukiji-vision",
+            "client": "Tsukiji Cold-chain Vision",
+            "industry": "물류 영상 분석",
+            "site": "JP-TYO",
+            "city": "도쿄",
+            "country": "일본",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 10:20",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "sgn-mekong-batch",
+            "client": "Mekong Pixel Forge",
+            "industry": "게임 제작",
+            "site": "VN-SGN",
+            "city": "호찌민",
+            "country": "베트남",
+            "job": "배치 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 95,
+            "mode": "절약형 모드",
+            "consent": "고객 허용 모드",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:30",
+            "completed": "D1 11:50",
+            "due": "D1 13:10",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "tpe-formosa-vision",
+            "client": "Formosa Fab Vision",
+            "industry": "제조 비전 검사",
+            "site": "TW-TPE",
+            "city": "타이베이",
+            "country": "대만",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 96,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 10:20",
+            "completed": "D1 11:10",
+            "due": "D1 11:50",
+            "waited": 50,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 5,
+            "template": "djn-hanbit-research",
+            "client": "한빛 계산과학연구소",
+            "industry": "연구기관",
+            "site": "KR-DJN",
+            "city": "대전",
+            "country": "대한민국",
+            "job": "GPU 연구 배치",
+            "outcome": "expired",
+            "label": "기한 만료 · 미처리",
+            "score": 0,
+            "mode": null,
+            "consent": "배정 없음",
+            "proposal": null,
+            "received": "D1 10:00",
+            "started": null,
+            "completed": "D1 13:40",
+            "due": "D1 13:20",
+            "waited": 220,
+            "late": 0,
+            "reason": "최종 배정 기한 초과 · 미처리 종료"
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 4,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 1
+        },
+        "success": 4,
+        "total": 5,
+        "goal": {
+          "minSuccess": 0,
+          "maxExpired": 999,
+          "minResolved": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 78,
+        "finished": "D1 13:40",
+        "started": "D1 09:00",
+        "feedback": [
+          "INC-F1 스토리지 공간 소진 (도쿄 요청 #2): 해결 · 해결 조치 게임 내부 임시 파일 정리",
+          "INC-F2 서비스 반복 재시작(CrashLoop) (호찌민 요청 #3): 해결 · 해결 조치 직전 배포 롤백",
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [
+          {
+            "id": "INC-F1",
+            "rid": 2,
+            "type": "storage_full",
+            "label": "스토리지 공간 소진",
+            "domain": "storage",
+            "client": "Tsukiji Cold-chain Vision",
+            "city": "도쿄",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:20",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 10,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "게임 내부 임시 파일 정리",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 10,
+            "slowMinutes": 50,
+            "postmortem": {
+              "field": "실제 현장이라면 스토리지 담당과 용량 추세 경보 기준을 점검하고, 임시 파일이 쌓인 원인을 더 확인했을 것입니다.",
+              "causal": "볼륨 사용률 100% → 체크포인트 쓰기 ENOSPC → 작업 정지.",
+              "alternatives": "I/O 지연은 지연이 정상이라 배제, GPU 문제는 DCGM PASS라 배제."
+            }
+          },
+          {
+            "id": "INC-F2",
+            "rid": 3,
+            "type": "crashloop",
+            "label": "서비스 반복 재시작(CrashLoop)",
+            "domain": "platform",
+            "client": "Mekong Pixel Forge",
+            "city": "호찌민",
+            "outcome": "resolved",
+            "reason": "",
+            "detected": "D1 09:40",
+            "diagnosedAfter": 0,
+            "recoveredAfter": 20,
+            "evidence": 13,
+            "probes": [
+              "cooling",
+              "dcgm",
+              "dns",
+              "job_log",
+              "link_stats",
+              "ping",
+              "service_events",
+              "storage_latency",
+              "storage_space",
+              "tor_port",
+              "ups"
+            ],
+            "wrongHypotheses": [],
+            "wrongActions": [],
+            "noEffect": [],
+            "refused": [],
+            "notices": 1,
+            "fix": "직전 배포 롤백",
+            "mitigations": [],
+            "notifiedBeforeRecovery": true,
+            "downtime": 20,
+            "slowMinutes": 90,
+            "postmortem": {
+              "field": "실제 현장이라면 배포 담당과 변경 승인 기록·카나리 배포 여부를 확인하고, 같은 버전을 쓰는 다른 서비스를 더 점검했을 것입니다.",
+              "causal": "배포 v2.3.1의 설정 오류 → 시작 직후 종료 → 반복 재시작(CrashLoop).",
+              "alternatives": "GPU 메모리 부족은 로그가 설정 오류라 배제, DNS는 이름 조회 정상이라 배제."
+            }
+          }
+        ],
+        "resolved": 2,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "자유 교대 운영 담당",
+          "rank": "연습 · 진급 없음",
+          "graduated": false,
+          "practice": false,
+          "observations": 0,
+          "commands": 0,
+          "interpreted": 0,
+          "misinterpretations": 0,
+          "help": 0
+        },
+        "regular": false,
+        "seed": 91,
+        "difficulty": "challenge"
+      }
+    },
+    {
+      "seed": 7,
+      "difficulty": "standard",
+      "events": [],
+      "result": {
+        "shift": null,
+        "title": "글로벌 자유 교대 결과",
+        "cleared": true,
+        "rows": [
+          {
+            "rid": 1,
+            "template": "sea-cascade-async",
+            "client": "Cascade Ledger Analytics",
+            "industry": "전자상거래 수요 예측",
+            "site": "US-SEA",
+            "city": "시애틀",
+            "country": "미국",
+            "job": "비동기 대량 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:50",
+            "due": "D1 12:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 2,
+            "template": "tpe-formosa-vision",
+            "client": "Formosa Fab Vision",
+            "industry": "제조 비전 검사",
+            "site": "TW-TPE",
+            "city": "타이베이",
+            "country": "대만",
+            "job": "영상·이미지 분석",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:00",
+            "started": "D1 09:00",
+            "completed": "D1 09:50",
+            "due": "D1 11:20",
+            "waited": 0,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 3,
+            "template": "bom-konkan-async",
+            "client": "Konkan Port Logistics",
+            "industry": "물류 분석",
+            "site": "IN-BOM",
+            "city": "뭄바이",
+            "country": "인도",
+            "job": "비동기 대량 추론",
+            "outcome": "on_time",
+            "label": "정상 완료 · 기한 준수",
+            "score": 100,
+            "mode": "고성능 모드",
+            "consent": "원래 요청 조건",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": "D1 09:50",
+            "completed": "D1 10:40",
+            "due": "D1 13:20",
+            "waited": 20,
+            "late": 0,
+            "reason": null
+          },
+          {
+            "rid": 4,
+            "template": "djn-hanbit-research",
+            "client": "한빛 계산과학연구소",
+            "industry": "연구기관",
+            "site": "KR-DJN",
+            "city": "대전",
+            "country": "대한민국",
+            "job": "GPU 연구 배치",
+            "outcome": "expired",
+            "label": "기한 만료 · 미처리",
+            "score": 0,
+            "mode": null,
+            "consent": "배정 없음",
+            "proposal": null,
+            "received": "D1 09:30",
+            "started": null,
+            "completed": "D1 13:10",
+            "due": "D1 12:50",
+            "waited": 220,
+            "late": 0,
+            "reason": "최종 배정 기한 초과 · 미처리 종료"
+          }
+        ],
+        "counts": {
+          "in_progress": 0,
+          "on_time": 3,
+          "late": 0,
+          "failed": 0,
+          "rejected": 0,
+          "expired": 1
+        },
+        "success": 3,
+        "total": 4,
+        "goal": {
+          "minSuccess": 0,
+          "maxExpired": 999,
+          "minResolved": 0,
+          "notifyBeforeRecovery": false
+        },
+        "average": 75,
+        "finished": "D1 13:10",
+        "started": "D1 09:00",
+        "feedback": [
+          "근무 목표 달성",
+          "Linux 학습: 조회 성공과 시스템 정상은 다릅니다. 보완적 증거·승인·사후 새 관측·고객 보고를 연결했습니다."
+        ],
+        "incidents": [],
+        "resolved": 0,
+        "practice": null,
+        "linux": {
+          "version": 1,
+          "role": "자유 교대 운영 담당",
+          "rank": "연습 · 진급 없음",
+          "graduated": false,
+          "practice": false,
+          "observations": 0,
+          "commands": 0,
+          "interpreted": 0,
+          "misinterpretations": 0,
+          "help": 0
+        },
+        "regular": false,
+        "seed": 7,
+        "difficulty": "standard"
+      }
+    }
+  ],
+  "resumes": [
+    {
+      "label": "free midshift",
+      "id": "aidc_3d_global_001",
+      "minute": 570
+    },
+    {
+      "label": "free midshift",
+      "id": "aidc_3d_global_002",
+      "minute": 570
+    },
+    {
+      "label": "free midshift",
+      "id": "aidc_3d_global_003",
+      "minute": 570
+    },
+    {
+      "label": "free midshift",
+      "id": "aidc_3d_global_004",
+      "minute": 570
+    },
+    {
+      "label": "senior first result",
+      "id": "aidc_3d_senior_001",
+      "minute": 750
+    }
+  ],
+  "layouts": [],
+  "startedAt": "2026-11-27T22:04:07.794Z",
+  "finishedAt": "2026-11-27T22:36:59.645Z",
+  "summary": {
+    "pass": 9,
+    "total": 9
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "issue": 6,
+  "mode": "Chrome headed / Playwright CDP / isolated contexts / isolated engine+saves (temporary)",
+  "checks": [
+    {
+      "name": "regular story chapters 1 -> 5 through the real UI, engine restart + resume after every chapter, graduation",
+      "pass": true,
+      "ms": 175433
+    },
+    {
+      "name": "chapter 2 failure through the UI: original conditions in a row are late → senior feedback → retry in a new slot (source unchanged)",
+      "pass": true,
+      "ms": 25517
+    },
+    {
+      "name": "chapter 3 failure: three wrong responses → failed card → retry; responses before the diagnosis are not offered",
+      "pass": true,
+      "ms": 18080
+    },
+    {
+      "name": "chapter 4 failure: repair on the tight deadline is late → chapter failed (no next chapter) → retry; impossible migration refused",
+      "pass": true,
+      "ms": 37270
+    },
+    {
+      "name": "chapter practice from the menu is a separate save: no campaign, no next chapter, free stage choice in the Lab",
+      "pass": true,
+      "ms": 7732
+    },
+    {
+      "name": "layout 1366x768: talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll",
+      "pass": true,
+      "ms": 13471
+    },
+    {
+      "name": "layout 150% of 1920x1080 (emulated): talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll",
+      "pass": true,
+      "ms": 13725
+    },
+    {
+      "name": "layout 1920x1080: talk, tabs, time, diagnosis responses, Lab controls and terminal reachable without page scroll",
+      "pass": true,
+      "ms": 13497
+    },
+    {
+      "name": "WebGL resources and heap stay flat while cycling every space three times in one page",
+      "pass": true,
+      "ms": 21550
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "ch1-clear.png",
+    "ch2-compare.png",
+    "ch2-plan-impacts.png",
+    "ch2-hall-two-customers.png",
+    "ch2-clear.png",
+    "ch3-a-world-symptom.png",
+    "ch3-a-diagnosis.png",
+    "ch3-network-room.png",
+    "ch3-a-recovered-card.png",
+    "ch3-b-world-symptom.png",
+    "ch3-b-diagnosis.png",
+    "ch3-b-recovered-card.png",
+    "ch3-clear.png",
+    "ch4-a-hall-fault.png",
+    "ch4-a-diagnosis.png",
+    "ch4-a-card.png",
+    "ch4-b-hall-fault.png",
+    "ch4-b-diagnosis.png",
+    "ch4-b-card.png",
+    "ch4-clear.png",
+    "ch5-stage1.png",
+    "ch5-stage2.png",
+    "ch5-stage3.png",
+    "ch5-stage4.png",
+    "ch5-stage5-verified.png",
+    "graduation.png",
+    "ch2-failure-feedback.png",
+    "ch3-failed-card.png",
+    "ch4-failed.png",
+    "practice-lab-terminal.png",
+    "layout-1366x768@1-lab.png",
+    "layout-1280x720@1.5-lab.png",
+    "layout-1920x1080@1-lab.png"
+  ],
+  "chapters": [
+    {
+      "label": "ch1 clear",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 10:30",
+      "chapter": "제1장 — 첫 근무",
+      "state": "cleared",
+      "result": 100,
+      "gpuUsed": 0,
+      "servers": "A:HEALTHY B:HEALTHY C:HEALTHY D:HEALTHY",
+      "campaign": "제1장:cleared 제2장:available 제3장:locked 제4장:locked 제5장:locked"
+    },
+    {
+      "label": "ch2 clear",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 12:30",
+      "chapter": "제2장 — 한정된 자원",
+      "state": "cleared",
+      "result": "두 고객 모두 기한 내 완료",
+      "gpuUsed": 0,
+      "servers": "A:HEALTHY B:HEALTHY C:HEALTHY D:HEALTHY",
+      "campaign": "제1장:cleared 제2장:cleared 제3장:available 제4장:locked 제5장:locked"
+    },
+    {
+      "label": "ch3 clear",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 15:20",
+      "chapter": "제3장 — 끊어진 연결",
+      "state": "cleared",
+      "result": "두 장애 모두 원인에 맞게 복구하고 정상 완료",
+      "gpuUsed": 0,
+      "servers": "A:HEALTHY B:HEALTHY C:HEALTHY D:HEALTHY",
+      "campaign": "제1장:cleared 제2장:cleared 제3장:cleared 제4장:available 제5장:locked"
+    },
+    {
+      "label": "ch4 clear",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 17:50",
+      "chapter": "제4장 — 서버실의 경보",
+      "state": "cleared",
+      "result": "두 장애 모두 기한 내 정상 완료",
+      "gpuUsed": 0,
+      "servers": "A:HEALTHY B:HEALTHY C:HEALTHY D:HEALTHY",
+      "campaign": "제1장:cleared 제2장:cleared 제3장:cleared 제4장:cleared 제5장:available"
+    },
+    {
+      "label": "ch5 clear",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 18:20",
+      "chapter": "제5장 — 홀로 선 엔지니어",
+      "state": "cleared",
+      "result": null,
+      "gpuUsed": 4,
+      "servers": "A:HEALTHY B:HEALTHY C:HEALTHY D:HEALTHY",
+      "campaign": "제1장:cleared 제2장:cleared 제3장:cleared 제4장:cleared 제5장:cleared"
+    }
+  ],
+  "resumes": [
+    {
+      "label": "after ch1",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 10:30",
+      "chapter": "제1장 — 첫 근무",
+      "state": "cleared",
+      "next": "제2장 — 한정된 자원"
+    },
+    {
+      "label": "after ch2",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 12:30",
+      "chapter": "제2장 — 한정된 자원",
+      "state": "cleared",
+      "next": "제3장 — 끊어진 연결"
+    },
+    {
+      "label": "after ch3",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 15:20",
+      "chapter": "제3장 — 끊어진 연결",
+      "state": "cleared",
+      "next": "제4장 — 서버실의 경보"
+    },
+    {
+      "label": "after ch4",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 17:50",
+      "chapter": "제4장 — 서버실의 경보",
+      "state": "cleared",
+      "next": "제5장 — 홀로 선 엔지니어"
+    },
+    {
+      "label": "after ch5",
+      "id": "aidc_story_slot_001",
+      "clock": "D1 18:20",
+      "chapter": "제5장 — 홀로 선 엔지니어",
+      "state": "cleared",
+      "next": null
+    }
+  ],
+  "retries": [
+    {
+      "chapter": "2",
+      "from": "aidc_story_slot_002",
+      "to": "aidc_story_slot_003",
+      "reason": "late",
+      "clock": "D1 10:30"
+    },
+    {
+      "chapter": "3",
+      "from": "aidc_story_slot_004",
+      "to": "aidc_story_slot_005",
+      "reason": "NETWORK RECOVERY FAILED",
+      "clock": "D1 12:30"
+    },
+    {
+      "chapter": "3b",
+      "from": "aidc_story_slot_006",
+      "to": "aidc_story_slot_007",
+      "reason": "repair late",
+      "clock": "D1 15:20"
+    }
+  ],
+  "performance": [
+    {
+      "label": "ch1 start (noc)",
+      "fps": 163.2,
+      "p95": 6.1,
+      "heapMiB": 29,
+      "geometries": 52,
+      "textures": 26,
+      "calls": 253
+    },
+    {
+      "label": "ch2 hall",
+      "fps": 170.7,
+      "p95": 6.2,
+      "heapMiB": 37.7,
+      "geometries": 168,
+      "textures": 62,
+      "calls": 757
+    },
+    {
+      "label": "ch3 world",
+      "fps": 166.7,
+      "p95": 6.1,
+      "heapMiB": 36.6,
+      "geometries": 543,
+      "textures": 90,
+      "calls": 253
+    },
+    {
+      "label": "ch4 hall",
+      "fps": 170.7,
+      "p95": 6.1,
+      "heapMiB": 29.5,
+      "geometries": 167,
+      "textures": 62,
+      "calls": 253
+    }
+  ],
+  "resources": [
+    {
+      "label": "start",
+      "geometries": 52,
+      "textures": 26
+    },
+    {
+      "label": "after campaign",
+      "geometries": 167,
+      "textures": 62
+    },
+    {
+      "label": "space cycles",
+      "cycles": [
+        {
+          "geometries": 535,
+          "textures": 83,
+          "heap": 44914122,
+          "fps": 172.801105927078
+        },
+        {
+          "geometries": 535,
+          "textures": 83,
+          "heap": 39922299,
+          "fps": 173.8122827346466
+        },
+        {
+          "geometries": 535,
+          "textures": 83,
+          "heap": 48902215,
+          "fps": 173.16017316017314
+        }
+      ]
+    }
+  ],
+  "startedAt": "2026-11-28T00:51:05.978Z",
+  "url": "http://127.0.0.1:5175/",
+  "browserVersion": "158.0.8127.38",
+  "checkpoints": [
+    "aidc_checkpoint_aidc_story_slot_001_ch1.db",
+    "aidc_checkpoint_aidc_story_slot_001_ch2.db",
+    "aidc_checkpoint_aidc_story_slot_001_ch3.db",
+    "aidc_checkpoint_aidc_story_slot_001_ch3b.db",
+    "aidc_checkpoint_aidc_story_slot_001_chlab.db"
+  ],
+  "finishedAt": "2026-11-28T00:56:32.715Z",
+  "pass": true
+}

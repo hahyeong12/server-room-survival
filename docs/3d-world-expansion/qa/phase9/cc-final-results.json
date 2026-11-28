@@ -1,0 +1,157 @@
+{
+  "startedAt": "2026-11-28T00:15:25.907Z",
+  "tag": "cc-final",
+  "checks": [
+    {
+      "label": "phase8",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "scripts/phase8-qa.mjs",
+        "--out=C:\\Users\\hahye\\Desktop\\server-room-survival\\docs\\3d-world-expansion\\qa\\phase9\\cc-final-phase8"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": {
+        "pass": 13,
+        "total": 13
+      },
+      "ms": 593948
+    },
+    {
+      "label": "phase7",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "scripts/phase7-qa.mjs",
+        "--out=C:\\Users\\hahye\\Desktop\\server-room-survival\\docs\\3d-world-expansion\\qa\\phase9\\cc-final-phase7"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": {
+        "pass": 12,
+        "total": 12
+      },
+      "ms": 869878
+    },
+    {
+      "label": "phase6",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "scripts/phase6-qa.mjs",
+        "--out=C:\\Users\\hahye\\Desktop\\server-room-survival\\docs\\3d-world-expansion\\qa\\phase9\\cc-final-phase6"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": {
+        "pass": 16,
+        "total": 16
+      },
+      "ms": 676028
+    },
+    {
+      "label": "phase5",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "scripts/phase5-qa.mjs",
+        "--out=C:\\Users\\hahye\\Desktop\\server-room-survival\\docs\\3d-world-expansion\\qa\\phase9\\cc-final-phase5"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": {
+        "pass": 9,
+        "total": 9
+      },
+      "ms": 328029
+    },
+    {
+      "label": "phase4",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "scripts/phase4-qa.mjs",
+        "--out=C:\\Users\\hahye\\Desktop\\server-room-survival\\docs\\3d-world-expansion\\qa\\phase9\\cc-final-phase4"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": {
+        "pass": 13,
+        "total": 13
+      },
+      "ms": 318314
+    },
+    {
+      "label": "lab",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "scripts/browser-qa.mjs",
+        "--url=http://127.0.0.1:5199/lab.html",
+        "--output=C:\\Users\\hahye\\Desktop\\server-room-survival\\docs\\3d-world-expansion\\qa\\phase9\\cc-final-lab"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": null,
+      "ms": 88288
+    },
+    {
+      "label": "python-headless",
+      "command": [
+        "C:/Users/hahye/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "tests.run_headless"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": null,
+      "ms": 91873
+    },
+    {
+      "label": "python-adapter",
+      "command": [
+        "C:/Users/hahye/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "engine/tests",
+        "-t",
+        ".",
+        "-q"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": null,
+      "ms": 14017
+    },
+    {
+      "label": "javascript",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "--test",
+        "tests/*.test.mjs"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": null,
+      "ms": 147
+    },
+    {
+      "label": "build",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "node_modules/vite/bin/vite.js",
+        "build"
+      ],
+      "code": 0,
+      "pass": true,
+      "summary": null,
+      "ms": 974
+    }
+  ],
+  "finishedAt": "2026-11-28T01:05:07.679Z",
+  "summary": {
+    "pass": 10,
+    "total": 10
+  }
+}

@@ -1,0 +1,22 @@
+[engine] SRS 3D engine ready on http://127.0.0.1:8791  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-04tpt6)
+[vite] 
+  [32m[1mVITE[22m v7.3.8[39m  [2mready in [0m[1m174[22m[2m[0m ms[22m
+[vite]   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5191[22m/[39m
+PASS menu: career map, senior lock and free seed/difficulty/start reachable at 1366x768, 1920x1080 and 150 percent
+PASS keyboard only: Tab to seed, type it, arrow-select difficulty, Enter starts that free shift
+PASS free shift HUD: wrap-up, time and incident actions reachable at all four sizes without page scroll
+PASS delayed reply interrupted by reload: the 10 minutes and the incident draw happen exactly once
+[engine] SRS 3D engine ready on http://127.0.0.1:8791  (saves: C:\Users\hahye\AppData\Local\Temp\srs3d-qa-04tpt6)
+PASS wrap-up double click, result shown once, not again after reload or engine restart, result tab reopens it
+PASS prerequisites through real UI: chapters 1 to 5, global 3, incident 3, Linux 5
+FAIL senior evaluation fails honestly when incidents are ignored; retry opens a new slot and preserves the source bytes: an ignored senior shift still ends
+
+false !== true
+
+AssertionError [ERR_ASSERTION]: an ignored senior shift still ends
+
+false !== true
+
+    at file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-ux-qa.mjs:120:12
+    at async check (file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-ux-qa.mjs:22:54)
+    at async file:///C:/Users/hahye/Desktop/server-room-survival/prototypes/3d-datacenter-001/scripts/phase9-ux-qa.mjs:117:3

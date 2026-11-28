@@ -1,0 +1,19 @@
+[36mvite v7.3.8 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 48 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                [39m[1m[2m  0.81 kB[22m[1m[22m[2m │ gzip:   0.52 kB[22m
+[2mdist/[22m[32mlab.html                  [39m[1m[2m  7.24 kB[22m[1m[22m[2m │ gzip:   2.91 kB[22m
+[2mdist/[22m[35massets/lab-C88Uys7p.css   [39m[1m[2m 12.70 kB[22m[1m[22m[2m │ gzip:   3.51 kB[22m
+[2mdist/[22m[35massets/main-CTJ-qCAR.css  [39m[1m[2m 55.91 kB[22m[1m[22m[2m │ gzip:  12.29 kB[22m
+[2mdist/[22m[36massets/lab-GRxTsfnJ.js    [39m[1m[2m  6.59 kB[22m[1m[22m[2m │ gzip:   3.03 kB[22m
+[2mdist/[22m[36massets/main-BI56T7fB.js   [39m[1m[2m133.88 kB[22m[1m[22m[2m │ gzip:  48.23 kB[22m
+[2mdist/[22m[36massets/scene-pqHvkO9b.js  [39m[1m[2m329.33 kB[22m[1m[22m[2m │ gzip: 115.56 kB[22m
+[2mdist/[22m[36massets/three-D_v2ZSRG.js  [39m[1m[33m536.06 kB[39m[22m[2m │ gzip: 136.85 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 736ms[39m
